@@ -27,7 +27,7 @@
                 if (user.emailVerified || user.providerData[0].providerId === 'phone') {
                     const idToken = await user.getIdToken();
                     if (!document.cookie.includes('sessionid')) {
-                        fetch('/api/login/', {
+                        fetch('/accounts/api/login/', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
