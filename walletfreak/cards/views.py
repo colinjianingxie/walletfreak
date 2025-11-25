@@ -1,34 +1,19 @@
 from django.shortcuts import render, Http404
 from core.services import db
-import signal
 import random
-
-def with_timeout(func, timeout=3):
-    """Wrapper to add timeout to Firestore calls"""
-    def timeout_handler(signum, frame):
-        raise TimeoutError("Firestore query timed out")
-    
-    signal.signal(signal.SIGALRM, timeout_handler)
-    signal.alarm(timeout)
-    
-    try:
-        result = func()
-        return result
-    finally:
-        signal.alarm(0)
 
 def personality_list(request):
     try:
-        personalities = with_timeout(lambda: db.get_personalities())
-    except (TimeoutError, Exception) as e:
+        personalities = db.get_personalities()
+    except Exception as e:
         print(f"Warning: Failed to fetch personalities: {e}")
         personalities = []
     return render(request, 'cards/personality_list.html', {'personalities': personalities})
 
 def personality_detail(request, personality_id):
     try:
-        personality = with_timeout(lambda: db.get_personality_by_slug(personality_id))
-    except (TimeoutError, Exception):
+        personality = db.get_personality_by_slug(personality_id)
+    except Exception:
         raise Http404("Personality not found")
         
     if not personality:
@@ -39,10 +24,10 @@ def personality_detail(request, personality_id):
     try:
         for card_id in personality.get('recommended_cards', []):
             try:
-                card = with_timeout(lambda: db.get_card_by_slug(card_id))
+                card = db.get_card_by_slug(card_id)
                 if card:
                     recommended_cards.append(card)
-            except (TimeoutError, Exception):
+            except Exception:
                 continue
     except Exception:
         pass
@@ -54,16 +39,16 @@ def personality_detail(request, personality_id):
 
 def card_list(request):
     try:
-        cards = with_timeout(lambda: db.get_cards())
-    except (TimeoutError, Exception) as e:
+        cards = db.get_cards()
+    except Exception as e:
         print(f"Warning: Failed to fetch cards: {e}")
         cards = []
     return render(request, 'cards/card_list.html', {'cards': cards})
 
 def card_detail(request, card_id):
     try:
-        card = with_timeout(lambda: db.get_card_by_slug(card_id))
-    except (TimeoutError, Exception):
+        card = db.get_card_by_slug(card_id)
+    except Exception:
         raise Http404("Card not found")
         
     if not card:
