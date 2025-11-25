@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="padding: 4rem 0;">
+    <div class="card" style="max-width: 800px; margin: 0 auto;">
+        <h1 style="margin-bottom: 0.5rem;">{{ card.name }}</h1>
+        <p style="color: var(--primary); font-size: 1.2rem; margin-bottom: 2rem;">{{ card.issuer }}</p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+            <div>
+                <h3>Rewards Structure</h3>
+                <ul style="margin-top: 1rem; color: var(--text-muted);">
+                    {% for key, value in card.rewards_structure.items %}
+                    <li style="margin-bottom: 0.5rem;"><strong>{{ value }}</strong> on {{ key }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                <h3>Key Details</h3>
+                <p style="margin-top: 1rem;"><strong>Annual Fee:</strong> ${{ card.annual_fee }}</p>
+                {% if card.user_type %}
+                <p><strong>Best For:</strong> {{ card.user_type|join:", " }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if card.benefits %}
+        <h3 style="margin-bottom: 1rem;">Benefits</h3>
+        <div style="display: grid; gap: 1rem;">
+            {% for benefit in card.benefits %}
+            <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px;">
+                <h4 style="color: var(--accent);">{{ benefit.name }}</h4>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">{{ benefit.description }}</p>
+                {% if benefit.amount %}
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Value: ${{ benefit.amount }} ({{ benefit.type
+                    }})</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center;">
+            <form action="{% url 'add_card' card.id %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="status" value="active">
+                <button type="submit" class="btn btn-primary">Add to Wallet</button>
+            </form>
+            <form action="{% url 'add_card' card.id %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="status" value="eyeing">
+                <button type="submit" class="btn btn-outline">Add to Wishlist</button>
+            </form>
+        </div>
+
+        <div style="margin-top: 3rem; text-align: center;">
+            {% if active_link %}
+            <a href="{{ active_link }}" target="_blank" class="btn btn-primary"
+                style="font-size: 1.2rem; padding: 1rem 3rem;">Apply Now</a>
+            {% else %}
+            <button class="btn btn-primary" style="font-size: 1.2rem; padding: 1rem 3rem;" disabled>Application
+                Unavailable</button>
+            {% endif %}
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;">* We may earn a commission if you
+                apply through our links.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

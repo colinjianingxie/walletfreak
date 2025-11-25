@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 style="margin: 2rem 0; text-align: center;">Latest from the Blog</h1>
+    <div class="grid">
+        {% for blog in blogs %}
+        <div class="card">
+            {% if blog.images %}
+            <img src="{{ blog.images.0 }}" alt="{{ blog.title }}"
+                style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+            {% endif %}
+            <h3 style="margin-top: 1rem;">{{ blog.title }}</h3>
+            <p style="color: var(--text-muted); margin: 0.5rem 0;">{{ blog.published_date }}</p>
+            <a href="{% url 'blog_detail' blog.id %}" class="btn btn-outline">Read More</a>
+        </div>
+        {% empty %}
+        <p>No posts yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

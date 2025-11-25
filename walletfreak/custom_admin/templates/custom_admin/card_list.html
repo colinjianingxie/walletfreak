@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="padding: 2rem 0;">
+    <h1>Manage Cards</h1>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 2rem;">
+        <thead>
+            <tr style="text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <th style="padding: 1rem;">Name</th>
+                <th style="padding: 1rem;">Issuer</th>
+                <th style="padding: 1rem;">Fee</th>
+                <th style="padding: 1rem;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for card in cards %}
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                <td style="padding: 1rem;">{{ card.name }}</td>
+                <td style="padding: 1rem;">{{ card.issuer }}</td>
+                <td style="padding: 1rem;">${{ card.annual_fee }}</td>
+                <td style="padding: 1rem;">
+                    <button class="btn btn-outline" style="font-size: 0.8rem;">Edit</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

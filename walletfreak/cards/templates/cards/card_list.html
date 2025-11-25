@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="padding: 3rem 0;">
+    <div class="text-center mb-4">
+        <h1>All Credit Cards</h1>
+        <p>Browse, search, and compare the best cards on the market.</p>
+    </div>
+
+    <!-- Filters Placeholder -->
+    <div class="card mb-4" style="padding: 1rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+        <input type="text" placeholder="Search cards..." style="margin: 0; max-width: 300px;">
+        <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn-outline btn-sm">Issuers ▾</button>
+            <button class="btn btn-outline btn-sm">Categories ▾</button>
+            <button class="btn btn-outline btn-sm">Annual Fee ▾</button>
+        </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        {% for card in cards %}
+        <div class="card" style="display: grid; grid-template-columns: 200px 1fr auto; gap: 2rem; align-items: center;">
+            <!-- Left: Image -->
+            <div style="text-align: center;">
+                <div
+                    style="background: #f1f5f9; height: 120px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                    {% if card.image_url %}
+                    <img src="{{ card.image_url }}" alt="{{ card.name }}" style="max-width: 100%; max-height: 100%;">
+                    {% else %}
+                    <span style="font-size: 2rem;">💳</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Middle: Content -->
+            <div>
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <span class="badge badge-dark">{{ card.issuer }}</span>
+                    {% if card.annual_fee > 200 %}
+                    <span class="badge badge-dark">Luxury</span>
+                    {% endif %}
+                </div>
+                <h3 style="margin-bottom: 0.5rem;"><a href="{% url 'card_detail' card.id %}">{{ card.name }}</a></h3>
+                <p style="font-size: 0.9rem; margin-bottom: 1rem;">
+                    Credit Score: <strong>Good-Excellent (690+)</strong>
+                </p>
+
+                <!-- Benefits Preview -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.9rem;">
+                    {% for benefit in card.benefits|slice:":2" %}
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="color: var(--success);">✓</span> {{ benefit.name }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Right: Action -->
+            <div style="text-align: right; min-width: 150px;">
+                <div style="font-size: 1.5rem; font-weight: 700; color: var(--dark); margin-bottom: 0.25rem;">
+                    ${{ card.annual_fee }}<span
+                        style="font-size: 0.9rem; color: var(--text-muted); font-weight: 400;">/yr</span>
+                </div>
+
+                {% if user.is_authenticated %}
+                <form action="{% url 'add_card' card.id %}" method="POST" style="margin-bottom: 0.5rem;">
+                    {% csrf_token %}
+                    <input type="hidden" name="status" value="active">
+                    <button type="submit" class="btn btn-primary btn-sm" style="width: 100%;">+ Add to Wallet</button>
+                </form>
+                {% endif %}
+
+                <a href="{% url 'card_detail' card.id %}" class="btn btn-dark" style="width: 100%;">Apply Now ↗</a>
+                <div style="margin-top: 0.5rem; text-align: center;">
+                    <a href="{% url 'card_detail' card.id %}" style="font-size: 0.85rem; color: var(--primary);">View
+                        Details</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No cards found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

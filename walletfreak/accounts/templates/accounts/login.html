@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="padding: 4rem 0; max-width: 500px;">
+    <div class="card" style="padding: 3rem;">
+        <h1 style="text-align: center; margin-bottom: 2rem;">Welcome to WalletFreak</h1>
+
+        <!-- Sign Up Form -->
+        <div id="signup-form" style="display: block;">
+            <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Create Account</h2>
+            <form id="signupForm">
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">First Name</label>
+                <input type="text" id="firstName" required style="margin-bottom: 1rem;">
+
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Last Name</label>
+                <input type="text" id="lastName" required style="margin-bottom: 1rem;">
+
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Email</label>
+                <input type="email" id="signupEmail" required style="margin-bottom: 1rem;">
+
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Password</label>
+                <input type="password" id="signupPassword" required minlength="6" style="margin-bottom: 1.5rem;">
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;">Sign Up</button>
+                <div id="signup-error" style="color: var(--danger); margin-top: 1rem; display: none;"></div>
+            </form>
+
+            <div style="text-align: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0;">
+                <p style="margin-bottom: 1rem;">Or sign up with</p>
+                <button id="googleSignup" class="btn btn-outline" style="width: 100%;">
+                    <svg width="18" height="18" viewBox="0 0 18 18" style="margin-right: 0.5rem;">
+                        <path fill="#4285F4"
+                            d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" />
+                        <path fill="#34A853"
+                            d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z" />
+                        <path fill="#FBBC05"
+                            d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957C.347 6.175 0 7.55 0 9s.348 2.825.957 4.039l3.007-2.332z" />
+                        <path fill="#EA4335"
+                            d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.961L3.964 7.293C4.672 5.163 6.656 3.58 9 3.58z" />
+                    </svg>
+                    Continue with Google
+                </button>
+                <p style="margin-top: 1.5rem;">Already have an account? <a href="#" id="showLogin"
+                        style="color: var(--primary); font-weight: 600;">Sign In</a></p>
+            </div>
+        </div>
+
+        <!-- Sign In Form -->
+        <div id="login-form" style="display: none;">
+            <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Sign In</h2>
+            <form id="loginForm">
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Email</label>
+                <input type="email" id="loginEmail" required style="margin-bottom: 1rem;">
+
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Password</label>
+                <input type="password" id="loginPassword" required style="margin-bottom: 1.5rem;">
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;">Sign In</button>
+                <div id="login-error" style="color: var(--danger); margin-top: 1rem; display: none;"></div>
+            </form>
+
+            <div style="text-align: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0;">
+                <p style="margin-bottom: 1rem;">Or sign in with</p>
+                <button id="googleLogin" class="btn btn-outline" style="width: 100%;">
+                    <svg width="18" height="18" viewBox="0 0 18 18" style="margin-right: 0.5rem;">
+                        <path fill="#4285F4"
+                            d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" />
+                        <path fill="#34A853"
+                            d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z" />
+                        <path fill="#FBBC05"
+                            d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957C.347 6.175 0 7.55 0 9s.348 2.825.957 4.039l3.007-2.332z" />
+                        <path fill="#EA4335"
+                            d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.961L3.964 7.293C4.672 5.163 6.656 3.58 9 3.58z" />
+                    </svg>
+                    Continue with Google
+                </button>
+                <p style="margin-top: 1.5rem;">Don't have an account? <a href="#" id="showSignup"
+                        style="color: var(--primary); font-weight: 600;">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const signupForm = document.getElementById('signup-form');
+    const loginForm = document.getElementById('login-form');
+    const showLogin = document.getElementById('showLogin');
+    const showSignup = document.getElementById('showSignup');
+
+    showLogin.addEventListener('click', (e) => {
+        e.preventDefault();
+        signupForm.style.display = 'none';
+        loginForm.style.display = 'block';
+    });
+
+    showSignup.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginForm.style.display = 'none';
+        signupForm.style.display = 'block';
+    });
+
+    // Sign Up with Email
+    document.getElementById('signupForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const email = document.getElementById('signupEmail').value;
+        const password = document.getElementById('signupPassword').value;
+        const errorDiv = document.getElementById('signup-error');
+
+        try {
+            const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+            await userCredential.user.updateProfile({
+                displayName: `${firstName} ${lastName}`
+            });
+
+            // Send verification email
+            await userCredential.user.sendEmailVerification();
+
+            // Show message to user
+            errorDiv.style.color = 'var(--success)';
+            errorDiv.textContent = 'Account created! Please check your email to verify your account before signing in.';
+            errorDiv.style.display = 'block';
+
+            // Sign out the user until they verify
+            await firebase.auth().signOut();
+
+            // Switch to login form after 3 seconds
+            setTimeout(() => {
+                signupForm.style.display = 'none';
+                loginForm.style.display = 'block';
+            }, 3000);
+
+        } catch (error) {
+            errorDiv.style.color = 'var(--danger)';
+            errorDiv.textContent = error.message;
+            errorDiv.style.display = 'block';
+        }
+    });
+
+    // Sign In with Email
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        const errorDiv = document.getElementById('login-error');
+
+        try {
+            const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+
+            // Check if email is verified
+            if (!userCredential.user.emailVerified) {
+                errorDiv.textContent = 'Please verify your email before signing in. Check your inbox for the verification link.';
+                errorDiv.style.display = 'block';
+                await firebase.auth().signOut();
+                return;
+            }
+
+            const idToken = await userCredential.user.getIdToken();
+
+            const response = await fetch('/accounts/api/login/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idToken })
+            });
+
+            if (response.ok) {
+                window.location.href = '/dashboard/';
+            } else {
+                throw new Error('Backend authentication failed');
+            }
+        } catch (error) {
+            errorDiv.textContent = error.message;
+            errorDiv.style.display = 'block';
+        }
+    });
+
+    // Google Sign Up/In (no verification needed)
+    document.getElementById('googleSignup').addEventListener('click', async () => {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        try {
+            const result = await firebase.auth().signInWithPopup(provider);
+            const idToken = await result.user.getIdToken();
+
+            const response = await fetch('/accounts/api/login/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idToken })
+            });
+
+            if (response.ok) {
+                window.location.href = '/dashboard/';
+            }
+        } catch (error) {
+            document.getElementById('signup-error').textContent = error.message;
+            document.getElementById('signup-error').style.display = 'block';
+        }
+    });
+
+    // Google Sign In (same as signup - Google handles verification)
+    document.getElementById('googleLogin').addEventListener('click', async () => {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        try {
+            const result = await firebase.auth().signInWithPopup(provider);
+            const idToken = await result.user.getIdToken();
+
+            const response = await fetch('/accounts/api/login/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idToken })
+            });
+
+            if (response.ok) {
+                window.location.href = '/dashboard/';
+            }
+        } catch (error) {
+            document.getElementById('login-error').textContent = error.message;
+            document.getElementById('login-error').style.display = 'block';
+        }
+    });
+</script>
+{% endblock %}

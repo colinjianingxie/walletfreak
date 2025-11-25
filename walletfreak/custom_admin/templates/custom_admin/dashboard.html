@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="padding: 4rem 0;">
+    <h1>Admin Dashboard</h1>
+    <div class="grid">
+        <div class="card">
+            <h3>Manage Cards</h3>
+            <p>Add, edit, or remove credit cards.</p>
+            <a href="{% url 'admin_card_list' %}" class="btn btn-primary">Go to Cards</a>
+        </div>
+        <div class="card">
+            <h3>Manage Personalities</h3>
+            <p>Update personality archetypes.</p>
+            <a href="{% url 'admin_personality_list' %}" class="btn btn-primary">Go to Personalities</a>
+        </div>
+        <div class="card">
+            <h3>Manage Users</h3>
+            <p>Toggle Super Staff roles.</p>
+            <a href="{% url 'admin_user_list' %}" class="btn btn-primary">Go to Users</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

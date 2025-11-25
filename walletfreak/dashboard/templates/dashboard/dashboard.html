@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="padding: 3rem 0;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <div>
+            <h1>Subscription Tracker</h1>
+            <p>Track your recurring credits and maximize your annual fees.</p>
+        </div>
+        <a href="{% url 'card_list' %}" class="btn btn-outline">⚙️ Manage Wallet</a>
+    </div>
+
+    <!-- Notifications Toggle -->
+    <div class="card mb-4" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <div
+                style="width: 48px; height: 48px; background: #e0e7ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.5rem;">
+                🔔
+            </div>
+            <div>
+                <h3 style="margin: 0; font-size: 1.1rem;">Email Notifications</h3>
+                <p style="margin: 0; font-size: 0.9rem;">Get alerts for expiring benefits</p>
+            </div>
+        </div>
+        <label class="switch">
+            <input type="checkbox" checked>
+            <span class="slider round"></span>
+        </label>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="card mb-4">
+        <div style="display: flex; align-items: center; gap: 2rem;">
+            <div style="flex: 1;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span style="font-weight: 600; color: var(--text-muted);">Utilization</span>
+                    <span style="font-weight: 700;">$0 / $0</span>
+                </div>
+                <div style="height: 12px; background: #f1f5f9; border-radius: 6px; overflow: hidden;">
+                    <div style="width: 0%; height: 100%; background: var(--primary);"></div>
+                </div>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <div
+                    style="background: #eff6ff; padding: 1rem; border-radius: 8px; text-align: center; min-width: 100px;">
+                    <div style="font-size: 0.8rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">
+                        Cards</div>
+                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--dark);">{{ active_cards|length }}
+                    </div>
+                </div>
+                <div
+                    style="background: #eff6ff; padding: 1rem; border-radius: 8px; text-align: center; min-width: 100px;">
+                    <div style="font-size: 0.8rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">
+                        Credits</div>
+                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--dark);">0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if not active_cards %}
+    <!-- Empty State -->
+    <div class="card text-center" style="padding: 4rem 2rem; border-style: dashed; border-width: 2px;">
+        <p style="font-size: 1.2rem; margin-bottom: 2rem;">You haven't added any cards to your wallet yet.</p>
+        <a href="{% url 'card_list' %}" class="btn btn-primary">Add your cards now</a>
+    </div>
+    {% else %}
+
+    <!-- Unused Subscriptions Alert -->
+    {% if unused_subscriptions %}
+    <div class="card mb-4" style="background: linear-gradient(45deg, #2c3e50, #3498db); border: none;">
+        <h3 style="color: white; margin-bottom: 1rem;">⚠️ Unused Benefits</h3>
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+            {% for sub in unused_subscriptions %}
+            <div
+                style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; backdrop-filter: blur(5px);">
+                <p style="font-weight: bold; color: #fff; margin-bottom: 0.25rem;">{{ sub.benefit_name }}</p>
+                <p style="font-size: 0.85rem; color: rgba(255,255,255,0.8); margin-bottom: 0.5rem;">{{ sub.card_name }}
+                </p>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span class="badge" style="background: rgba(255,255,255,0.2); color: white;">
+                        {% if sub.frequency != 'Annual' %}{{ sub.frequency }}{% endif %}
+                        {% if sub.reset_date %}
+                        (Resets: {{ sub.reset_date|date:"M d" }})
+                        {% endif %}
+                    </span>
+                    <span style="color: #4cd137; font-weight: 600;">${{ sub.remaining }} Left</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Active Cards List -->
+    <div class="grid">
+        {% for card in active_cards %}
+        <div class="card">
+            <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
+                <div
+                    style="width: 60px; height: 40px; background: #f1f5f9; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                    {% if card.image_url %}
+                    <img src="{{ card.image_url }}" alt="{{ card.name }}" style="max-width: 100%; max-height: 100%;">
+                    {% else %}
+                    💳
+                    {% endif %}
+                </div>
+                <div>
+                    <h3 style="font-size: 1.1rem; margin: 0;">{{ card.name }}</h3>
+                    <span class="badge badge-success">Active</span>
+                </div>
+            </div>
+
+            <!-- Anniversary Date Input -->
+            <div style="margin-bottom: 1rem; padding: 0.5rem; background: #f8fafc; border-radius: 4px;">
+                <form action="{% url 'update_anniversary' card.id %}" method="POST"
+                    style="display: flex; align-items: center; gap: 0.5rem;">
+                    {% csrf_token %}
+                    <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted);">Anniversary:</label>
+                    <input type="date" name="anniversary_date" value="{{ card.anniversary_date|default:'' }}"
+                        style="padding: 0.25rem; font-size: 0.8rem; border: 1px solid #cbd5e1; border-radius: 4px;">
+                    <button type="submit" class="btn btn-outline btn-sm"
+                        style="padding: 0.25rem 0.5rem; font-size: 0.7rem;">Save</button>
+                </form>
+            </div>
+
+            <div
+                style="border-top: 1px solid #f1f5f9; padding-top: 1rem; margin-top: 1rem; display: flex; gap: 0.5rem;">
+                <a href="{% url 'card_detail' card.card_id %}" class="btn btn-outline btn-sm" style="flex: 1;">View
+                    Benefits</a>
+
+                <!-- Remove Card Button -->
+                <form action="{% url 'remove_card' card.id %}" method="POST"
+                    onsubmit="return confirm('Are you sure you want to remove this card from your wallet?');">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline btn-sm"
+                        style="color: var(--danger); border-color: var(--danger);">Remove</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    /* Toggle Switch */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 28px;
+    }
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 20px;
+        width: 20px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    input:checked+.slider {
+        background-color: var(--primary);
+    }
+
+    input:focus+.slider {
+        box-shadow: 0 0 1px var(--primary);
+    }
+
+    input:checked+.slider:before {
+        -webkit-transform: translateX(22px);
+        -ms-transform: translateX(22px);
+        transform: translateX(22px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+</style>
+{% endblock %}

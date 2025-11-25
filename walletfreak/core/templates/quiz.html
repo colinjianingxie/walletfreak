@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="max-width: 800px; padding: 4rem 0;">
+    <div id="quiz-container">
+        <h1 style="text-align: center; margin-bottom: 2rem;">Find Your Credit Card Personality</h1>
+        <div id="question-box" class="card">
+            <h2 id="question-text" style="margin-bottom: 1.5rem;"></h2>
+            <div id="options-container" style="display: grid; gap: 1rem;">
+                <!-- Options will be injected here -->
+            </div>
+            <button id="next-btn" class="btn btn-primary" style="margin-top: 1.5rem; width: 100%; display: none;"
+                onclick="nextQuestion()">Next</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        {
+            question: "What's your biggest priority when using a credit card? (Select all that apply)",
+            options: [
+                { text: "Maximizing travel rewards and luxury perks", type: "rewards-guru" },
+                { text: "Simplicity and cash back on everything", type: "cashback-enthusiast" },
+                { text: "Airport lounges and flight upgrades", type: "luxury-spender" },
+                { text: "Discounts on shopping and groceries", type: "deal-hunter" },
+                { text: "Gas and dining rewards for my commute", type: "budget-traveler" }
+            ]
+        },
+        {
+            question: "How do you feel about annual fees?",
+            options: [
+                { text: "I don't mind them if the value is there", type: "rewards-guru" },
+                { text: "I strictly avoid them", type: "simple-minimalist" },
+                { text: "Willing to pay for premium travel benefits", type: "luxury-spender" },
+                { text: "Prefer low or no fee cards", type: "student" },
+                { text: "Only if it makes sense for my spending", type: "balance-manager" }
+            ]
+        },
+        {
+            question: "What do you spend the most on? (Select all that apply)",
+            options: [
+                { text: "Travel and dining", type: "lifestyle-fashionista" },
+                { text: "A little bit of everything", type: "simple-minimalist" },
+                { text: "Flights and hotels", type: "luxury-spender" },
+                { text: "Online shopping and groceries", type: "family-oriented" },
+                { text: "Gas and entertainment", type: "tech-enthusiast" }
+            ]
+        }
+    ];
+
+    let currentQuestion = 0;
+    const scores = {};
+
+    function loadQuestion() {
+        const q = questions[currentQuestion];
+        document.getElementById('question-text').innerText = q.question;
+        const optionsContainer = document.getElementById('options-container');
+        optionsContainer.innerHTML = '';
+        document.getElementById('next-btn').style.display = 'none';
+
+        q.options.forEach((opt, index) => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'option-wrapper';
+            wrapper.style.display = 'flex';
+            wrapper.style.alignItems = 'center';
+            wrapper.style.padding = '1rem';
+            wrapper.style.border = '1px solid #e2e8f0';
+            wrapper.style.borderRadius = '8px';
+            wrapper.style.cursor = 'pointer';
+            wrapper.onclick = (e) => {
+                if (e.target.type !== 'checkbox') {
+                    const checkbox = wrapper.querySelector('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                    checkbox.dispatchEvent(new Event('change'));
+                }
+            };
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = `opt-${index}`;
+            checkbox.value = opt.type;
+            checkbox.style.marginRight = '1rem';
+            checkbox.style.width = '20px';
+            checkbox.style.height = '20px';
+            checkbox.onchange = () => {
+                const anyChecked = Array.from(optionsContainer.querySelectorAll('input[type="checkbox"]')).some(cb => cb.checked);
+                document.getElementById('next-btn').style.display = anyChecked ? 'block' : 'none';
+
+                if (checkbox.checked) {
+                    wrapper.style.borderColor = 'var(--primary)';
+                    wrapper.style.background = '#eff6ff';
+                } else {
+                    wrapper.style.borderColor = '#e2e8f0';
+                    wrapper.style.background = 'transparent';
+                }
+            };
+
+            const label = document.createElement('label');
+            label.htmlFor = `opt-${index}`;
+            label.innerText = opt.text;
+            label.style.cursor = 'pointer';
+            label.style.flex = '1';
+
+            wrapper.appendChild(checkbox);
+            wrapper.appendChild(label);
+            optionsContainer.appendChild(wrapper);
+        });
+    }
+
+    function nextQuestion() {
+        // Tally scores for current question
+        const checkboxes = document.querySelectorAll('#options-container input[type="checkbox"]:checked');
+        checkboxes.forEach(cb => {
+            const type = cb.value;
+            scores[type] = (scores[type] || 0) + 1;
+        });
+
+        currentQuestion++;
+
+        if (currentQuestion < questions.length) {
+            loadQuestion();
+        } else {
+            showResult();
+        }
+    }
+
+    function showResult() {
+        // Find type with max score
+        let maxType = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+
+        // Fallback if no scores (shouldn't happen with validation)
+        if (!maxType) maxType = 'beginner-dabbler';
+
+        // Redirect to personality page
+        window.location.href = `/personalities/${maxType}/`;
+    }
+
+    loadQuestion();
+</script>
+{% endblock %}

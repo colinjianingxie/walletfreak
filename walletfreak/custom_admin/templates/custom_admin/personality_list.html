@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="padding: 2rem 0;">
+    <h1>Manage Personalities</h1>
+    <div class="grid">
+        {% for p in personalities %}
+        <div class="card">
+            <h3>{{ p.name }}</h3>
+            <p>{{ p.description|truncatechars:100 }}</p>
+            <button class="btn btn-outline" style="margin-top: 1rem;">Edit</button>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

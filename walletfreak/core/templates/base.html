@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WalletFreak - Credit Card Recommendations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
+
+    <script>
+        const firebaseConfig = {{ firebase_config_json| safe }};
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Auth State Observer
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                if (user.emailVerified || user.providerData[0].providerId === 'phone') {
+                    const idToken = await user.getIdToken();
+                    if (!document.cookie.includes('sessionid')) {
+                        fetch('/api/login/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ idToken: idToken })
+                        }).then(res => {
+                            if (res.ok) window.location.reload();
+                        });
+                    }
+                } else {
+                    // Email not verified
+                    if (!window.location.pathname.includes('verify-email')) {
+                        // Optional: Allow them to stay logged in Firebase but not Django? 
+                        // Or force sign out. For now, let's alert.
+                        // alert('Please verify your email address.');
+                        // auth.signOut();
+                    }
+                }
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="#2563EB" />
+                    <path d="M8 10H24V22C24 23.1 23.1 24 22 24H10C8.9 24 8 23.1 8 22V10Z" stroke="white"
+                        stroke-width="2" />
+                    <path d="M11 14H21" stroke="white" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                WalletFreak
+            </a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/quiz/">Quiz</a>
+                <a href="/cards/">All Cards</a>
+                <a href="/blog/">Blog</a>
+                {% if user.is_authenticated %}
+                <a href="/dashboard/">Tracker</a>
+                <div style="display: flex; align-items: center; gap: 1rem; margin-left: 1rem;">
+                    <span style="font-weight: 600; font-size: 0.9rem;">{{ user.first_name|default:user.email }}</span>
+                    <a href="/logout/" style="color: var(--text-muted); font-size: 1.2rem;" title="Logout">→</a>
+                </div>
+                {% else %}
+                <a href="{% url 'login' %}" class="btn btn-primary btn-sm">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 WalletFreak. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

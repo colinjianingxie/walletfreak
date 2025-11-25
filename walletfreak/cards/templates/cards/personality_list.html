@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 style="margin: 2rem 0; text-align: center;">Choose Your Personality</h1>
+    <div class="grid">
+        {% for personality in personalities %}
+        <div class="card">
+            <h2>{{ personality.name }}</h2>
+            <p style="color: var(--text-muted); margin: 1rem 0;">{{ personality.description }}</p>
+            <a href="{% url 'personality_detail' personality.id %}" class="btn btn-primary">View Recommendations</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
