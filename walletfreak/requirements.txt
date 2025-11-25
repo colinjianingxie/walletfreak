@@ -4,4 +4,4 @@ gunicorn>=21.2.0
 requests
 python-dotenv
 python-dateutil
->=1.0.0
+
