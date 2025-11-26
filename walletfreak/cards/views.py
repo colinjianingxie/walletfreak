@@ -44,11 +44,54 @@ def card_list(request):
         print(f"Warning: Failed to fetch cards: {e}")
         all_cards = []
 
+    # Derive categories for each card
+    categories_map = {
+        'Travel': ['travel', 'flight', 'hotel', 'mile', 'vacation', 'rental car', 'transit'],
+        'Hotel': ['hotel', 'marriott', 'hilton', 'hyatt', 'ihg'],
+        'Flights': ['flight', 'airline', 'delta', 'united', 'southwest', 'british airways', 'avios', 'aeroplan'],
+        'Dining': ['dining', 'restaurant', 'food', 'eats'],
+        'Groceries': ['groceries', 'supermarket', 'whole foods'],
+        'Gas': ['gas'],
+        'Student': ['student'],
+        'Cash Back': ['cash back', 'cash rewards'],
+        'Luxury': ['lounge', 'luxury', 'platinum', 'reserve']
+    }
+
+    for card in all_cards:
+        card_cats = set()
+        # Check description and benefits
+        text_to_check = (card.get('name', '') + ' ' + str(card.get('rewards_structure', '')) + ' ' + str(card.get('benefits', ''))).lower()
+        
+        for cat, keywords in categories_map.items():
+            if any(k in text_to_check for k in keywords):
+                card_cats.add(cat)
+        
+        # Special cases based on fee
+        if card.get('annual_fee', 0) == 0:
+            card_cats.add('No Annual Fee')
+            
+        card['categories'] = sorted(list(card_cats))
+
     # Get filter options
     issuers = sorted(list(set(c.get('issuer') for c in all_cards if c.get('issuer'))))
     
-    # Apply filters
+    # Collect all actual categories from cards
+    actual_categories = set()
+    for card in all_cards:
+        actual_categories.update(card['categories'])
+    
+    all_categories = sorted(list(actual_categories))
+    
+    # Fee range
+    fees = [c.get('annual_fee', 0) for c in all_cards]
+    min_fee = min(fees) if fees else 0
+    max_fee = max(fees) if fees else 1000
+
+    # Apply filters (Server-side fallback)
     selected_issuers = request.GET.getlist('issuer')
+    selected_categories = request.GET.getlist('category')
+    min_fee_filter = request.GET.get('min_fee')
+    max_fee_filter = request.GET.get('max_fee')
     search_query = request.GET.get('search', '').lower()
     
     filtered_cards = all_cards
@@ -56,14 +99,35 @@ def card_list(request):
     if selected_issuers:
         filtered_cards = [c for c in filtered_cards if c.get('issuer') in selected_issuers]
         
+    if selected_categories:
+        filtered_cards = [c for c in filtered_cards if any(cat in c.get('categories', []) for cat in selected_categories)]
+
+    if min_fee_filter:
+        try:
+            filtered_cards = [c for c in filtered_cards if c.get('annual_fee', 0) >= int(min_fee_filter)]
+        except ValueError:
+            pass
+            
+    if max_fee_filter:
+        try:
+            filtered_cards = [c for c in filtered_cards if c.get('annual_fee', 0) <= int(max_fee_filter)]
+        except ValueError:
+            pass
+        
     if search_query:
         filtered_cards = [c for c in filtered_cards if search_query in c.get('name', '').lower() or search_query in c.get('issuer', '').lower()]
 
     context = {
         'cards': filtered_cards,
         'issuers': issuers,
+        'categories': all_categories,
         'selected_issuers': selected_issuers,
-        'search_query': search_query
+        'selected_categories': selected_categories,
+        'search_query': search_query,
+        'min_fee': min_fee,
+        'max_fee': max_fee,
+        'current_min_fee': min_fee_filter or min_fee,
+        'current_max_fee': max_fee_filter or max_fee
     }
     return render(request, 'cards/card_list.html', context)
 
