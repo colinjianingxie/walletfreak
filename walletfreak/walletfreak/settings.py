@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://walletfreak-99478632058.us-central1.run.app',
+]
+
 
 # Application definition
 
