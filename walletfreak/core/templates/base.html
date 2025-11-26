@@ -26,7 +26,12 @@
             if (user) {
                 if (user.emailVerified || user.providerData[0].providerId === 'phone') {
                     const idToken = await user.getIdToken();
-                    if (!document.cookie.includes('sessionid')) {
+                    // Check if Django session exists using template variable
+                    // We can't check document.cookie for sessionid because it's HttpOnly
+                    const isDjangoAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}" === "true";
+
+                    if (!isDjangoAuthenticated) {
+                        const idToken = await user.getIdToken();
                         fetch('/accounts/api/login/', {
                             method: 'POST',
                             headers: {
