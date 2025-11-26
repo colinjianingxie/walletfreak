@@ -39,11 +39,33 @@ def personality_detail(request, personality_id):
 
 def card_list(request):
     try:
-        cards = db.get_cards()
+        all_cards = db.get_cards()
     except Exception as e:
         print(f"Warning: Failed to fetch cards: {e}")
-        cards = []
-    return render(request, 'cards/card_list.html', {'cards': cards})
+        all_cards = []
+
+    # Get filter options
+    issuers = sorted(list(set(c.get('issuer') for c in all_cards if c.get('issuer'))))
+    
+    # Apply filters
+    selected_issuers = request.GET.getlist('issuer')
+    search_query = request.GET.get('search', '').lower()
+    
+    filtered_cards = all_cards
+    
+    if selected_issuers:
+        filtered_cards = [c for c in filtered_cards if c.get('issuer') in selected_issuers]
+        
+    if search_query:
+        filtered_cards = [c for c in filtered_cards if search_query in c.get('name', '').lower() or search_query in c.get('issuer', '').lower()]
+
+    context = {
+        'cards': filtered_cards,
+        'issuers': issuers,
+        'selected_issuers': selected_issuers,
+        'search_query': search_query
+    }
+    return render(request, 'cards/card_list.html', context)
 
 def card_detail(request, card_id):
     try:

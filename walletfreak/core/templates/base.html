@@ -77,12 +77,22 @@
                 <a href="/dashboard/">Tracker</a>
                 <div style="display: flex; align-items: center; gap: 1rem; margin-left: 1rem;">
                     <span style="font-weight: 600; font-size: 0.9rem;">{{ user.first_name|default:user.email }}</span>
-                    <a href="/logout/" style="color: var(--text-muted); font-size: 1.2rem;" title="Logout">→</a>
+                    <a href="#" onclick="handleLogout(event)" style="color: var(--text-muted); font-size: 1.2rem;"
+                        title="Logout">→</a>
                 </div>
-                {% else %}
-                <a href="{% url 'login' %}" class="btn btn-primary btn-sm">Login</a>
-                {% endif %}
+                <script>
+                    function handleLogout(e) {
+                        e.preventDefault();
+                        firebase.auth().signOut().then(() => {
+                            window.location.href = "/logout/";
+                        });
+                    }
+                </script>
             </div>
+            {% else %}
+            <a href="{% url 'login' %}" class="btn btn-primary btn-sm">Login</a>
+            {% endif %}
+        </div>
         </div>
     </nav>
 

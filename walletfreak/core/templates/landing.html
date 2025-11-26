@@ -26,10 +26,11 @@
         <div class="card text-center" style="border: none; box-shadow: none; background: transparent;">
             <div
                 style="width: 120px; height: 120px; background: #e0e7ff; border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; font-size: 3rem;">
-                {% if forloop.counter0|divisibleby:3 %}🧙‍♂️{% elif forloop.counter0|divisibleby:2 %}👗{% else %}🎓{% endif %}
+                {% if forloop.counter0|divisibleby:3 %}🧙‍♂️{% elif forloop.counter0|divisibleby:2 %}👗{% else %}🎓{%
+                endif %}
             </div>
             <h3>{{ personality.name }}</h3>
-            <span class="badge badge-primary">{{ personality.tagline|default:"The Strategist" }}</span>
+            <span class="badge badge-primary">{{ personality.tagline|default:'The Strategist' }}</span>
             <p class="mt-2">{{ personality.description|truncatewords:15 }}</p>
             <a href="{% url 'personality_detail' personality.id %}" class="btn btn-outline btn-sm mt-2">View
                 Profile</a>

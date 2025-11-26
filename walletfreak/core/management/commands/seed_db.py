@@ -65,31 +65,38 @@ class Command(BaseCommand):
 
         # Helper to extract benefits from description string
         def parse_benefits(desc):
-            # Very basic parsing to create a list of benefits for the UI
-            parts = desc.split(';')
+            # Split by semicolons first, then commas if needed
+            parts = [p.strip() for p in desc.split(';') if p.strip()]
             benefits = []
+            
             for i, part in enumerate(parts):
-                part = part.strip()
-                if not part: continue
                 # Try to guess type/amount
                 b_type = 'credit' if '$' in part else 'perk'
                 amount = 0
                 if '$' in part:
-                    # simplistic extraction
                     try:
-                        amount = int(''.join(filter(str.isdigit, part.split('$')[1].split(' ')[0])))
+                        # Extract the first number after $
+                        import re
+                        match = re.search(r'\$(\d+(?:,\d{3})*)', part)
+                        if match:
+                            amount = int(match.group(1).replace(',', ''))
                     except:
                         pass
                 
-                # Detect frequency
-                frequency = 'annual' # Default
+                # Detect frequency/reset period
+                reset_period = 'annual' # Default
                 lower_part = part.lower()
+                
                 if 'month' in lower_part or 'uber cash' in lower_part or 'dining credit' in lower_part:
-                    frequency = 'monthly'
+                    reset_period = 'monthly'
                 elif 'quarter' in lower_part:
-                    frequency = 'quarterly'
+                    reset_period = 'quarterly'
                 elif 'semi-annual' in lower_part:
-                    frequency = 'semi-annual'
+                    reset_period = 'semi-annual'
+                elif 'anniversary' in lower_part:
+                    reset_period = 'anniversary'
+                elif 'calendar year' in lower_part:
+                    reset_period = 'calendar_year'
                 
                 benefits.append({
                     'id': f'benefit_{i}',
@@ -97,13 +104,12 @@ class Command(BaseCommand):
                     'description': part,
                     'type': b_type,
                     'amount': amount,
-                    'reset_period': frequency # Using reset_period to store frequency
+                    'reset_period': reset_period
                 })
             return benefits
 
         # Helper to extract rewards structure
         def parse_rewards(desc):
-            # Just return a dict with the full description for now
             return {'details': desc}
 
         card_slug_map = {} # Name -> Slug
@@ -129,6 +135,7 @@ class Command(BaseCommand):
         personalities = [
             {
                 'name': 'Rewards Guru',
+                'tagline': 'The Strategist',
                 'description': 'Treats credit cards like a competitive game, maintaining spreadsheets to maximize points, bonuses, and benefits across multiple cards; strategically churns for value without unnecessary fees.',
                 'recommended_names': [
                     'Chase Sapphire Reserve®',
@@ -139,6 +146,7 @@ class Command(BaseCommand):
             },
             {
                 'name': 'Lifestyle Fashionista',
+                'tagline': 'The Trendsetter',
                 'description': 'Prioritizes cards that align with a stylish, everyday lifestyle, focusing on aesthetics, shopping protections, and rewards for fashion, coffee, and daily indulgences.',
                 'recommended_names': [
                     'American Express® Gold Card',
@@ -149,6 +157,7 @@ class Command(BaseCommand):
             },
             {
                 'name': 'Beginner Dabbler',
+                'tagline': 'The Starter',
                 'description': 'New to rewards, wants simple travel perks without complexity; shops at premium stores like Whole Foods and prefers one versatile card over a wallet full.',
                 'recommended_names': [
                     'Chase Sapphire Preferred® Card',
@@ -159,6 +168,7 @@ class Command(BaseCommand):
             },
             {
                 'name': 'Cashback Enthusiast',
+                'tagline': 'The Pragmatist',
                 'description': 'Dismisses points as gimmicks; demands straightforward cash back deposited directly, with zero annual fees and high rates on everyday spending.',
                 'recommended_names': [
                     'Wells Fargo Active Cash® Card',
@@ -169,6 +179,7 @@ class Command(BaseCommand):
             },
             {
                 'name': 'Budget Traveler',
+                'tagline': 'The Explorer',
                 'description': 'Loves travel but sticks to practical, affordable options; seeks flexible points, no-frills perks like hotel credits, and low-to-moderate fees without luxury excess.',
                 'recommended_names': [
                     'Capital One Venture Rewards Credit Card',
@@ -179,6 +190,7 @@ class Command(BaseCommand):
             },
             {
                 'name': 'Simple Minimalist',
+                'tagline': 'The Essentialist',
                 'description': 'Favors one reliable card for clean, hassle-free use; pays off balances monthly, values simplicity over rewards, and avoids debt or complexity.',
                 'recommended_names': [
                     'Chase Freedom Unlimited®',
@@ -189,6 +201,7 @@ class Command(BaseCommand):
             },
             {
                 'name': 'Luxury Spender',
+                'tagline': 'The High Roller',
                 'description': 'Enjoys high-end perks like lounge access and concierge services; comfortable with premium fees for status symbols, elite benefits, and statement-making cards.',
                 'recommended_names': [
                     'Chase Sapphire Reserve®',
@@ -199,6 +212,7 @@ class Command(BaseCommand):
             },
             {
                 'name': 'Deal Hunter',
+                'tagline': 'The Optimizer',
                 'description': 'Thrives on optimizing deals through rotating categories, bonuses, and free perks; gets satisfaction from stacking rewards on shopping and everyday buys.',
                 'recommended_names': [
                     'Chase Freedom Flex®',
@@ -209,6 +223,7 @@ class Command(BaseCommand):
             },
             {
                 'name': 'Balance Manager',
+                'tagline': 'The Planner',
                 'description': 'Often carries balances and needs low-interest options or intro APRs; focuses on structure to manage debt rather than chasing rewards.',
                 'recommended_names': [
                     'Wells Fargo Reflect® Card',
@@ -219,6 +234,7 @@ class Command(BaseCommand):
             },
             {
                 'name': 'Tech Enthusiast',
+                'tagline': 'The Innovator',
                 'description': 'Attracted to modern, digital-first cards with app integration, sustainability features, and perks like crypto rewards or carbon offsets.',
                 'recommended_names': [
                     'Capital One Venture X Rewards Credit Card',
@@ -229,6 +245,7 @@ class Command(BaseCommand):
             },
             {
                 'name': 'Family Oriented',
+                'tagline': 'The Provider',
                 'description': 'Manages household finances with kids in mind; seeks family-friendly benefits like travel insurance, shared user perks, and protections for group travel or purchases.',
                 'recommended_names': [
                     'Chase Sapphire Preferred® Card',
@@ -239,6 +256,7 @@ class Command(BaseCommand):
             },
             {
                 'name': 'Student',
+                'tagline': 'The Scholar',
                 'description': 'Budget-conscious learner building credit during school; wants no annual fees, cash back on dining, entertainment, and gas, plus student-specific intro offers and perks.',
                 'recommended_names': [
                     'Discover it® Student Cash Back',
@@ -263,6 +281,7 @@ class Command(BaseCommand):
 
             p_data = {
                 'name': p['name'],
+                'tagline': p.get('tagline', 'The Archetype'),
                 'description': p['description'],
                 'recommended_cards': rec_slugs,
                 'avatar_url': ''

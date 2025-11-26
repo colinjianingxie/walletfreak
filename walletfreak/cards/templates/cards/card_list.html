@@ -7,15 +7,33 @@
         <p>Browse, search, and compare the best cards on the market.</p>
     </div>
 
-    <!-- Filters Placeholder -->
-    <div class="card mb-4" style="padding: 1rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-        <input type="text" placeholder="Search cards..." style="margin: 0; max-width: 300px;">
-        <div style="display: flex; gap: 0.5rem;">
-            <button class="btn btn-outline btn-sm">Issuers ▾</button>
-            <button class="btn btn-outline btn-sm">Categories ▾</button>
-            <button class="btn btn-outline btn-sm">Annual Fee ▾</button>
+    <!-- Filters -->
+    <form method="GET" class="card mb-4" style="padding: 1.5rem;">
+        <div style="display: grid; grid-template-columns: 1fr auto; gap: 1rem; margin-bottom: 1rem;">
+            <input type="text" name="search" value="{{ search_query }}" placeholder="Search cards by name or issuer..."
+                style="margin: 0;">
+            <button type="submit" class="btn btn-primary">Search</button>
         </div>
-    </div>
+
+        <div style="border-top: 1px solid var(--border); padding-top: 1rem;">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; text-transform: uppercase; color: var(--text-muted);">
+                Filter by Issuer</h4>
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                {% for issuer in issuers %}
+                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                    <input type="checkbox" name="issuer" value="{{ issuer }}" {% if issuer in selected_issuers
+                        %}checked{% endif %}>
+                    {{ issuer }}
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div style="margin-top: 1rem; text-align: right;">
+            <a href="{% url 'card_list' %}" class="btn btn-outline btn-sm">Clear Filters</a>
+            <button type="submit" class="btn btn-dark btn-sm">Apply Filters</button>
+        </div>
+    </form>
 
     <div style="display: flex; flex-direction: column; gap: 1.5rem;">
         {% for card in cards %}
