@@ -75,6 +75,7 @@ def firebase_login(request):
         
         # Store UID in session for easy access
         request.session['uid'] = uid
+        request.session.modified = True
         
         return JsonResponse({'status': 'success'})
         
