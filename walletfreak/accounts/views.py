@@ -85,3 +85,8 @@ def firebase_login(request):
 def logout_view(request):
     logout(request)
     return JsonResponse({'status': 'success'})
+
+def logout_redirect(request):
+    logout(request)
+    from django.shortcuts import redirect
+    return redirect('home')
