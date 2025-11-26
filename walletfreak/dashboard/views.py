@@ -88,7 +88,7 @@ def dashboard(request):
                     })
 
     context = {
-        'user': user_profile,
+        'user_profile': user_profile,
         'active_cards': active_cards,
         'inactive_cards': inactive_cards,
         'wishlist_cards': wishlist_cards,
