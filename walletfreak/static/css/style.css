@@ -1,23 +1,43 @@
 :root {
-    /* Brand Colors */
-    --primary: #2563eb;
-    /* Royal Blue */
-    --primary-dark: #1e40af;
-    --secondary: #f8fafc;
-    /* Light Gray/White */
-    --accent: #3b82f6;
-    --dark: #0f172a;
-    /* Dark Navy */
-    --text-main: #1e293b;
-    --text-muted: #64748b;
+    /* Material Design 3 Color Palette */
+    --md-primary: #6750A4;
+    --md-primary-container: #EADDFF;
+    --md-on-primary: #FFFFFF;
+    --md-on-primary-container: #21005E;
+
+    --md-secondary: #625B71;
+    --md-secondary-container: #E8DEF8;
+    --md-on-secondary: #FFFFFF;
+    --md-on-secondary-container: #1E192B;
+
+    --md-tertiary: #7D5260;
+    --md-tertiary-container: #FFD8E4;
+    --md-on-tertiary: #FFFFFF;
+    --md-on-tertiary-container: #370B1E;
+
+    --md-surface: #FEF7FF;
+    --md-surface-variant: #E7E0EC;
+    --md-on-surface: #1C1B1F;
+    --md-on-surface-variant: #49454F;
+
+    --md-outline: #79747E;
+    --md-outline-variant: #CAC4D0;
+
+    /* Brand Colors (keeping for compatibility) */
+    --primary: var(--md-primary);
+    --primary-dark: #5A3D99;
+    --secondary: var(--md-surface);
+    --accent: #7C4DFF;
+    --dark: #1C1B1F;
+    --text-main: var(--md-on-surface);
+    --text-muted: var(--md-on-surface-variant);
     --success: #10b981;
     --warning: #f59e0b;
     --danger: #ef4444;
 
     /* Backgrounds */
-    --bg-body: #f0f4f8;
-    /* Very light cool gray/blue */
-    --bg-card: #ffffff;
+    --bg-body: #F5F5F5;
+    --bg-card: var(--md-surface);
 
     /* Spacing & Layout */
     --container-width: 1200px;
@@ -26,10 +46,18 @@
     --radius-md: 12px;
     --radius-lg: 20px;
 
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    /* Material Design Elevation System */
+    --elevation-0: none;
+    --elevation-1: 0px 1px 2px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+    --elevation-2: 0px 1px 2px rgba(0, 0, 0, 0.3), 0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+    --elevation-3: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+    --elevation-4: 0px 6px 10px 4px rgba(0, 0, 0, 0.15), 0px 2px 3px rgba(0, 0, 0, 0.3);
+    --elevation-5: 0px 8px 12px 6px rgba(0, 0, 0, 0.15), 0px 4px 4px rgba(0, 0, 0, 0.3);
+
+    /* Legacy shadows (mapped to elevation) */
+    --shadow-sm: var(--elevation-1);
+    --shadow-md: var(--elevation-2);
+    --shadow-lg: var(--elevation-3);
 }
 
 * {

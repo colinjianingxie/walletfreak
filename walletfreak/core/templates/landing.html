@@ -1,40 +1,176 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section class="hero">
-    <div class="container">
-        <h1>Welcome to <span style="color: var(--primary);">WalletFreak</span></h1>
-        <p>Find the perfect cards for your lifestyle. From fashionistas to students, discover your credit card
-            personality and track your monthly benefits.</p>
-        <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap;">
-            <a href="{% url 'quiz' %}" class="btn btn-primary">✨ Find My Archetype</a>
-            <a href="{% url 'dashboard' %}" class="btn btn-outline">Track Benefits</a>
+<!-- Hero Section with Material Design -->
+<section class="hero"
+    style="background: linear-gradient(135deg, var(--md-primary-container) 0%, var(--md-secondary-container) 100%); padding: 5rem 0; position: relative; overflow: hidden;">
+    <div
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.1; background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1440 320\'%3E%3Cpath fill=\'%236750A4\' d=\'M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z\'%3E%3C/path%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: bottom; background-size: cover;">
+    </div>
+    <div class="container" style="position: relative; z-index: 1;">
+        <h1
+            style="font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 700; margin-bottom: 1.5rem; color: var(--md-on-primary-container);">
+            Welcome to <span style="color: var(--md-primary);">WalletFreak</span>
+        </h1>
+        <p
+            style="font-size: clamp(1.1rem, 2vw, 1.4rem); max-width: 700px; margin: 0 auto 3rem; color: var(--md-on-surface-variant); line-height: 1.6;">
+            Find the perfect cards for your lifestyle. From fashionistas to students, discover your credit card
+            personality and track your monthly benefits.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="{% url 'quiz' %}" class="btn btn-primary"
+                style="padding: 1rem 2.5rem; font-size: 1.1rem; box-shadow: var(--elevation-2); transition: all 0.3s ease;">
+                ✨ Find My Archetype
+            </a>
+            <a href="{% url 'dashboard' %}" class="btn btn-outline"
+                style="padding: 1rem 2.5rem; font-size: 1.1rem; background: white; transition: all 0.3s ease;">
+                Track Benefits
+            </a>
         </div>
     </div>
 </section>
 
-<section class="container mb-4">
-    <div class="text-center mb-4">
+<!-- Personalities Section -->
+<section class="container" style="padding: 5rem 0;">
+    <div class="text-center" style="margin-bottom: 4rem;">
         <h2
-            style="font-size: 1.5rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2rem;">
-            The Archetypes</h2>
-        <h3>Who are you in the credit game?</h3>
+            style="font-size: 0.9rem; color: var(--md-primary); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem; font-weight: 600;">
+            The Archetypes
+        </h2>
+        <h3
+            style="font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; color: var(--md-on-surface); margin-bottom: 1rem;">
+            Who are you in the credit game?
+        </h3>
+        <p style="color: var(--md-on-surface-variant); max-width: 600px; margin: 0 auto;">
+            Discover your unique financial personality and get personalized card recommendations
+        </p>
     </div>
 
-    <div class="grid">
+    <div class="grid" style="gap: 2rem;">
         {% for personality in personalities %}
-        <div class="card text-center" style="border: none; box-shadow: none; background: transparent;">
+        <div class="card"
+            style="padding: 2rem; border-radius: 16px; box-shadow: var(--elevation-1); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid var(--md-outline-variant); background: var(--md-surface); position: relative; overflow: hidden;">
             <div
-                style="width: 120px; height: 120px; background: #e0e7ff; border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; font-size: 3rem;">
-                {% if forloop.counter0|divisibleby:3 %}🧙‍♂️{% elif forloop.counter0|divisibleby:2 %}👗{% else %}🎓{% endif %}
+                style="position: absolute; top: 0; right: 0; width: 100px; height: 100px; background: linear-gradient(135deg, var(--md-primary-container), transparent); border-radius: 0 0 0 100%;">
             </div>
-            <h3>{{ personality.name }}</h3>
-            <span class="badge badge-primary">{{ personality.tagline|default:'The Strategist' }}</span>
-            <p class="mt-2">{{ personality.description|truncatewords:15 }}</p>
-            <a href="{% url 'personality_detail' personality.id %}" class="btn btn-outline btn-sm mt-2">View
-                Profile</a>
+            <div style="position: relative; z-index: 1;">
+                <div
+                    style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--md-primary-container), var(--md-secondary-container)); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; font-size: 3rem; box-shadow: var(--elevation-2);">
+                    {% if forloop.counter0|divisibleby:3 %}🧙‍♂️{% elif forloop.counter0|divisibleby:2 %}👗{% else
+                    %}🎓{% endif %}
+                </div>
+                <h3
+                    style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--md-on-surface); text-align: center;">
+                    {{ personality.name }}
+                </h3>
+                <span class="badge"
+                    style="display: inline-block; padding: 0.5rem 1rem; background: var(--md-primary-container); color: var(--md-on-primary-container); border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1rem;">
+                    {{ personality.tagline|default:'The Strategist' }}
+                </span>
+                <p
+                    style="color: var(--md-on-surface-variant); line-height: 1.6; margin-bottom: 1.5rem; text-align: center;">
+                    {{ personality.description|truncatewords:15 }}
+                </p>
+                <a href="{% url 'personality_detail' personality.id %}" class="btn btn-outline btn-sm"
+                    style="width: 100%; padding: 0.75rem; border-color: var(--md-outline); color: var(--md-primary); transition: all 0.3s ease;">
+                    View Profile →
+                </a>
+            </div>
         </div>
         {% endfor %}
     </div>
 </section>
+
+<!-- Blog Posts Section -->
+{% if blogs %}
+<section style="background: var(--md-surface-variant); padding: 5rem 0;">
+    <div class="container">
+        <div class="text-center" style="margin-bottom: 4rem;">
+            <h2
+                style="font-size: 0.9rem; color: var(--md-primary); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem; font-weight: 600;">
+                Latest Insights
+            </h2>
+            <h3
+                style="font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; color: var(--md-on-surface); margin-bottom: 1rem;">
+                From the WalletFreak Blog
+            </h3>
+            <p style="color: var(--md-on-surface-variant); max-width: 600px; margin: 0 auto;">
+                Expert tips, strategies, and news to help you maximize your credit card rewards
+            </p>
+        </div>
+
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            {% for blog in blogs %}
+            <article class="card"
+                style="padding: 0; border-radius: 16px; box-shadow: var(--elevation-2); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; background: var(--md-surface); border: none;">
+                <div
+                    style="height: 200px; background: linear-gradient(135deg, var(--md-tertiary-container), var(--md-primary-container)); display: flex; align-items: center; justify-content: center; font-size: 4rem;">
+                    📝
+                </div>
+                <div style="padding: 2rem;">
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                        <span class="badge"
+                            style="background: var(--md-secondary-container); color: var(--md-on-secondary-container); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">
+                            {{ blog.category|default:"Credit Cards" }}
+                        </span>
+                        <span style="color: var(--md-on-surface-variant); font-size: 0.85rem;">
+                            {{ blog.created_at|date:"M d, Y"|default:"Recent" }}
+                        </span>
+                    </div>
+                    <h4
+                        style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--md-on-surface); line-height: 1.4;">
+                        {{ blog.title }}
+                    </h4>
+                    <p style="color: var(--md-on-surface-variant); line-height: 1.6; margin-bottom: 1.5rem;">
+                        {{ blog.excerpt|default:blog.content|truncatewords:20 }}
+                    </p>
+                    <a href="{% url 'blog_detail' blog.id %}"
+                        style="color: var(--md-primary); font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: gap 0.3s ease;">
+                        Read More
+                        <span style="transition: transform 0.3s ease;">→</span>
+                    </a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="{% url 'blog_list' %}" class="btn btn-outline"
+                style="padding: 1rem 2rem; border-color: var(--md-outline); color: var(--md-primary);">
+                View All Posts →
+            </a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<style>
+    /* Material Design Hover Effects */
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--elevation-3) !important;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--elevation-3);
+    }
+
+    .btn-primary:hover {
+        background: var(--md-primary-dark);
+    }
+
+    article.card a:hover span {
+        transform: translateX(4px);
+    }
+
+    article.card a:hover {
+        gap: 0.75rem;
+    }
+
+    /* Smooth transitions */
+    * {
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+</style>
 {% endblock %}

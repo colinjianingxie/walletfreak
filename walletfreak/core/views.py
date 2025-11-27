@@ -10,9 +10,17 @@ def home(request):
     except Exception as e:
         print(f"Warning: Failed to fetch personalities: {e}")
         
+    # Fetch blog posts for the landing page
+    blogs = []
+    try:
+        blogs = db.get_blogs()[:3]  # Get latest 3 blog posts
+    except Exception as e:
+        print(f"Warning: Failed to fetch blog posts: {e}")
+        
     context = {
         'firebase_config': settings.FIREBASE_CLIENT_CONFIG,
-        'personalities': personalities
+        'personalities': personalities,
+        'blogs': blogs
     }
     return render(request, 'landing.html', context)
 

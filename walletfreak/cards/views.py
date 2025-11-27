@@ -46,6 +46,17 @@ def card_list(request):
         print(f"Warning: Failed to fetch cards: {e}")
         all_cards = []
 
+    # Get user's wallet cards if authenticated
+    wallet_card_ids = set()
+    if request.user.is_authenticated:
+        uid = request.session.get('uid')
+        if uid:
+            try:
+                user_cards = db.get_user_cards(uid)  # Get all user cards regardless of status
+                wallet_card_ids = {card['card_id'] for card in user_cards}
+            except Exception as e:
+                print(f"Warning: Failed to fetch user cards: {e}")
+
     # Derive categories for each card
     categories_map = {
         'Travel': ['travel', 'flight', 'hotel', 'mile', 'vacation', 'rental car', 'transit'],
@@ -73,6 +84,9 @@ def card_list(request):
             card_cats.add('No Annual Fee')
             
         card['categories'] = sorted(list(card_cats))
+        
+        # Mark if card is in wallet
+        card['in_wallet'] = card.get('id') in wallet_card_ids
 
     # Get filter options
     issuers = sorted(list(set(c.get('issuer') for c in all_cards if c.get('issuer'))))
@@ -95,6 +109,7 @@ def card_list(request):
     min_fee_filter = request.GET.get('min_fee')
     max_fee_filter = request.GET.get('max_fee')
     search_query = request.GET.get('search', '').lower()
+    wallet_filter = request.GET.get('wallet', '')  # 'in', 'out', or ''
     
     filtered_cards = all_cards
     
@@ -118,6 +133,12 @@ def card_list(request):
         
     if search_query:
         filtered_cards = [c for c in filtered_cards if search_query in c.get('name', '').lower() or search_query in c.get('issuer', '').lower()]
+    
+    # Apply wallet filter
+    if wallet_filter == 'in':
+        filtered_cards = [c for c in filtered_cards if c.get('in_wallet', False)]
+    elif wallet_filter == 'out':
+        filtered_cards = [c for c in filtered_cards if not c.get('in_wallet', False)]
 
     context = {
         'cards': filtered_cards,
@@ -129,7 +150,8 @@ def card_list(request):
         'min_fee': min_fee,
         'max_fee': max_fee,
         'current_min_fee': min_fee_filter or min_fee,
-        'current_max_fee': max_fee_filter or max_fee
+        'current_max_fee': max_fee_filter or max_fee,
+        'wallet_filter': wallet_filter
     }
     return render(request, 'cards/card_list.html', context)
 

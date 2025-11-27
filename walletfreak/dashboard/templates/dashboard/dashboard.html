@@ -36,10 +36,12 @@
             <div style="flex: 1; min-width: 200px;">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                     <span style="font-weight: 600; color: var(--text-muted);">Utilization</span>
-                    <span style="font-weight: 700;">$0 / $0</span>
+                    <span style="font-weight: 700;">${{ total_used_value }} / ${{ total_potential_value }}</span>
                 </div>
                 <div style="height: 12px; background: #f1f5f9; border-radius: 6px; overflow: hidden;">
-                    <div style="width: 0%; height: 100%; background: var(--primary);"></div>
+                    <div
+                        style="width: {% if total_potential_value > 0 %}{% widthratio total_used_value total_potential_value 100 %}{% else %}0{% endif %}%; height: 100%; background: var(--primary); transition: width 0.5s ease;">
+                    </div>
                 </div>
             </div>
             <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
@@ -54,7 +56,8 @@
                     style="background: #eff6ff; padding: 1rem; border-radius: 8px; text-align: center; min-width: 100px;">
                     <div style="font-size: 0.8rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">
                         Credits</div>
-                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--dark);">0</div>
+                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--dark);">{{ all_benefits|length }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -68,25 +71,40 @@
     </div>
     {% else %}
 
-    <!-- Unused Subscriptions Alert -->
-    {% if unused_subscriptions %}
+    <!-- All Benefits Section -->
+    {% if all_benefits %}
     <div class="card mb-4" style="background: linear-gradient(45deg, #2c3e50, #3498db); border: none;">
-        <h3 style="color: white; margin-bottom: 1rem;">⚠️ Unused Benefits</h3>
+        <h3 style="color: white; margin-bottom: 1rem;">💳 Credit Card Benefits</h3>
         <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
-            {% for sub in unused_subscriptions %}
-            <div
-                style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; backdrop-filter: blur(5px);">
-                <p style="font-weight: bold; color: #fff; margin-bottom: 0.25rem;">{{ sub.benefit_name }}</p>
-                <p style="font-size: 0.85rem; color: rgba(255,255,255,0.8); margin-bottom: 0.5rem;">{{ sub.card_name }}
-                </p>
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span class="badge" style="background: rgba(255,255,255,0.2); color: white;">
-                        {% if sub.frequency != 'Annual' %}{{ sub.frequency }}{% endif %}
-                        {% if sub.reset_date %}
-                        (Resets: {{ sub.reset_date|date:"M d" }})
-                        {% endif %}
-                    </span>
-                    <span style="color: #4cd137; font-weight: 600;">${{ sub.remaining }} Left</span>
+            {% for benefit in all_benefits %}
+            <div data-benefit-id="{{ benefit.benefit_id }}"
+                style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; backdrop-filter: blur(5px); display: flex; flex-direction: column; justify-content: space-between; {% if benefit.is_used %}opacity: 0.7;{% endif %}">
+                <div>
+                    <p style="font-weight: bold; color: #fff; margin-bottom: 0.25rem;">{{ benefit.benefit_name }}</p>
+                    <p style="font-size: 0.85rem; color: rgba(255,255,255,0.8); margin-bottom: 0.5rem;">{{
+                        benefit.card_name }}</p>
+                </div>
+                <div>
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <span class="badge" style="background: rgba(255,255,255,0.2); color: white;">
+                            {% if benefit.frequency != 'Annual' %}{{ benefit.frequency }}{% endif %}
+                            {% if benefit.reset_date %}
+                            (Resets: {{ benefit.reset_date|date:"M d" }})
+                            {% endif %}
+                        </span>
+                        <span
+                            style="color: {% if benefit.is_used %}#95a5a6{% else %}#4cd137{% endif %}; font-weight: 600;">
+                            {% if benefit.is_used %}✓ Used{% else %} ${{ benefit.remaining }} Left{% endif %}
+                        </span>
+                    </div>
+                    <form action="{% url 'toggle_benefit_usage' benefit.card_id benefit.benefit_id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm"
+                            style="width: 100%; background: {% if benefit.is_used %}rgba(255,255,255,0.5){% else %}rgba(255,255,255,0.9){% endif %}; color: #2c3e50; font-weight: 600; border: none;">
+                            {% if benefit.is_used %}↺ Uncheck{% else %}✓ Mark as Used{% endif %}
+                        </button>
+                    </form>
                 </div>
             </div>
             {% endfor %}
@@ -160,6 +178,82 @@
 </div>
 
 <script>
+    // AJAX Benefit Toggle
+    document.querySelectorAll('form[action*="toggle-benefit"]').forEach(form => {
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const button = this.querySelector('button[type="submit"]');
+            // Use the data-benefit-id attribute to find the card
+            const benefitCard = this.closest('[data-benefit-id]');
+
+            // Find the status span - navigate up to the parent div, then find the status container
+            const parentDiv = this.parentElement;
+            const statusContainer = parentDiv ? parentDiv.querySelector('div[style*="display: flex"]') : null;
+            const statusSpan = statusContainer ? statusContainer.querySelector('span[style*="font-weight: 600"]') : null;
+
+            const originalButtonText = button.textContent.trim();
+
+            // Disable button during request
+            button.disabled = true;
+            button.textContent = '...';
+
+            try {
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': this.querySelector('[name="csrfmiddlewaretoken"]').value,
+                    },
+                    body: new FormData(this)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Update benefit card styling
+                    if (data.is_used) {
+                        if (benefitCard) benefitCard.style.opacity = '0.7';
+                        button.textContent = '↺ Uncheck';
+                        button.style.background = 'rgba(255,255,255,0.5)';
+                        if (statusSpan) {
+                            statusSpan.style.color = '#95a5a6';
+                            statusSpan.textContent = '✓ Used';
+                        }
+                    } else {
+                        if (benefitCard) benefitCard.style.opacity = '1';
+                        button.textContent = '✓ Mark as Used';
+                        button.style.background = 'rgba(255,255,255,0.9)';
+                        if (statusSpan) {
+                            statusSpan.style.color = '#4cd137';
+                            statusSpan.textContent = ` $${data.remaining} Left`;
+                        }
+                    }
+
+                    // Update utilization stats
+                    const utilizationText = document.querySelector('span[style*="font-weight: 700"]');
+                    if (utilizationText && utilizationText.textContent.includes('/')) {
+                        utilizationText.textContent = `$${data.total_used_value} / $${data.total_potential_value}`;
+                    }
+
+                    // Update progress bar
+                    const progressBar = document.querySelector('[style*="height: 12px"]').querySelector('div');
+                    if (progressBar) {
+                        progressBar.style.width = `${data.utilization_percentage}%`;
+                    }
+                } else {
+                    console.error('Toggle failed:', data);
+                    button.textContent = originalButtonText;
+                }
+            } catch (error) {
+                console.error('Error toggling benefit:', error);
+                button.textContent = originalButtonText;
+            } finally {
+                button.disabled = false;
+            }
+        });
+    });
+
     // Remove card modal functionality
     const modal = document.getElementById('removeCardModal');
     const removeForm = document.getElementById('removeCardForm');

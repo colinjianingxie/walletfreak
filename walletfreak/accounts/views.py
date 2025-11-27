@@ -8,6 +8,10 @@ from firebase_admin import auth, firestore
 from core.services import db
 
 def login_view(request):
+    # Redirect to dashboard if already authenticated
+    if request.user.is_authenticated:
+        from django.shortcuts import redirect
+        return redirect('dashboard')
     return render(request, 'accounts/login.html')
 
 @csrf_exempt
@@ -70,12 +74,15 @@ def firebase_login(request):
             # Actually, let's just update the specific fields to avoid wiping data.
             db.db.collection('users').document(uid).set(user_data, merge=True)
 
+
         # Log the user in
         login(request, user)
         
         # Store UID in session for easy access
         request.session['uid'] = uid
-        request.session.modified = True
+        
+        # Force session save to prevent race condition
+        request.session.save()
         
         return JsonResponse({'status': 'success'})
         

@@ -169,3 +169,7 @@ FIREBASE_CLIENT_CONFIG = {
     "appId": "1:99478632058:web:410490ffab3e4011426dc3",
     "measurementId": "G-DJSZXRZH6V"
 }
+
+# Authentication settings
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/dashboard/'

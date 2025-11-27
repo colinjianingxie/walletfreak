@@ -77,6 +77,32 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Wallet Status Dropdown -->
+            {% if user.is_authenticated %}
+            <div class="filter-dropdown-wrapper">
+                <button type="button" class="filter-dropdown-btn" data-dropdown="wallet">
+                    <span>Wallet Status</span>
+                    <span class="dropdown-arrow">▼</span>
+                </button>
+                <div class="filter-dropdown-content" id="dropdown-wallet">
+                    <div class="dropdown-inner">
+                        <label class="dropdown-option">
+                            <input type="radio" name="wallet-filter" class="wallet-radio" value="" checked>
+                            <span>All Cards</span>
+                        </label>
+                        <label class="dropdown-option">
+                            <input type="radio" name="wallet-filter" class="wallet-radio" value="in">
+                            <span>In My Wallet</span>
+                        </label>
+                        <label class="dropdown-option">
+                            <input type="radio" name="wallet-filter" class="wallet-radio" value="out">
+                            <span>Not in My Wallet</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
         </div>
 
         <!-- Active Filters (Tags) -->
@@ -259,6 +285,7 @@
         {% for card in cards %}
         <div class="card card-item" data-name="{{ card.name|lower }}" data-issuer="{{ card.issuer }}"
             data-fee="{{ card.annual_fee }}" data-categories="{{ card.categories|join:',' }}"
+            data-in-wallet="{{ card.in_wallet|yesno:'true,false' }}" data-card-id="{{ card.id }}"
             style="display: grid; grid-template-columns: 200px 1fr auto; gap: 2rem; align-items: center;">
             <!-- Left: Image -->
             <div style="text-align: center;">
@@ -282,6 +309,9 @@
                     {% for cat in card.categories|slice:":3" %}
                     <span class="badge badge-outline" style="font-size: 0.7rem;">{{ cat }}</span>
                     {% endfor %}
+                    {% if card.in_wallet %}
+                    <span class="badge" style="background: var(--success); color: white;">In Wallet</span>
+                    {% endif %}
                 </div>
                 <h3 style="margin-bottom: 0.5rem;"><a href="{% url 'card_detail' card.id %}">{{ card.name }}</a></h3>
                 <p style="font-size: 0.9rem; margin-bottom: 1rem;">
@@ -306,11 +336,20 @@
                 </div>
 
                 {% if user.is_authenticated %}
+                {% if card.in_wallet %}
+                <!-- Remove from Wallet button -->
+                <button type="button" class="btn btn-outline btn-sm remove-from-wallet-btn" data-card-id="{{ card.id }}"
+                    style="width: 100%; margin-bottom: 0.5rem;">
+                    Remove from Wallet
+                </button>
+                {% else %}
+                <!-- Add to Wallet button -->
                 <form action="{% url 'add_card' card.id %}" method="POST" style="margin-bottom: 0.5rem;">
                     {% csrf_token %}
                     <input type="hidden" name="status" value="active">
                     <button type="submit" class="btn btn-primary btn-sm" style="width: 100%;">+ Add to Wallet</button>
                 </form>
+                {% endif %}
                 {% endif %}
 
                 <a href="{% url 'card_detail' card.id %}" class="btn btn-dark" style="width: 100%;">Apply Now ↗</a>
@@ -380,7 +419,8 @@
             issuer: [],
             category: [],
             minFee: null,
-            maxFee: null
+            maxFee: null,
+            wallet: ''  // '', 'in', or 'out'
         };
 
         // Update active filter tags
@@ -402,6 +442,13 @@
                 const min = activeFilters.minFee || 0;
                 const max = activeFilters.maxFee || '∞';
                 addFilterTag('fee', 'range', `Fee: $${min} - $${max}`);
+            }
+
+            // Add wallet filter tag
+            if (activeFilters.wallet === 'in') {
+                addFilterTag('wallet', 'in', 'In My Wallet');
+            } else if (activeFilters.wallet === 'out') {
+                addFilterTag('wallet', 'out', 'Not in My Wallet');
             }
         }
 
@@ -431,6 +478,11 @@
                 activeFilters.maxFee = null;
                 minFeeInput.value = '';
                 maxFeeInput.value = '';
+            } else if (type === 'wallet') {
+                activeFilters.wallet = '';
+                // Reset radio to "All Cards"
+                const allCardsRadio = document.querySelector('.wallet-radio[value=""]');
+                if (allCardsRadio) allCardsRadio.checked = true;
             }
 
             updateFilterTags();
@@ -451,6 +503,15 @@
                     activeFilters[type] = activeFilters[type].filter(v => v !== value);
                 }
 
+                updateFilterTags();
+                filterCards();
+            });
+        });
+
+        // Handle wallet filter radio buttons
+        document.querySelectorAll('.wallet-radio').forEach(radio => {
+            radio.addEventListener('change', function () {
+                activeFilters.wallet = this.value;
                 updateFilterTags();
                 filterCards();
             });
@@ -481,12 +542,17 @@
             // Clear search
             searchInput.value = '';
 
+            // Clear wallet filter
+            const allCardsRadio = document.querySelector('.wallet-radio[value=""]');
+            if (allCardsRadio) allCardsRadio.checked = true;
+
             // Reset active filters
             activeFilters = {
                 issuer: [],
                 category: [],
                 minFee: null,
-                maxFee: null
+                maxFee: null,
+                wallet: ''
             };
 
             updateFilterTags();
@@ -506,13 +572,17 @@
                 const issuer = card.dataset.issuer;
                 const fee = parseInt(card.dataset.fee);
                 const categories = card.dataset.categories.split(',');
+                const inWallet = card.dataset.inWallet === 'true';
 
                 const matchesSearch = name.includes(query) || issuer.toLowerCase().includes(query);
                 const matchesIssuer = activeFilters.issuer.length === 0 || activeFilters.issuer.includes(issuer);
                 const matchesCategory = activeFilters.category.length === 0 || activeFilters.category.some(cat => categories.includes(cat));
                 const matchesFee = fee >= minFee && fee <= maxFee;
+                const matchesWallet = activeFilters.wallet === '' ||
+                    (activeFilters.wallet === 'in' && inWallet) ||
+                    (activeFilters.wallet === 'out' && !inWallet);
 
-                if (matchesSearch && matchesIssuer && matchesCategory && matchesFee) {
+                if (matchesSearch && matchesIssuer && matchesCategory && matchesFee && matchesWallet) {
                     card.style.display = 'grid';
                     visibleCount++;
                 } else {

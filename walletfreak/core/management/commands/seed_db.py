@@ -10,126 +10,22 @@ class Command(BaseCommand):
         
         # 1. Credit Cards Data
         # Format: Name, Issuer, Fee, Benefits/Description
-        raw_cards = [
-            ("Chase Sapphire Preferred® Card", "Chase", 95, "5x points on travel via Chase Travel, 3x on dining/online groceries/streaming, 2x on other travel; $50 hotel credit; transferable points to partners; travel protections like trip cancellation."),
-            ("American Express® Gold Card", "American Express", 325, "4x points at restaurants (up to $50,000/year) and U.S. supermarkets (up to $25,000/year), 3x on flights; $120 Uber Cash, $120 dining credit, $100 Resy credit; no foreign fees."),
-            ("Capital One Venture X Rewards Credit Card", "Capital One", 395, "10x miles on hotels/rental cars via Capital One Travel, 5x on flights/vacation rentals, 2x on all; $300 travel credit, 10,000 anniversary miles; lounge access; transferable miles."),
-            ("Chase Freedom Unlimited®", "Chase", 0, "5% on travel via Chase Travel, 3% on dining/drugstores, 1.5% on all; 0% intro APR 15 months; no minimum redemption."),
-            ("Wells Fargo Active Cash® Card", "Wells Fargo", 0, "Unlimited 2% cash rewards; $200 bonus; 0% intro APR 12 months; cell phone protection."),
-            ("Blue Cash Preferred® Card from American Express", "American Express", 95, "6% at U.S. supermarkets (up to $6,000/year), 6% on streaming, 3% on gas/transit; $10 monthly subscription credit; 0% intro APR 12 months."),
-            ("Citi Double Cash® Card", "Citi", 0, "2% cash back (1% on purchase + 1% on payment); 0% intro APR on balance transfers 18 months; 5% on hotels/car rentals via Citi Travel."),
-            ("Capital One Venture Rewards Credit Card", "Capital One", 95, "5x miles on hotels/vacation rentals/rental cars via Capital One Travel, 2x on all; $120 Global Entry/TSA PreCheck credit; transferable miles."),
-            ("Chase Sapphire Reserve®", "Chase", 795, "8x points on Chase Travel, 4x on flights/hotels direct, 3x on dining; $300 travel credit; lounge access; transferable points."),
-            ("American Express Platinum Card®", "American Express", 895, "5x points on flights/prepaid hotels via Amex Travel; $200 Uber Cash, $300 entertainment credit, $600 hotel credit; lounge access."),
-            ("Prime Visa", "Chase", 0, "5% at Amazon/Whole Foods/Chase Travel (with Prime), 2% at gas/restaurants/transit; purchase/extended warranty protection."),
-            ("Discover it® Cash Back", "Discover", 0, "5% on rotating categories (up to quarterly max), 1% on all; Cashback Match; 0% intro APR 15 months on purchases/balance transfers."),
-            ("Wells Fargo Reflect® Card", "Wells Fargo", 0, "0% intro APR 21 months on purchases/balance transfers; cell phone protection."),
-            ("Capital One Savor Cash Rewards Credit Card", "Capital One", 0, "8% on Capital One Entertainment, 5% on hotels/rental cars via Travel, 3% on dining/entertainment/groceries/streaming; 0% intro APR 12 months."),
-            ("Chase Freedom Flex®", "Chase", 0, "5% on rotating categories (up to $1,500 quarterly), 5% on travel via Chase, 3% on dining/drugstores; 0% intro APR 15 months."),
-            ("Citi Strata Premier® Card", "Citi", 95, "10x points on hotels/car rentals/attractions via Citi Travel, 3x on air travel/hotels/restaurants/supermarkets/gas; $100 hotel credit; transferable points."),
-            ("Blue Cash Everyday® Card from American Express", "American Express", 0, "3% at U.S. supermarkets/online retail/gas (up to $6,000/category/year); $7 monthly Disney+ credit; 0% intro APR 15 months."),
-            ("Capital One Quicksilver Cash Rewards Credit Card", "Capital One", 0, "Unlimited 1.5% cash back, 5% on hotels/rental cars via Travel; 0% intro APR 15 months; no foreign fees."),
-            ("United℠ Explorer Card", "Chase", 150, "2x miles on United/dining/hotels; free checked bag, priority boarding; $100 United credit; Global Entry/TSA credit."),
-            ("Marriott Bonvoy Boundless® Credit Card", "Chase", 95, "6x points at Marriott, 3x on groceries/gas/dining (up to $6,000/year); annual free night (35,000 points); Silver Elite status."),
-            ("Delta SkyMiles® Platinum American Express Card", "American Express", 350, "3x miles on Delta/hotels, 2x on restaurants/U.S. supermarkets; companion certificate; free checked bag; $120 Resy/Rideshare credits."),
-            ("Hilton Honors American Express Surpass® Card", "American Express", 150, "12x points at Hilton, 6x at U.S. restaurants/supermarkets/gas, 4x on U.S. online retail; $200 Hilton credits; Gold status."),
-            ("Southwest Rapid Rewards® Priority Credit Card", "Chase", 229, "4x points on Southwest, 2x on gas/restaurants; $75 travel credit; 7,500 anniversary points; upgraded boardings."),
-            ("Discover it® Miles", "Discover", 0, "Unlimited 1.5x miles; mile-for-mile match; 0% intro APR 15 months; no foreign fees."),
-            ("Capital One VentureOne Rewards Credit Card", "Capital One", 0, "5x miles on hotels/rental cars via Travel, 1.25x on all; 0% intro APR 15 months; transferable miles."),
-            ("IHG One Rewards Premier Credit Card", "Chase", 99, "Up to 26x points at IHG; fourth night free; annual free night; Platinum Elite status; Global Entry credit."),
-            ("American Express® Green Card", "American Express", 150, "3x points on travel/transit/restaurants; $209 CLEAR credit; trip delay insurance; no foreign fees."),
-            ("United Quest℠ Card", "Chase", 350, "3x miles on United, 2x on dining/streaming/travel; free checked bags; $200 TravelBank cash; 10,000-mile discount."),
-            ("Citi Simplicity® Card", "Citi", 0, "0% intro APR 12 months purchases/21 months balance transfers; no late fees/penalty rate; Quick Lock."),
-            ("Discover it® Chrome", "Discover", 0, "2% at gas/restaurants (up to $1,000/quarter), 1% on all; Cashback Match; 0% intro APR 18 months balance transfers."),
-            ("The World of Hyatt Credit Card", "Chase", 95, "Up to 9x points at Hyatt; annual free night (Category 1-4); Discoverist status; extra night after $15,000 spend."),
-            ("Capital One QuicksilverOne Cash Rewards Credit Card", "Capital One", 39, "1.5% cash back, 5% on hotels/rental cars via Travel; credit line reviews; for fair credit."),
-            ("Marriott Bonvoy Brilliant® American Express® Card", "American Express", 650, "6x points at Marriott, 3x on restaurants/flights; $300 dining credit; annual free night (85,000 points); Platinum status."),
-            ("Delta SkyMiles® Reserve American Express Card", "American Express", 650, "3x miles on Delta; Sky Club access; companion certificate; free checked bag; $240 Resy credit."),
-            ("Hilton Honors Aspire Card from American Express", "American Express", 550, "14x points at Hilton, 7x on dining/travel; $400 resort credits; Diamond status; annual free night."),
-            ("Aeroplan® Credit Card", "Chase", 95, "3x on dining/groceries/Air Canada; 500 bonus points every $2,000; free checked bag; 25K status."),
-            ("British Airways Visa Signature® Card", "Chase", 95, "3x Avios on British Airways/Aer Lingus/Iberia/LEVEL, 2x on hotels; Travel Together Ticket after $30,000; 10% flight discount."),
-            ("U.S. Bank Smartly Visa Signature Card", "U.S. Bank", 0, "2% cash back (higher with bank savings); for account holders."),
-            ("Capital One Savor Student Cash Rewards Credit Card", "Capital One", 0, "8% on entertainment, 3% on dining/groceries/streaming; no foreign fees; for students."),
-            ("Discover it® Secured Credit Card", "Discover", 0, "2% at gas/restaurants (up to $1,000/quarter), 1% on all; Cashback Match; security deposit refund potential."),
-            ("Capital One Platinum Secured Credit Card", "Capital One", 0, "Credit building; security deposit starting $49; automatic reviews; no foreign fees."),
-            ("Chase Slate Edge®", "Chase", 0, "Low intro APR; credit limit reviews; purchase/extended warranty protection."),
-            ("IHG One Rewards Traveler Credit Card", "Chase", 0, "Up to 17x at IHG; fourth night free; Silver Elite status; no foreign fees."),
-            ("United Club℠ Card", "Chase", 695, "4x miles on United; lounge membership; free checked bags; Premier access."),
-            ("Bank of America® Customized Cash Rewards credit card for Students", "Bank of America", 0, "3% in choice category, 2% at groceries/wholesale; 0% intro APR 15 cycles; for students."),
-            ("Discover it® Student Cash Back", "Discover", 0, "5% rotating categories, 1% on all; Cashback Match; no credit score required."),
-            ("Capital One Quicksilver Student Cash Rewards Credit Card", "Capital One", 0, "1.5% cash back, 5% on hotels/rental cars via Travel; no foreign fees; for students."),
-            ("Discover it® Student Chrome", "Discover", 0, "2% at gas/restaurants (up to $1,000/quarter), 1% on all; Cashback Match; for students."),
-            ("Capital One Quicksilver Secured Cash Rewards Credit Card", "Capital One", 0, "1.5% cash back, 5% on hotels/rental cars via Travel; security deposit refund potential."),
-            ("U.S. Bank Shield™ Visa® Card", "U.S. Bank", 0, "4% on prepaid travel via Travel Center; 0% intro APR 18 cycles; $20 annual credit.")
-        ]
-
-        # Helper to extract benefits from description string
-        def parse_benefits(desc):
-            # Split by semicolons first, then commas if needed
-            parts = [p.strip() for p in desc.split(';') if p.strip()]
-            benefits = []
-            
-            for i, part in enumerate(parts):
-                # Try to guess type/amount
-                b_type = 'credit' if '$' in part else 'perk'
-                amount = 0
-                if '$' in part:
-                    try:
-                        # Extract the first number after $
-                        import re
-                        match = re.search(r'\$(\d+(?:,\d{3})*)', part)
-                        if match:
-                            amount = int(match.group(1).replace(',', ''))
-                    except:
-                        pass
-                
-                # Detect frequency/reset period
-                reset_period = 'annual' # Default
-                lower_part = part.lower()
-                
-                if 'month' in lower_part or 'uber cash' in lower_part or 'dining credit' in lower_part:
-                    reset_period = 'monthly'
-                elif 'quarter' in lower_part:
-                    reset_period = 'quarterly'
-                elif 'semi-annual' in lower_part:
-                    reset_period = 'semi-annual'
-                elif 'anniversary' in lower_part:
-                    reset_period = 'anniversary'
-                elif 'calendar year' in lower_part:
-                    reset_period = 'calendar_year'
-                
-                benefits.append({
-                    'id': f'benefit_{i}',
-                    'name': part,
-                    'description': part,
-                    'type': b_type,
-                    'amount': amount,
-                    'reset_period': reset_period
-                })
-            return benefits
-
-        # Helper to extract rewards structure
-        def parse_rewards(desc):
-            return {'details': desc}
+        # 1. Credit Cards Data
+        from .cards_seed_data import cards_data
 
         card_slug_map = {} # Name -> Slug
 
-        for name, issuer, fee, desc in raw_cards:
-            slug = slugify(name)
-            card_slug_map[name] = slug
+        for card in cards_data:
+            slug = slugify(card['name'])
+            card_slug_map[card['name']] = slug
             
-            card_data = {
-                'name': name,
-                'issuer': issuer,
-                'annual_fee': fee,
-                'rewards_structure': parse_rewards(desc),
-                'benefits': parse_benefits(desc),
-                'image_url': '',
-                'referral_links': [],
-                'user_type': []
-            }
-            db.create_document('credit_cards', card_data, doc_id=slug)
-            self.stdout.write(f'Seeded card: {name}')
+            # Add fields expected by the model but not in CSV
+            card['image_url'] = ''
+            card['referral_links'] = []
+            card['user_type'] = []
+            
+            db.create_document('credit_cards', card, doc_id=slug)
+            self.stdout.write(f'Seeded card: {card["name"]}')
 
         # 2. Personalities Data
         personalities = [

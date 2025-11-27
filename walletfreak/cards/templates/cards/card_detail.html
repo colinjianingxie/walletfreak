@@ -11,9 +11,13 @@
             <div>
                 <h3>Rewards Structure</h3>
                 <ul style="margin-top: 1rem; color: var(--text-muted);">
+                    {% if card.rewards_structure.details %}
+                    <div style="white-space: pre-line;">{{ card.rewards_structure.details }}</div>
+                    {% else %}
                     {% for key, value in card.rewards_structure.items %}
                     <li style="margin-bottom: 0.5rem;"><strong>{{ value }}</strong> on {{ key }}</li>
                     {% endfor %}
+                    {% endif %}
                 </ul>
             </div>
             <div>
