@@ -17,8 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from accounts import views as accounts_views
+from custom_admin import views as custom_admin_views
 
 urlpatterns = [
+    path('admin/logout/', custom_admin_views.admin_logout_view, name='admin_logout'),
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
     path('', include('cards.urls')),

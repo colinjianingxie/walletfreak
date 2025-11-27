@@ -3,7 +3,20 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 from django.utils.text import slugify
 from core.services import db
+from django.conf import settings
 import json
+
+from django.contrib.auth import logout
+
+def admin_logout_view(request):
+    """
+    Custom logout view for admin that signs out of Firebase.
+    """
+    logout(request)  # Clear Django session
+    context = {
+        'firebase_config': json.dumps(settings.FIREBASE_CLIENT_CONFIG)
+    }
+    return render(request, 'custom_admin/logout.html', context)
 
 @staff_member_required
 def admin_dashboard(request):

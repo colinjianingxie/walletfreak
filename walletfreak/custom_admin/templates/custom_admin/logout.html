@@ -1,0 +1,33 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Logged out' %}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <p>{% trans 'Logging out...' %}</p>
+</div>
+
+<script>
+    // Use the same compat SDKs as base.html to ensure session consistency
+    const firebaseConfig = {{ firebase_config| safe }};
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    const auth = firebase.auth();
+
+    auth.signOut().then(() => {
+        // Sign-out successful.
+        console.log("Firebase sign-out successful");
+        window.location.href = "/";
+    }).catch((error) => {
+        // An error happened.
+        console.error("Logout error:", error);
+        window.location.href = "/";
+    });
+</script>
+{% endblock %}

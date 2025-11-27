@@ -79,6 +79,9 @@
                 <a href="/cards/">All Cards</a>
                 <a href="/blog/">Blog</a>
                 {% if user.is_authenticated %}
+                {% if user.is_staff %}
+                <a href="/admin/" style="color: var(--primary); font-weight: 600;">Admin</a>
+                {% endif %}
                 <a href="/dashboard/">Tracker</a>
                 <div style="display: flex; align-items: center; gap: 1rem;">
                     <span style="font-weight: 600; font-size: 0.9rem;">{{ user.first_name|default:user.email }}</span>

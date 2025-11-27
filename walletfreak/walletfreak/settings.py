@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'dashboard',
     'blog',
     'custom_admin',
+    'firestore',
 ]
 
 MIDDLEWARE = [
@@ -123,9 +124,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
-]
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
 ]
 
 

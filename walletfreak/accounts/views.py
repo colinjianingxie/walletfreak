@@ -88,7 +88,7 @@ def firebase_login(request):
                 user.save()
         
         # Log the user in
-        login(request, user)
+        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         
         # Store UID in session for easy access
         request.session['uid'] = uid
@@ -99,6 +99,7 @@ def firebase_login(request):
         return JsonResponse({'status': 'success'})
         
     except Exception as e:
+        print(f"Login error: {e}")  # Log error to console for debugging
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
 def logout_view(request):
