@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="padding: 2rem 0; max-width: 800px;">
+    <h1>Create New Card</h1>
+    
+    {% if messages %}
+        {% for message in messages %}
+        <div style="padding: 1rem; margin: 1rem 0; background: {% if message.tags == 'success' %}#10b981{% elif message.tags == 'error' %}#ef4444{% else %}#3b82f6{% endif %}; border-radius: 0.5rem;">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
+    
+    <form method="post" style="margin-top: 2rem;">
+        {% csrf_token %}
+        
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Card Name</label>
+            <input type="text" name="name" required 
+                   style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem; color: white;">
+        </div>
+        
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Issuer</label>
+            <input type="text" name="issuer" required 
+                   style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem; color: white;">
+        </div>
+        
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Annual Fee ($)</label>
+            <input type="number" name="annual_fee" value="0" step="0.01" required 
+                   style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem; color: white;">
+        </div>
+        
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Image URL</label>
+            <input type="text" name="image_url" 
+                   style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem; color: white;">
+        </div>
+        
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Benefits (JSON)</label>
+            <p style="font-size: 0.875rem; color: rgba(255,255,255,0.6); margin-bottom: 0.5rem;">
+                Enter benefits as JSON array. Each benefit should have: description, category, dollar_value (or null), effective_date
+            </p>
+            <textarea name="benefits" rows="15" required 
+                      style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem; color: white; font-family: monospace; font-size: 0.875rem;">[
+  {
+    "description": "Example benefit",
+    "category": "Permanent",
+    "dollar_value": null,
+    "effective_date": "2025-11-27"
+  }
+]</textarea>
+        </div>
+        
+        <div style="display: flex; gap: 1rem;">
+            <button type="submit" class="btn btn-primary">Create Card</button>
+            <a href="{% url 'admin_card_list' %}" class="btn btn-outline">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

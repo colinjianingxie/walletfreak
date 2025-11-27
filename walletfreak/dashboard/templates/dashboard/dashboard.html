@@ -98,11 +98,27 @@
                             {% if benefit.is_used %}✓ Used{% else %} ${{ benefit.remaining }} Left{% endif %}
                         </span>
                     </div>
+                    <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem;">
+                        <input type="number"
+                               id="amount-{{ benefit.card_id }}-{{ benefit.benefit_id }}"
+                               min="0"
+                               max="{{ benefit.amount }}"
+                               step="0.01"
+                               value="{{ benefit.used }}"
+                               placeholder="Amount used"
+                               style="flex: 1; padding: 0.5rem; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; background: rgba(255,255,255,0.9); color: #2c3e50; font-size: 0.9rem;">
+                        <button type="button"
+                                onclick="updateBenefitAmount('{{ benefit.card_id }}', '{{ benefit.benefit_id }}', this)"
+                                class="btn btn-sm"
+                                style="background: rgba(255,255,255,0.9); color: #2c3e50; font-weight: 600; border: none; padding: 0.5rem 1rem;">
+                            Update
+                        </button>
+                    </div>
                     <form action="{% url 'toggle_benefit_usage' benefit.card_id benefit.benefit_id %}" method="POST">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-sm"
                             style="width: 100%; background: {% if benefit.is_used %}rgba(255,255,255,0.5){% else %}rgba(255,255,255,0.9){% endif %}; color: #2c3e50; font-weight: 600; border: none;">
-                            {% if benefit.is_used %}↺ Uncheck{% else %}✓ Mark as Used{% endif %}
+                            {% if benefit.is_used %}↺ Reset{% else %}✓ Mark Full{% endif %}
                         </button>
                     </form>
                 </div>
@@ -178,6 +194,77 @@
 </div>
 
 <script>
+    // Update benefit amount with custom value
+    async function updateBenefitAmount(cardId, benefitId, button) {
+        const inputId = `amount-${cardId}-${benefitId}`;
+        const input = document.getElementById(inputId);
+        const amount = parseFloat(input.value) || 0;
+        
+        // Disable button during request
+        const originalText = button.textContent;
+        button.disabled = true;
+        button.textContent = '...';
+        
+        try {
+            const csrfToken = document.querySelector('[name="csrfmiddlewaretoken"]').value;
+            const url = `/dashboard/update-benefit/${cardId}/${benefitId}/`;
+            
+            const formData = new FormData();
+            formData.append('amount', amount);
+            formData.append('csrfmiddlewaretoken', csrfToken);
+            
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: formData
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                // Update the benefit card
+                const benefitCard = button.closest('[data-benefit-id]');
+                const statusSpan = benefitCard.querySelector('span[style*="font-weight: 600"]');
+                
+                if (data.is_used) {
+                    if (benefitCard) benefitCard.style.opacity = '0.7';
+                    if (statusSpan) {
+                        statusSpan.style.color = '#95a5a6';
+                        statusSpan.textContent = '✓ Used';
+                    }
+                } else {
+                    if (benefitCard) benefitCard.style.opacity = '1';
+                    if (statusSpan) {
+                        statusSpan.style.color = '#4cd137';
+                        statusSpan.textContent = ` $${data.remaining.toFixed(2)} Left`;
+                    }
+                }
+                
+                // Update utilization stats
+                const utilizationText = document.querySelector('span[style*="font-weight: 700"]');
+                if (utilizationText) {
+                    utilizationText.textContent = `$${data.total_used_value.toFixed(2)} / $${data.total_potential_value.toFixed(2)}`;
+                }
+                
+                const progressBar = document.querySelector('div[style*="background: var(--primary)"]');
+                if (progressBar) {
+                    progressBar.style.width = `${data.utilization_percentage}%`;
+                }
+                
+                // Update the input value to reflect what was actually saved
+                input.value = data.used.toFixed(2);
+            }
+        } catch (error) {
+            console.error('Error updating benefit:', error);
+            alert('Failed to update benefit amount');
+        } finally {
+            button.disabled = false;
+            button.textContent = originalText;
+        }
+    }
+
     // AJAX Benefit Toggle
     document.querySelectorAll('form[action*="toggle-benefit"]').forEach(form => {
         form.addEventListener('submit', async function (e) {

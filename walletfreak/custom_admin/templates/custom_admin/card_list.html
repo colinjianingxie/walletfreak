@@ -2,13 +2,26 @@
 
 {% block content %}
 <div class="container" style="padding: 2rem 0;">
-    <h1>Manage Cards</h1>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h1>Manage Cards</h1>
+        <a href="{% url 'admin_card_create' %}" class="btn btn-primary">Create New Card</a>
+    </div>
+    
+    {% if messages %}
+        {% for message in messages %}
+        <div style="padding: 1rem; margin-bottom: 1rem; background: {% if message.tags == 'success' %}#10b981{% elif message.tags == 'error' %}#ef4444{% else %}#3b82f6{% endif %}; border-radius: 0.5rem;">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
+    
     <table style="width: 100%; border-collapse: collapse; margin-top: 2rem;">
         <thead>
             <tr style="text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1);">
                 <th style="padding: 1rem;">Name</th>
                 <th style="padding: 1rem;">Issuer</th>
                 <th style="padding: 1rem;">Fee</th>
+                <th style="padding: 1rem;">Benefits</th>
                 <th style="padding: 1rem;">Actions</th>
             </tr>
         </thead>
@@ -18,8 +31,13 @@
                 <td style="padding: 1rem;">{{ card.name }}</td>
                 <td style="padding: 1rem;">{{ card.issuer }}</td>
                 <td style="padding: 1rem;">${{ card.annual_fee }}</td>
+                <td style="padding: 1rem;">{{ card.benefits|length }}</td>
                 <td style="padding: 1rem;">
-                    <button class="btn btn-outline" style="font-size: 0.8rem;">Edit</button>
+                    <a href="{% url 'admin_card_edit' card.id %}" class="btn btn-outline" style="font-size: 0.8rem; margin-right: 0.5rem;">Edit</a>
+                    <form method="post" action="{% url 'admin_card_delete' card.id %}" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this card?');">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline" style="font-size: 0.8rem; background: #ef4444;">Delete</button>
+                    </form>
                 </td>
             </tr>
             {% endfor %}

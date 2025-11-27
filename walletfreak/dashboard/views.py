@@ -35,15 +35,34 @@ def dashboard(request):
             except ValueError:
                 pass
 
-        for benefit in card_def['benefits']:
-            if benefit.get('amount', 0) > 0:
+        for idx, benefit in enumerate(card_def['benefits']):
+            # Only track benefits with dollar values
+            if benefit.get('dollar_value') and benefit.get('dollar_value') > 0:
+                # Create a unique benefit ID based on index
+                benefit_id = f"benefit_{idx}"
+                
                 # Check usage
-                usage = card.get('benefit_usage', {}).get(benefit['id'], {})
+                usage = card.get('benefit_usage', {}).get(benefit_id, {})
                 used_amount = usage.get('used', 0)
                 last_updated = usage.get('last_updated') # Timestamp
                 
-                # Determine reset period start/end
-                reset_period = benefit.get('reset_period', 'annual').lower()
+                # Determine reset period start/end from category
+                category = benefit.get('category', 'Permanent').lower()
+                reset_period = 'permanent'
+                
+                # Map category to reset period
+                if 'monthly' in category:
+                    reset_period = 'monthly'
+                elif 'quarterly' in category:
+                    reset_period = 'quarterly'
+                elif 'semi-annual' in category or 'semi annual' in category:
+                    reset_period = 'semi-annual'
+                elif 'anniversary' in category:
+                    reset_period = 'anniversary'
+                elif 'calendar year' in category or 'annually' in category:
+                    reset_period = 'annual'
+                elif 'every 4 years' in category:
+                    reset_period = 'quadrennial'
                 
                 period_start = None
                 
@@ -79,14 +98,14 @@ def dashboard(request):
                 # Add ALL benefits (used and unused) to the list
                 all_benefits.append({
                     'card_name': card['name'],
-                    'benefit_name': benefit['name'],
-                    'benefit_id': benefit['id'],
+                    'benefit_name': benefit['description'],
+                    'benefit_id': benefit_id,
                     'card_id': card['id'],
-                    'amount': benefit['amount'],
+                    'amount': benefit['dollar_value'],
                     'used': used_amount,
-                    'remaining': benefit['amount'] - used_amount,
-                    'is_used': used_amount >= benefit['amount'],
-                    'frequency': benefit.get('reset_period', 'annual').title(),
+                    'remaining': benefit['dollar_value'] - used_amount,
+                    'is_used': used_amount >= benefit['dollar_value'],
+                    'frequency': benefit.get('category', 'Permanent'),
                     'reset_date': (period_start + relativedelta(years=1) if reset_period == 'anniversary' else None)
                 })
 
@@ -99,17 +118,35 @@ def dashboard(request):
         if not card_def or 'benefits' not in card_def:
             continue
             
-        for benefit in card_def['benefits']:
-            if benefit.get('amount', 0) > 0:
-                total_potential_value += benefit['amount']
+        for idx, benefit in enumerate(card_def['benefits']):
+            if benefit.get('dollar_value') and benefit.get('dollar_value') > 0:
+                total_potential_value += benefit['dollar_value']
+                
+                # Create benefit ID
+                benefit_id = f"benefit_{idx}"
                 
                 # Get usage
-                usage = card.get('benefit_usage', {}).get(benefit['id'], {})
+                usage = card.get('benefit_usage', {}).get(benefit_id, {})
                 used = usage.get('used', 0)
                 
                 # Re-applying reset logic briefly:
                 last_updated = usage.get('last_updated')
-                reset_period = benefit.get('reset_period', 'annual').lower()
+                category = benefit.get('category', 'Permanent').lower()
+                reset_period = 'permanent'
+                
+                # Map category to reset period
+                if 'monthly' in category:
+                    reset_period = 'monthly'
+                elif 'quarterly' in category:
+                    reset_period = 'quarterly'
+                elif 'semi-annual' in category or 'semi annual' in category:
+                    reset_period = 'semi-annual'
+                elif 'anniversary' in category:
+                    reset_period = 'anniversary'
+                elif 'calendar year' in category or 'annually' in category:
+                    reset_period = 'annual'
+                elif 'every 4 years' in category:
+                    reset_period = 'quadrennial'
                 anniversary_date = None
                 if card.get('anniversary_date'):
                     try:
@@ -165,12 +202,18 @@ def toggle_benefit_usage(request, user_card_id, benefit_id):
         if target_card:
             card_def = db.get_card_by_slug(target_card['card_id'])
             if card_def:
-                target_benefit = next((b for b in card_def.get('benefits', []) if b['id'] == benefit_id), None)
-                if target_benefit:
+                # Extract index from benefit_id (format: "benefit_0", "benefit_1", etc.)
+                try:
+                    benefit_idx = int(benefit_id.split('_')[1])
+                    target_benefit = card_def.get('benefits', [])[benefit_idx] if benefit_idx < len(card_def.get('benefits', [])) else None
+                except (IndexError, ValueError):
+                    target_benefit = None
+                
+                if target_benefit and target_benefit.get('dollar_value'):
                     # Toggle logic: check current usage
                     current_usage = target_card.get('benefit_usage', {}).get(benefit_id, {})
                     current_used = current_usage.get('used', 0)
-                    amount = target_benefit['amount']
+                    amount = target_benefit['dollar_value']
                     
                     # If currently used (at max), set to 0. Otherwise, set to max.
                     new_amount = 0 if current_used >= amount else amount
@@ -194,16 +237,103 @@ def toggle_benefit_usage(request, user_card_id, benefit_id):
                             if not card_def_temp or 'benefits' not in card_def_temp:
                                 continue
                                 
-                            for benefit in card_def_temp['benefits']:
-                                if benefit.get('amount', 0) > 0:
-                                    total_potential_value += benefit['amount']
+                            for idx, benefit in enumerate(card_def_temp['benefits']):
+                                if benefit.get('dollar_value') and benefit.get('dollar_value') > 0:
+                                    total_potential_value += benefit['dollar_value']
                                     
-                                    usage = card.get('benefit_usage', {}).get(benefit['id'], {})
+                                    benefit_id_temp = f"benefit_{idx}"
+                                    usage = card.get('benefit_usage', {}).get(benefit_id_temp, {})
+                                    used = usage.get('used', 0)
+                                    
+                                    total_used_value += used
+                        
+                        return JsonResponse({
+                            'success': True,
+                            'is_used': new_amount >= amount,
+                            'remaining': amount - new_amount,
+                            'total_used_value': total_used_value,
+                            'total_potential_value': total_potential_value,
+                            'utilization_percentage': int((total_used_value / total_potential_value * 100) if total_potential_value > 0 else 0)
+                        })
+                    
+    return redirect('dashboard')
+
+@login_required
+def update_benefit_usage(request, user_card_id, benefit_id):
+    """Update benefit usage with a custom amount"""
+    if request.method == 'POST':
+        uid = request.session.get('uid')
+        
+        # Get the amount from POST data
+        try:
+            amount = float(request.POST.get('amount', 0))
+        except (ValueError, TypeError):
+            amount = 0
+        
+        # Fetch the card to validate
+        user_cards = db.get_user_cards(uid)
+        target_card = next((c for c in user_cards if c['id'] == user_card_id), None)
+        
+        if target_card:
+            card_def = db.get_card_by_slug(target_card['card_id'])
+            if card_def:
+                # Extract index from benefit_id
+                try:
+                    benefit_idx = int(benefit_id.split('_')[1])
+                    target_benefit = card_def.get('benefits', [])[benefit_idx] if benefit_idx < len(card_def.get('benefits', [])) else None
+                except (IndexError, ValueError):
+                    target_benefit = None
+                
+                if target_benefit and target_benefit.get('dollar_value'):
+                    # Clamp amount to valid range [0, dollar_value]
+                    max_amount = target_benefit['dollar_value']
+                    amount = max(0, min(amount, max_amount))
+                    
+                    # Update the usage
+                    db.update_benefit_usage(uid, user_card_id, benefit_id, amount)
+                    
+                    # Check if this is an AJAX request
+                    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                        from django.http import JsonResponse
+                        
+                        # Calculate new totals
+                        active_cards = db.get_user_cards(uid, status='active')
+                        total_potential_value = 0
+                        total_used_value = 0
+                        
+                        from zoneinfo import ZoneInfo
+                        eastern = ZoneInfo('America/New_York')
+                        current_date = datetime.datetime.now(eastern).date()
+                        
+                        for card in active_cards:
+                            card_def_temp = db.get_card_by_slug(card['card_id'])
+                            if not card_def_temp or 'benefits' not in card_def_temp:
+                                continue
+                                
+                            for idx, benefit in enumerate(card_def_temp['benefits']):
+                                if benefit.get('dollar_value') and benefit.get('dollar_value') > 0:
+                                    total_potential_value += benefit['dollar_value']
+                                    
+                                    benefit_id_temp = f"benefit_{idx}"
+                                    usage = card.get('benefit_usage', {}).get(benefit_id_temp, {})
                                     used = usage.get('used', 0)
                                     
                                     # Apply reset logic
                                     last_updated = usage.get('last_updated')
-                                    reset_period = benefit.get('reset_period', 'annual').lower()
+                                    category = benefit.get('category', 'Permanent').lower()
+                                    reset_period = 'permanent'
+                                    
+                                    if 'monthly' in category:
+                                        reset_period = 'monthly'
+                                    elif 'quarterly' in category:
+                                        reset_period = 'quarterly'
+                                    elif 'semi-annual' in category or 'semi annual' in category:
+                                        reset_period = 'semi-annual'
+                                    elif 'anniversary' in category:
+                                        reset_period = 'anniversary'
+                                    elif 'calendar year' in category or 'annually' in category:
+                                        reset_period = 'annual'
+                                    
                                     anniversary_date = None
                                     if card.get('anniversary_date'):
                                         try:
@@ -238,8 +368,9 @@ def toggle_benefit_usage(request, user_card_id, benefit_id):
                         
                         return JsonResponse({
                             'success': True,
-                            'is_used': new_amount >= amount,
-                            'remaining': amount - new_amount,
+                            'used': amount,
+                            'remaining': max_amount - amount,
+                            'is_used': amount >= max_amount,
                             'total_used_value': total_used_value,
                             'total_potential_value': total_potential_value,
                             'utilization_percentage': int((total_used_value / total_potential_value * 100) if total_potential_value > 0 else 0)
