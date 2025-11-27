@@ -1,0 +1,94 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block content %}
+<div id="content-main">
+    <form method="post" id="creditcard_form">
+        {% csrf_token %}
+        
+        <div>
+            <fieldset class="module aligned">
+                <h2>Basic Information</h2>
+                
+                <div class="form-row field-card_id">
+                    <div>
+                        <label for="id_card_id">Card ID:</label>
+                        <input type="text" name="card_id" value="{{ card_id }}" id="id_card_id" readonly style="background-color: #f0f0f0;">
+                        <p class="help">Card ID cannot be changed</p>
+                    </div>
+                </div>
+                
+                <div class="form-row field-name">
+                    <div>
+                        <label for="id_name" class="required">Name:</label>
+                        <input type="text" name="name" value="{{ card.name }}" maxlength="200" required id="id_name">
+                    </div>
+                </div>
+                
+                <div class="form-row field-issuer">
+                    <div>
+                        <label for="id_issuer">Issuer:</label>
+                        <input type="text" name="issuer" value="{{ card.issuer }}" maxlength="200" id="id_issuer">
+                    </div>
+                </div>
+                
+                <div class="form-row field-annual_fee">
+                    <div>
+                        <label for="id_annual_fee">Annual Fee:</label>
+                        <input type="number" name="annual_fee" value="{{ card.annual_fee|default:'0' }}" step="0.01" id="id_annual_fee">
+                    </div>
+                </div>
+            </fieldset>
+            
+            <fieldset class="module aligned">
+                <h2>URLs</h2>
+                
+                <div class="form-row field-image_url">
+                    <div>
+                        <label for="id_image_url">Image URL:</label>
+                        <input type="url" name="image_url" value="{{ card.image_url }}" maxlength="500" id="id_image_url">
+                    </div>
+                </div>
+                
+                <div class="form-row field-apply_url">
+                    <div>
+                        <label for="id_apply_url">Apply URL:</label>
+                        <input type="url" name="apply_url" value="{{ card.apply_url }}" maxlength="500" id="id_apply_url">
+                    </div>
+                </div>
+            </fieldset>
+            
+            <fieldset class="module aligned">
+                <h2>Benefits</h2>
+                <p class="help">Enter benefits as JSON array. Each benefit should have: description, category, dollar_value</p>
+                
+                <div class="form-row field-benefits_json">
+                    <div>
+                        <label for="id_benefits_json">Benefits JSON:</label>
+                        <textarea name="benefits_json" cols="80" rows="20" id="id_benefits_json" style="font-family: monospace;">{{ card.benefits_json }}</textarea>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <fieldset class="module aligned">
+                <h2>Personalities</h2>
+                <p class="help">Enter personality IDs as JSON array</p>
+                
+                <div class="form-row field-personalities_json">
+                    <div>
+                        <label for="id_personalities_json">Personalities JSON:</label>
+                        <textarea name="personalities_json" cols="80" rows="5" id="id_personalities_json" style="font-family: monospace;">{{ card.personalities_json }}</textarea>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <div class="submit-row">
+                <input type="submit" value="Save" class="default" name="_save">
+                <p class="deletelink-box">
+                    <a href="{% url 'admin:credit_card_list' %}" class="button cancel-link">Cancel</a>
+                </p>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

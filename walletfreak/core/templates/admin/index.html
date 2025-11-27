@@ -1,0 +1,82 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static "admin/css/dashboard.css" %}">{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block nav-breadcrumbs %}{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <h1>WalletFreak Administration</h1>
+    <p>Manage your credit cards and personalities stored in Firebase Firestore.</p>
+
+    <div class="module" style="margin-top: 30px;">
+        <table>
+            <caption>
+                <a href="{% url 'admin:credit_card_list' %}" class="section">💳 Credit Cards</a>
+            </caption>
+            <tr>
+                <th scope="row">
+                    <a href="{% url 'admin:credit_card_list' %}">Credit Cards</a>
+                </th>
+                <td>View and manage all credit cards with their benefits</td>
+                <td>
+                    <a href="{% url 'admin:credit_card_list' %}" class="viewlink">View All</a>
+                    <a href="{% url 'admin:credit_card_create' %}" class="addlink">Add New</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="module" style="margin-top: 20px;">
+        <table>
+            <caption>
+                <a href="{% url 'admin:personality_list' %}" class="section">👤 Personalities</a>
+            </caption>
+            <tr>
+                <th scope="row">
+                    <a href="{% url 'admin:personality_list' %}">Personalities</a>
+                </th>
+                <td>Manage personality types and archetypes</td>
+                <td>
+                    <a href="{% url 'admin:personality_list' %}" class="viewlink">View All</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    {% if app_list %}
+    <div class="module" style="margin-top: 20px;">
+        <table>
+            <caption>
+                <span class="section">Django Models</span>
+            </caption>
+            {% for app in app_list %}
+                {% for model in app.models %}
+                <tr>
+                    <th scope="row">
+                        <a href="{{ model.admin_url }}">{{ model.name }}</a>
+                    </th>
+                    <td>{{ model.object_name }}</td>
+                    <td>
+                        {% if model.admin_url %}
+                            <a href="{{ model.admin_url }}" class="viewlink">View</a>
+                        {% endif %}
+                        {% if model.add_url %}
+                            <a href="{{ model.add_url }}" class="addlink">Add</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

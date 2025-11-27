@@ -53,28 +53,40 @@ def firebase_login(request):
         user.save()
             
         # Create or Update Firestore profile
-        user_data = {
-            'email': email,
-            'first_name': first_name,
-            'last_name': last_name,
-            'is_super_staff': False # Default
-        }
-        
-        # Check if exists to preserve other fields like personality
+        # Check if exists to preserve other fields like personality and is_super_staff
         existing_profile = db.get_user_profile(uid)
+        
         if not existing_profile:
-            user_data['created_at'] = firestore.SERVER_TIMESTAMP
+            # New user - set defaults
+            user_data = {
+                'email': email,
+                'first_name': first_name,
+                'last_name': last_name,
+                'is_super_staff': False,  # Default for new users
+                'created_at': firestore.SERVER_TIMESTAMP
+            }
             db.create_user_profile(uid, user_data)
         else:
-            # Update name if changed
-            db.create_user_profile(uid, user_data) # This might overwrite, need to be careful. 
-            # create_document in services uses set(merge=True) usually? Let's check services.py
-            # If create_document uses set(), we should use update() or set(merge=True).
-            # Let's assume for now we just want to ensure these fields are set.
-            # Actually, let's just update the specific fields to avoid wiping data.
+            # Existing user - only update name/email, preserve is_super_staff and other fields
+            user_data = {
+                'email': email,
+                'first_name': first_name,
+                'last_name': last_name,
+            }
+            # Use merge=True to preserve existing fields like is_super_staff
             db.db.collection('users').document(uid).set(user_data, merge=True)
 
 
+        # Check if user has admin permissions and sync with Django
+        updated_profile = db.get_user_profile(uid)
+        if updated_profile:
+            is_super_staff = updated_profile.get('is_super_staff', False)
+            if is_super_staff is True or is_super_staff == 'true' or is_super_staff == True:
+                user.is_staff = True
+                user.is_superuser = True
+                user.is_active = True
+                user.save()
+        
         # Log the user in
         login(request, user)
         
@@ -90,10 +102,30 @@ def firebase_login(request):
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
 def logout_view(request):
+    """Logout from both Django and clear Firebase session"""
+    try:
+        # Clear Firebase UID from session if it exists
+        if 'uid' in request.session:
+            del request.session['uid']
+    except:
+        pass
+    
+    # Django logout (clears Django session and user)
     logout(request)
+    
     return JsonResponse({'status': 'success'})
 
 def logout_redirect(request):
+    """Logout and redirect to home"""
+    try:
+        # Clear Firebase UID from session if it exists
+        if 'uid' in request.session:
+            del request.session['uid']
+    except:
+        pass
+    
+    # Django logout (clears session and logs out user)
     logout(request)
+    
     from django.shortcuts import redirect
     return redirect('home')

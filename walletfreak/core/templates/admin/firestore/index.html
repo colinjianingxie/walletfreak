@@ -1,0 +1,44 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block content %}
+<div id="content-main">
+    <h1>Firestore Data Management</h1>
+    <p>Manage your credit cards and personalities stored in Firebase Firestore.</p>
+    
+    <div class="module" style="margin-top: 20px;">
+        <table>
+            <caption>
+                <a href="{% url 'admin:credit_card_list' %}" class="section">Credit Cards</a>
+            </caption>
+            <tr>
+                <th scope="row">
+                    <a href="{% url 'admin:credit_card_list' %}">Credit Cards</a>
+                </th>
+                <td>{{ cards_count }} card{{ cards_count|pluralize }}</td>
+                <td>
+                    <a href="{% url 'admin:credit_card_list' %}" class="changelink">View</a>
+                    <a href="{% url 'admin:credit_card_create' %}" class="addlink">Add</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="module" style="margin-top: 20px;">
+        <table>
+            <caption>
+                <a href="{% url 'admin:personality_list' %}" class="section">Personalities</a>
+            </caption>
+            <tr>
+                <th scope="row">
+                    <a href="{% url 'admin:personality_list' %}">Personalities</a>
+                </th>
+                <td>{{ personalities_count }} personalit{{ personalities_count|pluralize:"y,ies" }}</td>
+                <td>
+                    <a href="{% url 'admin:personality_list' %}" class="changelink">View</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}

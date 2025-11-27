@@ -56,8 +56,15 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'core.middleware.FirebaseAdminMiddleware',  # Custom Firebase admin auth
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+# Authentication backends
+AUTHENTICATION_BACKENDS = [
+    'core.admin_auth.FirebaseAdminBackend',  # Firebase admin authentication
+    'django.contrib.auth.backends.ModelBackend',  # Default Django auth (fallback)
 ]
 
 # ... (skip to static files section)

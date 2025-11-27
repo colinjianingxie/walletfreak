@@ -1,0 +1,74 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block content %}
+<div id="content-main">
+    <div class="module filtered" id="changelist">
+        <div id="toolbar">
+            <form id="changelist-search" method="get">
+                <div>
+                    <label for="searchbar"><img src="{% static 'admin/img/search.svg' %}" alt="Search"></label>
+                    <input type="text" size="40" name="q" value="" id="searchbar" autofocus>
+                    <input type="submit" value="Search">
+                </div>
+            </form>
+        </div>
+        
+        <div class="results">
+            <table id="result_list">
+                <thead>
+                    <tr>
+                        <th scope="col" class="sortable column-name">
+                            <div class="text"><a href="#">Card Name</a></div>
+                        </th>
+                        <th scope="col" class="column-issuer">
+                            <div class="text"><span>Issuer</span></div>
+                        </th>
+                        <th scope="col" class="column-annual_fee">
+                            <div class="text"><span>Annual Fee</span></div>
+                        </th>
+                        <th scope="col" class="column-benefit_count">
+                            <div class="text"><span>Benefits</span></div>
+                        </th>
+                        <th scope="col" class="column-actions">
+                            <div class="text"><span>Actions</span></div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for card in cards %}
+                    <tr class="{% cycle 'row1' 'row2' %}">
+                        <th class="field-name">
+                            <a href="{% url 'admin:credit_card_edit' card.id %}">{{ card.name }}</a>
+                        </th>
+                        <td class="field-issuer">{{ card.issuer|default:"-" }}</td>
+                        <td class="field-annual_fee">${{ card.annual_fee|floatformat:2 }}</td>
+                        <td class="field-benefit_count">{{ card.benefit_count }}</td>
+                        <td class="field-actions">
+                            <a href="{% url 'admin:credit_card_edit' card.id %}" class="changelink">Edit</a>
+                            <form method="post" action="{% url 'admin:credit_card_delete' card.id %}" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete {{ card.name }}?');">
+                                {% csrf_token %}
+                                <button type="submit" class="deletelink" style="background:none;border:none;color:#ba2121;cursor:pointer;text-decoration:underline;">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5">No credit cards found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <ul class="object-tools">
+        <li>
+            <a href="{% url 'admin:credit_card_create' %}" class="addlink">Add Credit Card</a>
+        </li>
+        <li>
+            <a href="{% url 'admin:firestore_index' %}">Back to Firestore</a>
+        </li>
+    </ul>
+</div>
+{% endblock %}
