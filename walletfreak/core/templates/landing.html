@@ -56,8 +56,7 @@
             <div style="position: relative; z-index: 1;">
                 <div
                     style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--md-primary-container), var(--md-secondary-container)); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; font-size: 3rem; box-shadow: var(--elevation-2);">
-                    {% if forloop.counter0|divisibleby:3 %}🧙‍♂️{% elif forloop.counter0|divisibleby:2 %}👗{% else
-                    %}🎓{% endif %}
+                    {% if personality.icon %}{{ personality.icon }}{% elif forloop.counter0|divisibleby:3 %}🧙‍♂️{% elif forloop.counter0|divisibleby:2 %}👗{% else %}🎓{% endif %}
                 </div>
                 <h3
                     style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--md-on-surface); text-align: center;">
