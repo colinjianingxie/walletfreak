@@ -2,7 +2,8 @@
 
 {% block content %}
 <div class="container" style="padding: 3rem 0;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <div
+        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
         <div>
             <h1>Subscription Tracker</h1>
             <p>Track your recurring credits and maximize your annual fees.</p>
@@ -11,8 +12,9 @@
     </div>
 
     <!-- Notifications Toggle -->
-    <div class="card mb-4" style="display: flex; justify-content: space-between; align-items: center;">
-        <div style="display: flex; align-items: center; gap: 1rem;">
+    <div class="card mb-4"
+        style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div style="display: flex; align-items: center; gap: 1rem; flex: 1; min-width: 200px;">
             <div
                 style="width: 48px; height: 48px; background: #e0e7ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.5rem;">
                 🔔
@@ -30,8 +32,8 @@
 
     <!-- Stats Row -->
     <div class="card mb-4">
-        <div style="display: flex; align-items: center; gap: 2rem;">
-            <div style="flex: 1;">
+        <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 200px;">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                     <span style="font-weight: 600; color: var(--text-muted);">Utilization</span>
                     <span style="font-weight: 700;">$0 / $0</span>
@@ -40,7 +42,7 @@
                     <div style="width: 0%; height: 100%; background: var(--primary);"></div>
                 </div>
             </div>
-            <div style="display: flex; gap: 1rem;">
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
                 <div
                     style="background: #eff6ff; padding: 1rem; border-radius: 8px; text-align: center; min-width: 100px;">
                     <div style="font-size: 0.8rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">
@@ -130,18 +132,62 @@
                     Benefits</a>
 
                 <!-- Remove Card Button -->
-                <form action="{% url 'remove_card' card.id %}" method="POST"
-                    onsubmit="return confirm('Are you sure you want to remove this card from your wallet?');">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-outline btn-sm"
-                        style="color: var(--danger); border-color: var(--danger);">Remove</button>
-                </form>
+                <button type="button" class="btn btn-outline btn-sm remove-card-btn" data-card-id="{{ card.id }}"
+                    data-card-name="{{ card.name }}"
+                    style="color: var(--danger); border-color: var(--danger);">Remove</button>
             </div>
         </div>
         {% endfor %}
     </div>
     {% endif %}
 </div>
+
+<!-- Remove Card Confirmation Modal -->
+<div id="removeCardModal"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center;">
+    <div class="card" style="max-width: 400px; margin: 2rem; padding: 2rem;">
+        <h3 style="margin-bottom: 1rem;">Remove Card from Wallet?</h3>
+        <p id="removeCardMessage" style="margin-bottom: 1.5rem; color: var(--text-muted);"></p>
+        <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+            <button type="button" id="cancelRemove" class="btn btn-outline">Cancel</button>
+            <form id="removeCardForm" method="POST" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary"
+                    style="background: var(--danger); border-color: var(--danger);">Remove</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Remove card modal functionality
+    const modal = document.getElementById('removeCardModal');
+    const removeForm = document.getElementById('removeCardForm');
+    const removeMessage = document.getElementById('removeCardMessage');
+    const cancelBtn = document.getElementById('cancelRemove');
+
+    document.querySelectorAll('.remove-card-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const cardId = this.dataset.cardId;
+            const cardName = this.dataset.cardName;
+
+            removeMessage.textContent = `Are you sure you want to remove "${cardName}" from your wallet?`;
+            removeForm.action = `/dashboard/remove-card/${cardId}/`;
+            modal.style.display = 'flex';
+        });
+    });
+
+    cancelBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    // Close modal when clicking outside
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+</script>
 
 <style>
     /* Toggle Switch */

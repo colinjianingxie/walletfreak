@@ -16,7 +16,8 @@
         </div>
 
         <!-- Filter Dropdowns -->
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem;">
+        <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
             <!-- Issuer Dropdown -->
             <div class="filter-dropdown-wrapper">
                 <button type="button" class="filter-dropdown-btn" data-dropdown="issuer">
@@ -218,6 +219,38 @@
             to {
                 opacity: 1;
                 transform: scale(1);
+            }
+        }
+
+        /* Mobile Responsive Styles for Card List */
+        @media (max-width: 768px) {
+            .card-item {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+                text-align: center;
+            }
+
+            .card-item>div:last-child {
+                min-width: auto !important;
+                text-align: center;
+            }
+
+            .filter-dropdown-content {
+                position: fixed;
+                left: 1rem;
+                right: 1rem;
+                top: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #search-input {
+                font-size: 16px;
+            }
+
+            .filter-dropdown-btn {
+                font-size: 0.85rem;
+                padding: 0.6rem 0.8rem;
             }
         }
     </style>

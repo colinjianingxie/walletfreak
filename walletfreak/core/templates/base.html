@@ -68,14 +68,19 @@
                 </svg>
                 WalletFreak
             </a>
-            <div class="nav-links">
+
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                ☰
+            </button>
+
+            <div class="nav-links" id="nav-links">
                 <a href="/">Home</a>
                 <a href="/quiz/">Quiz</a>
                 <a href="/cards/">All Cards</a>
                 <a href="/blog/">Blog</a>
                 {% if user.is_authenticated %}
                 <a href="/dashboard/">Tracker</a>
-                <div style="display: flex; align-items: center; gap: 1rem; margin-left: 1rem;">
+                <div style="display: flex; align-items: center; gap: 1rem;">
                     <span style="font-weight: 600; font-size: 0.9rem;">{{ user.first_name|default:user.email }}</span>
                     <a href="#" onclick="handleLogout(event)" style="color: var(--text-muted); font-size: 1.2rem;"
                         title="Logout">→</a>
@@ -88,13 +93,28 @@
                         });
                     }
                 </script>
+                {% else %}
+                <a href="{% url 'login' %}" class="btn btn-primary btn-sm">Login</a>
+                {% endif %}
             </div>
-            {% else %}
-            <a href="{% url 'login' %}" class="btn btn-primary btn-sm">Login</a>
-            {% endif %}
-        </div>
         </div>
     </nav>
+
+    <script>
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const navLinks = document.getElementById('nav-links');
+
+            if (mobileMenuToggle) {
+                mobileMenuToggle.addEventListener('click', function () {
+                    navLinks.classList.toggle('mobile-open');
+                    this.textContent = navLinks.classList.contains('mobile-open') ? '✕' : '☰';
+                });
+            }
+        });
+    </script>
+
 
     <main>
         {% block content %}

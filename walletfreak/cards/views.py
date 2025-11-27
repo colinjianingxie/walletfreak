@@ -32,6 +32,8 @@ def personality_detail(request, personality_id):
     except Exception:
         pass
             
+    import sys
+    sys.stderr.write(f"DEBUG: Fetched personality for {personality_id}: {personality}\n")
     return render(request, 'cards/personality_detail.html', {
         'personality': personality,
         'recommended_cards': recommended_cards

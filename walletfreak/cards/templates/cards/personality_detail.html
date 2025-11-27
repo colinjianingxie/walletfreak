@@ -4,16 +4,15 @@
 <div style="background: #f8fafc; padding-bottom: 4rem;">
     <!-- Header Section -->
     <div class="container" style="padding-top: 4rem; padding-bottom: 2rem;">
-        <div style="display: flex; align-items: center; gap: 2rem;">
+        <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
             <div
                 style="width: 150px; height: 150px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 4rem; flex-shrink: 0;">
                 {% if 'fashion' in personality.id %}👗{% elif 'travel' in personality.id %}✈️{% elif 'student' in
                 personality.id %}🎓{% else %}🧙‍♂️{% endif %}
             </div>
-            <div>
-                <span class="badge badge-primary" style="margin-bottom: 0.5rem;">{{ personality.tagline|default:"The
-                    Archetype" }}</span>
-                <h1 style="font-size: 3.5rem; margin-bottom: 1rem; line-height: 1;">{{ personality.name }}</h1>
+            <div style="flex: 1; min-width: 250px;">
+                <span class="badge badge-primary" style="margin-bottom: 0.5rem;">{{ personality.tagline|default:"The Archetype" }}</span>
+                <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1rem; line-height: 1;">{{ personality.name }}</h1>
                 <p style="font-size: 1.25rem; max-width: 700px; color: var(--text-main);">
                     {{ personality.description }}
                 </p>
@@ -26,7 +25,7 @@
         <h2 style="margin-bottom: 2rem;">Recommended Cards</h2>
         <div style="display: flex; flex-direction: column; gap: 1.5rem;">
             {% for card in recommended_cards %}
-            <div class="card"
+            <div class="card personality-card-item"
                 style="display: grid; grid-template-columns: 200px 1fr auto; gap: 2rem; align-items: center;">
                 <!-- Left: Image -->
                 <div style="text-align: center;">
@@ -59,7 +58,8 @@
                         <h5
                             style="font-size: 0.85rem; text-transform: uppercase; color: var(--primary); margin-bottom: 0.5rem;">
                             🎁 Notable Benefits</h5>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.9rem;">
+                        <div
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.5rem; font-size: 0.9rem;">
                             {% for benefit in card.benefits|slice:":4" %}
                             <div style="display: flex; align-items: center; gap: 0.5rem;">
                                 <span style="color: var(--primary);">✓</span> {{ benefit.name }}
