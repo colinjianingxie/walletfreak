@@ -140,6 +140,10 @@ def card_list(request):
             pass
         
     if search_query:
+        # Handle aliases
+        if search_query == 'amex':
+            search_query = 'american express'
+            
         filtered_cards = [c for c in filtered_cards if search_query in c.get('name', '').lower() or search_query in c.get('issuer', '').lower()]
     
     # Apply wallet filter

@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -88,7 +89,7 @@
                 <div class="user-dropdown">
                     <button class="user-dropdown-toggle" id="user-dropdown-toggle" aria-label="User menu">
                         <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
-                            ✈️
+                            <span class="material-icons" style="font-size: 20px;">flight</span>
                         </div>
                         <span style="font-weight: 600; font-size: 0.95rem; color: var(--dark);">{{ user.first_name|default:"Alex" }}</span>
                     </button>
@@ -100,17 +101,17 @@
                         </div>
                         
                         <a href="{% url 'profile' %}" class="user-dropdown-menu-item">
-                            <span style="font-size: 1.25rem;">👤</span>
+                            <span class="material-icons" style="font-size: 20px;">person</span>
                             Profile
                         </a>
                         
                         <a href="{% url 'settings' %}" class="user-dropdown-menu-item">
-                            <span style="font-size: 1.25rem;">⚙️</span>
+                            <span class="material-icons" style="font-size: 20px;">settings</span>
                             Settings
                         </a>
                         
                         <a href="#" onclick="handleLogout(event)" class="user-dropdown-menu-item logout">
-                            <span style="font-size: 1.25rem;">🚪</span>
+                            <span class="material-icons" style="font-size: 20px;">logout</span>
                             Log Out
                         </a>
                     </div>

@@ -10,6 +10,9 @@ def dashboard(request):
     uid = request.session.get('uid')
     user_profile = db.get_user_profile(uid)
     
+    # Get user's assigned personality
+    assigned_personality = db.get_user_assigned_personality(uid)
+    
     active_cards = db.get_user_cards(uid, status='active')
     inactive_cards = db.get_user_cards(uid, status='inactive')
     wishlist_cards = db.get_user_cards(uid, status='eyeing')
@@ -203,6 +206,7 @@ def dashboard(request):
         'total_potential_value': total_potential_value,
         'total_used_value': total_used_value,
         'available_cards_json': cards_json,
+        'assigned_personality': assigned_personality,
     }
     return render(request, 'dashboard/dashboard.html', context)
 
@@ -400,6 +404,9 @@ def add_card(request, card_id):
     status = request.POST.get('status', 'active')
     if request.method == 'POST':
         db.add_card_to_user(uid, card_id, status=status)
+        # Recalculate personality if adding an active card
+        if status == 'active':
+            db.recalculate_and_update_personality(uid)
         return redirect('dashboard')
     return redirect('card_list')
 
@@ -408,14 +415,36 @@ def update_card_status(request, user_card_id):
     if request.method == 'POST':
         uid = request.session.get('uid')
         new_status = request.POST.get('status')
+        old_status = None
+        
+        # Get old status to check if active status changed
+        user_cards = db.get_user_cards(uid)
+        target_card = next((c for c in user_cards if c['id'] == user_card_id), None)
+        if target_card:
+            old_status = target_card.get('status')
+        
         db.update_card_status(uid, user_card_id, new_status)
+        
+        # Recalculate personality if active status changed
+        if (old_status == 'active' or new_status == 'active') and old_status != new_status:
+            db.recalculate_and_update_personality(uid)
     return redirect('dashboard')
 
 @login_required
 def remove_card(request, user_card_id):
     if request.method == 'POST':
         uid = request.session.get('uid')
+        
+        # Check if removing an active card
+        user_cards = db.get_user_cards(uid)
+        target_card = next((c for c in user_cards if c['id'] == user_card_id), None)
+        was_active = target_card and target_card.get('status') == 'active'
+        
         db.remove_card_from_user(uid, user_card_id)
+        
+        # Recalculate personality if removed an active card
+        if was_active:
+            db.recalculate_and_update_personality(uid)
     return redirect('dashboard')
 
 @login_required
@@ -435,8 +464,12 @@ def wallet(request):
     # Get all active cards
     active_cards = db.get_user_cards(uid, status='active')
     
+    # Get user's assigned personality
+    assigned_personality = db.get_user_assigned_personality(uid)
+    
     context = {
         'user_profile': user_profile,
         'active_cards': active_cards,
+        'assigned_personality': assigned_personality,
     }
     return render(request, 'dashboard/wallet.html', context)

@@ -10,12 +10,12 @@
     <div class="container" style="position: relative; z-index: 1;">
         <!-- Badge -->
         <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 999px; margin-bottom: 1.5rem; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
-            <span style="font-size: 1.1rem;">✨</span>
+            <span style="font-size: 1.1rem;"><span class="material-icons" style="font-size: 16px; vertical-align: middle;">auto_awesome</span></span>
             <span style="font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;">Discover Your Financial DNA</span>
         </div>
         
         <!-- Title -->
-        <h1 style="font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 700; margin-bottom: 1rem; line-height: 1.2;">
+        <h1 style="font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 700; margin-bottom: 1rem; line-height: 1.2; color: white;">
             What's your <span style="background: linear-gradient(135deg, #A78BFA 0%, #C084FC 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Wallet Vibe?</span>
         </h1>
         
@@ -65,13 +65,13 @@
             <div style="background: white; border-radius: 20px; padding: 2.5rem; border: 1px solid #E5E7EB; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: all 0.3s; display: grid; grid-template-columns: auto 1fr auto; gap: 2rem; align-items: center;" class="personality-card">
                 <!-- Left: Avatar -->
                 <div style="width: 100px; height: 100px; background: linear-gradient(135deg, {% if 'jetsetter' in personality.id|lower %}#06B6D4{% elif 'freak' in personality.id|lower or 'wallet freak' in personality.name|lower %}#A855F7{% elif 'minimalist' in personality.id|lower or 'hunter' in personality.id|lower %}#10B981{% else %}#F59E0B{% endif %} 0%, {% if 'jetsetter' in personality.id|lower %}#0EA5E9{% elif 'freak' in personality.id|lower or 'wallet freak' in personality.name|lower %}#9333EA{% elif 'minimalist' in personality.id|lower or 'hunter' in personality.id|lower %}#059669{% else %}#D97706{% endif %} 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); flex-shrink: 0;">
-                    {% if 'jetsetter' in personality.id|lower %}✈️
-                    {% elif 'freak' in personality.id|lower or 'wallet freak' in personality.name|lower %}🤓
-                    {% elif 'minimalist' in personality.id|lower %}💵
-                    {% elif 'foodie' in personality.id|lower %}🍽️
-                    {% elif 'hunter' in personality.id|lower %}🎯
-                    {% elif 'strategist' in personality.id|lower or 'optimizer' in personality.id|lower %}📊
-                    {% else %}💳{% endif %}
+                    {% if 'jetsetter' in personality.id|lower %}<span class="material-icons" style="font-size: 48px;">flight</span>
+                    {% elif 'freak' in personality.id|lower or 'wallet freak' in personality.name|lower %}<span class="material-icons" style="font-size: 48px;">psychology</span>
+                    {% elif 'minimalist' in personality.id|lower %}<span class="material-icons" style="font-size: 48px;">attach_money</span>
+                    {% elif 'foodie' in personality.id|lower %}<span class="material-icons" style="font-size: 48px;">restaurant</span>
+                    {% elif 'hunter' in personality.id|lower %}<span class="material-icons" style="font-size: 48px;">gps_fixed</span>
+                    {% elif 'strategist' in personality.id|lower or 'optimizer' in personality.id|lower %}<span class="material-icons" style="font-size: 48px;">analytics</span>
+                    {% else %}<span class="material-icons" style="font-size: 48px;">credit_card</span>{% endif %}
                 </div>
 
                 <!-- Middle: Info -->
@@ -170,7 +170,7 @@
         {% empty %}
         <!-- Empty State -->
         <div style="text-align: center; padding: 4rem 2rem;">
-            <div style="font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.3;">💳</div>
+            <div style="font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.3;"><span class="material-icons" style="font-size: 64px;">credit_card</span></div>
             <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;">No personalities yet</h2>
             <p style="color: var(--text-muted);">Check back soon!</p>
         </div>
@@ -179,7 +179,7 @@
 
     <!-- No Results State (Hidden by default) -->
     <div id="no-results" style="display: none; text-align: center; padding: 4rem 0;">
-        <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+        <div style="font-size: 3rem; margin-bottom: 1rem;"><span class="material-icons" style="font-size: 48px;">search</span></div>
         <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">No personalities found</h3>
         <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Try adjusting your search terms or take the quiz to
             find your match.</p>
@@ -223,31 +223,31 @@
         {
             question: "What describes you best when it comes to credit cards? (Select all that apply)",
             options: [
-                { text: "I live for free flights & lounges", icon: "✈️", type: "jetsetter" },
-                { text: "Cash is king. Fees are evil.", icon: "💵", type: "minimalist" },
-                { text: "Dining out & VIP events", icon: "🍽️", type: "foodie" },
-                { text: "Maximize ROI. Optimize everything", icon: "📊", type: "strategist" },
-                { text: "I have a spreadsheet for everything", icon: "⚡", type: "optimizer" }
+                { text: "I live for free flights & lounges", icon: "flight", type: "jetsetter" },
+                { text: "Cash is king. Fees are evil.", icon: "attach_money", type: "minimalist" },
+                { text: "Dining out & VIP events", icon: "restaurant", type: "foodie" },
+                { text: "Maximize ROI. Optimize everything", icon: "analytics", type: "strategist" },
+                { text: "I have a spreadsheet for everything", icon: "flash_on", type: "optimizer" }
             ]
         },
         {
             question: "How do you feel about annual fees? (Select all that apply)",
             options: [
-                { text: "Worth it for premium travel perks", icon: "✈️", type: "jetsetter" },
-                { text: "I avoid them at all costs", icon: "🚫", type: "minimalist" },
-                { text: "Fine if dining credits offset the cost", icon: "🍽️", type: "foodie" },
-                { text: "I calculate the exact ROI", icon: "📊", type: "strategist" },
-                { text: "I track every dollar of value", icon: "⚡", type: "optimizer" }
+                { text: "Worth it for premium travel perks", icon: "flight", type: "jetsetter" },
+                { text: "I avoid them at all costs", icon: "block", type: "minimalist" },
+                { text: "Fine if dining credits offset the cost", icon: "restaurant", type: "foodie" },
+                { text: "I calculate the exact ROI", icon: "analytics", type: "strategist" },
+                { text: "I track every dollar of value", icon: "flash_on", type: "optimizer" }
             ]
         },
         {
             question: "What's your biggest spending category? (Select all that apply)",
             options: [
-                { text: "Travel: flights, hotels, experiences", icon: "✈️", type: "jetsetter" },
-                { text: "Essentials: groceries and gas", icon: "🛒", type: "minimalist" },
-                { text: "Restaurants and food delivery", icon: "🍽️", type: "foodie" },
-                { text: "Everything - I optimize by category", icon: "📊", type: "strategist" },
-                { text: "I diversify across multiple cards", icon: "⚡", type: "optimizer" }
+                { text: "Travel: flights, hotels, experiences", icon: "flight", type: "jetsetter" },
+                { text: "Essentials: groceries and gas", icon: "shopping_cart", type: "minimalist" },
+                { text: "Restaurants and food delivery", icon: "restaurant", type: "foodie" },
+                { text: "Everything - I optimize by category", icon: "analytics", type: "strategist" },
+                { text: "I diversify across multiple cards", icon: "flash_on", type: "optimizer" }
             ]
         }
     ];
@@ -269,8 +269,8 @@
             optionCard.className = 'option-card';
             optionCard.dataset.value = opt.type;
             optionCard.style.cssText = `
-                background: rgba(255,255,255,0.05);
-                border: 2px solid rgba(255,255,255,0.1);
+                background: rgba(255,255,255,0.1);
+                border: 2px solid rgba(255,255,255,0.2);
                 border-radius: 16px;
                 padding: 2rem 1rem;
                 cursor: pointer;
@@ -280,9 +280,11 @@
                 align-items: center;
                 text-align: center;
                 min-height: 180px;
+                backdrop-filter: blur(10px);
             `;
 
             const iconSpan = document.createElement('div');
+            iconSpan.className = 'material-icons';
             iconSpan.style.cssText = `
                 font-size: 3rem;
                 margin-bottom: 1rem;
@@ -291,9 +293,9 @@
 
             const textSpan = document.createElement('div');
             textSpan.style.cssText = `
-                color: white;
+                color: rgba(255,255,255,0.95);
                 font-size: 0.95rem;
-                font-weight: 500;
+                font-weight: 600;
                 line-height: 1.4;
             `;
             textSpan.textContent = opt.text;
@@ -308,18 +310,18 @@
                 if (isSelected) {
                     // Deselect
                     optionCard.classList.remove('selected');
-                    optionCard.style.background = 'rgba(255,255,255,0.05)';
-                    optionCard.style.borderColor = 'rgba(255,255,255,0.1)';
+                    optionCard.style.background = 'rgba(255,255,255,0.1)';
+                    optionCard.style.borderColor = 'rgba(255,255,255,0.2)';
                     optionCard.style.transform = 'scale(1)';
                     optionCard.style.boxShadow = 'none';
                     selectedOptions.delete(opt.type);
                 } else {
                     // Select
                     optionCard.classList.add('selected');
-                    optionCard.style.background = 'linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(124, 58, 237, 0.3))';
-                    optionCard.style.borderColor = '#8b5cf6';
+                    optionCard.style.background = 'linear-gradient(135deg, rgba(139, 92, 246, 0.5), rgba(124, 58, 237, 0.5))';
+                    optionCard.style.borderColor = '#a78bfa';
                     optionCard.style.transform = 'scale(1.05)';
-                    optionCard.style.boxShadow = '0 8px 24px rgba(139, 92, 246, 0.4)';
+                    optionCard.style.boxShadow = '0 8px 24px rgba(139, 92, 246, 0.5)';
                     selectedOptions.add(opt.type);
                 }
 

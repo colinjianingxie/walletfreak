@@ -141,6 +141,103 @@ class FirestoreService:
             return False
         return user.get('is_super_staff', False) or user.get('is_editor', False)
 
+    # Personality Assignment Methods
+    def calculate_personality_from_wallet(self, uid):
+        """
+        Calculate the best-matching personality based on user's active cards.
+        Returns a tuple of (personality_id, score, total_cards) or (None, 0, 0) if no match.
+        """
+        # Get user's active cards
+        active_cards = self.get_user_cards(uid, status='active')
+        if not active_cards:
+            return None, 0, 0
+        
+        # Get all personalities
+        personalities = self.get_personalities()
+        if not personalities:
+            return None, 0, 0
+        
+        # Build card_id set from user's wallet
+        user_card_ids = {card['card_id'] for card in active_cards}
+        
+        # Calculate scores for each personality
+        personality_scores = {}
+        for personality in personalities:
+            score = 0
+            recommended_cards = personality.get('recommended_cards', [])
+            
+            # Count how many of this personality's recommended cards the user has
+            for card_id in recommended_cards:
+                if card_id in user_card_ids:
+                    score += 1
+            
+            if score > 0:
+                personality_scores[personality['id']] = score
+        
+        # Find personality with highest score
+        if not personality_scores:
+            return None, 0, len(user_card_ids)
+        
+        best_personality_id = max(personality_scores, key=personality_scores.get)
+        best_score = personality_scores[best_personality_id]
+        
+        return best_personality_id, best_score, len(user_card_ids)
+    
+    def update_user_personality(self, uid, personality_id, score=None):
+        """
+        Update user's assigned personality in their profile.
+        """
+        user_ref = self.db.collection('users').document(uid)
+        update_data = {
+            'assigned_personality': personality_id,
+            'personality_assigned_at': firestore.SERVER_TIMESTAMP
+        }
+        
+        if score is not None:
+            update_data['personality_score'] = score
+        
+        # Check if user profile exists
+        user_doc = user_ref.get()
+        if user_doc.exists:
+            user_ref.update(update_data)
+        else:
+            # Create user profile if it doesn't exist
+            user_ref.set(update_data)
+    
+    def get_user_assigned_personality(self, uid):
+        """
+        Get user's assigned personality with full details.
+        Returns personality object with additional 'match_score' field, or None.
+        """
+        user = self.get_user_profile(uid)
+        if not user or not user.get('assigned_personality'):
+            return None
+        
+        personality_id = user.get('assigned_personality')
+        personality = self.get_personality_by_slug(personality_id)
+        
+        if personality:
+            # Add match score to personality object
+            personality['match_score'] = user.get('personality_score', 0)
+            personality['assigned_at'] = user.get('personality_assigned_at')
+        
+        return personality
+    
+    def recalculate_and_update_personality(self, uid):
+        """
+        Convenience method to recalculate and update user's personality in one call.
+        Returns the assigned personality object or None.
+        """
+        personality_id, score, total_cards = self.calculate_personality_from_wallet(uid)
+        
+        if personality_id:
+            self.update_user_personality(uid, personality_id, score)
+            return self.get_user_assigned_personality(uid)
+        else:
+            # Clear personality if user has no cards or no matches
+            self.update_user_personality(uid, None, 0)
+            return None
+
     # Blog Methods
     def get_blogs(self, status=None, limit=None):
         """Get blogs, optionally filtered by status"""

@@ -13,25 +13,32 @@
     <div style="display: flex; align-items: center; gap: 1.5rem;">
         <div
             style="width: 60px; height: 60px; background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.75rem; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);">
-            ✈️
+            <span class="material-icons" style="font-size: 32px;">flight</span>
         </div>
         <div>
             <h1 style="font-size: 2rem; font-weight: 800; margin: 0; line-height: 1.2;">
                 Hey, <span style="color: #7C3AED;">{% if user.first_name %}{{ user.first_name }}{% else %}Alex{% endif %}!</span>
             </h1>
             <div style="display: flex; align-items: center; gap: 0.75rem; margin-top: 0.5rem;">
+                {% if assigned_personality %}
                 <span
                     style="background: #E0F2FE; color: #0284C7; font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 4px; letter-spacing: 0.05em; text-transform: uppercase;">
-                    The Jetsetter
+                    <span class="material-icons" style="font-size: 10px; vertical-align: middle;">psychology</span>
+                    {{ assigned_personality.name }}
                 </span>
-                <span style="color: #64748B; font-size: 0.9rem;">Your benefits are working hard.</span>
+                {% if assigned_personality.match_score %}
+                <span style="color: #64748B; font-size: 0.9rem;">{{ assigned_personality.match_score }} card{{ assigned_personality.match_score|pluralize }} match</span>
+                {% endif %}
+                {% else %}
+                <span style="color: #64748B; font-size: 0.9rem;">Add cards to discover your personality</span>
+                {% endif %}
             </div>
         </div>
         
         <!-- Search Bar (Right Aligned) -->
         <div style="margin-left: auto; width: 300px;">
             <div style="position: relative;">
-                <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #9CA3AF;">🔍</span>
+                <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #9CA3AF;"><span class="material-icons" style="font-size: 18px;">search</span></span>
                 <input type="text" placeholder="Search benefits..." style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem; border: 1px solid #E5E7EB; border-radius: 99px; font-size: 0.9rem; background: white;">
             </div>
         </div>
@@ -47,7 +54,7 @@
         <!-- Top Row -->
         <div style="display: flex; justify-content: space-between; align-items: flex-start; position: relative; z-index: 1;">
             <div style="width: 48px; height: 48px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
-                📈
+                <span class="material-icons" style="font-size: 24px;">trending_up</span>
             </div>
             <div style="font-size: 0.875rem; font-weight: 500; opacity: 0.9;">Annual Value</div>
         </div>
@@ -56,10 +63,10 @@
         <div style="position: relative; z-index: 1;">
             <div style="font-size: 0.9rem; margin-bottom: 0.25rem; opacity: 0.9;">Total Value Extracted</div>
             <div style="font-size: 3.5rem; font-weight: 800; line-height: 1; margin-bottom: 0.5rem; letter-spacing: -0.02em;">
-                ${{ total_used_value|default:590|floatformat:0 }}<span style="font-size: 1.75rem; font-weight: 500; opacity: 0.7;">.00</span>
+                ${{ total_used_value|floatformat:0 }}<span style="font-size: 1.75rem; font-weight: 500; opacity: 0.7;">.00</span>
             </div>
             <div style="font-size: 0.875rem; opacity: 0.8;">
-                Out of ${{ total_potential_value|default:1120|floatformat:0 }} available credits
+                Out of ${{ total_potential_value|floatformat:0 }} available credits
             </div>
         </div>
     </div>
@@ -76,7 +83,7 @@
                 </div>
             </div>
             <div style="width: 40px; height: 40px; background: #FDF4FF; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #D946EF;">
-                💳
+                <span class="material-icons" style="font-size: 20px;">credit_card</span>
             </div>
         </div>
         
@@ -107,6 +114,72 @@
     </div>
 </div>
 
+<!-- Personality Card Section -->
+{% if assigned_personality %}
+<div style="background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%); border-radius: 24px; padding: 2rem; margin-bottom: 2.5rem; border: 1px solid #E9D5FF;">
+    <div style="display: grid; grid-template-columns: auto 1fr auto; gap: 2rem; align-items: center;">
+        <!-- Left: Avatar -->
+        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #A855F7 0%, #9333EA 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; box-shadow: 0 8px 16px rgba(168, 85, 247, 0.3);">
+            <span class="material-icons" style="font-size: 40px; color: white;">psychology</span>
+        </div>
+
+        <!-- Middle: Info -->
+        <div>
+            <div style="font-size: 0.75rem; color: #7C3AED; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 0.5rem; text-transform: uppercase;">
+                YOUR WALLET PERSONALITY
+            </div>
+            
+            <h3 style="font-size: 1.75rem; font-weight: 800; margin: 0 0 0.5rem 0; color: #1F2937;">
+                {{ assigned_personality.name }}
+                {% if assigned_personality.tagline %}
+                <span style="font-size: 1rem; font-weight: 600; color: #7C3AED; margin-left: 0.5rem;">• {{ assigned_personality.tagline }}</span>
+                {% endif %}
+            </h3>
+
+            <p style="color: #64748B; line-height: 1.6; margin: 0 0 1rem 0; font-size: 0.9375rem; max-width: 600px;">
+                {{ assigned_personality.description|truncatewords:30 }}
+            </p>
+
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                {% if assigned_personality.match_score %}
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <div style="width: 120px; height: 6px; background: #E9D5FF; border-radius: 3px; overflow: hidden;">
+                        <div style="width: {% if active_cards|length > 0 %}{% widthratio assigned_personality.match_score active_cards|length 100 %}{% else %}0{% endif %}%; height: 100%; background: #A855F7; border-radius: 3px;"></div>
+                    </div>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: #7C3AED;">
+                        {{ assigned_personality.match_score }}/{{ active_cards|length }} cards match
+                    </span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Right: Action -->
+        <a href="{% url 'personality_detail' assigned_personality.id %}" style="padding: 1rem 1.5rem; background: white; color: #7C3AED; border: 2px solid #A855F7; border-radius: 12px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; white-space: nowrap;">
+            View Full Details
+            <span class="material-icons" style="font-size: 18px;">arrow_forward</span>
+        </a>
+    </div>
+</div>
+{% elif active_cards|length == 0 %}
+<!-- Empty state: No cards yet -->
+<div style="background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%); border-radius: 24px; padding: 2.5rem; margin-bottom: 2.5rem; text-align: center; border: 2px dashed #E5E7EB;">
+    <div style="width: 64px; height: 64px; background: #EEF2FF; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+        <span class="material-icons" style="font-size: 32px; color: #6366F1;">add_card</span>
+    </div>
+    <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 0.75rem 0; color: #1F2937;">
+        Discover Your Wallet Personality
+    </h3>
+    <p style="color: #64748B; font-size: 0.9375rem; margin: 0 0 1.5rem 0; max-width: 500px; margin-left: auto; margin-right: auto;">
+        Add your credit cards to automatically discover which personality best matches your wallet strategy.
+    </p>
+    <button onclick="openManageWalletModal('add')" style="padding: 1rem 2rem; background: #6366F1; color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.4);">
+        <span class="material-icons" style="font-size: 18px; vertical-align: middle; margin-right: 0.5rem;">add</span>
+        Add Your First Card
+    </button>
+</div>
+{% endif %}
+
 <!-- Active Benefits Section -->
 <div
     style="background: white; border-radius: 24px; padding: 2rem; border: 1px solid #F3F4F6; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
@@ -128,7 +201,7 @@
     {% if not all_benefits %}
     <!-- Empty State -->
     <div style="text-align: center; padding: 3rem 1rem;">
-        <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;">💳</div>
+        <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"><span class="material-icons" style="font-size: 48px;">credit_card</span></div>
         <div style="font-weight: 600; font-size: 1.125rem; margin-bottom: 0.5rem; color: #1F2937;">No active benefits yet</div>
         <div style="color: #64748B; margin-bottom: 1.5rem;">Add cards to your wallet to start tracking benefits</div>
         <button class="btn btn-primary" onclick="openManageWalletModal('add')">Add Card</button>
@@ -144,7 +217,7 @@
             <!-- Percentage Circle -->
             {% if benefit.is_used %}
             <div style="width: 56px; height: 56px; border-radius: 50%; background: #DCFCE7; border: 2px solid #DCFCE7; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; color: #16A34A;">
-                ✓
+                <span class="material-icons" style="font-size: 24px;">check</span>
             </div>
             {% else %}
             <div style="width: 56px; height: 56px; border-radius: 50%; border: 2px solid {% if benefit.used > 0 %}#6366F1{% else %}#E2E8F0{% endif %}; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; color: {% if benefit.used > 0 %}#6366F1{% else %}#64748B{% endif %};">
@@ -203,12 +276,12 @@
             
             <div class="sidebar-nav">
                 <button class="sidebar-item active" onclick="switchWalletView('stack')" id="nav-stack">
-                    <span style="font-size: 1.2rem;">💳</span>
+                    <span class="material-icons" style="font-size: 20px;">credit_card</span>
                     My Stack
                     <span style="background: #E2E8F0; color: #64748B; font-size: 0.75rem; padding: 0.1rem 0.5rem; border-radius: 99px; margin-left: auto;">{{ active_cards|length }}</span>
                 </button>
                 <button class="sidebar-item" onclick="switchWalletView('add')" id="nav-add">
-                    <span style="font-size: 1.2rem;">+</span>
+                    <span class="material-icons" style="font-size: 20px;">add</span>
                     Add New Card
                 </button>
             </div>
@@ -247,7 +320,7 @@
                                 <span style="background: #DCFCE7; color: #16A34A; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 99px;">Active</span>
                                 <form method="POST" action="{% url 'remove_card' card.id %}" style="margin: 0;" onsubmit="return confirm('Remove this card?');">
                                     {% csrf_token %}
-                                    <button type="submit" style="background: none; border: none; cursor: pointer; color: #CBD5E1; font-size: 1.25rem; padding: 0.25rem;">🗑️</button>
+                                    <button type="submit" style="background: none; border: none; cursor: pointer; color: #CBD5E1; font-size: 1.25rem; padding: 0.25rem;"><span class="material-icons" style="font-size: 20px;">delete</span></button>
                                 </form>
                             </div>
                         </div>
@@ -272,7 +345,7 @@
                     <p style="color: #64748B; font-size: 0.9rem; margin-bottom: 1.5rem;">Search by name or issuer to add it to your wallet.</p>
                     
                     <div style="position: relative; margin-bottom: 1.5rem;">
-                        <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #9CA3AF;">🔍</span>
+                        <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #9CA3AF;"><span class="material-icons" style="font-size: 18px;">search</span></span>
                         <input type="text" id="card-search-input" placeholder="Search e.g. 'Sapphire' or 'Amex'" 
                                style="width: 100%; padding: 0.875rem 1rem 0.875rem 2.5rem; border: 1px solid #E2E8F0; border-radius: 12px; font-size: 0.95rem;">
                     </div>
@@ -295,7 +368,7 @@
                 <!-- Preview Column -->
                 <div style="width: 300px; padding: 2rem; background: #FAFAFA; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
                     <div id="card-preview-empty" style="color: #94A3B8;">
-                        <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;">💳</div>
+                        <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"><span class="material-icons" style="font-size: 48px;">credit_card</span></div>
                         <p>Select a card to preview</p>
                     </div>
                     
@@ -567,14 +640,25 @@
     }
 
     function filterCards(issuer) {
-        const filtered = availableCards.filter(c => c.issuer.includes(issuer));
+        let searchIssuer = issuer;
+        if (issuer === 'Amex') {
+            searchIssuer = 'American Express';
+        }
+        const filtered = availableCards.filter(c => c.issuer.includes(searchIssuer));
         renderCardResults(filtered);
     }
 
     document.getElementById('card-search-input').addEventListener('input', (e) => {
-        const term = e.target.value.toLowerCase();
+        let term = e.target.value.toLowerCase();
+        
+        // Alias mapping
+        if (term === 'amex') {
+            term = 'american express';
+        }
+        
         const filtered = availableCards.filter(c => 
-            c.name.toLowerCase().includes(term) || c.issuer.toLowerCase().includes(term)
+            c.name.toLowerCase().includes(term) || c.issuer.toLowerCase().includes(term) ||
+            (term === 'amex' && c.issuer.toLowerCase().includes('american express'))
         );
         renderCardResults(filtered);
     });
