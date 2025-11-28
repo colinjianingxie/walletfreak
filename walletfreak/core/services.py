@@ -237,6 +237,139 @@ class FirestoreService:
             # Clear personality if user has no cards or no matches
             self.update_user_personality(uid, None, 0)
             return None
+    
+    # Personality Survey Methods
+    def save_personality_survey(self, uid, personality_id, responses, card_ids, is_published=False):
+        """
+        Save a user's personality survey response.
+        Returns the survey document ID.
+        """
+        survey_data = {
+            'user_id': uid,
+            'personality_id': personality_id,
+            'responses': responses,
+            'card_ids': card_ids,
+            'is_published': is_published,
+            'created_at': firestore.SERVER_TIMESTAMP
+        }
+        
+        # Add to surveys collection
+        _, doc_ref = self.db.collection('personality_surveys').add(survey_data)
+        
+        # Update user profile with survey completion
+        user_ref = self.db.collection('users').document(uid)
+        user_ref.update({
+            'survey_completed': True,
+            'survey_personality': personality_id,
+            'survey_completed_at': firestore.SERVER_TIMESTAMP
+        })
+        
+        return doc_ref.id
+    
+    def get_user_survey(self, uid):
+        """
+        Get the most recent survey for a user.
+        """
+        from google.cloud.firestore import FieldFilter
+        query = self.db.collection('personality_surveys').where(
+            filter=FieldFilter('user_id', '==', uid)
+        ).order_by('created_at', direction=firestore.Query.DESCENDING).limit(1)
+        
+        docs = list(query.stream())
+        if docs:
+            return {**docs[0].to_dict(), 'id': docs[0].id}
+        return None
+    
+    def publish_user_personality(self, uid):
+        """
+        Mark user's most recent survey as published for crowd-sourcing.
+        """
+        survey = self.get_user_survey(uid)
+        if survey:
+            self.db.collection('personality_surveys').document(survey['id']).update({
+                'is_published': True,
+                'published_at': firestore.SERVER_TIMESTAMP
+            })
+            return True
+        return False
+    
+    def get_crowd_sourced_personalities(self, card_ids):
+        """
+        Get crowd-sourced personality data based on card combinations.
+        Returns a dict of personality_id -> count of matching surveys.
+        """
+        from google.cloud.firestore import FieldFilter
+        
+        # Get all published surveys
+        query = self.db.collection('personality_surveys').where(
+            filter=FieldFilter('is_published', '==', True)
+        )
+        
+        personality_counts = {}
+        card_id_set = set(card_ids)
+        
+        for doc in query.stream():
+            survey = doc.to_dict()
+            survey_card_ids = set(survey.get('card_ids', []))
+            
+            # Calculate overlap between user's cards and survey cards
+            overlap = len(card_id_set & survey_card_ids)
+            
+            # Only count if there's significant overlap (at least 50% of user's cards)
+            if overlap >= len(card_id_set) * 0.5:
+                personality_id = survey.get('personality_id')
+                if personality_id:
+                    personality_counts[personality_id] = personality_counts.get(personality_id, 0) + 1
+        
+        return personality_counts
+    
+    def get_suggested_personality(self, uid):
+        """
+        Get personality suggestion based on both card matching and crowd-sourced data.
+        Returns a dict with personality info and confidence score.
+        """
+        # Get user's active cards
+        active_cards = self.get_user_cards(uid, status='active')
+        if not active_cards:
+            return None
+        
+        card_ids = [card['card_id'] for card in active_cards]
+        
+        # Method 1: Card-based matching (existing logic)
+        card_personality_id, card_score, total_cards = self.calculate_personality_from_wallet(uid)
+        
+        # Method 2: Crowd-sourced matching
+        crowd_personalities = self.get_crowd_sourced_personalities(card_ids)
+        
+        # Combine both methods
+        combined_scores = {}
+        
+        # Add card-based score (weight: 60%)
+        if card_personality_id:
+            combined_scores[card_personality_id] = card_score * 0.6
+        
+        # Add crowd-sourced scores (weight: 40%)
+        for personality_id, count in crowd_personalities.items():
+            if personality_id in combined_scores:
+                combined_scores[personality_id] += count * 0.4
+            else:
+                combined_scores[personality_id] = count * 0.4
+        
+        if not combined_scores:
+            return None
+        
+        # Get best match
+        best_personality_id = max(combined_scores, key=combined_scores.get)
+        best_score = combined_scores[best_personality_id]
+        
+        # Get personality details
+        personality = self.get_personality_by_slug(best_personality_id)
+        if personality:
+            personality['suggested_score'] = best_score
+            personality['card_match_score'] = card_score if card_personality_id == best_personality_id else 0
+            personality['crowd_match_count'] = crowd_personalities.get(best_personality_id, 0)
+        
+        return personality
 
     # Blog Methods
     def get_blogs(self, status=None, limit=None):

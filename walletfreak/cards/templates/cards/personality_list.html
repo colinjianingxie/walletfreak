@@ -55,6 +55,41 @@
     }
 </style>
 
+<!-- User's Assigned Personality (if exists) -->
+{% if assigned_personality %}
+<section class="container" style="padding: 2rem 0 1rem;">
+    <div style="background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%); border-radius: 20px; padding: 2rem; border: 1px solid #E9D5FF; box-shadow: 0 4px 12px rgba(168, 85, 247, 0.15);">
+        <div style="display: grid; grid-template-columns: auto 1fr auto; gap: 2rem; align-items: center;">
+            <!-- Left: Icon -->
+            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #A855F7 0%, #9333EA 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; box-shadow: 0 8px 16px rgba(168, 85, 247, 0.3);">
+                {{ assigned_personality.icon|default:"🎯" }}
+            </div>
+
+            <!-- Middle: Info -->
+            <div>
+                <div style="font-size: 0.75rem; color: #7C3AED; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 0.5rem; text-transform: uppercase;">
+                    YOUR PERSONALITY
+                </div>
+                
+                <h3 style="font-size: 1.75rem; font-weight: 800; margin: 0 0 0.5rem 0; color: #1F2937;">
+                    {{ assigned_personality.name }}
+                </h3>
+
+                <p style="color: #64748B; line-height: 1.6; margin: 0; font-size: 0.9375rem; max-width: 600px;">
+                    {{ assigned_personality.tagline }}
+                </p>
+            </div>
+
+            <!-- Right: Action -->
+            <a href="{% url 'personality_results' %}" style="padding: 1rem 1.5rem; background: white; color: #7C3AED; border: 2px solid #A855F7; border-radius: 12px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; white-space: nowrap;">
+                View Details
+                <span class="material-icons" style="font-size: 18px;">arrow_forward</span>
+            </a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
 <!-- Personalities Grid -->
 <section class="container" style="padding: 4rem 0;">
     <div style="display: flex; flex-direction: column; gap: 2rem;" id="personalities-grid">

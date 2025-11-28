@@ -6,13 +6,14 @@ def parse_benefits_csv(csv_path):
     """
     Parse the benefits CSV and return structured card data.
     
-    CSV Format: Vendor,CardName,BenefitDescription,Category,DollarValue,EffectiveDate
+    CSV Format: Vendor,CardName,AnnualFee,BenefitDescription,Category,DollarValue,EffectiveDate
     
     Returns a dictionary mapping card names to their data structure:
     {
         'card_name': {
             'name': str,
             'issuer': str,
+            'annual_fee': int,
             'benefits': [
                 {
                     'description': str,
@@ -27,19 +28,29 @@ def parse_benefits_csv(csv_path):
     cards_dict = defaultdict(lambda: {
         'name': '',
         'issuer': '',
+        'annual_fee': 0,
         'benefits': []
     })
     
     with open(csv_path, 'r', encoding='utf-8') as f:
-        # Use csv.QUOTE_ALL to handle commas within quoted fields
-        reader = csv.DictReader(f, quoting=csv.QUOTE_MINIMAL)
+        # Use semicolon as delimiter
+        reader = csv.DictReader(f, delimiter=';', quoting=csv.QUOTE_MINIMAL)
         for row in reader:
             vendor = row['Vendor'].strip()
             card_name = row['CardName'].strip()
+            annual_fee_str = row['AnnualFee'].strip()
             benefit_desc = row['BenefitDescription'].strip()
             category = row['Category'].strip()
             dollar_value_str = row['DollarValue'].strip()
             effective_date = row['EffectiveDate'].strip()
+            
+            # Parse annual fee
+            annual_fee = 0
+            if annual_fee_str:
+                try:
+                    annual_fee = int(annual_fee_str)
+                except ValueError:
+                    annual_fee = 0
             
             # Parse dollar value
             dollar_value = None
@@ -53,6 +64,7 @@ def parse_benefits_csv(csv_path):
             if not cards_dict[card_name]['name']:
                 cards_dict[card_name]['name'] = card_name
                 cards_dict[card_name]['issuer'] = vendor
+                cards_dict[card_name]['annual_fee'] = annual_fee
             
             # Add benefit
             benefit = {
@@ -75,15 +87,11 @@ def convert_to_firestore_format(cards_dict):
     firestore_cards = []
     
     for card_name, card_data in cards_dict.items():
-        # Determine annual fee (we'll need to infer or set default)
-        # For now, we'll set it to 0 and can be updated manually in admin
-        annual_fee = 0
-        
         # Create the card document
         card_doc = {
             'name': card_data['name'],
             'issuer': card_data['issuer'],
-            'annual_fee': annual_fee,
+            'annual_fee': card_data['annual_fee'],
             'benefits': card_data['benefits'],
             'image_url': '',
             'referral_links': [],

@@ -21,16 +21,30 @@
             </h1>
             <div style="display: flex; align-items: center; gap: 0.75rem; margin-top: 0.5rem;">
                 {% if assigned_personality %}
-                <span
-                    style="background: #E0F2FE; color: #0284C7; font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 4px; letter-spacing: 0.05em; text-transform: uppercase;">
-                    <span class="material-icons" style="font-size: 10px; vertical-align: middle;">psychology</span>
-                    {{ assigned_personality.name }}
-                </span>
+                <a href="{% url 'personality_results' %}" style="text-decoration: none;">
+                    <span
+                        style="background: #E0F2FE; color: #0284C7; font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 4px; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;"
+                        onmouseover="this.style.background='#BAE6FD'"
+                        onmouseout="this.style.background='#E0F2FE'">
+                        <span class="material-icons" style="font-size: 10px; vertical-align: middle;">psychology</span>
+                        {{ assigned_personality.name }}
+                    </span>
+                </a>
                 {% if assigned_personality.match_score %}
                 <span style="color: #64748B; font-size: 0.9rem;">{{ assigned_personality.match_score }} card{{ assigned_personality.match_score|pluralize }} match</span>
                 {% endif %}
                 {% else %}
-                <span style="color: #64748B; font-size: 0.9rem;">Add cards to discover your personality</span>
+                <span style="color: #64748B; font-size: 0.9rem;">
+                    {% if active_cards|length >= 3 %}
+                    <a href="{% url 'personality_survey' %}" style="color: #0284C7; text-decoration: none; font-weight: 500;">Take survey</a> to discover your personality
+                    {% elif active_cards|length == 2 %}
+                    Add 1 more card to discover your personality
+                    {% elif active_cards|length == 1 %}
+                    Add 2 more cards to discover your personality
+                    {% else %}
+                    Add 3 cards to discover your personality
+                    {% endif %}
+                </span>
                 {% endif %}
             </div>
         </div>
@@ -114,71 +128,6 @@
     </div>
 </div>
 
-<!-- Personality Card Section -->
-{% if assigned_personality %}
-<div style="background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%); border-radius: 24px; padding: 2rem; margin-bottom: 2.5rem; border: 1px solid #E9D5FF;">
-    <div style="display: grid; grid-template-columns: auto 1fr auto; gap: 2rem; align-items: center;">
-        <!-- Left: Avatar -->
-        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #A855F7 0%, #9333EA 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; box-shadow: 0 8px 16px rgba(168, 85, 247, 0.3);">
-            <span class="material-icons" style="font-size: 40px; color: white;">psychology</span>
-        </div>
-
-        <!-- Middle: Info -->
-        <div>
-            <div style="font-size: 0.75rem; color: #7C3AED; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 0.5rem; text-transform: uppercase;">
-                YOUR WALLET PERSONALITY
-            </div>
-            
-            <h3 style="font-size: 1.75rem; font-weight: 800; margin: 0 0 0.5rem 0; color: #1F2937;">
-                {{ assigned_personality.name }}
-                {% if assigned_personality.tagline %}
-                <span style="font-size: 1rem; font-weight: 600; color: #7C3AED; margin-left: 0.5rem;">• {{ assigned_personality.tagline }}</span>
-                {% endif %}
-            </h3>
-
-            <p style="color: #64748B; line-height: 1.6; margin: 0 0 1rem 0; font-size: 0.9375rem; max-width: 600px;">
-                {{ assigned_personality.description|truncatewords:30 }}
-            </p>
-
-            <div style="display: flex; gap: 1rem; align-items: center;">
-                {% if assigned_personality.match_score %}
-                <div style="display: flex; align-items: center; gap: 0.5rem;">
-                    <div style="width: 120px; height: 6px; background: #E9D5FF; border-radius: 3px; overflow: hidden;">
-                        <div style="width: {% if active_cards|length > 0 %}{% widthratio assigned_personality.match_score active_cards|length 100 %}{% else %}0{% endif %}%; height: 100%; background: #A855F7; border-radius: 3px;"></div>
-                    </div>
-                    <span style="font-size: 0.875rem; font-weight: 600; color: #7C3AED;">
-                        {{ assigned_personality.match_score }}/{{ active_cards|length }} cards match
-                    </span>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-
-        <!-- Right: Action -->
-        <a href="{% url 'personality_detail' assigned_personality.id %}" style="padding: 1rem 1.5rem; background: white; color: #7C3AED; border: 2px solid #A855F7; border-radius: 12px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; white-space: nowrap;">
-            View Full Details
-            <span class="material-icons" style="font-size: 18px;">arrow_forward</span>
-        </a>
-    </div>
-</div>
-{% elif active_cards|length == 0 %}
-<!-- Empty state: No cards yet -->
-<div style="background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%); border-radius: 24px; padding: 2.5rem; margin-bottom: 2.5rem; text-align: center; border: 2px dashed #E5E7EB;">
-    <div style="width: 64px; height: 64px; background: #EEF2FF; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
-        <span class="material-icons" style="font-size: 32px; color: #6366F1;">add_card</span>
-    </div>
-    <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 0.75rem 0; color: #1F2937;">
-        Discover Your Wallet Personality
-    </h3>
-    <p style="color: #64748B; font-size: 0.9375rem; margin: 0 0 1.5rem 0; max-width: 500px; margin-left: auto; margin-right: auto;">
-        Add your credit cards to automatically discover which personality best matches your wallet strategy.
-    </p>
-    <button onclick="openManageWalletModal('add')" style="padding: 1rem 2rem; background: #6366F1; color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.4);">
-        <span class="material-icons" style="font-size: 18px; vertical-align: middle; margin-right: 0.5rem;">add</span>
-        Add Your First Card
-    </button>
-</div>
-{% endif %}
 
 <!-- Active Benefits Section -->
 <div

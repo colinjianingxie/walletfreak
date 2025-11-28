@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Your Personality - WalletFreak{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+        
+        {% if assigned_personality %}
+        <!-- Main Personality Card -->
+        <div class="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-xl p-8 mb-8 text-white">
+            <div class="flex items-start mb-6">
+                <div class="text-6xl mr-6">{{ assigned_personality.icon }}</div>
+                <div class="flex-1">
+                    <h1 class="text-3xl font-bold mb-2">You are {{ assigned_personality.name }}</h1>
+                    <p class="text-xl text-blue-100 mb-4">{{ assigned_personality.tagline }}</p>
+                    {% if assigned_personality.match_score %}
+                    <div class="inline-block bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-sm">
+                        Match Score: {{ assigned_personality.match_score }} card(s)
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                <h3 class="font-semibold mb-2 text-lg">About This Personality</h3>
+                <p class="text-blue-50">{{ assigned_personality.description }}</p>
+            </div>
+        </div>
+
+        <!-- Your Cards -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Your Active Cards</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {% for card in active_cards %}
+                <div class="text-center">
+                    <div class="bg-gradient-to-br from-gray-700 to-gray-900 rounded-lg p-4 mb-2 h-24 flex items-center justify-center">
+                        <span class="text-white text-xs font-medium">{{ card.name|truncatewords:3 }}</span>
+                    </div>
+                    <p class="text-xs text-gray-600">{{ card.name|truncatewords:4 }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Survey Responses -->
+        {% if survey %}
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Your Survey Responses</h2>
+            <div class="space-y-4">
+                {% for key, value in survey.responses.items %}
+                <div class="border-l-4 border-blue-500 pl-4">
+                    <p class="text-sm text-gray-600 capitalize">{{ key|replace:"_":" " }}</p>
+                    <p class="text-gray-900 font-medium capitalize">{{ value|replace:"_":" " }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            
+            {% if not survey.is_published %}
+            <div class="mt-6 pt-6 border-t border-gray-200">
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <h3 class="font-semibold text-gray-900 mb-2">Help the Community</h3>
+                    <p class="text-sm text-gray-600 mb-4">
+                        Share your personality anonymously to help others discover their credit card personality. 
+                        Your personal information will never be shared.
+                    </p>
+                    <form method="post" action="{% url 'publish_personality' %}">
+                        {% csrf_token %}
+                        <button 
+                            type="submit"
+                            class="bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                        >
+                            Publish My Personality
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% else %}
+            <div class="mt-6 pt-6 border-t border-gray-200">
+                <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 text-green-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-green-800 font-medium">Thank you for contributing to the community!</span>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <!-- Recommended Cards -->
+        {% if assigned_personality.recommended_cards %}
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Recommended Cards for Your Personality</h2>
+            <p class="text-gray-600 mb-4">Based on your personality type, these cards might be a great fit:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {% for card_id in assigned_personality.recommended_cards %}
+                <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                    <div class="bg-gradient-to-br from-gray-700 to-gray-900 rounded-lg p-4 mb-3 h-32 flex items-center justify-center">
+                        <span class="text-white text-sm font-medium">{{ card_id }}</span>
+                    </div>
+                    <a href="{% url 'card_list' %}" class="text-blue-600 hover:text-blue-700 font-medium text-sm">
+                        View Details →
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Actions -->
+        <div class="flex gap-4">
+            <a 
+                href="{% url 'dashboard' %}"
+                class="flex-1 bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors text-center"
+            >
+                Back to Dashboard
+            </a>
+            <a 
+                href="{% url 'personality_survey' %}"
+                class="px-6 py-3 border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+            >
+                Retake Survey
+            </a>
+        </div>
+
+        {% else %}
+        <!-- No Personality Assigned -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
+            <div class="text-6xl mb-4">🤔</div>
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">No Personality Assigned Yet</h2>
+            <p class="text-gray-600 mb-6">
+                Take our quick survey to discover your credit card personality!
+            </p>
+            <a 
+                href="{% url 'personality_survey' %}"
+                class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+            >
+                Take Survey
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -80,6 +80,10 @@ class Personality(FirestoreProxyModel):
     description = models.TextField(blank=True)
     icon = models.CharField(max_length=10, blank=True, help_text="Emoji icon")
     
+    # Survey-related fields
+    survey_questions_json = models.TextField(blank=True, help_text="JSON array of survey questions")
+    recommended_cards_json = models.TextField(blank=True, help_text="JSON array of recommended card IDs")
+    
     class Meta:
         managed = False
         verbose_name = "Personality"
@@ -87,3 +91,84 @@ class Personality(FirestoreProxyModel):
     
     def __str__(self):
         return self.name
+    
+    @property
+    def survey_questions(self):
+        """Parse survey questions from JSON"""
+        if self.survey_questions_json:
+            try:
+                return json.loads(self.survey_questions_json)
+            except:
+                return []
+        return []
+    
+    @survey_questions.setter
+    def survey_questions(self, value):
+        """Serialize survey questions to JSON"""
+        self.survey_questions_json = json.dumps(value, indent=2)
+    
+    @property
+    def recommended_cards(self):
+        """Parse recommended cards from JSON"""
+        if self.recommended_cards_json:
+            try:
+                return json.loads(self.recommended_cards_json)
+            except:
+                return []
+        return []
+    
+    @recommended_cards.setter
+    def recommended_cards(self, value):
+        """Serialize recommended cards to JSON"""
+        self.recommended_cards_json = json.dumps(value)
+
+
+class PersonalitySurvey(FirestoreProxyModel):
+    """
+    Proxy model for personality survey responses stored in Firestore.
+    """
+    survey_id = models.CharField(max_length=200, primary_key=True)
+    user_id = models.CharField(max_length=200)
+    personality_id = models.CharField(max_length=200)
+    responses_json = models.TextField(help_text="JSON object of question_id -> answer")
+    card_ids_json = models.TextField(help_text="JSON array of card IDs user has")
+    is_published = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        managed = False
+        verbose_name = "Personality Survey"
+        verbose_name_plural = "Personality Surveys"
+    
+    def __str__(self):
+        return f"Survey {self.survey_id}"
+    
+    @property
+    def responses(self):
+        """Parse responses from JSON"""
+        if self.responses_json:
+            try:
+                return json.loads(self.responses_json)
+            except:
+                return {}
+        return {}
+    
+    @responses.setter
+    def responses(self, value):
+        """Serialize responses to JSON"""
+        self.responses_json = json.dumps(value)
+    
+    @property
+    def card_ids(self):
+        """Parse card IDs from JSON"""
+        if self.card_ids_json:
+            try:
+                return json.loads(self.card_ids_json)
+            except:
+                return []
+        return []
+    
+    @card_ids.setter
+    def card_ids(self, value):
+        """Serialize card IDs to JSON"""
+        self.card_ids_json = json.dumps(value)

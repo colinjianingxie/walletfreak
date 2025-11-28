@@ -10,12 +10,23 @@ def personality_list(request):
         print(f"Warning: Failed to fetch personalities: {e}")
         personalities = []
     
+    # Get user's assigned personality if authenticated
+    assigned_personality = None
+    if request.user.is_authenticated:
+        uid = request.session.get('uid')
+        if uid:
+            try:
+                assigned_personality = db.get_user_assigned_personality(uid)
+            except Exception as e:
+                print(f"Warning: Failed to fetch user personality: {e}")
+    
     # Convert personalities to JSON for JavaScript
     personalities_json = json.dumps(personalities)
     
     return render(request, 'cards/personality_list.html', {
         'personalities': personalities,
-        'personalities_json': personalities_json
+        'personalities_json': personalities_json,
+        'assigned_personality': assigned_personality
     })
 
 def personality_detail(request, personality_id):
