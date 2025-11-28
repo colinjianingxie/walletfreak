@@ -210,7 +210,17 @@ p {
     border: none !important;
     display: inline-flex !important;
     align-items: center !important;
+    justify-content: center !important;
     text-decoration: none !important;
+    padding: 0.75rem 2rem !important;
+    border-radius: 999px !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    line-height: 1.2 !important;
+    min-width: 120px !important;
+    min-height: 48px !important;
+    box-sizing: border-box !important;
 }
 
 /* Higher specificity to override .nav-links a */

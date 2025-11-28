@@ -106,7 +106,7 @@ def dashboard(request):
                     'remaining': benefit['dollar_value'] - used_amount,
                     'is_used': used_amount >= benefit['dollar_value'],
                     'frequency': benefit.get('category', 'Permanent'),
-                    'reset_date': (period_start + relativedelta(years=1) if reset_period == 'anniversary' else None)
+                    'reset_date': (period_start + relativedelta(years=1) if (reset_period == 'anniversary' and period_start) else None)
                 })
 
     # Calculate totals

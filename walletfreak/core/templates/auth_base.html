@@ -50,14 +50,9 @@
     <!-- Top Navigation Bar -->
     <nav class="navbar">
         <div class="container" style="display: flex; align-items: center; gap: 3rem;">
-            <a href="{% if user.is_authenticated %}{% url 'dashboard' %}{% else %}/{% endif %}" class="logo">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="32" height="32" rx="8" fill="#2563EB" />
-                    <path d="M8 10H24V22C24 23.1 23.1 24 22 24H10C8.9 24 8 23.1 8 22V10Z" stroke="white"
-                        stroke-width="2" />
-                    <path d="M11 14H21" stroke="white" stroke-width="2" stroke-linecap="round" />
-                </svg>
-                WalletFreak
+            <a href="{% if user.is_authenticated %}{% url 'dashboard' %}{% else %}/{% endif %}" class="logo" style="display: flex; align-items: center; gap: 0.75rem; text-decoration: none;">
+                <img src="{% static 'images/logo-mascot.svg' %}" alt="WalletFreak" style="height: 40px; width: auto;">
+                <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.5rem; color: var(--dark); letter-spacing: -0.02em;">WalletFreak</span>
             </a>
 
             <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
@@ -109,7 +104,7 @@
                     </div>
                 </div>
                 {% else %}
-                <a href="{% url 'login' %}" class="btn btn-login" style="padding: 0.625rem 1.5rem; border-radius: 999px; font-weight: 600;">Log In</a>
+                <a href="{% url 'login' %}" class="btn btn-login">Log In</a>
                 {% endif %}
             </div>
         </div>
@@ -169,22 +164,9 @@
                 style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
                 <!-- Brand Section -->
                 <div style="grid-column: span 1;">
-                    <a href="/" class="logo" style="color: white; margin-bottom: 1rem; display: inline-flex;">
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"
-                            style="margin-right: 0.5rem;">
-                            <rect width="32" height="32" rx="8" fill="url(#logo-gradient)" />
-                            <defs>
-                                <linearGradient id="logo-gradient" x1="0" y1="0" x2="32" y2="32"
-                                    gradientUnits="userSpaceOnUse">
-                                    <stop stop-color="#8B5CF6" />
-                                    <stop offset="1" stop-color="#6D28D9" />
-                                </linearGradient>
-                            </defs>
-                            <path d="M8 10H24V22C24 23.1 23.1 24 22 24H10C8.9 24 8 23.1 8 22V10Z" stroke="white"
-                                stroke-width="2" />
-                            <path d="M11 14H21" stroke="white" stroke-width="2" stroke-linecap="round" />
-                        </svg>
-                        WalletFreak
+                    <a href="/" class="logo" style="color: white; margin-bottom: 1rem; display: inline-flex; align-items: center; gap: 0.75rem; text-decoration: none;">
+                        <img src="{% static 'images/logo-mascot.svg' %}" alt="WalletFreak" style="height: 32px; width: auto;">
+                        <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: -0.02em;">WalletFreak</span>
                     </a>
                     <p style="color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 1.5rem;">
                         Master your wallet. Freakishly fast. The ultimate tool for credit card optimization.
