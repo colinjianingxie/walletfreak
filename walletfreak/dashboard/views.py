@@ -179,6 +179,21 @@ def dashboard(request):
                 
                 total_used_value += used
 
+    # Get all available cards for the add card modal
+    import json
+    try:
+        all_available_cards = db.get_cards()
+        # Convert to JSON for JavaScript
+        cards_json = json.dumps([{
+            'id': card.get('id'),
+            'name': card.get('name'),
+            'issuer': card.get('issuer'),
+            'image': 'card-chase'  # You can enhance this based on issuer
+        } for card in all_available_cards])
+    except Exception as e:
+        print(f"Warning: Failed to fetch cards: {e}")
+        cards_json = '[]'
+    
     context = {
         'user_profile': user_profile,
         'active_cards': active_cards,
@@ -187,6 +202,7 @@ def dashboard(request):
         'all_benefits': all_benefits,
         'total_potential_value': total_potential_value,
         'total_used_value': total_used_value,
+        'available_cards_json': cards_json,
     }
     return render(request, 'dashboard/dashboard.html', context)
 

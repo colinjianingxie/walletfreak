@@ -5,4 +5,6 @@ urlpatterns = [
     path('api/login/', views.firebase_login, name='firebase_login'),
     path('api/logout/', views.logout_view, name='logout'),
     path('login/', views.login_view, name='login'),
+    path('profile/', views.profile, name='profile'),
+    path('settings/', views.settings, name='settings'),
 ]
