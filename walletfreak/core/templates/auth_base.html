@@ -72,11 +72,40 @@
                     <a href="{% url 'blog_list' %}">Blog</a>
                 </div>
                 
-                <div style="display: flex; align-items: center; gap: 0.75rem;">
-                    <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
-                        ✈️
+                <div class="user-dropdown">
+                    <button class="user-dropdown-toggle" id="user-dropdown-toggle" aria-label="User menu">
+                        <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
+                            ✈️
+                        </div>
+                        <span style="font-weight: 600; font-size: 0.95rem; color: var(--dark);">{{ user.first_name|default:"Alex" }}</span>
+                    </button>
+                    
+                    <div class="user-dropdown-menu" id="user-dropdown-menu">
+                        <div class="user-dropdown-header">
+                            <div class="user-dropdown-name">{{ user.first_name|default:"Alex" }} {{ user.last_name|default:"Smith" }}</div>
+                            <div class="user-dropdown-tagline">The Jetsetter</div>
+                        </div>
+                        
+                        <a href="#" class="user-dropdown-menu-item">
+                            <span style="font-size: 1.25rem;">👤</span>
+                            Profile
+                        </a>
+                        
+                        <a href="{% url 'wallet' %}" class="user-dropdown-menu-item">
+                            <span style="font-size: 1.25rem;">💳</span>
+                            My Wallet
+                        </a>
+                        
+                        <a href="#" class="user-dropdown-menu-item">
+                            <span style="font-size: 1.25rem;">⚙️</span>
+                            Settings
+                        </a>
+                        
+                        <a href="#" onclick="handleLogout(event)" class="user-dropdown-menu-item logout">
+                            <span style="font-size: 1.25rem;">🚪</span>
+                            Log Out
+                        </a>
                     </div>
-                    <span style="font-weight: 600; font-size: 0.95rem; color: var(--dark);">{{ user.first_name|default:"Alex" }}</span>
                 </div>
             </div>
         </div>
@@ -99,6 +128,24 @@
                 mobileMenuToggle.addEventListener('click', function () {
                     navLinks.classList.toggle('mobile-open');
                     this.textContent = navLinks.classList.contains('mobile-open') ? '✕' : '☰';
+                });
+            }
+
+            // User dropdown toggle
+            const userDropdownToggle = document.getElementById('user-dropdown-toggle');
+            const userDropdownMenu = document.getElementById('user-dropdown-menu');
+
+            if (userDropdownToggle && userDropdownMenu) {
+                userDropdownToggle.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    userDropdownMenu.classList.toggle('active');
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function (e) {
+                    if (!userDropdownMenu.contains(e.target) && !userDropdownToggle.contains(e.target)) {
+                        userDropdownMenu.classList.remove('active');
+                    }
                 });
             }
         });
