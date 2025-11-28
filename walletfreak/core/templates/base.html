@@ -175,9 +175,11 @@
     </script>
 
 
-    <main>
-        {% block content %}
-        {% endblock %}
+    <main style="padding: 3rem 0; background: #F7F7F7; min-height: calc(100vh - 70px);">
+        <div class="container" style="max-width: 1400px;">
+            {% block content %}
+            {% endblock %}
+        </div>
     </main>
 
     <footer style="background: var(--dark); color: white; padding: 4rem 0; margin-top: auto;">

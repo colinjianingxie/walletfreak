@@ -2,44 +2,38 @@
 
 {% block content %}
 <!-- Explore Cards Header -->
-<div style="margin-bottom: 2.5rem;">
-    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
-        <span style="font-size: 1.25rem;">🤖</span>
-        <span style="color: var(--primary); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em;">AI
-            RECOMMENDATIONS</span>
+<div style="margin-bottom: 2rem;">
+    <div style="display: flex; align-items: center; gap: 0.625rem; margin-bottom: 1rem;">
+        <span style="font-size: 1rem;">🤖</span>
+        <span style="color: #6366F1; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;">AI RECOMMENDATIONS</span>
     </div>
 
-    <h1 style="font-size: 2rem; font-weight: 700; margin: 0 0 0.5rem 0;">Explore Cards</h1>
-    <p style="color: var(--text-muted); margin: 0;">Based on your spending profile (The Jetsetter), these cards will
-        maximize your return.</p>
+    <h1 style="font-size: 2rem; font-weight: 700; margin: 0 0 0.625rem 0; color: #1F2937;">Explore Cards</h1>
+    <p style="color: #64748B; margin: 0; font-size: 0.9375rem;">Based on your spending profile (The Jetsetter), these cards will maximize your return.</p>
 </div>
 
 <!-- Search and Filters -->
-<div
-    style="background: white; border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #E5E7EB; box-shadow: var(--elevation-1);">
-    <div style="display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: center;">
+<div style="background: white; border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #E5E7EB; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+    <div style="display: flex; align-items: center; gap: 1rem;">
         <!-- Search Bar -->
-        <div style="position: relative;">
-            <span
-                style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1.1rem;">🔍</span>
+        <div style="position: relative; flex: 1;">
+            <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); font-size: 1rem;">🔍</span>
             <input type="text" id="search-input" placeholder="Search cards by name or issuer..."
-                style="width: 100%; padding: 0.875rem 1rem 0.875rem 3rem; border: 1px solid #E5E7EB; border-radius: var(--radius-md); font-size: 0.95rem;">
+                style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.75rem; border: 1px solid #E5E7EB; border-radius: 10px; font-size: 0.9375rem; outline: none;">
         </div>
 
-        <!-- Filter Pills + Filter Icon -->
-        <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <div class="filter-pills" id="filter-pills" style="display: flex; gap: 0.5rem;">
-                <button class="filter-pill active" data-category="all">All Cards</button>
-                <button class="filter-pill" data-category="travel">Travel</button>
-                <button class="filter-pill" data-category="cash-back">Cash Back</button>
-                <button class="filter-pill" data-category="no-fee">No Fee</button>
-            </div>
-            <button
-                style="background: none; border: 1px solid #E5E7EB; border-radius: var(--radius-md); padding: 0.5rem 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center;"
-                title="More Filters">
-                <span style="font-size: 1.25rem;">⚙️</span>
-            </button>
+        <!-- Filter Pills -->
+        <div class="filter-pills" id="filter-pills" style="display: flex; gap: 0.5rem;">
+            <button class="filter-pill active" data-category="all">All Cards</button>
+            <button class="filter-pill" data-category="travel">Travel</button>
+            <button class="filter-pill" data-category="cash-back">Cash Back</button>
+            <button class="filter-pill" data-category="no-fee">No Fee</button>
         </div>
+        
+        <!-- Filter Icon -->
+        <button style="background: none; border: 1px solid #E5E7EB; border-radius: 10px; padding: 0.5rem 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;" title="More Filters">
+            <span style="font-size: 1.125rem;">⚙️</span>
+        </button>
     </div>
 </div>
 
@@ -49,7 +43,7 @@
     {% for card in cards %}
     <div class="card-item" data-name="{{ card.name|lower }}" data-issuer="{{ card.issuer|lower }}"
         data-categories="{{ card.categories|join:',' }}" data-fee="{{ card.annual_fee|default:0 }}"
-        style="background: white; border-radius: var(--radius-lg); padding: 2rem; border: 1px solid #E5E7EB; box-shadow: var(--elevation-1); transition: all 0.3s;">
+        style="background: white; border-radius: 16px; padding: 1.75rem; border: 1px solid #E5E7EB; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: all 0.3s;">
         <!-- 3D Credit Card -->
         <div class="credit-card {% if 'american express' in card.name|lower or 'amex' in card.name|lower %}{% if 'platinum' in card.name|lower %}card-amex-platinum{% else %}card-gold{% endif %}{% elif 'chase' in card.name|lower %}card-chase{% elif 'capital one' in card.name|lower %}card-capital-one{% elif 'citi' in card.name|lower %}card-citi{% else %}card-chase{% endif %}"
             style="margin-bottom: 1.5rem;">
@@ -74,56 +68,49 @@
         </div>
 
         <!-- Card Details -->
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem;">
             <div style="flex: 1;">
-                <h3 style="font-size: 1.25rem; font-weight: 700; margin: 0 0 0.25rem 0; color: var(--dark);">
+                <h3 style="font-size: 1.125rem; font-weight: 700; margin: 0 0 0.375rem 0; color: #1F2937;">
                     {{ card.name }}
                 </h3>
-                <div style="font-size: 0.85rem; color: var(--text-muted);">{{ card.issuer }}</div>
+                <div style="font-size: 0.875rem; color: #64748B;">{{ card.issuer }}</div>
             </div>
             <div>
-                <div
-                    style="font-size: 1.75rem; font-weight: 700; color: var(--dark); text-align: right; line-height: 1;">
+                <div style="font-size: 1.75rem; font-weight: 800; color: #1F2937; text-align: right; line-height: 1;">
                     {% if forloop.counter == 1 %}98{% elif forloop.counter == 2 %}88{% else %}85{% endif %}%
                 </div>
-                <div
-                    style="font-size: 0.75rem; color: var(--success); font-weight: 600; text-align: right; margin-top: 0.25rem;">
+                <div style="font-size: 0.6875rem; color: #10B981; font-weight: 700; text-align: right; margin-top: 0.25rem; letter-spacing: 0.025em;">
                     MATCH</div>
             </div>
         </div>
 
         <!-- Rewards Info -->
-        <div
-            style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; padding: 0.75rem; background: var(--bg-body); border-radius: var(--radius-md);">
-            <span style="font-size: 1.1rem;">🎁</span>
+        <div style="display: flex; align-items: center; gap: 0.625rem; margin-bottom: 0.75rem; padding: 0.875rem; background: #F9FAFB; border-radius: 10px;">
+            <span style="font-size: 1rem;">🎁</span>
             <div style="flex: 1;">
-                <div
-                    style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.125rem;">
+                <div style="font-size: 0.6875rem; color: #9CA3AF; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; font-weight: 600;">
                     REWARDS</div>
-                <div style="font-size: 0.9rem; font-weight: 600; color: var(--dark);">
+                <div style="font-size: 0.875rem; font-weight: 600; color: #1F2937;">
                     {% if card.rewards_summary %}{{ card.rewards_summary }}{% else %}2x Everything{% endif %}
                 </div>
             </div>
         </div>
 
         <!-- Annual Fee Info -->
-        <div
-            style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; padding: 0.75rem; background: var(--bg-body); border-radius: var(--radius-md);">
-            <span style="font-size: 1.1rem;">💰</span>
+        <div style="display: flex; align-items: center; gap: 0.625rem; margin-bottom: 1.5rem; padding: 0.875rem; background: #F9FAFB; border-radius: 10px;">
+            <span style="font-size: 1rem;">💰</span>
             <div style="flex: 1;">
-                <div
-                    style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.125rem;">
+                <div style="font-size: 0.6875rem; color: #9CA3AF; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; font-weight: 600;">
                     ANNUAL FEE</div>
-                <div style="font-size: 0.9rem; font-weight: 600; color: var(--dark);">${{ card.annual_fee|default:0 }}
-                </div>
+                <div style="font-size: 0.875rem; font-weight: 600; color: #1F2937;">${{ card.annual_fee|default:0 }}</div>
             </div>
         </div>
 
         <!-- Apply Button -->
-        <a href="{% url 'card_detail' card.id %}" class="btn"
-            style="width: 100%; background: var(--dark); color: white; padding: 0.875rem; text-align: center; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none;">
+        <a href="{% url 'card_detail' card.id %}"
+            style="width: 100%; background: #1E293B; color: white; padding: 0.875rem; text-align: center; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none; border-radius: 10px; font-size: 0.9375rem; transition: all 0.2s;">
             Apply Now
-            <span style="font-size: 0.9rem;">→</span>
+            <span style="font-size: 0.875rem;">→</span>
         </a>
     </div>
     {% empty %}
