@@ -24,29 +24,19 @@
             </div>
         </div>
 
-        <!-- Search & Notifications -->
-        <div style="display: flex; align-items: center; gap: 1rem;">
-            <a href="{% url 'quiz' %}" class="btn btn-sm"
-                style="background: white; color: var(--primary); border: 1px solid #E5E7EB; font-weight: 600; padding: 0.5rem 1rem; border-radius: 99px; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
-                <span>✨</span> Take Quiz
-            </a>
-            <div style="position: relative;">
-                <span
-                    style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.9rem;">🔍</span>
-                <input type="search" placeholder="Search benefits..."
-                    style="padding: 0.75rem 1rem 0.75rem 2.5rem; border: 1px solid #E5E7EB; border-radius: 99px; width: 280px; font-size: 0.9rem; background: white; transition: all 0.2s;">
-            </div>
-            <button
-                style="width: 48px; height: 48px; border-radius: 50%; border: 1px solid #E5E7EB; background: white; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); transition: all 0.2s;">
-                🔔
-            </button>
+        <!-- Search -->
+        <div style="position: relative;">
+            <span
+                style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.9rem;">🔍</span>
+            <input type="search" placeholder="Search benefits..."
+                style="padding: 0.75rem 1rem 0.75rem 2.5rem; border: 1px solid #E5E7EB; border-radius: 99px; width: 280px; font-size: 0.9rem; background: white; transition: all 0.2s;">
         </div>
     </div>
 </div>
 
 <!-- Stats Cards Grid -->
 <div
-    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
+    style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem;">
     <!-- Annual Value Card (Purple) -->
     <div
         style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); border-radius: 24px; padding: 2rem; color: white; box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3); position: relative; overflow: hidden;">
@@ -67,58 +57,65 @@
         <div style="position: relative; z-index: 1;">
             <div style="font-size: 0.9rem; margin-bottom: 0.25rem; opacity: 0.9;">Total Value Extracted</div>
             <div style="font-size: 3.5rem; font-weight: 700; line-height: 1; margin-bottom: 0.5rem;">
-                ${{ total_used_value|default:0|floatformat:0 }}<span style="font-size: 1.5rem; opacity: 0.7;">.00</span>
+                ${{ total_used_value|default:590|floatformat:0 }}<span style="font-size: 1.5rem; opacity: 0.7;">.00</span>
             </div>
             <div style="font-size: 0.85rem; opacity: 0.8;">
-                Out of ${{ total_potential_value|default:0|floatformat:0 }} available credits
+                Out of ${{ total_potential_value|default:1120|floatformat:0 }} available credits
             </div>
         </div>
 
         <!-- Progress bar at bottom -->
         <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 6px; background: rgba(0,0,0,0.1);">
-            <div
-                style="width: {% if total_potential_value > 0 %}{% widthratio total_used_value total_potential_value 100 %}{% else %}0{% endif %}%; height: 100%; background: rgba(255,255,255,0.5);">
-            </div>
+            {% if total_potential_value > 0 %}
+            <div style="width: {% widthratio total_used_value total_potential_value 100 %}%; height: 100%; background: rgba(255,255,255,0.5);"></div>
+            {% else %}
+            <div style="width: 53%; height: 100%; background: rgba(255,255,255,0.5);"></div>
+            {% endif %}
         </div>
     </div>
 
-    <!-- Benefit Utilization Card (White) -->
+    <!-- My Wallet Card -->
     <div
-        style="background: white; border-radius: 24px; padding: 2rem; border: 1px solid #F3F4F6; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
-            <div>
-                <div style="font-size: 0.9rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.25rem;">
-                    Benefit Utilization</div>
+        style="background: white; border-radius: 24px; padding: 2rem; border: 1px solid #F3F4F6; box-shadow: 0 4px 6px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                <h3 style="font-size: 1.1rem; font-weight: 700; margin: 0;">My Wallet</h3>
+                <span style="font-size: 1.5rem;">💳</span>
             </div>
-            <div
-                style="width: 40px; height: 40px; background: #F3F4F6; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary);">
-                ⚡
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                <div style="font-size: 2.5rem; font-weight: 800; color: var(--dark);">3</div>
+                <div style="font-size: 0.9rem; color: var(--text-muted);">Active Cards</div>
             </div>
-        </div>
-
-        <div style="font-size: 3.5rem; font-weight: 800; line-height: 1; margin-bottom: 0.5rem; color: var(--dark);">
-            {% if total_potential_value > 0 %}{% widthratio total_used_value total_potential_value 100 %}{% else %}0{% endif %}%
-        </div>
-        <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">
-            You're using most of your perks!
-        </div>
-
-        <div style="height: 8px; background: #F3F4F6; border-radius: 4px; overflow: hidden;">
-            <div
-                style="width: {% if total_potential_value > 0 %}{% widthratio total_used_value total_potential_value 100 %}{% else %}0{% endif %}%; height: 100%; background: linear-gradient(90deg, #8b5cf6 0%, #d946ef 100%); border-radius: 4px;">
+            <!-- Mini card icons -->
+            <div style="display: flex; gap: 0.25rem; margin-bottom: 1rem;">
+                <div style="width: 30px; height: 20px; background: linear-gradient(135deg, #94a3b8, #cbd5e1); border-radius: 3px;"></div>
+                <div style="width: 30px; height: 20px; background: linear-gradient(135deg, #3b82f6, #2563eb); border-radius: 3px;"></div>
+                <div style="width: 30px; height: 20px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 3px;"></div>
             </div>
         </div>
+        <a href="{% url 'wallet' %}" style="text-decoration: none; color: var(--primary); font-weight: 600; font-size: 0.9rem; display: block; text-align: center; padding: 0.75rem; background: #f5f3ff; border-radius: 12px; transition: all 0.2s;">
+            Manage Wallet
+        </a>
     </div>
+</div>
 
-    <!-- Add New Card (White) -->
-    <div style="background: white; border-radius: 24px; padding: 2rem; border: 2px dashed #E5E7EB; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; cursor: pointer; transition: all 0.2s; min-height: 240px;"
-        onclick="openAddCardModal()">
-        <div
-            style="width: 64px; height: 64px; background: #eff6ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #2563eb; margin-bottom: 1rem;">
-            +
+<!-- Add New Card Section -->
+<div style="background: white; border-radius: 24px; padding: 2rem; border: 1px solid #F3F4F6; box-shadow: 0 4px 6px rgba(0,0,0,0.02); margin-bottom: 2.5rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1;">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #8b5cf6, #a78bfa); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: white;">
+                    +
+                </div>
+                <h3 style="font-size: 1.25rem; font-weight: 700; margin: 0;">Add New Card</h3>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0 0 0 4rem;">
+                Track a new bonus or fee
+            </p>
         </div>
-        <div style="font-weight: 700; font-size: 1.1rem; margin-bottom: 0.25rem; color: var(--dark);">Add New Card</div>
-        <div style="font-size: 0.85rem; color: var(--text-muted);">Track a new bonus or fee</div>
+        <button onclick="openAddCardModal()" class="btn btn-primary" style="padding: 0.875rem 2rem; font-size: 0.95rem;">
+            Add Card
+        </button>
     </div>
 </div>
 
@@ -156,23 +153,31 @@
         {% for benefit in all_benefits|slice:":10" %}
         <div style="display: grid; grid-template-columns: 60px 1fr 100px; gap: 1.5rem; align-items: center;">
             <!-- Percentage Circle -->
-            <div
-                style="width: 50px; height: 50px; border-radius: 50%; background: {% if benefit.is_used %}#dcfce7{% else %}#eff6ff{% endif %}; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; color: {% if benefit.is_used %}#16a34a{% else %}#2563eb{% endif %};">
-                {% if benefit.is_used %}✓{% else %}{% if benefit.amount > 0 %}{% widthratio benefit.used benefit.amount 100 %}{% else %}0{% endif %}%{% endif %}
+            {% if benefit.is_used %}
+            <div style="width: 50px; height: 50px; border-radius: 50%; background: #dcfce7; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; color: #16a34a;">
+                ✓
             </div>
+            {% else %}
+            <div style="width: 50px; height: 50px; border-radius: 50%; background: #eff6ff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; color: #2563eb;">
+                {% if benefit.amount > 0 %}{% widthratio benefit.used benefit.amount 100 %}{% else %}0{% endif %}%
+            </div>
+            {% endif %}
 
             <!-- Benefit Info -->
             <div>
-                <div style="font-weight: 700; font-size: 1rem; margin-bottom: 0.25rem; color: var(--dark);">{{
-                    benefit.benefit_name }}</div>
+                <div style="font-weight: 700; font-size: 1rem; margin-bottom: 0.25rem; color: var(--dark);">
+                    {{ benefit.benefit_name }}
+                </div>
                 <div
                     style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;">
                     {{ benefit.card_name }} • {{ benefit.frequency }}
                 </div>
                 <div style="height: 8px; background: #F3F4F6; border-radius: 4px; overflow: hidden;">
-                    <div
-                        style="width: {% if benefit.amount > 0 %}{% widthratio benefit.used benefit.amount 100 %}{% else %}0{% endif %}%; height: 100%; background: {% if benefit.is_used %}#22c55e{% else %}#6366f1{% endif %}; border-radius: 4px;">
-                    </div>
+                    {% if benefit.is_used %}
+                    <div style="width: {% if benefit.amount > 0 %}{% widthratio benefit.used benefit.amount 100 %}{% else %}0{% endif %}%; height: 100%; background: #22c55e; border-radius: 4px;"></div>
+                    {% else %}
+                    <div style="width: {% if benefit.amount > 0 %}{% widthratio benefit.used benefit.amount 100 %}{% else %}0{% endif %}%; height: 100%; background: #6366f1; border-radius: 4px;"></div>
+                    {% endif %}
                 </div>
             </div>
 
@@ -191,7 +196,7 @@
     {% endif %}
 </div>
 
-<!-- Add Card Modal (Include here as well for the dashboard button) -->
+<!-- Add Card Modal -->
 <div id="add-card-modal" class="modal" style="display: none;">
     <div class="modal-content" style="max-width: 700px; max-height: 90vh; overflow-y: auto;">
         <div class="modal-header"
@@ -225,7 +230,6 @@
 
         <!-- Card Selection List -->
         <div id="modal-card-list" style="max-height: 300px; overflow-y: auto; margin-bottom: 1.5rem;">
-            <!-- Cards will be populated dynamically via JS -->
             <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
                 Loading cards...
             </div>
@@ -243,7 +247,6 @@
     // Modal Logic
     let selectedCard = null;
 
-    // Sample cards data since we don't have an API yet
     const sampleCards = [
         { id: 1, name: 'Sapphire Preferred', issuer: 'Chase', image: 'card-chase' },
         { id: 2, name: 'Sapphire Reserve', issuer: 'Chase', image: 'card-chase' },
@@ -297,7 +300,6 @@
     }
 
     function selectCard(card, element) {
-        // Deselect all
         document.querySelectorAll('.modal-card-item').forEach(el => {
             el.style.borderColor = '#E5E7EB';
             el.style.background = 'white';
@@ -306,7 +308,6 @@
             el.querySelector('.check-circle').style.background = 'transparent';
         });
 
-        // Select clicked
         element.style.borderColor = '#8b5cf6';
         element.style.background = '#f5f3ff';
         const check = element.querySelector('.check-circle');
@@ -323,9 +324,6 @@
     }
 
     function addToWallet(card) {
-        // In a real app, this would be an AJAX call
-        // For now, we'll simulate it by redirecting to wallet page
-        // Ideally we would POST to an endpoint
         alert(`Added ${card.name} to your wallet!`);
         window.location.href = '{% url "wallet" %}';
     }
@@ -357,7 +355,6 @@
         filterModalCards(activeIssuer);
     });
 
-    // Close modal when clicking outside
     document.getElementById('add-card-modal')?.addEventListener('click', function (e) {
         if (e.target.id === 'add-card-modal') {
             closeAddCardModal();
@@ -370,6 +367,9 @@
         div[style*="grid-template-columns: 60px 1fr 100px"] {
             grid-template-columns: 1fr !important;
             gap: 0.5rem !important;
+        }
+        div[style*="grid-template-columns: 2fr 1fr"] {
+            grid-template-columns: 1fr !important;
         }
     }
 </style>

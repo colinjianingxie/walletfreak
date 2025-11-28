@@ -16,8 +16,11 @@
     <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
 
+    <script id="firebase-config" type="application/json">
+        {{ firebase_config_json|safe }}
+    </script>
     <script>
-        const firebaseConfig = {{ firebase_config_json| safe }};
+        const firebaseConfig = JSON.parse(document.getElementById('firebase-config').textContent);
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
@@ -58,7 +61,7 @@
 
 <body>
     <nav class="navbar">
-        <div class="container">
+        <div class="container" style="display: flex; align-items: center; gap: 3rem;">
             <a href="/" class="logo">
                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="32" height="32" rx="8" fill="#2563EB" />
@@ -73,35 +76,40 @@
                 ☰
             </button>
 
-            <div class="nav-links" id="nav-links">
-                <a href="{% url 'features' %}">Features</a>
-                <a href="{% url 'personality_list' %}">Personalities</a>
-                <a href="{% url 'blog_list' %}">Blog</a>
-                {% if user.is_authenticated %}
-                {% if user.is_staff %}
-                <a href="/admin/" style="color: var(--primary); font-weight: 600;">Admin</a>
-                {% endif %}
-                <a href="{% url 'dashboard' %}">Dashboard</a>
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <span style="font-weight: 600; font-size: 0.9rem;">{{ user.first_name|default:user.email }}</span>
-                    <a href="#" onclick="handleLogout(event)" style="color: var(--text-muted); font-size: 1.2rem;"
-                        title="Logout">→</a>
+            <div class="nav-links" id="nav-links" style="flex: 1; justify-content: space-between;">
+                <div style="display: flex; gap: 2rem; align-items: center;">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'dashboard' %}">Dashboard</a>
+                    {% else %}
+                    <a href="{% url 'features' %}">Features</a>
+                    {% endif %}
+                    <a href="{% url 'card_list' %}">Explore</a>
+                    <a href="{% url 'personality_list' %}">Personalities</a>
+                    <a href="{% url 'blog_list' %}">Blog</a>
                 </div>
-                <script>
-                    function handleLogout(e) {
-                        e.preventDefault();
-                        firebase.auth().signOut().then(() => {
-                            window.location.href = "/logout/";
-                        });
-                    }
-                </script>
+                
+                {% if user.is_authenticated %}
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
+                        ✈️
+                    </div>
+                    <span style="font-weight: 600; font-size: 0.95rem; color: var(--dark);">{{ user.first_name|default:"Alex" }}</span>
+                </div>
                 {% else %}
                 <a href="{% url 'login' %}" class="btn btn-sm"
-                    style="background: white; border: 2px solid var(--primary); color: var(--primary);">Log In</a>
-                <a href="{% url 'quiz' %}" class="btn btn-primary btn-sm">Get Started</a>
+                    style="background: var(--dark); color: white; padding: 0.625rem 1.5rem; border-radius: 999px; font-weight: 600;">Log In</a>
                 {% endif %}
             </div>
         </div>
+        
+        <script>
+            function handleLogout(e) {
+                e.preventDefault();
+                firebase.auth().signOut().then(() => {
+                    window.location.href = "/logout/";
+                });
+            }
+        </script>
     </nav>
 
     <script>

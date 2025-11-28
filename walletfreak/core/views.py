@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.conf import settings
 from .services import db
 
@@ -11,16 +11,16 @@ def home(request):
         print(f"Warning: Failed to fetch personalities: {e}")
         
     # Fetch blog posts for the landing page
-    blogs = []
+    blog_posts = []
     try:
-        blogs = db.get_blogs()[:3]  # Get latest 3 blog posts
+        blog_posts = db.get_blogs()[:4]  # Get latest 4 blog posts (1 featured + 3 list)
     except Exception as e:
         print(f"Warning: Failed to fetch blog posts: {e}")
         
     context = {
         'firebase_config': settings.FIREBASE_CLIENT_CONFIG,
         'personalities': personalities,
-        'blogs': blogs
+        'blog_posts': blog_posts
     }
     return render(request, 'landing.html', context)
 
@@ -31,6 +31,10 @@ def quiz(request):
     return render(request, 'quiz.html', context)
 
 def features(request):
+    # Redirect to dashboard if user is authenticated
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+    
     context = {
         'firebase_config': settings.FIREBASE_CLIENT_CONFIG,
     }

@@ -13,8 +13,11 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 
+    <script id="firebase-config" type="application/json">
+        {{ firebase_config_json|safe }}
+    </script>
     <script>
-        const firebaseConfig = {{ firebase_config_json| safe }};
+        const firebaseConfig = JSON.parse(document.getElementById('firebase-config').textContent);
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
@@ -44,75 +47,167 @@
 </head>
 
 <body>
-    <div class="auth-layout">
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar">
-            <div class="sidebar-logo">
-                <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="32" height="32" rx="8" fill="url(#sidebar-logo-gradient)" />
-                    <defs>
-                        <linearGradient id="sidebar-logo-gradient" x1="0" y1="0" x2="32" y2="32"
-                            gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#8B5CF6" />
-                            <stop offset="1" stop-color="#6D28D9" />
-                        </linearGradient>
-                    </defs>
+    <!-- Top Navigation Bar -->
+    <nav class="navbar">
+        <div class="container" style="display: flex; align-items: center; gap: 3rem;">
+            <a href="/" class="logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="#2563EB" />
                     <path d="M8 10H24V22C24 23.1 23.1 24 22 24H10C8.9 24 8 23.1 8 22V10Z" stroke="white"
                         stroke-width="2" />
                     <path d="M11 14H21" stroke="white" stroke-width="2" stroke-linecap="round" />
                 </svg>
                 WalletFreak
-            </div>
-
-            <nav class="sidebar-nav">
-                <a href="{% url 'dashboard' %}"
-                    class="sidebar-nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
-                    <span class="icon">📊</span>
-                    Dashboard
-                </a>
-                <a href="{% url 'wallet' %}"
-                    class="sidebar-nav-item {% if request.resolver_match.url_name == 'wallet' %}active{% endif %}">
-                    <span class="icon">💳</span>
-                    My Wallet
-                </a>
-                <a href="{% url 'card_list' %}"
-                    class="sidebar-nav-item {% if request.resolver_match.url_name == 'card_list' %}active{% endif %}">
-                    <span class="icon">🧭</span>
-                    Explore Cards
-                </a>
-                <a href="{% url 'profile' %}"
-                    class="sidebar-nav-item {% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
-                    <span class="icon">👤</span>
-                    Profile
-                </a>
-                <a href="{% url 'settings' %}"
-                    class="sidebar-nav-item {% if request.resolver_match.url_name == 'settings' %}active{% endif %}">
-                    <span class="icon">⚙️</span>
-                    Settings
-                </a>
-            </nav>
-
-            <a href="#" onclick="handleLogout(event)" class="sidebar-logout">
-                <span class="icon">🚪</span>
-                Log Out
             </a>
 
-            <script>
-                function handleLogout(e) {
-                    e.preventDefault();
-                    firebase.auth().signOut().then(() => {
-                        window.location.href = "/logout/";
-                    });
-                }
-            </script>
-        </aside>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                ☰
+            </button>
 
-        <!-- Main Content Area -->
-        <main class="auth-content">
+            <div class="nav-links" id="nav-links" style="flex: 1; justify-content: space-between;">
+                <div style="display: flex; gap: 2rem; align-items: center;">
+                    <a href="{% url 'dashboard' %}">Dashboard</a>
+                    <a href="{% url 'card_list' %}">Explore</a>
+                    <a href="{% url 'personality_list' %}">Personalities</a>
+                    <a href="{% url 'blog_list' %}">Blog</a>
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
+                        ✈️
+                    </div>
+                    <span style="font-weight: 600; font-size: 0.95rem; color: var(--dark);">{{ user.first_name|default:"Alex" }}</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        function handleLogout(e) {
+            e.preventDefault();
+            firebase.auth().signOut().then(() => {
+                window.location.href = "/logout/";
+            });
+        }
+
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const navLinks = document.getElementById('nav-links');
+
+            if (mobileMenuToggle) {
+                mobileMenuToggle.addEventListener('click', function () {
+                    navLinks.classList.toggle('mobile-open');
+                    this.textContent = navLinks.classList.contains('mobile-open') ? '✕' : '☰';
+                });
+            }
+        });
+    </script>
+
+    <!-- Main Content Area -->
+    <main style="padding: 2rem 0;">
+        <div class="container">
             {% block content %}
             {% endblock %}
-        </main>
-    </div>
+        </div>
+    </main>
+
+    <footer style="background: var(--dark); color: white; padding: 4rem 0; margin-top: auto;">
+        <div class="container">
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
+                <!-- Brand Section -->
+                <div style="grid-column: span 1;">
+                    <a href="/" class="logo" style="color: white; margin-bottom: 1rem; display: inline-flex;">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            style="margin-right: 0.5rem;">
+                            <rect width="32" height="32" rx="8" fill="url(#logo-gradient)" />
+                            <defs>
+                                <linearGradient id="logo-gradient" x1="0" y1="0" x2="32" y2="32"
+                                    gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#8B5CF6" />
+                                    <stop offset="1" stop-color="#6D28D9" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M8 10H24V22C24 23.1 23.1 24 22 24H10C8.9 24 8 23.1 8 22V10Z" stroke="white"
+                                stroke-width="2" />
+                            <path d="M11 14H21" stroke="white" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        WalletFreak
+                    </a>
+                    <p style="color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 1.5rem;">
+                        Master your wallet. Freakishly fast. The ultimate tool for credit card optimization.
+                    </p>
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="#" style="color: rgba(255,255,255,0.7); text-decoration: none;">🐦</a>
+                        <a href="#" style="color: rgba(255,255,255,0.7); text-decoration: none;">📸</a>
+                        <a href="#" style="color: rgba(255,255,255,0.7); text-decoration: none;">💼</a>
+                    </div>
+                </div>
+
+                <!-- Product Links -->
+                <div>
+                    <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 1.5rem; letter-spacing: 0.05em;">
+                        PRODUCT</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <a href="{% url 'features' %}"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Features</a>
+                        <a href="{% url 'quiz' %}"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Wallet
+                            Vibe Quiz</a>
+                        <a href="{% url 'personality_list' %}"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Personalities</a>
+                        <a href="#"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Pricing</a>
+                    </div>
+                </div>
+
+                <!-- Resources Links -->
+                <div>
+                    <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 1.5rem; letter-spacing: 0.05em;">
+                        RESOURCES</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <a href="{% url 'blog_list' %}"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">The
+                            Ledger</a>
+                        <a href="#"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Card
+                            Database</a>
+                        <a href="#"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Help
+                            Center</a>
+                        <a href="#"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Contact
+                            Us</a>
+                    </div>
+                </div>
+
+                <!-- Legal Links -->
+                <div>
+                    <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 1.5rem; letter-spacing: 0.05em;">LEGAL
+                    </h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <a href="#"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Privacy
+                            Policy</a>
+                        <a href="#"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Terms
+                            of Service</a>
+                        <a href="#"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Cookie
+                            Policy</a>
+                        <a href="#"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Disclaimer</a>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; text-align: center; color: rgba(255,255,255,0.5); font-size: 0.875rem;">
+                <p>&copy; 2025 WalletFreak. All rights reserved. WalletFreak is not a bank or lender.</p>
+            </div>
+        </div>
+    </footer>
 </body>
 
 </html>

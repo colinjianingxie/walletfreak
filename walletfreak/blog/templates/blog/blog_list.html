@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 
-{% extends 'base.html' %}
-
 {% block content %}
 <!-- Blog Header -->
 <section style="padding: 4rem 0 2rem; background: white;">
@@ -61,7 +59,7 @@
         <div style="display: flex; flex-direction: column; gap: 3rem;">
             {% for blog in blogs|slice:"1:4" %}
             <a href="{% url 'blog_detail' blog.id %}"
-                style="text-decoration: none; color: inherit; display: block; group">
+                style="text-decoration: none; color: inherit; display: block;">
                 <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                     <div
                         style="display: flex; align-items: center; gap: 0.75rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #6366f1; margin-bottom: 0.5rem;">

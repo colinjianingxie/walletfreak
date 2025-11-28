@@ -120,63 +120,70 @@
     </div>
 </section>
 
-<!-- Latest Blog Posts Section -->
+<!-- The Ledger Blog Section -->
 {% if blog_posts %}
 <section class="container" style="padding: 5rem 0;">
-    <div style="text-align: center; margin-bottom: 3rem;">
-        <div
-            style="color: var(--primary); font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.75rem;">
+    <div style="margin-bottom: 3rem;">
+        <h2 style="font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 700; color: var(--dark); margin-bottom: 0.5rem;">
             The Ledger
-        </div>
-        <h2 style="font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 700; color: var(--dark); margin-bottom: 0.75rem;">
-            Latest insights
         </h2>
-        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">
-            Tips, tricks, and hot takes on the credit card industry
+        <p style="color: var(--text-muted); font-size: 1.125rem;">
+            Tips, tricks, and hot takes on the credit card industry.
         </p>
     </div>
 
-    <div class="grid" style="gap: 2rem; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
-        {% for post in blog_posts|slice:":3" %}
-        <a href="{% url 'blog_detail' post.slug %}" class="card"
-            style="text-decoration: none; color: inherit; display: block; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--elevation-1); transition: all 0.3s ease; background: white; border: 1px solid #E5E7EB;">
-            {% if post.image_url %}
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;">
+        <!-- Featured Article (Left) -->
+        {% if blog_posts %}
+        <a href="{% url 'blog_detail' blog_posts.0.slug %}"
+            style="text-decoration: none; color: inherit; display: block; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: all 0.3s ease; background: white; position: relative; height: 500px;">
+            {% if blog_posts.0.image_url %}
             <div
-                style="width: 100%; height: 200px; background: linear-gradient(135deg, var(--md-primary-container), var(--md-secondary-container)); background-image: url('{{ post.image_url }}'); background-size: cover; background-position: center;">
-            </div>
+                style="width: 100%; height: 100%; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); background-image: url('{{ blog_posts.0.image_url }}'); background-size: cover; background-position: center; position: relative;">
             {% else %}
             <div
-                style="width: 100%; height: 200px; background: linear-gradient(135deg, var(--md-primary-container), var(--md-secondary-container));">
-            </div>
+                style="width: 100%; height: 100%; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); position: relative;">
             {% endif %}
-            <div style="padding: 1.5rem;">
-                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
-                    <span class="badge badge-purple" style="font-size: 0.75rem; padding: 0.25rem 0.75rem;">
-                        {{ post.category|default:'ARTICLE' }}
+                <!-- Gradient overlay -->
+                <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%); padding: 2.5rem;">
+                    <div style="margin-bottom: 1rem;">
+                        <span style="background: rgba(139, 92, 246, 0.9); color: white; font-size: 0.7rem; font-weight: 700; padding: 0.4rem 0.9rem; border-radius: 4px; letter-spacing: 0.05em; text-transform: uppercase;">
+                            FEATURED
+                        </span>
+                    </div>
+                    <h3 style="font-size: 1.75rem; font-weight: 700; color: white; margin-bottom: 0.75rem; line-height: 1.2;">
+                        {{ blog_posts.0.title }}
+                    </h3>
+                    <p style="color: rgba(255,255,255,0.9); line-height: 1.6; font-size: 0.95rem;">
+                        {{ blog_posts.0.excerpt|default:blog_posts.0.content|truncatewords:25 }}
+                    </p>
+                </div>
+            </div>
+        </a>
+        {% endif %}
+
+        <!-- Article List (Right) -->
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
+            {% for post in blog_posts|slice:"1:4" %}
+            <a href="{% url 'blog_detail' post.slug %}"
+                style="text-decoration: none; color: inherit; display: block; transition: all 0.2s ease;">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                    <span style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6; font-size: 0.7rem; font-weight: 700; padding: 0.3rem 0.75rem; border-radius: 4px; letter-spacing: 0.05em; text-transform: uppercase;">
+                        {{ post.category|default:'REVIEWS' }}
                     </span>
-                    <span style="color: var(--text-muted); font-size: 0.85rem;">
-                        {{ post.published_at|date:"M d, Y" }}
+                    <span style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                        {{ post.published_at|date:"M d"|upper }}
                     </span>
                 </div>
-                <h3
-                    style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--dark); line-height: 1.3;">
+                <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--dark); margin-bottom: 0.5rem; line-height: 1.3;">
                     {{ post.title }}
                 </h3>
-                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem;">
-                    {{ post.excerpt|default:post.content|truncatewords:20 }}
+                <p style="color: var(--text-muted); font-size: 0.9rem;">
+                    Read in {{ post.read_time|default:"5" }} min
                 </p>
-                <div style="color: var(--primary); font-weight: 600; font-size: 0.9rem;">
-                    Read more →
-                </div>
-            </div>
-        </a>
-        {% endfor %}
-    </div>
-
-    <div style="text-align: center; margin-top: 3rem;">
-        <a href="{% url 'blog_list' %}" class="btn btn-outline" style="padding: 0.875rem 2rem;">
-            View all articles →
-        </a>
+            </a>
+            {% endfor %}
+        </div>
     </div>
 </section>
 {% endif %}
