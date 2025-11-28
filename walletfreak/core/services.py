@@ -8,7 +8,13 @@ class FirestoreService:
         if not firebase_admin._apps:
              # This fallback is mostly for local testing if settings didn't catch it
              pass
-        self.db = firestore.client()
+        self._db = None
+
+    @property
+    def db(self):
+        if self._db is None:
+            self._db = firestore.client()
+        return self._db
 
     def get_collection(self, collection_name, limit=None):
         ref = self.db.collection(collection_name)
