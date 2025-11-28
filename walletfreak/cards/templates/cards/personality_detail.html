@@ -1,88 +1,198 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div style="background: #f8fafc; padding-bottom: 4rem;">
-    <!-- Header Section -->
-    <div class="container" style="padding-top: 4rem; padding-bottom: 2rem;">
-        <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
-            <div
-                style="width: 150px; height: 150px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 4rem; flex-shrink: 0;">
-                {% if 'fashion' in personality.id %}👗{% elif 'travel' in personality.id %}✈️{% elif 'student' in
-                personality.id %}🎓{% else %}🧙‍♂️{% endif %}
-            </div>
-            <div style="flex: 1; min-width: 250px;">
-                <span class="badge badge-primary" style="margin-bottom: 0.5rem;">{{ personality.tagline|default:"The Archetype" }}</span>
-                <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1rem; line-height: 1;">{{ personality.name }}</h1>
-                <p style="font-size: 1.25rem; max-width: 700px; color: var(--text-main);">
-                    {{ personality.description }}
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Recommended Setup -->
+<!-- Personality Header -->
+<section style="background: var(--gradient-purple); padding: 4rem 0; color: white;">
     <div class="container">
-        <h2 style="margin-bottom: 2rem;">Recommended Cards</h2>
-        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-            {% for card in recommended_cards %}
-            <div class="card personality-card-item"
-                style="display: grid; grid-template-columns: 200px 1fr auto; gap: 2rem; align-items: center;">
-                <!-- Left: Image -->
-                <div style="text-align: center;">
-                    <div
-                        style="background: #f1f5f9; height: 120px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                        {% if card.image_url %}
-                        <img src="{{ card.image_url }}" alt="{{ card.name }}"
-                            style="max-width: 100%; max-height: 100%;">
-                        {% else %}
-                        <span style="font-size: 2rem;">💳</span>
-                        {% endif %}
-                    </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+            <!-- Left: Personality Info -->
+            <div>
+                <div
+                    style="width: 120px; height: 120px; background: rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 4rem; margin-bottom: 2rem; backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,0.3);">
+                    {% if 'jetsetter' in personality.id|lower %}✈️
+                    {% elif 'minimalist' in personality.id|lower %}💵
+                    {% elif 'foodie' in personality.id|lower %}🍽️
+                    {% elif 'strategist' in personality.id|lower or 'optimizer' in personality.id|lower %}📊
+                    {% else %}💳{% endif %}
                 </div>
 
-                <!-- Middle: Content -->
-                <div>
-                    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
-                        <span class="badge badge-dark">{{ card.issuer }}</span>
-                    </div>
-                    <h3 style="margin-bottom: 0.5rem;"><a href="{% url 'card_detail' card.id %}">{{ card.name }}</a>
-                    </h3>
-                    <p style="font-size: 0.9rem; margin-bottom: 1rem;">
-                        Credit Score: <strong>Good-Excellent (690+)</strong>
-                    </p>
-                    <p style="color: var(--text-muted);">{{ card.description|truncatewords:20 }}</p>
+                <span class="badge"
+                    style="background: rgba(255,255,255,0.2); color: white; padding: 0.5rem 1rem; margin-bottom: 1rem; font-size: 0.85rem; letter-spacing: 0.05em;">
+                    {{ personality.tagline|default:"THE ARCHETYPE"|upper }}
+                </span>
 
-                    <!-- Benefits Preview -->
-                    {% if card.benefits %}
-                    <div style="background: #eff6ff; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
-                        <h5
-                            style="font-size: 0.85rem; text-transform: uppercase; color: var(--primary); margin-bottom: 0.5rem;">
-                            🎁 Notable Benefits</h5>
-                        <div
-                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.5rem; font-size: 0.9rem;">
-                            {% for benefit in card.benefits|slice:":4" %}
-                            <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                <span style="color: var(--primary);">✓</span> {{ benefit.name }}
+                <h1
+                    style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; margin-bottom: 1.5rem; line-height: 1.1;">
+                    {{ personality.name }}
+                </h1>
+
+                <p style="font-size: 1.125rem; line-height: 1.7; opacity: 0.95; margin-bottom: 2rem;">
+                    {{ personality.description }}
+                </p>
+
+                <a href="{% url 'quiz' %}" class="btn"
+                    style="background: white; color: var(--primary); padding: 1rem 2rem; font-weight: 600;">
+                    Take the Quiz →
+                </a>
+            </div>
+
+            <!-- Right: Card Stack Visual -->
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <div class="card-stack">
+                    {% if recommended_cards %}
+                    {% for card in recommended_cards|slice:":3" %}
+                    <!-- 3D Credit Card representing recommended cards -->
+                    <div
+                        class="credit-card {% if 'american express' in card.name|lower or 'amex' in card.name|lower %}{% if 'platinum' in card.name|lower %}card-amex-platinum{% else %}card-gold{% endif %}{% elif 'chase' in card.name|lower %}card-chase{% elif 'capital one' in card.name|lower %}card-capital-one{% elif 'citi' in card.name|lower %}card-citi{% else %}card-chase{% endif %}">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div style="font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;">
+                                {{ card.issuer|upper|default:"CREDIT CARD" }}
                             </div>
-                            {% endfor %}
+                        </div>
+                        <div class="credit-card-chip"></div>
+                        <div class="credit-card-number">•••• •••• •••• {{ forloop.counter }}234</div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                            <div class="credit-card-name">{{ card.name|truncatewords:2|upper }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <!-- Default card stack if no recommendations -->
+                    <div class="credit-card card-amex-platinum">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div style="font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;">AMERICAN EXPRESS
+                            </div>
+                        </div>
+                        <div class="credit-card-chip"></div>
+                        <div class="credit-card-number">•••• •••• •••• 1005</div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                            <div class="credit-card-name">Platinum Card®</div>
+                        </div>
+                    </div>
+                    <div class="credit-card card-chase">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div style="font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;">CHASE</div>
+                        </div>
+                        <div class="credit-card-chip"></div>
+                        <div class="credit-card-number">•••• •••• •••• 4421</div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                            <div class="credit-card-name">Sapphire Reserve</div>
                         </div>
                     </div>
                     {% endif %}
                 </div>
-
-                <!-- Right: Action -->
-                <div style="text-align: right; min-width: 150px;">
-                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--dark); margin-bottom: 0.25rem;">
-                        ${{ card.annual_fee }}<span
-                            style="font-size: 0.9rem; color: var(--text-muted); font-weight: 400;">/yr</span>
-                    </div>
-                    <a href="{% url 'card_detail' card.id %}" class="btn btn-dark" style="width: 100%;">Apply Now ↗</a>
-                </div>
             </div>
-            {% empty %}
-            <p>No recommended cards found for this personality.</p>
-            {% endfor %}
         </div>
     </div>
-</div>
+</section>
+
+<!-- Recommended Stack Section -->
+<section class="container" style="padding: 4rem 0;">
+    <div style="margin-bottom: 3rem;">
+        <div
+            style="display: inline-flex; align-items: center; gap: 0.5rem; background: var(--md-primary-container); color: var(--md-on-primary-container); padding: 0.5rem 1rem; border-radius: 999px; margin-bottom: 1rem; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em;">
+            <span style="font-size: 1.1rem;">🎯</span>
+            RECOMMENDED STACK
+        </div>
+        <h2 style="font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 0.75rem;">
+            Your perfect wallet lineup
+        </h2>
+        <p style="color: var(--text-muted); max-width: 700px;">
+            These cards align perfectly with your spending patterns and financial goals.
+        </p>
+    </div>
+
+    {% if recommended_cards %}
+    <div style="display: grid; gap: 2rem;">
+        {% for card in recommended_cards %}
+        <div class="card"
+            style="display: grid; grid-template-columns: auto 1fr auto; gap: 2rem; align-items: center; padding: 2rem; border-radius: var(--radius-lg); box-shadow: var(--elevation-2); border: 1px solid #E5E7EB;">
+            <!-- Left: 3D Mini Card -->
+            <div style="min-width: 200px;">
+                <div class="credit-card"
+                    style="transform: scale(0.7); transform-origin: left center; {% if 'american express' in card.name|lower or 'amex' in card.name|lower %}{% if 'platinum' in card.name|lower %}background: var(--gradient-amex-platinum);{% else %}background: var(--gradient-gold);{% endif %}{% elif 'chase' in card.name|lower %}background: var(--gradient-chase);{% elif 'capital one' in card.name|lower %}background: var(--gradient-capital-one);{% elif 'citi' in card.name|lower %}background: var(--gradient-citi);{% else %}background: var(--gradient-chase);{% endif %}">
+                    <div style="font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; margin-bottom: 1.5rem;">{{
+                        card.issuer|upper|default:"CARD" }}</div>
+                    <div class="credit-card-chip"></div>
+                    <div class="credit-card-number">•••• •••• •••• {{ forloop.counter }}234</div>
+                    <div class="credit-card-name">{{ card.name|truncatewords:2|upper }}</div>
+                </div>
+            </div>
+
+            <!-- Middle: Card Info -->
+            <div>
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                    <span class="badge"
+                        style="background: var(--dark); color: white; font-size: 0.75rem; padding: 0.25rem 0.75rem;">
+                        {{ card.issuer|upper }}
+                    </span>
+                    <span class="badge badge-match" style="font-size: 0.75rem; padding: 0.25rem 0.75rem;">
+                        95% MATCH
+                    </span>
+                </div>
+
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;">
+                    <a href="{% url 'card_detail' card.id %}" style="color: var(--dark); text-decoration: none;">{{
+                        card.name }}</a>
+                </h3>
+
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem;">
+                    {{ card.description|truncatewords:25 }}
+                </p>
+
+                <!-- Key Rewards -->
+                <div style="display: flex; align-items: center; gap: 1.5rem; font-size: 0.9rem;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted);">
+                        <span style="color: var(--primary);">🎁</span>
+                        <span><strong>Bonus:</strong> 80k points</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted);">
+                        <span style="color: var(--primary);">✈️</span>
+                        <span><strong>5x</strong> on travel</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Annual Fee & CTA -->
+            <div style="text-align: right; min-width: 140px;">
+                <div style="font-size: 2rem; font-weight: 700; color: var(--dark); margin-bottom: 0.5rem;">
+                    ${{ card.annual_fee|default:0 }}
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">annual fee</div>
+                <a href="{{ card.affiliate_link|default:'#' }}" class="btn btn-primary"
+                    style="width: 100%; padding: 0.875rem;">
+                    Apply Now
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <!-- Empty State -->
+    <div
+        style="text-align: center; padding: 4rem 2rem; background: white; border-radius: var(--radius-lg); border: 2px dashed #E5E7EB;">
+        <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;">💳</div>
+        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">No recommendations yet</h3>
+        <p style="color: var(--text-muted);">We're still building out card recommendations for this personality.</p>
+    </div>
+    {% endif %}
+</section>
+
+<style>
+    @media (max-width: 768px) {
+        section>.container>div[style*="grid-template-columns: 1fr 1fr"] {
+            grid-template-columns: 1fr !important;
+        }
+
+        .card[style*="grid-template-columns: auto 1fr auto"] {
+            grid-template-columns: 1fr !important;
+            text-align: center !important;
+        }
+
+        .card-stack {
+            max-width: 300px !important;
+            margin: 0 auto;
+        }
+    }
+</style>
 {% endblock %}

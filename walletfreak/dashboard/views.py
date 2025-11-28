@@ -410,3 +410,17 @@ def update_anniversary(request, user_card_id):
         if date_str:
             db.update_card_details(uid, user_card_id, {'anniversary_date': date_str})
     return redirect('dashboard')
+
+@login_required
+def wallet(request):
+    uid = request.session.get('uid')
+    user_profile = db.get_user_profile(uid)
+    
+    # Get all active cards
+    active_cards = db.get_user_cards(uid, status='active')
+    
+    context = {
+        'user_profile': user_profile,
+        'active_cards': active_cards,
+    }
+    return render(request, 'dashboard/wallet.html', context)

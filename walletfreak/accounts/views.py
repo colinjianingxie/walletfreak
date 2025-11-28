@@ -130,3 +130,42 @@ def logout_redirect(request):
     
     from django.shortcuts import redirect
     return redirect('home')
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def profile(request):
+    uid = request.session.get('uid')
+    user_profile = db.get_user_profile(uid)
+    
+    # Get user's active cards count
+    active_cards = db.get_user_cards(uid, status='active')
+    cards_count = len(active_cards)
+    
+    # Calculate total value from benefits (placeholder)
+    total_value = 0
+    for card in active_cards:
+        card_def = db.get_card_by_slug(card['card_id'])
+        if card_def and 'benefits' in card_def:
+            for benefit in card_def['benefits']:
+                if benefit.get('dollar_value'):
+                    total_value += benefit.get('dollar_value', 0)
+    
+    context = {
+        'user_profile': user_profile,
+        'cards_count': cards_count,
+        'total_value': total_value,
+        'score': 740,  # Placeholder - would calculate based on actual data
+        'utilization': 68,  # Placeholder - would calculate from actual usage
+    }
+    return render(request, 'accounts/profile.html', context)
+
+@login_required
+def settings(request):
+    uid = request.session.get('uid')
+    user_profile = db.get_user_profile(uid)
+    
+    context = {
+        'user_profile': user_profile,
+    }
+    return render(request, 'accounts/settings.html', context)

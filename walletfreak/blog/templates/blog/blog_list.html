@@ -1,22 +1,106 @@
 {% extends 'base.html' %}
 
+{% extends 'base.html' %}
+
 {% block content %}
-<div class="container">
-    <h1 style="margin: 2rem 0; text-align: center;">Latest from the Blog</h1>
-    <div class="grid">
-        {% for blog in blogs %}
-        <div class="card">
-            {% if blog.images %}
-            <img src="{{ blog.images.0 }}" alt="{{ blog.title }}"
-                style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
-            {% endif %}
-            <h3 style="margin-top: 1rem;">{{ blog.title }}</h3>
-            <p style="color: var(--text-muted); margin: 0.5rem 0;">{{ blog.published_date }}</p>
-            <a href="{% url 'blog_detail' blog.id %}" class="btn btn-outline">Read More</a>
-        </div>
-        {% empty %}
-        <p>No posts yet.</p>
-        {% endfor %}
+<!-- Blog Header -->
+<section style="padding: 4rem 0 2rem; background: white;">
+    <div class="container">
+        <h1
+            style="font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; color: var(--dark); letter-spacing: -0.02em;">
+            The Ledger
+        </h1>
+        <p style="font-size: 1.25rem; color: var(--text-muted); max-width: 600px; line-height: 1.6;">
+            Tips, tricks, and hot takes on the credit card industry.
+        </p>
     </div>
-</div>
+</section>
+
+<!-- Blog Posts -->
+<section class="container" style="padding: 2rem 0 6rem;">
+    {% if blogs %}
+    <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 4rem; align-items: start;">
+        <!-- Featured Article (Left Side) -->
+        {% with blogs|first as featured %}
+        <a href="{% url 'blog_detail' featured.id %}" style="text-decoration: none; color: inherit; display: block;">
+            <div
+                style="border-radius: 24px; overflow: hidden; position: relative; height: 600px; box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
+                {% if featured.images %}
+                <div
+                    style="width: 100%; height: 100%; background-image: url('{{ featured.images.0 }}'); background-size: cover; background-position: center;">
+                    <div
+                        style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%);">
+                    </div>
+                </div>
+                {% else %}
+                <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #6366f1, #8b5cf6);">
+                    <div
+                        style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%);">
+                    </div>
+                </div>
+                {% endif %}
+
+                <div style="position: absolute; bottom: 0; left: 0; padding: 3rem; color: white; width: 100%;">
+                    <span
+                        style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); font-size: 0.75rem; font-weight: 700; padding: 0.5rem 1rem; border-radius: 99px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.5rem; display: inline-block;">
+                        FEATURED
+                    </span>
+                    <h2
+                        style="font-size: 2.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 1rem; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                        {{ featured.title }}
+                    </h2>
+                    <p style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 0; max-width: 90%; line-height: 1.6;">
+                        {{ featured.content|truncatewords:20|striptags }}
+                    </p>
+                </div>
+            </div>
+        </a>
+        {% endwith %}
+
+        <!-- Recent Articles List (Right Side) -->
+        <div style="display: flex; flex-direction: column; gap: 3rem;">
+            {% for blog in blogs|slice:"1:4" %}
+            <a href="{% url 'blog_detail' blog.id %}"
+                style="text-decoration: none; color: inherit; display: block; group">
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                    <div
+                        style="display: flex; align-items: center; gap: 0.75rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #6366f1; margin-bottom: 0.5rem;">
+                        <span>REVIEWS</span>
+                        <span style="color: var(--text-muted);">•</span>
+                        <span style="color: var(--text-muted);">{{ blog.published_date|date:"M d" }}</span>
+                    </div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--dark); line-height: 1.3; margin: 0;">
+                        {{ blog.title }}
+                    </h3>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem; line-height: 1.6;">
+                        Read in 5 min
+                    </p>
+                </div>
+            </a>
+            <div style="height: 1px; background: #F3F4F6;"></div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <!-- Empty State -->
+    <div style="text-align: center; padding: 4rem 2rem;">
+        <div style="font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.3;">📰</div>
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;">No articles yet</h2>
+        <p style="color: var(--text-muted);">Check back soon for credit card insights and tips!</p>
+    </div>
+    {% endif %}
+</section>
+
+<style>
+    @media (max-width: 1024px) {
+        div[style*="grid-template-columns: 1.5fr 1fr"] {
+            grid-template-columns: 1fr !important;
+            gap: 3rem !important;
+        }
+
+        div[style*="height: 600px"] {
+            height: 400px !important;
+        }
+    }
+</style>
 {% endblock %}

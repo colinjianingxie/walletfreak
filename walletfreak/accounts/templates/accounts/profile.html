@@ -1,0 +1,84 @@
+{% extends 'auth_base.html' %}
+
+{% block content %}
+<!-- Profile Header -->
+<div style="margin-bottom: 2.5rem;">
+    <h1 style="font-size: 2rem; font-weight: 700; margin: 0;">My Profile</h1>
+</div>
+
+<!-- Profile Card -->
+<div
+    style="background: white; border-radius: var(--radius-lg); padding: 3rem; border: 1px solid #E5E7EB; box-shadow: var(--elevation-1); margin-bottom: 2.5rem;">
+    <div style="display: flex; align-items: center; gap: 2.5rem; margin-bottom: 3rem; flex-wrap: wrap;">
+        <!-- Avatar -->
+        <div class="avatar" style="flex-shrink: 0;">
+            ✈️
+        </div>
+
+        <!-- User Info -->
+        <div style="flex: 1; min-width: 250px;">
+            <h2 style="font-size: 2rem; font-weight: 700; margin: 0 0 0.5rem 0;">
+                {{ user.first_name|default:"User" }} {{ user.last_name|default:"" }}
+            </h2>
+            <div class="badge badge-purple" style="font-size: 0.9rem; padding: 0.5rem 1rem; margin-bottom: 1.5rem;">
+                The Jetsetter
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-muted);">
+                    <span style="font-size: 1.25rem;">📧</span>
+                    <span>{{ user.email }}</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-muted);">
+                    <span style="font-size: 1.25rem;">📍</span>
+                    <span>{{ user_profile.location|default:"New York, NY" }}</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-muted);">
+                    <span style="font-size: 1.25rem;">📅</span>
+                    <span>Joined {{ user.date_joined|date:"M Y" }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- My Stats Section -->
+    <div>
+        <h3 style="font-size: 1.25rem; font-weight: 700; margin: 0 0 1.5rem 0; color: var(--dark);">My Stats</h3>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem;">
+            <!-- Cards Count -->
+            <div class="stat-card">
+                <div class="stat-value">{{ cards_count }}</div>
+                <div class="stat-label">CARDS</div>
+            </div>
+
+            <!-- Score (Placeholder) -->
+            <div class="stat-card">
+                <div class="stat-value">{{ score }}</div>
+                <div class="stat-label">SCORE</div>
+            </div>
+
+            <!-- Total Value -->
+            <div class="stat-card">
+                <div class="stat-value">${{ total_value|floatformat:1|default:"0" }}k</div>
+                <div class="stat-label">VALUE</div>
+            </div>
+
+            <!-- Utilization -->
+            <div class="stat-card">
+                <div class="stat-value">{{ utilization }}%</div>
+                <div class="stat-label">UTIL</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @media (max-width: 768px) {
+        div[style*="display: flex"][style*="gap: 2.5rem"] {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+        }
+    }
+</style>
+{% endblock %}

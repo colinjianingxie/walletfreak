@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}WalletFreak{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {{ firebase_config_json| safe }};
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Auth State Observer
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                if (user.emailVerified || user.providerData[0].providerId === 'phone') {
+                    const idToken = await user.getIdToken();
+                    const isDjangoAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}" === "true";
+
+                    if (!isDjangoAuthenticated) {
+                        const idToken = await user.getIdToken();
+                        fetch('/accounts/api/login/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ idToken: idToken })
+                        }).then(res => {
+                            if (res.ok) window.location.reload();
+                        });
+                    }
+                }
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div class="auth-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="url(#sidebar-logo-gradient)" />
+                    <defs>
+                        <linearGradient id="sidebar-logo-gradient" x1="0" y1="0" x2="32" y2="32"
+                            gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#8B5CF6" />
+                            <stop offset="1" stop-color="#6D28D9" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M8 10H24V22C24 23.1 23.1 24 22 24H10C8.9 24 8 23.1 8 22V10Z" stroke="white"
+                        stroke-width="2" />
+                    <path d="M11 14H21" stroke="white" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                WalletFreak
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="{% url 'dashboard' %}"
+                    class="sidebar-nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                    <span class="icon">📊</span>
+                    Dashboard
+                </a>
+                <a href="{% url 'wallet' %}"
+                    class="sidebar-nav-item {% if request.resolver_match.url_name == 'wallet' %}active{% endif %}">
+                    <span class="icon">💳</span>
+                    My Wallet
+                </a>
+                <a href="{% url 'card_list' %}"
+                    class="sidebar-nav-item {% if request.resolver_match.url_name == 'card_list' %}active{% endif %}">
+                    <span class="icon">🧭</span>
+                    Explore Cards
+                </a>
+                <a href="{% url 'profile' %}"
+                    class="sidebar-nav-item {% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
+                    <span class="icon">👤</span>
+                    Profile
+                </a>
+                <a href="{% url 'settings' %}"
+                    class="sidebar-nav-item {% if request.resolver_match.url_name == 'settings' %}active{% endif %}">
+                    <span class="icon">⚙️</span>
+                    Settings
+                </a>
+            </nav>
+
+            <a href="#" onclick="handleLogout(event)" class="sidebar-logout">
+                <span class="icon">🚪</span>
+                Log Out
+            </a>
+
+            <script>
+                function handleLogout(e) {
+                    e.preventDefault();
+                    firebase.auth().signOut().then(() => {
+                        window.location.href = "/logout/";
+                    });
+                }
+            </script>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="auth-content">
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+</body>
+
+</html>

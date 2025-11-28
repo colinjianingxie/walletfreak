@@ -1,605 +1,235 @@
-{% extends 'base.html' %}
+{% extends 'auth_base.html' %}
 
 {% block content %}
-<div class="container" style="padding: 3rem 0;">
-    <div class="text-center mb-4">
-        <h1>All Credit Cards</h1>
-        <p>Browse, search, and compare the best cards on the market.</p>
+<!-- Explore Cards Header -->
+<div style="margin-bottom: 2.5rem;">
+    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+        <span style="font-size: 1.25rem;">🤖</span>
+        <span style="color: var(--primary); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em;">AI
+            RECOMMENDATIONS</span>
     </div>
 
-    <!-- Filters -->
-    <div class="card mb-4" style="padding: 1.5rem;">
+    <h1 style="font-size: 2rem; font-weight: 700; margin: 0 0 0.5rem 0;">Explore Cards</h1>
+    <p style="color: var(--text-muted); margin: 0;">Based on your spending profile (The Jetsetter), these cards will
+        maximize your return.</p>
+</div>
+
+<!-- Search and Filters -->
+<div
+    style="background: white; border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #E5E7EB; box-shadow: var(--elevation-1);">
+    <div style="display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: center;">
         <!-- Search Bar -->
-        <div style="display: grid; grid-template-columns: 1fr auto; gap: 1rem; margin-bottom: 1rem;">
-            <input type="text" id="search-input" placeholder="Search cards by name or issuer..." style="margin: 0;">
-            <button type="button" id="clear-all-btn" class="btn btn-outline btn-sm">Clear All</button>
+        <div style="position: relative;">
+            <span
+                style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1.1rem;">🔍</span>
+            <input type="text" id="search-input" placeholder="Search cards by name or issuer..."
+                style="width: 100%; padding: 0.875rem 1rem 0.875rem 3rem; border: 1px solid #E5E7EB; border-radius: var(--radius-md); font-size: 0.95rem;">
         </div>
 
-        <!-- Filter Dropdowns -->
-        <div
-            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
-            <!-- Issuer Dropdown -->
-            <div class="filter-dropdown-wrapper">
-                <button type="button" class="filter-dropdown-btn" data-dropdown="issuer">
-                    <span>Issuer</span>
-                    <span class="dropdown-arrow">▼</span>
-                </button>
-                <div class="filter-dropdown-content" id="dropdown-issuer">
-                    <div class="dropdown-inner">
-                        {% for issuer in issuers %}
-                        <label class="dropdown-option">
-                            <input type="checkbox" class="filter-checkbox" data-filter-type="issuer"
-                                value="{{ issuer }}">
-                            <span>{{ issuer }}</span>
-                        </label>
-                        {% endfor %}
-                    </div>
-                </div>
+        <!-- Filter Pills + Filter Icon -->
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div class="filter-pills" id="filter-pills" style="display: flex; gap: 0.5rem;">
+                <button class="filter-pill active" data-category="all">All Cards</button>
+                <button class="filter-pill" data-category="travel">Travel</button>
+                <button class="filter-pill" data-category="cash-back">Cash Back</button>
+                <button class="filter-pill" data-category="no-fee">No Fee</button>
             </div>
-
-            <!-- Category Dropdown -->
-            <div class="filter-dropdown-wrapper">
-                <button type="button" class="filter-dropdown-btn" data-dropdown="category">
-                    <span>Category</span>
-                    <span class="dropdown-arrow">▼</span>
-                </button>
-                <div class="filter-dropdown-content" id="dropdown-category">
-                    <div class="dropdown-inner">
-                        {% for cat in categories %}
-                        <label class="dropdown-option">
-                            <input type="checkbox" class="filter-checkbox" data-filter-type="category"
-                                value="{{ cat }}">
-                            <span>{{ cat }}</span>
-                        </label>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-
-            <!-- Annual Fee Dropdown -->
-            <div class="filter-dropdown-wrapper">
-                <button type="button" class="filter-dropdown-btn" data-dropdown="fee">
-                    <span>Annual Fee</span>
-                    <span class="dropdown-arrow">▼</span>
-                </button>
-                <div class="filter-dropdown-content" id="dropdown-fee">
-                    <div class="dropdown-inner" style="padding: 1rem;">
-                        <div
-                            style="margin-bottom: 0.75rem; font-size: 0.9rem; font-weight: 500; color: var(--text-muted);">
-                            Fee Range ($)</div>
-                        <div style="display: flex; gap: 0.5rem; align-items: center;">
-                            <input type="number" id="min-fee-input" min="0" max="10000" placeholder="Min"
-                                style="width: 100%; padding: 0.5rem; border: 1px solid var(--border); border-radius: 6px;">
-                            <span style="color: var(--text-muted);">–</span>
-                            <input type="number" id="max-fee-input" min="0" max="10000" placeholder="Max"
-                                style="width: 100%; padding: 0.5rem; border: 1px solid var(--border); border-radius: 6px;">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Wallet Status Dropdown -->
-            {% if user.is_authenticated %}
-            <div class="filter-dropdown-wrapper">
-                <button type="button" class="filter-dropdown-btn" data-dropdown="wallet">
-                    <span>Wallet Status</span>
-                    <span class="dropdown-arrow">▼</span>
-                </button>
-                <div class="filter-dropdown-content" id="dropdown-wallet">
-                    <div class="dropdown-inner">
-                        <label class="dropdown-option">
-                            <input type="radio" name="wallet-filter" class="wallet-radio" value="" checked>
-                            <span>All Cards</span>
-                        </label>
-                        <label class="dropdown-option">
-                            <input type="radio" name="wallet-filter" class="wallet-radio" value="in">
-                            <span>In My Wallet</span>
-                        </label>
-                        <label class="dropdown-option">
-                            <input type="radio" name="wallet-filter" class="wallet-radio" value="out">
-                            <span>Not in My Wallet</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
+            <button
+                style="background: none; border: 1px solid #E5E7EB; border-radius: var(--radius-md); padding: 0.5rem 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center;"
+                title="More Filters">
+                <span style="font-size: 1.25rem;">⚙️</span>
+            </button>
         </div>
-
-        <!-- Active Filters (Tags) -->
-        <div id="active-filters" style="display: flex; flex-wrap: wrap; gap: 0.5rem; min-height: 24px;"></div>
-    </div>
-
-    <style>
-        .filter-dropdown-wrapper {
-            position: relative;
-        }
-
-        .filter-dropdown-btn {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            background: white;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: #374151;
-        }
-
-        .filter-dropdown-btn:hover {
-            border-color: var(--primary);
-            background: #f9fafb;
-        }
-
-        .filter-dropdown-btn.active {
-            border-color: var(--primary);
-            background: #f0f4ff;
-        }
-
-        .dropdown-arrow {
-            font-size: 0.75rem;
-            transition: transform 0.2s ease;
-            color: #6b7280;
-        }
-
-        .filter-dropdown-btn.active .dropdown-arrow {
-            transform: rotate(180deg);
-        }
-
-        .filter-dropdown-content {
-            position: absolute;
-            top: calc(100% + 0.5rem);
-            left: 0;
-            right: 0;
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.2s ease;
-        }
-
-        .filter-dropdown-content.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-inner {
-            max-height: 280px;
-            overflow-y: auto;
-            padding: 0.5rem 0;
-        }
-
-        .dropdown-option {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.625rem 1rem;
-            cursor: pointer;
-            transition: background 0.15s ease;
-            user-select: none;
-        }
-
-        .dropdown-option:hover {
-            background: #f3f4f6;
-        }
-
-        .dropdown-option input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            margin: 0;
-            flex-shrink: 0;
-        }
-
-        .dropdown-option span {
-            font-size: 0.9rem;
-            color: #374151;
-        }
-
-        .filter-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 0.75rem;
-            background: var(--primary);
-            color: white;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            animation: fadeIn 0.2s ease;
-        }
-
-        .filter-tag button {
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            padding: 0;
-            margin-left: 0.25rem;
-            font-size: 1.2rem;
-            line-height: 1;
-            opacity: 0.8;
-            transition: opacity 0.2s;
-            font-weight: 400;
-        }
-
-        .filter-tag button:hover {
-            opacity: 1;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        /* Mobile Responsive Styles for Card List */
-        @media (max-width: 768px) {
-            .card-item {
-                grid-template-columns: 1fr !important;
-                gap: 1rem !important;
-                text-align: center;
-            }
-
-            .card-item>div:last-child {
-                min-width: auto !important;
-                text-align: center;
-            }
-
-            .filter-dropdown-content {
-                position: fixed;
-                left: 1rem;
-                right: 1rem;
-                top: auto;
-            }
-        }
-
-        @media (max-width: 480px) {
-            #search-input {
-                font-size: 16px;
-            }
-
-            .filter-dropdown-btn {
-                font-size: 0.85rem;
-                padding: 0.6rem 0.8rem;
-            }
-        }
-    </style>
-
-    <div id="card-grid" style="display: flex; flex-direction: column; gap: 1.5rem;">
-        {% for card in cards %}
-        <div class="card card-item" data-name="{{ card.name|lower }}" data-issuer="{{ card.issuer }}"
-            data-fee="{{ card.annual_fee }}" data-categories="{{ card.categories|join:',' }}"
-            data-in-wallet="{{ card.in_wallet|yesno:'true,false' }}" data-card-id="{{ card.id }}"
-            style="display: grid; grid-template-columns: 200px 1fr auto; gap: 2rem; align-items: center;">
-            <!-- Left: Image -->
-            <div style="text-align: center;">
-                <div
-                    style="background: #f1f5f9; height: 120px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                    {% if card.image_url %}
-                    <img src="{{ card.image_url }}" alt="{{ card.name }}" style="max-width: 100%; max-height: 100%;">
-                    {% else %}
-                    <span style="font-size: 2rem;">💳</span>
-                    {% endif %}
-                </div>
-            </div>
-
-            <!-- Middle: Content -->
-            <div>
-                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
-                    <span class="badge badge-dark">{{ card.issuer }}</span>
-                    {% if card.annual_fee > 200 %}
-                    <span class="badge badge-dark">Luxury</span>
-                    {% endif %}
-                    {% for cat in card.categories|slice:":3" %}
-                    <span class="badge badge-outline" style="font-size: 0.7rem;">{{ cat }}</span>
-                    {% endfor %}
-                    {% if card.in_wallet %}
-                    <span class="badge" style="background: var(--success); color: white;">In Wallet</span>
-                    {% endif %}
-                </div>
-                <h3 style="margin-bottom: 0.5rem;"><a href="{% url 'card_detail' card.id %}">{{ card.name }}</a></h3>
-                <p style="font-size: 0.9rem; margin-bottom: 1rem;">
-                    Credit Score: <strong>Good-Excellent (690+)</strong>
-                </p>
-
-                <!-- Benefits Preview -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.9rem;">
-                    {% for benefit in card.benefits|slice:":2" %}
-                    <div style="display: flex; align-items: center; gap: 0.5rem;">
-                        <span style="color: var(--success);">✓</span> {{ benefit.name }}
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <!-- Right: Action -->
-            <div style="text-align: right; min-width: 150px;">
-                <div style="font-size: 1.5rem; font-weight: 700; color: var(--dark); margin-bottom: 0.25rem;">
-                    ${{ card.annual_fee }}<span
-                        style="font-size: 0.9rem; color: var(--text-muted); font-weight: 400;">/yr</span>
-                </div>
-
-                {% if user.is_authenticated %}
-                {% if card.in_wallet %}
-                <!-- Remove from Wallet button -->
-                <button type="button" class="btn btn-outline btn-sm remove-from-wallet-btn" data-card-id="{{ card.id }}"
-                    style="width: 100%; margin-bottom: 0.5rem;">
-                    Remove from Wallet
-                </button>
-                {% else %}
-                <!-- Add to Wallet button -->
-                <form action="{% url 'add_card' card.id %}" method="POST" style="margin-bottom: 0.5rem;">
-                    {% csrf_token %}
-                    <input type="hidden" name="status" value="active">
-                    <button type="submit" class="btn btn-primary btn-sm" style="width: 100%;">+ Add to Wallet</button>
-                </form>
-                {% endif %}
-                {% endif %}
-
-                <a href="{% url 'card_detail' card.id %}" class="btn btn-dark" style="width: 100%;">Apply Now ↗</a>
-                <div style="margin-top: 0.5rem; text-align: center;">
-                    <a href="{% url 'card_detail' card.id %}" style="font-size: 0.85rem; color: var(--primary);">View
-                        Details</a>
-                </div>
-            </div>
-        </div>
-        {% empty %}
-        <p class="text-center" id="server-no-results">No cards found.</p>
-        {% endfor %}
-        <p class="text-center" id="js-no-results" style="display: none;">No cards match your filters.</p>
     </div>
 </div>
 
+<!-- Cards Grid -->
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2rem;"
+    id="cards-container">
+    {% for card in cards %}
+    <div class="card-item" data-name="{{ card.name|lower }}" data-issuer="{{ card.issuer|lower }}"
+        data-categories="{{ card.categories|join:',' }}" data-fee="{{ card.annual_fee|default:0 }}"
+        style="background: white; border-radius: var(--radius-lg); padding: 2rem; border: 1px solid #E5E7EB; box-shadow: var(--elevation-1); transition: all 0.3s;">
+        <!-- 3D Credit Card -->
+        <div class="credit-card {% if 'american express' in card.name|lower or 'amex' in card.name|lower %}{% if 'platinum' in card.name|lower %}card-amex-platinum{% else %}card-gold{% endif %}{% elif 'chase' in card.name|lower %}card-chase{% elif 'capital one' in card.name|lower %}card-capital-one{% elif 'citi' in card.name|lower %}card-citi{% else %}card-chase{% endif %}"
+            style="margin-bottom: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                <div style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;">
+                    {{ card.issuer|upper|default:"CREDIT CARD" }}
+                </div>
+                <div style="font-size: 1rem;">💳</div>
+            </div>
+            <div class="credit-card-chip"></div>
+            <div class="credit-card-number">•••• •••• •••• {{ forloop.counter }}234</div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                <div class="credit-card-name">YOUR NAME</div>
+                <div style="display: flex; gap: 0.25rem;">
+                    <div style="width: 20px; height: 20px; background: #EB001B; border-radius: 50%; opacity: 0.9;">
+                    </div>
+                    <div
+                        style="width: 20px; height: 20px; background: #F79E1B; border-radius: 50%; opacity: 0.9; margin-left: -8px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Details -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+            <div style="flex: 1;">
+                <h3 style="font-size: 1.25rem; font-weight: 700; margin: 0 0 0.25rem 0; color: var(--dark);">
+                    {{ card.name }}
+                </h3>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">{{ card.issuer }}</div>
+            </div>
+            <div>
+                <div
+                    style="font-size: 1.75rem; font-weight: 700; color: var(--dark); text-align: right; line-height: 1;">
+                    {% if forloop.counter == 1 %}98{% elif forloop.counter == 2 %}88{% else %}85{% endif %}%
+                </div>
+                <div
+                    style="font-size: 0.75rem; color: var(--success); font-weight: 600; text-align: right; margin-top: 0.25rem;">
+                    MATCH</div>
+            </div>
+        </div>
+
+        <!-- Rewards Info -->
+        <div
+            style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; padding: 0.75rem; background: var(--bg-body); border-radius: var(--radius-md);">
+            <span style="font-size: 1.1rem;">🎁</span>
+            <div style="flex: 1;">
+                <div
+                    style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.125rem;">
+                    REWARDS</div>
+                <div style="font-size: 0.9rem; font-weight: 600; color: var(--dark);">
+                    {% if card.rewards_summary %}{{ card.rewards_summary }}{% else %}2x Everything{% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Annual Fee Info -->
+        <div
+            style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; padding: 0.75rem; background: var(--bg-body); border-radius: var(--radius-md);">
+            <span style="font-size: 1.1rem;">💰</span>
+            <div style="flex: 1;">
+                <div
+                    style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.125rem;">
+                    ANNUAL FEE</div>
+                <div style="font-size: 0.9rem; font-weight: 600; color: var(--dark);">${{ card.annual_fee|default:0 }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Apply Button -->
+        <a href="{% url 'card_detail' card.id %}" class="btn"
+            style="width: 100%; background: var(--dark); color: white; padding: 0.875rem; text-align: center; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none;">
+            Apply Now
+            <span style="font-size: 0.9rem;">→</span>
+        </a>
+    </div>
+    {% empty %}
+    <!-- Empty State -->
+    <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem;">
+        <div style="font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.3;">💳</div>
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;">No cards found</h2>
+        <p style="color: var(--text-muted);">Try adjusting your filters or search query.</p>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- No Results Message (hidden by default) -->
+<div id="no-results" style="display: none; text-align: center; padding: 4rem 2rem;">
+    <div style="font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.3;">🔍</div>
+    <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;">No cards match your filters</h2>
+    <p style="color: var(--text-muted);">Try adjusting your search or filters.</p>
+</div>
+
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const searchInput = document.querySelector('#search-input');
-        const clearAllBtn = document.querySelector('#clear-all-btn');
-        const filterCheckboxes = document.querySelectorAll('.filter-checkbox');
-        const minFeeInput = document.querySelector('#min-fee-input');
-        const maxFeeInput = document.querySelector('#max-fee-input');
-        const cards = document.querySelectorAll('.card-item');
-        const jsNoResults = document.getElementById('js-no-results');
-        const serverNoResults = document.getElementById('server-no-results');
-        const activeFiltersContainer = document.getElementById('active-filters');
+    const searchInput = document.getElementById('search-input');
+    const filterPills = document.querySelectorAll('.filter-pill');
+    const cardsContainer = document.getElementById('cards-container');
+    const cardItems = document.querySelectorAll('.card-item');
+    const noResults = document.getElementById('no-results');
 
-        // Dropdown toggle functionality
-        document.querySelectorAll('.filter-dropdown-btn').forEach(btn => {
-            btn.addEventListener('click', function (e) {
-                e.stopPropagation();
-                const dropdownId = 'dropdown-' + this.dataset.dropdown;
-                const dropdown = document.getElementById(dropdownId);
-                const isOpen = dropdown.classList.contains('show');
+    let activeCategory = 'all';
 
-                // Close all dropdowns
-                document.querySelectorAll('.filter-dropdown-content').forEach(d => {
-                    d.classList.remove('show');
-                });
-                document.querySelectorAll('.filter-dropdown-btn').forEach(b => {
-                    b.classList.remove('active');
-                });
+    // Search functionality
+    searchInput.addEventListener('input', filterCards);
 
-                // Toggle current dropdown
-                if (!isOpen) {
-                    dropdown.classList.add('show');
-                    this.classList.add('active');
-                }
-            });
-        });
-
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function (e) {
-            if (!e.target.closest('.filter-dropdown-wrapper')) {
-                document.querySelectorAll('.filter-dropdown-content').forEach(d => {
-                    d.classList.remove('show');
-                });
-                document.querySelectorAll('.filter-dropdown-btn').forEach(b => {
-                    b.classList.remove('active');
-                });
-            }
-        });
-
-        // Active filters state
-        let activeFilters = {
-            issuer: [],
-            category: [],
-            minFee: null,
-            maxFee: null,
-            wallet: ''  // '', 'in', or 'out'
-        };
-
-        // Update active filter tags
-        function updateFilterTags() {
-            activeFiltersContainer.innerHTML = '';
-
-            // Add issuer tags
-            activeFilters.issuer.forEach(value => {
-                addFilterTag('issuer', value, `Issuer: ${value}`);
-            });
-
-            // Add category tags
-            activeFilters.category.forEach(value => {
-                addFilterTag('category', value, `Category: ${value}`);
-            });
-
-            // Add fee range tag
-            if (activeFilters.minFee !== null || activeFilters.maxFee !== null) {
-                const min = activeFilters.minFee || 0;
-                const max = activeFilters.maxFee || '∞';
-                addFilterTag('fee', 'range', `Fee: $${min} - $${max}`);
-            }
-
-            // Add wallet filter tag
-            if (activeFilters.wallet === 'in') {
-                addFilterTag('wallet', 'in', 'In My Wallet');
-            } else if (activeFilters.wallet === 'out') {
-                addFilterTag('wallet', 'out', 'Not in My Wallet');
-            }
-        }
-
-        function addFilterTag(type, value, label) {
-            const tag = document.createElement('div');
-            tag.className = 'filter-tag';
-            tag.innerHTML = `
-            <span>${label}</span>
-            <button type="button" data-filter-type="${type}" data-filter-value="${value}">×</button>
-        `;
-
-            tag.querySelector('button').addEventListener('click', function () {
-                removeFilter(type, value);
-            });
-
-            activeFiltersContainer.appendChild(tag);
-        }
-
-        function removeFilter(type, value) {
-            if (type === 'issuer' || type === 'category') {
-                activeFilters[type] = activeFilters[type].filter(v => v !== value);
-                // Uncheck the checkbox
-                const checkbox = document.querySelector(`.filter-checkbox[data-filter-type="${type}"][value="${value}"]`);
-                if (checkbox) checkbox.checked = false;
-            } else if (type === 'fee') {
-                activeFilters.minFee = null;
-                activeFilters.maxFee = null;
-                minFeeInput.value = '';
-                maxFeeInput.value = '';
-            } else if (type === 'wallet') {
-                activeFilters.wallet = '';
-                // Reset radio to "All Cards"
-                const allCardsRadio = document.querySelector('.wallet-radio[value=""]');
-                if (allCardsRadio) allCardsRadio.checked = true;
-            }
-
-            updateFilterTags();
-            filterCards();
-        }
-
-        // Handle checkbox changes
-        filterCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function () {
-                const type = this.dataset.filterType;
-                const value = this.value;
-
-                if (this.checked) {
-                    if (!activeFilters[type].includes(value)) {
-                        activeFilters[type].push(value);
-                    }
-                } else {
-                    activeFilters[type] = activeFilters[type].filter(v => v !== value);
-                }
-
-                updateFilterTags();
-                filterCards();
-            });
-        });
-
-        // Handle wallet filter radio buttons
-        document.querySelectorAll('.wallet-radio').forEach(radio => {
-            radio.addEventListener('change', function () {
-                activeFilters.wallet = this.value;
-                updateFilterTags();
-                filterCards();
-            });
-        });
-
-        // Handle fee inputs
-        minFeeInput.addEventListener('input', function () {
-            activeFilters.minFee = this.value ? parseInt(this.value) : null;
-            updateFilterTags();
+    // Filter pill functionality
+    filterPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            filterPills.forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+            activeCategory = pill.dataset.category;
             filterCards();
         });
+    });
 
-        maxFeeInput.addEventListener('input', function () {
-            activeFilters.maxFee = this.value ? parseInt(this.value) : null;
-            updateFilterTags();
-            filterCards();
-        });
+    function filterCards() {
+        const query = searchInput.value.toLowerCase();
+        let visibleCount = 0;
 
-        // Clear all filters
-        clearAllBtn.addEventListener('click', function () {
-            // Clear checkboxes
-            filterCheckboxes.forEach(cb => cb.checked = false);
+        cardItems.forEach(card => {
+            const name = card.dataset.name;
+            const issuer = card.dataset.issuer;
+            const categories = card.dataset.categories.toLowerCase();
+            const fee = parseFloat(card.dataset.fee);
 
-            // Clear fee inputs
-            minFeeInput.value = '';
-            maxFeeInput.value = '';
+            const matchesSearch = name.includes(query) || issuer.includes(query);
 
-            // Clear search
-            searchInput.value = '';
+            let matchesCategory = true;
+            if (activeCategory === 'travel') {
+                matchesCategory = categories.includes('travel');
+            } else if (activeCategory === 'cash-back') {
+                matchesCategory = categories.includes('cash') || categories.includes('cashback');
+            } else if (activeCategory === 'no-fee') {
+                matchesCategory = fee === 0;
+            }
 
-            // Clear wallet filter
-            const allCardsRadio = document.querySelector('.wallet-radio[value=""]');
-            if (allCardsRadio) allCardsRadio.checked = true;
-
-            // Reset active filters
-            activeFilters = {
-                issuer: [],
-                category: [],
-                minFee: null,
-                maxFee: null,
-                wallet: ''
-            };
-
-            updateFilterTags();
-            filterCards();
-        });
-
-        // Filter cards function
-        function filterCards() {
-            const query = searchInput.value.toLowerCase();
-            const minFee = activeFilters.minFee || 0;
-            const maxFee = activeFilters.maxFee || 10000;
-
-            let visibleCount = 0;
-
-            cards.forEach(card => {
-                const name = card.dataset.name;
-                const issuer = card.dataset.issuer;
-                const fee = parseInt(card.dataset.fee);
-                const categories = card.dataset.categories.split(',');
-                const inWallet = card.dataset.inWallet === 'true';
-
-                const matchesSearch = name.includes(query) || issuer.toLowerCase().includes(query);
-                const matchesIssuer = activeFilters.issuer.length === 0 || activeFilters.issuer.includes(issuer);
-                const matchesCategory = activeFilters.category.length === 0 || activeFilters.category.some(cat => categories.includes(cat));
-                const matchesFee = fee >= minFee && fee <= maxFee;
-                const matchesWallet = activeFilters.wallet === '' ||
-                    (activeFilters.wallet === 'in' && inWallet) ||
-                    (activeFilters.wallet === 'out' && !inWallet);
-
-                if (matchesSearch && matchesIssuer && matchesCategory && matchesFee && matchesWallet) {
-                    card.style.display = 'grid';
-                    visibleCount++;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-
-            if (visibleCount === 0) {
-                jsNoResults.style.display = 'block';
-                if (serverNoResults) serverNoResults.style.display = 'none';
+            if (matchesSearch && matchesCategory) {
+                card.style.display = 'block';
+                visibleCount++;
             } else {
-                jsNoResults.style.display = 'none';
+                card.style.display = 'none';
             }
-        }
+        });
 
-        // Search input
-        searchInput.addEventListener('input', filterCards);
+        if (visibleCount === 0) {
+            cardsContainer.style.display = 'none';
+            noResults.style.display = 'block';
+        } else {
+            cardsContainer.style.display = 'grid';
+            noResults.style.display = 'none';
+        }
+    }
+
+    // Hover effects
+    cardItems.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-4px)';
+            card.style.boxShadow = 'var(--elevation-4)';
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0)';
+            card.style.boxShadow = 'var(--elevation-1)';
+        });
     });
 </script>
+
+<style>
+    @media (max-width: 768px) {
+        div[style*="grid-template-columns: 1fr auto"] {
+            grid-template-columns: 1fr !important;
+        }
+
+        .filter-pills {
+            flex-wrap: wrap;
+        }
+
+        div[style*="grid-template-columns: repeat(auto-fill, minmax(340px, 1fr))"] {
+            grid-template-columns: 1fr !important;
+        }
+    }
+</style>
 {% endblock %}

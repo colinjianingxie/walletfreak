@@ -35,16 +35,26 @@
     --warning: #f59e0b;
     --danger: #ef4444;
 
+    /* Gradients for new design */
+    --gradient-purple: linear-gradient(135deg, #6750A4 0%, #4A3680 100%);
+    --gradient-purple-dark: linear-gradient(135deg, #2D1B69 0%, #1A0F3D 100%);
+    --gradient-blue: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%);
+    --gradient-gold: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+
     /* Backgrounds */
     --bg-body: #F5F5F5;
     --bg-card: var(--md-surface);
+    --bg-sidebar: #F8F9FA;
+    --bg-auth-body: #FAFBFC;
 
     /* Spacing & Layout */
     --container-width: 1200px;
     --header-height: 70px;
+    --sidebar-width: 240px;
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 20px;
+    --radius-xl: 24px;
 
     /* Material Design Elevation System */
     --elevation-0: none;
@@ -53,6 +63,10 @@
     --elevation-3: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
     --elevation-4: 0px 6px 10px 4px rgba(0, 0, 0, 0.15), 0px 2px 3px rgba(0, 0, 0, 0.3);
     --elevation-5: 0px 8px 12px 6px rgba(0, 0, 0, 0.15), 0px 4px 4px rgba(0, 0, 0, 0.3);
+
+    /* Card shadows for 3D effect */
+    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 1px 8px rgba(0, 0, 0, 0.1);
+    --card-shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.15);
 
     /* Legacy shadows (mapped to elevation) */
     --shadow-sm: var(--elevation-1);
@@ -549,4 +563,438 @@ footer {
     padding-top: 4rem;
     padding-bottom: 4rem;
     margin: 0 auto;
+}
+
+/* ========================================
+   NEW DESIGN SYSTEM COMPONENTS
+   ======================================== */
+
+/* 3D Credit Card Visualization */
+.credit-card {
+    position: relative;
+    width: 100%;
+    max-width: 340px;
+    aspect-ratio: 1.586 / 1;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: white;
+    overflow: hidden;
+}
+
+.credit-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-shadow-hover);
+}
+
+.credit-card.card-amex-platinum {
+    background: linear-gradient(135deg, #8B9BA7 0%, #5A6B78 100%);
+}
+
+.credit-card.card-chase {
+    background: var(--gradient-blue);
+}
+
+.credit-card.card-gold {
+    background: var(--gradient-gold);
+}
+
+.credit-card.card-capital-one {
+    background: linear-gradient(135deg, #2C3E50 0%, #1A2332 100%);
+}
+
+.credit-card.card-citi {
+    background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+}
+
+.credit-card-chip {
+    width: 45px;
+    height: 35px;
+    background: linear-gradient(135deg, #F4D03F 0%, #C9A02C 100%);
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.credit-card-number {
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+}
+
+.credit-card-name {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.credit-card-logo {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 50px;
+    height: auto;
+}
+
+/* Sidebar Navigation (Authenticated Pages) */
+.auth-layout {
+    display: flex;
+    min-height: 100vh;
+    background: var(--bg-auth-body);
+}
+
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--bg-sidebar);
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #E5E7EB;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.sidebar-logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary);
+    padding: 0 1rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sidebar-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.sidebar-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.sidebar-nav-item:hover {
+    background: #E8EAED;
+    color: var(--dark);
+}
+
+.sidebar-nav-item.active {
+    background: var(--primary);
+    color: white;
+}
+
+.sidebar-nav-item svg,
+.sidebar-nav-item .icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.sidebar-logout {
+    padding: 0.75rem 1rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    transition: color 0.2s;
+    margin-top: auto;
+}
+
+.sidebar-logout:hover {
+    color: var(--danger);
+}
+
+.auth-content {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    padding: 2rem;
+}
+
+/* Progress Bar */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #E5E7EB;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 999px;
+    transition: width 0.3s ease;
+}
+
+.progress-bar-fill.success {
+    background: var(--success);
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #CBD5E1;
+    transition: 0.3s;
+    border-radius: 34px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+}
+
+.toggle-switch input:checked+.toggle-slider {
+    background-color: var(--primary);
+}
+
+.toggle-switch input:checked+.toggle-slider:before {
+    transform: translateX(24px);
+}
+
+/* Badge Variations */
+.badge-outline {
+    background: transparent;
+    border: 1px solid var(--md-outline-variant);
+    color: var(--text-muted);
+}
+
+.badge-purple {
+    background: var(--md-primary-container);
+    color: var(--md-on-primary-container);
+}
+
+.badge-match {
+    background: var(--success);
+    color: white;
+    font-weight: 700;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    max-width: 700px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: var(--elevation-5);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    padding: 0.25rem;
+    line-height: 1;
+}
+
+.modal-close:hover {
+    color: var(--dark);
+}
+
+/* Filter Pills */
+.filter-pills {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.filter-pill {
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    border: 1px solid #E5E7EB;
+    background: white;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.filter-pill:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.filter-pill.active {
+    background: var(--dark);
+    color: white;
+    border-color: var(--dark);
+}
+
+/* Stat Card */
+.stat-card {
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+/* Avatar */
+.avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient-blue);
+    color: white;
+    font-size: 3rem;
+    box-shadow: var(--elevation-2);
+}
+
+/* Card Stack (for personality and landing page) */
+.card-stack {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    height: 280px;
+}
+
+.card-stack .credit-card {
+    position: absolute;
+    max-width: 340px;
+}
+
+.card-stack .credit-card:nth-child(1) {
+    top: 0;
+    left: 0;
+    transform: rotate(-5deg);
+    z-index: 1;
+}
+
+.card-stack .credit-card:nth-child(2) {
+    top: 20px;
+    left: 30px;
+    transform: rotate(2deg);
+    z-index: 2;
+}
+
+.card-stack .credit-card:nth-child(3) {
+    top: 40px;
+    left: 60px;
+    transform: rotate(-2deg);
+    z-index: 3;
+}
+
+/* Gradient Text */
+.gradient-text {
+    background: var(--gradient-purple);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Responsive Sidebar */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+        border-right: none;
+        border-bottom: 1px solid #E5E7EB;
+    }
+
+    .auth-content {
+        margin-left: 0;
+        padding: 1rem;
+    }
+
+    .auth-layout {
+        flex-direction: column;
+    }
+
+    .card-stack {
+        height: 200px;
+        max-width: 300px;
+    }
+
+    .credit-card {
+        max-width: 280px;
+    }
 }

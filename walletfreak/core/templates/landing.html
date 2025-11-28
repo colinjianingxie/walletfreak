@@ -1,175 +1,198 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!-- Hero Section with Material Design -->
-<section class="hero"
-    style="background: linear-gradient(135deg, var(--md-primary-container) 0%, var(--md-secondary-container) 100%); padding: 5rem 0; position: relative; overflow: hidden;">
+<!-- Hero Section with Card Stack -->
+<section style="background: var(--gradient-purple); padding: 6rem 0 8rem; position: relative; overflow: hidden;">
+    <!-- Background pattern -->
     <div
-        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.1; background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1440 320\'%3E%3Cpath fill=\'%236750A4\' d=\'M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z\'%3E%3C/path%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: bottom; background-size: cover;">
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.05; background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1440 320\'%3E%3Cpath fill=\'%23ffffff\' d=\'M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z\'%3E%3C/path%3E%3C/svg%3E');">
     </div>
+
     <div class="container" style="position: relative; z-index: 1;">
-        <h1
-            style="font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 700; margin-bottom: 1.5rem; color: var(--md-on-primary-container);">
-            Welcome to <span style="color: var(--md-primary);">WalletFreak</span>
-        </h1>
-        <p
-            style="font-size: clamp(1.1rem, 2vw, 1.4rem); max-width: 700px; margin: 0 auto 3rem; color: var(--md-on-surface-variant); line-height: 1.6;">
-            Find the perfect cards for your lifestyle. From fashionistas to students, discover your credit card
-            personality and track your monthly benefits.
-        </p>
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <a href="{% url 'quiz' %}" class="btn btn-primary"
-                style="padding: 1rem 2.5rem; font-size: 1.1rem; box-shadow: var(--elevation-2); transition: all 0.3s ease;">
-                ✨ Find My Archetype
-            </a>
-            <a href="{% url 'dashboard' %}" class="btn btn-outline"
-                style="padding: 1rem 2.5rem; font-size: 1.1rem; background: white; transition: all 0.3s ease;">
-                Track Benefits
-            </a>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+            <!-- Left side: Content -->
+            <div style="color: white;">
+                <!-- Badge -->
+                <div
+                    style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.15); padding: 0.5rem 1rem; border-radius: 999px; margin-bottom: 2rem; backdrop-filter: blur(10px);">
+                    <span style="font-size: 1.2rem;">⚡</span>
+                    <span style="font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em;">NO CREDIT CARD
+                        REQUIRED</span>
+                </div>
+
+                <!-- Headline -->
+                <h1
+                    style="font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; line-height: 1.1; margin-bottom: 1.5rem;">
+                    Master your wallet. <span
+                        style="display: block; background: linear-gradient(90deg, #FFF 0%, rgba(255,255,255,0.7) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Freakishly
+                        fast.</span>
+                </h1>
+
+                <!-- Subtitle -->
+                <p style="font-size: 1.25rem; line-height: 1.6; margin-bottom: 2.5rem; opacity: 0.95;">
+                    Stop losing money on unused benefits. We track, you cash in.
+                </p>
+
+                <!-- CTA Button -->
+                <a href="{% url 'quiz' %}" class="btn"
+                    style="background: white; color: var(--primary); padding: 1.25rem 2.5rem; font-size: 1.1rem; font-weight: 600; box-shadow: 0 8px 20px rgba(0,0,0,0.15); transition: all 0.3s ease; border: none; display: inline-block;">
+                    Start Optimizing →
+                </a>
+
+                <!-- Annual value indicator -->
+                <div style="margin-top: 3rem; display: flex; align-items: center; gap: 1rem;">
+                    <div
+                        style="width: 50px; height: 50px; background: rgba(255,255,255,0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; backdrop-filter: blur(10px);">
+                        📈
+                    </div>
+                    <div>
+                        <div style="font-size: 0.85rem; opacity: 0.9; margin-bottom: 0.25rem;">Average annual value
+                        </div>
+                        <div style="font-size: 1.75rem; font-weight: 700;">+$1,250.00</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right side: Card Stack -->
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <div class="card-stack">
+                    <!-- Card 1 - Amex Platinum -->
+                    <div class="credit-card card-amex-platinum">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div style="font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;">AMERICAN EXPRESS
+                            </div>
+                        </div>
+                        <div class="credit-card-chip"></div>
+                        <div class="credit-card-number">•••• •••• •••• 1005</div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                            <div class="credit-card-name">Platinum Card®</div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 - Chase Sapphire -->
+                    <div class="credit-card card-chase">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div style="font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;">CHASE</div>
+                        </div>
+                        <div class="credit-card-chip"></div>
+                        <div class="credit-card-number">•••• •••• •••• 4421</div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                            <div class="credit-card-name">Sapphire Reserve</div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 - Venture X -->
+                    <div class="credit-card card-capital-one">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div style="font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;">CAPITAL ONE</div>
+                        </div>
+                        <div class="credit-card-chip"></div>
+                        <div class="credit-card-number">•••• •••• •••• 4242</div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                            <div class="credit-card-name">Venture X</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bank logos -->
+        <div style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid rgba(255,255,255,0.15);">
+            <div
+                style="text-align: center; color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;">
+                Trusted by cardholders at
+            </div>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 3rem; flex-wrap: wrap;">
+                <div style="color: rgba(255,255,255,0.9); font-size: 1.1rem; font-weight: 600; letter-spacing: 0.05em;">
+                    Chase
+                </div>
+                <div style="color: rgba(255,255,255,0.9); font-size: 1.1rem; font-weight: 600; letter-spacing: 0.05em;">
+                    American Express
+                </div>
+                <div style="color: rgba(255,255,255,0.9); font-size: 1.1rem; font-weight: 600; letter-spacing: 0.05em;">
+                    Citi
+                </div>
+                <div style="color: rgba(255,255,255,0.9); font-size: 1.1rem; font-weight: 600; letter-spacing: 0.05em;">
+                    Capital One
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- Personalities Section -->
+<!-- Latest Blog Posts Section -->
+{% if blog_posts %}
 <section class="container" style="padding: 5rem 0;">
-    <div class="text-center" style="margin-bottom: 4rem;">
-        <h2
-            style="font-size: 0.9rem; color: var(--md-primary); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem; font-weight: 600;">
-            The Archetypes
+    <div style="text-align: center; margin-bottom: 3rem;">
+        <div
+            style="color: var(--primary); font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.75rem;">
+            The Ledger
+        </div>
+        <h2 style="font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 700; color: var(--dark); margin-bottom: 0.75rem;">
+            Latest insights
         </h2>
-        <h3
-            style="font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; color: var(--md-on-surface); margin-bottom: 1rem;">
-            Who are you in the credit game?
-        </h3>
-        <p style="color: var(--md-on-surface-variant); max-width: 600px; margin: 0 auto;">
-            Discover your unique financial personality and get personalized card recommendations
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">
+            Tips, tricks, and hot takes on the credit card industry
         </p>
     </div>
 
-    <div class="grid" style="gap: 2rem;">
-        {% for personality in personalities %}
-        <div class="card"
-            style="padding: 2rem; border-radius: 16px; box-shadow: var(--elevation-1); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid var(--md-outline-variant); background: var(--md-surface); position: relative; overflow: hidden;">
+    <div class="grid" style="gap: 2rem; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
+        {% for post in blog_posts|slice:":3" %}
+        <a href="{% url 'blog_detail' post.slug %}" class="card"
+            style="text-decoration: none; color: inherit; display: block; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--elevation-1); transition: all 0.3s ease; background: white; border: 1px solid #E5E7EB;">
+            {% if post.image_url %}
             <div
-                style="position: absolute; top: 0; right: 0; width: 100px; height: 100px; background: linear-gradient(135deg, var(--md-primary-container), transparent); border-radius: 0 0 0 100%;">
+                style="width: 100%; height: 200px; background: linear-gradient(135deg, var(--md-primary-container), var(--md-secondary-container)); background-image: url('{{ post.image_url }}'); background-size: cover; background-position: center;">
             </div>
-            <div style="position: relative; z-index: 1;">
-                <div
-                    style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--md-primary-container), var(--md-secondary-container)); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; font-size: 3rem; box-shadow: var(--elevation-2);">
-                    {% if personality.icon %}{{ personality.icon }}{% elif forloop.counter0|divisibleby:3 %}🧙‍♂️{% elif forloop.counter0|divisibleby:2 %}👗{% else %}🎓{% endif %}
+            {% else %}
+            <div
+                style="width: 100%; height: 200px; background: linear-gradient(135deg, var(--md-primary-container), var(--md-secondary-container));">
+            </div>
+            {% endif %}
+            <div style="padding: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                    <span class="badge badge-purple" style="font-size: 0.75rem; padding: 0.25rem 0.75rem;">
+                        {{ post.category|default:'ARTICLE' }}
+                    </span>
+                    <span style="color: var(--text-muted); font-size: 0.85rem;">
+                        {{ post.published_at|date:"M d, Y" }}
+                    </span>
                 </div>
                 <h3
-                    style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--md-on-surface); text-align: center;">
-                    {{ personality.name }}
+                    style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--dark); line-height: 1.3;">
+                    {{ post.title }}
                 </h3>
-                <span class="badge"
-                    style="display: inline-block; padding: 0.5rem 1rem; background: var(--md-primary-container); color: var(--md-on-primary-container); border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1rem;">
-                    {{ personality.tagline|default:'The Strategist' }}
-                </span>
-                <p
-                    style="color: var(--md-on-surface-variant); line-height: 1.6; margin-bottom: 1.5rem; text-align: center;">
-                    {{ personality.description|truncatewords:15 }}
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem;">
+                    {{ post.excerpt|default:post.content|truncatewords:20 }}
                 </p>
-                <a href="{% url 'personality_detail' personality.id %}" class="btn btn-outline btn-sm"
-                    style="width: 100%; padding: 0.75rem; border-color: var(--md-outline); color: var(--md-primary); transition: all 0.3s ease;">
-                    View Profile →
-                </a>
+                <div style="color: var(--primary); font-weight: 600; font-size: 0.9rem;">
+                    Read more →
+                </div>
             </div>
-        </div>
+        </a>
         {% endfor %}
     </div>
-</section>
 
-<!-- Blog Posts Section -->
-{% if blogs %}
-<section style="background: var(--md-surface-variant); padding: 5rem 0;">
-    <div class="container">
-        <div class="text-center" style="margin-bottom: 4rem;">
-            <h2
-                style="font-size: 0.9rem; color: var(--md-primary); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem; font-weight: 600;">
-                Latest Insights
-            </h2>
-            <h3
-                style="font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; color: var(--md-on-surface); margin-bottom: 1rem;">
-                From the WalletFreak Blog
-            </h3>
-            <p style="color: var(--md-on-surface-variant); max-width: 600px; margin: 0 auto;">
-                Expert tips, strategies, and news to help you maximize your credit card rewards
-            </p>
-        </div>
-
-        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-            {% for blog in blogs %}
-            <article class="card"
-                style="padding: 0; border-radius: 16px; box-shadow: var(--elevation-2); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; background: var(--md-surface); border: none;">
-                <div
-                    style="height: 200px; background: linear-gradient(135deg, var(--md-tertiary-container), var(--md-primary-container)); display: flex; align-items: center; justify-content: center; font-size: 4rem;">
-                    📝
-                </div>
-                <div style="padding: 2rem;">
-                    <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
-                        <span class="badge"
-                            style="background: var(--md-secondary-container); color: var(--md-on-secondary-container); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">
-                            {{ blog.category|default:"Credit Cards" }}
-                        </span>
-                        <span style="color: var(--md-on-surface-variant); font-size: 0.85rem;">
-                            {{ blog.created_at|date:"M d, Y"|default:"Recent" }}
-                        </span>
-                    </div>
-                    <h4
-                        style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--md-on-surface); line-height: 1.4;">
-                        {{ blog.title }}
-                    </h4>
-                    <p style="color: var(--md-on-surface-variant); line-height: 1.6; margin-bottom: 1.5rem;">
-                        {{ blog.excerpt|default:blog.content|truncatewords:20 }}
-                    </p>
-                    <a href="{% url 'blog_detail' blog.id %}"
-                        style="color: var(--md-primary); font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: gap 0.3s ease;">
-                        Read More
-                        <span style="transition: transform 0.3s ease;">→</span>
-                    </a>
-                </div>
-            </article>
-            {% endfor %}
-        </div>
-
-        <div style="text-align: center; margin-top: 3rem;">
-            <a href="{% url 'blog_list' %}" class="btn btn-outline"
-                style="padding: 1rem 2rem; border-color: var(--md-outline); color: var(--md-primary);">
-                View All Posts →
-            </a>
-        </div>
+    <div style="text-align: center; margin-top: 3rem;">
+        <a href="{% url 'blog_list' %}" class="btn btn-outline" style="padding: 0.875rem 2rem;">
+            View all articles →
+        </a>
     </div>
 </section>
 {% endif %}
 
 <style>
-    /* Material Design Hover Effects */
-    .card:hover {
-        transform: translateY(-4px);
-        box-shadow: var(--elevation-3) !important;
-    }
+    @media (max-width: 768px) {
+        section>.container>div[style*="grid-template-columns: 1fr 1fr"] {
+            grid-template-columns: 1fr !important;
+            gap: 2rem !important;
+        }
 
-    .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--elevation-3);
-    }
-
-    .btn-primary:hover {
-        background: var(--md-primary-dark);
-    }
-
-    article.card a:hover span {
-        transform: translateX(4px);
-    }
-
-    article.card a:hover {
-        gap: 0.75rem;
-    }
-
-    /* Smooth transitions */
-    * {
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .card-stack {
+            max-width: 300px !important;
+            height: 200px !important;
+            margin: 0 auto;
+        }
     }
 </style>
 {% endblock %}

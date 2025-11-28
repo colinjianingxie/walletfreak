@@ -1,0 +1,261 @@
+{% extends 'auth_base.html' %}
+
+{% block content %}
+<!-- Wallet Header -->
+<div style="margin-bottom: 2.5rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div>
+            <h1 style="font-size: 2rem; font-weight: 700; margin: 0 0 0.5rem 0;">My Wallet</h1>
+            <p style="color: var(--text-muted); margin: 0;">Manage your active credit cards.</p>
+        </div>
+        <button class="btn" style="background: var(--dark); color: white; padding: 0.875rem 1.5rem; font-weight: 600;"
+            onclick="openAddCardModal()">
+            + Add Card
+        </button>
+    </div>
+</div>
+
+{% if not active_cards %}
+<!-- Empty State -->
+<div
+    style="background: white; border-radius: var(--radius-lg); padding: 4rem 2rem; text-align: center; border: 2px dashed #E5E7EB;">
+    <div style="font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.3;">💳</div>
+    <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;">No cards in your wallet</h2>
+    <p style="color: var(--text-muted); margin-bottom: 2rem; max-width: 400px; margin-left: auto; margin-right: auto;">
+        Add your first credit card to start tracking benefits and maximizing value
+    </p>
+    <button class="btn btn-primary" style="padding: 1rem 2rem;" onclick="openAddCardModal()">
+        Browse Cards →
+    </button>
+</div>
+{% else %}
+
+<!-- Card Grid -->
+<div
+    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+    {% for card in active_cards %}
+    <div>
+        <!-- 3D Credit Card -->
+        <div
+            class="credit-card {% if 'american express' in card.name.lower or 'amex' in card.name.lower %}{% if 'platinum' in card.name.lower %}card-amex-platinum{% else %}card-gold{% endif %}{% elif 'chase' in card.name.lower %}card-chase{% elif 'capital one' in card.name.lower %}card-capital-one{% elif 'citi' in card.name.lower %}card-citi{% else %}card- chase{% endif %}">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                <div style="font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;">
+                    {% if 'american express' in card.name.lower or 'amex' in card.name.lower %}AMERICAN EXPRESS
+                    {% elif 'chase' in card.name.lower %}CHASE
+                    {% elif 'capital one' in card.name.lower %}CAPITAL ONE
+                    {% elif 'citi' in card.name.lower %}CITI
+                    {% else %}CREDIT CARD{% endif %}
+                </div>
+            </div>
+            <div class="credit-card-chip"></div>
+            <div class="credit-card-number">•••• •••• •••• {{ card.id|slice:"-4:" }}</div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                <div class="credit-card-name">{% if user.first_name %}{{ user.first_name|upper }} {{
+                    user.last_name|upper }}{% else %}CARDHOLDER NAME{% endif %}</div>
+            </div>
+        </div>
+
+        <!-- Card Details Below -->
+        <div style="margin-top: 1rem; text-align: center;">
+            <div style="font-weight: 700; font-size: 1rem; color: var(--dark); margin-bottom: 0.25rem;">
+                {{ card.name }}{% if 'card' not in card.name.lower %}{% endif %}
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">
+                --- {{ card.id|slice:"-4:" }}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- Add Another Card Button -->
+    <div style="border: 2px dashed #E5E7EB; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; min-height: 250px; background: white;"
+        onclick="openAddCardModal()">
+        <div
+            style="width: 80px; height: 80px; background: var(--md-primary-container); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; margin-bottom: 1rem;">
+            ➕
+        </div>
+        <div style="font-weight: 700; font-size: 1.1rem; color: var(--dark);">Add Another Card</div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Add Card Modal -->
+<div id="add-card-modal" class="modal" style="display: none;">
+    <div class="modal-content" style="max-width: 700px; max-height: 90vh; overflow-y: auto;">
+        <div class="modal-header"
+            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0;">Add New Card</h3>
+            <button class="modal-close" onclick="closeAddCardModal()"
+                style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted);">×</button>
+        </div>
+
+        <!-- Search Bar -->
+        <div style="margin-bottom: 1.5rem;">
+            <input type="text" id="modal-search" placeholder="Search e.g. 'Sapphire' or 'Amex'"
+                style="width: 100%; padding: 0.875rem 1rem; border: 1px solid #E5E7EB; border-radius: var(--radius-md); font-size: 0.95rem;">
+        </div>
+
+        <!-- Popular Issuers Filters -->
+        <div style="margin-bottom: 1.5rem;">
+            <div
+                style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; font-weight: 600;">
+                POPULAR ISSUERS</div>
+            <div class="filter-pills" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <button class="filter-pill active" data-issuer="all" onclick="filterModalCards('all')">All</button>
+                <button class="filter-pill" data-issuer="Chase" onclick="filterModalCards('Chase')">Chase</button>
+                <button class="filter-pill" data-issuer="American Express"
+                    onclick="filterModalCards('American Express')">Amex</button>
+                <button class="filter-pill" data-issuer="Capital One" onclick="filterModalCards('Capital One')">Capital
+                    One</button>
+                <button class="filter-pill" data-issuer="Citi" onclick="filterModalCards('Citi')">Citi</button>
+            </div>
+        </div>
+
+        <!-- Card Selection List -->
+        <div id="modal-card-list" style="max-height: 300px; overflow-y: auto; margin-bottom: 1.5rem;">
+            <!-- Cards will be populated dynamically -->
+        </div>
+
+        <!-- Add to Wallet Button -->
+        <button id="add-to-wallet-btn" class="btn btn-primary"
+            style="width: 100%; padding: 1rem; font-size: 1rem; display: none;" disabled>
+            + Add to Wallet
+        </button>
+    </div>
+</div>
+
+// Modal Logic
+let selectedCard = null;
+
+// Sample cards data since we don't have an API yet
+const sampleCards = [
+{ id: 1, name: 'Sapphire Preferred', issuer: 'Chase', image: 'card-chase' },
+{ id: 2, name: 'Sapphire Reserve', issuer: 'Chase', image: 'card-chase' },
+{ id: 3, name: 'Platinum Card', issuer: 'American Express', image: 'card-amex-platinum' },
+{ id: 4, name: 'Gold Card', issuer: 'American Express', image: 'card-gold' },
+{ id: 5, name: 'Venture X', issuer: 'Capital One', image: 'card-capital-one' },
+{ id: 6, name: 'Double Cash', issuer: 'Citi', image: 'card-citi' },
+{ id: 7, name: 'Freedom Unlimited', issuer: 'Chase', image: 'card-chase' }
+];
+
+function openAddCardModal() {
+document.getElementById('add-card-modal').style.display = 'flex';
+renderModalCards(sampleCards);
+}
+
+function closeAddCardModal() {
+document.getElementById('add-card-modal').style.display = 'none';
+selectedCard = null;
+document.getElementById('add-to-wallet-btn').style.display = 'none';
+}
+
+function renderModalCards(cards) {
+const container = document.getElementById('modal-card-list');
+container.innerHTML = '';
+
+if (cards.length === 0) {
+container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-muted);">No cards found</div>';
+return;
+}
+
+cards.forEach(card => {
+const div = document.createElement('div');
+div.className = 'modal-card-item';
+div.style.cssText = `
+display: flex; align-items: center; gap: 1rem; padding: 1rem;
+border: 1px solid #E5E7EB; border-radius: 12px; margin-bottom: 0.75rem; cursor: pointer; transition: all 0.2s;
+`;
+div.onclick = () => selectCard(card, div);
+
+div.innerHTML = `
+<div
+    style="width: 60px; height: 40px; background: #eee; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+    💳</div>
+<div>
+    <div style="font-weight: 700; color: var(--dark);">${card.name}</div>
+    <div style="font-size: 0.85rem; color: var(--text-muted);">${card.issuer}</div>
+</div>
+<div style="margin-left: auto; width: 24px; height: 24px; border: 2px solid #E5E7EB; border-radius: 50%; display: flex; align-items: center; justify-content: center;"
+    class="check-circle">
+</div>
+`;
+container.appendChild(div);
+});
+}
+
+function selectCard(card, element) {
+// Deselect all
+document.querySelectorAll('.modal-card-item').forEach(el => {
+el.style.borderColor = '#E5E7EB';
+el.style.background = 'white';
+el.querySelector('.check-circle').innerHTML = '';
+el.querySelector('.check-circle').style.borderColor = '#E5E7EB';
+el.querySelector('.check-circle').style.background = 'transparent';
+});
+
+// Select clicked
+element.style.borderColor = '#8b5cf6';
+element.style.background = '#f5f3ff';
+const check = element.querySelector('.check-circle');
+check.style.borderColor = '#8b5cf6';
+check.style.background = '#8b5cf6';
+check.innerHTML = '<span style="color: white; font-size: 0.8rem;">✓</span>';
+
+selectedCard = card;
+const btn = document.getElementById('add-to-wallet-btn');
+btn.style.display = 'block';
+btn.disabled = false;
+btn.textContent = `+ Add ${card.name} to Wallet`;
+btn.onclick = () => addToWallet(card);
+}
+
+function addToWallet(card) {
+// In a real app, this would be an AJAX call
+// For now, we'll simulate it by redirecting to wallet page
+// Ideally we would POST to an endpoint
+alert(`Added ${card.name} to your wallet!`);
+window.location.reload();
+}
+
+function filterModalCards(issuer) {
+document.querySelectorAll('.filter-pill').forEach(pill => {
+pill.classList.remove('active');
+if (pill.dataset.issuer === issuer) {
+pill.classList.add('active');
+}
+});
+
+const search = document.getElementById('modal-search').value.toLowerCase();
+let filtered = sampleCards;
+
+if (issuer !== 'all') {
+filtered = filtered.filter(c => c.issuer === issuer);
+}
+
+if (search) {
+filtered = filtered.filter(c => c.name.toLowerCase().includes(search) || c.issuer.toLowerCase().includes(search));
+}
+
+renderModalCards(filtered);
+}
+
+document.getElementById('modal-search').addEventListener('input', (e) => {
+const activeIssuer = document.querySelector('.filter-pill.active').dataset.issuer;
+filterModalCards(activeIssuer);
+});
+
+// Close modal when clicking outside
+document.getElementById('add-card-modal')?.addEventListener('click', function(e) {
+if (e.target.id === 'add-card-modal') {
+closeAddCardModal();
+}
+});
+
+<style>
+    @media (max-width: 768px) {
+        div[style*="grid-template-columns: repeat(auto-fill, minmax(340px, 1fr))"] {
+            grid-template-columns: 1fr !important;
+        }
+    }
+</style>
+{% endblock %}

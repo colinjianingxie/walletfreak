@@ -1,16 +1,136 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <h1 style="margin: 2rem 0; text-align: center;">Choose Your Personality</h1>
-    <div class="grid">
+<!-- Personalities Header -->
+<section style="background: var(--gradient-purple); padding: 4rem 0; text-align: center; color: white;">
+    <div class="container">
+        <div
+            style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.15); padding: 0.5rem 1rem; border-radius: 999px; margin-bottom: 1.5rem; backdrop-filter: blur(10px);">
+            <span style="font-size: 1.2rem;">✨</span>
+            <span style="font-size: 0.85rem; font-weight: 600; letter-spacing: 0.1em;">DISCOVER YOUR TYPE</span>
+        </div>
+        <h1 style="font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 700; margin-bottom: 1rem;">
+            Credit Card Personalities
+        </h1>
+        <p style="font-size: 1.125rem; opacity: 0.9; max-width: 600px; margin: 0 auto 2rem;">
+            Find the archetype that matches your spending style.
+        </p>
+
+        <!-- Search & Quiz CTA -->
+        <div
+            style="max-width: 500px; margin: 0 auto; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+            <div style="position: relative; flex: 1; min-width: 280px;">
+                <span
+                    style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); opacity: 0.5; color: var(--dark);">🔍</span>
+                <input type="text" id="personality-search" placeholder="Search e.g. 'Travel' or 'Cash Back'"
+                    style="width: 100%; padding: 1rem 1rem 1rem 3rem; border-radius: 99px; border: none; font-size: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); color: var(--dark);">
+            </div>
+            <a href="{% url 'quiz' %}" class="btn"
+                style="background: white; color: var(--primary); font-weight: 700; padding: 1rem 2rem; border-radius: 99px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); white-space: nowrap;">
+                Take the Quiz →
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Personalities Grid -->
+<section class="container" style="padding: 4rem 0;">
+    <div class="grid" id="personalities-grid"
+        style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">
         {% for personality in personalities %}
-        <div class="card">
-            <h2>{{ personality.name }}</h2>
-            <p style="color: var(--text-muted); margin: 1rem 0;">{{ personality.description }}</p>
-            <a href="{% url 'personality_detail' personality.id %}" class="btn btn-primary">View Recommendations</a>
+        <a href="{% url 'personality_detail' personality.id %}" class="personality-card-link"
+            style="text-decoration: none; color:inherit;" data-name="{{ personality.name|lower }}"
+            data-desc="{{ personality.description|lower }}" data-tag="{{ personality.tagline|default:''|lower }}">
+            <div class="card"
+                style="height: 100%; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--elevation-2); transition: all 0.3s; border: 1px solid #E5E7EB; background: white; padding: 2.5rem; text-align: center;">
+                <!-- Icon/Avatar -->
+                <div
+                    style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--md-primary-container), var(--md-secondary-container)); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; font-size: 3rem; box-shadow: var(--elevation-2);">
+                    {% if 'jetsetter' in personality.id|lower %}✈️
+                    {% elif 'minimalist' in personality.id|lower %}💵
+                    {% elif 'foodie' in personality.id|lower %}🍽️
+                    {% elif 'strategist' in personality.id|lower or 'optimizer' in personality.id|lower %}📊
+                    {% else %}💳{% endif %}
+                </div>
+
+                <!-- Personality Name -->
+                <h3 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--dark);">
+                    {{ personality.name }}
+                </h3>
+
+                <!-- Tagline Badge -->
+                <span class="badge badge-purple"
+                    style="font-size: 0.85rem; padding: 0.5rem 1rem; margin-bottom: 1.5rem;">
+                    {{ personality.tagline|default:"THE STRATEGIST"|upper }}
+                </span>
+
+                <!-- Description -->
+                <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 1.5rem;">
+                    {{ personality.description|truncatewords:20 }}
+                </p>
+
+                <!-- CTA -->
+                <span style="color: var(--primary); font-weight: 600; font-size: 0.95rem;">
+                    View recommendations →
+                </span>
+            </div>
+        </a>
+        {% empty %}
+        <!-- Empty State -->
+        <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem;">
+            <div style="font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.3;">💳</div>
+            <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;">No personalities yet</h2>
+            <p style="color: var(--text-muted);">Check back soon!</p>
         </div>
         {% endfor %}
     </div>
-</div>
+
+    <!-- No Results State (Hidden by default) -->
+    <div id="no-results" style="display: none; text-align: center; padding: 4rem 0;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+        <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">No personalities found</h3>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Try adjusting your search terms or take the quiz to
+            find your match.</p>
+        <a href="{% url 'quiz' %}" class="btn btn-primary">Take the Quiz</a>
+    </div>
+</section>
+
+<script>
+    document.getElementById('personality-search').addEventListener('input', function (e) {
+        const searchTerm = e.target.value.toLowerCase();
+        const cards = document.querySelectorAll('.personality-card-link');
+        let hasVisible = false;
+
+        cards.forEach(card => {
+            const name = card.dataset.name;
+            const desc = card.dataset.desc;
+            const tag = card.dataset.tag;
+
+            if (name.includes(searchTerm) || desc.includes(searchTerm) || tag.includes(searchTerm)) {
+                card.style.display = 'block';
+                hasVisible = true;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        const noResults = document.getElementById('no-results');
+        const grid = document.getElementById('personalities-grid');
+
+        if (!hasVisible && cards.length > 0) {
+            noResults.style.display = 'block';
+            grid.style.display = 'none';
+        } else {
+            noResults.style.display = 'none';
+            grid.style.display = 'grid';
+        }
+    });
+</script>
+
+<style>
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--elevation-4);
+    }
+</style>
 {% endblock %}

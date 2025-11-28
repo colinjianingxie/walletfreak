@@ -1,173 +1,189 @@
-{% extends 'base.html' %}
+{% extends 'auth_base.html' %}
 
 {% block content %}
-<div class="container" style="padding: 3rem 0;">
-    <div
-        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
-        <div>
-            <h1>Subscription Tracker</h1>
-            <p>Track your recurring credits and maximize your annual fees.</p>
-        </div>
-        <a href="{% url 'card_list' %}" class="btn btn-outline">⚙️ Manage Wallet</a>
-    </div>
-
-    <!-- Notifications Toggle -->
-    <div class="card mb-4"
-        style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-        <div style="display: flex; align-items: center; gap: 1rem; flex: 1; min-width: 200px;">
+<!-- Dashboard Header -->
+<div style="margin-bottom: 2rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
+        <!-- Greeting Section -->
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
             <div
-                style="width: 48px; height: 48px; background: #e0e7ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.5rem;">
-                🔔
+                style="width: 64px; height: 64px; background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); border: 3px solid white;">
+                ✈️
             </div>
             <div>
-                <h3 style="margin: 0; font-size: 1.1rem;">Email Notifications</h3>
-                <p style="margin: 0; font-size: 0.9rem;">Get alerts for expiring benefits</p>
-            </div>
-        </div>
-        <label class="switch">
-            <input type="checkbox" checked>
-            <span class="slider round"></span>
-        </label>
-    </div>
-
-    <!-- Stats Row -->
-    <div class="card mb-4">
-        <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
-            <div style="flex: 1; min-width: 200px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                    <span style="font-weight: 600; color: var(--text-muted);">Utilization</span>
-                    <span style="font-weight: 700;">${{ total_used_value }} / ${{ total_potential_value }}</span>
-                </div>
-                <div style="height: 12px; background: #f1f5f9; border-radius: 6px; overflow: hidden;">
-                    <div
-                        style="width: {% if total_potential_value > 0 %}{% widthratio total_used_value total_potential_value 100 %}{% else %}0{% endif %}%; height: 100%; background: var(--primary); transition: width 0.5s ease;">
-                    </div>
-                </div>
-            </div>
-            <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
-                <div
-                    style="background: #eff6ff; padding: 1rem; border-radius: 8px; text-align: center; min-width: 100px;">
-                    <div style="font-size: 0.8rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">
-                        Cards</div>
-                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--dark);">{{ active_cards|length }}
-                    </div>
-                </div>
-                <div
-                    style="background: #eff6ff; padding: 1rem; border-radius: 8px; text-align: center; min-width: 100px;">
-                    <div style="font-size: 0.8rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">
-                        Credits</div>
-                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--dark);">{{ all_benefits|length }}
-                    </div>
+                <h1 style="font-size: 2.25rem; font-weight: 800; margin: 0; line-height: 1.1;">
+                    Hey, <span style="color: #6D28D9;">{% if user.first_name %}{{ user.first_name }}{% else %}Alex{% endif %}!</span>
+                </h1>
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-top: 0.5rem;">
+                    <span
+                        style="background: rgba(14, 165, 233, 0.1); color: #0ea5e9; font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 4px; letter-spacing: 0.05em;">
+                        THE JETSETTER
+                    </span>
+                    <span style="color: var(--text-muted); font-size: 0.9rem;">Your benefits are working hard.</span>
                 </div>
             </div>
         </div>
+
+        <!-- Search & Notifications -->
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <a href="{% url 'quiz' %}" class="btn btn-sm"
+                style="background: white; color: var(--primary); border: 1px solid #E5E7EB; font-weight: 600; padding: 0.5rem 1rem; border-radius: 99px; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+                <span>✨</span> Take Quiz
+            </a>
+            <div style="position: relative;">
+                <span
+                    style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.9rem;">🔍</span>
+                <input type="search" placeholder="Search benefits..."
+                    style="padding: 0.75rem 1rem 0.75rem 2.5rem; border: 1px solid #E5E7EB; border-radius: 99px; width: 280px; font-size: 0.9rem; background: white; transition: all 0.2s;">
+            </div>
+            <button
+                style="width: 48px; height: 48px; border-radius: 50%; border: 1px solid #E5E7EB; background: white; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); transition: all 0.2s;">
+                🔔
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Cards Grid -->
+<div
+    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
+    <!-- Annual Value Card (Purple) -->
+    <div
+        style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); border-radius: 24px; padding: 2rem; color: white; box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3); position: relative; overflow: hidden;">
+        <!-- Background decoration -->
+        <div
+            style="position: absolute; top: -20px; right: -20px; width: 150px; height: 150px; background: rgba(255,255,255,0.1); border-radius: 50%;">
+        </div>
+
+        <div
+            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; position: relative; z-index: 1;">
+            <div
+                style="width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                📈
+            </div>
+            <div style="font-size: 0.8rem; font-weight: 600; opacity: 0.9;">Annual Value</div>
+        </div>
+
+        <div style="position: relative; z-index: 1;">
+            <div style="font-size: 0.9rem; margin-bottom: 0.25rem; opacity: 0.9;">Total Value Extracted</div>
+            <div style="font-size: 3.5rem; font-weight: 700; line-height: 1; margin-bottom: 0.5rem;">
+                ${{ total_used_value|default:0|floatformat:0 }}<span style="font-size: 1.5rem; opacity: 0.7;">.00</span>
+            </div>
+            <div style="font-size: 0.85rem; opacity: 0.8;">
+                Out of ${{ total_potential_value|default:0|floatformat:0 }} available credits
+            </div>
+        </div>
+
+        <!-- Progress bar at bottom -->
+        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 6px; background: rgba(0,0,0,0.1);">
+            <div
+                style="width: {% if total_potential_value > 0 %}{% widthratio total_used_value total_potential_value 100 %}{% else %}0{% endif %}%; height: 100%; background: rgba(255,255,255,0.5);">
+            </div>
+        </div>
     </div>
 
-    {% if not active_cards %}
+    <!-- Benefit Utilization Card (White) -->
+    <div
+        style="background: white; border-radius: 24px; padding: 2rem; border: 1px solid #F3F4F6; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+            <div>
+                <div style="font-size: 0.9rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.25rem;">
+                    Benefit Utilization</div>
+            </div>
+            <div
+                style="width: 40px; height: 40px; background: #F3F4F6; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                ⚡
+            </div>
+        </div>
+
+        <div style="font-size: 3.5rem; font-weight: 800; line-height: 1; margin-bottom: 0.5rem; color: var(--dark);">
+            {% if total_potential_value > 0 %}{% widthratio total_used_value total_potential_value 100 %}{% else %}0{% endif %}%
+        </div>
+        <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+            You're using most of your perks!
+        </div>
+
+        <div style="height: 8px; background: #F3F4F6; border-radius: 4px; overflow: hidden;">
+            <div
+                style="width: {% if total_potential_value > 0 %}{% widthratio total_used_value total_potential_value 100 %}{% else %}0{% endif %}%; height: 100%; background: linear-gradient(90deg, #8b5cf6 0%, #d946ef 100%); border-radius: 4px;">
+            </div>
+        </div>
+    </div>
+
+    <!-- Add New Card (White) -->
+    <div style="background: white; border-radius: 24px; padding: 2rem; border: 2px dashed #E5E7EB; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; cursor: pointer; transition: all 0.2s; min-height: 240px;"
+        onclick="openAddCardModal()">
+        <div
+            style="width: 64px; height: 64px; background: #eff6ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #2563eb; margin-bottom: 1rem;">
+            +
+        </div>
+        <div style="font-weight: 700; font-size: 1.1rem; margin-bottom: 0.25rem; color: var(--dark);">Add New Card</div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">Track a new bonus or fee</div>
+    </div>
+</div>
+
+<!-- Active Benefits Section -->
+<div
+    style="background: white; border-radius: 24px; padding: 2rem; border: 1px solid #F3F4F6; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 800; margin: 0; color: var(--dark);">Active Benefits</h2>
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <button
+                style="background: #F3F4F6; border: none; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); cursor: pointer;">Reset:
+                All</button>
+            <button
+                style="background: #F3F4F6; border: none; width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted);">
+                ▼
+            </button>
+        </div>
+    </div>
+    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem;">Real-time tracking of your card
+        credits.</p>
+
+    {% if not all_benefits %}
     <!-- Empty State -->
-    <div class="card text-center" style="padding: 4rem 2rem; border-style: dashed; border-width: 2px;">
-        <p style="font-size: 1.2rem; margin-bottom: 2rem;">You haven't added any cards to your wallet yet.</p>
-        <a href="{% url 'card_list' %}" class="btn btn-primary">Add your cards now</a>
+    <div style="text-align: center; padding: 3rem 1rem;">
+        <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;">💳</div>
+        <div style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.5rem;">No active benefits yet</div>
+        <div style="color: var(--text-muted); margin-bottom: 1.5rem;">Add cards to your wallet to start tracking
+            benefits</div>
+        <button class="btn btn-primary" onclick="openAddCardModal()">Add Card</button>
     </div>
     {% else %}
 
-    <!-- All Benefits Section -->
-    {% if all_benefits %}
-    <div class="card mb-4" style="background: linear-gradient(45deg, #2c3e50, #3498db); border: none;">
-        <h3 style="color: white; margin-bottom: 1rem;">💳 Credit Card Benefits</h3>
-        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
-            {% for benefit in all_benefits %}
-            <div data-benefit-id="{{ benefit.benefit_id }}"
-                style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; backdrop-filter: blur(5px); display: flex; flex-direction: column; justify-content: space-between; {% if benefit.is_used %}opacity: 0.7;{% endif %}">
-                <div>
-                    <p style="font-weight: bold; color: #fff; margin-bottom: 0.25rem;">{{ benefit.benefit_name }}</p>
-                    <p style="font-size: 0.85rem; color: rgba(255,255,255,0.8); margin-bottom: 0.5rem;">{{ benefit.card_name }}</p>
-                </div>
-                <div>
-                    <div
-                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                        <span class="badge" style="background: rgba(255,255,255,0.2); color: white;">
-                            {% if benefit.frequency != 'Annual' %}{{ benefit.frequency }}{% endif %}
-                            {% if benefit.reset_date %}
-                            (Resets: {{ benefit.reset_date|date:"M d" }})
-                            {% endif %}
-                        </span>
-                        <span
-                            style="color: {% if benefit.is_used %}#95a5a6{% else %}#4cd137{% endif %}; font-weight: 600;">
-                            {% if benefit.is_used %}✓ Used{% else %} ${{ benefit.remaining }} Left{% endif %}
-                        </span>
-                    </div>
-                    <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem;">
-                        <input type="number"
-                               id="amount-{{ benefit.card_id }}-{{ benefit.benefit_id }}"
-                               min="0"
-                               max="{{ benefit.amount }}"
-                               step="0.01"
-                               value="{{ benefit.used }}"
-                               placeholder="Amount used"
-                               style="flex: 1; padding: 0.5rem; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; background: rgba(255,255,255,0.9); color: #2c3e50; font-size: 0.9rem;">
-                        <button type="button"
-                                onclick="updateBenefitAmount('{{ benefit.card_id }}', '{{ benefit.benefit_id }}', this)"
-                                class="btn btn-sm"
-                                style="background: rgba(255,255,255,0.9); color: #2c3e50; font-weight: 600; border: none; padding: 0.5rem 1rem;">
-                            Update
-                        </button>
-                    </div>
-                    <form action="{% url 'toggle_benefit_usage' benefit.card_id benefit.benefit_id %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm"
-                            style="width: 100%; background: {% if benefit.is_used %}rgba(255,255,255,0.5){% else %}rgba(255,255,255,0.9){% endif %}; color: #2c3e50; font-weight: 600; border: none;">
-                            {% if benefit.is_used %}↺ Reset{% else %}✓ Mark Full{% endif %}
-                        </button>
-                    </form>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-    {% endif %}
-
-    <!-- Active Cards List -->
-    <div class="grid">
-        {% for card in active_cards %}
-        <div class="card">
-            <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
-                <div
-                    style="width: 60px; height: 40px; background: #f1f5f9; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
-                    {% if card.image_url %}
-                    <img src="{{ card.image_url }}" alt="{{ card.name }}" style="max-width: 100%; max-height: 100%;">
-                    {% else %}
-                    💳
-                    {% endif %}
-                </div>
-                <div>
-                    <h3 style="font-size: 1.1rem; margin: 0;">{{ card.name }}</h3>
-                    <span class="badge badge-success">Active</span>
-                </div>
-            </div>
-
-            <!-- Anniversary Date Input -->
-            <div style="margin-bottom: 1rem; padding: 0.5rem; background: #f8fafc; border-radius: 4px;">
-                <form action="{% url 'update_anniversary' card.id %}" method="POST"
-                    style="display: flex; align-items: center; gap: 0.5rem;">
-                    {% csrf_token %}
-                    <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted);">Anniversary:</label>
-                    <input type="date" name="anniversary_date" value="{{ card.anniversary_date|default:'' }}"
-                        style="padding: 0.25rem; font-size: 0.8rem; border: 1px solid #cbd5e1; border-radius: 4px;">
-                    <button type="submit" class="btn btn-outline btn-sm"
-                        style="padding: 0.25rem 0.5rem; font-size: 0.7rem;">Save</button>
-                </form>
-            </div>
-
+    <!-- Benefits List -->
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        {% for benefit in all_benefits|slice:":10" %}
+        <div style="display: grid; grid-template-columns: 60px 1fr 100px; gap: 1.5rem; align-items: center;">
+            <!-- Percentage Circle -->
             <div
-                style="border-top: 1px solid #f1f5f9; padding-top: 1rem; margin-top: 1rem; display: flex; gap: 0.5rem;">
-                <a href="{% url 'card_detail' card.card_id %}" class="btn btn-outline btn-sm" style="flex: 1;">View
-                    Benefits</a>
+                style="width: 50px; height: 50px; border-radius: 50%; background: {% if benefit.is_used %}#dcfce7{% else %}#eff6ff{% endif %}; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; color: {% if benefit.is_used %}#16a34a{% else %}#2563eb{% endif %};">
+                {% if benefit.is_used %}✓{% else %}{% if benefit.amount > 0 %}{% widthratio benefit.used benefit.amount 100 %}{% else %}0{% endif %}%{% endif %}
+            </div>
 
-                <!-- Remove Card Button -->
-                <button type="button" class="btn btn-outline btn-sm remove-card-btn" data-card-id="{{ card.id }}"
-                    data-card-name="{{ card.name }}"
-                    style="color: var(--danger); border-color: var(--danger);">Remove</button>
+            <!-- Benefit Info -->
+            <div>
+                <div style="font-weight: 700; font-size: 1rem; margin-bottom: 0.25rem; color: var(--dark);">{{
+                    benefit.benefit_name }}</div>
+                <div
+                    style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;">
+                    {{ benefit.card_name }} • {{ benefit.frequency }}
+                </div>
+                <div style="height: 8px; background: #F3F4F6; border-radius: 4px; overflow: hidden;">
+                    <div
+                        style="width: {% if benefit.amount > 0 %}{% widthratio benefit.used benefit.amount 100 %}{% else %}0{% endif %}%; height: 100%; background: {% if benefit.is_used %}#22c55e{% else %}#6366f1{% endif %}; border-radius: 4px;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Value Display -->
+            <div style="text-align: right;">
+                <div style="font-weight: 800; font-size: 1.1rem; color: var(--dark);">
+                    ${{ benefit.used|floatformat:0 }}
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">
+                    / ${{ benefit.amount|floatformat:0 }}
+                </div>
             </div>
         </div>
         {% endfor %}
@@ -175,260 +191,186 @@
     {% endif %}
 </div>
 
-<!-- Remove Card Confirmation Modal -->
-<div id="removeCardModal"
-    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center;">
-    <div class="card" style="max-width: 400px; margin: 2rem; padding: 2rem;">
-        <h3 style="margin-bottom: 1rem;">Remove Card from Wallet?</h3>
-        <p id="removeCardMessage" style="margin-bottom: 1.5rem; color: var(--text-muted);"></p>
-        <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
-            <button type="button" id="cancelRemove" class="btn btn-outline">Cancel</button>
-            <form id="removeCardForm" method="POST" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary"
-                    style="background: var(--danger); border-color: var(--danger);">Remove</button>
-            </form>
+<!-- Add Card Modal (Include here as well for the dashboard button) -->
+<div id="add-card-modal" class="modal" style="display: none;">
+    <div class="modal-content" style="max-width: 700px; max-height: 90vh; overflow-y: auto;">
+        <div class="modal-header"
+            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0;">Add New Card</h3>
+            <button class="modal-close" onclick="closeAddCardModal()"
+                style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted);">×</button>
         </div>
+
+        <!-- Search Bar -->
+        <div style="margin-bottom: 1.5rem;">
+            <input type="text" id="modal-search" placeholder="Search e.g. 'Sapphire' or 'Amex'"
+                style="width: 100%; padding: 0.875rem 1rem; border: 1px solid #E5E7EB; border-radius: var(--radius-md); font-size: 0.95rem;">
+        </div>
+
+        <!-- Popular Issuers Filters -->
+        <div style="margin-bottom: 1.5rem;">
+            <div
+                style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; font-weight: 600;">
+                POPULAR ISSUERS</div>
+            <div class="filter-pills" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <button class="filter-pill active" data-issuer="all" onclick="filterModalCards('all')">All</button>
+                <button class="filter-pill" data-issuer="Chase" onclick="filterModalCards('Chase')">Chase</button>
+                <button class="filter-pill" data-issuer="American Express"
+                    onclick="filterModalCards('American Express')">Amex</button>
+                <button class="filter-pill" data-issuer="Capital One" onclick="filterModalCards('Capital One')">Capital
+                    One</button>
+                <button class="filter-pill" data-issuer="Citi" onclick="filterModalCards('Citi')">Citi</button>
+            </div>
+        </div>
+
+        <!-- Card Selection List -->
+        <div id="modal-card-list" style="max-height: 300px; overflow-y: auto; margin-bottom: 1.5rem;">
+            <!-- Cards will be populated dynamically via JS -->
+            <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                Loading cards...
+            </div>
+        </div>
+
+        <!-- Add to Wallet Button -->
+        <button id="add-to-wallet-btn" class="btn btn-primary"
+            style="width: 100%; padding: 1rem; font-size: 1rem; display: none;" disabled>
+            + Add to Wallet
+        </button>
     </div>
 </div>
 
 <script>
-    // Update benefit amount with custom value
-    async function updateBenefitAmount(cardId, benefitId, button) {
-        const inputId = `amount-${cardId}-${benefitId}`;
-        const input = document.getElementById(inputId);
-        const amount = parseFloat(input.value) || 0;
-        
-        // Disable button during request
-        const originalText = button.textContent;
-        button.disabled = true;
-        button.textContent = '...';
-        
-        try {
-            const csrfToken = document.querySelector('[name="csrfmiddlewaretoken"]').value;
-            const url = `/dashboard/update-benefit/${cardId}/${benefitId}/`;
-            
-            const formData = new FormData();
-            formData.append('amount', amount);
-            formData.append('csrfmiddlewaretoken', csrfToken);
-            
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                },
-                body: formData
-            });
-            
-            const data = await response.json();
-            
-            if (data.success) {
-                // Update the benefit card
-                const benefitCard = button.closest('[data-benefit-id]');
-                const statusSpan = benefitCard.querySelector('span[style*="font-weight: 600"]');
-                
-                if (data.is_used) {
-                    if (benefitCard) benefitCard.style.opacity = '0.7';
-                    if (statusSpan) {
-                        statusSpan.style.color = '#95a5a6';
-                        statusSpan.textContent = '✓ Used';
-                    }
-                } else {
-                    if (benefitCard) benefitCard.style.opacity = '1';
-                    if (statusSpan) {
-                        statusSpan.style.color = '#4cd137';
-                        statusSpan.textContent = ` $${data.remaining.toFixed(2)} Left`;
-                    }
-                }
-                
-                // Update utilization stats
-                const utilizationText = document.querySelector('span[style*="font-weight: 700"]');
-                if (utilizationText) {
-                    utilizationText.textContent = `$${data.total_used_value.toFixed(2)} / $${data.total_potential_value.toFixed(2)}`;
-                }
-                
-                const progressBar = document.querySelector('div[style*="background: var(--primary)"]');
-                if (progressBar) {
-                    progressBar.style.width = `${data.utilization_percentage}%`;
-                }
-                
-                // Update the input value to reflect what was actually saved
-                input.value = data.used.toFixed(2);
-            }
-        } catch (error) {
-            console.error('Error updating benefit:', error);
-            alert('Failed to update benefit amount');
-        } finally {
-            button.disabled = false;
-            button.textContent = originalText;
-        }
+    // Modal Logic
+    let selectedCard = null;
+
+    // Sample cards data since we don't have an API yet
+    const sampleCards = [
+        { id: 1, name: 'Sapphire Preferred', issuer: 'Chase', image: 'card-chase' },
+        { id: 2, name: 'Sapphire Reserve', issuer: 'Chase', image: 'card-chase' },
+        { id: 3, name: 'Platinum Card', issuer: 'American Express', image: 'card-amex-platinum' },
+        { id: 4, name: 'Gold Card', issuer: 'American Express', image: 'card-gold' },
+        { id: 5, name: 'Venture X', issuer: 'Capital One', image: 'card-capital-one' },
+        { id: 6, name: 'Double Cash', issuer: 'Citi', image: 'card-citi' },
+        { id: 7, name: 'Freedom Unlimited', issuer: 'Chase', image: 'card-chase' }
+    ];
+
+    function openAddCardModal() {
+        document.getElementById('add-card-modal').style.display = 'flex';
+        renderModalCards(sampleCards);
     }
 
-    // AJAX Benefit Toggle
-    document.querySelectorAll('form[action*="toggle-benefit"]').forEach(form => {
-        form.addEventListener('submit', async function (e) {
-            e.preventDefault();
+    function closeAddCardModal() {
+        document.getElementById('add-card-modal').style.display = 'none';
+        selectedCard = null;
+        document.getElementById('add-to-wallet-btn').style.display = 'none';
+    }
 
-            const button = this.querySelector('button[type="submit"]');
-            // Use the data-benefit-id attribute to find the card
-            const benefitCard = this.closest('[data-benefit-id]');
+    function renderModalCards(cards) {
+        const container = document.getElementById('modal-card-list');
+        container.innerHTML = '';
 
-            // Find the status span - navigate up to the parent div, then find the status container
-            const parentDiv = this.parentElement;
-            const statusContainer = parentDiv ? parentDiv.querySelector('div[style*="display: flex"]') : null;
-            const statusSpan = statusContainer ? statusContainer.querySelector('span[style*="font-weight: 600"]') : null;
+        if (cards.length === 0) {
+            container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-muted);">No cards found</div>';
+            return;
+        }
 
-            const originalButtonText = button.textContent.trim();
+        cards.forEach(card => {
+            const div = document.createElement('div');
+            div.className = 'modal-card-item';
+            div.style.cssText = `
+            display: flex; align-items: center; gap: 1rem; padding: 1rem; 
+            border: 1px solid #E5E7EB; border-radius: 12px; margin-bottom: 0.75rem; cursor: pointer; transition: all 0.2s;
+        `;
+            div.onclick = () => selectCard(card, div);
 
-            // Disable button during request
-            button.disabled = true;
-            button.textContent = '...';
+            div.innerHTML = `
+            <div style="width: 60px; height: 40px; background: #eee; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">💳</div>
+            <div>
+                <div style="font-weight: 700; color: var(--dark);">${card.name}</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">${card.issuer}</div>
+            </div>
+            <div style="margin-left: auto; width: 24px; height: 24px; border: 2px solid #E5E7EB; border-radius: 50%; display: flex; align-items: center; justify-content: center;" class="check-circle">
+            </div>
+        `;
+            container.appendChild(div);
+        });
+    }
 
-            try {
-                const response = await fetch(this.action, {
-                    method: 'POST',
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'X-CSRFToken': this.querySelector('[name="csrfmiddlewaretoken"]').value,
-                    },
-                    body: new FormData(this)
-                });
+    function selectCard(card, element) {
+        // Deselect all
+        document.querySelectorAll('.modal-card-item').forEach(el => {
+            el.style.borderColor = '#E5E7EB';
+            el.style.background = 'white';
+            el.querySelector('.check-circle').innerHTML = '';
+            el.querySelector('.check-circle').style.borderColor = '#E5E7EB';
+            el.querySelector('.check-circle').style.background = 'transparent';
+        });
 
-                const data = await response.json();
+        // Select clicked
+        element.style.borderColor = '#8b5cf6';
+        element.style.background = '#f5f3ff';
+        const check = element.querySelector('.check-circle');
+        check.style.borderColor = '#8b5cf6';
+        check.style.background = '#8b5cf6';
+        check.innerHTML = '<span style="color: white; font-size: 0.8rem;">✓</span>';
 
-                if (data.success) {
-                    // Update benefit card styling
-                    if (data.is_used) {
-                        if (benefitCard) benefitCard.style.opacity = '0.7';
-                        button.textContent = '↺ Uncheck';
-                        button.style.background = 'rgba(255,255,255,0.5)';
-                        if (statusSpan) {
-                            statusSpan.style.color = '#95a5a6';
-                            statusSpan.textContent = '✓ Used';
-                        }
-                    } else {
-                        if (benefitCard) benefitCard.style.opacity = '1';
-                        button.textContent = '✓ Mark as Used';
-                        button.style.background = 'rgba(255,255,255,0.9)';
-                        if (statusSpan) {
-                            statusSpan.style.color = '#4cd137';
-                            statusSpan.textContent = ` $${data.remaining} Left`;
-                        }
-                    }
+        selectedCard = card;
+        const btn = document.getElementById('add-to-wallet-btn');
+        btn.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = `+ Add ${card.name} to Wallet`;
+        btn.onclick = () => addToWallet(card);
+    }
 
-                    // Update utilization stats
-                    const utilizationText = document.querySelector('span[style*="font-weight: 700"]');
-                    if (utilizationText && utilizationText.textContent.includes('/')) {
-                        utilizationText.textContent = `$${data.total_used_value} / $${data.total_potential_value}`;
-                    }
+    function addToWallet(card) {
+        // In a real app, this would be an AJAX call
+        // For now, we'll simulate it by redirecting to wallet page
+        // Ideally we would POST to an endpoint
+        alert(`Added ${card.name} to your wallet!`);
+        window.location.href = '{% url "wallet" %}';
+    }
 
-                    // Update progress bar
-                    const progressBar = document.querySelector('[style*="height: 12px"]').querySelector('div');
-                    if (progressBar) {
-                        progressBar.style.width = `${data.utilization_percentage}%`;
-                    }
-                } else {
-                    console.error('Toggle failed:', data);
-                    button.textContent = originalButtonText;
-                }
-            } catch (error) {
-                console.error('Error toggling benefit:', error);
-                button.textContent = originalButtonText;
-            } finally {
-                button.disabled = false;
+    function filterModalCards(issuer) {
+        document.querySelectorAll('.filter-pill').forEach(pill => {
+            pill.classList.remove('active');
+            if (pill.dataset.issuer === issuer) {
+                pill.classList.add('active');
             }
         });
-    });
 
-    // Remove card modal functionality
-    const modal = document.getElementById('removeCardModal');
-    const removeForm = document.getElementById('removeCardForm');
-    const removeMessage = document.getElementById('removeCardMessage');
-    const cancelBtn = document.getElementById('cancelRemove');
+        const search = document.getElementById('modal-search').value.toLowerCase();
+        let filtered = sampleCards;
 
-    document.querySelectorAll('.remove-card-btn').forEach(btn => {
-        btn.addEventListener('click', function () {
-            const cardId = this.dataset.cardId;
-            const cardName = this.dataset.cardName;
+        if (issuer !== 'all') {
+            filtered = filtered.filter(c => c.issuer === issuer);
+        }
 
-            removeMessage.textContent = `Are you sure you want to remove "${cardName}" from your wallet?`;
-            removeForm.action = `/dashboard/remove-card/${cardId}/`;
-            modal.style.display = 'flex';
-        });
-    });
+        if (search) {
+            filtered = filtered.filter(c => c.name.toLowerCase().includes(search) || c.issuer.toLowerCase().includes(search));
+        }
 
-    cancelBtn.addEventListener('click', () => {
-        modal.style.display = 'none';
+        renderModalCards(filtered);
+    }
+
+    document.getElementById('modal-search').addEventListener('input', (e) => {
+        const activeIssuer = document.querySelector('.filter-pill.active').dataset.issuer;
+        filterModalCards(activeIssuer);
     });
 
     // Close modal when clicking outside
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.style.display = 'none';
+    document.getElementById('add-card-modal')?.addEventListener('click', function (e) {
+        if (e.target.id === 'add-card-modal') {
+            closeAddCardModal();
         }
     });
 </script>
 
 <style>
-    /* Toggle Switch */
-    .switch {
-        position: relative;
-        display: inline-block;
-        width: 50px;
-        height: 28px;
-    }
-
-    .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
-
-    .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ccc;
-        -webkit-transition: .4s;
-        transition: .4s;
-    }
-
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 20px;
-        width: 20px;
-        left: 4px;
-        bottom: 4px;
-        background-color: white;
-        -webkit-transition: .4s;
-        transition: .4s;
-    }
-
-    input:checked+.slider {
-        background-color: var(--primary);
-    }
-
-    input:focus+.slider {
-        box-shadow: 0 0 1px var(--primary);
-    }
-
-    input:checked+.slider:before {
-        -webkit-transform: translateX(22px);
-        -ms-transform: translateX(22px);
-        transform: translateX(22px);
-    }
-
-    /* Rounded sliders */
-    .slider.round {
-        border-radius: 34px;
-    }
-
-    .slider.round:before {
-        border-radius: 50%;
+    @media (max-width: 768px) {
+        div[style*="grid-template-columns: 60px 1fr 100px"] {
+            grid-template-columns: 1fr !important;
+            gap: 0.5rem !important;
+        }
     }
 </style>
 {% endblock %}

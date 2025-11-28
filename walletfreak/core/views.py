@@ -29,3 +29,9 @@ def quiz(request):
         'firebase_config': settings.FIREBASE_CLIENT_CONFIG,
     }
     return render(request, 'quiz.html', context)
+
+def features(request):
+    context = {
+        'firebase_config': settings.FIREBASE_CLIENT_CONFIG,
+    }
+    return render(request, 'features.html', context)
