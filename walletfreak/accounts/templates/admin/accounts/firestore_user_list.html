@@ -1,0 +1,130 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static %}
+
+{% block extrahead %}
+{{ block.super }}
+<style>
+    .user-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    .user-table th {
+        background: #f8f9fa;
+        padding: 12px;
+        text-align: left;
+        font-weight: 600;
+        border-bottom: 2px solid #dee2e6;
+    }
+    .user-table td {
+        padding: 12px;
+        border-bottom: 1px solid #dee2e6;
+    }
+    .user-table tr:hover {
+        background: #f8f9fa;
+    }
+    .permission-toggle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .permission-toggle input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+    .permission-label {
+        font-weight: 500;
+    }
+    .permission-label.active {
+        color: #28a745;
+    }
+    .permission-label.inactive {
+        color: #6c757d;
+    }
+    .info-box {
+        background: #e7f3ff;
+        border-left: 4px solid #2196F3;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 4px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <div class="info-box">
+        <p style="margin: 0;">
+            <strong>Super Staff:</strong> Full admin access to all features<br>
+            <strong>Editor:</strong> Can create, edit, and publish blog posts
+        </p>
+    </div>
+
+    {% if messages %}
+    <ul class="messagelist">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <table class="user-table">
+        <thead>
+            <tr>
+                <th>Name / Email</th>
+                <th>Super Staff</th>
+                <th>Editor</th>
+                <th>User ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>
+                    <strong>{{ user.name }}</strong><br>
+                    <small style="color: #6c757d;">{{ user.email }}</small>
+                </td>
+                <td>
+                    <form method="post" action="{% url 'admin:accounts_firestoreuser_toggle_super' user.uid %}" style="margin: 0;">
+                        {% csrf_token %}
+                        <div class="permission-toggle">
+                            <input type="checkbox" 
+                                   name="is_super_staff" 
+                                   onchange="this.form.submit()" 
+                                   {% if user.is_super_staff %}checked{% endif %}>
+                            <span class="permission-label {% if user.is_super_staff %}active{% else %}inactive{% endif %}">
+                                {% if user.is_super_staff %}Yes{% else %}No{% endif %}
+                            </span>
+                        </div>
+                    </form>
+                </td>
+                <td>
+                    <form method="post" action="{% url 'admin:accounts_firestoreuser_toggle_editor' user.uid %}" style="margin: 0;">
+                        {% csrf_token %}
+                        <div class="permission-toggle">
+                            <input type="checkbox" 
+                                   name="is_editor" 
+                                   onchange="this.form.submit()" 
+                                   {% if user.is_editor %}checked{% endif %}>
+                            <span class="permission-label {% if user.is_editor %}active{% else %}inactive{% endif %}">
+                                {% if user.is_editor %}Yes{% else %}No{% endif %}
+                            </span>
+                        </div>
+                    </form>
+                </td>
+                <td>
+                    <small style="font-family: monospace; color: #6c757d;">{{ user.uid }}</small>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="text-align: center; padding: 40px; color: #6c757d;">
+                    No users found
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="padding: 2rem 0; max-width: 900px;">
+    <h1>Create New Blog Post</h1>
+    
+    {% if messages %}
+        {% for message in messages %}
+        <div style="padding: 1rem; margin: 1rem 0; background: {% if message.tags == 'success' %}#10b981{% elif message.tags == 'error' %}#ef4444{% else %}#3b82f6{% endif %}; border-radius: 0.5rem;">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
+    
+    <form method="post" style="margin-top: 2rem;">
+        {% csrf_token %}
+        
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Title *</label>
+            <input type="text" name="title" required value="{{ title|default:'' }}"
+                   style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem; color: white;">
+            <small style="color: rgba(255,255,255,0.6);">A URL-friendly slug will be auto-generated from the title</small>
+        </div>
+        
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Excerpt</label>
+            <textarea name="excerpt" rows="3" 
+                      style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem; color: white;">{{ excerpt|default:'' }}</textarea>
+            <small style="color: rgba(255,255,255,0.6);">Short description for preview (optional)</small>
+        </div>
+        
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Content *</label>
+            <textarea name="content" rows="20" required 
+                      style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem; color: white; font-family: inherit;">{{ content|default:'' }}</textarea>
+            <small style="color: rgba(255,255,255,0.6);">Supports HTML and Markdown</small>
+        </div>
+        
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Featured Image URL</label>
+            <input type="url" name="featured_image" value="{{ featured_image|default:'' }}"
+                   style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem; color: white;">
+        </div>
+        
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Tags</label>
+            <input type="text" name="tags" value="{{ tags|default:'' }}"
+                   style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem; color: white;">
+            <small style="color: rgba(255,255,255,0.6);">Comma-separated tags (e.g., credit cards, rewards, travel)</small>
+        </div>
+        
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Status *</label>
+            <select name="status" required 
+                    style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem; color: white;">
+                <option value="draft" {% if status == 'draft' %}selected{% endif %}>Draft</option>
+                <option value="published" {% if status == 'published' %}selected{% endif %}>Published</option>
+                <option value="archived" {% if status == 'archived' %}selected{% endif %}>Archived</option>
+            </select>
+            <small style="color: rgba(255,255,255,0.6);">Draft posts are not visible to the public</small>
+        </div>
+        
+        <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+            <button type="submit" class="btn btn-primary">Create Blog Post</button>
+            <a href="{% url 'admin_blog_list' %}" class="btn btn-outline">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

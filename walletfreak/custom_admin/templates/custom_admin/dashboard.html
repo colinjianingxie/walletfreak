@@ -3,20 +3,25 @@
 {% block content %}
 <div class="container" style="padding: 4rem 0;">
     <h1>Admin Dashboard</h1>
-    <div class="grid">
-        <div class="card">
+    <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+        <div class="card" style="padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 1rem;">
             <h3>Manage Cards</h3>
             <p>Add, edit, or remove credit cards.</p>
             <a href="{% url 'admin_card_list' %}" class="btn btn-primary">Go to Cards</a>
         </div>
-        <div class="card">
+        <div class="card" style="padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 1rem;">
             <h3>Manage Personalities</h3>
             <p>Update personality archetypes.</p>
             <a href="{% url 'admin_personality_list' %}" class="btn btn-primary">Go to Personalities</a>
         </div>
-        <div class="card">
+        <div class="card" style="padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 1rem;">
+            <h3>Manage Blogs</h3>
+            <p>Create, edit, and publish blog posts.</p>
+            <a href="{% url 'admin_blog_list' %}" class="btn btn-primary">Go to Blogs</a>
+        </div>
+        <div class="card" style="padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 1rem;">
             <h3>Manage Users</h3>
-            <p>Toggle Super Staff roles.</p>
+            <p>Toggle Super Staff and Editor roles.</p>
             <a href="{% url 'admin_user_list' %}" class="btn btn-primary">Go to Users</a>
         </div>
     </div>

@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="padding: 2rem 0;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h1>Manage Blogs</h1>
+        <a href="{% url 'admin_blog_create' %}" class="btn btn-primary">Create New Blog</a>
+    </div>
+    
+    {% if messages %}
+        {% for message in messages %}
+        <div style="padding: 1rem; margin-bottom: 1rem; background: {% if message.tags == 'success' %}#10b981{% elif message.tags == 'error' %}#ef4444{% else %}#3b82f6{% endif %}; border-radius: 0.5rem;">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
+    
+    <!-- Filter Section -->
+    <div style="margin-bottom: 2rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 0.5rem;">
+        <form method="get" style="display: flex; gap: 1rem; align-items: center;">
+            <label for="status">Filter by Status:</label>
+            <select name="status" id="status" style="padding: 0.5rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.25rem; color: white;">
+                <option value="">All</option>
+                <option value="draft" {% if status_filter == 'draft' %}selected{% endif %}>Draft</option>
+                <option value="published" {% if status_filter == 'published' %}selected{% endif %}>Published</option>
+                <option value="archived" {% if status_filter == 'archived' %}selected{% endif %}>Archived</option>
+            </select>
+            <button type="submit" class="btn btn-outline" style="font-size: 0.9rem;">Filter</button>
+            {% if status_filter %}
+            <a href="{% url 'admin_blog_list' %}" class="btn btn-outline" style="font-size: 0.9rem;">Clear</a>
+            {% endif %}
+        </form>
+    </div>
+    
+    <table style="width: 100%; border-collapse: collapse; margin-top: 2rem;">
+        <thead>
+            <tr style="text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <th style="padding: 1rem;">Title</th>
+                <th style="padding: 1rem;">Author</th>
+                <th style="padding: 1rem;">Status</th>
+                <th style="padding: 1rem;">Created</th>
+                <th style="padding: 1rem;">Published</th>
+                <th style="padding: 1rem;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for blog in blogs %}
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                <td style="padding: 1rem;">
+                    <strong>{{ blog.title }}</strong>
+                    {% if blog.excerpt %}
+                    <br><small style="color: rgba(255,255,255,0.6);">{{ blog.excerpt|truncatewords:15 }}</small>
+                    {% endif %}
+                </td>
+                <td style="padding: 1rem;">{{ blog.author_name }}</td>
+                <td style="padding: 1rem;">
+                    <span style="padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.8rem; 
+                        background: {% if blog.status == 'published' %}#10b981{% elif blog.status == 'draft' %}#f59e0b{% else %}#6b7280{% endif %};">
+                        {{ blog.status|title }}
+                    </span>
+                </td>
+                <td style="padding: 1rem; font-size: 0.9rem;">
+                    {% if blog.created_at %}
+                        {{ blog.created_at|date:"M d, Y" }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td style="padding: 1rem; font-size: 0.9rem;">
+                    {% if blog.published_at %}
+                        {{ blog.published_at|date:"M d, Y" }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td style="padding: 1rem;">
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <a href="{% url 'admin_blog_edit' blog.id %}" class="btn btn-outline" style="font-size: 0.8rem;">Edit</a>
+                        {% if blog.status != 'published' %}
+                        <form method="post" action="{% url 'admin_blog_publish' blog.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline" style="font-size: 0.8rem; background: #10b981;">Publish</button>
+                        </form>
+                        {% endif %}
+                        <form method="post" action="{% url 'admin_blog_delete' blog.id %}" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this blog?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline" style="font-size: 0.8rem; background: #ef4444;">Delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" style="padding: 2rem; text-align: center; color: rgba(255,255,255,0.6);">
+                    No blogs found. <a href="{% url 'admin_blog_create' %}" style="color: #3b82f6;">Create your first blog post</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -24,37 +24,20 @@
             Click the statement that sounds most like you.
         </p>
 
-        <!-- Quiz Option Cards -->
-        <div style="max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
-            <!-- Card 1 -->
-            <a href="{% url 'quiz' %}" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 1.5rem; text-decoration: none; color: white; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; backdrop-filter: blur(10px);" class="quiz-card">
-                <span style="font-size: 2rem;">✈️</span>
-                <p style="font-size: 0.875rem; font-weight: 600; margin: 0; line-height: 1.4; text-align: center;">I live for free flights & lounges.</p>
-            </a>
-            
-            <!-- Card 2 -->
-            <a href="{% url 'quiz' %}" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 1.5rem; text-decoration: none; color: white; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; backdrop-filter: blur(10px);" class="quiz-card">
-                <span style="font-size: 2rem;">💵</span>
-                <p style="font-size: 0.875rem; font-weight: 600; margin: 0; line-height: 1.4; text-align: center;">Cash is king. Fees are evil.</p>
-            </a>
-            
-            <!-- Card 3 -->
-            <a href="{% url 'quiz' %}" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 1.5rem; text-decoration: none; color: white; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; backdrop-filter: blur(10px);" class="quiz-card">
-                <span style="font-size: 2rem;">🍽️</span>
-                <p style="font-size: 0.875rem; font-weight: 600; margin: 0; line-height: 1.4; text-align: center;">Dining out & VIP events.</p>
-            </a>
-            
-            <!-- Card 4 -->
-            <a href="{% url 'quiz' %}" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 1.5rem; text-decoration: none; color: white; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; backdrop-filter: blur(10px);" class="quiz-card">
-                <span style="font-size: 2rem;">📊</span>
-                <p style="font-size: 0.875rem; font-weight: 600; margin: 0; line-height: 1.4; text-align: center;">Maximize ROI. Optimize everything.</p>
-            </a>
-            
-            <!-- Card 5 - Highlighted -->
-            <a href="{% url 'quiz' %}" style="background: linear-gradient(135deg, #7C3AED 0%, #6366F1 100%); border: 1px solid rgba(167, 139, 250, 0.3); border-radius: 16px; padding: 1.5rem; text-decoration: none; color: white; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);" class="quiz-card quiz-card-highlight">
-                <span style="font-size: 2rem;">⚡</span>
-                <p style="font-size: 0.875rem; font-weight: 600; margin: 0; line-height: 1.4; text-align: center;">I have a spreadsheet for everything.</p>
-            </a>
+        <!-- Quiz Container -->
+        <div id="quiz-container" style="max-width: 1200px; margin: 0 auto;">
+            <!-- Question Text -->
+            <h2 id="question-text" style="font-size: 1.25rem; font-weight: 500; margin-bottom: 2.5rem; color: rgba(255,255,255,0.9); line-height: 1.4;"></h2>
+
+            <!-- Options Container - 5 Cards in a Row -->
+            <div id="options-container" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-bottom: 3rem;">
+                <!-- Options will be injected here -->
+            </div>
+
+            <!-- Next Button -->
+            <button id="next-btn" class="btn" style="display: none; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white; padding: 1rem 3rem; font-size: 1.1rem; font-weight: 600; box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4); border: none;" onclick="nextQuestion()">
+                Continue →
+            </button>
         </div>
     </div>
 </section>
@@ -205,41 +188,250 @@
 </section>
 
 <script>
-    document.getElementById('personality-search').addEventListener('input', function (e) {
-        const searchTerm = e.target.value.toLowerCase();
-        const cards = document.querySelectorAll('.personality-card-link');
-        let hasVisible = false;
-
-        cards.forEach(card => {
-            const name = card.dataset.name;
-            const desc = card.dataset.desc;
-            const tag = card.dataset.tag;
-
-            if (name.includes(searchTerm) || desc.includes(searchTerm) || tag.includes(searchTerm)) {
-                card.style.display = 'block';
-                hasVisible = true;
-            } else {
-                card.style.display = 'none';
-            }
-        });
-
-        const noResults = document.getElementById('no-results');
-        const grid = document.getElementById('personalities-grid');
-
-        if (!hasVisible && cards.length > 0) {
-            noResults.style.display = 'block';
-            grid.style.display = 'none';
-        } else {
-            noResults.style.display = 'none';
-            grid.style.display = 'grid';
+    // Get personalities data from Django template
+    const personalities = {{ personalities_json|safe }};
+    
+    // Create a mapping from quiz types to actual personality IDs
+    const personalityMapping = {};
+    personalities.forEach(p => {
+        const name = p.name.toLowerCase();
+        const desc = (p.description || '').toLowerCase();
+        const tagline = (p.tagline || '').toLowerCase();
+        
+        // Map based on keywords in personality data
+        if (name.includes('jetsetter') || name.includes('travel') || desc.includes('travel') || desc.includes('flight')) {
+            personalityMapping['jetsetter'] = p.id;
+        }
+        if (name.includes('minimalist') || name.includes('cash') || desc.includes('cash back') || tagline.includes('simple')) {
+            personalityMapping['minimalist'] = p.id;
+        }
+        if (name.includes('foodie') || name.includes('dining') || desc.includes('dining') || desc.includes('restaurant')) {
+            personalityMapping['foodie'] = p.id;
+        }
+        if (name.includes('strategist') || name.includes('optimizer') || name.includes('maximize') || desc.includes('optimize')) {
+            personalityMapping['strategist'] = p.id;
+            personalityMapping['optimizer'] = p.id;
+        }
+        // Fallback: use first personality as default
+        if (!personalityMapping['default']) {
+            personalityMapping['default'] = p.id;
         }
     });
+    
+    // Quiz functionality
+    const questions = [
+        {
+            question: "What describes you best when it comes to credit cards? (Select all that apply)",
+            options: [
+                { text: "I live for free flights & lounges", icon: "✈️", type: "jetsetter" },
+                { text: "Cash is king. Fees are evil.", icon: "💵", type: "minimalist" },
+                { text: "Dining out & VIP events", icon: "🍽️", type: "foodie" },
+                { text: "Maximize ROI. Optimize everything", icon: "📊", type: "strategist" },
+                { text: "I have a spreadsheet for everything", icon: "⚡", type: "optimizer" }
+            ]
+        },
+        {
+            question: "How do you feel about annual fees? (Select all that apply)",
+            options: [
+                { text: "Worth it for premium travel perks", icon: "✈️", type: "jetsetter" },
+                { text: "I avoid them at all costs", icon: "🚫", type: "minimalist" },
+                { text: "Fine if dining credits offset the cost", icon: "🍽️", type: "foodie" },
+                { text: "I calculate the exact ROI", icon: "📊", type: "strategist" },
+                { text: "I track every dollar of value", icon: "⚡", type: "optimizer" }
+            ]
+        },
+        {
+            question: "What's your biggest spending category? (Select all that apply)",
+            options: [
+                { text: "Travel: flights, hotels, experiences", icon: "✈️", type: "jetsetter" },
+                { text: "Essentials: groceries and gas", icon: "🛒", type: "minimalist" },
+                { text: "Restaurants and food delivery", icon: "🍽️", type: "foodie" },
+                { text: "Everything - I optimize by category", icon: "📊", type: "strategist" },
+                { text: "I diversify across multiple cards", icon: "⚡", type: "optimizer" }
+            ]
+        }
+    ];
+
+    let currentQuestion = 0;
+    const scores = {};
+    const selectedOptions = new Set();
+
+    function loadQuestion() {
+        const q = questions[currentQuestion];
+        document.getElementById('question-text').innerText = q.question;
+        const optionsContainer = document.getElementById('options-container');
+        optionsContainer.innerHTML = '';
+        document.getElementById('next-btn').style.display = 'none';
+        selectedOptions.clear();
+
+        q.options.forEach((opt, index) => {
+            const optionCard = document.createElement('div');
+            optionCard.className = 'option-card';
+            optionCard.dataset.value = opt.type;
+            optionCard.style.cssText = `
+                background: rgba(255,255,255,0.05);
+                border: 2px solid rgba(255,255,255,0.1);
+                border-radius: 16px;
+                padding: 2rem 1rem;
+                cursor: pointer;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                min-height: 180px;
+            `;
+
+            const iconSpan = document.createElement('div');
+            iconSpan.style.cssText = `
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            `;
+            iconSpan.textContent = opt.icon;
+
+            const textSpan = document.createElement('div');
+            textSpan.style.cssText = `
+                color: white;
+                font-size: 0.95rem;
+                font-weight: 500;
+                line-height: 1.4;
+            `;
+            textSpan.textContent = opt.text;
+
+            optionCard.appendChild(iconSpan);
+            optionCard.appendChild(textSpan);
+
+            // Click handler for multiple selection
+            optionCard.onclick = () => {
+                const isSelected = optionCard.classList.contains('selected');
+                
+                if (isSelected) {
+                    // Deselect
+                    optionCard.classList.remove('selected');
+                    optionCard.style.background = 'rgba(255,255,255,0.05)';
+                    optionCard.style.borderColor = 'rgba(255,255,255,0.1)';
+                    optionCard.style.transform = 'scale(1)';
+                    optionCard.style.boxShadow = 'none';
+                    selectedOptions.delete(opt.type);
+                } else {
+                    // Select
+                    optionCard.classList.add('selected');
+                    optionCard.style.background = 'linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(124, 58, 237, 0.3))';
+                    optionCard.style.borderColor = '#8b5cf6';
+                    optionCard.style.transform = 'scale(1.05)';
+                    optionCard.style.boxShadow = '0 8px 24px rgba(139, 92, 246, 0.4)';
+                    selectedOptions.add(opt.type);
+                }
+
+                // Show next button if at least one option is selected
+                if (selectedOptions.size > 0) {
+                    document.getElementById('next-btn').style.display = 'inline-block';
+                } else {
+                    document.getElementById('next-btn').style.display = 'none';
+                }
+            };
+
+            optionsContainer.appendChild(optionCard);
+        });
+    }
+
+    function nextQuestion() {
+        // Collect all selected answers
+        selectedOptions.forEach(type => {
+            scores[type] = (scores[type] || 0) + 1;
+        });
+
+        currentQuestion++;
+
+        if (currentQuestion < questions.length) {
+            loadQuestion();
+        } else {
+            // Calculate personality
+            let maxScore = 0;
+            let personality = 'jetsetter'; // default
+
+            for (const [type, score] of Object.entries(scores)) {
+                if (score > maxScore) {
+                    maxScore = score;
+                    personality = type;
+                }
+            }
+
+            // Map quiz result to actual personality ID
+            const actualPersonalityId = personalityMapping[personality] || personalityMapping['default'] || personalities[0]?.id;
+            
+            if (actualPersonalityId) {
+                // Redirect to personality detail page with correct URL
+                window.location.href = `/personalities/${actualPersonalityId}/`;
+            } else {
+                // No personalities available, stay on page
+                alert('No personalities available yet. Please check back later!');
+                location.reload();
+            }
+        }
+    }
+
+    // Load first question on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        loadQuestion();
+    });
+
+    // Search functionality (if search input exists)
+    const searchInput = document.getElementById('personality-search');
+    if (searchInput) {
+        searchInput.addEventListener('input', function (e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.personality-card-link');
+            let hasVisible = false;
+
+            cards.forEach(card => {
+                const name = card.dataset.name;
+                const desc = card.dataset.desc;
+                const tag = card.dataset.tag;
+
+                if (name.includes(searchTerm) || desc.includes(searchTerm) || tag.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    hasVisible = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            const noResults = document.getElementById('no-results');
+            const grid = document.getElementById('personalities-grid');
+
+            if (!hasVisible && cards.length > 0) {
+                noResults.style.display = 'block';
+                grid.style.display = 'none';
+            } else {
+                noResults.style.display = 'none';
+                grid.style.display = 'grid';
+            }
+        });
+    }
 </script>
 
 <style>
     .personality-card:hover {
         transform: translateY(-4px);
         box-shadow: 0 8px 20px rgba(0,0,0,0.1) !important;
+    }
+
+    @media (max-width: 1024px) {
+        #options-container {
+            grid-template-columns: repeat(3, 1fr) !important;
+        }
+    }
+
+    @media (max-width: 768px) {
+        #options-container {
+            grid-template-columns: 1fr !important;
+        }
+
+        .option-card {
+            min-height: 140px !important;
+            padding: 1.5rem 1rem !important;
+        }
     }
 </style>
 {% endblock %}

@@ -120,11 +120,55 @@ class FirestoreService:
     def set_super_staff(self, uid, is_staff):
         self.db.collection('users').document(uid).update({'is_super_staff': is_staff})
 
+    # Editor Methods
+    def is_editor(self, uid):
+        user = self.get_user_profile(uid)
+        return user.get('is_editor', False) if user else False
+
+    def set_editor(self, uid, is_editor):
+        self.db.collection('users').document(uid).update({'is_editor': is_editor})
+
+    def can_manage_blogs(self, uid):
+        """Check if user can manage blogs (either super_staff or editor)"""
+        user = self.get_user_profile(uid)
+        if not user:
+            return False
+        return user.get('is_super_staff', False) or user.get('is_editor', False)
+
     # Blog Methods
-    def get_blogs(self):
-        return self.get_collection('blogs')
+    def get_blogs(self, status=None, limit=None):
+        """Get blogs, optionally filtered by status"""
+        from google.cloud.firestore import FieldFilter
+        query = self.db.collection('blogs')
+        if status:
+            query = query.where(filter=FieldFilter('status', '==', status))
+        query = query.order_by('created_at', direction=firestore.Query.DESCENDING)
+        if limit:
+            query = query.limit(limit)
+        return [doc.to_dict() | {'id': doc.id} for doc in query.stream()]
+
+    def get_blog_by_id(self, blog_id):
+        return self.get_document('blogs', blog_id)
 
     def get_blog_by_slug(self, slug):
-        return self.get_document('blogs', slug)
+        """Get blog by slug field"""
+        from google.cloud.firestore import FieldFilter
+        query = self.db.collection('blogs').where(filter=FieldFilter('slug', '==', slug)).limit(1)
+        docs = list(query.stream())
+        if docs:
+            return docs[0].to_dict() | {'id': docs[0].id}
+        return None
+
+    def create_blog(self, data):
+        """Create a new blog post"""
+        return self.create_document('blogs', data)
+
+    def update_blog(self, blog_id, data):
+        """Update an existing blog post"""
+        self.update_document('blogs', blog_id, data)
+
+    def delete_blog(self, blog_id):
+        """Delete a blog post"""
+        self.delete_document('blogs', blog_id)
 
 db = FirestoreService()

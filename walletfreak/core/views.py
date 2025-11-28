@@ -10,10 +10,10 @@ def home(request):
     except Exception as e:
         print(f"Warning: Failed to fetch personalities: {e}")
         
-    # Fetch blog posts for the landing page
+    # Fetch published blog posts for the landing page
     blog_posts = []
     try:
-        blog_posts = db.get_blogs()[:4]  # Get latest 4 blog posts (1 featured + 3 list)
+        blog_posts = db.get_blogs(status='published', limit=3)  # Get latest 3 published blog posts
     except Exception as e:
         print(f"Warning: Failed to fetch blog posts: {e}")
         

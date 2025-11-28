@@ -3,35 +3,76 @@
 {% block content %}
 <div class="container" style="padding: 2rem 0;">
     <h1>Manage Users</h1>
+    
+    {% if messages %}
+        {% for message in messages %}
+        <div style="padding: 1rem; margin: 1rem 0; background: {% if message.tags == 'success' %}#10b981{% elif message.tags == 'error' %}#ef4444{% else %}#3b82f6{% endif %}; border-radius: 0.5rem;">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
+    
     <table style="width: 100%; border-collapse: collapse; margin-top: 2rem;">
         <thead>
             <tr style="text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                <th style="padding: 1rem;">UID / Email</th>
-                <th style="padding: 1rem;">Super Staff?</th>
-                <th style="padding: 1rem;">Actions</th>
+                <th style="padding: 1rem;">Name / Email</th>
+                <th style="padding: 1rem;">Super Staff</th>
+                <th style="padding: 1rem;">Editor</th>
+                <th style="padding: 1rem;">UID</th>
             </tr>
         </thead>
         <tbody>
             {% for user in users %}
             <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                <td style="padding: 1rem;">{{ user.id }} <br> <small>{{ user.email }}</small></td>
                 <td style="padding: 1rem;">
-                    {% if user.is_super_staff %}
-                    <span style="color: var(--accent);">Yes</span>
-                    {% else %}
-                    <span style="color: var(--text-muted);">No</span>
-                    {% endif %}
+                    <strong>{{ user.name|default:"Unknown" }}</strong><br>
+                    <small style="color: rgba(255,255,255,0.6);">{{ user.email|default:"No email" }}</small>
                 </td>
                 <td style="padding: 1rem;">
-                    <form action="{% url 'toggle_super_staff' user.id %}" method="POST">
+                    <form action="{% url 'toggle_super_staff' user.id %}" method="POST" style="display: inline;">
                         {% csrf_token %}
-                        <input type="checkbox" name="is_super_staff" onchange="this.form.submit()" {% if
-                            user.is_super_staff %}checked{% endif %}>
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" name="is_super_staff" onchange="this.form.submit()"
+                                   {% if user.is_super_staff %}checked{% endif %}
+                                   style="width: 20px; height: 20px; cursor: pointer;">
+                            <span style="color: {% if user.is_super_staff %}#10b981{% else %}rgba(255,255,255,0.4){% endif %};">
+                                {% if user.is_super_staff %}Yes{% else %}No{% endif %}
+                            </span>
+                        </label>
                     </form>
+                </td>
+                <td style="padding: 1rem;">
+                    <form action="{% url 'toggle_editor' user.id %}" method="POST" style="display: inline;">
+                        {% csrf_token %}
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" name="is_editor" onchange="this.form.submit()"
+                                   {% if user.is_editor %}checked{% endif %}
+                                   style="width: 20px; height: 20px; cursor: pointer;">
+                            <span style="color: {% if user.is_editor %}#10b981{% else %}rgba(255,255,255,0.4){% endif %};">
+                                {% if user.is_editor %}Yes{% else %}No{% endif %}
+                            </span>
+                        </label>
+                    </form>
+                </td>
+                <td style="padding: 1rem;">
+                    <small style="font-family: monospace; color: rgba(255,255,255,0.6);">{{ user.id }}</small>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="padding: 2rem; text-align: center; color: rgba(255,255,255,0.6);">
+                    No users found
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+    
+    <div style="margin-top: 2rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 0.5rem;">
+        <p style="margin: 0; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+            <strong>Super Staff:</strong> Full admin access to all features<br>
+            <strong>Editor:</strong> Can create, edit, and publish blog posts
+        </p>
+    </div>
 </div>
 {% endblock %}

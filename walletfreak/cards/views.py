@@ -3,12 +3,20 @@ from core.services import db
 import random
 
 def personality_list(request):
+    import json
     try:
         personalities = db.get_personalities()
     except Exception as e:
         print(f"Warning: Failed to fetch personalities: {e}")
         personalities = []
-    return render(request, 'cards/personality_list.html', {'personalities': personalities})
+    
+    # Convert personalities to JSON for JavaScript
+    personalities_json = json.dumps(personalities)
+    
+    return render(request, 'cards/personality_list.html', {
+        'personalities': personalities,
+        'personalities_json': personalities_json
+    })
 
 def personality_detail(request, personality_id):
     try:
