@@ -119,12 +119,6 @@
             >
                 Back to Dashboard
             </a>
-            <a 
-                href="{% url 'personality_survey' %}"
-                class="px-6 py-3 border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-            >
-                Retake Survey
-            </a>
         </div>
 
         {% else %}
@@ -135,12 +129,12 @@
             <p class="text-gray-600 mb-6">
                 Take our quick survey to discover your credit card personality!
             </p>
-            <a 
-                href="{% url 'personality_survey' %}"
-                class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+            <button
+                disabled
+                class="inline-block bg-gray-400 text-white px-8 py-3 rounded-lg font-medium cursor-not-allowed"
             >
-                Take Survey
-            </a>
+                Survey Coming Soon
+            </button>
         </div>
         {% endif %}
     </div>

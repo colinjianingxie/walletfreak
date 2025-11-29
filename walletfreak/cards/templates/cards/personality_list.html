@@ -2,13 +2,14 @@
 {% load static %}
 
 {% block content %}
+
 <!-- Personalities Header with Quiz -->
 <section style="background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%); padding: 4rem 0; text-align: center; color: white; position: relative; overflow: hidden;">
     <!-- Background decoration -->
     <div style="position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; background: rgba(124, 58, 237, 0.1); border-radius: 50%; filter: blur(80px);"></div>
     <div style="position: absolute; bottom: -100px; left: -100px; width: 300px; height: 300px; background: rgba(99, 102, 241, 0.1); border-radius: 50%; filter: blur(80px);"></div>
     
-    <div class="container" style="position: relative; z-index: 1;">
+    <div style="position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; padding: 0 1rem;">
         <!-- Badge -->
         <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 999px; margin-bottom: 1.5rem; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
             <span style="font-size: 1.1rem;"><span class="material-icons" style="font-size: 16px; vertical-align: middle;">auto_awesome</span></span>
@@ -20,86 +21,167 @@
             What's your <span style="background: linear-gradient(135deg, #A78BFA 0%, #C084FC 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Wallet Vibe?</span>
         </h1>
         
-        <!-- Subtitle -->
-        <p style="font-size: 1.125rem; color: #94A3B8; max-width: 600px; margin: 0 auto 3rem;">
-            Click the statement that sounds most like you.
+        <!-- Subtitle (hidden during quiz, shown on initial load) -->
+        <p id="quiz-subtitle-text" style="font-size: 1.125rem; color: #94A3B8; max-width: 600px; margin: 0 auto 3rem;">
+            Answer a few quick questions to discover your perfect credit card personality.
         </p>
 
         <!-- Quiz Container -->
-        <div id="quiz-container" style="max-width: 800px; margin: 0 auto;">
-            <!-- Question Text -->
-            <h2 id="question-text" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 3rem; color: white; line-height: 1.4;"></h2>
-
-            <!-- Slider Container -->
-            <div id="slider-container" style="margin-bottom: 4rem; padding: 0 2rem;">
-                <input type="range" min="1" max="5" value="3" class="slider" id="rating-slider">
-                <div style="display: flex; justify-content: space-between; margin-top: 1rem; color: rgba(255,255,255,0.6); font-size: 0.9rem;">
-                    <span>Not at all (1)</span>
-                    <span>Somewhat (3)</span>
-                    <span>Absolutely (5)</span>
+        <div id="quiz-container" style="max-width: 750px; margin: 0 auto; background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(20px); border-radius: 20px; padding: 2.5rem 3rem; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+            <!-- Progress Header -->
+            <div style="margin-bottom: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <span id="question-counter" style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; color: #94A3B8;">QUESTION 1 OF 4</span>
+                    <span id="progress-percent" style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; color: #94A3B8;">0% COMPLETE</span>
                 </div>
-                <div id="current-rating" style="margin-top: 1.5rem; font-size: 2rem; font-weight: 700; color: #a78bfa;">3</div>
+                <!-- Progress Bar -->
+                <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 999px; overflow: hidden;">
+                    <div id="progress-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #3B82F6 0%, #8B5CF6 100%); border-radius: 999px; transition: width 0.5s ease;"></div>
+                </div>
             </div>
 
-            <!-- Next Button -->
-            <button id="next-btn" class="btn" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white; padding: 1rem 3rem; font-size: 1.1rem; font-weight: 600; box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4); border: none; border-radius: 99px; cursor: pointer; transition: transform 0.2s;" onclick="nextQuestion()">
-                Next →
-            </button>
+            <!-- Question Text -->
+            <h2 id="question-text" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 0.75rem; color: white; line-height: 1.3;"></h2>
+            <p id="question-subtitle" style="font-size: 0.9rem; color: #94A3B8; margin-bottom: 1.75rem;"></p>
+
+            <!-- Options Container -->
+            <div id="options-container" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.875rem; margin-bottom: 1.75rem;">
+                <!-- Options will be dynamically inserted here -->
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div style="display: flex; gap: 1rem; justify-content: center; align-items: center;">
+                <button id="back-btn" style="display: none; padding: 0.875rem 1.5rem; background: rgba(100, 116, 139, 0.3); color: white; border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 1rem;" onclick="previousQuestion()">
+                    ← Back
+                </button>
+                <button id="continue-btn" style="display: none; padding: 0.875rem 2rem; background: white; color: #1E293B; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.2); font-size: 1rem;" onclick="nextQuestion()">
+                    Continue →
+                </button>
+            </div>
+        </div>
+
+        <!-- Loading Container (hidden initially) -->
+        <div id="loading-container" style="display: none; max-width: 750px; margin: 0 auto; background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(20px); border-radius: 20px; padding: 4rem 3rem; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.3); text-align: center;">
+            <!-- Spinner -->
+            <div style="margin: 0 auto 2rem; width: 80px; height: 80px; border: 4px solid rgba(139, 92, 246, 0.2); border-top: 4px solid #8B5CF6; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+            
+            <h2 id="loading-title" style="font-size: 1.75rem; font-weight: 600; margin-bottom: 1rem; color: white;">Analyzing your preferences...</h2>
+            <p id="loading-subtitle" style="font-size: 1rem; color: #94A3B8;">Crunching the multipliers</p>
+        </div>
+
+        <!-- Results Container (hidden initially) -->
+        <div id="results-container" style="display: none; max-width: 750px; margin: 0 auto; background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(20px); border-radius: 20px; padding: 3.5rem 3rem; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.3); text-align: center;">
+            <p style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; color: #94A3B8; margin-bottom: 2rem;">YOUR VIBE IS</p>
+            
+            <!-- Personality Avatar -->
+            <div style="margin: 0 auto 2rem; width: 160px; height: 160px; background: linear-gradient(135deg, #A855F7 0%, #C084FC 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 12px rgba(168, 85, 247, 0.2), 0 0 60px rgba(168, 85, 247, 0.4); position: relative;">
+                <div id="result-icon" style="font-size: 5rem;"></div>
+                <!-- Glow effect -->
+                <div style="position: absolute; inset: -20px; background: radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, transparent 70%); filter: blur(20px); z-index: -1;"></div>
+            </div>
+
+            <h2 id="result-name" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem; color: white;"></h2>
+            <p id="result-description" style="font-size: 1.125rem; color: #CBD5E1; max-width: 600px; margin: 0 auto 3rem; line-height: 1.6;"></p>
+
+            <!-- Action Buttons -->
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a id="view-stack-btn" href="#" style="padding: 1rem 2rem; background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%); color: white; border: none; border-radius: 12px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.3s; box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);">
+                    View Your Stack
+                </a>
+                <button onclick="resetQuiz()" style="padding: 1rem 2rem; background: rgba(100, 116, 139, 0.3); color: white; border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.3s;">
+                    <span class="material-icons" style="font-size: 18px;">refresh</span>
+                    Start Over
+                </button>
+            </div>
         </div>
     </div>
 </section>
 
 <style>
-    .slider {
-        -webkit-appearance: none;
-        width: 100%;
-        height: 12px;
-        border-radius: 6px;
-        background: rgba(255,255,255,0.1);
-        outline: none;
-        transition: opacity .2s;
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
     }
 
-    .slider::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        background: #8b5cf6;
+    .quiz-option {
+        background: rgba(30, 41, 59, 0.4);
+        border: 2px solid rgba(255,255,255,0.1);
+        border-radius: 12px;
+        padding: 1.125rem 1.25rem;
         cursor: pointer;
-        box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
-        border: 4px solid #1e293b;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 0.875rem;
+        position: relative;
+        overflow: hidden;
     }
 
-    .slider::-moz-range-thumb {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        background: #8b5cf6;
-        cursor: pointer;
-        box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
-        border: 4px solid #1e293b;
-    }
-    
-    #next-btn:hover {
+    .quiz-option:hover {
+        background: rgba(59, 130, 246, 0.2);
+        border-color: rgba(59, 130, 246, 0.4);
         transform: translateY(-2px);
-        box-shadow: 0 12px 24px rgba(139, 92, 246, 0.5) !important;
     }
-    
-    #next-btn:active {
-        transform: translateY(0);
+
+    .quiz-option.selected {
+        background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+        border-color: #3B82F6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
     }
-    
-    .quiz-card:hover {
-        background: rgba(255,255,255,0.1) !important;
-        transform: translateY(-4px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+
+    .quiz-option .icon {
+        font-size: 1.75rem;
+        flex-shrink: 0;
     }
-    
-    .quiz-card-highlight:hover {
-        background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%) !important;
-        box-shadow: 0 12px 24px rgba(124, 58, 237, 0.4) !important;
+
+    .quiz-option .text {
+        flex: 1;
+        text-align: left;
+        font-size: 0.9375rem;
+        font-weight: 500;
+        color: white;
+    }
+
+    .quiz-option .checkmark {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        width: 24px;
+        height: 24px;
+        background: white;
+        border-radius: 50%;
+        display: none;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .quiz-option.selected .checkmark {
+        display: flex;
+    }
+
+    #continue-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    #back-btn:hover {
+        background: rgba(100, 116, 139, 0.5);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    @media (max-width: 768px) {
+        #options-container {
+            grid-template-columns: 1fr !important;
+        }
+        
+        .quiz-option {
+            padding: 1.25rem;
+        }
+        
+        .quiz-option .text {
+            font-size: 0.9rem;
+        }
     }
 </style>
 
@@ -271,95 +353,301 @@
 
     const questions = [
         {
-            category: "travel",
-            text: "How important are travel perks like flights, hotels, and lounge access?",
-            icon: "✈️"
+            id: 1,
+            text: "What is your rewards endgame?",
+            subtitle: "Select up to 3 priorities.",
+            multiSelect: true,
+            maxSelect: 3,
+            category: "rewards",
+            options: [
+                { icon: "✈️", text: "Free International Flights", value: "flights", weight: { travel: 2 } },
+                { icon: "💵", text: "Cold Hard Cash Back", value: "cashback", weight: { cashback: 2 } },
+                { icon: "☕", text: "Airport Lounge Access", value: "lounge", weight: { travel: 1, luxury: 1 } },
+                { icon: "🏨", text: "Hotel/Airline Status", value: "status", weight: { travel: 2, luxury: 1 } },
+                { icon: "💼", text: "Business Expenses", value: "business", weight: { shopping: 1, cashback: 1 } },
+                { icon: "🎁", text: "Sign-Up Bonuses", value: "bonuses", weight: { shopping: 1 } }
+            ]
         },
         {
-            category: "dining",
-            text: "How much do you value rewards on dining, takeout, and food delivery?",
-            icon: "🍽️"
+            id: 2,
+            text: "Where does most of your money go?",
+            subtitle: "Select all that apply.",
+            multiSelect: true,
+            maxSelect: 6,
+            category: "spending",
+            options: [
+                { icon: "🍔", text: "Restaurants & Bars", value: "dining", weight: { dining: 2 } },
+                { icon: "🥬", text: "Groceries", value: "groceries", weight: { cashback: 1 } },
+                { icon: "✈️", text: "Flights & Hotels", value: "travel", weight: { travel: 2 } },
+                { icon: "💻", text: "Online Ads / Software", value: "software", weight: { shopping: 1 } },
+                { icon: "⛽", text: "Gas / Commute", value: "gas", weight: { cashback: 1 } },
+                { icon: "🛍️", text: "Online Shopping", value: "shopping", weight: { shopping: 2 } }
+            ]
         },
         {
-            category: "shopping",
-            text: "How often do you shop for clothes, electronics, or everyday items?",
-            icon: "🛍️"
+            id: 3,
+            text: "How do you feel about Annual Fees?",
+            subtitle: "Pick the one that fits best.",
+            multiSelect: false,
+            category: "fees",
+            options: [
+                { icon: "🚫", text: "I refuse to pay them. ($0)", value: "no_fee", weight: { cashback: 2 } },
+                { icon: "🤷", text: "I'm okay with moderate fees ($95ish).", value: "moderate", weight: { travel: 1, shopping: 1 } },
+                { icon: "🧠", text: "I'll pay $695+ if the math works.", value: "premium", weight: { luxury: 2, travel: 1 } }
+            ]
         },
         {
-            category: "cashback",
-            text: "Do you prefer simple cash back over complicated points systems?",
-            icon: "💵"
-        },
-        {
-            category: "luxury",
-            text: "Are you willing to pay high annual fees for premium status and luxury benefits?",
-            icon: "💎"
+            id: 4,
+            text: "Which of these sound like you?",
+            subtitle: "Select all true statements.",
+            multiSelect: true,
+            maxSelect: 5,
+            category: "personality",
+            options: [
+                { icon: "📊", text: "I have a spreadsheet for my points.", value: "spreadsheet", weight: { luxury: 2 } },
+                { icon: "🎯", text: "I just want one card for everything.", value: "simple", weight: { cashback: 2 } },
+                { icon: "🎁", text: "I open cards just for the bonus.", value: "churner", weight: { shopping: 2 } },
+                { icon: "💼", text: "I run a small business or side hustle.", value: "business", weight: { shopping: 1, cashback: 1 } },
+                { icon: "👶", text: "I'm brand new to credit cards.", value: "beginner", weight: { cashback: 1 } }
+            ]
         }
     ];
 
     let currentQuestion = 0;
-    const userPreferences = {};
-
-    const slider = document.getElementById('rating-slider');
-    const ratingDisplay = document.getElementById('current-rating');
-
-    slider.oninput = function() {
-        ratingDisplay.textContent = this.value;
-    }
+    const userAnswers = {};
+    const categoryScores = { travel: 0, dining: 0, shopping: 0, cashback: 0, luxury: 0 };
 
     function loadQuestion() {
         const q = questions[currentQuestion];
-        document.getElementById('question-text').innerHTML = `<span style="display:block; font-size: 3rem; margin-bottom: 1rem;">${q.icon}</span>${q.text}`;
+        const progress = (currentQuestion / questions.length) * 100;
         
-        // Reset slider to middle
-        slider.value = 3;
-        ratingDisplay.textContent = 3;
-    }
-
-    function nextQuestion() {
-        // Save answer
-        const q = questions[currentQuestion];
-        userPreferences[q.category] = parseInt(slider.value);
-
-        currentQuestion++;
-
-        if (currentQuestion < questions.length) {
-            loadQuestion();
+        document.getElementById('question-counter').textContent = `QUESTION ${q.id} OF ${questions.length}`;
+        document.getElementById('progress-percent').textContent = `${Math.round(progress)}% COMPLETE`;
+        document.getElementById('progress-bar').style.width = `${progress}%`;
+        document.getElementById('question-text').textContent = q.text;
+        document.getElementById('question-subtitle').textContent = q.subtitle;
+        
+        const container = document.getElementById('options-container');
+        container.innerHTML = '';
+        
+        // Set grid columns based on number of options
+        const cols = q.options.length === 3 ? '3' : '2';
+        container.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+        
+        q.options.forEach((option, idx) => {
+            const div = document.createElement('div');
+            div.className = 'quiz-option';
+            div.dataset.value = option.value;
+            div.innerHTML = `
+                <span class="icon">${option.icon}</span>
+                <span class="text">${option.text}</span>
+                <div class="checkmark">
+                    <span class="material-icons" style="font-size: 16px; color: #2563EB;">check</span>
+                </div>
+            `;
+            
+            div.onclick = () => selectOption(div, q.multiSelect, q.maxSelect || 1);
+            container.appendChild(div);
+        });
+        
+        // Hide Continue button initially
+        document.getElementById('continue-btn').style.display = 'none';
+        
+        // Update button text for last question
+        const btn = document.getElementById('continue-btn');
+        btn.textContent = currentQuestion === questions.length - 1 ? 'Reveal Match →' : 'Continue →';
+        
+        // Show/hide back button
+        const backBtn = document.getElementById('back-btn');
+        if (currentQuestion > 0) {
+            backBtn.style.display = 'block';
         } else {
-            calculateResult();
+            backBtn.style.display = 'none';
         }
     }
 
-    function calculateResult() {
+    function selectOption(element, multiSelect, maxSelect) {
+        const container = document.getElementById('options-container');
+        const selected = container.querySelectorAll('.quiz-option.selected');
+        
+        if (multiSelect) {
+            if (element.classList.contains('selected')) {
+                element.classList.remove('selected');
+            } else {
+                if (selected.length >= maxSelect) {
+                    selected[0].classList.remove('selected');
+                }
+                element.classList.add('selected');
+            }
+        } else {
+            selected.forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+        
+        // Show/hide continue button based on selection
+        const hasSelection = container.querySelectorAll('.quiz-option.selected').length > 0;
+        const continueBtn = document.getElementById('continue-btn');
+        if (hasSelection) {
+            continueBtn.style.display = 'block';
+        } else {
+            continueBtn.style.display = 'none';
+        }
+    }
+
+    function nextQuestion() {
+        const q = questions[currentQuestion];
+        const container = document.getElementById('options-container');
+        const selected = container.querySelectorAll('.quiz-option.selected');
+        
+        // Save answers and calculate scores
+        const answers = Array.from(selected).map(el => el.dataset.value);
+        userAnswers[q.category] = answers;
+        
+        // Update category scores
+        selected.forEach(el => {
+            const option = q.options.find(opt => opt.value === el.dataset.value);
+            if (option && option.weight) {
+                for (const [category, weight] of Object.entries(option.weight)) {
+                    categoryScores[category] += weight;
+                }
+            }
+        });
+        
+        currentQuestion++;
+        
+        if (currentQuestion < questions.length) {
+            loadQuestion();
+        } else {
+            showLoading();
+        }
+    }
+
+    function previousQuestion() {
+        if (currentQuestion > 0) {
+            // Revert category scores from current question
+            const q = questions[currentQuestion - 1];
+            if (userAnswers[q.category]) {
+                userAnswers[q.category].forEach(answerValue => {
+                    const option = q.options.find(opt => opt.value === answerValue);
+                    if (option && option.weight) {
+                        for (const [category, weight] of Object.entries(option.weight)) {
+                            categoryScores[category] -= weight;
+                        }
+                    }
+                });
+            }
+            
+            currentQuestion--;
+            loadQuestion();
+            
+            // Restore previous selections
+            if (userAnswers[q.category]) {
+                userAnswers[q.category].forEach(answerValue => {
+                    const optionEl = document.querySelector(`[data-value="${answerValue}"]`);
+                    if (optionEl) {
+                        optionEl.classList.add('selected');
+                    }
+                });
+                // Show continue button since we have selections
+                document.getElementById('continue-btn').style.display = 'block';
+            }
+        }
+    }
+
+    function showLoading() {
+        document.getElementById('quiz-container').style.display = 'none';
+        document.getElementById('loading-container').style.display = 'block';
+        
+        // Simulate loading with fun messages
+        const messages = [
+            { title: "Analyzing your preferences...", subtitle: "Crunching the multipliers" },
+            { title: "Calculating your vibe...", subtitle: "Consulting the credit card oracle" },
+            { title: "Finding your match...", subtitle: "Almost there!" }
+        ];
+        
+        let msgIndex = 0;
+        const interval = setInterval(() => {
+            msgIndex++;
+            if (msgIndex < messages.length) {
+                document.getElementById('loading-title').textContent = messages[msgIndex].title;
+                document.getElementById('loading-subtitle').textContent = messages[msgIndex].subtitle;
+            }
+        }, 1000);
+        
+        // Show results after 3 seconds
+        setTimeout(() => {
+            clearInterval(interval);
+            calculateAndShowResults();
+        }, 3000);
+    }
+
+    function calculateAndShowResults() {
+        // Find best matching personality based on category scores
         let bestMatch = null;
         let minDistance = Infinity;
-
+        
         personalities.forEach(p => {
             let distance = 0;
-            // Calculate Euclidean distance
-            for (const [category, value] of Object.entries(userPreferences)) {
-                const pValue = p.preferences[category] || 3; // Default to 3 if missing
-                distance += Math.pow(value - pValue, 2);
+            for (const [category, score] of Object.entries(categoryScores)) {
+                const pValue = p.preferences[category] || 3;
+                distance += Math.pow(score - pValue, 2);
             }
             distance = Math.sqrt(distance);
-
+            
             if (distance < minDistance) {
                 minDistance = distance;
                 bestMatch = p;
             }
         });
-
-        if (bestMatch) {
-            // Redirect to personality detail page
-            window.location.href = `/personalities/${bestMatch.id}/`;
-        } else {
-            // Fallback
-            alert('No matching personality found. Please try again.');
-            location.reload();
+        
+        // If no good match, use highest category score
+        if (!bestMatch || minDistance > 10) {
+            const maxCategory = Object.keys(categoryScores).reduce((a, b) => 
+                categoryScores[a] > categoryScores[b] ? a : b
+            );
+            
+            // Map categories to personality types
+            const categoryMap = {
+                travel: personalities.find(p => p.id.includes('jetsetter')) || personalities[0],
+                luxury: personalities.find(p => p.id.includes('freak')) || personalities[0],
+                cashback: personalities.find(p => p.id.includes('hunter')) || personalities[0],
+                shopping: personalities.find(p => p.id.includes('optimizer')) || personalities[0],
+                dining: personalities.find(p => p.id.includes('foodie')) || personalities[0]
+            };
+            
+            bestMatch = categoryMap[maxCategory] || personalities[0];
         }
+        
+        showResults(bestMatch);
     }
 
-    // Load first question
+    function showResults(personality) {
+        document.getElementById('loading-container').style.display = 'none';
+        document.getElementById('results-container').style.display = 'block';
+        
+        // Update progress to 100%
+        document.getElementById('progress-bar').style.width = '100%';
+        
+        // Display personality info
+        const iconImg = personality.icon || '🎯';
+        document.getElementById('result-icon').textContent = iconImg;
+        document.getElementById('result-name').textContent = personality.name;
+        document.getElementById('result-description').textContent = personality.description;
+        document.getElementById('view-stack-btn').href = `/personalities/${personality.id}/`;
+    }
+
+    function resetQuiz() {
+        currentQuestion = 0;
+        Object.keys(categoryScores).forEach(key => categoryScores[key] = 0);
+        Object.keys(userAnswers).forEach(key => delete userAnswers[key]);
+        
+        document.getElementById('results-container').style.display = 'none';
+        document.getElementById('quiz-container').style.display = 'block';
+        
+        loadQuestion();
+    }
+
+    // Load first question on page load
     loadQuestion();
 </script>
 

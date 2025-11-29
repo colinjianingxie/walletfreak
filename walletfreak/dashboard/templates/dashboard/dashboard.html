@@ -35,9 +35,7 @@
                 {% endif %}
                 {% else %}
                 <span style="color: #64748B; font-size: 0.9rem;">
-                    {% if active_cards|length >= 3 %}
-                    <a href="{% url 'personality_survey' %}" style="color: #0284C7; text-decoration: none; font-weight: 500;">Take survey</a> to discover your personality
-                    {% elif active_cards|length == 2 %}
+                    {% if active_cards|length == 2 %}
                     Add 1 more card to discover your personality
                     {% elif active_cards|length == 1 %}
                     Add 2 more cards to discover your personality
@@ -244,7 +242,7 @@
                 <div style="flex: 1; overflow-y: auto;">
                     {% if active_cards %}
                         {% for card in active_cards %}
-                        <div style="display: flex; align-items: center; padding: 1rem; border: 1px solid #E2E8F0; border-radius: 12px; margin-bottom: 1rem; background: white;">
+                        <div onclick="openCardModal('{{ card.id }}')" style="display: flex; align-items: center; padding: 1rem; border: 1px solid #E2E8F0; border-radius: 12px; margin-bottom: 1rem; background: white; cursor: pointer; transition: all 0.2s; position: relative;" onmouseover="this.style.borderColor='#6366F1'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.1)';" onmouseout="this.style.borderColor='#E2E8F0'; this.style.boxShadow='none';">
                             <div style="width: 60px; height: 40px; background: {% if 'chase' in card.name|lower %}#117ACA{% elif 'amex' in card.name|lower or 'american express' in card.name|lower %}#2563EB{% elif 'capital' in card.name|lower %}#0F172A{% else %}#CBD5E1{% endif %}; border-radius: 6px; margin-right: 1rem;"></div>
                             
                             <div>
@@ -252,10 +250,10 @@
                                 <div style="font-size: 0.85rem; color: #64748B;">{{ card.issuer }}</div>
                             </div>
                             
-                            <div style="margin-left: auto; display: flex; align-items: center; gap: 1rem;">
+                            <div style="margin-left: auto; display: flex; align-items: center; gap: 1rem;" onclick="event.stopPropagation();">
                                 <form method="POST" action="{% url 'remove_card' card.id %}" style="margin: 0;" onsubmit="return confirm('Remove this card from your wallet?');">
                                     {% csrf_token %}
-                                    <button type="submit" style="background: none; border: none; cursor: pointer; color: #94A3B8; padding: 0.5rem;">
+                                    <button type="submit" style="background: none; border: none; cursor: pointer; color: #94A3B8; padding: 0.5rem; transition: color 0.2s;" onmouseover="this.style.color='#EF4444'" onmouseout="this.style.color='#94A3B8'">
                                         <span class="material-icons" style="font-size: 20px;">delete</span>
                                     </button>
                                 </form>
@@ -326,30 +324,31 @@
                             <h3 id="preview-card-name" style="font-size: 1.5rem; font-weight: 800; color: #1F2937; margin: 0 0 0.25rem 0; text-align: left;">Sapphire Preferred</h3>
                             <p id="preview-card-issuer-text" style="color: #64748B; margin: 0 0 1.5rem 0; text-align: left;">Chase</p>
                             
+                            <!-- All Benefits -->
                             <!-- Earning Rates -->
-                            <div style="margin-bottom: 1.5rem;">
+                            <div style="margin-bottom: 1.5rem;" id="preview-earning-rates-container">
                                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
                                     <span class="material-icons" style="font-size: 16px; color: #94A3B8;">trending_up</span>
                                     <span style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em;">EARNING RATES</span>
                                 </div>
-                                <div id="preview-earning-rates" style="display: flex; flex-direction: column; gap: 0.75rem; max-height: 200px; overflow-y: auto; padding-right: 0.5rem;">
+                                <div id="preview-earning-rates" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
                                     <!-- Populated via JS -->
                                 </div>
                             </div>
-                            
+
                             <!-- Credits -->
-                            <div id="preview-credits-section" style="margin-bottom: 2rem; display: none;">
+                            <div style="margin-bottom: 1.5rem;" id="preview-credits-container">
                                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
-                                    <span class="material-icons" style="font-size: 16px; color: #94A3B8;">verified_user</span>
+                                    <span class="material-icons" style="font-size: 16px; color: #94A3B8;">bolt</span>
                                     <span style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em;">CREDITS</span>
                                 </div>
-                                <div id="preview-credits" style="display: flex; flex-direction: column; gap: 0.75rem; max-height: 150px; overflow-y: auto; padding-right: 0.5rem;">
+                                <div id="preview-credits" style="display: flex; flex-direction: column; gap: 0.5rem;">
                                     <!-- Populated via JS -->
                                 </div>
                             </div>
                             
                             <!-- Add to Wallet Button -->
-                            <button id="add-card-btn" onclick="addSelectedCard()" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%); color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.4); display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+                            <button id="add-card-btn" onclick="addSelectedCard()" style="width: 100%; padding: 1rem; background: #5850EC; color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(88, 80, 236, 0.4); display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.2s;" onmouseover="this.style.background='#4F46E5'; this.style.transform='translateY(-1px)'" onmouseout="this.style.background='#5850EC'; this.style.transform=''">
                                 <span class="material-icons" style="font-size: 20px;">add</span>
                                 Add to Wallet
                             </button>
@@ -482,6 +481,35 @@
         color: #94A3B8;
         padding: 0;
         line-height: 1;
+    }
+    
+    /* Accordion styles */
+    .benefit-accordion {
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    
+    .benefit-accordion:hover {
+        background: #F1F5F9 !important;
+    }
+    
+    .benefit-details {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+    }
+    
+    .benefit-details.expanded {
+        max-height: 500px;
+        transition: max-height 0.3s ease-in;
+    }
+    
+    .chevron-icon {
+        transition: transform 0.3s;
+    }
+    
+    .chevron-icon.rotated {
+        transform: rotate(180deg);
     }
     
     @media (max-width: 768px) {
@@ -617,114 +645,111 @@
         }
         
         // Parse benefits from Firestore structure
+        // Parse benefits from Firestore structure
         const benefits = card.benefits || [];
+        const earningRatesContainer = document.getElementById('preview-earning-rates');
+        const creditsContainer = document.getElementById('preview-credits');
+        const earningRatesWrapper = document.getElementById('preview-earning-rates-container');
+        const creditsWrapper = document.getElementById('preview-credits-container');
         
-        // Separate earning rates (multipliers) from credits
+        earningRatesContainer.innerHTML = '';
+        creditsContainer.innerHTML = '';
+        
+        // Separate benefits
         const earningRates = [];
-        const creditBenefits = [];
+        const credits = [];
         
-        benefits.forEach(benefit => {
+        benefits.forEach((benefit) => {
             const desc = benefit.description || '';
-            const dollarValue = benefit.dollar_value;
+            const shortDesc = benefit.short_description || desc;
+            const benefitType = benefit.benefit_type || '';
+            const numericValue = benefit.numeric_value;
             
-            // If it has a dollar value > 0, it's a credit
-            if (dollarValue && dollarValue > 0) {
-                creditBenefits.push({
-                    name: desc,
-                    amount: dollarValue
-                });
-            }
-            // If description contains multiplier patterns, it's an earning rate
-            else if (desc.match(/\d+x/i)) {
-                // Extract multiplier and category from description
-                const match = desc.match(/(\d+x)\s*(?:total\s*)?(?:points?\s*)?(?:on\s*)?(.+)/i);
-                if (match) {
-                    earningRates.push({
-                        rate: match[1],
-                        category: match[2].trim()
-                    });
+            let formattedValue = '';
+            let isEarningRate = false;
+            let isCredit = false;
+
+            // Categorization Logic
+            if (benefitType === 'Multiplier' && numericValue) {
+                formattedValue = `${numericValue}x`;
+                isEarningRate = true;
+            } else if (benefitType === 'Cashback' && numericValue) {
+                formattedValue = `${numericValue}%`;
+                isEarningRate = true;
+            } else if (benefitType === 'Credit' && numericValue) {
+                formattedValue = `$${numericValue}`;
+                isCredit = true;
+            } else if (benefitType === 'Bonus' && numericValue) {
+                // Heuristic: Small value or % in desc -> Earning Rate (e.g. 10% bonus)
+                // Large value -> Credit (e.g. 10,000 miles)
+                if (numericValue <= 100 || desc.includes('%')) {
+                     formattedValue = `${numericValue}%`; // Assume percent for small bonuses
+                     isEarningRate = true;
+                } else {
+                     // Format large numbers (e.g. 10000 -> 10k)
+                     if (numericValue >= 1000) {
+                         formattedValue = (numericValue / 1000).toFixed(0) + 'k';
+                         // Append unit if possible? 
+                         // For now just 10k. User can see "Miles" in description if it's there.
+                         // Actually, let's try to append "Pts" or "Miles" if in shortDesc?
+                         if (shortDesc.toLowerCase().includes('miles')) formattedValue += ' Miles';
+                         else if (shortDesc.toLowerCase().includes('points')) formattedValue += ' Pts';
+                     } else {
+                         formattedValue = numericValue.toLocaleString();
+                     }
+                     isCredit = true;
                 }
+            }
+
+            const benefitData = {
+                description: desc,
+                shortDescription: shortDesc,
+                formattedValue: formattedValue,
+                benefitType: benefitType
+            };
+            
+            if (isEarningRate) {
+                earningRates.push(benefitData);
+            } else if (isCredit) {
+                credits.push(benefitData);
             }
         });
         
-        // Update earning rates display
-        const earningContainer = document.getElementById('preview-earning-rates');
-        earningContainer.innerHTML = '';
-        
+        // Render Earning Rates
         if (earningRates.length > 0) {
-            earningRates.forEach(rate => {
-                const rateDiv = document.createElement('div');
-                rateDiv.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;';
-                rateDiv.innerHTML = `
-                    <div style="font-size: 1rem; font-weight: 800; color: #6366F1;">${rate.rate}</div>
-                    <div style="font-size: 0.875rem; color: #64748B; text-align: right;">${rate.category}</div>
-                `;
-                earningContainer.appendChild(rateDiv);
-            });
-        } else {
-            // Fallback to old structure if available
-            const multipliers = card.rewards_structure || [];
-            if (multipliers && Array.isArray(multipliers) && multipliers.length > 0) {
-                multipliers.forEach(mult => {
-                    const rate = mult.rate || mult.multiplier || '1x';
-                    const category = mult.category || mult.name || 'Purchases';
-                    
-                    const rateDiv = document.createElement('div');
-                    rateDiv.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;';
-                    rateDiv.innerHTML = `
-                        <div style="font-size: 1rem; font-weight: 800; color: #6366F1;">${rate}</div>
-                        <div style="font-size: 0.875rem; color: #64748B; text-align: right;">${category}</div>
+            earningRatesWrapper.style.display = 'block';
+            let html = '';
+            earningRates.forEach(item => {
+                // Only show if we have a formatted value (user requirement)
+                if (item.formattedValue) {
+                    html += `
+                        <div style="background: white; border: 1px solid #E2E8F0; border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <div style="font-size: 1.1rem; font-weight: 700; color: #2563EB;">${item.formattedValue}</div>
+                            <div style="font-size: 0.8rem; color: #64748B; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.shortDescription}</div>
+                        </div>
                     `;
-                    earningContainer.appendChild(rateDiv);
-                });
-            } else {
-                // Final fallback
-                const rateDiv = document.createElement('div');
-                rateDiv.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;';
-                rateDiv.innerHTML = `
-                    <div style="font-size: 1rem; font-weight: 800; color: #6366F1;">1x</div>
-                    <div style="font-size: 0.875rem; color: #64748B; text-align: right;">All Purchases</div>
-                `;
-                earningContainer.appendChild(rateDiv);
-            }
+                }
+            });
+            earningRatesContainer.innerHTML = html;
+        } else {
+            earningRatesWrapper.style.display = 'none';
         }
-        
-        // Update credits display
-        const creditsContainer = document.getElementById('preview-credits');
-        const creditsSection = document.getElementById('preview-credits-section');
-        creditsContainer.innerHTML = '';
-        
-        if (creditBenefits.length > 0) {
-            creditsSection.style.display = 'block';
-            creditBenefits.forEach(credit => {
-                const creditDiv = document.createElement('div');
-                creditDiv.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;';
-                creditDiv.innerHTML = `
-                    <div style="font-size: 0.875rem; color: #64748B; flex: 1;">${credit.name}</div>
-                    <div style="font-size: 0.9rem; font-weight: 700; color: #10B981;">$${credit.amount}</div>
+
+        // Render Credits
+        if (credits.length > 0) {
+            creditsWrapper.style.display = 'block';
+            let html = '';
+            credits.forEach(item => {
+                html += `
+                    <div style="background: white; border: 1px solid #E2E8F0; border-radius: 12px; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="font-size: 0.9rem; color: #334155; font-weight: 500;">${item.shortDescription}</div>
+                        <div style="font-size: 0.9rem; font-weight: 700; color: #16A34A;">${item.formattedValue}</div>
+                    </div>
                 `;
-                creditsContainer.appendChild(creditDiv);
             });
+            creditsContainer.innerHTML = html;
         } else {
-            // Fallback to old structure if available
-            const credits = card.credits || [];
-            if (credits && Array.isArray(credits) && credits.length > 0) {
-                creditsSection.style.display = 'block';
-                credits.forEach(credit => {
-                    const name = credit.name || credit.category || 'Credit';
-                    const amount = credit.amount || credit.value || '0';
-                    
-                    const creditDiv = document.createElement('div');
-                    creditDiv.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;';
-                    creditDiv.innerHTML = `
-                        <div style="font-size: 0.875rem; color: #64748B; flex: 1;">${name}</div>
-                        <div style="font-size: 0.9rem; font-weight: 700; color: #10B981;">$${amount}</div>
-                    `;
-                    creditsContainer.appendChild(creditDiv);
-                });
-            } else {
-                creditsSection.style.display = 'none';
-            }
+            creditsWrapper.style.display = 'none';
         }
     }
 
@@ -770,7 +795,6 @@
         document.body.appendChild(form);
         form.submit();
     }
-</script>
 
     // --- Benefit Modal Logic (Existing) ---
     let currentBenefitData = {

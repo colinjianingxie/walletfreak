@@ -12,7 +12,6 @@ urlpatterns = [
     path('update-benefit/<str:user_card_id>/<str:benefit_id>/', views.update_benefit_usage, name='update_benefit_usage'),
     
     # Personality features
-    path('personality/survey/', views.personality_survey, name='personality_survey'),
     path('personality/submit/', views.submit_personality_survey, name='submit_personality_survey'),
     path('personality/results/', views.personality_results, name='personality_results'),
     path('personality/publish/', views.publish_personality, name='publish_personality'),
