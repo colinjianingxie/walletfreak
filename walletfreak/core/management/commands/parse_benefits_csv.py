@@ -33,8 +33,8 @@ def parse_benefits_csv(csv_path):
     })
     
     with open(csv_path, 'r', encoding='utf-8') as f:
-        # Use semicolon as delimiter
-        reader = csv.DictReader(f, delimiter=';', quoting=csv.QUOTE_MINIMAL)
+        # Use pipe as delimiter
+        reader = csv.DictReader(f, delimiter='|', quoting=csv.QUOTE_MINIMAL)
         for row in reader:
             vendor = row['Vendor'].strip()
             card_name = row['CardName'].strip()

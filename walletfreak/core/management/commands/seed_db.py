@@ -163,6 +163,17 @@ class Command(BaseCommand):
                     'Discover it® Student Chrome',
                     'Bank of America® Customized Cash Rewards credit card for Students'
                 ]
+            },
+            {
+                'name': 'Wallet Freak',
+                'tagline': 'The Ultimate Optimizer',
+                'description': 'The master of credit card optimization who tracks every benefit, maximizes every dollar, and maintains a perfectly balanced wallet. Combines the strategic mindset of a Rewards Guru with the meticulous tracking of a Deal Hunter, always staying ahead of the game.',
+                'recommended_names': [
+                    'Chase Sapphire Reserve®',
+                    'American Express Platinum Card®',
+                    'Capital One Venture X Rewards Credit Card',
+                    'Chase Sapphire Preferred® Card'
+                ]
             }
         ]
 
