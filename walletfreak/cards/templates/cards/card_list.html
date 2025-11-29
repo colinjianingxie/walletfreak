@@ -43,7 +43,8 @@
     {% for card in cards %}
     <div class="card-item" data-name="{{ card.name|lower }}" data-issuer="{{ card.issuer|lower }}"
         data-categories="{{ card.categories|join:',' }}" data-fee="{{ card.annual_fee|default:0 }}"
-        style="background: white; border-radius: 16px; padding: 1.75rem; border: 1px solid #E5E7EB; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: all 0.3s;">
+        style="background: white; border-radius: 16px; padding: 1.75rem; border: 1px solid #E5E7EB; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: all 0.3s; cursor: pointer;"
+        onclick="openCardModal('{{ card.id }}')">
         <!-- 3D Credit Card -->
         <div class="credit-card {% if 'american express' in card.name|lower or 'amex' in card.name|lower %}{% if 'platinum' in card.name|lower %}card-amex-platinum{% else %}card-gold{% endif %}{% elif 'chase' in card.name|lower %}card-chase{% elif 'capital one' in card.name|lower %}card-capital-one{% elif 'citi' in card.name|lower %}card-citi{% else %}card-chase{% endif %}"
             style="margin-bottom: 1.5rem;">
@@ -106,12 +107,12 @@
             </div>
         </div>
 
-        <!-- Apply Button -->
-        <a href="{% url 'card_detail' card.id %}"
-            style="width: 100%; background: #1E293B; color: white; padding: 0.875rem; text-align: center; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none; border-radius: 10px; font-size: 0.9375rem; transition: all 0.2s;">
-            Apply Now
+        <!-- View Details Button -->
+        <button onclick="event.stopPropagation(); openCardModal('{{ card.id }}');"
+            style="width: 100%; background: #1E293B; color: white; padding: 0.875rem; text-align: center; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.5rem; border: none; border-radius: 10px; font-size: 0.9375rem; transition: all 0.2s; cursor: pointer;">
+            View Details
             <span style="font-size: 0.875rem;">→</span>
-        </a>
+        </button>
     </div>
     {% empty %}
     <!-- Empty State -->
@@ -129,6 +130,8 @@
     <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;">No cards match your filters</h2>
     <p style="color: var(--text-muted);">Try adjusting your search or filters.</p>
 </div>
+
+{% include 'cards/includes/card_modal.html' %}
 
 <script>
     const searchInput = document.getElementById('search-input');

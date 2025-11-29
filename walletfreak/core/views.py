@@ -24,11 +24,6 @@ def home(request):
     }
     return render(request, 'landing.html', context)
 
-def quiz(request):
-    context = {
-        'firebase_config': settings.FIREBASE_CLIENT_CONFIG,
-    }
-    return render(request, 'quiz.html', context)
 
 def features(request):
     # Redirect to dashboard if user is authenticated

@@ -209,127 +209,156 @@
     
     <!-- View All History Button -->
     <div style="margin-top: 2.5rem;">
-        <button style="width: 100%; padding: 1rem; background: white; border: 1px solid #E2E8F0; border-radius: 12px; font-weight: 600; color: #64748B; cursor: pointer; transition: all 0.2s;">
+        <button onclick="window.location.href='{% url 'wallet' %}'" style="width: 100%; padding: 1rem; background: white; border: 1px solid #E2E8F0; border-radius: 12px; font-weight: 600; color: #64748B; cursor: pointer; transition: all 0.2s;">
             View All Benefits History
         </button>
     </div>
 </div>
 
-<!-- Manage Wallet Modal (New Design) -->
+<!-- Manage Wallet Modal (Redesigned to match image) -->
 <div id="manage-wallet-modal" class="modal" style="display: none; align-items: center; justify-content: center; padding: 2rem;">
-    <div class="modal-content" style="width: 1000px; max-width: 95vw; height: 600px; max-height: 90vh; padding: 0; display: flex; overflow: hidden; border-radius: 24px;">
+    <div class="modal-content" style="width: 900px; max-width: 95vw; max-height: 90vh; padding: 0; display: flex; flex-direction: column; overflow: hidden; border-radius: 16px; background: white;">
         
-        <!-- Sidebar -->
-        <div style="width: 240px; background: #F8FAFC; padding: 2rem 1.5rem; border-right: 1px solid #E2E8F0; display: flex; flex-direction: column;">
-            <h3 style="font-size: 1.25rem; font-weight: 800; margin: 0 0 2rem 0; color: #1F2937;">Manage Wallet</h3>
-            
-            <div class="sidebar-nav">
-                <button class="sidebar-item active" onclick="switchWalletView('stack')" id="nav-stack">
-                    <span class="material-icons" style="font-size: 20px;">credit_card</span>
-                    My Stack
-                    <span style="background: #E2E8F0; color: #64748B; font-size: 0.75rem; padding: 0.1rem 0.5rem; border-radius: 99px; margin-left: auto;">{{ active_cards|length }}</span>
-                </button>
-                <button class="sidebar-item" onclick="switchWalletView('add')" id="nav-add">
-                    <span class="material-icons" style="font-size: 20px;">add</span>
-                    Add New Card
-                </button>
-            </div>
-            
-            <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid #E2E8F0;">
-                <p style="font-size: 0.75rem; color: #94A3B8; line-height: 1.5;">
-                    Tip: Removing a card will archive its history but keep your data safe.
-                </p>
-            </div>
+        <!-- Tab Navigation -->
+        <div style="display: flex; border-bottom: 2px solid #F3F4F6; padding: 0 2rem;">
+            <button class="wallet-tab active" onclick="switchTab('stack')" id="tab-stack" style="padding: 1.25rem 2rem; border: none; background: none; font-weight: 700; font-size: 1rem; color: #64748B; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.2s;">
+                Manage Wallet
+            </button>
+            <button class="wallet-tab" onclick="switchTab('add')" id="tab-add" style="padding: 1.25rem 2rem; border: none; background: none; font-weight: 700; font-size: 1rem; color: #64748B; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.2s;">
+                Find a Card
+            </button>
+            <button class="modal-close-btn" onclick="closeManageWalletModal()" style="margin-left: auto; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #94A3B8; padding: 1rem;">×</button>
         </div>
-
-        <!-- Main Content Area -->
-        <div style="flex: 1; display: flex;">
+        
+        <!-- Tab Content Area -->
+        <div style="flex: 1; display: flex; overflow: hidden;">
             
-            <!-- View: My Stack -->
-            <div id="view-stack" style="flex: 1; padding: 2rem; display: none; flex-direction: column; width: 100%;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                    <h3 style="font-size: 1.25rem; font-weight: 700; margin: 0;">Active Cards</h3>
-                    <button onclick="switchWalletView('add')" style="color: #6366F1; font-weight: 600; background: none; border: none; cursor: pointer;">+ Add Another</button>
-                    <button class="modal-close-btn" onclick="closeManageWalletModal()">×</button>
+            <!-- Tab 1: Manage Wallet (My Stack) -->
+            <div id="content-stack" style="flex: 1; padding: 2rem; display: flex; flex-direction: column; overflow-y: auto;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;">
+                    <span class="material-icons" style="font-size: 20px; color: #6366F1;">credit_card</span>
+                    <h3 style="font-size: 1rem; font-weight: 700; margin: 0; color: #1F2937;">My Stack</h3>
+                    <span style="background: #F3F4F6; color: #64748B; font-size: 0.75rem; padding: 0.125rem 0.5rem; border-radius: 99px; margin-left: 0.5rem;">{{ active_cards|length }}</span>
                 </div>
                 
-                <div style="overflow-y: auto; flex: 1; padding-right: 0.5rem;">
+                <div style="flex: 1; overflow-y: auto;">
                     {% if active_cards %}
                         {% for card in active_cards %}
                         <div style="display: flex; align-items: center; padding: 1rem; border: 1px solid #E2E8F0; border-radius: 12px; margin-bottom: 1rem; background: white;">
-                            <!-- Card Icon Placeholder -->
-                            <div style="width: 60px; height: 40px; background: {% if 'chase' in card.name|lower %}#117ACA{% elif 'amex' in card.name|lower %}#2563EB{% else %}#CBD5E1{% endif %}; border-radius: 6px; margin-right: 1rem;"></div>
+                            <div style="width: 60px; height: 40px; background: {% if 'chase' in card.name|lower %}#117ACA{% elif 'amex' in card.name|lower or 'american express' in card.name|lower %}#2563EB{% elif 'capital' in card.name|lower %}#0F172A{% else %}#CBD5E1{% endif %}; border-radius: 6px; margin-right: 1rem;"></div>
                             
                             <div>
                                 <div style="font-weight: 700; color: #1F2937;">{{ card.name }}</div>
-                                <div style="font-size: 0.85rem; color: #64748B;">•••• {{ card.id|slice:"-4:" }}</div>
+                                <div style="font-size: 0.85rem; color: #64748B;">{{ card.issuer }}</div>
                             </div>
                             
                             <div style="margin-left: auto; display: flex; align-items: center; gap: 1rem;">
-                                <span style="background: #DCFCE7; color: #16A34A; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 99px;">Active</span>
-                                <form method="POST" action="{% url 'remove_card' card.id %}" style="margin: 0;" onsubmit="return confirm('Remove this card?');">
+                                <form method="POST" action="{% url 'remove_card' card.id %}" style="margin: 0;" onsubmit="return confirm('Remove this card from your wallet?');">
                                     {% csrf_token %}
-                                    <button type="submit" style="background: none; border: none; cursor: pointer; color: #CBD5E1; font-size: 1.25rem; padding: 0.25rem;"><span class="material-icons" style="font-size: 20px;">delete</span></button>
+                                    <button type="submit" style="background: none; border: none; cursor: pointer; color: #94A3B8; padding: 0.5rem;">
+                                        <span class="material-icons" style="font-size: 20px;">delete</span>
+                                    </button>
                                 </form>
                             </div>
                         </div>
                         {% endfor %}
                     {% else %}
                         <div style="text-align: center; padding: 3rem; color: #94A3B8;">
-                            No active cards. Add one to get started!
+                            <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"><span class="material-icons" style="font-size: 48px;">credit_card</span></div>
+                            <p>No cards in your wallet yet.</p>
+                            <button onclick="switchTab('add')" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: #6366F1; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                                + Add New Card
+                            </button>
                         </div>
                     {% endif %}
                 </div>
             </div>
-
-            <!-- View: Add New Card -->
-            <div id="view-add" style="flex: 1; display: flex; width: 100%;">
-                <!-- Search & List Column -->
-                <div style="flex: 1; padding: 2rem; border-right: 1px solid #E2E8F0; display: flex; flex-direction: column;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                        <h3 style="font-size: 1.25rem; font-weight: 700; margin: 0;">Find a Card</h3>
-                        <button class="modal-close-btn" onclick="closeManageWalletModal()" style="display: block;">×</button>
-                    </div>
-                    
-                    <p style="color: #64748B; font-size: 0.9rem; margin-bottom: 1.5rem;">Search by name or issuer to add it to your wallet.</p>
-                    
-                    <div style="position: relative; margin-bottom: 1.5rem;">
-                        <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #9CA3AF;"><span class="material-icons" style="font-size: 18px;">search</span></span>
-                        <input type="text" id="card-search-input" placeholder="Search e.g. 'Sapphire' or 'Amex'" 
-                               style="width: 100%; padding: 0.875rem 1rem 0.875rem 2.5rem; border: 1px solid #E2E8F0; border-radius: 12px; font-size: 0.95rem;">
-                    </div>
-                    
-                    <div style="margin-bottom: 1rem;">
-                        <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em; margin-bottom: 0.75rem;">QUICK ADD</div>
-                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                            <button class="filter-chip" onclick="filterCards('Chase')">Chase</button>
-                            <button class="filter-chip" onclick="filterCards('Amex')">Amex</button>
-                            <button class="filter-chip" onclick="filterCards('Capital One')">Capital One</button>
-                            <button class="filter-chip" onclick="filterCards('Citi')">Citi</button>
+            
+            <!-- Tab 2: Find a Card -->
+            <div id="content-add" style="flex: 1; display: none; overflow: hidden;">
+                <div style="display: flex; height: 100%;">
+                    <!-- Left Column: Search & List -->
+                    <div style="flex: 1; padding: 2rem; border-right: 1px solid #E2E8F0; display: flex; flex-direction: column; overflow: hidden;">
+                        <p style="color: #64748B; font-size: 0.9rem; margin-bottom: 1.5rem;">Search by name or issuer to add it to your wallet.</p>
+                        
+                        <div style="position: relative; margin-bottom: 1.5rem;">
+                            <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #9CA3AF;"><span class="material-icons" style="font-size: 18px;">search</span></span>
+                            <input type="text" id="card-search-input" placeholder="Search e.g. 'Sapphire' or 'Amex'" 
+                                   style="width: 100%; padding: 0.875rem 1rem 0.875rem 2.5rem; border: 1px solid #E2E8F0; border-radius: 12px; font-size: 0.95rem;">
+                        </div>
+                        
+                        <div style="margin-bottom: 1.5rem;">
+                            <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em; margin-bottom: 0.75rem;">QUICK ADD</div>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                <button class="quick-add-btn" onclick="filterCards('Chase')">Chase</button>
+                                <button class="quick-add-btn" onclick="filterCards('Amex')">Amex</button>
+                                <button class="quick-add-btn" onclick="filterCards('Capital One')">Capital One</button>
+                                <button class="quick-add-btn" onclick="filterCards('Citi')">Citi</button>
+                            </div>
+                        </div>
+                        
+                        <div id="card-results-list" style="overflow-y: auto; flex: 1;">
+                            <!-- Results populated via JS -->
                         </div>
                     </div>
                     
-                    <div id="card-results-list" style="overflow-y: auto; flex: 1; padding-right: 0.5rem;">
-                        <!-- Results populated via JS -->
-                    </div>
-                </div>
-                
-                <!-- Preview Column -->
-                <div style="width: 300px; padding: 2rem; background: #FAFAFA; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
-                    <div id="card-preview-empty" style="color: #94A3B8;">
-                        <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"><span class="material-icons" style="font-size: 48px;">credit_card</span></div>
-                        <p>Select a card to preview</p>
-                    </div>
-                    
-                    <div id="card-preview-content" style="display: none; width: 100%;">
-                        <div id="preview-card-image" style="width: 200px; height: 126px; background: linear-gradient(135deg, #6366F1, #8B5CF6); border-radius: 12px; margin-bottom: 1.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);"></div>
+                    <!-- Right Column: Card Preview -->
+                    <div style="width: 360px; padding: 2rem; background: white; display: flex; flex-direction: column; align-items: center; overflow-y: auto;">
+                        <div id="card-preview-empty" style="color: #94A3B8; text-align: center; margin-top: 4rem;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"><span class="material-icons" style="font-size: 48px;">credit_card</span></div>
+                            <p>Select a card to preview</p>
+                        </div>
                         
-                        <h3 id="preview-card-name" style="font-size: 1.25rem; font-weight: 700; color: #1F2937; margin-bottom: 0.5rem;">Card Name</h3>
-                        <p id="preview-card-issuer" style="color: #64748B; margin-bottom: 2rem;">Issuer</p>
-                        
-                        <button id="add-card-btn" onclick="addSelectedCard()" style="width: 100%; padding: 1rem; background: #6366F1; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.4);">
-                            + Add to Wallet
-                        </button>
+                        <div id="card-preview-content" style="display: none; width: 100%;">
+                            <!-- Card Visual -->
+                            <div id="preview-card-visual" style="width: 100%; max-width: 280px; height: 176px; background: linear-gradient(135deg, #6366F1, #8B5CF6); border-radius: 16px; margin: 0 auto 1.5rem; box-shadow: 0 20px 40px rgba(0,0,0,0.15); padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; color: white; position: relative; overflow: hidden;">
+                                <div id="preview-issuer" style="font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;">CHASE</div>
+                                <div style="font-size: 1rem; letter-spacing: 0.15em; font-family: 'Courier New', monospace;">•••• •••• •••• 4242</div>
+                                <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                                    <div style="font-size: 0.75rem;">YOUR NAME</div>
+                                    <div style="display: flex; gap: 2px;">
+                                        <div style="width: 18px; height: 18px; background: #EB001B; border-radius: 50%; opacity: 0.9;"></div>
+                                        <div style="width: 18px; height: 18px; background: #F79E1B; border-radius: 50%; margin-left: -6px; opacity: 0.9;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <h3 id="preview-card-name" style="font-size: 1.5rem; font-weight: 800; color: #1F2937; margin: 0 0 0.25rem 0; text-align: left;">Sapphire Preferred</h3>
+                            <p id="preview-card-issuer-text" style="color: #64748B; margin: 0 0 1.5rem 0; text-align: left;">Chase</p>
+                            
+                            <!-- Earning Rates -->
+                            <div style="margin-bottom: 1.5rem;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                    <span class="material-icons" style="font-size: 16px; color: #94A3B8;">trending_up</span>
+                                    <span style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em;">EARNING RATES</span>
+                                </div>
+                                <div id="preview-earning-rates" style="display: flex; flex-direction: column; gap: 0.75rem; max-height: 200px; overflow-y: auto; padding-right: 0.5rem;">
+                                    <!-- Populated via JS -->
+                                </div>
+                            </div>
+                            
+                            <!-- Credits -->
+                            <div id="preview-credits-section" style="margin-bottom: 2rem; display: none;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                    <span class="material-icons" style="font-size: 16px; color: #94A3B8;">verified_user</span>
+                                    <span style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em;">CREDITS</span>
+                                </div>
+                                <div id="preview-credits" style="display: flex; flex-direction: column; gap: 0.75rem; max-height: 150px; overflow-y: auto; padding-right: 0.5rem;">
+                                    <!-- Populated via JS -->
+                                </div>
+                            </div>
+                            
+                            <!-- Add to Wallet Button -->
+                            <button id="add-card-btn" onclick="addSelectedCard()" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%); color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.4); display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+                                <span class="material-icons" style="font-size: 20px;">add</span>
+                                Add to Wallet
+                            </button>
+                            
+                            <!-- APR Disclaimer -->
+                            <div style="margin-top: 1rem; text-align: center; font-size: 0.7rem; color: #94A3B8; line-height: 1.4;">
+                                Variable APR: 21.24% - 29.24% Var. Terms apply. Rates as of Oct 2024.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -399,35 +428,16 @@
 </div>
 
 <style>
-    .sidebar-item {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        width: 100%;
-        padding: 0.75rem 1rem;
-        border: none;
-        background: none;
-        text-align: left;
-        font-weight: 600;
-        color: #64748B;
-        cursor: pointer;
-        border-radius: 8px;
-        margin-bottom: 0.5rem;
-        transition: all 0.2s;
-    }
-    
-    .sidebar-item:hover {
-        background: #E2E8F0;
+    .wallet-tab:hover {
         color: #1F2937;
     }
     
-    .sidebar-item.active {
-        background: white;
-        color: #1F2937;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    .wallet-tab.active {
+        color: #6366F1;
+        border-bottom-color: #6366F1 !important;
     }
     
-    .filter-chip {
+    .quick-add-btn {
         padding: 0.5rem 1rem;
         border: 1px solid #E2E8F0;
         background: white;
@@ -439,9 +449,10 @@
         transition: all 0.2s;
     }
     
-    .filter-chip:hover {
-        border-color: #CBD5E1;
-        color: #1F2937;
+    .quick-add-btn:hover {
+        border-color: #8B5CF6;
+        color: #8B5CF6;
+        background: #F5F3FF;
     }
     
     .card-result-item {
@@ -450,15 +461,17 @@
         border-radius: 12px;
         cursor: pointer;
         transition: all 0.2s;
+        margin-bottom: 0.5rem;
     }
     
     .card-result-item:hover {
         background: #F8FAFC;
+        border-color: #E2E8F0;
     }
     
     .card-result-item.selected {
-        background: #F5F3FF;
-        border-color: #8B5CF6;
+        background: #EEF2FF;
+        border-color: #6366F1;
     }
     
     .modal-close-btn {
@@ -514,25 +527,30 @@
 
     function openManageWalletModal(view = 'stack') {
         document.getElementById('manage-wallet-modal').style.display = 'flex';
-        switchWalletView(view);
+        switchTab(view);
     }
 
     function closeManageWalletModal() {
         document.getElementById('manage-wallet-modal').style.display = 'none';
+        // Reset preview
+        document.getElementById('card-preview-empty').style.display = 'block';
+        document.getElementById('card-preview-content').style.display = 'none';
+        selectedAddCard = null;
     }
 
-    function switchWalletView(view) {
-        // Update Sidebar
-        document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
-        document.getElementById('nav-' + view).classList.add('active');
+    function switchTab(view) {
+        // Update Tabs
+        document.querySelectorAll('.wallet-tab').forEach(el => el.classList.remove('active'));
+        document.getElementById('tab-' + view).classList.add('active');
         
         // Update Content
-        document.getElementById('view-stack').style.display = 'none';
-        document.getElementById('view-add').style.display = 'none';
+        document.getElementById('content-stack').style.display = 'none';
+        document.getElementById('content-add').style.display = 'none';
         
-        document.getElementById('view-' + view).style.display = view === 'add' ? 'flex' : 'flex';
-        
-        if (view === 'add') {
+        if (view === 'stack') {
+            document.getElementById('content-stack').style.display = 'flex';
+        } else {
+            document.getElementById('content-add').style.display = 'block';
             renderCardResults(availableCards);
         }
     }
@@ -570,21 +588,143 @@
         document.getElementById('card-preview-empty').style.display = 'none';
         document.getElementById('card-preview-content').style.display = 'block';
         
+        // Update card name and issuer
         document.getElementById('preview-card-name').textContent = card.name;
-        document.getElementById('preview-card-issuer').textContent = card.issuer;
-        document.getElementById('add-card-btn').textContent = `+ Add to Wallet`;
+        document.getElementById('preview-card-issuer-text').textContent = card.issuer;
+        document.getElementById('preview-issuer').textContent = card.issuer.toUpperCase();
         
-        // Update preview color based on issuer (simple logic)
-        const previewImg = document.getElementById('preview-card-image');
-        const name = card.name.toLowerCase();
-        if (name.includes('amex') || name.includes('american express')) {
-            if (name.includes('platinum')) previewImg.style.background = '#E2E8F0';
-            else if (name.includes('gold')) previewImg.style.background = '#FCD34D';
-            else previewImg.style.background = '#2563EB';
-        } else if (name.includes('chase')) {
-            previewImg.style.background = '#117ACA';
+        // Update card visual colors
+        const cardVisual = document.getElementById('preview-card-visual');
+        const name = (card.name || '').toLowerCase();
+        const issuer = (card.issuer || '').toLowerCase();
+        
+        if (issuer.includes('american express') || issuer.includes('amex') || name.includes('amex')) {
+            if (name.includes('platinum')) {
+                cardVisual.style.background = 'linear-gradient(135deg, #E2E8F0 0%, #CBD5E1 100%)';
+            } else if (name.includes('gold')) {
+                cardVisual.style.background = 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)';
+            } else {
+                cardVisual.style.background = 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)';
+            }
+        } else if (issuer.includes('chase') || name.includes('chase')) {
+            cardVisual.style.background = 'linear-gradient(135deg, #1E40AF 0%, #1E3A8A 100%)';
+        } else if (issuer.includes('capital one') || name.includes('capital')) {
+            cardVisual.style.background = 'linear-gradient(135deg, #1F2937 0%, #111827 100%)';
+        } else if (issuer.includes('citi')) {
+            cardVisual.style.background = 'linear-gradient(135deg, #2563EB 0%, #1E40AF 100%)';
         } else {
-            previewImg.style.background = 'linear-gradient(135deg, #6366F1, #8B5CF6)';
+            cardVisual.style.background = 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)';
+        }
+        
+        // Parse benefits from Firestore structure
+        const benefits = card.benefits || [];
+        
+        // Separate earning rates (multipliers) from credits
+        const earningRates = [];
+        const creditBenefits = [];
+        
+        benefits.forEach(benefit => {
+            const desc = benefit.description || '';
+            const dollarValue = benefit.dollar_value;
+            
+            // If it has a dollar value > 0, it's a credit
+            if (dollarValue && dollarValue > 0) {
+                creditBenefits.push({
+                    name: desc,
+                    amount: dollarValue
+                });
+            }
+            // If description contains multiplier patterns, it's an earning rate
+            else if (desc.match(/\d+x/i)) {
+                // Extract multiplier and category from description
+                const match = desc.match(/(\d+x)\s*(?:total\s*)?(?:points?\s*)?(?:on\s*)?(.+)/i);
+                if (match) {
+                    earningRates.push({
+                        rate: match[1],
+                        category: match[2].trim()
+                    });
+                }
+            }
+        });
+        
+        // Update earning rates display
+        const earningContainer = document.getElementById('preview-earning-rates');
+        earningContainer.innerHTML = '';
+        
+        if (earningRates.length > 0) {
+            earningRates.forEach(rate => {
+                const rateDiv = document.createElement('div');
+                rateDiv.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;';
+                rateDiv.innerHTML = `
+                    <div style="font-size: 1rem; font-weight: 800; color: #6366F1;">${rate.rate}</div>
+                    <div style="font-size: 0.875rem; color: #64748B; text-align: right;">${rate.category}</div>
+                `;
+                earningContainer.appendChild(rateDiv);
+            });
+        } else {
+            // Fallback to old structure if available
+            const multipliers = card.rewards_structure || [];
+            if (multipliers && Array.isArray(multipliers) && multipliers.length > 0) {
+                multipliers.forEach(mult => {
+                    const rate = mult.rate || mult.multiplier || '1x';
+                    const category = mult.category || mult.name || 'Purchases';
+                    
+                    const rateDiv = document.createElement('div');
+                    rateDiv.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;';
+                    rateDiv.innerHTML = `
+                        <div style="font-size: 1rem; font-weight: 800; color: #6366F1;">${rate}</div>
+                        <div style="font-size: 0.875rem; color: #64748B; text-align: right;">${category}</div>
+                    `;
+                    earningContainer.appendChild(rateDiv);
+                });
+            } else {
+                // Final fallback
+                const rateDiv = document.createElement('div');
+                rateDiv.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;';
+                rateDiv.innerHTML = `
+                    <div style="font-size: 1rem; font-weight: 800; color: #6366F1;">1x</div>
+                    <div style="font-size: 0.875rem; color: #64748B; text-align: right;">All Purchases</div>
+                `;
+                earningContainer.appendChild(rateDiv);
+            }
+        }
+        
+        // Update credits display
+        const creditsContainer = document.getElementById('preview-credits');
+        const creditsSection = document.getElementById('preview-credits-section');
+        creditsContainer.innerHTML = '';
+        
+        if (creditBenefits.length > 0) {
+            creditsSection.style.display = 'block';
+            creditBenefits.forEach(credit => {
+                const creditDiv = document.createElement('div');
+                creditDiv.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;';
+                creditDiv.innerHTML = `
+                    <div style="font-size: 0.875rem; color: #64748B; flex: 1;">${credit.name}</div>
+                    <div style="font-size: 0.9rem; font-weight: 700; color: #10B981;">$${credit.amount}</div>
+                `;
+                creditsContainer.appendChild(creditDiv);
+            });
+        } else {
+            // Fallback to old structure if available
+            const credits = card.credits || [];
+            if (credits && Array.isArray(credits) && credits.length > 0) {
+                creditsSection.style.display = 'block';
+                credits.forEach(credit => {
+                    const name = credit.name || credit.category || 'Credit';
+                    const amount = credit.amount || credit.value || '0';
+                    
+                    const creditDiv = document.createElement('div');
+                    creditDiv.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;';
+                    creditDiv.innerHTML = `
+                        <div style="font-size: 0.875rem; color: #64748B; flex: 1;">${name}</div>
+                        <div style="font-size: 0.9rem; font-weight: 700; color: #10B981;">$${amount}</div>
+                    `;
+                    creditsContainer.appendChild(creditDiv);
+                });
+            } else {
+                creditsSection.style.display = 'none';
+            }
         }
     }
 
@@ -597,7 +737,7 @@
         renderCardResults(filtered);
     }
 
-    document.getElementById('card-search-input').addEventListener('input', (e) => {
+    document.getElementById('card-search-input')?.addEventListener('input', (e) => {
         let term = e.target.value.toLowerCase();
         
         // Alias mapping
@@ -630,6 +770,7 @@
         document.body.appendChild(form);
         form.submit();
     }
+</script>
 
     // --- Benefit Modal Logic (Existing) ---
     let currentBenefitData = {

@@ -39,12 +39,28 @@ def dashboard(request):
         print(f"Error fetching all cards: {e}")
         all_cards = []
     
-    # Prepare available cards JSON for JavaScript
+    # Get IDs of cards already in user's wallet
+    user_card_ids = set()
+    for card in active_cards + inactive_cards + eyeing_cards:
+        user_card_ids.add(card.get('card_id'))
+    
+    # Filter out cards already in wallet
+    available_cards = [card for card in all_cards if card['id'] not in user_card_ids]
+    
+    # Prepare available cards JSON for JavaScript with full details
     available_cards_json = json.dumps([{
         'id': card['id'],
         'name': card['name'],
-        'issuer': card['issuer']
-    } for card in all_cards])
+        'issuer': card['issuer'],
+        'benefits': card.get('benefits', []),
+        'rewards_structure': card.get('rewards_structure', []),
+        'credits': card.get('credits', []),
+        'welcome_bonus': card.get('welcome_bonus', ''),
+        'welcome_offer': card.get('welcome_offer', ''),
+        'signup_bonus': card.get('signup_bonus', ''),
+        'welcome_requirement': card.get('welcome_requirement', ''),
+        'annual_fee': card.get('annual_fee', 0)
+    } for card in available_cards], default=str)
     
     # Calculate benefits and values
     all_benefits = []
@@ -142,7 +158,9 @@ def add_card(request, card_id):
     """Add a card to user's wallet"""
     uid = request.session.get('uid')
     if not uid:
-        return JsonResponse({'success': False, 'error': 'Not authenticated'}, status=401)
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest' or request.POST.get('ajax'):
+            return JsonResponse({'success': False, 'error': 'Not authenticated'}, status=401)
+        return redirect('login')
     
     try:
         status = request.POST.get('status', 'active')
@@ -151,10 +169,17 @@ def add_card(request, card_id):
         success = db.add_card_to_user(uid, card_id, status=status, anniversary_date=anniversary_date)
         
         if success:
-            return JsonResponse({'success': True})
+            # Check if this is an AJAX request
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest' or request.POST.get('ajax'):
+                return JsonResponse({'success': True})
+            return redirect('dashboard')
         else:
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest' or request.POST.get('ajax'):
+                return JsonResponse({'success': False, 'error': 'Card not found'}, status=404)
             return JsonResponse({'success': False, 'error': 'Card not found'}, status=404)
     except Exception as e:
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest' or request.POST.get('ajax'):
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
         return JsonResponse({'success': False, 'error': str(e)}, status=500)
 
 
@@ -187,7 +212,7 @@ def remove_card(request, user_card_id):
     
     try:
         db.remove_card_from_user(uid, user_card_id)
-        return JsonResponse({'success': True})
+        return redirect('dashboard')
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)}, status=500)
 

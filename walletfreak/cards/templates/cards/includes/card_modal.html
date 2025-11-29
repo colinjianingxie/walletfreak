@@ -1,0 +1,418 @@
+<!-- Card Detail Modal -->
+<div id="card-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s;">
+    <div class="modal-content" style="background: #F8FAFC; width: 90%; max-width: 900px; border-radius: 32px; overflow: hidden; display: flex; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); transform: scale(0.95); transition: transform 0.3s;">
+        
+        <!-- Left Side: Card Visual -->
+        <div style="width: 40%; background: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%); padding: 3rem; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;">
+            <div id="modal-card-visual" style="width: 280px; height: 176px; background: linear-gradient(135deg, #FFD700 0%, #B8860B 100%); border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); position: relative; overflow: hidden; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; color: white;">
+                <!-- Card content will be injected via JS -->
+                <div style="font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;" id="modal-card-issuer-visual">AMERICAN EXPRESS</div>
+                <div style="display: flex; gap: 4px; margin: 1rem 0;">
+                    <div style="width: 32px; height: 24px; background: rgba(255,255,255,0.2); border-radius: 4px;"></div>
+                </div>
+                <div style="font-size: 1rem; letter-spacing: 0.15em; font-family: 'Courier New', monospace;" id="modal-card-number">•••• •••• •••• 4242</div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                    <div style="font-size: 0.75rem;" id="modal-card-holder">YOUR NAME</div>
+                    <div style="display: flex; gap: 2px;">
+                        <div style="width: 18px; height: 18px; background: #EB001B; border-radius: 50%;"></div>
+                        <div style="width: 18px; height: 18px; background: #F79E1B; border-radius: 50%; margin-left: -6px;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 3rem; text-align: center;">
+                <div style="background: white; border-radius: 12px; padding: 0.75rem 1.5rem; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                    <span style="color: #F59E0B;" class="material-icons">star</span>
+                    <span style="font-weight: 700; color: #1E293B;">Recommended</span>
+                </div>
+                <div style="margin-top: 1.5rem;">
+                    <div style="font-size: 0.75rem; color: #64748B; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">ANNUAL FEE</div>
+                    <div id="modal-annual-fee" style="font-size: 2rem; font-weight: 800; color: #0F172A;">$250</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Details -->
+        <div style="width: 60%; padding: 3rem; position: relative; max-height: 90vh; overflow-y: auto;">
+            <button onclick="closeCardModal()" style="position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; cursor: pointer; color: #94A3B8; transition: color 0.2s;">
+                <span class="material-icons" style="font-size: 24px;">close</span>
+            </button>
+
+            <h2 id="modal-card-name" style="font-size: 2.5rem; font-weight: 800; color: #0F172A; margin: 0 0 0.5rem 0; line-height: 1.1;">Gold Card</h2>
+            <div id="modal-issuer" style="font-size: 1.1rem; color: #64748B; margin-bottom: 2.5rem;">American Express</div>
+
+            <!-- Freak Verdict -->
+            <div style="background: #F5F3FF; border: 1px solid #E9D5FF; border-radius: 16px; padding: 1.5rem; margin-bottom: 2.5rem; display: flex; gap: 1rem;">
+                <div style="width: 40px; height: 40px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #7C3AED;">
+                    <span class="material-icons">bolt</span>
+                </div>
+                <div>
+                    <div style="font-size: 0.75rem; font-weight: 700; color: #4C1D95; letter-spacing: 0.05em; margin-bottom: 0.5rem;">THE FREAK VERDICT</div>
+                    <p id="modal-verdict" style="margin: 0; color: #4B5563; line-height: 1.6;">
+                        The absolute king of food points. If you eat, you need this card. The credits effectively lower the fee to $10.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Welcome Offer -->
+            <div style="margin-bottom: 2.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: #94A3B8; font-weight: 600; font-size: 0.875rem; letter-spacing: 0.05em;">
+                    <span class="material-icons" style="font-size: 18px;">card_giftcard</span> WELCOME OFFER
+                </div>
+                <div style="display: flex; align-items: baseline; gap: 1rem;">
+                    <div id="modal-welcome-bonus" style="font-size: 2.5rem; font-weight: 800; color: #0F172A;">60,000 Points</div>
+                    <div id="modal-welcome-desc" style="color: #64748B; font-size: 0.9rem;">after $4k spend in 6 months</div>
+                </div>
+            </div>
+
+            <div style="height: 1px; background: #E2E8F0; margin-bottom: 2.5rem;"></div>
+
+            <!-- Multipliers & Credits Grid -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 3rem;">
+                <!-- Multipliers -->
+                <div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; color: #94A3B8; font-weight: 600; font-size: 0.875rem; letter-spacing: 0.05em;">
+                        <span class="material-icons" style="font-size: 18px;">trending_up</span> MULTIPLIERS
+                    </div>
+                    <div id="modal-multipliers">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Credits -->
+                <div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; color: #94A3B8; font-weight: 600; font-size: 0.875rem; letter-spacing: 0.05em;">
+                        <span class="material-icons" style="font-size: 18px;">verified_user</span> CREDITS
+                    </div>
+                    <div id="modal-credits">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div style="display: flex; gap: 1rem;">
+                <button id="add-wallet-btn" onclick="addToWalletFromModal()" style="flex: 1; background: #0F172A; color: white; border: none; padding: 1rem; border-radius: 12px; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.2s;">
+                    <span id="add-wallet-text">Add to Wallet</span>
+                    <span class="material-icons" id="add-wallet-icon">check</span>
+                    <span class="material-icons" id="add-wallet-loader" style="display: none; animation: spin 1s linear infinite;">hourglass_empty</span>
+                </button>
+                <a id="modal-apply-link" href="#" target="_blank" style="padding: 1rem 2rem; background: white; color: #0F172A; border: 1px solid #E2E8F0; border-radius: 12px; font-weight: 600; font-size: 1rem; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: background 0.2s;">
+                    Apply <span class="material-icons" style="font-size: 18px;">open_in_new</span>
+                </a>
+            </div>
+            
+            <div style="margin-top: 1.5rem; text-align: center; font-size: 0.75rem; color: #94A3B8;">
+                Variable APR: 21.24% - 29.24% Var. Terms apply. Rates as of Oct 2024.
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Success Modal -->
+<div id="success-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(8px); z-index: 2000; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s;">
+    <div style="background: white; width: 90%; max-width: 400px; border-radius: 24px; padding: 3rem 2rem; text-align: center; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); transform: scale(0.95); transition: transform 0.3s;">
+        <div style="width: 64px; height: 64px; background: #10B981; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+            <span class="material-icons" style="font-size: 36px; color: white;">check_circle</span>
+        </div>
+        <h3 style="font-size: 1.5rem; font-weight: 800; color: #0F172A; margin: 0 0 0.5rem 0;">Card Added!</h3>
+        <p style="color: #64748B; margin: 0 0 2rem 0; font-size: 0.95rem;">Successfully added to your wallet</p>
+        <button onclick="closeSuccessModal()" style="width: 100%; background: #0F172A; color: white; border: none; padding: 1rem; border-radius: 12px; font-weight: 600; font-size: 1rem; cursor: pointer;">
+            Got it!
+        </button>
+    </div>
+</div>
+
+<style>
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+</style>
+
+<script>
+let currentModalCardId = null;
+const allCardsData = {{ cards_json|safe }};
+
+function openCardModal(cardId) {
+    currentModalCardId = cardId;
+    const card = allCardsData[cardId];
+    
+    if (!card) {
+        console.error('Card not found:', cardId);
+        return;
+    }
+    
+    // Update card name and issuer
+    document.getElementById('modal-card-name').textContent = card.name || 'Credit Card';
+    document.getElementById('modal-issuer').textContent = card.issuer || 'Issuer';
+    document.getElementById('modal-card-issuer-visual').textContent = (card.issuer || 'CREDIT CARD').toUpperCase();
+    
+    // Update annual fee
+    const annualFee = card.annual_fee || 0;
+    document.getElementById('modal-annual-fee').textContent = '$' + annualFee;
+    
+    // Update card visual background color based on issuer
+    const cardVisual = document.getElementById('modal-card-visual');
+    if (card.issuer && card.issuer.toLowerCase().includes('american express')) {
+        if (card.name.toLowerCase().includes('platinum')) {
+            cardVisual.style.background = 'linear-gradient(135deg, #8B9BA7 0%, #6B7B88 100%)';
+        } else if (card.name.toLowerCase().includes('gold')) {
+            cardVisual.style.background = 'linear-gradient(135deg, #FFD700 0%, #DAA520 100%)';
+        } else {
+            cardVisual.style.background = 'linear-gradient(135deg, #8B9BA7 0%, #6B7B88 100%)';
+        }
+    } else if (card.issuer && card.issuer.toLowerCase().includes('chase')) {
+        cardVisual.style.background = 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)';
+    } else if (card.issuer && card.issuer.toLowerCase().includes('capital one')) {
+        cardVisual.style.background = 'linear-gradient(135deg, #1E293B 0%, #0F172A 100%)';
+    } else {
+        cardVisual.style.background = 'linear-gradient(135deg, #6B7280 0%, #4B5563 100%)';
+    }
+    
+    // Update verdict
+    const verdict = card.verdict || card.description || 'This card offers great value for your spending needs.';
+    document.getElementById('modal-verdict').textContent = verdict;
+    
+    // Update welcome bonus
+    const welcomeBonus = card.welcome_bonus || card.signup_bonus || {};
+    const bonusText = welcomeBonus.amount || '50,000 Points';
+    const bonusDesc = welcomeBonus.requirement || 'after minimum spend';
+    document.getElementById('modal-welcome-bonus').textContent = bonusText;
+    document.getElementById('modal-welcome-desc').textContent = bonusDesc;
+    
+    // Parse benefits from Firestore structure
+    const benefits = card.benefits || [];
+    const earningRates = [];
+    const creditBenefits = [];
+    
+    benefits.forEach(benefit => {
+        const desc = benefit.description || '';
+        const dollarValue = benefit.dollar_value;
+        
+        if (dollarValue && dollarValue > 0) {
+            creditBenefits.push({ name: desc, amount: dollarValue });
+        } else if (desc.match(/\d+x/i)) {
+            const match = desc.match(/(\d+x)\s*(?:total\s*)?(?:points?\s*)?(?:on\s*)?(.+)/i);
+            if (match) {
+                earningRates.push({ rate: match[1], category: match[2].trim() });
+            }
+        }
+    });
+    
+    // Update multipliers
+    const multipliersContainer = document.getElementById('modal-multipliers');
+    multipliersContainer.innerHTML = '';
+    
+    if (earningRates.length > 0) {
+        earningRates.forEach(rate => {
+            const multDiv = document.createElement('div');
+            multDiv.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;';
+            multDiv.innerHTML = `
+                <div style="color: #4B5563; font-size: 0.9rem;">${rate.category}</div>
+                <div style="color: #6366F1; font-weight: 700; font-size: 1rem;">${rate.rate}</div>
+            `;
+            multipliersContainer.appendChild(multDiv);
+        });
+    } else {
+        const multipliers = card.rewards_structure || [];
+        if (Array.isArray(multipliers) && multipliers.length > 0) {
+            multipliers.forEach(mult => {
+                const multDiv = document.createElement('div');
+                multDiv.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;';
+                multDiv.innerHTML = `
+                    <div style="color: #4B5563; font-size: 0.9rem;">${mult.category || mult.name || 'Category'}</div>
+                    <div style="color: #6366F1; font-weight: 700; font-size: 1rem;">${mult.rate || mult.multiplier || '1x'}</div>
+                `;
+                multipliersContainer.appendChild(multDiv);
+            });
+        } else {
+            multipliersContainer.innerHTML = '<div style="color: #9CA3AF; font-size: 0.875rem;">1x on all purchases</div>';
+        }
+    }
+    
+    // Update credits
+    const creditsContainer = document.getElementById('modal-credits');
+    creditsContainer.innerHTML = '';
+    
+    if (creditBenefits.length > 0) {
+        creditBenefits.forEach(credit => {
+            const creditDiv = document.createElement('div');
+            creditDiv.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;';
+            creditDiv.innerHTML = `
+                <div style="color: #4B5563; font-size: 0.9rem;">${credit.name}</div>
+                <div style="color: #10B981; font-weight: 700; font-size: 1rem;">$${credit.amount}</div>
+            `;
+            creditsContainer.appendChild(creditDiv);
+        });
+    } else {
+        const credits = card.credits || [];
+        if (Array.isArray(credits) && credits.length > 0) {
+            credits.forEach(credit => {
+                const creditDiv = document.createElement('div');
+                creditDiv.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;';
+                creditDiv.innerHTML = `
+                    <div style="color: #4B5563; font-size: 0.9rem;">${credit.name || credit.category || 'Credit'}</div>
+                    <div style="color: #10B981; font-weight: 700; font-size: 1rem;">$${credit.amount || credit.value || '0'}</div>
+                `;
+                creditsContainer.appendChild(creditDiv);
+            });
+        } else {
+            creditsContainer.innerHTML = '<div style="color: #9CA3AF; font-size: 0.875rem;">No annual credits</div>';
+        }
+    }
+    
+    // Update apply link
+    const applyLink = document.getElementById('modal-apply-link');
+    applyLink.href = card.application_url || '#';
+    
+    // Show modal with animation
+    const modal = document.getElementById('card-modal');
+    modal.style.display = 'flex';
+    setTimeout(() => {
+        modal.style.opacity = '1';
+        modal.querySelector('.modal-content').style.transform = 'scale(1)';
+    }, 10);
+}
+
+function closeCardModal() {
+    const modal = document.getElementById('card-modal');
+    modal.style.opacity = '0';
+    modal.querySelector('.modal-content').style.transform = 'scale(0.95)';
+    setTimeout(() => {
+        modal.style.display = 'none';
+    }, 300);
+    currentModalCardId = null;
+}
+
+function addToWalletFromModal() {
+    if (!currentModalCardId) return;
+    
+    // Show loader
+    const btn = document.getElementById('add-wallet-btn');
+    const text = document.getElementById('add-wallet-text');
+    const icon = document.getElementById('add-wallet-icon');
+    const loader = document.getElementById('add-wallet-loader');
+    
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
+    btn.style.cursor = 'not-allowed';
+    text.textContent = 'Adding...';
+    icon.style.display = 'none';
+    loader.style.display = 'inline-block';
+    
+    // Submit form
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = `/dashboard/add-card/${currentModalCardId}/`;
+    
+    const csrfInput = document.createElement('input');
+    csrfInput.type = 'hidden';
+    csrfInput.name = 'csrfmiddlewaretoken';
+    csrfInput.value = getCookie('csrftoken');
+    form.appendChild(csrfInput);
+    
+    // Add hidden input for AJAX detection
+    const ajaxInput = document.createElement('input');
+    ajaxInput.type = 'hidden';
+    ajaxInput.name = 'ajax';
+    ajaxInput.value = '1';
+    form.appendChild(ajaxInput);
+    
+    document.body.appendChild(form);
+    
+    // Use fetch to submit as AJAX
+    const formData = new FormData(form);
+    
+    fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+        // Remove form
+        document.body.removeChild(form);
+        
+        // Reset button
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
+        text.textContent = 'Add to Wallet';
+        icon.style.display = 'inline-block';
+        loader.style.display = 'none';
+        
+        if (data.success) {
+            closeCardModal();
+            showSuccessModal();
+        } else {
+            alert(data.error || 'Failed to add card');
+        }
+    })
+    .catch(err => {
+        // Remove form
+        if (document.body.contains(form)) {
+            document.body.removeChild(form);
+        }
+        
+        // Reset button
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
+        text.textContent = 'Add to Wallet';
+        icon.style.display = 'inline-block';
+        loader.style.display = 'none';
+        
+        console.error('Error adding card:', err);
+        alert('Failed to add card to wallet');
+    });
+}
+
+function showSuccessModal() {
+    const modal = document.getElementById('success-modal');
+    modal.style.display = 'flex';
+    setTimeout(() => {
+        modal.style.opacity = '1';
+        modal.querySelector('div > div').style.transform = 'scale(1)';
+    }, 10);
+}
+
+function closeSuccessModal() {
+    const modal = document.getElementById('success-modal');
+    modal.style.opacity = '0';
+    setTimeout(() => {
+        modal.style.display = 'none';
+        // Reload page to show updated wallet
+        window.location.reload();
+    }, 300);
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Close modal on background click
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('card-modal');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeCardModal();
+            }
+        });
+    }
+});
+</script>

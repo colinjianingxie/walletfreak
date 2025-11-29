@@ -142,46 +142,7 @@ class FirestoreService:
         return user.get('is_super_staff', False) or user.get('is_editor', False)
 
     # Personality Assignment Methods
-    def calculate_personality_from_wallet(self, uid):
-        """
-        Calculate the best-matching personality based on user's active cards.
-        Returns a tuple of (personality_id, score, total_cards) or (None, 0, 0) if no match.
-        """
-        # Get user's active cards
-        active_cards = self.get_user_cards(uid, status='active')
-        if not active_cards:
-            return None, 0, 0
-        
-        # Get all personalities
-        personalities = self.get_personalities()
-        if not personalities:
-            return None, 0, 0
-        
-        # Build card_id set from user's wallet
-        user_card_ids = {card['card_id'] for card in active_cards}
-        
-        # Calculate scores for each personality
-        personality_scores = {}
-        for personality in personalities:
-            score = 0
-            recommended_cards = personality.get('recommended_cards', [])
-            
-            # Count how many of this personality's recommended cards the user has
-            for card_id in recommended_cards:
-                if card_id in user_card_ids:
-                    score += 1
-            
-            if score > 0:
-                personality_scores[personality['id']] = score
-        
-        # Find personality with highest score
-        if not personality_scores:
-            return None, 0, len(user_card_ids)
-        
-        best_personality_id = max(personality_scores, key=personality_scores.get)
-        best_score = personality_scores[best_personality_id]
-        
-        return best_personality_id, best_score, len(user_card_ids)
+
     
     def update_user_personality(self, uid, personality_id, score=None):
         """
@@ -223,20 +184,6 @@ class FirestoreService:
         
         return personality
     
-    def recalculate_and_update_personality(self, uid):
-        """
-        Convenience method to recalculate and update user's personality in one call.
-        Returns the assigned personality object or None.
-        """
-        personality_id, score, total_cards = self.calculate_personality_from_wallet(uid)
-        
-        if personality_id:
-            self.update_user_personality(uid, personality_id, score)
-            return self.get_user_assigned_personality(uid)
-        else:
-            # Clear personality if user has no cards or no matches
-            self.update_user_personality(uid, None, 0)
-            return None
     
     # Personality Survey Methods
     def save_personality_survey(self, uid, personality_id, responses, card_ids, is_published=False):
@@ -293,83 +240,7 @@ class FirestoreService:
             return True
         return False
     
-    def get_crowd_sourced_personalities(self, card_ids):
-        """
-        Get crowd-sourced personality data based on card combinations.
-        Returns a dict of personality_id -> count of matching surveys.
-        """
-        from google.cloud.firestore import FieldFilter
-        
-        # Get all published surveys
-        query = self.db.collection('personality_surveys').where(
-            filter=FieldFilter('is_published', '==', True)
-        )
-        
-        personality_counts = {}
-        card_id_set = set(card_ids)
-        
-        for doc in query.stream():
-            survey = doc.to_dict()
-            survey_card_ids = set(survey.get('card_ids', []))
-            
-            # Calculate overlap between user's cards and survey cards
-            overlap = len(card_id_set & survey_card_ids)
-            
-            # Only count if there's significant overlap (at least 50% of user's cards)
-            if overlap >= len(card_id_set) * 0.5:
-                personality_id = survey.get('personality_id')
-                if personality_id:
-                    personality_counts[personality_id] = personality_counts.get(personality_id, 0) + 1
-        
-        return personality_counts
     
-    def get_suggested_personality(self, uid):
-        """
-        Get personality suggestion based on both card matching and crowd-sourced data.
-        Returns a dict with personality info and confidence score.
-        """
-        # Get user's active cards
-        active_cards = self.get_user_cards(uid, status='active')
-        if not active_cards:
-            return None
-        
-        card_ids = [card['card_id'] for card in active_cards]
-        
-        # Method 1: Card-based matching (existing logic)
-        card_personality_id, card_score, total_cards = self.calculate_personality_from_wallet(uid)
-        
-        # Method 2: Crowd-sourced matching
-        crowd_personalities = self.get_crowd_sourced_personalities(card_ids)
-        
-        # Combine both methods
-        combined_scores = {}
-        
-        # Add card-based score (weight: 60%)
-        if card_personality_id:
-            combined_scores[card_personality_id] = card_score * 0.6
-        
-        # Add crowd-sourced scores (weight: 40%)
-        for personality_id, count in crowd_personalities.items():
-            if personality_id in combined_scores:
-                combined_scores[personality_id] += count * 0.4
-            else:
-                combined_scores[personality_id] = count * 0.4
-        
-        if not combined_scores:
-            return None
-        
-        # Get best match
-        best_personality_id = max(combined_scores, key=combined_scores.get)
-        best_score = combined_scores[best_personality_id]
-        
-        # Get personality details
-        personality = self.get_personality_by_slug(best_personality_id)
-        if personality:
-            personality['suggested_score'] = best_score
-            personality['card_match_score'] = card_score if card_personality_id == best_personality_id else 0
-            personality['crowd_match_count'] = crowd_personalities.get(best_personality_id, 0)
-        
-        return personality
 
     # Blog Methods
     def get_blogs(self, status=None, limit=None):

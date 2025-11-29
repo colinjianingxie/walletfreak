@@ -40,8 +40,10 @@ def parse_benefits_csv(csv_path):
             card_name = row['CardName'].strip()
             annual_fee_str = row['AnnualFee'].strip()
             benefit_desc = row['BenefitDescription'].strip()
-            category = row['Category'].strip()
+            additional_details = row.get('AdditionalDetails', '').strip()
+            category = row['BenefitCategory'].strip()
             dollar_value_str = row['DollarValue'].strip()
+            enrollment_required_str = row.get('EnrollmentRequired', 'False').strip()
             effective_date = row['EffectiveDate'].strip()
             
             # Parse annual fee
@@ -59,6 +61,9 @@ def parse_benefits_csv(csv_path):
                     dollar_value = float(dollar_value_str)
                 except ValueError:
                     dollar_value = None
+
+            # Parse enrollment required
+            enrollment_required = enrollment_required_str.lower() == 'true'
             
             # Initialize card if first time seeing it
             if not cards_dict[card_name]['name']:
@@ -69,8 +74,10 @@ def parse_benefits_csv(csv_path):
             # Add benefit
             benefit = {
                 'description': benefit_desc,
+                'additional_details': additional_details,
                 'category': category,
                 'dollar_value': dollar_value,
+                'enrollment_required': enrollment_required,
                 'effective_date': effective_date
             }
             cards_dict[card_name]['benefits'].append(benefit)

@@ -20,16 +20,37 @@ def personality_list(request):
             except Exception as e:
                 print(f"Warning: Failed to fetch user personality: {e}")
     
-    # Convert personalities to JSON for JavaScript
+    # Fetch all cards for the modal
+    all_cards_dict = {}
+    try:
+        all_cards = db.get_cards()
+        for card in all_cards:
+            # Add some derived fields for the modal
+            # Calculate rough value estimates if not present
+            if 'annual_fee' not in card:
+                card['annual_fee'] = 0
+            
+            # Ensure benefits is a list
+            if 'benefits' not in card:
+                card['benefits'] = []
+                
+            all_cards_dict[card['id']] = card
+    except Exception as e:
+        print(f"Warning: Failed to fetch cards for modal: {e}")
+
+    # Convert personalities and cards to JSON for JavaScript
     personalities_json = json.dumps(personalities)
+    cards_json = json.dumps(all_cards_dict, default=str) # default=str to handle dates/objects
     
     return render(request, 'cards/personality_list.html', {
         'personalities': personalities,
         'personalities_json': personalities_json,
+        'cards_json': cards_json,
         'assigned_personality': assigned_personality
     })
 
 def personality_detail(request, personality_id):
+    import json
     try:
         personality = db.get_personality_by_slug(personality_id)
     except Exception:
@@ -40,25 +61,77 @@ def personality_detail(request, personality_id):
     
     # Fetch recommended cards
     recommended_cards = []
+    total_annual_fees = 0
+    
+    # Categories map for deriving card categories
+    categories_map = {
+        'Travel': ['travel', 'flight', 'hotel', 'mile', 'vacation', 'rental car', 'transit'],
+        'Hotel': ['hotel', 'marriott', 'hilton', 'hyatt', 'ihg'],
+        'Flights': ['flight', 'airline', 'delta', 'united', 'southwest', 'british airways', 'avios', 'aeroplan'],
+        'Dining': ['dining', 'restaurant', 'food', 'eats'],
+        'Groceries': ['groceries', 'supermarket', 'whole foods'],
+        'Gas': ['gas'],
+        'Student': ['student'],
+        'Cash Back': ['cash back', 'cash rewards'],
+        'Luxury': ['lounge', 'luxury', 'platinum', 'reserve']
+    }
+    
     try:
         for card_id in personality.get('recommended_cards', []):
             try:
                 card = db.get_card_by_slug(card_id)
                 if card:
+                    # Calculate annual fees
+                    annual_fee = card.get('annual_fee', 0)
+                    total_annual_fees += annual_fee
+                    
+                    # Derive categories for the card
+                    card_cats = set()
+                    text_to_check = (card.get('name', '') + ' ' + str(card.get('rewards_structure', '')) + ' ' + str(card.get('benefits', ''))).lower()
+                    
+                    for cat, keywords in categories_map.items():
+                        if any(k in text_to_check for k in keywords):
+                            card_cats.add(cat)
+                    
+                    # Special cases
+                    if annual_fee == 0:
+                        card_cats.add('No Annual Fee')
+                    
+                    card['categories'] = sorted(list(card_cats))
                     recommended_cards.append(card)
             except Exception:
                 continue
     except Exception:
         pass
-            
+    
+    # Calculate financial metrics (using rough estimates)
+    # These could be made more sophisticated based on actual card benefits
+    credit_value = total_annual_fees * 1.15  # Rough estimate: 115% of fees back in credits
+    points_value = total_annual_fees * 1.8   # Rough estimate: 180% of fees in points value
+    net_value = credit_value + points_value - total_annual_fees
+    
+    # Create cards dictionary for modal
+    all_cards_dict = {}
+    for card in recommended_cards:
+        all_cards_dict[card['id']] = card
+    
+    cards_json = json.dumps(all_cards_dict, default=str)
+    
     import sys
     sys.stderr.write(f"DEBUG: Fetched personality for {personality_id}: {personality}\n")
+    
     return render(request, 'cards/personality_detail.html', {
         'personality': personality,
-        'recommended_cards': recommended_cards
+        'recommended_cards': recommended_cards,
+        'cards_json': cards_json,
+        'total_annual_fees': int(total_annual_fees),
+        'credit_value': int(credit_value),
+        'points_value': int(points_value),
+        'net_value': int(net_value)
     })
 
 def card_list(request):
+    import json
     try:
         all_cards = db.get_cards()
     except Exception as e:
@@ -163,8 +236,16 @@ def card_list(request):
     elif wallet_filter == 'out':
         filtered_cards = [c for c in filtered_cards if not c.get('in_wallet', False)]
 
+    # Create cards dictionary for modal
+    all_cards_dict = {}
+    for card in all_cards:
+        all_cards_dict[card['id']] = card
+    
+    cards_json = json.dumps(all_cards_dict, default=str)
+
     context = {
         'cards': filtered_cards,
+        'cards_json': cards_json,
         'issuers': issuers,
         'categories': all_categories,
         'selected_issuers': selected_issuers,

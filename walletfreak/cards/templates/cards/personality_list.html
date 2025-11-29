@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <!-- Personalities Header with Quiz -->
@@ -25,24 +26,71 @@
         </p>
 
         <!-- Quiz Container -->
-        <div id="quiz-container" style="max-width: 1200px; margin: 0 auto;">
+        <div id="quiz-container" style="max-width: 800px; margin: 0 auto;">
             <!-- Question Text -->
-            <h2 id="question-text" style="font-size: 1.25rem; font-weight: 500; margin-bottom: 2.5rem; color: rgba(255,255,255,0.9); line-height: 1.4;"></h2>
+            <h2 id="question-text" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 3rem; color: white; line-height: 1.4;"></h2>
 
-            <!-- Options Container - 5 Cards in a Row -->
-            <div id="options-container" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-bottom: 3rem;">
-                <!-- Options will be injected here -->
+            <!-- Slider Container -->
+            <div id="slider-container" style="margin-bottom: 4rem; padding: 0 2rem;">
+                <input type="range" min="1" max="5" value="3" class="slider" id="rating-slider">
+                <div style="display: flex; justify-content: space-between; margin-top: 1rem; color: rgba(255,255,255,0.6); font-size: 0.9rem;">
+                    <span>Not at all (1)</span>
+                    <span>Somewhat (3)</span>
+                    <span>Absolutely (5)</span>
+                </div>
+                <div id="current-rating" style="margin-top: 1.5rem; font-size: 2rem; font-weight: 700; color: #a78bfa;">3</div>
             </div>
 
             <!-- Next Button -->
-            <button id="next-btn" class="btn" style="display: none; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white; padding: 1rem 3rem; font-size: 1.1rem; font-weight: 600; box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4); border: none;" onclick="nextQuestion()">
-                Continue →
+            <button id="next-btn" class="btn" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white; padding: 1rem 3rem; font-size: 1.1rem; font-weight: 600; box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4); border: none; border-radius: 99px; cursor: pointer; transition: transform 0.2s;" onclick="nextQuestion()">
+                Next →
             </button>
         </div>
     </div>
 </section>
 
 <style>
+    .slider {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 12px;
+        border-radius: 6px;
+        background: rgba(255,255,255,0.1);
+        outline: none;
+        transition: opacity .2s;
+    }
+
+    .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #8b5cf6;
+        cursor: pointer;
+        box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+        border: 4px solid #1e293b;
+    }
+
+    .slider::-moz-range-thumb {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #8b5cf6;
+        cursor: pointer;
+        box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+        border: 4px solid #1e293b;
+    }
+    
+    #next-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 24px rgba(139, 92, 246, 0.5) !important;
+    }
+    
+    #next-btn:active {
+        transform: translateY(0);
+    }
+    
     .quiz-card:hover {
         background: rgba(255,255,255,0.1) !important;
         transform: translateY(-4px);
@@ -99,14 +147,8 @@
             data-desc="{{ personality.description|lower }}" data-tag="{{ personality.tagline|default:''|lower }}">
             <div style="background: white; border-radius: 20px; padding: 2.5rem; border: 1px solid #E5E7EB; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: all 0.3s; display: grid; grid-template-columns: auto 1fr auto; gap: 2rem; align-items: center;" class="personality-card">
                 <!-- Left: Avatar -->
-                <div style="width: 100px; height: 100px; background: linear-gradient(135deg, {% if 'jetsetter' in personality.id|lower %}#06B6D4{% elif 'freak' in personality.id|lower or 'wallet freak' in personality.name|lower %}#A855F7{% elif 'minimalist' in personality.id|lower or 'hunter' in personality.id|lower %}#10B981{% else %}#F59E0B{% endif %} 0%, {% if 'jetsetter' in personality.id|lower %}#0EA5E9{% elif 'freak' in personality.id|lower or 'wallet freak' in personality.name|lower %}#9333EA{% elif 'minimalist' in personality.id|lower or 'hunter' in personality.id|lower %}#059669{% else %}#D97706{% endif %} 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); flex-shrink: 0;">
-                    {% if 'jetsetter' in personality.id|lower %}<span class="material-icons" style="font-size: 48px;">flight</span>
-                    {% elif 'freak' in personality.id|lower or 'wallet freak' in personality.name|lower %}<span class="material-icons" style="font-size: 48px;">psychology</span>
-                    {% elif 'minimalist' in personality.id|lower %}<span class="material-icons" style="font-size: 48px;">attach_money</span>
-                    {% elif 'foodie' in personality.id|lower %}<span class="material-icons" style="font-size: 48px;">restaurant</span>
-                    {% elif 'hunter' in personality.id|lower %}<span class="material-icons" style="font-size: 48px;">gps_fixed</span>
-                    {% elif 'strategist' in personality.id|lower or 'optimizer' in personality.id|lower %}<span class="material-icons" style="font-size: 48px;">analytics</span>
-                    {% else %}<span class="material-icons" style="font-size: 48px;">credit_card</span>{% endif %}
+                <div style="width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); flex-shrink: 0; backdrop-filter: blur(10px); border: 1px solid rgba(0,0,0,0.05);">
+                    <img src="{% static 'img/personalities/'|add:personality.id|add:'.svg' %}" alt="{{ personality.name }}" style="width: 100%; height: 100%; object-fit: contain; padding: 15px;">
                 </div>
 
                 <!-- Middle: Info -->
@@ -127,7 +169,7 @@
                     </p>
 
                     <!-- Tags -->
-                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
                         {% if personality.tagline %}
                         <span style="background: #F3F4F6; color: #6366F1; font-size: 0.75rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.05em;">
                             #{{ personality.tagline|upper|truncatewords:2 }}
@@ -146,12 +188,17 @@
                         <span style="background: #F3F4F6; color: #6366F1; font-size: 0.75rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px;">#NOFEE</span>
                         {% endif %}
                     </div>
+
+                    <!-- View Full Strategy Link (Moved Inside) -->
+                    <a href="{% url 'personality_detail' personality.id %}" style="display: inline-flex; align-items: center; gap: 0.5rem; color: #6366F1; font-weight: 600; font-size: 0.9rem; text-decoration: none;">
+                        View Full Strategy <span class="material-icons" style="font-size: 16px;">arrow_forward</span>
+                    </a>
                 </div>
 
                 <!-- Right: Card Stack -->
-                <div style="position: relative; width: 280px; height: 200px; flex-shrink: 0;">
+                <div style="position: relative; width: 280px; height: 200px; flex-shrink: 0; cursor: pointer;" onclick="event.preventDefault(); openCardModal('{{ personality.recommended_cards.0 }}');">
                     <!-- Card 1 (Back) - Amex/Gray -->
-                    <div style="position: absolute; top: 0; left: 0; width: 240px; height: 150px; background: linear-gradient(135deg, #8B9BA7 0%, #6B7B88 100%); border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); transform: rotate(-8deg); z-index: 1;">
+                    <div style="position: absolute; top: 0; left: 0; width: 240px; height: 150px; background: linear-gradient(135deg, #8B9BA7 0%, #6B7B88 100%); border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); transform: rotate(-8deg); z-index: 1; transition: transform 0.3s;">
                         <div style="padding: 1rem; display: flex; flex-direction: column; justify-content: space-between; height: 100%; color: white;">
                             <div style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;">AMEX</div>
                             <div style="font-size: 0.9rem; letter-spacing: 0.1em;">•••• •••• •••• 1323</div>
@@ -166,7 +213,7 @@
                     </div>
                     
                     <!-- Card 2 (Middle) - Chase Blue -->
-                    <div style="position: absolute; top: 20px; left: 30px; width: 240px; height: 150px; background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%); border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); transform: rotate(-4deg); z-index: 2;">
+                    <div style="position: absolute; top: 20px; left: 30px; width: 240px; height: 150px; background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%); border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); transform: rotate(-4deg); z-index: 2; transition: transform 0.3s;">
                         <div style="padding: 1rem; display: flex; flex-direction: column; justify-content: space-between; height: 100%; color: white;">
                             <div style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;">CHASE</div>
                             <div style="font-size: 0.9rem; letter-spacing: 0.1em;">•••• •••• •••• 4242</div>
@@ -181,7 +228,7 @@
                     </div>
                     
                     <!-- Card 3 (Front) - Capital One Dark -->
-                    <div style="position: absolute; top: 40px; left: 60px; width: 240px; height: 150px; background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%); border-radius: 12px; box-shadow: 0 12px 24px rgba(0,0,0,0.2); transform: rotate(2deg); z-index: 3;">
+                    <div style="position: absolute; top: 40px; left: 60px; width: 240px; height: 150px; background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%); border-radius: 12px; box-shadow: 0 12px 24px rgba(0,0,0,0.2); transform: rotate(2deg); z-index: 3; transition: transform 0.3s;">
                         <div style="padding: 1rem; display: flex; flex-direction: column; justify-content: space-between; height: 100%; color: white;">
                             <div style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;">CAPITAL ONE</div>
                             <div style="font-size: 0.9rem; letter-spacing: 0.1em;">•••• •••• •••• 4242</div>
@@ -195,11 +242,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- View Full Strategy Link -->
-            <div style="text-align: right; margin-top: 1rem;">
-                <span style="color: #6366F1; font-weight: 600; font-size: 0.9rem;">View Full Strategy →</span>
             </div>
         </a>
         {% empty %}
@@ -218,234 +260,107 @@
         <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">No personalities found</h3>
         <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Try adjusting your search terms or take the quiz to
             find your match.</p>
-        <a href="{% url 'quiz' %}" class="btn btn-primary">Take the Quiz</a>
     </div>
 </section>
 
+{% include 'cards/includes/card_modal.html' %}
+
 <script>
-    // Get personalities data from Django template
+    // Personalities data for quiz
     const personalities = {{ personalities_json|safe }};
-    
-    // Create a mapping from quiz types to actual personality IDs
-    const personalityMapping = {};
-    personalities.forEach(p => {
-        const name = p.name.toLowerCase();
-        const desc = (p.description || '').toLowerCase();
-        const tagline = (p.tagline || '').toLowerCase();
-        
-        // Map based on keywords in personality data
-        if (name.includes('jetsetter') || name.includes('travel') || desc.includes('travel') || desc.includes('flight')) {
-            personalityMapping['jetsetter'] = p.id;
-        }
-        if (name.includes('minimalist') || name.includes('cash') || desc.includes('cash back') || tagline.includes('simple')) {
-            personalityMapping['minimalist'] = p.id;
-        }
-        if (name.includes('foodie') || name.includes('dining') || desc.includes('dining') || desc.includes('restaurant')) {
-            personalityMapping['foodie'] = p.id;
-        }
-        if (name.includes('strategist') || name.includes('optimizer') || name.includes('maximize') || desc.includes('optimize')) {
-            personalityMapping['strategist'] = p.id;
-            personalityMapping['optimizer'] = p.id;
-        }
-        // Fallback: use first personality as default
-        if (!personalityMapping['default']) {
-            personalityMapping['default'] = p.id;
-        }
-    });
-    
-    // Quiz functionality
+
     const questions = [
         {
-            question: "What describes you best when it comes to credit cards? (Select all that apply)",
-            options: [
-                { text: "I live for free flights & lounges", icon: "flight", type: "jetsetter" },
-                { text: "Cash is king. Fees are evil.", icon: "attach_money", type: "minimalist" },
-                { text: "Dining out & VIP events", icon: "restaurant", type: "foodie" },
-                { text: "Maximize ROI. Optimize everything", icon: "analytics", type: "strategist" },
-                { text: "I have a spreadsheet for everything", icon: "flash_on", type: "optimizer" }
-            ]
+            category: "travel",
+            text: "How important are travel perks like flights, hotels, and lounge access?",
+            icon: "✈️"
         },
         {
-            question: "How do you feel about annual fees? (Select all that apply)",
-            options: [
-                { text: "Worth it for premium travel perks", icon: "flight", type: "jetsetter" },
-                { text: "I avoid them at all costs", icon: "block", type: "minimalist" },
-                { text: "Fine if dining credits offset the cost", icon: "restaurant", type: "foodie" },
-                { text: "I calculate the exact ROI", icon: "analytics", type: "strategist" },
-                { text: "I track every dollar of value", icon: "flash_on", type: "optimizer" }
-            ]
+            category: "dining",
+            text: "How much do you value rewards on dining, takeout, and food delivery?",
+            icon: "🍽️"
         },
         {
-            question: "What's your biggest spending category? (Select all that apply)",
-            options: [
-                { text: "Travel: flights, hotels, experiences", icon: "flight", type: "jetsetter" },
-                { text: "Essentials: groceries and gas", icon: "shopping_cart", type: "minimalist" },
-                { text: "Restaurants and food delivery", icon: "restaurant", type: "foodie" },
-                { text: "Everything - I optimize by category", icon: "analytics", type: "strategist" },
-                { text: "I diversify across multiple cards", icon: "flash_on", type: "optimizer" }
-            ]
+            category: "shopping",
+            text: "How often do you shop for clothes, electronics, or everyday items?",
+            icon: "🛍️"
+        },
+        {
+            category: "cashback",
+            text: "Do you prefer simple cash back over complicated points systems?",
+            icon: "💵"
+        },
+        {
+            category: "luxury",
+            text: "Are you willing to pay high annual fees for premium status and luxury benefits?",
+            icon: "💎"
         }
     ];
 
     let currentQuestion = 0;
-    const scores = {};
-    const selectedOptions = new Set();
+    const userPreferences = {};
+
+    const slider = document.getElementById('rating-slider');
+    const ratingDisplay = document.getElementById('current-rating');
+
+    slider.oninput = function() {
+        ratingDisplay.textContent = this.value;
+    }
 
     function loadQuestion() {
         const q = questions[currentQuestion];
-        document.getElementById('question-text').innerText = q.question;
-        const optionsContainer = document.getElementById('options-container');
-        optionsContainer.innerHTML = '';
-        document.getElementById('next-btn').style.display = 'none';
-        selectedOptions.clear();
-
-        q.options.forEach((opt, index) => {
-            const optionCard = document.createElement('div');
-            optionCard.className = 'option-card';
-            optionCard.dataset.value = opt.type;
-            optionCard.style.cssText = `
-                background: rgba(255,255,255,0.1);
-                border: 2px solid rgba(255,255,255,0.2);
-                border-radius: 16px;
-                padding: 2rem 1rem;
-                cursor: pointer;
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-                min-height: 180px;
-                backdrop-filter: blur(10px);
-            `;
-
-            const iconSpan = document.createElement('div');
-            iconSpan.className = 'material-icons';
-            iconSpan.style.cssText = `
-                font-size: 3rem;
-                margin-bottom: 1rem;
-            `;
-            iconSpan.textContent = opt.icon;
-
-            const textSpan = document.createElement('div');
-            textSpan.style.cssText = `
-                color: rgba(255,255,255,0.95);
-                font-size: 0.95rem;
-                font-weight: 600;
-                line-height: 1.4;
-            `;
-            textSpan.textContent = opt.text;
-
-            optionCard.appendChild(iconSpan);
-            optionCard.appendChild(textSpan);
-
-            // Click handler for multiple selection
-            optionCard.onclick = () => {
-                const isSelected = optionCard.classList.contains('selected');
-                
-                if (isSelected) {
-                    // Deselect
-                    optionCard.classList.remove('selected');
-                    optionCard.style.background = 'rgba(255,255,255,0.1)';
-                    optionCard.style.borderColor = 'rgba(255,255,255,0.2)';
-                    optionCard.style.transform = 'scale(1)';
-                    optionCard.style.boxShadow = 'none';
-                    selectedOptions.delete(opt.type);
-                } else {
-                    // Select
-                    optionCard.classList.add('selected');
-                    optionCard.style.background = 'linear-gradient(135deg, rgba(139, 92, 246, 0.5), rgba(124, 58, 237, 0.5))';
-                    optionCard.style.borderColor = '#a78bfa';
-                    optionCard.style.transform = 'scale(1.05)';
-                    optionCard.style.boxShadow = '0 8px 24px rgba(139, 92, 246, 0.5)';
-                    selectedOptions.add(opt.type);
-                }
-
-                // Show next button if at least one option is selected
-                if (selectedOptions.size > 0) {
-                    document.getElementById('next-btn').style.display = 'inline-block';
-                } else {
-                    document.getElementById('next-btn').style.display = 'none';
-                }
-            };
-
-            optionsContainer.appendChild(optionCard);
-        });
+        document.getElementById('question-text').innerHTML = `<span style="display:block; font-size: 3rem; margin-bottom: 1rem;">${q.icon}</span>${q.text}`;
+        
+        // Reset slider to middle
+        slider.value = 3;
+        ratingDisplay.textContent = 3;
     }
 
     function nextQuestion() {
-        // Collect all selected answers
-        selectedOptions.forEach(type => {
-            scores[type] = (scores[type] || 0) + 1;
-        });
+        // Save answer
+        const q = questions[currentQuestion];
+        userPreferences[q.category] = parseInt(slider.value);
 
         currentQuestion++;
 
         if (currentQuestion < questions.length) {
             loadQuestion();
         } else {
-            // Calculate personality
-            let maxScore = 0;
-            let personality = 'jetsetter'; // default
-
-            for (const [type, score] of Object.entries(scores)) {
-                if (score > maxScore) {
-                    maxScore = score;
-                    personality = type;
-                }
-            }
-
-            // Map quiz result to actual personality ID
-            const actualPersonalityId = personalityMapping[personality] || personalityMapping['default'] || personalities[0]?.id;
-            
-            if (actualPersonalityId) {
-                // Redirect to personality detail page with correct URL
-                window.location.href = `/personalities/${actualPersonalityId}/`;
-            } else {
-                // No personalities available, stay on page
-                alert('No personalities available yet. Please check back later!');
-                location.reload();
-            }
+            calculateResult();
         }
     }
 
-    // Load first question on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        loadQuestion();
-    });
+    function calculateResult() {
+        let bestMatch = null;
+        let minDistance = Infinity;
 
-    // Search functionality (if search input exists)
-    const searchInput = document.getElementById('personality-search');
-    if (searchInput) {
-        searchInput.addEventListener('input', function (e) {
-            const searchTerm = e.target.value.toLowerCase();
-            const cards = document.querySelectorAll('.personality-card-link');
-            let hasVisible = false;
+        personalities.forEach(p => {
+            let distance = 0;
+            // Calculate Euclidean distance
+            for (const [category, value] of Object.entries(userPreferences)) {
+                const pValue = p.preferences[category] || 3; // Default to 3 if missing
+                distance += Math.pow(value - pValue, 2);
+            }
+            distance = Math.sqrt(distance);
 
-            cards.forEach(card => {
-                const name = card.dataset.name;
-                const desc = card.dataset.desc;
-                const tag = card.dataset.tag;
-
-                if (name.includes(searchTerm) || desc.includes(searchTerm) || tag.includes(searchTerm)) {
-                    card.style.display = 'block';
-                    hasVisible = true;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-
-            const noResults = document.getElementById('no-results');
-            const grid = document.getElementById('personalities-grid');
-
-            if (!hasVisible && cards.length > 0) {
-                noResults.style.display = 'block';
-                grid.style.display = 'none';
-            } else {
-                noResults.style.display = 'none';
-                grid.style.display = 'grid';
+            if (distance < minDistance) {
+                minDistance = distance;
+                bestMatch = p;
             }
         });
+
+        if (bestMatch) {
+            // Redirect to personality detail page
+            window.location.href = `/personalities/${bestMatch.id}/`;
+        } else {
+            // Fallback
+            alert('No matching personality found. Please try again.');
+            location.reload();
+        }
     }
+
+    // Load first question
+    loadQuestion();
 </script>
 
 <style>

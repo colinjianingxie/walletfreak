@@ -36,6 +36,7 @@ class Command(BaseCommand):
                 'name': 'Rewards Guru',
                 'tagline': 'The Strategist',
                 'description': 'Treats credit cards like a competitive game, maintaining spreadsheets to maximize points, bonuses, and benefits across multiple cards; strategically churns for value without unnecessary fees.',
+                'preferences': {'travel': 5, 'dining': 5, 'shopping': 3, 'cashback': 2, 'luxury': 4},
                 'recommended_names': [
                     'Chase Sapphire Reserve®',
                     'American Express® Gold Card',
@@ -47,6 +48,7 @@ class Command(BaseCommand):
                 'name': 'Lifestyle Fashionista',
                 'tagline': 'The Trendsetter',
                 'description': 'Prioritizes cards that align with a stylish, everyday lifestyle, focusing on aesthetics, shopping protections, and rewards for fashion, coffee, and daily indulgences.',
+                'preferences': {'travel': 4, 'dining': 5, 'shopping': 5, 'cashback': 3, 'luxury': 4},
                 'recommended_names': [
                     'American Express® Gold Card',
                     'Capital One Savor Cash Rewards Credit Card',
@@ -58,6 +60,7 @@ class Command(BaseCommand):
                 'name': 'Beginner Dabbler',
                 'tagline': 'The Starter',
                 'description': 'New to rewards, wants simple travel perks without complexity; shops at premium stores like Whole Foods and prefers one versatile card over a wallet full.',
+                'preferences': {'travel': 3, 'dining': 3, 'shopping': 3, 'cashback': 3, 'luxury': 2},
                 'recommended_names': [
                     'Chase Sapphire Preferred® Card',
                     'Capital One Venture Rewards Credit Card',
@@ -69,6 +72,7 @@ class Command(BaseCommand):
                 'name': 'Cashback Enthusiast',
                 'tagline': 'The Pragmatist',
                 'description': 'Dismisses points as gimmicks; demands straightforward cash back deposited directly, with zero annual fees and high rates on everyday spending.',
+                'preferences': {'travel': 1, 'dining': 3, 'shopping': 3, 'cashback': 5, 'luxury': 1},
                 'recommended_names': [
                     'Wells Fargo Active Cash® Card',
                     'Citi Double Cash® Card',
@@ -80,6 +84,7 @@ class Command(BaseCommand):
                 'name': 'Budget Traveler',
                 'tagline': 'The Explorer',
                 'description': 'Loves travel but sticks to practical, affordable options; seeks flexible points, no-frills perks like hotel credits, and low-to-moderate fees without luxury excess.',
+                'preferences': {'travel': 5, 'dining': 3, 'shopping': 2, 'cashback': 3, 'luxury': 2},
                 'recommended_names': [
                     'Capital One Venture Rewards Credit Card',
                     'Chase Freedom Unlimited®',
@@ -91,6 +96,7 @@ class Command(BaseCommand):
                 'name': 'Simple Minimalist',
                 'tagline': 'The Essentialist',
                 'description': 'Favors one reliable card for clean, hassle-free use; pays off balances monthly, values simplicity over rewards, and avoids debt or complexity.',
+                'preferences': {'travel': 2, 'dining': 2, 'shopping': 2, 'cashback': 4, 'luxury': 1},
                 'recommended_names': [
                     'Chase Freedom Unlimited®',
                     'Capital One Quicksilver Cash Rewards Credit Card',
@@ -102,6 +108,7 @@ class Command(BaseCommand):
                 'name': 'Luxury Spender',
                 'tagline': 'The High Roller',
                 'description': 'Enjoys high-end perks like lounge access and concierge services; comfortable with premium fees for status symbols, elite benefits, and statement-making cards.',
+                'preferences': {'travel': 5, 'dining': 5, 'shopping': 5, 'cashback': 1, 'luxury': 5},
                 'recommended_names': [
                     'Chase Sapphire Reserve®',
                     'American Express Platinum Card®',
@@ -113,6 +120,7 @@ class Command(BaseCommand):
                 'name': 'Deal Hunter',
                 'tagline': 'The Optimizer',
                 'description': 'Thrives on optimizing deals through rotating categories, bonuses, and free perks; gets satisfaction from stacking rewards on shopping and everyday buys.',
+                'preferences': {'travel': 3, 'dining': 4, 'shopping': 5, 'cashback': 5, 'luxury': 2},
                 'recommended_names': [
                     'Chase Freedom Flex®',
                     'Discover it® Cash Back',
@@ -124,6 +132,7 @@ class Command(BaseCommand):
                 'name': 'Balance Manager',
                 'tagline': 'The Planner',
                 'description': 'Often carries balances and needs low-interest options or intro APRs; focuses on structure to manage debt rather than chasing rewards.',
+                'preferences': {'travel': 1, 'dining': 1, 'shopping': 1, 'cashback': 2, 'luxury': 1},
                 'recommended_names': [
                     'Wells Fargo Reflect® Card',
                     'Citi Simplicity® Card',
@@ -135,6 +144,7 @@ class Command(BaseCommand):
                 'name': 'Tech Enthusiast',
                 'tagline': 'The Innovator',
                 'description': 'Attracted to modern, digital-first cards with app integration, sustainability features, and perks like crypto rewards or carbon offsets.',
+                'preferences': {'travel': 4, 'dining': 3, 'shopping': 4, 'cashback': 3, 'luxury': 3},
                 'recommended_names': [
                     'Capital One Venture X Rewards Credit Card',
                     'American Express® Green Card',
@@ -146,6 +156,7 @@ class Command(BaseCommand):
                 'name': 'Family Oriented',
                 'tagline': 'The Provider',
                 'description': 'Manages household finances with kids in mind; seeks family-friendly benefits like travel insurance, shared user perks, and protections for group travel or purchases.',
+                'preferences': {'travel': 3, 'dining': 4, 'shopping': 5, 'cashback': 4, 'luxury': 2},
                 'recommended_names': [
                     'Chase Sapphire Preferred® Card',
                     'Delta SkyMiles® Platinum American Express Card',
@@ -157,6 +168,7 @@ class Command(BaseCommand):
                 'name': 'Student',
                 'tagline': 'The Scholar',
                 'description': 'Budget-conscious learner building credit during school; wants no annual fees, cash back on dining, entertainment, and gas, plus student-specific intro offers and perks.',
+                'preferences': {'travel': 2, 'dining': 4, 'shopping': 3, 'cashback': 5, 'luxury': 1},
                 'recommended_names': [
                     'Discover it® Student Cash Back',
                     'Capital One Quicksilver Student Cash Rewards Credit Card',
@@ -168,6 +180,7 @@ class Command(BaseCommand):
                 'name': 'Wallet Freak',
                 'tagline': 'The Ultimate Optimizer',
                 'description': 'The master of credit card optimization who tracks every benefit, maximizes every dollar, and maintains a perfectly balanced wallet. Combines the strategic mindset of a Rewards Guru with the meticulous tracking of a Deal Hunter, always staying ahead of the game.',
+                'preferences': {'travel': 5, 'dining': 5, 'shopping': 5, 'cashback': 5, 'luxury': 5},
                 'recommended_names': [
                     'Chase Sapphire Reserve®',
                     'American Express Platinum Card®',
@@ -193,6 +206,7 @@ class Command(BaseCommand):
                 'name': p['name'],
                 'tagline': p.get('tagline', 'The Archetype'),
                 'description': p['description'],
+                'preferences': p.get('preferences', {}),
                 'recommended_cards': rec_slugs,
                 'avatar_url': ''
             }
