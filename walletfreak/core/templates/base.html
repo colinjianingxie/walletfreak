@@ -166,7 +166,7 @@
     </script>
 
 
-    <main style="padding: 3rem 0; background: #F7F7F7; min-height: calc(100vh - 70px);">
+    <main style="{% block main_style %}padding: 3rem 0; background: #F7F7F7; min-height: calc(100vh - 70px);{% endblock %}">
         <div class="container" style="max-width: 1400px;">
             {% block content %}
             {% endblock %}

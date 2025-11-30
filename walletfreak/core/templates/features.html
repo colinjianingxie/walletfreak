@@ -1,108 +1,365 @@
 {% extends 'base.html' %}
 
+{% block main_style %}padding: 0; background: #F7F7F7; min-height: auto;{% endblock %}
+
 {% block content %}
-<!-- Purple Gradient Hero -->
-<section
-    style="background: linear-gradient(135deg, #4338ca 0%, #6366f1 50%, #8b5cf6 100%); padding: 6rem 0 8rem; text-align: center; color: white; position: relative; overflow: hidden; border-radius: 0 0 50% 50% / 0 0 4rem 4rem;">
-    <div class="container" style="position: relative; z-index: 1; max-width: 900px;">
-        <h1 style="font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 700; line-height: 1.1; margin-bottom: 1.5rem;">
-            Features built for the credit obsessed.
+<!-- Close the base template's container and main to break out -->
+</div>
+</main>
+
+<!-- Hero Section - Full Width -->
+<section style="background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); padding: 6rem 0 10rem; text-align: center; color: white; position: relative; overflow: visible; margin: 0 0 -6rem 0; border-radius: 0 0 50px 50px;">
+    <div style="position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 1rem;">
+        <!-- Badge -->
+        <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(99, 102, 241, 0.15); color: #a5b4fc; padding: 0.5rem 1rem; border-radius: 999px; margin-bottom: 2rem; font-size: 0.875rem; font-weight: 500; border: 1px solid rgba(99, 102, 241, 0.2);">
+            <span style="font-size: 1rem;">⚡</span>
+            Supercharge your wallet
+        </div>
+
+        <h1 style="font-size: clamp(2.5rem, 6vw, 3.5rem); font-weight: 700; line-height: 1.2; margin-bottom: 1.5rem; color: white;">
+            The operating system for<br>
+            <span style="color: #818cf8;">credit card optimizers.</span>
         </h1>
-        <p style="font-size: 1.25rem; line-height: 1.6; opacity: 0.95; max-width: 700px; margin: 0 auto;">
-            Everything you need to squeeze every ounce of value from your annual fees.
+        
+        <p style="font-size: 1.125rem; line-height: 1.7; color: rgba(255, 255, 255, 0.8); max-width: 650px; margin: 0 auto 2.5rem;">
+            Spreadsheets are dead. WalletFreak replaces manual tracking with an intelligent dashboard designed to squeeze every ounce of value from your annual fees.
         </p>
+
+        <a href="#" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #6366f1; color: white; padding: 0.875rem 2rem; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s;">
+            Explore Cards
+            <span style="font-size: 1.2rem;">→</span>
+        </a>
     </div>
 </section>
 
-<!-- Real-time Benefit Tracking -->
-<section class="container" style="padding: 5rem 0;">
-    <div class="grid" style="gap: 4rem; grid-template-columns: 1fr 1fr; align-items: center;">
-        <!-- Left: Content -->
-        <div>
-            <div
-                style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(139, 92, 246, 0.1); color: #8b5cf6; padding: 0.5rem 1rem; border-radius: 999px; margin-bottom: 1.5rem; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em;">
-                <span style="font-size: 1.1rem;">⚡</span>
-                REAL-TIME TRACKING
+<!-- Reopen main and container for rest of content -->
+<main style="padding: 0; background: #F7F7F7; min-height: auto;">
+<div class="container" style="max-width: 1400px;">
+
+<!-- Feature Cards Grid -->
+<section style="padding: 0 0 4rem; max-width: 1200px; margin: 0 auto; position: relative; z-index: 2;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+        
+        <!-- Granular Tracking -->
+        <div style="background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;">
+            <div style="width: 48px; height: 48px; background: rgba(99, 102, 241, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
             </div>
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; color: #0f172a;">Granular Tracking</h3>
+            <p style="font-size: 0.9375rem; line-height: 1.6; color: #64748b;">Track benefits monthly, quarterly, semi-annually, or annually. We know Uber Cash is monthly and Hotel Credits are annual—so we built a system that understands the difference.</p>
+        </div>
 
-            <h2
-                style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1.5rem; color: var(--dark); line-height: 1.2;">
-                Real-time Benefit Tracking
+        <!-- Strategy Blueprints -->
+        <div style="background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;">
+            <div style="width: 48px; height: 48px; background: rgba(139, 92, 246, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 6v6l4 2"></path>
+                </svg>
+            </div>
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; color: #0f172a;">Strategy Blueprints</h3>
+            <p style="font-size: 0.9375rem; line-height: 1.6; color: #64748b;">Don't know which cards to pair? Our AI analyzes your personality to generate a "Perfect Loadout"—a combination of cards that maximize points for your specific goals.</p>
+        </div>
+
+        <!-- Net Value Analysis -->
+        <div style="background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;">
+            <div style="width: 48px; height: 48px; background: rgba(34, 197, 94, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+            </div>
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; color: #0f172a;">Net Value Analysis</h3>
+            <p style="font-size: 0.9375rem; line-height: 1.6; color: #64748b;">We calculate your 'Real Annual Fee' by subtracting the value of the credits you actually use. See exactly how much profit you're making from each card.</p>
+        </div>
+
+        <!-- Smart Expiration Alerts -->
+        <div style="background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;">
+            <div style="width: 48px; height: 48px; background: rgba(251, 191, 36, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+            </div>
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; color: #0f172a;">Smart Expiration Alerts</h3>
+            <p style="font-size: 0.9375rem; line-height: 1.6; color: #64748b;">Never let a credit expire again. We send timely notifications before the end of the month, quarter, or year so you can use it or lose it.</p>
+        </div>
+
+        <!-- Spending Categories -->
+        <div style="background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;">
+            <div style="width: 48px; height: 48px; background: rgba(239, 68, 68, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+            </div>
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; color: #0f172a;">Spending Categories</h3>
+            <p style="font-size: 0.9375rem; line-height: 1.6; color: #64748b;">Visual breakdown of where you earn the most. See if you're over-indexed on dining or missing out on travel multipliers at a glance.</p>
+        </div>
+
+        <!-- Benefit Library -->
+        <div style="background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;">
+            <div style="width: 48px; height: 48px; background: rgba(59, 130, 246, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                    <path d="M2 17l10 5 10-5"></path>
+                    <path d="M2 12l10 5 10-5"></path>
+                </svg>
+            </div>
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; color: #0f172a;">Benefit Library</h3>
+            <p style="font-size: 0.9375rem; line-height: 1.6; color: #64748b;">Forget the fine print. We've indexed the insurance policies, purchase protections, and lounge access rules for over 100 premium cards.</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- Stop Leaving Money Section -->
+<section style="padding: 4rem 0; max-width: 1200px; margin: 0 auto;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+        
+        <!-- Left Content -->
+        <div>
+            <h2 style="font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 1.5rem; color: #0f172a; line-height: 1.2;">
+                Stop leaving money on the table.
             </h2>
-
-            <p style="font-size: 1.125rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 2rem;">
-                Stop using spreadsheets to track your Uber credits, dining perks, and airline incidentals. WalletFreak visualizes your progress so you never leave money on the table.
+            
+            <p style="font-size: 1.0625rem; line-height: 1.7; color: #64748b; margin-bottom: 2.5rem;">
+                The average premium cardholder loses <strong style="color: #0f172a;">$300+ per year</strong> in unused benefits. That's a free flight or a fancy dinner wasted.
             </p>
 
-            <ul style="list-style: none; padding: 0; margin: 0;">
-                <li style="display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1rem;">
-                    <span style="color: var(--success); font-size: 1.5rem;">✓</span>
-                    <span style="color: var(--text-main); line-height: 1.6;">Automatic reset tracking for monthly,
-                        quarterly, and annual benefits</span>
-                </li>
-                <li style="display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1rem;">
-                    <span style="color: var(--success); font-size: 1.5rem;">✓</span>
-                    <span style="color: var(--text-main); line-height: 1.6;">Visual progress bars show exactly how much
-                        credit you've used</span>
-                </li>
-                <li style="display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1rem;">
-                    <span style="color: var(--success); font-size: 1.5rem;">✓</span>
-                    <span style="color: var(--text-main); line-height: 1.6;">Dashboard shows total annual value across
-                        all your cards</span>
-                </li>
-            </ul>
-        </div>
-
-        <!-- Right: Example benefit tracking -->
-        <div
-            style="background: white; border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #E5E7EB;">
-            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 2rem; color: var(--dark);">
-                Example Benefits
-            </h3>
-
-            <!-- Benefit 1: Dining Credit -->
-            <div style="margin-bottom: 2rem;">
-                <div
-                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-                    <div>
-                        <div style="font-weight: 600; color: var(--dark); margin-bottom: 0.25rem;">Dining Credit</div>
-                        <div style="font-size: 0.85rem; color: var(--text-muted);">GOLD CARD • MONTHLY</div>
+            <!-- Features List -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                
+                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                    <div style="width: 32px; height: 32px; background: rgba(34, 197, 94, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
                     </div>
-                    <div style="text-align: right;">
-                        <div style="font-weight: 700; color: #8b5cf6;">$10 / $25</div>
+                    <div>
+                        <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem; color: #0f172a;">Visual Progress Bars</h4>
+                        <p style="font-size: 0.9375rem; line-height: 1.6; color: #64748b; margin: 0;">Instantly see what's maxed out and what needs attention.</p>
                     </div>
                 </div>
-                <div style="height: 8px; background: #F3F4F6; border-radius: 4px; overflow: hidden;">
-                    <div style="width: 40%; height: 100%; background: #8b5cf6; border-radius: 4px;"></div>
+
+                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                    <div style="width: 32px; height: 32px; background: rgba(59, 130, 246, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem; color: #0f172a;">Multi-Card Support</h4>
+                        <p style="font-size: 0.9375rem; line-height: 1.6; color: #64748b; margin: 0;">Manage Amex, Chase, Capital One, and Citi cards in one unified view.</p>
+                    </div>
+                </div>
+
+                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                    <div style="width: 32px; height: 32px; background: rgba(139, 92, 246, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="3">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem; color: #0f172a;">Custom Valuation</h4>
+                        <p style="font-size: 0.9375rem; line-height: 1.6; color: #64748b; margin: 0;">Don't value a $50 Saks credit at $50? Mark it down to what it's worth to you.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Right: Card Preview -->
+        <div style="background: white; border-radius: 20px; padding: 2rem; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;">
+            
+            <!-- Header -->
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #e5e7eb;">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
+                        😎
+                    </div>
+                    <div>
+                        <div style="font-weight: 700; font-size: 1rem; color: #0f172a;">The Wallet Freak</div>
+                        <div style="font-size: 0.8125rem; color: #64748b;">PRO ACCOUNT</div>
+                    </div>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-size: 1.5rem; font-weight: 700; color: #22c55e;">+$2,450</div>
+                    <div style="font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Net Value</div>
                 </div>
             </div>
 
-            <!-- Benefit 2: Airline Fee (Complete) -->
-            <div style="margin-bottom: 2rem;">
-                <div
-                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-                    <div>
-                        <div style="font-weight: 600; color: var(--dark); margin-bottom: 0.25rem;">Airline Fee
-                        </div>
-                        <div style="font-size: 0.85rem; color: var(--text-muted);">PLATINUM CARD • ANNUALLY</div>
-                    </div>
-                    <div style="text-align: right;">
-                        <div style="font-weight: 700; color: #22c55e;">$200 / $200</div>
-                    </div>
+            <!-- Benefit 1: Uber Cash -->
+            <div style="margin-bottom: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <div style="font-weight: 600; font-size: 0.9375rem; color: #0f172a;">Uber Cash</div>
+                    <div style="font-weight: 600; font-size: 0.9375rem; color: #64748b;">$10 / $15</div>
                 </div>
-                <div style="height: 8px; background: #F3F4F6; border-radius: 4px; overflow: hidden;">
-                    <div style="width: 100%; height: 100%; background: #22c55e; border-radius: 4px;"></div>
+                <div style="height: 6px; background: #f1f5f9; border-radius: 3px; overflow: hidden;">
+                    <div style="width: 66%; height: 100%; background: #0f172a; border-radius: 3px;"></div>
+                </div>
+            </div>
+
+            <!-- Benefit 2: Airline Fee -->
+            <div style="margin-bottom: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <div style="font-weight: 600; font-size: 0.9375rem; color: #0f172a;">Airline Fee</div>
+                    <div style="font-weight: 600; font-size: 0.9375rem; color: #22c55e;">$200 / $200</div>
+                </div>
+                <div style="height: 6px; background: #f1f5f9; border-radius: 3px; overflow: hidden;">
+                    <div style="width: 100%; height: 100%; background: #22c55e; border-radius: 3px;"></div>
+                </div>
+            </div>
+
+            <!-- Alert -->
+            <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 0.875rem; display: flex; align-items: center; gap: 0.75rem;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span style="font-size: 0.875rem; color: #991b1b; font-weight: 500;">Action Required: Use $50 Hotel Credit</span>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- Bank-Grade Security Section -->
+<section style="padding: 4rem 0; max-width: 1000px; margin: 0 auto;">
+    <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 24px; padding: 4rem 3rem; text-align: center; color: white;">
+        
+        <div style="width: 64px; height: 64px; background: rgba(59, 130, 246, 0.15); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; border: 1px solid rgba(59, 130, 246, 0.3);">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+        </div>
+
+        <h2 style="font-size: clamp(1.75rem, 4vw, 2.25rem); font-weight: 700; margin-bottom: 1rem; line-height: 1.2; color: white;">
+            Bank-Grade Security
+        </h2>
+        
+        <p style="font-size: 1.0625rem; line-height: 1.7; color: rgba(255, 255, 255, 0.8); max-width: 650px; margin: 0 auto 2.5rem;">
+            We use <strong style="color: white;">Google Authentication</strong> to secure your identity, so we never touch your passwords. WalletFreak operates on a "trust-less" model where you manually select the cards you own—we don't ask for bank logins or store full credit card numbers.
+        </p>
+
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; max-width: 700px; margin: 0 auto;">
+            
+            <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9375rem; opacity: 0.9;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Google Secure Login</span>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9375rem; opacity: 0.9;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>No Bank Linking</span>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9375rem; opacity: 0.9;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>256-bit Encryption</span>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section style="padding: 4rem 0 6rem; max-width: 800px; margin: 0 auto;">
+    <h2 style="font-size: clamp(1.75rem, 4vw, 2.25rem); font-weight: 700; margin-bottom: 3rem; text-align: center; color: #0f172a;">
+        Frequently Asked Questions
+    </h2>
+
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        
+        <!-- FAQ 1 -->
+        <div style="background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.75rem;">
+            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                <div style="width: 24px; height: 24px; border: 2px solid #6366f1; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.125rem;">
+                    <div style="width: 8px; height: 8px; background: #6366f1; border-radius: 50%;"></div>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.0625rem; font-weight: 600; margin-bottom: 0.75rem; color: #0f172a;">Do I need to link my bank account?</h3>
+                    <p style="font-size: 0.9375rem; line-height: 1.7; color: #64748b; margin: 0;">
+                        No, <strong style="color: #0f172a;">WalletFreak</strong> is a manual tracking tool. You simply tell us which cards you have, and we populate the benefits automatically. This ensures maximum security and privacy.
+                    </p>
                 </div>
             </div>
         </div>
+
+        <!-- FAQ 2 -->
+        <div style="background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.75rem;">
+            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                <div style="width: 24px; height: 24px; border: 2px solid #6366f1; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.125rem;">
+                    <div style="width: 8px; height: 8px; background: #6366f1; border-radius: 50%;"></div>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.0625rem; font-weight: 600; margin-bottom: 0.75rem; color: #0f172a;">Does it track specific transactions?</h3>
+                    <p style="font-size: 0.9375rem; line-height: 1.7; color: #64748b; margin: 0;">
+                        Not directly. We focus on benefit utilization (e.g., "Did I use my monthly Uber credit?"). You manually log usage or mark benefits as complete.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div style="background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.75rem;">
+            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                <div style="width: 24px; height: 24px; border: 2px solid #6366f1; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.125rem;">
+                    <div style="width: 8px; height: 8px; background: #6366f1; border-radius: 50%;"></div>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.0625rem; font-weight: 600; margin-bottom: 0.75rem; color: #0f172a;">Is it free?</h3>
+                    <p style="font-size: 0.9375rem; line-height: 1.7; color: #64748b; margin: 0;">
+                        Yes! <strong style="color: #0f172a;">WalletFreak</strong> is currently in open beta and completely free to use. We may introduce premium power-user features in the future.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div style="background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.75rem;">
+            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                <div style="width: 24px; height: 24px; border: 2px solid #6366f1; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.125rem;">
+                    <div style="width: 8px; height: 8px; background: #6366f1; border-radius: 50%;"></div>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.0625rem; font-weight: 600; margin-bottom: 0.75rem; color: #0f172a;">Which issuers do you support?</h3>
+                    <p style="font-size: 0.9375rem; line-height: 1.7; color: #64748b; margin: 0;">
+                        We support all major US issuers including Chase, American Express, Capital One, Citi, Wells Fargo, Discover, and Bank of America.
+                    </p>
+                </div>
+            </div>
+        </div>
+
     </div>
 </section>
 
 <style>
     @media (max-width: 768px) {
-        .grid[style*="grid-template-columns: 1fr 1fr"] {
+        section[style*="grid-template-columns: 1fr 1fr"] > div {
+            grid-template-columns: 1fr !important;
+        }
+        
+        section div[style*="grid-template-columns: repeat"] {
             grid-template-columns: 1fr !important;
         }
     }
 </style>
+
 {% endblock %}
