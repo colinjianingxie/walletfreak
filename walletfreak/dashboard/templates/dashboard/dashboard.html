@@ -88,27 +88,22 @@
         style="background: white; border-radius: 24px; padding: 1.5rem; border: 1px solid #F3F4F6; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between;">
         <div style="display: flex; justify-content: space-between; align-items: flex-start;">
             <div>
-                <div style="font-size: 0.75rem; font-weight: 700; color: #64748B; letter-spacing: 0.05em; margin-bottom: 0.5rem; text-transform: uppercase;">My Wallet</div>
+                <div style="font-size: 0.75rem; font-weight: 700; color: #64748B; letter-spacing: 0.05em; margin-bottom: 0.5rem; text-transform: uppercase;">MY STACK</div>
                 <div style="display: flex; align-items: baseline; gap: 0.5rem;">
                     <div style="font-size: 3rem; font-weight: 800; color: #1F2937; line-height: 1;">{{ active_cards|length }}</div>
-                    <div style="font-size: 0.9rem; color: #64748B;">Cards</div>
+                    <div style="font-size: 0.9rem; color: #64748B;">Active Cards</div>
                 </div>
             </div>
             <div style="width: 40px; height: 40px; background: #FDF4FF; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #D946EF;">
-                <span class="material-icons" style="font-size: 20px;">credit_card</span>
+                <span class="material-icons" style="font-size: 20px;">wallet</span>
             </div>
         </div>
         
-        <!-- Mini card previews -->
-        <div style="display: flex; gap: 0.5rem; margin: 1rem 0;">
-            <div style="width: 40px; height: 26px; background: #CBD5E1; border-radius: 4px;"></div>
-            <div style="width: 40px; height: 26px; background: #3B82F6; border-radius: 4px;"></div>
-            <div style="width: 40px; height: 26px; background: #F59E0B; border-radius: 4px;"></div>
+        <div style="margin-top: auto;">
+            <button onclick="openManageWalletModal('stack')" style="width: 100%; padding: 0.75rem; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; font-weight: 600; color: #1F2937; cursor: pointer; transition: all 0.2s;">
+                Manage Wallet
+            </button>
         </div>
-
-        <button onclick="openManageWalletModal('stack')" style="width: 100%; padding: 0.75rem; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; font-weight: 600; color: #1F2937; cursor: pointer; transition: all 0.2s;">
-            Manage Wallet
-        </button>
     </div>
 
     <!-- Add New Card Trigger -->
@@ -305,88 +300,94 @@
 </div>
 {% endif %}
 
-<!-- Manage Wallet Modal (Redesigned to match image) -->
+<!-- Manage Wallet Modal (Redesigned with Sidebar) -->
 <div id="manage-wallet-modal" class="modal" style="display: none; align-items: center; justify-content: center; padding: 2rem;">
-    <div class="modal-content" style="width: 900px; max-width: 95vw; max-height: 90vh; padding: 0; display: flex; flex-direction: column; overflow: hidden; border-radius: 16px; background: white;">
+    <div class="modal-content" style="width: 1000px; max-width: 95vw; height: 600px; max-height: 90vh; padding: 0; display: flex; overflow: hidden; border-radius: 24px; background: white; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
         
-        <!-- Tab Navigation -->
-        <div style="display: flex; border-bottom: 2px solid #F3F4F6; padding: 0 2rem;">
-            <button class="wallet-tab active" onclick="switchTab('stack')" id="tab-stack" style="padding: 1.25rem 2rem; border: none; background: none; font-weight: 700; font-size: 1rem; color: #64748B; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.2s;">
-                Manage Wallet
-            </button>
-            <button class="wallet-tab" onclick="switchTab('add')" id="tab-add" style="padding: 1.25rem 2rem; border: none; background: none; font-weight: 700; font-size: 1rem; color: #64748B; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.2s;">
-                Find a Card
-            </button>
-            <button class="modal-close-btn" onclick="closeManageWalletModal()" style="margin-left: auto; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #94A3B8; padding: 1rem;">×</button>
+        <!-- Sidebar -->
+        <div class="modal-sidebar">
+            <div style="padding: 0 0.5rem; margin-bottom: 1.5rem;">
+                <h3 style="font-size: 1.25rem; font-weight: 800; margin: 0; color: #1F2937;">Manage Wallet</h3>
+            </div>
+            
+            <div class="modal-sidebar-item active" onclick="switchTab('stack')" id="tab-stack">
+                <span class="material-icons" style="font-size: 20px;">wallet</span>
+                <span>My Stack</span>
+                <span style="background: #E2E8F0; color: #64748B; font-size: 0.75rem; padding: 0.125rem 0.5rem; border-radius: 99px; margin-left: auto;">{{ active_cards|length }}</span>
+            </div>
+            
+            <div class="modal-sidebar-item" onclick="switchTab('add')" id="tab-add">
+                <span class="material-icons" style="font-size: 20px;">add_circle_outline</span>
+                <span>Add New Card</span>
+            </div>
+
+            <div style="margin-top: auto; padding: 1rem; background: #F1F5F9; border-radius: 12px; font-size: 0.75rem; color: #64748B; line-height: 1.4;">
+                Tip: Removing a card will archive its history but keep your data safe.
+            </div>
         </div>
         
-        <!-- Tab Content Area -->
-        <div style="flex: 1; display: flex; overflow: hidden;">
-            
-            <!-- Tab 1: Manage Wallet (My Stack) -->
+        <!-- Content Area -->
+        <div style="flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative;">
+            <button class="modal-close-btn" onclick="closeManageWalletModal()" style="position: absolute; top: 1rem; right: 1rem; z-index: 10;">×</button>
+
+            <!-- View 1: My Stack -->
             <div id="content-stack" style="flex: 1; padding: 2rem; display: flex; flex-direction: column; overflow-y: auto;">
-                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;">
-                    <span class="material-icons" style="font-size: 20px; color: #6366F1;">credit_card</span>
-                    <h3 style="font-size: 1rem; font-weight: 700; margin: 0; color: #1F2937;">My Stack</h3>
-                    <span style="background: #F3F4F6; color: #64748B; font-size: 0.75rem; padding: 0.125rem 0.5rem; border-radius: 99px; margin-left: 0.5rem;">{{ active_cards|length }}</span>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0; color: #1F2937;">Active Cards</h3>
+                    <button onclick="switchTab('add')" style="color: #6366F1; font-weight: 700; background: none; border: none; cursor: pointer; font-size: 0.9rem;">+ Add Another</button>
                 </div>
                 
                 <div style="flex: 1; overflow-y: auto;">
                     {% if active_cards %}
                         {% for card in active_cards %}
-                        <div onclick="openCardModal('{{ card.id }}')" style="display: flex; align-items: center; padding: 1rem; border: 1px solid #E2E8F0; border-radius: 12px; margin-bottom: 1rem; background: white; cursor: pointer; transition: all 0.2s; position: relative;" onmouseover="this.style.borderColor='#6366F1'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.1)';" onmouseout="this.style.borderColor='#E2E8F0'; this.style.boxShadow='none';">
-                            <div style="width: 60px; height: 40px; background: {% if 'chase' in card.name|lower %}#117ACA{% elif 'amex' in card.name|lower or 'american express' in card.name|lower %}#2563EB{% elif 'capital' in card.name|lower %}#0F172A{% else %}#CBD5E1{% endif %}; border-radius: 6px; margin-right: 1rem;"></div>
+                        <div style="display: flex; align-items: center; padding: 1.25rem; border: 1px solid #F3F4F6; border-radius: 16px; margin-bottom: 1rem; background: white; transition: all 0.2s;">
+                            <div style="width: 60px; height: 40px; background: {% if 'chase' in card.name|lower %}#117ACA{% elif 'amex' in card.name|lower or 'american express' in card.name|lower %}#2563EB{% elif 'capital' in card.name|lower %}#0F172A{% else %}#CBD5E1{% endif %}; border-radius: 6px; margin-right: 1.25rem;"></div>
                             
                             <div>
-                                <div style="font-weight: 700; color: #1F2937;">{{ card.name }}</div>
-                                <div style="font-size: 0.85rem; color: #64748B;">{{ card.issuer }}</div>
+                                <div style="font-weight: 700; color: #1F2937; font-size: 1rem;">{{ card.name }}</div>
+                                <div style="font-size: 0.85rem; color: #94A3B8; font-family: monospace;">•••• {{ card.last4|default:"****" }}</div>
                             </div>
                             
-                            <div style="margin-left: auto; display: flex; align-items: center; gap: 0.5rem;" onclick="event.stopPropagation();">
-                                <button onclick="openAnniversaryModal('{{ card.id }}', '{{ card.name|escapejs }}', '{{ card.anniversary_date|default:'' }}')" 
-                                        style="background: none; border: none; cursor: pointer; color: #94A3B8; padding: 0.5rem; transition: color 0.2s;" 
-                                        onmouseover="this.style.color='#6366F1'" 
-                                        onmouseout="this.style.color='#94A3B8'"
-                                        title="Edit Anniversary Date">
-                                    <span class="material-icons" style="font-size: 20px;">event</span>
-                                </button>
+                            <div style="margin-left: auto; display: flex; align-items: center; gap: 1rem;">
+                                <span style="background: #DCFCE7; color: #16A34A; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 99px;">Active</span>
                                 
                                 <form method="POST" action="{% url 'remove_card' card.id %}" style="margin: 0;" onsubmit="return confirm('Remove this card from your wallet?');">
                                     {% csrf_token %}
-                                    <button type="submit" style="background: none; border: none; cursor: pointer; color: #94A3B8; padding: 0.5rem; transition: color 0.2s;" onmouseover="this.style.color='#EF4444'" onmouseout="this.style.color='#94A3B8'" title="Remove Card">
-                                        <span class="material-icons" style="font-size: 20px;">delete</span>
+                                    <button type="submit" class="btn-delete-card" style="background: none; border: none; cursor: pointer; color: #E2E8F0; padding: 0.5rem; transition: color 0.2s;" onmouseover="this.style.color='#EF4444'" onmouseout="this.style.color='#E2E8F0'" title="Remove Card">
+                                        <span class="material-icons" style="font-size: 20px;">delete_outline</span>
                                     </button>
                                 </form>
                             </div>
                         </div>
                         {% endfor %}
                     {% else %}
-                        <div style="text-align: center; padding: 3rem; color: #94A3B8;">
-                            <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"><span class="material-icons" style="font-size: 48px;">credit_card</span></div>
-                            <p>No cards in your wallet yet.</p>
-                            <button onclick="switchTab('add')" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: #6366F1; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
-                                + Add New Card
+                        <div style="text-align: center; padding: 4rem 2rem; color: #94A3B8;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"><span class="material-icons" style="font-size: 48px;">wallet</span></div>
+                            <p>Your wallet is empty.</p>
+                            <button onclick="switchTab('add')" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: #6366F1; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer;">
+                                Add Your First Card
                             </button>
                         </div>
                     {% endif %}
                 </div>
             </div>
             
-            <!-- Tab 2: Find a Card -->
-            <div id="content-add" style="flex: 1; display: none; overflow: hidden;">
+            <!-- View 2: Find a Card -->
+            <div id="content-add" style="flex: 1; display: none; overflow: hidden; height: 100%;">
                 <div style="display: flex; height: 100%;">
                     <!-- Left Column: Search & List -->
-                    <div style="flex: 1; padding: 2rem; border-right: 1px solid #E2E8F0; display: flex; flex-direction: column; overflow: hidden;">
+                    <div style="flex: 1; padding: 2rem; border-right: 1px solid #F3F4F6; display: flex; flex-direction: column; overflow: hidden;">
+                        <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 0.5rem 0; color: #1F2937;">Find a Card</h3>
                         <p style="color: #64748B; font-size: 0.9rem; margin-bottom: 1.5rem;">Search by name or issuer to add it to your wallet.</p>
                         
                         <div style="position: relative; margin-bottom: 1.5rem;">
-                            <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #9CA3AF;"><span class="material-icons" style="font-size: 18px;">search</span></span>
+                            <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #6366F1;"><span class="material-icons" style="font-size: 20px;">search</span></span>
                             <input type="text" id="card-search-input" placeholder="Search e.g. 'Sapphire' or 'Amex'" 
-                                   style="width: 100%; padding: 0.875rem 1rem 0.875rem 2.5rem; border: 1px solid #E2E8F0; border-radius: 12px; font-size: 0.95rem;">
+                                   style="width: 100%; padding: 1rem 1rem 1rem 3rem; border: 1px solid #6366F1; border-radius: 12px; font-size: 1rem; outline: none; box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);">
                         </div>
                         
                         <div style="margin-bottom: 1.5rem;">
-                            <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em; margin-bottom: 0.75rem;">QUICK ADD</div>
+                            <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em; margin-bottom: 0.75rem; text-transform: uppercase;">Quick Add</div>
                             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                                 <button class="quick-add-btn" onclick="filterCards('Chase')">Chase</button>
                                 <button class="quick-add-btn" onclick="filterCards('Amex')">Amex</button>
@@ -395,67 +396,50 @@
                             </div>
                         </div>
                         
-                        <div id="card-results-list" style="overflow-y: auto; flex: 1;">
+                        <div id="card-results-list" style="overflow-y: auto; flex: 1; padding-right: 0.5rem;">
                             <!-- Results populated via JS -->
                         </div>
                     </div>
                     
                     <!-- Right Column: Card Preview -->
-                    <div style="width: 360px; padding: 2rem; background: white; display: flex; flex-direction: column; align-items: center; overflow-y: auto;">
-                        <div id="card-preview-empty" style="color: #94A3B8; text-align: center; margin-top: 4rem;">
-                            <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"><span class="material-icons" style="font-size: 48px;">credit_card</span></div>
-                            <p>Select a card to preview</p>
+                    <div style="width: 380px; padding: 2rem; background: #F8FAFC; display: flex; flex-direction: column; align-items: center; overflow-y: auto;">
+                        <div id="card-preview-empty" style="color: #94A3B8; text-align: center; margin-top: 8rem;">
+                            <div style="width: 80px; height: 80px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                                <span class="material-icons" style="font-size: 32px; color: #CBD5E1;">credit_card</span>
+                            </div>
+                            <h4 style="color: #1F2937; margin-bottom: 0.5rem;">Select a Card</h4>
+                            <p style="font-size: 0.9rem;">Choose a card from the list to<br>preview its benefits.</p>
                         </div>
                         
                         <div id="card-preview-content" style="display: none; width: 100%;">
                             <!-- Card Visual -->
-                            <div id="preview-card-visual" style="width: 100%; max-width: 280px; height: 176px; background: linear-gradient(135deg, #6366F1, #8B5CF6); border-radius: 16px; margin: 0 auto 1.5rem; box-shadow: 0 20px 40px rgba(0,0,0,0.15); padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; color: white; position: relative; overflow: hidden;">
+                            <div id="preview-card-visual" style="width: 100%; max-width: 300px; height: 190px; background: linear-gradient(135deg, #6366F1, #8B5CF6); border-radius: 16px; margin: 0 auto 2rem; box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.4); padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; color: white; position: relative; overflow: hidden;">
                                 <div id="preview-issuer" style="font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;">CHASE</div>
-                                <div style="font-size: 1rem; letter-spacing: 0.15em; font-family: 'Courier New', monospace;">•••• •••• •••• 4242</div>
+                                <div style="font-size: 1.1rem; letter-spacing: 0.15em; font-family: 'Courier New', monospace; opacity: 0.8;">•••• •••• •••• 4242</div>
                                 <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-                                    <div style="font-size: 0.75rem;">YOUR NAME</div>
+                                    <div style="font-size: 0.75rem; opacity: 0.9;">YOUR NAME</div>
                                     <div style="display: flex; gap: 2px;">
-                                        <div style="width: 18px; height: 18px; background: #EB001B; border-radius: 50%; opacity: 0.9;"></div>
-                                        <div style="width: 18px; height: 18px; background: #F79E1B; border-radius: 50%; margin-left: -6px; opacity: 0.9;"></div>
+                                        <div style="width: 20px; height: 20px; background: #EB001B; border-radius: 50%; opacity: 0.9;"></div>
+                                        <div style="width: 20px; height: 20px; background: #F79E1B; border-radius: 50%; margin-left: -8px; opacity: 0.9;"></div>
                                     </div>
                                 </div>
                             </div>
                             
-                            <h3 id="preview-card-name" style="font-size: 1.5rem; font-weight: 800; color: #1F2937; margin: 0 0 0.25rem 0; text-align: left;">Sapphire Preferred</h3>
-                            <p id="preview-card-issuer-text" style="color: #64748B; margin: 0 0 1.5rem 0; text-align: left;">Chase</p>
-                            
-                            <!-- All Benefits -->
-                            <!-- Earning Rates -->
-                            <div style="margin-bottom: 1.5rem;" id="preview-earning-rates-container">
-                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
-                                    <span class="material-icons" style="font-size: 16px; color: #94A3B8;">trending_up</span>
-                                    <span style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em;">EARNING RATES</span>
-                                </div>
-                                <div id="preview-earning-rates" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-                                    <!-- Populated via JS -->
-                                </div>
-                            </div>
-
-                            <!-- Credits -->
-                            <div style="margin-bottom: 1.5rem;" id="preview-credits-container">
-                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
-                                    <span class="material-icons" style="font-size: 16px; color: #94A3B8;">bolt</span>
-                                    <span style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em;">CREDITS</span>
-                                </div>
-                                <div id="preview-credits" style="display: flex; flex-direction: column; gap: 0.5rem;">
-                                    <!-- Populated via JS -->
-                                </div>
-                            </div>
+                            <h3 id="preview-card-name" style="font-size: 1.5rem; font-weight: 800; color: #1F2937; margin: 0 0 0.25rem 0; text-align: center;">Sapphire Preferred</h3>
+                            <p id="preview-card-issuer-text" style="color: #64748B; margin: 0 0 2rem 0; text-align: center;">Chase</p>
                             
                             <!-- Add to Wallet Button -->
-                            <button id="add-card-btn" onclick="addSelectedCard()" style="width: 100%; padding: 1rem; background: #5850EC; color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(88, 80, 236, 0.4); display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.2s;" onmouseover="this.style.background='#4F46E5'; this.style.transform='translateY(-1px)'" onmouseout="this.style.background='#5850EC'; this.style.transform=''">
+                            <button id="add-card-btn" onclick="addSelectedCard()" style="width: 100%; padding: 1rem; background: #111827; color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.2s; margin-bottom: 2rem;">
                                 <span class="material-icons" style="font-size: 20px;">add</span>
                                 Add to Wallet
                             </button>
-                            
-                            <!-- APR Disclaimer -->
-                            <div style="margin-top: 1rem; text-align: center; font-size: 0.7rem; color: #94A3B8; line-height: 1.4;">
-                                Variable APR: 21.24% - 29.24% Var. Terms apply. Rates as of Oct 2024.
+
+                            <!-- Benefits List -->
+                            <div style="width: 100%;">
+                                <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em; margin-bottom: 1rem; text-transform: uppercase;">Benefits & Credits</div>
+                                <div id="preview-credits" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                                    <!-- Populated via JS -->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -465,69 +449,62 @@
     </div>
 </div>
 
-<!-- Benefit Usage Modal (Reused) -->
-<div id="benefit-modal" class="modal" style="display: none;">
-    <div class="modal-content" style="max-width: 500px;">
-        <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-            <div>
-                <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 0.5rem 0;" id="benefit-modal-title">Update Benefit Usage</h3>
-                <p style="color: #64748B; margin: 0; font-size: 0.875rem;" id="benefit-modal-subtitle">Specify how much you've used</p>
-            </div>
-            <button class="modal-close" onclick="closeBenefitModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #94A3B8;">×</button>
-        </div>
-
-        <!-- Benefit Details -->
-        <div style="background: #F9FAFB; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-                <span style="color: #64748B; font-size: 0.875rem;">Total Benefit Value</span>
-                <span style="font-weight: 700; font-size: 1.125rem; color: #1F2937;" id="benefit-total-value">$0</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span style="color: #64748B; font-size: 0.875rem;">Currently Used</span>
-                <span style="font-weight: 700; font-size: 1.125rem; color: #7C3AED;" id="benefit-current-used">$0</span>
+<!-- Benefit Usage Modal (Redesigned) -->
+<div id="benefit-modal" class="modal" style="display: none; align-items: center; justify-content: center; padding: 1rem;">
+    <div class="modal-content" style="width: 400px; max-width: 95vw; padding: 0; border-radius: 24px; overflow: hidden; background: white; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+        
+        <!-- Header (Dark) -->
+        <div style="background: #111827; padding: 1.5rem; color: white; position: relative;">
+            <button class="modal-close-btn" onclick="closeBenefitModal()" style="position: absolute; top: 1rem; right: 1rem; color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.1);">×</button>
+            
+            <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 0.5rem 0; color: white;" id="benefit-modal-title">Dining Credit</h3>
+            <div style="display: inline-block; background: rgba(255,255,255,0.15); padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.9);" id="benefit-modal-subtitle">
+                Gold Card
             </div>
         </div>
 
-        <!-- Amount Input -->
-        <div style="margin-bottom: 1.5rem;">
-            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1F2937;">Amount Used ($)</label>
-            <input type="number" id="benefit-amount-input" min="0" step="0.01" 
-                   style="width: 100%; padding: 0.875rem 1rem; border: 2px solid #E5E7EB; border-radius: 10px; font-size: 1rem; font-weight: 600;"
-                   placeholder="0.00">
-            <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem; flex-wrap: wrap;">
-                <button onclick="setQuickAmount(25)" style="background: #F3F4F6; border: none; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; color: #64748B;">25%</button>
-                <button onclick="setQuickAmount(50)" style="background: #F3F4F6; border: none; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; color: #64748B;">50%</button>
-                <button onclick="setQuickAmount(75)" style="background: #F3F4F6; border: none; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; color: #64748B;">75%</button>
-                <button onclick="setQuickAmount(100)" style="background: #F3F4F6; border: none; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; color: #64748B;">100%</button>
-                <button onclick="clearAmount()" style="background: #FEE2E2; border: none; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; color: #DC2626;">Clear</button>
+        <div style="padding: 2rem;">
+            <!-- Month Navigator -->
+            <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 2rem; background: #F9FAFB; padding: 0.75rem; border-radius: 12px;">
+                <button style="background: none; border: none; color: #64748B; cursor: pointer; padding: 0.25rem;"><span class="material-icons" style="font-size: 18px;">chevron_left</span></button>
+                <div style="font-weight: 700; color: #1F2937; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="material-icons" style="font-size: 18px; color: #6366F1;">calendar_today</span>
+                    <span id="benefit-period-label">Sep</span>
+                </div>
+                <button style="background: none; border: none; color: #64748B; cursor: pointer; padding: 0.25rem;"><span class="material-icons" style="font-size: 18px;">chevron_right</span></button>
             </div>
-        </div>
 
-        <!-- Progress Preview -->
-        <div style="margin-bottom: 1.5rem;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                <span style="font-size: 0.875rem; color: #64748B;">Progress</span>
-                <span style="font-size: 0.875rem; font-weight: 600; color: #1F2937;" id="benefit-progress-text">0%</span>
+            <!-- Circular Progress -->
+            <div style="margin-bottom: 2.5rem;">
+                <div class="circular-progress" id="benefit-circular-progress">
+                    <div class="circular-progress-content">
+                        <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.1em; margin-bottom: 0.25rem;">USAGE</div>
+                        <div style="font-size: 2.5rem; font-weight: 800; color: #1F2937; line-height: 1; margin-bottom: 0.25rem;" id="benefit-current-used-display">$10</div>
+                        <div style="font-size: 0.875rem; font-weight: 600; color: #64748B;">of <span id="benefit-total-value-display">$10</span></div>
+                    </div>
+                </div>
             </div>
-            <div style="height: 8px; background: #F3F4F6; border-radius: 4px; overflow: hidden;">
-                <div id="benefit-progress-bar" style="width: 0%; height: 100%; background: #6366F1; border-radius: 4px; transition: width 0.3s;"></div>
-            </div>
-        </div>
 
-        <!-- Action Buttons -->
-        <div style="display: flex; gap: 0.75rem; flex-direction: column;">
-            <button id="mark-full-btn" onclick="markAsFull()" style="width: 100%; background: white; color: #1F2937; border: 1px solid #E5E7EB; padding: 0.875rem; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
-                <span class="material-icons" style="font-size: 18px; margin-right: 0.5rem; color: #10B981;">check_circle</span>
-                Mark as Full
+            <!-- Add Usage Input -->
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; border-top: 1px solid #F3F4F6; padding-top: 2rem; position: relative;">
+                <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: white; padding: 0 1rem; color: #94A3B8; font-size: 0.75rem; font-weight: 600;">Add Usage</div>
+                
+                <div style="flex: 1; position: relative;">
+                    <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #94A3B8; font-weight: 600;">$</span>
+                    <input type="number" id="benefit-amount-input" min="0" step="0.01" 
+                           style="width: 100%; padding: 0.875rem 1rem 0.875rem 2rem; border: 1px solid #E5E7EB; border-radius: 12px; font-size: 1rem; font-weight: 600; color: #1F2937; margin-bottom: 0;"
+                           placeholder="Remaining: $0">
+                </div>
+                <button id="btn-log-usage" onclick="saveBenefitUsage()" style="background: #111827; color: white; border: none; padding: 0.875rem 1.5rem; border-radius: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; min-width: 80px;">
+                    Log
+                </button>
+            </div>
+
+            <!-- Mark as Full -->
+            <button id="mark-full-btn" onclick="markAsFull()" style="width: 100%; background: white; color: #1F2937; border: 1px solid #E5E7EB; padding: 1rem; border-radius: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                <span class="material-icons" style="font-size: 20px; margin-right: 0.5rem; color: #10B981; opacity: 0;">check</span>
+                Mark <span id="benefit-period-label-btn" style="margin: 0 0.25rem;">Sep</span> as Full
             </button>
-            <div style="display: flex; gap: 0.75rem;">
-                <button onclick="closeBenefitModal()" style="flex: 1; background: #F3F4F6; color: #64748B; border: none; padding: 0.875rem; border-radius: 10px; font-weight: 600; cursor: pointer;">
-                    Cancel
-                </button>
-                <button onclick="saveBenefitUsage()" style="flex: 1; background: #7C3AED; color: white; border: none; padding: 0.875rem; border-radius: 10px; font-weight: 600; cursor: pointer;">
-                    Save Log
-                </button>
-            </div>
         </div>
     </div>
 </div>
@@ -576,13 +553,167 @@
 </div>
 
 <style>
-    .wallet-tab:hover {
+    /* --- Dashboard Pills --- */
+    .period-pill {
+        min-width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: #F8FAFC;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: 1px solid transparent;
+    }
+    
+    .period-pill:hover {
+        background: #F1F5F9;
+        transform: translateY(-1px);
+    }
+    
+    .period-pill.current {
+        border-color: #3B82F6;
+        background: #EFF6FF;
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+    
+    .period-pill.full {
+        background: #DCFCE7;
+        color: #16A34A;
+    }
+    
+    .period-pill.partial {
+        background: #DBEAFE;
+        color: #2563EB;
+    }
+    
+    .period-pill.unavailable {
+        opacity: 0.4;
+        background: #F1F5F9;
+        color: #94A3B8;
+        cursor: not-allowed;
+    }
+    
+    .period-pill.large {
+        height: 56px;
+        flex-direction: row;
+        gap: 0.5rem;
+        padding: 0 1rem;
+    }
+    
+    .pill-label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: inherit;
+    }
+    
+    .pill-status {
+        height: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .benefit-card {
+        background: white; 
+        border-radius: 24px; 
+        padding: 1.5rem; 
+        border: 1px solid #F3F4F6; 
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); 
+        transition: all 0.2s;
+    }
+    
+    .benefit-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    /* --- Circular Progress Bar --- */
+    .circular-progress {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: conic-gradient(#10B981 var(--progress, 0%), #F3F4F6 0deg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        margin: 0 auto;
+        transition: background 0.3s ease;
+    }
+    
+    .circular-progress::before {
+        content: "";
+        position: absolute;
+        width: 156px;
+        height: 156px;
+        border-radius: 50%;
+        background: white;
+    }
+    
+    .circular-progress-content {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* --- Modal Sidebar --- */
+    .modal-sidebar {
+        width: 260px;
+        background: #F8FAFC;
+        border-right: 1px solid #E2E8F0;
+        padding: 1.5rem 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        flex-shrink: 0;
+    }
+    
+    .modal-sidebar-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.875rem 1rem;
+        border-radius: 12px;
+        color: #64748B;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: 1px solid transparent;
+    }
+    
+    .modal-sidebar-item:hover {
+        background: #F1F5F9;
         color: #1F2937;
     }
     
-    .wallet-tab.active {
-        color: #6366F1;
-        border-bottom-color: #6366F1 !important;
+    .modal-sidebar-item.active {
+        background: white;
+        color: #1F2937;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        border-color: #E2E8F0;
+    }
+
+    .modal-close-btn {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #94A3B8;
+        padding: 0.5rem;
+        line-height: 1;
+        border-radius: 50%;
+        transition: all 0.2s;
+    }
+    .modal-close-btn:hover {
+        background: #F1F5F9;
+        color: #EF4444;
     }
     
     .quick-add-btn {
@@ -621,111 +752,61 @@
         background: #EEF2FF;
         border-color: #6366F1;
     }
-    
-    .modal-close-btn {
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        color: #94A3B8;
-        padding: 0;
-        line-height: 1;
+
+    /* Loader */
+    .loader {
+        border: 2px solid #f3f3f3;
+        border-top: 2px solid #3498db;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        animation: spin 1s linear infinite;
+        display: inline-block;
     }
-    
-    /* Period Pills */
-    .period-pill {
-        min-width: 48px;
-        height: 48px;
-        border-radius: 12px;
-        background: #F8FAFC;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.2s;
-        border: 1px solid transparent;
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
     }
-    
-    .period-pill:hover {
-        background: #F1F5F9;
-    }
-    
-    .period-pill.current {
-        border-color: #3B82F6;
-        background: #EFF6FF;
-    }
-    
-    .period-pill.full {
-        background: #DCFCE7;
-        color: #16A34A;
-    }
-    
-    .period-pill.partial {
-        background: #DBEAFE;
-        color: #2563EB;
-    }
-    
-    .period-pill.large {
-        height: 56px;
-        flex-direction: row;
-        gap: 0.5rem;
-    }
-    
-    .pill-label {
-        font-size: 0.75rem;
-        font-weight: 700;
-        color: inherit;
-    }
-    
-    .pill-status {
-        height: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .benefit-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
-    }
-    
+
     @media (max-width: 768px) {
         div[style*="grid-template-columns: 1.5fr 1fr 1fr"] {
             grid-template-columns: 1fr !important;
         }
         
-        div[style*="grid-template-columns: repeat(auto-fill, minmax(400px, 1fr))"] {
+        div[style*="grid-template-columns: repeat(auto-fill, minmax(520px, 1fr))"] {
             grid-template-columns: 1fr !important;
         }
         
         .modal-content {
             flex-direction: column;
             height: 90vh !important;
+            width: 95vw !important;
         }
         
-        div[style*="width: 240px"] {
-            width: 100% !important;
+        .modal-sidebar {
+            width: 100%;
             flex-direction: row;
-            padding: 1rem;
             overflow-x: auto;
             border-right: none;
             border-bottom: 1px solid #E2E8F0;
+            padding: 1rem;
         }
         
-        .sidebar-nav {
-            display: flex;
-            gap: 1rem;
+        .modal-sidebar-item {
+            white-space: nowrap;
         }
-        
-        #view-add {
+
+        #content-add > div {
             flex-direction: column;
         }
         
-        div[style*="width: 300px"] {
+        #content-add > div > div:first-child {
+            border-right: none;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        div[style*="width: 360px"] {
             width: 100% !important;
-            border-top: 1px solid #E2E8F0;
-            padding: 1rem;
         }
     }
 </style>
