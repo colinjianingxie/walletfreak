@@ -119,8 +119,11 @@ def dashboard(request):
                         for m_idx, m_name in enumerate(months):
                             period_key = f"{current_year}_{m_idx+1:02d}"
                             period_max = period_values.get(period_key, dollar_value / 12)  # Fallback to division
-                            # Available if: month >= anniversary_month AND month <= current_month
-                            is_available = (m_idx + 1) >= anniversary_month and (m_idx + 1) <= current_month
+                            # Available if: anniversary year < current year (all months available) OR (same year AND month >= anniversary_month AND month <= current_month)
+                            if anniversary_year < current_year:
+                                is_available = (m_idx + 1) <= current_month
+                            else:
+                                is_available = (m_idx + 1) >= anniversary_month and (m_idx + 1) <= current_month
                             
                             p_data = benefit_usage_data.get('periods', {}).get(period_key, {})
                             p_used = p_data.get('used', 0)
@@ -155,15 +158,21 @@ def dashboard(request):
                         # H1
                         h1_data = benefit_usage_data.get('periods', {}).get(h1_key, {})
                         h1_status = 'full' if (h1_data.get('is_full') or h1_data.get('used', 0) >= h1_max) else ('partial' if h1_data.get('used', 0) > 0 else 'empty')
-                        # H1 available if anniversary is in H1 (Jan-Jun) OR if we're past H1
-                        h1_available = anniversary_month <= 6 and current_month >= 1
+                        # H1 available if: anniversary year < current year (always available) OR (same year AND anniversary is in H1 and we're past start of year)
+                        if anniversary_year < current_year:
+                            h1_available = current_month >= 1
+                        else:
+                            h1_available = anniversary_month <= 6 and current_month >= 1
                         periods.append({'label': 'H1', 'key': h1_key, 'status': h1_status, 'is_current': current_month <= 6, 'max_value': h1_max, 'is_available': h1_available})
                         
                         # H2
                         h2_data = benefit_usage_data.get('periods', {}).get(h2_key, {})
                         h2_status = 'full' if (h2_data.get('is_full') or h2_data.get('used', 0) >= h2_max) else ('partial' if h2_data.get('used', 0) > 0 else 'empty')
-                        # H2 available if: (anniversary is in H1 and current is H2) OR (anniversary is in H2 and current >= anniversary month)
-                        h2_available = (anniversary_month <= 6 and current_month >= 7) or (anniversary_month >= 7 and current_month >= anniversary_month)
+                        # H2 available if: anniversary year < current year (available if we're in H2) OR (same year AND ((anniversary in H1 and current is H2) OR (anniversary in H2 and current >= anniversary month)))
+                        if anniversary_year < current_year:
+                            h2_available = current_month >= 7
+                        else:
+                            h2_available = (anniversary_month <= 6 and current_month >= 7) or (anniversary_month >= 7 and current_month >= anniversary_month)
                         periods.append({'label': 'H2', 'key': h2_key, 'status': h2_status, 'is_current': current_month > 6, 'max_value': h2_max, 'is_available': h2_available})
                         
                         if current_month <= 6:
@@ -180,8 +189,11 @@ def dashboard(request):
                         for q in range(1, 5):
                             q_key = f"{current_year}_Q{q}"
                             q_max = period_values.get(q_key, dollar_value / 4)
-                            # Available if: quarter >= anniversary_quarter AND quarter <= current_quarter
-                            q_available = q >= anniversary_q and q <= curr_q
+                            # Available if: anniversary year < current year (all quarters up to current available) OR (same year AND quarter >= anniversary_quarter AND quarter <= current_quarter)
+                            if anniversary_year < current_year:
+                                q_available = q <= curr_q
+                            else:
+                                q_available = q >= anniversary_q and q <= curr_q
                             q_data = benefit_usage_data.get('periods', {}).get(q_key, {})
                             q_status = 'full' if (q_data.get('is_full') or q_data.get('used', 0) >= q_max) else ('partial' if q_data.get('used', 0) > 0 else 'empty')
                             periods.append({'label': f'Q{q}', 'key': q_key, 'status': q_status, 'is_current': q == curr_q, 'max_value': q_max, 'is_available': q_available})
