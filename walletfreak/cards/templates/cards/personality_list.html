@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block main_style %}padding: 0; background: #F7F7F7; min-height: calc(100vh - 70px);{% endblock %}
+
 {% block content %}
 
 <!-- Personalities Header with Quiz -->
-<section style="background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%); padding: 4rem 0; text-align: center; color: white; position: relative; overflow: hidden;">
+<section style="background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%); padding: 4rem 0; text-align: center; color: white; position: relative; overflow: hidden; border-radius: 0 0 40px 40px; margin-left: calc(-50vw + 50%); margin-right: calc(-50vw + 50%); width: 100vw;">
     <!-- Background decoration -->
     <div style="position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; background: rgba(124, 58, 237, 0.1); border-radius: 50%; filter: blur(80px);"></div>
     <div style="position: absolute; bottom: -100px; left: -100px; width: 300px; height: 300px; background: rgba(99, 102, 241, 0.1); border-radius: 50%; filter: blur(80px);"></div>
@@ -221,127 +223,156 @@
 {% endif %}
 
 <!-- Personalities Grid -->
-<section class="container" style="padding: 4rem 0;">
-    <div style="display: flex; flex-direction: column; gap: 2rem;" id="personalities-grid">
-        {% for personality in personalities %}
-        <a href="{% url 'personality_detail' personality.id %}" class="personality-card-link"
-            style="text-decoration: none; color:inherit;" data-name="{{ personality.name|lower }}"
-            data-desc="{{ personality.description|lower }}" data-tag="{{ personality.tagline|default:''|lower }}">
-            <div style="background: white; border-radius: 20px; padding: 2.5rem; border: 1px solid #E5E7EB; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: all 0.3s; display: grid; grid-template-columns: auto 1fr auto; gap: 2rem; align-items: center;" class="personality-card">
-                <!-- Left: Avatar -->
-                <div style="width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); flex-shrink: 0; backdrop-filter: blur(10px); border: 1px solid rgba(0,0,0,0.05);">
-                    <img src="{% static 'img/personalities/'|add:personality.id|add:'.svg' %}" alt="{{ personality.name }}" style="width: 100%; height: 100%; object-fit: contain; padding: 15px;">
+<section style="background: #F9FAFB; padding: 4rem 0;">
+    <div class="container">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; max-width: 1400px; margin: 0 auto;" id="personalities-grid">
+            {% for personality in personalities %}
+            <div class="personality-card-link" data-name="{{ personality.name|lower }}"
+                data-desc="{{ personality.description|lower }}" data-tag="{{ personality.tagline|default:''|lower }}"
+                style="background: white; border-radius: 20px; padding: 2.5rem; border: 1px solid #E5E7EB; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: all 0.3s; display: flex; flex-direction: column; align-items: center; text-align: center;">
+                
+                <!-- Avatar Icon -->
+                <div style="width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;
+                    {% if 'freak' in personality.id|lower or 'wallet-freak' in personality.id|lower %}
+                        background: linear-gradient(135deg, #A855F7 0%, #C084FC 100%);
+                    {% elif 'jetsetter' in personality.id|lower %}
+                        background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
+                    {% elif 'hunter' in personality.id|lower or 'value' in personality.id|lower %}
+                        background: linear-gradient(135deg, #10B981 0%, #34D399 100%);
+                    {% elif 'seeker' in personality.id|lower or 'experience' in personality.id|lower %}
+                        background: linear-gradient(135deg, #EC4899 0%, #F472B6 100%);
+                    {% elif 'optimizer' in personality.id|lower %}
+                        background: linear-gradient(135deg, #1E293B 0%, #475569 100%);
+                    {% else %}
+                        background: linear-gradient(135deg, #6366F1 0%, #818CF8 100%);
+                    {% endif %}
+                    box-shadow: 0 8px 20px rgba(0,0,0,0.15);">
+                    <img src="{% static 'img/personalities/'|add:personality.id|add:'.svg' %}" alt="{{ personality.name }}" style="width: 70%; height: 70%; object-fit: contain;">
                 </div>
 
-                <!-- Middle: Info -->
-                <div style="min-width: 0;">
-                    <!-- Label -->
-                    <div style="font-size: 0.75rem; color: #9CA3AF; font-weight: 600; letter-spacing: 0.1em; margin-bottom: 0.5rem; text-transform: uppercase;">
-                        RECOMMENDED STACK
-                    </div>
-                    
-                    <!-- Name -->
-                    <h3 style="font-size: 1.75rem; font-weight: 700; margin: 0 0 0.75rem 0; color: #1F2937;">
-                        {{ personality.name }}
-                    </h3>
+                <!-- Personality Name -->
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 1rem 0; color: #1F2937;">
+                    {{ personality.name }}
+                </h3>
 
-                    <!-- Description -->
-                    <p style="color: #64748B; line-height: 1.6; margin: 0 0 1rem 0; font-size: 0.9375rem;">
-                        {{ personality.description|truncatewords:25 }}
-                    </p>
+                <!-- Description -->
+                <p style="color: #64748B; line-height: 1.6; margin: 0 0 1.5rem 0; font-size: 0.9375rem; flex-grow: 1;">
+                    {{ personality.description|truncatewords:20 }}
+                </p>
 
-                    <!-- Tags -->
-                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
-                        {% if personality.tagline %}
-                        <span style="background: #F3F4F6; color: #6366F1; font-size: 0.75rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.05em;">
-                            #{{ personality.tagline|upper|truncatewords:2 }}
-                        </span>
+                <!-- Tags -->
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-bottom: 1.5rem;">
+                    {% if 'jetsetter' in personality.id|lower %}
+                    <span style="background: #EEF2FF; color: #6366F1; font-size: 0.7rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.05em;">#TRAVEL</span>
+                    <span style="background: #EEF2FF; color: #6366F1; font-size: 0.7rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.05em;">#FLY</span>
+                    <span style="background: #EEF2FF; color: #6366F1; font-size: 0.7rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.05em;">#PLANE</span>
+                    {% elif 'freak' in personality.id|lower or 'wallet-freak' in personality.id|lower %}
+                    <span style="background: #F5F3FF; color: #A855F7; font-size: 0.7rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.05em;">#POSSESSED</span>
+                    <span style="background: #F5F3FF; color: #A855F7; font-size: 0.7rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.05em;">#CHURNING</span>
+                    <span style="background: #F5F3FF; color: #A855F7; font-size: 0.7rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.05em;">#MAXIMUM</span>
+                    {% elif 'hunter' in personality.id|lower or 'value' in personality.id|lower %}
+                    <span style="background: #ECFDF5; color: #10B981; font-size: 0.7rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.05em;">#SAVE</span>
+                    <span style="background: #ECFDF5; color: #10B981; font-size: 0.7rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.05em;">#CASH</span>
+                    <span style="background: #ECFDF5; color: #10B981; font-size: 0.7rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.05em;">#BUDGET</span>
+                    {% elif 'seeker' in personality.id|lower or 'experience' in personality.id|lower %}
+                    <span style="background: #FDF2F8; color: #EC4899; font-size: 0.7rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.05em;">#LUXURY</span>
+                    <span style="background: #FDF2F8; color: #EC4899; font-size: 0.7rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.05em;">#EXPERIENCE</span>
+                    {% elif 'optimizer' in personality.id|lower %}
+                    <span style="background: #F1F5F9; color: #475569; font-size: 0.7rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.05em;">#EFFICIENT</span>
+                    <span style="background: #F1F5F9; color: #475569; font-size: 0.7rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.05em;">#OPTIMIZE</span>
+                    {% else %}
+                    <span style="background: #EEF2FF; color: #6366F1; font-size: 0.7rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.05em;">#REWARDS</span>
+                    {% endif %}
+                </div>
+
+                <!-- Card Stack Preview -->
+                <div style="position: relative; width: 100%; height: 140px; margin-bottom: 1.5rem;">
+                    <!-- Card 1 (Back Left) -->
+                    <div style="position: absolute; bottom: 0; left: 10%; width: 35%; height: 90px;
+                        {% if 'freak' in personality.id|lower or 'wallet-freak' in personality.id|lower %}
+                            background: linear-gradient(135deg, #8B9BA7 0%, #6B7B88 100%);
+                        {% elif 'jetsetter' in personality.id|lower %}
+                            background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+                        {% elif 'hunter' in personality.id|lower or 'value' in personality.id|lower %}
+                            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+                        {% else %}
+                            background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
                         {% endif %}
-                        <!-- Additional context tags based on personality type -->
-                        {% if 'jetsetter' in personality.id|lower %}
-                        <span style="background: #F3F4F6; color: #6366F1; font-size: 0.75rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px;">#TRAVEL</span>
-                        <span style="background: #F3F4F6; color: #6366F1; font-size: 0.75rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px;">#FLY</span>
-                        <span style="background: #F3F4F6; color: #6366F1; font-size: 0.75rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px;">#PLANE</span>
-                        {% elif 'freak' in personality.id|lower or 'wallet freak' in personality.name|lower %}
-                        <span style="background: #F3F4F6; color: #6366F1; font-size: 0.75rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px;">#CHURNING</span>
-                        <span style="background: #F3F4F6; color: #6366F1; font-size: 0.75rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px;">#MAXIMUM</span>
-                        {% elif 'hunter' in personality.id|lower %}
-                        <span style="background: #F3F4F6; color: #6366F1; font-size: 0.75rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px;">#CASHBACK</span>
-                        <span style="background: #F3F4F6; color: #6366F1; font-size: 0.75rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 6px;">#NOFEE</span>
+                        border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transform: rotate(-8deg); z-index: 1;">
+                        <div style="padding: 0.75rem; display: flex; flex-direction: column; justify-content: space-between; height: 100%; color: white;">
+                            <div style="font-size: 0.5rem; font-weight: 600; letter-spacing: 0.1em;">
+                                {% if 'freak' in personality.id|lower %}CAPITAL ONE{% elif 'jetsetter' in personality.id|lower %}CAPITAL ONE{% else %}CARD{% endif %}
+                            </div>
+                            <div style="font-size: 0.6rem; letter-spacing: 0.05em;">•••• 4242</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 2 (Middle) -->
+                    <div style="position: absolute; bottom: 10px; left: 25%; width: 35%; height: 90px;
+                        {% if 'freak' in personality.id|lower or 'wallet-freak' in personality.id|lower %}
+                            background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+                        {% elif 'jetsetter' in personality.id|lower %}
+                            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+                        {% elif 'hunter' in personality.id|lower or 'value' in personality.id|lower %}
+                            background: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%);
+                        {% else %}
+                            background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
                         {% endif %}
-                    </div>
-
-                    <!-- View Full Strategy Link (Moved Inside) -->
-                    <a href="{% url 'personality_detail' personality.id %}" style="display: inline-flex; align-items: center; gap: 0.5rem; color: #6366F1; font-weight: 600; font-size: 0.9rem; text-decoration: none;">
-                        View Full Strategy <span class="material-icons" style="font-size: 16px;">arrow_forward</span>
-                    </a>
-                </div>
-
-                <!-- Right: Card Stack -->
-                <div style="position: relative; width: 280px; height: 200px; flex-shrink: 0; cursor: pointer;" onclick="event.preventDefault(); openCardModal('{{ personality.recommended_cards.0 }}');">
-                    <!-- Card 1 (Back) - Amex/Gray -->
-                    <div style="position: absolute; top: 0; left: 0; width: 240px; height: 150px; background: linear-gradient(135deg, #8B9BA7 0%, #6B7B88 100%); border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); transform: rotate(-8deg); z-index: 1; transition: transform 0.3s;">
-                        <div style="padding: 1rem; display: flex; flex-direction: column; justify-content: space-between; height: 100%; color: white;">
-                            <div style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;">AMEX</div>
-                            <div style="font-size: 0.9rem; letter-spacing: 0.1em;">•••• •••• •••• 1323</div>
-                            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-                                <div style="font-size: 0.7rem;">YOUR NAME</div>
-                                <div style="display: flex; gap: 2px;">
-                                    <div style="width: 14px; height: 14px; background: #EB001B; border-radius: 50%;"></div>
-                                    <div style="width: 14px; height: 14px; background: #F79E1B; border-radius: 50%; margin-left: -6px;"></div>
-                                </div>
+                        border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transform: rotate(-2deg); z-index: 2;">
+                        <div style="padding: 0.75rem; display: flex; flex-direction: column; justify-content: space-between; height: 100%; color: white;">
+                            <div style="font-size: 0.5rem; font-weight: 600; letter-spacing: 0.1em;">
+                                {% if 'jetsetter' in personality.id|lower %}CAPITAL ONE{% else %}CHASE{% endif %}
                             </div>
+                            <div style="font-size: 0.6rem; letter-spacing: 0.05em;">•••• 1323</div>
                         </div>
                     </div>
                     
-                    <!-- Card 2 (Middle) - Chase Blue -->
-                    <div style="position: absolute; top: 20px; left: 30px; width: 240px; height: 150px; background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%); border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); transform: rotate(-4deg); z-index: 2; transition: transform 0.3s;">
-                        <div style="padding: 1rem; display: flex; flex-direction: column; justify-content: space-between; height: 100%; color: white;">
-                            <div style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;">CHASE</div>
-                            <div style="font-size: 0.9rem; letter-spacing: 0.1em;">•••• •••• •••• 4242</div>
-                            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-                                <div style="font-size: 0.7rem;">YOUR NAME</div>
-                                <div style="display: flex; gap: 2px;">
-                                    <div style="width: 14px; height: 14px; background: #EB001B; border-radius: 50%;"></div>
-                                    <div style="width: 14px; height: 14px; background: #F79E1B; border-radius: 50%; margin-left: -6px;"></div>
-                                </div>
+                    <!-- Card 3 (Front Right) -->
+                    <div style="position: absolute; bottom: 20px; left: 40%; width: 35%; height: 90px;
+                        {% if 'freak' in personality.id|lower or 'wallet-freak' in personality.id|lower %}
+                            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+                        {% elif 'jetsetter' in personality.id|lower %}
+                            background: linear-gradient(135deg, #8B9BA7 0%, #6B7B88 100%);
+                        {% elif 'hunter' in personality.id|lower or 'value' in personality.id|lower %}
+                            background: linear-gradient(135deg, #06B6D4 0%, #0891B2 100%);
+                        {% else %}
+                            background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);
+                        {% endif %}
+                        border-radius: 8px; box-shadow: 0 6px 16px rgba(0,0,0,0.2); transform: rotate(4deg); z-index: 3;">
+                        <div style="padding: 0.75rem; display: flex; flex-direction: column; justify-content: space-between; height: 100%; color: white;">
+                            <div style="font-size: 0.5rem; font-weight: 600; letter-spacing: 0.1em;">
+                                {% if 'freak' in personality.id|lower %}CAPITAL ONE{% elif 'hunter' in personality.id|lower %}CITI{% else %}AMEX{% endif %}
                             </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Card 3 (Front) - Capital One Dark -->
-                    <div style="position: absolute; top: 40px; left: 60px; width: 240px; height: 150px; background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%); border-radius: 12px; box-shadow: 0 12px 24px rgba(0,0,0,0.2); transform: rotate(2deg); z-index: 3; transition: transform 0.3s;">
-                        <div style="padding: 1rem; display: flex; flex-direction: column; justify-content: space-between; height: 100%; color: white;">
-                            <div style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;">CAPITAL ONE</div>
-                            <div style="font-size: 0.9rem; letter-spacing: 0.1em;">•••• •••• •••• 4242</div>
-                            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-                                <div style="font-size: 0.7rem;">VENTURE X</div>
-                                <div style="display: flex; gap: 2px;">
-                                    <div style="width: 14px; height: 14px; background: #EB001B; border-radius: 50%;"></div>
-                                    <div style="width: 14px; height: 14px; background: #F79E1B; border-radius: 50%; margin-left: -6px;"></div>
-                                </div>
-                            </div>
+                            <div style="font-size: 0.6rem; letter-spacing: 0.05em;">•••• 8888</div>
                         </div>
                     </div>
                 </div>
+
+                <!-- View Strategy Button -->
+                <a href="{% url 'personality_detail' personality.id %}" style="width: 100%; padding: 1rem 1.5rem;
+                    {% if 'freak' in personality.id|lower or 'wallet-freak' in personality.id|lower %}
+                        background: #1E293B;
+                    {% elif 'jetsetter' in personality.id|lower %}
+                        background: #1E293B;
+                    {% elif 'hunter' in personality.id|lower or 'value' in personality.id|lower %}
+                        background: #1E293B;
+                    {% else %}
+                        background: #1E293B;
+                    {% endif %}
+                    color: white; border: none; border-radius: 12px; font-weight: 700; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                    View Strategy
+                    <span class="material-icons" style="font-size: 18px;">arrow_forward</span>
+                </a>
             </div>
-        </a>
-        {% empty %}
-        <!-- Empty State -->
-        <div style="text-align: center; padding: 4rem 2rem;">
-            <div style="font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.3;"><span class="material-icons" style="font-size: 64px;">credit_card</span></div>
-            <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;">No personalities yet</h2>
-            <p style="color: var(--text-muted);">Check back soon!</p>
+            {% empty %}
+            <!-- Empty State -->
+            <div style="text-align: center; padding: 4rem 2rem; grid-column: 1 / -1;">
+                <div style="font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.3;"><span class="material-icons" style="font-size: 64px;">credit_card</span></div>
+                <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;">No personalities yet</h2>
+                <p style="color: #64748B;">Check back soon!</p>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
-
-    <!-- No Results State (Hidden by default) -->
-    <div id="no-results" style="display: none; text-align: center; padding: 4rem 0;">
-        <div style="font-size: 3rem; margin-bottom: 1rem;"><span class="material-icons" style="font-size: 48px;">search</span></div>
-        <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">No personalities found</h3>
-        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Try adjusting your search terms or take the quiz to
-            find your match.</p>
     </div>
 </section>
 
@@ -652,14 +683,22 @@
 </script>
 
 <style>
-    .personality-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.1) !important;
+    .personality-card-link:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 32px rgba(0,0,0,0.12) !important;
+    }
+
+    .personality-card-link a:hover {
+        background: #0F172A !important;
     }
 
     @media (max-width: 1024px) {
         #options-container {
             grid-template-columns: repeat(3, 1fr) !important;
+        }
+        
+        #personalities-grid {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
         }
     }
 
@@ -671,6 +710,10 @@
         .option-card {
             min-height: 140px !important;
             padding: 1.5rem 1rem !important;
+        }
+        
+        #personalities-grid {
+            grid-template-columns: 1fr !important;
         }
     }
 </style>
