@@ -11,7 +11,7 @@
             Explore Cards
         </h1>
         <p style="color: #64748B; font-size: 1rem; margin: 0;">
-            {{ cards|length }} perfect card{{ cards|length|pluralize }} just for your wallet
+            {{ total_cards }} perfect card{{ total_cards|pluralize }} just for your wallet
         </p>
     </div>
 
@@ -39,24 +39,47 @@
     </div>
 
     <!-- Main Content: Sidebar + Cards Grid -->
-    <div style="display: grid; grid-template-columns: 280px 1fr; gap: 2rem;">
+    <div id="cards-section" style="display: grid; grid-template-columns: 280px 1fr; gap: 2rem; scroll-margin-top: 2rem;">
         <!-- Left Sidebar: Filters -->
         <div style="display: flex; flex-direction: column; gap: 1.5rem;">
             <!-- Annual Fee Filter -->
             <div style="background: white; border-radius: 12px; padding: 1.5rem; border: 1px solid #E2E8F0;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
-                    <h3 style="font-size: 0.75rem; font-weight: 800; color: #64748B; margin: 0; letter-spacing: 0.1em;">MAX ANNUAL FEE</h3>
-                    <span id="fee-value" style="font-size: 0.875rem; font-weight: 700; color: #6366F1;">$1000</span>
+                <h3 style="font-size: 0.75rem; font-weight: 800; color: #64748B; margin: 0 0 1rem 0; letter-spacing: 0.1em;">ANNUAL FEE RANGE</h3>
+                
+                <!-- Min Fee Slider -->
+                <div style="margin-bottom: 1.25rem;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span style="font-size: 0.75rem; color: #64748B; font-weight: 600;">MIN</span>
+                        <span id="min-fee-value" style="font-size: 0.875rem; font-weight: 700; color: #6366F1;">$0</span>
+                    </div>
+                    <input
+                        type="range"
+                        id="min-fee-slider"
+                        min="0"
+                        max="1000"
+                        value="{{ current_min_fee }}"
+                        step="50"
+                        style="width: 100%; accent-color: #6366F1; cursor: pointer;"
+                    >
                 </div>
-                <input 
-                    type="range" 
-                    id="fee-slider" 
-                    min="0" 
-                    max="1000" 
-                    value="{{ current_max_fee }}" 
-                    step="50"
-                    style="width: 100%; accent-color: #6366F1; cursor: pointer;"
-                >
+                
+                <!-- Max Fee Slider -->
+                <div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span style="font-size: 0.75rem; color: #64748B; font-weight: 600;">MAX</span>
+                        <span id="max-fee-value" style="font-size: 0.875rem; font-weight: 700; color: #6366F1;">$1000</span>
+                    </div>
+                    <input
+                        type="range"
+                        id="max-fee-slider"
+                        min="0"
+                        max="1000"
+                        value="{{ current_max_fee }}"
+                        step="50"
+                        style="width: 100%; accent-color: #6366F1; cursor: pointer;"
+                    >
+                </div>
+                
                 <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
                     <span style="font-size: 0.75rem; color: #94A3B8;">$0</span>
                     <span style="font-size: 0.75rem; color: #94A3B8;">$1000</span>
@@ -117,13 +140,14 @@
                 style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;"
             >
                 {% for card in cards %}
-                <div 
-                    class="explore-card" 
-                    data-name="{{ card.name|lower }}" 
-                    data-issuer="{{ card.issuer|lower }}"
-                    data-categories="{{ card.categories|join:',' }}" 
+                <div
+                    class="explore-card"
+                    data-name="{{ card.name|lower }}"
+                    data-issuer="{{ card.issuer|default:''|lower }}"
+                    data-categories="{{ card.categories|join:',' }}"
                     data-fee="{{ card.annual_fee|default:0 }}"
-                    style="background: white; border-radius: 16px; padding: 1.5rem; border: 1px solid #E2E8F0; cursor: pointer; transition: all 0.2s ease; position: relative; display: flex; flex-direction: column;"
+                    data-index="{{ forloop.counter0 }}"
+                    style="background: white; border-radius: 16px; padding: 1.5rem; border: 1px solid #E2E8F0; cursor: pointer; transition: all 0.2s ease; position: relative; {% if forloop.counter0 >= 12 %}display: none;{% else %}display: flex;{% endif %} flex-direction: column;"
                     onclick="openCardModal('{{ card.id }}')"
                 >
                     <!-- Gradient Card Visual -->
@@ -196,6 +220,14 @@
                 {% endfor %}
             </div>
 
+            <!-- Load More Button -->
+            <div id="load-more-container" style="display: flex; justify-content: center; margin-top: 2rem; padding: 1.5rem 0;">
+                <button id="load-more-btn" onclick="loadMoreCards()" style="padding: 1rem 2.5rem; background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%); color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); display: flex; align-items: center; gap: 0.5rem;">
+                    <span>Show More Results</span>
+                    <span class="material-icons" style="font-size: 20px;">expand_more</span>
+                </button>
+            </div>
+
             <!-- No Results Message (hidden by default) -->
             <div id="no-results" style="display: none; text-align: center; padding: 4rem 2rem;">
                 <span class="material-icons" style="font-size: 4rem; color: #E2E8F0; margin-bottom: 1rem;">search_off</span>
@@ -214,18 +246,49 @@ const userMatchScores = {{ user_match_scores|safe|default:'{}' }};
 
 // Elements
 const searchInput = document.getElementById('search-input');
-const feeSlider = document.getElementById('fee-slider');
-const feeValue = document.getElementById('fee-value');
+const minFeeSlider = document.getElementById('min-fee-slider');
+const maxFeeSlider = document.getElementById('max-fee-slider');
+const minFeeValue = document.getElementById('min-fee-value');
+const maxFeeValue = document.getElementById('max-fee-value');
 const sortSelect = document.getElementById('sort-select');
 const issuerFilters = document.querySelectorAll('.issuer-filter');
 const categoryFilters = document.querySelectorAll('.category-filter');
 const cardsGrid = document.getElementById('cards-grid');
 const exploreCards = document.querySelectorAll('.explore-card');
 const noResults = document.getElementById('no-results');
+const loadMoreBtn = document.getElementById('load-more-btn');
+const loadMoreContainer = document.getElementById('load-more-container');
 
-// Update fee value display
-feeSlider.addEventListener('input', (e) => {
-    feeValue.textContent = `$${e.target.value}`;
+// Track visible cards
+let cardsPerPage = 12;
+let currentlyShowing = cardsPerPage;
+
+// Update fee value displays
+minFeeSlider.addEventListener('input', (e) => {
+    const minVal = parseInt(e.target.value);
+    const maxVal = parseInt(maxFeeSlider.value);
+    
+    // Ensure min doesn't exceed max
+    if (minVal > maxVal) {
+        e.target.value = maxVal;
+        minFeeValue.textContent = `$${maxVal}`;
+    } else {
+        minFeeValue.textContent = `$${minVal}`;
+    }
+    filterCards();
+});
+
+maxFeeSlider.addEventListener('input', (e) => {
+    const maxVal = parseInt(e.target.value);
+    const minVal = parseInt(minFeeSlider.value);
+    
+    // Ensure max doesn't go below min
+    if (maxVal < minVal) {
+        e.target.value = minVal;
+        maxFeeValue.textContent = `$${minVal}`;
+    } else {
+        maxFeeValue.textContent = `$${maxVal}`;
+    }
     filterCards();
 });
 
@@ -246,7 +309,8 @@ sortSelect.addEventListener('change', () => {
 
 function filterCards() {
     const query = searchInput.value.toLowerCase();
-    const maxFee = parseInt(feeSlider.value);
+    const minFee = parseInt(minFeeSlider.value);
+    const maxFee = parseInt(maxFeeSlider.value);
     
     // Get selected issuers and categories
     const selectedIssuers = Array.from(issuerFilters)
@@ -256,41 +320,115 @@ function filterCards() {
         .filter(f => f.checked)
         .map(f => f.value.toLowerCase());
     
-    let visibleCount = 0;
+    let matchingCards = [];
     
     exploreCards.forEach(card => {
         const name = card.dataset.name;
-        const issuer = card.dataset.issuer;
+        const issuer = card.dataset.issuer || '';
         const categories = card.dataset.categories.toLowerCase();
         const fee = parseInt(card.dataset.fee);
         
         // Search match
         const matchesSearch = query === '' || name.includes(query) || issuer.includes(query) || categories.includes(query);
         
-        // Fee match
-        const matchesFee = fee <= maxFee;
+        // Fee match (inclusive range)
+        const matchesFee = fee >= minFee && fee <= maxFee;
         
-        // Issuer match
-        const matchesIssuer = selectedIssuers.length === 0 || selectedIssuers.includes(issuer);
+        // Issuer match - ensure both are trimmed and compared properly
+        const matchesIssuer = selectedIssuers.length === 0 || (issuer && selectedIssuers.some(si => si.toLowerCase() === issuer.toLowerCase()));
         
         // Category match
         const matchesCategory = selectedCategories.length === 0 || selectedCategories.some(cat => categories.includes(cat));
         
         if (matchesSearch && matchesFee && matchesIssuer && matchesCategory) {
-            card.style.display = 'block';
-            visibleCount++;
+            matchingCards.push(card);
         } else {
             card.style.display = 'none';
         }
     });
     
-    if (visibleCount === 0) {
+    // Reset to showing first page of results
+    currentlyShowing = cardsPerPage;
+    
+    // Show first batch of matching cards
+    matchingCards.forEach((card, index) => {
+        if (index < currentlyShowing) {
+            card.style.display = 'flex';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+    
+    // Show/hide load more button
+    if (matchingCards.length > currentlyShowing) {
+        loadMoreContainer.style.display = 'flex';
+        updateLoadMoreButton(matchingCards.length);
+    } else {
+        loadMoreContainer.style.display = 'none';
+    }
+    
+    // Show/hide no results message
+    if (matchingCards.length === 0) {
         cardsGrid.style.display = 'none';
         noResults.style.display = 'block';
+        loadMoreContainer.style.display = 'none';
     } else {
         cardsGrid.style.display = 'grid';
         noResults.style.display = 'none';
     }
+}
+
+function loadMoreCards() {
+    const query = searchInput.value.toLowerCase();
+    const minFee = parseInt(minFeeSlider.value);
+    const maxFee = parseInt(maxFeeSlider.value);
+    
+    const selectedIssuers = Array.from(issuerFilters)
+        .filter(f => f.checked)
+        .map(f => f.value.toLowerCase());
+    const selectedCategories = Array.from(categoryFilters)
+        .filter(f => f.checked)
+        .map(f => f.value.toLowerCase());
+    
+    let matchingCards = [];
+    
+    exploreCards.forEach(card => {
+        const name = card.dataset.name;
+        const issuer = card.dataset.issuer || '';
+        const categories = card.dataset.categories.toLowerCase();
+        const fee = parseInt(card.dataset.fee);
+        
+        const matchesSearch = query === '' || name.includes(query) || issuer.includes(query) || categories.includes(query);
+        const matchesFee = fee >= minFee && fee <= maxFee;
+        const matchesIssuer = selectedIssuers.length === 0 || (issuer && selectedIssuers.some(si => si.toLowerCase() === issuer.toLowerCase()));
+        const matchesCategory = selectedCategories.length === 0 || selectedCategories.some(cat => categories.includes(cat));
+        
+        if (matchesSearch && matchesFee && matchesIssuer && matchesCategory) {
+            matchingCards.push(card);
+        }
+    });
+    
+    // Show next batch
+    currentlyShowing += cardsPerPage;
+    
+    matchingCards.forEach((card, index) => {
+        if (index < currentlyShowing) {
+            card.style.display = 'flex';
+        }
+    });
+    
+    // Hide button if all cards are shown
+    if (currentlyShowing >= matchingCards.length) {
+        loadMoreContainer.style.display = 'none';
+    } else {
+        updateLoadMoreButton(matchingCards.length);
+    }
+}
+
+function updateLoadMoreButton(totalMatching) {
+    const remaining = totalMatching - currentlyShowing;
+    const toShow = Math.min(remaining, cardsPerPage);
+    loadMoreBtn.querySelector('span:first-child').textContent = `Show ${toShow} More Result${toShow !== 1 ? 's' : ''}`;
 }
 
 // Card hover effects
@@ -305,9 +443,38 @@ exploreCards.forEach(card => {
         card.style.boxShadow = 'none';
     });
 });
+
+// Load more button hover effect
+loadMoreBtn.addEventListener('mouseenter', () => {
+    loadMoreBtn.style.transform = 'translateY(-2px)';
+    loadMoreBtn.style.boxShadow = '0 8px 20px rgba(99, 102, 241, 0.4)';
+});
+
+loadMoreBtn.addEventListener('mouseleave', () => {
+    loadMoreBtn.style.transform = 'translateY(0)';
+    loadMoreBtn.style.boxShadow = '0 4px 12px rgba(99, 102, 241, 0.3)';
+});
+
+// Initialize load more button on page load
+window.addEventListener('DOMContentLoaded', () => {
+    // Count total cards (all cards in the page)
+    const totalCards = exploreCards.length;
+    
+    if (totalCards > cardsPerPage) {
+        loadMoreContainer.style.display = 'flex';
+        updateLoadMoreButton(totalCards);
+    } else {
+        loadMoreContainer.style.display = 'none';
+    }
+});
 </script>
 
 <style>
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
 /* Gradient card backgrounds */
 .gradient-card {
     color: white;

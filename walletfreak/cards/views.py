@@ -102,6 +102,7 @@ def personality_detail(request, personality_id):
 
 def card_list(request):
     import json
+    from django.core.paginator import Paginator
     try:
         all_cards = db.get_cards()
     except Exception as e:
@@ -190,8 +191,12 @@ def card_list(request):
             
             user_match_scores[card['id']] = score
     
-    # Get filter options
-    issuers = sorted(list(set(c.get('issuer') for c in all_cards if c.get('issuer'))))
+    # Get filter options - ensure we only get valid, non-empty issuers
+    issuers = sorted(list(set(
+        c.get('issuer').strip()
+        for c in all_cards
+        if c.get('issuer') and c.get('issuer').strip()
+    )))
     
     # Collect all actual categories from cards
     actual_categories = set()
@@ -257,6 +262,11 @@ def card_list(request):
     elif sort_by == 'fee_high':
         filtered_cards = sorted(filtered_cards, key=lambda c: c.get('annual_fee', 0), reverse=True)
 
+    # Pagination
+    paginator = Paginator(filtered_cards, 12)  # 12 cards per page
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
+
     # Create cards dictionary for modal
     all_cards_dict = {}
     for card in all_cards:
@@ -265,7 +275,9 @@ def card_list(request):
     cards_json = json.dumps(all_cards_dict, default=str)
 
     context = {
-        'cards': filtered_cards,
+        'cards': page_obj,
+        'page_obj': page_obj,
+        'total_cards': len(filtered_cards),
         'cards_json': cards_json,
         'issuers': issuers,
         'categories': all_categories,
