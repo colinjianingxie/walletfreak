@@ -108,16 +108,24 @@ def card_list(request):
         print(f"Warning: Failed to fetch cards: {e}")
         all_cards = []
 
-    # Get user's wallet cards if authenticated
+    # Get user's wallet cards and personality if authenticated
     wallet_card_ids = set()
+    user_personality = None
+    user_match_scores = {}
+    
     if request.user.is_authenticated:
         uid = request.session.get('uid')
         if uid:
             try:
-                user_cards = db.get_user_cards(uid)  # Get all user cards regardless of status
+                user_cards = db.get_user_cards(uid)
                 wallet_card_ids = {card['card_id'] for card in user_cards}
             except Exception as e:
                 print(f"Warning: Failed to fetch user cards: {e}")
+            
+            try:
+                user_personality = db.get_user_assigned_personality(uid)
+            except Exception as e:
+                print(f"Warning: Failed to fetch user personality: {e}")
 
     # Derive categories for each card
     categories_map = {
@@ -150,6 +158,38 @@ def card_list(request):
         # Mark if card is in wallet
         card['in_wallet'] = card.get('id') in wallet_card_ids
 
+    # Calculate match percentages for authenticated users
+    if request.user.is_authenticated and user_personality:
+        # Get personality preferences
+        personality_categories = set()
+        if 'focus_categories' in user_personality:
+            personality_categories = set(user_personality['focus_categories'])
+        
+        for card in all_cards:
+            score = 50  # Base score
+            
+            # Category alignment (up to +30 points)
+            card_categories = set(card.get('categories', []))
+            if personality_categories:
+                category_overlap = len(card_categories & personality_categories)
+                score += min(30, category_overlap * 10)
+            
+            # Annual fee consideration (up to +20 or -20 points)
+            annual_fee = card.get('annual_fee', 0)
+            if annual_fee == 0:
+                score += 10  # Bonus for no fee
+            elif annual_fee > 500:
+                score -= 10  # Penalty for high fee
+            
+            # Already in wallet penalty (-30 points)
+            if card.get('in_wallet', False):
+                score -= 30
+            
+            # Ensure score is between 0 and 100
+            score = max(0, min(100, score))
+            
+            user_match_scores[card['id']] = score
+    
     # Get filter options
     issuers = sorted(list(set(c.get('issuer') for c in all_cards if c.get('issuer'))))
     
@@ -172,6 +212,7 @@ def card_list(request):
     max_fee_filter = request.GET.get('max_fee')
     search_query = request.GET.get('search', '').lower()
     wallet_filter = request.GET.get('wallet', '')  # 'in', 'out', or ''
+    sort_by = request.GET.get('sort', 'match')  # Default sort by match
     
     filtered_cards = all_cards
     
@@ -205,6 +246,16 @@ def card_list(request):
         filtered_cards = [c for c in filtered_cards if c.get('in_wallet', False)]
     elif wallet_filter == 'out':
         filtered_cards = [c for c in filtered_cards if not c.get('in_wallet', False)]
+    
+    # Apply sorting
+    if sort_by == 'match' and user_match_scores:
+        filtered_cards = sorted(filtered_cards, key=lambda c: user_match_scores.get(c['id'], 0), reverse=True)
+    elif sort_by == 'name':
+        filtered_cards = sorted(filtered_cards, key=lambda c: c.get('name', '').lower())
+    elif sort_by == 'fee_low':
+        filtered_cards = sorted(filtered_cards, key=lambda c: c.get('annual_fee', 0))
+    elif sort_by == 'fee_high':
+        filtered_cards = sorted(filtered_cards, key=lambda c: c.get('annual_fee', 0), reverse=True)
 
     # Create cards dictionary for modal
     all_cards_dict = {}
@@ -225,9 +276,12 @@ def card_list(request):
         'max_fee': max_fee,
         'current_min_fee': min_fee_filter or min_fee,
         'current_max_fee': max_fee_filter or max_fee,
-        'wallet_filter': wallet_filter
+        'wallet_filter': wallet_filter,
+        'user_match_scores': user_match_scores,
+        'sort_by': sort_by
     }
     return render(request, 'cards/card_list.html', context)
+
 
 def card_detail(request, card_id):
     try:

@@ -1,225 +1,360 @@
 {% extends 'base.html' %}
+{% load card_extras %}
+
+{%block main_style %}padding: 2rem 0; background: #F9FAFB; min-height: calc(100vh - 70px);{% endblock %}
 
 {% block content %}
-<!-- Explore Cards Header -->
-<div style="margin-bottom: 2rem;">
-    <div style="display: flex; align-items: center; gap: 0.625rem; margin-bottom: 1rem;">
-        <span style="font-size: 1rem;">🤖</span>
-        <span style="color: #6366F1; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;">AI RECOMMENDATIONS</span>
+<div style="max-width: 1600px; margin: 0 auto;">
+    <!-- Header Section -->
+    <div style="margin-bottom: 2rem;">
+        <h1 style="font-size: 2.25rem; font-weight: 800; margin: 0 0 0.5rem 0; color: #0F172A;">
+            Explore Cards
+        </h1>
+        <p style="color: #64748B; font-size: 1rem; margin: 0;">
+            {{ cards|length }} perfect card{{ cards|length|pluralize }} just for your wallet
+        </p>
     </div>
 
-    <h1 style="font-size: 2rem; font-weight: 700; margin: 0 0 0.625rem 0; color: #1F2937;">Explore Cards</h1>
-    <p style="color: #64748B; margin: 0; font-size: 0.9375rem;">Based on your spending profile (The Jetsetter), these cards will maximize your return.</p>
-</div>
-
-<!-- Search and Filters -->
-<div style="background: white; border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #E5E7EB; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
-    <div style="display: flex; align-items: center; gap: 1rem;">
-        <!-- Search Bar -->
+    <!-- Search and Sort Bar -->
+    <div style="background: white; border-radius: 12px; padding: 1rem; margin-bottom: 2rem; border: 1px solid #E2E8F0; display: flex; align-items: center; gap: 1rem;">
         <div style="position: relative; flex: 1;">
-            <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); font-size: 1rem;">🔍</span>
-            <input type="text" id="search-input" placeholder="Search cards by name or issuer..."
-                style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.75rem; border: 1px solid #E5E7EB; border-radius: 10px; font-size: 0.9375rem; outline: none;">
+            <span class="material-icons" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #94A3B8; font-size: 20px;">search</span>
+            <input 
+                type="text" 
+                id="search-input" 
+                placeholder="Search cards by name, issuer, perks, or category..."
+                value="{{ search_query }}"
+                style="width: 100%; padding: 0.75rem 1rem 0.75rem 3rem; border: 1px solid #E2E8F0; border-radius: 8px; font-size: 0.9375rem; outline: none; font-family: 'Outfit', sans-serif;"
+            >
         </div>
-
-        <!-- Filter Pills -->
-        <div class="filter-pills" id="filter-pills" style="display: flex; gap: 0.5rem;">
-            <button class="filter-pill active" data-category="all">All Cards</button>
-            <button class="filter-pill" data-category="travel">Travel</button>
-            <button class="filter-pill" data-category="cash-back">Cash Back</button>
-            <button class="filter-pill" data-category="no-fee">No Fee</button>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span style="color: #64748B; font-size: 0.875rem; font-weight: 600;">SORT BY:</span>
+            <select id="sort-select" style="padding: 0.75rem 1rem; border: 1px solid #E2E8F0; border-radius: 8px; font-size: 0.875rem; font-weight: 600; color: #1F2937; background: white; cursor: pointer; font-family: 'Outfit', sans-serif;">
+                <option value="match" {% if sort_by == 'match' %}selected{% endif %}>% Match</option>
+                <option value="name" {% if sort_by == 'name' %}selected{% endif %}>Alphabetical</option>
+                <option value="fee_low" {% if sort_by == 'fee_low' %}selected{% endif %}>Lowest Fee</option>
+                <option value="fee_high" {% if sort_by == 'fee_high' %}selected{% endif %}>Highest Fee</option>
+            </select>
         </div>
-        
-        <!-- Filter Icon -->
-        <button style="background: none; border: 1px solid #E5E7EB; border-radius: 10px; padding: 0.5rem 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;" title="More Filters">
-            <span style="font-size: 1.125rem;">⚙️</span>
-        </button>
     </div>
-</div>
 
-<!-- Cards Grid -->
-<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2rem;"
-    id="cards-container">
-    {% for card in cards %}
-    <div class="card-item" data-name="{{ card.name|lower }}" data-issuer="{{ card.issuer|lower }}"
-        data-categories="{{ card.categories|join:',' }}" data-fee="{{ card.annual_fee|default:0 }}"
-        style="background: white; border-radius: 16px; padding: 1.75rem; border: 1px solid #E5E7EB; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: all 0.3s; cursor: pointer;"
-        onclick="openCardModal('{{ card.id }}')">
-        <!-- 3D Credit Card -->
-        <div class="credit-card {% if 'american express' in card.name|lower or 'amex' in card.name|lower %}{% if 'platinum' in card.name|lower %}card-amex-platinum{% else %}card-gold{% endif %}{% elif 'chase' in card.name|lower %}card-chase{% elif 'capital one' in card.name|lower %}card-capital-one{% elif 'citi' in card.name|lower %}card-citi{% else %}card-chase{% endif %}"
-            style="margin-bottom: 1.5rem;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
-                <div style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;">
-                    {{ card.issuer|upper|default:"CREDIT CARD" }}
+    <!-- Main Content: Sidebar + Cards Grid -->
+    <div style="display: grid; grid-template-columns: 280px 1fr; gap: 2rem;">
+        <!-- Left Sidebar: Filters -->
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <!-- Annual Fee Filter -->
+            <div style="background: white; border-radius: 12px; padding: 1.5rem; border: 1px solid #E2E8F0;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                    <h3 style="font-size: 0.75rem; font-weight: 800; color: #64748B; margin: 0; letter-spacing: 0.1em;">MAX ANNUAL FEE</h3>
+                    <span id="fee-value" style="font-size: 0.875rem; font-weight: 700; color: #6366F1;">$1000</span>
                 </div>
-                <div style="font-size: 1rem;">💳</div>
+                <input 
+                    type="range" 
+                    id="fee-slider" 
+                    min="0" 
+                    max="1000" 
+                    value="{{ current_max_fee }}" 
+                    step="50"
+                    style="width: 100%; accent-color: #6366F1; cursor: pointer;"
+                >
+                <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+                    <span style="font-size: 0.75rem; color: #94A3B8;">$0</span>
+                    <span style="font-size: 0.75rem; color: #94A3B8;">$1000</span>
+                </div>
             </div>
-            <div class="credit-card-chip"></div>
-            <div class="credit-card-number">•••• •••• •••• {{ forloop.counter }}234</div>
-            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-                <div class="credit-card-name">YOUR NAME</div>
-                <div style="display: flex; gap: 0.25rem;">
-                    <div style="width: 20px; height: 20px; background: #EB001B; border-radius: 50%; opacity: 0.9;">
+
+            <!-- Issuers Filter -->
+            <div style="background: white; border-radius: 12px; padding: 1.5rem; border: 1px solid #E2E8F0;">
+                <h3 style="font-size: 0.75rem; font-weight: 800; color: #64748B; margin: 0 0 1rem 0; letter-spacing: 0.1em;">ISSUERS</h3>
+                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    {% for issuer in issuers %}
+                    <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                        <input 
+                            type="checkbox" 
+                            class="issuer-filter" 
+                            value="{{ issuer }}"
+                            {% if issuer in selected_issuers %}checked{% endif %}
+                            style="width: 18px; height: 18px; accent-color: #6366F1; cursor: pointer;"
+                        >
+                        <span style="font-size: 0.875rem; color: #1F2937; font-weight: 500;">{{ issuer }}</span>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Category Filter -->
+            <div style="background: white; border-radius: 12px; padding: 1.5rem; border: 1px solid #E2E8F0;">
+                <h3 style="font-size: 0.75rem; font-weight: 800; color: #64748B; margin: 0 0 1rem 0; letter-spacing: 0.1em;">CATEGORY</h3>
+                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    {% for category in categories %}
+                    <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                        <input 
+                            type="checkbox" 
+                            class="category-filter" 
+                            value="{{ category }}"
+                            {% if category in selected_categories %}checked{% endif %}
+                            style="width: 18px; height: 18px; accent-color: #6366F1; cursor: pointer;"
+                        >
+                        <span style="font-size: 0.875rem; color: #1F2937; font-weight: 500;">{{ category }}</span>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Recent Explore (Optional) -->
+            <div style="background: white; border-radius: 12px; padding: 1.5rem; border: 1px solid #E2E8F0;">
+                <h3 style="font-size: 0.75rem; font-weight: 800; color: #64748B; margin: 0 0 1rem 0; letter-spacing: 0.1em;">RECENT EXPLORE</h3>
+                <div style="display: flex; align-items: center; justify-content: center; padding: 2rem 0; color: #94A3B8; font-size: 0.875rem;">
+                    No recent cards
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Content: Cards Grid -->
+        <div>
+            <div 
+                id="cards-grid" 
+                style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;"
+            >
+                {% for card in cards %}
+                <div 
+                    class="explore-card" 
+                    data-name="{{ card.name|lower }}" 
+                    data-issuer="{{ card.issuer|lower }}"
+                    data-categories="{{ card.categories|join:',' }}" 
+                    data-fee="{{ card.annual_fee|default:0 }}"
+                    style="background: white; border-radius: 16px; padding: 1.5rem; border: 1px solid #E2E8F0; cursor: pointer; transition: all 0.2s ease; position: relative; display: flex; flex-direction: column;"
+                    onclick="openCardModal('{{ card.id }}')"
+                >
+                    <!-- Gradient Card Visual -->
+                    <div class="gradient-card {% if 'Chase' in card.issuer %}card-chase{% elif 'American Express' in card.issuer or 'Amex' in card.issuer %}{% if 'Gold' in card.name %}card-gold{% elif 'Platinum' in card.name %}card-platinum{% else %}card-amex{% endif %}{% elif 'Capital One' in card.issuer %}card-capital-one{% elif 'Citi' in card.issuer %}card-citi{% else %}card-default{% endif %}" 
+                        style="height: 180px; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div style="font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; opacity: 0.9; color: inherit;">
+                                {{ card.issuer|upper|default:"CREDIT CARD" }}
+                            </div>
+                            <span class="material-icons" style="font-size: 24px; opacity: 0.8; color: inherit;">credit_card</span>
+                        </div>
+                        <div>
+                            <div class="card-chip-small" style="width: 40px; height: 30px; background: rgba(255,255,255,0.3); border-radius: 4px; margin-bottom: 1.5rem;"></div>
+                            <div style="font-family: monospace; font-size: 1rem; letter-spacing: 0.15em; margin-bottom: 1rem; opacity: 0.9; color: inherit;">•••• •••• •••• {{ forloop.counter0|stringformat:"04d" }}</div>
+                            <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.8; color: inherit;">CARDHOLDER NAME</div>
+                        </div>
                     </div>
-                    <div
-                        style="width: 20px; height: 20px; background: #F79E1B; border-radius: 50%; opacity: 0.9; margin-left: -8px;">
+
+                    <!-- Card Info -->
+                    <div style="flex: 1; display: flex; flex-direction: column;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                            <h3 style="font-size: 1.125rem; font-weight: 700; color: #0F172A; margin: 0; flex: 1; line-height: 1.3; min-height: 3.9rem;">{{ card.name }}</h3>
+                            {% if user.is_authenticated and user_match_scores %}
+                                <div style="margin-left: 0.75rem;">
+                                    <div style="font-size: 1.5rem; font-weight: 800; color: #0F172A; line-height: 1; text-align: right;">{{ user_match_scores|get_item:card.id|default:0 }}%</div>
+                                    <div style="font-size: 0.65rem; color: #10B981; font-weight: 700; text-align: right; margin-top: 0.125rem; letter-spacing: 0.05em;">MATCH</div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div style="font-size: 0.875rem; color: #64748B; margin-bottom: 0.75rem;">{{ card.issuer }}</div>
+                        
+                        <!-- Category Badges -->
+                        {% if card.categories %}
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; min-height: 1.625rem;">
+                            {% for category in card.categories|slice:":3" %}
+                            <span style="background: #EEF2FF; color: #6366F1; padding: 0.25rem 0.625rem; border-radius: 6px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">{{ category }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div style="min-height: 1.625rem; margin-bottom: 1rem;"></div>
+                        {% endif %}
+
+                        <!-- Spacer to push fee and button to bottom -->
+                        <div style="flex: 1;"></div>
+
+                        <!-- Fee Section -->
+                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #F9FAFB; border-radius: 8px; margin-bottom: 1rem;">
+                            <div style="flex: 1;">
+                                <div style="font-size: 0.65rem; color: #9CA3AF; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 0.25rem;">FEE</div>
+                                <div style="font-size: 1rem; font-weight: 700; color: #1F2937;">${{ card.annual_fee|default:0 }}</div>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- View Details Button -->
+                    <button 
+                        onclick="event.stopPropagation(); openCardModal('{{ card.id }}');"
+                        style="width: 100%; background: #1E293B; color: white; padding: 0.875rem; text-align: center; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.5rem; border: none; border-radius: 8px; font-size: 0.875rem; cursor: pointer; transition: all 0.2s; font-family: 'Outfit', sans-serif;"
+                    >
+                        View Details
+                        <span class="material-icons" style="font-size: 16px;">arrow_forward</span>
+                    </button>
                 </div>
-            </div>
-        </div>
-
-        <!-- Card Details -->
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem;">
-            <div style="flex: 1;">
-                <h3 style="font-size: 1.125rem; font-weight: 700; margin: 0 0 0.375rem 0; color: #1F2937;">
-                    {{ card.name }}
-                </h3>
-                <div style="font-size: 0.875rem; color: #64748B;">{{ card.issuer }}</div>
-            </div>
-            <div>
-                <div style="font-size: 1.75rem; font-weight: 800; color: #1F2937; text-align: right; line-height: 1;">
-                    {% if forloop.counter == 1 %}98{% elif forloop.counter == 2 %}88{% else %}85{% endif %}%
+                {% empty %}
+                <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem;">
+                    <span class="material-icons" style="font-size: 4rem; color: #E2E8F0; margin-bottom: 1rem;">credit_card</span>
+                    <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem; color: #1F2937;">No cards found</h2>
+                    <p style="color: #64748B;">Try adjusting your filters or search query.</p>
                 </div>
-                <div style="font-size: 0.6875rem; color: #10B981; font-weight: 700; text-align: right; margin-top: 0.25rem; letter-spacing: 0.025em;">
-                    MATCH</div>
+                {% endfor %}
+            </div>
+
+            <!-- No Results Message (hidden by default) -->
+            <div id="no-results" style="display: none; text-align: center; padding: 4rem 2rem;">
+                <span class="material-icons" style="font-size: 4rem; color: #E2E8F0; margin-bottom: 1rem;">search_off</span>
+                <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem; color: #1F2937;">No cards match your filters</h2>
+                <p style="color: #64748B;">Try adjusting your search or filters.</p>
             </div>
         </div>
-
-        <!-- Rewards Info -->
-        <div style="display: flex; align-items: center; gap: 0.625rem; margin-bottom: 0.75rem; padding: 0.875rem; background: #F9FAFB; border-radius: 10px;">
-            <span style="font-size: 1rem;">🎁</span>
-            <div style="flex: 1;">
-                <div style="font-size: 0.6875rem; color: #9CA3AF; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; font-weight: 600;">
-                    REWARDS</div>
-                <div style="font-size: 0.875rem; font-weight: 600; color: #1F2937;">
-                    {% if card.rewards_summary %}{{ card.rewards_summary }}{% else %}2x Everything{% endif %}
-                </div>
-            </div>
-        </div>
-
-        <!-- Annual Fee Info -->
-        <div style="display: flex; align-items: center; gap: 0.625rem; margin-bottom: 1.5rem; padding: 0.875rem; background: #F9FAFB; border-radius: 10px;">
-            <span style="font-size: 1rem;">💰</span>
-            <div style="flex: 1;">
-                <div style="font-size: 0.6875rem; color: #9CA3AF; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; font-weight: 600;">
-                    ANNUAL FEE</div>
-                <div style="font-size: 0.875rem; font-weight: 600; color: #1F2937;">${{ card.annual_fee|default:0 }}</div>
-            </div>
-        </div>
-
-        <!-- View Details Button -->
-        <button onclick="event.stopPropagation(); openCardModal('{{ card.id }}');"
-            style="width: 100%; background: #1E293B; color: white; padding: 0.875rem; text-align: center; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.5rem; border: none; border-radius: 10px; font-size: 0.9375rem; transition: all 0.2s; cursor: pointer;">
-            View Details
-            <span style="font-size: 0.875rem;">→</span>
-        </button>
     </div>
-    {% empty %}
-    <!-- Empty State -->
-    <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem;">
-        <div style="font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.3;">💳</div>
-        <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;">No cards found</h2>
-        <p style="color: var(--text-muted);">Try adjusting your filters or search query.</p>
-    </div>
-    {% endfor %}
-</div>
-
-<!-- No Results Message (hidden by default) -->
-<div id="no-results" style="display: none; text-align: center; padding: 4rem 2rem;">
-    <div style="font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.3;">🔍</div>
-    <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;">No cards match your filters</h2>
-    <p style="color: var(--text-muted);">Try adjusting your search or filters.</p>
 </div>
 
 {% include 'cards/includes/card_modal.html' %}
 
 <script>
-    const searchInput = document.getElementById('search-input');
-    const filterPills = document.querySelectorAll('.filter-pill');
-    const cardsContainer = document.getElementById('cards-container');
-    const cardItems = document.querySelectorAll('.card-item');
-    const noResults = document.getElementById('no-results');
+// Template filter for dictionary access
+const userMatchScores = {{ user_match_scores|safe|default:'{}' }};
 
-    let activeCategory = 'all';
+// Elements
+const searchInput = document.getElementById('search-input');
+const feeSlider = document.getElementById('fee-slider');
+const feeValue = document.getElementById('fee-value');
+const sortSelect = document.getElementById('sort-select');
+const issuerFilters = document.querySelectorAll('.issuer-filter');
+const categoryFilters = document.querySelectorAll('.category-filter');
+const cardsGrid = document.getElementById('cards-grid');
+const exploreCards = document.querySelectorAll('.explore-card');
+const noResults = document.getElementById('no-results');
 
-    // Search functionality
-    searchInput.addEventListener('input', filterCards);
+// Update fee value display
+feeSlider.addEventListener('input', (e) => {
+    feeValue.textContent = `$${e.target.value}`;
+    filterCards();
+});
 
-    // Filter pill functionality
-    filterPills.forEach(pill => {
-        pill.addEventListener('click', () => {
-            filterPills.forEach(p => p.classList.remove('active'));
-            pill.classList.add('active');
-            activeCategory = pill.dataset.category;
-            filterCards();
-        });
-    });
+// Search functionality
+searchInput.addEventListener('input', filterCards);
 
-    function filterCards() {
-        const query = searchInput.value.toLowerCase();
-        let visibleCount = 0;
+// Filter checkboxes
+issuerFilters.forEach(filter => filter.addEventListener('change', filterCards));
+categoryFilters.forEach(filter => filter.addEventListener('change', filterCards));
 
-        cardItems.forEach(card => {
-            const name = card.dataset.name;
-            const issuer = card.dataset.issuer;
-            const categories = card.dataset.categories.toLowerCase();
-            const fee = parseFloat(card.dataset.fee);
+// Sort functionality
+sortSelect.addEventListener('change', () => {
+    // Update URL with sort parameter
+    const url = new URL(window.location);
+    url.searchParams.set('sort', sortSelect.value);
+    window.location.href = url.toString();
+});
 
-            const matchesSearch = name.includes(query) || issuer.includes(query);
-
-            let matchesCategory = true;
-            if (activeCategory === 'travel') {
-                matchesCategory = categories.includes('travel');
-            } else if (activeCategory === 'cash-back') {
-                matchesCategory = categories.includes('cash') || categories.includes('cashback');
-            } else if (activeCategory === 'no-fee') {
-                matchesCategory = fee === 0;
-            }
-
-            if (matchesSearch && matchesCategory) {
-                card.style.display = 'block';
-                visibleCount++;
-            } else {
-                card.style.display = 'none';
-            }
-        });
-
-        if (visibleCount === 0) {
-            cardsContainer.style.display = 'none';
-            noResults.style.display = 'block';
+function filterCards() {
+    const query = searchInput.value.toLowerCase();
+    const maxFee = parseInt(feeSlider.value);
+    
+    // Get selected issuers and categories
+    const selectedIssuers = Array.from(issuerFilters)
+        .filter(f => f.checked)
+        .map(f => f.value.toLowerCase());
+    const selectedCategories = Array.from(categoryFilters)
+        .filter(f => f.checked)
+        .map(f => f.value.toLowerCase());
+    
+    let visibleCount = 0;
+    
+    exploreCards.forEach(card => {
+        const name = card.dataset.name;
+        const issuer = card.dataset.issuer;
+        const categories = card.dataset.categories.toLowerCase();
+        const fee = parseInt(card.dataset.fee);
+        
+        // Search match
+        const matchesSearch = query === '' || name.includes(query) || issuer.includes(query) || categories.includes(query);
+        
+        // Fee match
+        const matchesFee = fee <= maxFee;
+        
+        // Issuer match
+        const matchesIssuer = selectedIssuers.length === 0 || selectedIssuers.includes(issuer);
+        
+        // Category match
+        const matchesCategory = selectedCategories.length === 0 || selectedCategories.some(cat => categories.includes(cat));
+        
+        if (matchesSearch && matchesFee && matchesIssuer && matchesCategory) {
+            card.style.display = 'block';
+            visibleCount++;
         } else {
-            cardsContainer.style.display = 'grid';
-            noResults.style.display = 'none';
+            card.style.display = 'none';
         }
-    }
-
-    // Hover effects
-    cardItems.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.style.transform = 'translateY(-4px)';
-            card.style.boxShadow = 'var(--elevation-4)';
-        });
-
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'translateY(0)';
-            card.style.boxShadow = 'var(--elevation-1)';
-        });
     });
+    
+    if (visibleCount === 0) {
+        cardsGrid.style.display = 'none';
+        noResults.style.display = 'block';
+    } else {
+        cardsGrid.style.display = 'grid';
+        noResults.style.display = 'none';
+    }
+}
+
+// Card hover effects
+exploreCards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+        card.style.transform = 'translateY(-4px)';
+        card.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.1)';
+    });
+    
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'translateY(0)';
+        card.style.boxShadow = 'none';
+    });
+});
 </script>
 
 <style>
-    @media (max-width: 768px) {
-        div[style*="grid-template-columns: 1fr auto"] {
-            grid-template-columns: 1fr !important;
-        }
+/* Gradient card backgrounds */
+.gradient-card {
+    color: white;
+}
 
-        .filter-pills {
-            flex-wrap: wrap;
-        }
+.card-chase {
+    background: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%);
+}
 
-        div[style*="grid-template-columns: repeat(auto-fill, minmax(340px, 1fr))"] {
-            grid-template-columns: 1fr !important;
-        }
+.card-amex {
+    background: linear-gradient(135deg, #94A3B8 0%, #64748B 100%);
+}
+
+.card-platinum {
+    background: linear-gradient(135deg, #E2E8F0 0%, #94A3B8 100%);
+    color: #1F2937;
+}
+
+.card-gold {
+    background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 100%);
+    color: #78350F;
+}
+
+.card-capital-one {
+    background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+}
+
+.card-citi {
+    background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
+}
+
+.card-default {
+    background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+    div[style*="grid-template-columns: 280px 1fr"] {
+        grid-template-columns: 1fr !important;
     }
+}
+
+@media (max-width: 768px) {
+    #cards-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
 </style>
+
 {% endblock %}

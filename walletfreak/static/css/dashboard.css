@@ -1,0 +1,46 @@
+/* Dashboard Specific Styles */
+
+/* Filter Pills */
+.filter-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 99px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #4B5563;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.filter-pill:hover {
+    background: #F9FAFB;
+    border-color: #D1D5DB;
+}
+
+.filter-pill.active {
+    background: #1F2937;
+    color: white;
+    border-color: #1F2937;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* Hide scrollbar for filter container */
+#card-filters::-webkit-scrollbar {
+    display: none;
+}
+
+#card-filters {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}

@@ -1,6 +1,14 @@
 {% extends 'auth_base.html' %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/dashboard.js' %}"></script>
+{% endblock %}
+
 {% block content %}
 <!-- Hidden CSRF token for JavaScript -->
 <form style="display: none;">
@@ -33,27 +41,26 @@
                 {% if assigned_personality.match_score %}
                 <span style="color: #64748B; font-size: 0.9rem;">{{ assigned_personality.match_score }} card{{ assigned_personality.match_score|pluralize }} match</span>
                 {% endif %}
-                {% else %}
-                <span style="color: #64748B; font-size: 0.9rem;">
-                    {% if active_cards|length == 2 %}
-                    Add 1 more card to discover your personality
-                    {% elif active_cards|length == 1 %}
-                    Add 2 more cards to discover your personality
-                    {% else %}
-                    Add 3 cards to discover your personality
-                    {% endif %}
-                </span>
                 {% endif %}
             </div>
         </div>
-        
-        <!-- Search Bar (Right Aligned) -->
-        <div style="margin-left: auto; width: 300px;">
-            <div style="position: relative;">
-                <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #9CA3AF;"><span class="material-icons" style="font-size: 18px;">search</span></span>
-                <input type="text" placeholder="Search benefits..." style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem; border: 1px solid #E5E7EB; border-radius: 99px; font-size: 0.9rem; background: white;">
-            </div>
-        </div>
+        <!-- Search Bar Removed -->
+    </div>
+</div>
+
+<!-- Filter Pills Section -->
+<div style="margin-bottom: 2rem; overflow-x: auto; padding-bottom: 0.5rem;">
+    <div style="display: flex; gap: 0.75rem;" id="card-filters">
+        <button class="filter-pill active" onclick="filterBenefits('all')">
+            <span class="material-icons" style="font-size: 16px;">filter_list</span>
+            All Cards
+        </button>
+        {% for card in active_cards %}
+        <button class="filter-pill" onclick="filterBenefits('{{ card.card_id }}')">
+            <span class="dot" style="background: {% if 'platinum' in card.name|lower %}#E5E7EB{% elif 'gold' in card.name|lower %}#FCD34D{% elif 'sapphire' in card.name|lower %}#3B82F6{% else %}#9CA3AF{% endif %};"></span>
+            {{ card.name }}
+        </button>
+        {% endfor %}
     </div>
 </div>
 
@@ -140,7 +147,7 @@
     {% else %}
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); gap: 1.5rem;">
         {% for benefit in action_needed_benefits %}
-        <div class="benefit-card" style="background: white; border-radius: 24px; padding: 1.5rem; border: 1px solid #F3F4F6; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); transition: all 0.2s;">
+        <div class="benefit-card" data-card-id="{{ benefit.card_id }}" style="background: white; border-radius: 24px; padding: 1.5rem; border: 1px solid #F3F4F6; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); transition: all 0.2s;">
             <!-- Card Header -->
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
                 <div style="display: flex; gap: 1rem;">
@@ -240,7 +247,7 @@
 
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); gap: 1.5rem;">
         {% for benefit in maxed_out_benefits %}
-        <div class="benefit-card" style="background: white; border-radius: 24px; padding: 1.5rem; border: 1px solid #F3F4F6; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); transition: all 0.2s;">
+        <div class="benefit-card" data-card-id="{{ benefit.card_id }}" style="background: white; border-radius: 24px; padding: 1.5rem; border: 1px solid #F3F4F6; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); transition: all 0.2s;">
             <!-- Card Header -->
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
                 <div style="display: flex; gap: 1rem;">
