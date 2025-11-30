@@ -83,6 +83,8 @@ class Personality(FirestoreProxyModel):
     # Survey-related fields
     survey_questions_json = models.TextField(blank=True, help_text="JSON array of survey questions")
     recommended_cards_json = models.TextField(blank=True, help_text="JSON array of recommended card IDs")
+    wallet_setup_json = models.TextField(blank=True, help_text="JSON array of wallet setup categories with cards")
+    slots_json = models.TextField(blank=True, help_text="JSON array of slots with name, description, and recommended cards")
     
     class Meta:
         managed = False
@@ -121,6 +123,74 @@ class Personality(FirestoreProxyModel):
     def recommended_cards(self, value):
         """Serialize recommended cards to JSON"""
         self.recommended_cards_json = json.dumps(value)
+    
+    @property
+    def wallet_setup(self):
+        """Parse wallet setup from JSON"""
+        if self.wallet_setup_json:
+            try:
+                return json.loads(self.wallet_setup_json)
+            except:
+                return []
+        return []
+    
+    @wallet_setup.setter
+    def wallet_setup(self, value):
+        """Serialize wallet setup to JSON"""
+        self.wallet_setup_json = json.dumps(value, indent=2)
+    
+    @property
+    def slots(self):
+        """
+        Parse slots from JSON.
+        Each slot has: name, description, cards (list of card slugs), and optional order.
+        """
+        if self.slots_json:
+            try:
+                return json.loads(self.slots_json)
+            except:
+                return []
+        return []
+    
+    @slots.setter
+    def slots(self, value):
+        """Serialize slots to JSON"""
+        self.slots_json = json.dumps(value, indent=2)
+
+
+class Slot:
+    """
+    Helper class representing a wallet slot for a personality.
+    Each slot has a name, description, and list of recommended cards.
+    This is not a Django model - slots are stored as embedded JSON in Personality.
+    """
+    def __init__(self, name, description='', cards=None, order=0):
+        self.name = name
+        self.description = description
+        self.cards = cards or []
+        self.order = order
+    
+    def to_dict(self):
+        """Convert slot to dictionary for JSON serialization"""
+        return {
+            'name': self.name,
+            'description': self.description,
+            'cards': self.cards,
+            'order': self.order
+        }
+    
+    @classmethod
+    def from_dict(cls, data):
+        """Create a Slot instance from a dictionary"""
+        return cls(
+            name=data.get('name', ''),
+            description=data.get('description', ''),
+            cards=data.get('cards', []),
+            order=data.get('order', 0)
+        )
+    
+    def __repr__(self):
+        return f"Slot(name='{self.name}', cards={len(self.cards)})"
 
 
 class PersonalitySurvey(FirestoreProxyModel):
