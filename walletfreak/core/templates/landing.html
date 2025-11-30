@@ -1,10 +1,164 @@
-{% extends 'base.html' %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WalletFreak - Credit Card Recommendations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
+
+    <script id="firebase-config" type="application/json">
+        {{ firebase_config_json|safe }}
+    </script>
+    <script>
+        const firebaseConfig = JSON.parse(document.getElementById('firebase-config').textContent);
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Auth State Observer
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                if (user.emailVerified || user.providerData[0].providerId === 'phone') {
+                    const idToken = await user.getIdToken();
+                    const isDjangoAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}" === "true";
+
+                    if (!isDjangoAuthenticated) {
+                        const idToken = await user.getIdToken();
+                        fetch('/accounts/api/login/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ idToken: idToken })
+                        }).then(res => {
+                            if (res.ok) window.location.reload();
+                        });
+                    }
+                }
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container" style="display: flex; align-items: center; gap: 3rem;">
+            <a href="{% if user.is_authenticated %}{% url 'dashboard' %}{% else %}/{% endif %}" class="logo" style="display: flex; align-items: center; gap: 0.75rem; text-decoration: none;">
+                <img src="{% static 'images/logo-mascot.svg' %}" alt="WalletFreak" style="height: 40px; width: auto;">
+                <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.5rem; color: var(--dark); letter-spacing: -0.02em;">WalletFreak</span>
+            </a>
+
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                ☰
+            </button>
+
+            <div class="nav-links" id="nav-links" style="flex: 1; justify-content: space-between;">
+                <div style="display: flex; gap: 2rem; align-items: center;">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'dashboard' %}">Dashboard</a>
+                    {% else %}
+                    <a href="{% url 'features' %}">Features</a>
+                    {% endif %}
+                    <a href="{% url 'card_list' %}">Explore</a>
+                    <a href="{% url 'personality_list' %}">Personalities</a>
+                    <a href="{% url 'blog_list' %}">Blog</a>
+                </div>
+                
+
+                {% if user.is_authenticated %}
+                <div class="user-dropdown">
+                    <button class="user-dropdown-toggle" id="user-dropdown-toggle" aria-label="User menu">
+                        <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
+                            <span class="material-icons" style="font-size: 20px;">flight</span>
+                        </div>
+                        <span style="font-weight: 600; font-size: 0.95rem; color: var(--dark);">{{ user.first_name|default:"Alex" }}</span>
+                    </button>
+                    
+                    <div class="user-dropdown-menu" id="user-dropdown-menu">
+                        <div class="user-dropdown-header">
+                            <div class="user-dropdown-name">{{ user.first_name|default:"Alex" }} {{ user.last_name|default:"Smith" }}</div>
+                            <div class="user-dropdown-tagline">The Jetsetter</div>
+                        </div>
+                        
+                        <a href="{% url 'profile' %}" class="user-dropdown-menu-item">
+                            <span class="material-icons" style="font-size: 20px;">person</span>
+                            Profile
+                        </a>
+                        
+                        <a href="{% url 'settings' %}" class="user-dropdown-menu-item">
+                            <span class="material-icons" style="font-size: 20px;">settings</span>
+                            Settings
+                        </a>
+                        
+                        <a href="#" onclick="handleLogout(event)" class="user-dropdown-menu-item logout">
+                            <span class="material-icons" style="font-size: 20px;">logout</span>
+                            Log Out
+                        </a>
+                    </div>
+                </div>
+                {% else %}
+                <a href="{% url 'login' %}" class="btn btn-login">Log In</a>
+                {% endif %}
+            </div>
+        </div>
+        
+        <script>
+            function handleLogout(e) {
+                e.preventDefault();
+                firebase.auth().signOut().then(() => {
+                    window.location.href = "/logout/";
+                });
+            }
+        </script>
+    </nav>
+
+    <script>
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const navLinks = document.getElementById('nav-links');
+
+            if (mobileMenuToggle) {
+                mobileMenuToggle.addEventListener('click', function () {
+                    navLinks.classList.toggle('mobile-open');
+                    this.textContent = navLinks.classList.contains('mobile-open') ? '✕' : '☰';
+                });
+            }
+
+            // User dropdown toggle
+            const userDropdownToggle = document.getElementById('user-dropdown-toggle');
+            const userDropdownMenu = document.getElementById('user-dropdown-menu');
+
+            if (userDropdownToggle && userDropdownMenu) {
+                userDropdownToggle.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    userDropdownMenu.classList.toggle('active');
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function (e) {
+                    if (!userDropdownMenu.contains(e.target) && !userDropdownToggle.contains(e.target)) {
+                        userDropdownMenu.classList.remove('active');
+                    }
+                });
+            }
+        });
+    </script>
+
+    <main style="min-height: calc(100vh - 70px);">
+
 <!-- Hero Section -->
 <section style="background: linear-gradient(135deg, #F9FAFB 0%, #FFFFFF 100%); padding: 8rem 0 6rem; position: relative; overflow: hidden;">
-    <div class="container" style="position: relative; z-index: 1;">
+    <div style="position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 0 2rem;">
         <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: center;">
             <!-- Left side: Content -->
             <div>
@@ -84,6 +238,133 @@
                 </div>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- Stop leaving money on the table -->
+<section class="container" style="padding: 6rem 0;">
+    <div style="text-align: center; max-width: 800px; margin: 0 auto 4rem;">
+        <h2 style="font-size: 3rem; font-weight: 800; color: #0F172A; margin-bottom: 1.5rem; line-height: 1.2;">
+            Stop leaving money on the table.
+        </h2>
+        <p style="font-size: 1.125rem; line-height: 1.7; color: #64748B;">
+            Did you know 30% of credit card benefits go unused? Our dashboard tracks monthly, quarterly, and annual credits so you maximize every dollar.
+        </p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+        <!-- Left Side: Benefit Cards Preview -->
+        <div style="position: relative;">
+            <!-- Benefit Card 1 -->
+            <div style="background: white; border: 1px solid #E2E8F0; border-radius: 16px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="width: 48px; height: 48px; background: #FEF3C7; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                        🚗
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 700; color: #0F172A; margin-bottom: 0.25rem;">Uber Cash</div>
+                        <div style="font-size: 0.875rem; color: #64748B;">Monthly • Jan - Dec</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-weight: 800; font-size: 1.125rem; color: #0F172A;">$15.00</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Benefit Card 2 -->
+            <div style="background: white; border: 1px solid #E2E8F0; border-radius: 16px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="width: 48px; height: 48px; background: #DBEAFE; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                        🍔
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 700; color: #0F172A; margin-bottom: 0.25rem;">Uber Eats</div>
+                        <div style="font-size: 0.875rem; color: #64748B;">Monthly • Jan - Dec</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-weight: 800; font-size: 1.125rem; color: #0F172A;">$201.00</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Warning Card -->
+            <div style="background: #FEF2F2; border: 1px solid #FCA5A5; border-radius: 12px; padding: 1rem; display: flex; align-items: center; gap: 0.75rem;">
+                <div style="color: #DC2626; font-size: 1.25rem;">⚠️</div>
+                <div style="font-size: 0.875rem; color: #991B1B; font-weight: 600;">
+                    Warning: $16 credit expires in 5 days
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Features -->
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
+            <!-- Feature 1: Automated Tracking -->
+            <div style="display: flex; gap: 1rem;">
+                <div style="flex-shrink: 0;">
+                    <div style="width: 48px; height: 48px; background: #DBEAFE; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #2563EB;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="font-weight: 800; font-size: 1.125rem; color: #0F172A; margin-bottom: 0.5rem;">
+                        Automated Tracking
+                    </h3>
+                    <p style="color: #64748B; line-height: 1.6; font-size: 0.95rem;">
+                        We check your spending against the perks and annual programs so you don't build a spreadsheet.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Feature 2: Expiration Alerts -->
+            <div style="display: flex; gap: 1rem;">
+                <div style="flex-shrink: 0;">
+                    <div style="width: 48px; height: 48px; background: #FCE7F3; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #DB2777;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                            <line x1="12" y1="9" x2="12" y2="13"></line>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="font-weight: 800; font-size: 1.125rem; color: #0F172A; margin-bottom: 0.5rem;">
+                        Expiration Alerts
+                    </h3>
+                    <p style="color: #64748B; line-height: 1.6; font-size: 0.95rem;">
+                        Get notified before you lose a credit. We'll hop you don't rush you into deals you don't need.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Feature 3: Net Value Analysis -->
+            <div style="display: flex; gap: 1rem;">
+                <div style="flex-shrink: 0;">
+                    <div style="width: 48px; height: 48px; background: #D1FAE5; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #059669;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="font-weight: 800; font-size: 1.125rem; color: #0F172A; margin-bottom: 0.5rem;">
+                        Net Value Analysis
+                    </h3>
+                    <p style="color: #64748B; line-height: 1.6; font-size: 0.95rem;">
+                        See exactly how much value you're extracting vs. the annual fee you're paying.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Button -->
+    <div style="text-align: center; margin-top: 3rem;">
+        <a href="{% url 'dashboard' %}" class="btn" style="background: #0F172A; color: white; padding: 1rem 2.5rem; font-size: 1rem; font-weight: 700; border-radius: 8px; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+            Create Free Account
+        </a>
     </div>
 </section>
 
@@ -387,4 +668,91 @@
         }
     }
 </style>
-{% endblock %}
+    </main>
+
+    <footer style="background: var(--dark); color: white; padding: 4rem 0; margin-top: auto;">
+        <div class="container">
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
+                <!-- Brand Section -->
+                <div style="grid-column: span 1;">
+                    <a href="/" class="logo" style="color: white; margin-bottom: 1rem; display: inline-flex; align-items: center; gap: 0.75rem; text-decoration: none;">
+                        <img src="{% static 'images/logo-mascot.svg' %}" alt="WalletFreak" style="height: 32px; width: auto;">
+                        <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: -0.02em;">WalletFreak</span>
+                    </a>
+                    <p style="color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 1.5rem;">
+                        Master your wallet. Freakishly fast. The ultimate tool for credit card optimization.
+                    </p>
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="#" style="color: rgba(255,255,255,0.7); text-decoration: none;">🐦</a>
+                        <a href="#" style="color: rgba(255,255,255,0.7); text-decoration: none;">📸</a>
+                        <a href="#" style="color: rgba(255,255,255,0.7); text-decoration: none;">💼</a>
+                    </div>
+                </div>
+
+                <!-- Product Links -->
+                <div>
+                    <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 1.5rem; letter-spacing: 0.05em;">
+                        PRODUCT</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <a href="{% url 'features' %}"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Features</a>
+                        <a href="{% url 'personality_list' %}"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Wallet
+                            Vibe Quiz</a>
+                        <a href="{% url 'personality_list' %}"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Personalities</a>
+                        <a href="#"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Pricing</a>
+                    </div>
+                </div>
+
+                <!-- Resources Links -->
+                <div>
+                    <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 1.5rem; letter-spacing: 0.05em;">
+                        RESOURCES</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <a href="{% url 'blog_list' %}"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">The
+                            Ledger</a>
+                        <a href="#"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Card
+                            Database</a>
+                        <a href="#"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Help
+                            Center</a>
+                        <a href="#"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Contact
+                            Us</a>
+                    </div>
+                </div>
+
+                <!-- Legal Links -->
+                <div>
+                    <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 1.5rem; letter-spacing: 0.05em;">LEGAL
+                    </h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <a href="#"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Privacy
+                            Policy</a>
+                        <a href="#"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Terms
+                            of Service</a>
+                        <a href="#"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Cookie
+                            Policy</a>
+                        <a href="#"
+                            style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Disclaimer</a>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; text-align: center; color: rgba(255,255,255,0.5); font-size: 0.875rem;">
+                <p>&copy; 2025 WalletFreak. All rights reserved. WalletFreak is not a bank or lender.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
