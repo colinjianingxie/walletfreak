@@ -342,10 +342,18 @@
                                 <div style="font-size: 0.85rem; color: #64748B;">{{ card.issuer }}</div>
                             </div>
                             
-                            <div style="margin-left: auto; display: flex; align-items: center; gap: 1rem;" onclick="event.stopPropagation();">
+                            <div style="margin-left: auto; display: flex; align-items: center; gap: 0.5rem;" onclick="event.stopPropagation();">
+                                <button onclick="openAnniversaryModal('{{ card.id }}', '{{ card.name|escapejs }}', '{{ card.anniversary_date|default:'' }}')" 
+                                        style="background: none; border: none; cursor: pointer; color: #94A3B8; padding: 0.5rem; transition: color 0.2s;" 
+                                        onmouseover="this.style.color='#6366F1'" 
+                                        onmouseout="this.style.color='#94A3B8'"
+                                        title="Edit Anniversary Date">
+                                    <span class="material-icons" style="font-size: 20px;">event</span>
+                                </button>
+                                
                                 <form method="POST" action="{% url 'remove_card' card.id %}" style="margin: 0;" onsubmit="return confirm('Remove this card from your wallet?');">
                                     {% csrf_token %}
-                                    <button type="submit" style="background: none; border: none; cursor: pointer; color: #94A3B8; padding: 0.5rem; transition: color 0.2s;" onmouseover="this.style.color='#EF4444'" onmouseout="this.style.color='#94A3B8'">
+                                    <button type="submit" style="background: none; border: none; cursor: pointer; color: #94A3B8; padding: 0.5rem; transition: color 0.2s;" onmouseover="this.style.color='#EF4444'" onmouseout="this.style.color='#94A3B8'" title="Remove Card">
                                         <span class="material-icons" style="font-size: 20px;">delete</span>
                                     </button>
                                 </form>
@@ -954,48 +962,101 @@
     function addSelectedCard() {
         if (!selectedAddCard) return;
         
-        // Prompt for anniversary date
+        // Open anniversary modal in "add" mode
+        // We pass null as cardId to indicate we are adding a new card
+        // But we store the selectedAddCard.id in a separate variable or reuse currentAnniversaryCardId with a flag
+        
+        currentAnniversaryCardId = 'ADD_NEW_CARD'; // Special flag
+        document.getElementById('anniversary-card-name').textContent = selectedAddCard.name;
+        
+        // Default to current month
         const now = new Date();
         const currentYear = now.getFullYear();
         const currentMonth = String(now.getMonth() + 1).padStart(2, '0');
         const defaultDate = `${currentYear}-${currentMonth}-01`;
         
-        const message = "When did you get this card? (This helps track your benefits correctly)\n\nFormat: YYYY-MM-DD\nExample: 2025-10-01";
-        const anniversaryDate = prompt(message, defaultDate);
+        document.getElementById('anniversary-date-input').value = defaultDate;
+        document.getElementById('anniversary-modal').style.display = 'flex';
+    }
+    
+    // --- Anniversary Modal Logic ---
+    let currentAnniversaryCardId = null;
+
+    function openAnniversaryModal(cardId, cardName, currentDate) {
+        currentAnniversaryCardId = cardId;
+        document.getElementById('anniversary-card-name').textContent = cardName;
+        document.getElementById('anniversary-date-input').value = currentDate || '';
+        document.getElementById('anniversary-modal').style.display = 'flex';
+    }
+
+    function closeAnniversaryModal() {
+        document.getElementById('anniversary-modal').style.display = 'none';
+        currentAnniversaryCardId = null;
+    }
+
+    function saveAnniversaryDate() {
+        if (!currentAnniversaryCardId) return;
         
-        if (!anniversaryDate) {
-            // User cancelled
+        const date = document.getElementById('anniversary-date-input').value;
+        if (!date) {
+            alert('Please select a date');
             return;
         }
         
-        // Validate date format
-        const datePattern = /^\d{4}-\d{2}-\d{2}$/;
-        if (!datePattern.test(anniversaryDate)) {
-            alert('Invalid date format. Please use YYYY-MM-DD format (e.g., 2025-10-01)');
+        // Check if we are adding a new card
+        if (currentAnniversaryCardId === 'ADD_NEW_CARD') {
+            if (!selectedAddCard) return;
+            
+            // Submit form to add card with anniversary date
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = `/dashboard/add-card/${selectedAddCard.id}/`;
+            
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            const csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = 'csrfmiddlewaretoken';
+            csrfInput.value = csrfToken;
+            form.appendChild(csrfInput);
+            
+            // Add anniversary date
+            const dateInput = document.createElement('input');
+            dateInput.type = 'hidden';
+            dateInput.name = 'anniversary_date';
+            dateInput.value = date;
+            form.appendChild(dateInput);
+            
+            document.body.appendChild(form);
+            form.submit();
+            
+            closeAnniversaryModal();
             return;
         }
         
-        // Submit form to add card with anniversary date
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = `/dashboard/add-card/${selectedAddCard.id}/`;
+        // Otherwise, we are updating an existing card
+        const formData = new FormData();
+        formData.append('anniversary_date', date);
+        formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
         
-        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-        const csrfInput = document.createElement('input');
-        csrfInput.type = 'hidden';
-        csrfInput.name = 'csrfmiddlewaretoken';
-        csrfInput.value = csrfToken;
-        form.appendChild(csrfInput);
-        
-        // Add anniversary date
-        const dateInput = document.createElement('input');
-        dateInput.type = 'hidden';
-        dateInput.name = 'anniversary_date';
-        dateInput.value = anniversaryDate;
-        form.appendChild(dateInput);
-        
-        document.body.appendChild(form);
-        form.submit();
+        fetch(`/dashboard/update-anniversary/${currentAnniversaryCardId}/`, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert('Error saving date: ' + (data.error || 'Unknown error'));
+            }
+        })
+        .catch(err => {
+            console.error('Error:', err);
+            alert('Error saving date');
+        });
     }
 
     // --- Benefit Modal Logic (Existing) ---
