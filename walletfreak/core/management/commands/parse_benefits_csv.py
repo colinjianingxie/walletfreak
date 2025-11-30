@@ -45,6 +45,7 @@ def parse_benefits_csv(csv_path):
             benefit_desc = row['BenefitDescription'].strip()
             additional_details = row.get('AdditionalDetails', '').strip()
             category = row['BenefitCategory'].strip()
+            time_category = row['TimeCategory'].strip()
             dollar_value_str = row['DollarValue'].strip()
             enrollment_required_str = row.get('EnrollmentRequired', 'False').strip()
             effective_date = row['EffectiveDate'].strip()
@@ -86,11 +87,37 @@ def parse_benefits_csv(csv_path):
                 except ValueError:
                     pass
 
+            # Calculate period value mappings based on time category
+            period_values = {}
+            if dollar_value:
+                from datetime import datetime
+                current_year = datetime.now().year
+                
+                if 'Monthly' in time_category:
+                    per_month = dollar_value / 12
+                    for month in range(1, 13):
+                        period_key = f"{current_year}_{month:02d}"
+                        period_values[period_key] = round(per_month, 2)
+                elif 'Quarterly' in time_category:
+                    per_quarter = dollar_value / 4
+                    for quarter in range(1, 5):
+                        period_key = f"{current_year}_Q{quarter}"
+                        period_values[period_key] = round(per_quarter, 2)
+                elif 'Semi-annually' in time_category:
+                    per_half = dollar_value / 2
+                    period_values[f"{current_year}_H1"] = round(per_half, 2)
+                    period_values[f"{current_year}_H2"] = round(per_half, 2)
+                else:
+                    # Annual/Permanent - single period
+                    period_values[str(current_year)] = dollar_value
+
             benefit = {
                 'description': benefit_desc,
                 'additional_details': additional_details,
                 'category': category,
+                'time_category': time_category,  # New field for frequency
                 'dollar_value': dollar_value,
+                'period_values': period_values,  # Pre-calculated mappings for each period
                 'enrollment_required': enrollment_required,
                 'effective_date': effective_date,
                 'short_description': short_desc or benefit_desc,  # Fallback to full desc if short is missing

@@ -64,8 +64,14 @@ def dashboard(request):
     
     # Calculate benefits and values
     all_benefits = []
+    action_needed_benefits = []
+    maxed_out_benefits = []
     total_used_value = 0
     total_potential_value = 0
+    
+    current_year = datetime.now().year
+    current_month = datetime.now().month
+    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     
     for card in active_cards:
         try:
@@ -79,26 +85,125 @@ def dashboard(request):
                 dollar_value = benefit.get('dollar_value')
                 if dollar_value and dollar_value > 0:
                     benefit_id = f"benefit_{idx}"
+                    frequency = benefit.get('time_category', 'Annually (calendar year)')
                     
                     # Get usage from user's card data
-                    benefit_usage = card.get('benefit_usage', {}).get(benefit_id, {})
-                    used_amount = benefit_usage.get('used', 0)
+                    benefit_usage_data = card.get('benefit_usage', {}).get(benefit_id, {})
                     
-                    # Check if fully used
-                    is_used = used_amount >= dollar_value
+                    # Determine periods based on frequency
+                    periods = []
+                    current_period_status = 'empty' # empty, partial, full
+                    current_period_used = 0
                     
-                    all_benefits.append({
+                    # Get period values mapping from benefit
+                    period_values = benefit.get('period_values', {})
+                    
+                    if 'Monthly' in frequency:
+                        # Generate 12 months
+                        for m_idx, m_name in enumerate(months):
+                            period_key = f"{current_year}_{m_idx+1:02d}"
+                            period_max = period_values.get(period_key, dollar_value / 12)  # Fallback to division
+                            is_available = (m_idx + 1) <= current_month  # Only past/current months are available
+                            
+                            p_data = benefit_usage_data.get('periods', {}).get(period_key, {})
+                            p_used = p_data.get('used', 0)
+                            p_full = p_data.get('is_full', False)
+                            
+                            status = 'empty'
+                            if p_full or p_used >= period_max:
+                                status = 'full'
+                            elif p_used > 0:
+                                status = 'partial'
+                                
+                            periods.append({
+                                'label': m_name,
+                                'key': period_key,
+                                'status': status,
+                                'is_current': (m_idx + 1) == current_month,
+                                'max_value': period_max,
+                                'is_available': is_available
+                            })
+                            
+                            if (m_idx + 1) == current_month:
+                                current_period_status = status
+                                current_period_used = p_used
+
+                    elif 'Semi-annually' in frequency:
+                        # H1 (Jan-Jun), H2 (Jul-Dec)
+                        h1_key = f"{current_year}_H1"
+                        h2_key = f"{current_year}_H2"
+                        h1_max = period_values.get(h1_key, dollar_value / 2)
+                        h2_max = period_values.get(h2_key, dollar_value / 2)
+                        
+                        # H1
+                        h1_data = benefit_usage_data.get('periods', {}).get(h1_key, {})
+                        h1_status = 'full' if (h1_data.get('is_full') or h1_data.get('used', 0) >= h1_max) else ('partial' if h1_data.get('used', 0) > 0 else 'empty')
+                        h1_available = current_month >= 1  # Always available (starts in Jan)
+                        periods.append({'label': 'H1', 'key': h1_key, 'status': h1_status, 'is_current': current_month <= 6, 'max_value': h1_max, 'is_available': h1_available})
+                        
+                        # H2
+                        h2_data = benefit_usage_data.get('periods', {}).get(h2_key, {})
+                        h2_status = 'full' if (h2_data.get('is_full') or h2_data.get('used', 0) >= h2_max) else ('partial' if h2_data.get('used', 0) > 0 else 'empty')
+                        h2_available = current_month >= 7  # Only available starting July
+                        periods.append({'label': 'H2', 'key': h2_key, 'status': h2_status, 'is_current': current_month > 6, 'max_value': h2_max, 'is_available': h2_available})
+                        
+                        if current_month <= 6:
+                            current_period_status = h1_status
+                            current_period_used = h1_data.get('used', 0)
+                        else:
+                            current_period_status = h2_status
+                            current_period_used = h2_data.get('used', 0)
+
+                    elif 'Quarterly' in frequency:
+                        # Q1-Q4
+                        curr_q = (current_month - 1) // 3 + 1
+                        for q in range(1, 5):
+                            q_key = f"{current_year}_Q{q}"
+                            q_max = period_values.get(q_key, dollar_value / 4)
+                            q_available = q <= curr_q  # Only quarters up to current are available
+                            q_data = benefit_usage_data.get('periods', {}).get(q_key, {})
+                            q_status = 'full' if (q_data.get('is_full') or q_data.get('used', 0) >= q_max) else ('partial' if q_data.get('used', 0) > 0 else 'empty')
+                            periods.append({'label': f'Q{q}', 'key': q_key, 'status': q_status, 'is_current': q == curr_q, 'max_value': q_max, 'is_available': q_available})
+                            
+                            if q == curr_q:
+                                current_period_status = q_status
+                                current_period_used = q_data.get('used', 0)
+
+                    else:
+                        # Annual / Permanent
+                        period_key = f"{current_year}"
+                        p_data = benefit_usage_data.get('periods', {}).get(period_key, {})
+                        # Fallback to legacy 'used' if period data missing
+                        legacy_used = benefit_usage_data.get('used', 0)
+                        p_used = p_data.get('used', legacy_used)
+                        p_full = p_data.get('is_full', False)
+                        
+                        status = 'full' if (p_full or p_used >= dollar_value) else ('partial' if p_used > 0 else 'empty')
+                        periods.append({'label': str(current_year), 'key': period_key, 'status': status, 'is_current': True})
+                        
+                        current_period_status = status
+                        current_period_used = p_used
+
+                    benefit_obj = {
                         'card_id': card['id'],
                         'card_name': card_details['name'],
                         'benefit_id': benefit_id,
                         'benefit_name': benefit['description'][:50] + '...' if len(benefit['description']) > 50 else benefit['description'],
                         'amount': dollar_value,
-                        'used': used_amount,
-                        'is_used': is_used,
-                        'frequency': benefit.get('category', 'Permanent')
-                    })
+                        'used': current_period_used,
+                        'periods': periods,
+                        'frequency': frequency,
+                        'current_period_status': current_period_status
+                    }
                     
-                    total_used_value += used_amount
+                    all_benefits.append(benefit_obj)
+                    
+                    if current_period_status == 'full':
+                        maxed_out_benefits.append(benefit_obj)
+                    else:
+                        action_needed_benefits.append(benefit_obj)
+                    
+                    total_used_value += current_period_used
                     total_potential_value += dollar_value
         except Exception as e:
             print(f"Error processing card benefits: {e}")
@@ -112,8 +217,11 @@ def dashboard(request):
         'all_cards': all_cards,
         'available_cards_json': available_cards_json,
         'all_benefits': all_benefits,
+        'action_needed_benefits': action_needed_benefits,
+        'maxed_out_benefits': maxed_out_benefits,
         'total_used_value': total_used_value,
         'total_potential_value': total_potential_value,
+        'current_month_idx': current_month - 1,
     }
     
     return render(request, 'dashboard/dashboard.html', context)
@@ -259,7 +367,10 @@ def update_benefit_usage(request, user_card_id, benefit_id):
     
     try:
         usage_amount = float(request.POST.get('amount', 0))
-        db.update_benefit_usage(uid, user_card_id, benefit_id, usage_amount)
+        period_key = request.POST.get('period_key')
+        is_full = request.POST.get('is_full') == 'true'
+        
+        db.update_benefit_usage(uid, user_card_id, benefit_id, usage_amount, period_key=period_key, is_full=is_full)
         return JsonResponse({'success': True})
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)}, status=500)

@@ -111,12 +111,29 @@ class FirestoreService:
         ref = self.db.collection('users').document(uid).collection('user_cards').document(user_card_id)
         ref.update(data)
 
-    def update_benefit_usage(self, uid, user_card_id, benefit_name, usage_amount):
+    def update_benefit_usage(self, uid, user_card_id, benefit_name, usage_amount, period_key=None, is_full=False):
         card_ref = self.db.collection('users').document(uid).collection('user_cards').document(user_card_id)
-        card_ref.update({
-            f'benefit_usage.{benefit_name}.used': usage_amount,
+        
+        update_data = {
             f'benefit_usage.{benefit_name}.last_updated': firestore.SERVER_TIMESTAMP
-        })
+        }
+        
+        if period_key:
+            # Update specific period
+            update_data[f'benefit_usage.{benefit_name}.periods.{period_key}.used'] = usage_amount
+            update_data[f'benefit_usage.{benefit_name}.periods.{period_key}.is_full'] = is_full
+            
+            # Also update the main 'used' field for backward compatibility or summary
+            # For now, let's just update it to match the current period if it's the latest
+            # But simpler: just update the 'used' field to be the amount of the current operation
+            # The view logic will handle aggregation if needed.
+            # actually, let's keep 'used' as the "current active period usage"
+            update_data[f'benefit_usage.{benefit_name}.used'] = usage_amount
+        else:
+            # Legacy/Simple update
+            update_data[f'benefit_usage.{benefit_name}.used'] = usage_amount
+            
+        card_ref.update(update_data)
 
     # Super Staff Methods
     def is_super_staff(self, uid):
