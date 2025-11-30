@@ -2,7 +2,7 @@
 Quiz questions and personality data for the credit card recommendation system.
 """
 
-# Quiz Questions - 4 Stages
+# Quiz Questions
 QUIZ_QUESTIONS = [
     {
         'stage': 1,
@@ -51,7 +51,7 @@ QUIZ_QUESTIONS = [
         'stage': 2,
         'question': 'Where do you actually spend the most money every month?',
         'subtitle': 'Select all that apply',
-        'max_selections': None,  # No limit
+        'max_selections': None,
         'options': [
             {
                 'id': 'dining',
@@ -103,7 +103,7 @@ QUIZ_QUESTIONS = [
             },
             {
                 'id': 'low_fee',
-                'text': "I'll pay $95–$150 if it pays for itself quickly",
+                'text': 'I’ll pay $95–$150 if it pays for itself quickly',
                 'personalities': ['value-traveler', 'foodie-grocery-king', 'category-hunter']
             },
             {
@@ -113,7 +113,7 @@ QUIZ_QUESTIONS = [
             },
             {
                 'id': 'high_fee',
-                'text': "$550+ is totally okay if I'm getting way more value",
+                'text': '$550+ is totally okay if I’m getting way more value',
                 'personalities': ['luxury-jetsetter', 'wallet-freak', 'business-powerhouse']
             }
         ]
@@ -122,7 +122,7 @@ QUIZ_QUESTIONS = [
         'stage': 4,
         'question': 'Which of these sound like YOU?',
         'subtitle': 'Select all that apply',
-        'max_selections': None,  # No limit
+        'max_selections': None,
         'options': [
             {
                 'id': 'optimizer',
@@ -136,7 +136,7 @@ QUIZ_QUESTIONS = [
             },
             {
                 'id': 'churner',
-                'text': "I'm happy to open new cards for big welcome bonuses",
+                'text': 'I’m happy to open new cards for big welcome bonuses',
                 'personalities': ['wallet-freak', 'points-strategist', 'category-hunter']
             },
             {
@@ -146,7 +146,7 @@ QUIZ_QUESTIONS = [
             },
             {
                 'id': 'student',
-                'text': "I'm a student or just starting my credit journey",
+                'text': 'I’m a student or just starting my credit journey',
                 'personalities': ['student-starter']
             },
             {
@@ -163,61 +163,86 @@ QUIZ_QUESTIONS = [
     }
 ]
 
-# Personality Definitions with Wallet Setup
+# Personality Definitions
 PERSONALITIES = [
     {
-        'name': 'Wallet Freak',
-        'slug': 'wallet-freak',
-        'tagline': 'The Ultimate Optimizer',
-        'description': 'You are the final boss of this game. You track every portal, every transfer partner, every retention offer, and you make the issuers cry. You will gladly pay $695 if you extract $2,000+ in value.',
-        'wallet_setup': [
+        'name': 'The Global Entry',  # Renamed from Luxury Jetsetter to match screenshot vibe
+        'slug': 'luxury-jetsetter',
+        'tagline': 'The gold standard for travel.',
+        'description': 'Flexible points that transfer to high-value partners like Hyatt, plus unbeatable travel insurance.',
+        'stats': {
+            'annual_fees': 550,
+            'credit_value': 300,
+            'points_value': 1200,
+            'net_value': 950
+        },
+        'slots': [
             {
-                'category': 'Premium Hub (Lounges + Transfer Partners)',
-                'cards': ['chase-sapphire-reserve-card', 'capital-one-venture-x-rewards-credit-card', 'american-express-platinum-card']
+                'name': 'The Hub',
+                'description': 'The core card that unlocks transfer partners and travel insurance.',
+                'cards': ['chase-sapphire-reserve-card', 'chase-sapphire-preferred-card']
             },
             {
-                'category': 'Dining & Groceries Maximizer',
-                'cards': ['american-express-gold-card']
+                'name': 'The Point Generator',
+                'description': 'Earns points faster on everyday purchases to transfer to your Hub.',
+                'cards': ['chase-freedom-unlimited-card', 'chase-freedom-flex-card']
+            }
+        ],
+        'rules': [
+            {
+                'title': 'The Anchor',
+                'description': 'The Sapphire Reserve is your hub. It unlocks 50% more value for travel and enables point transfers.'
             },
             {
-                'category': 'Rotating/Quarterly Categories',
-                'cards': ['chase-freedom-flex-card', 'discover-it-cash-back-card']
+                'title': 'The Accumulator',
+                'description': 'Use Freedom Unlimited for everything else. Move those points to your Sapphire account to boost their value.'
             },
             {
-                'category': 'Catch-All / Flat Rate',
-                'cards': ['citi-double-cash-card', 'wells-fargo-active-cash-card']
-            },
-            {
-                'category': 'Business / Side Hustle',
-                'cards': ['chase-ink-business-preferred-credit-card', 'american-express-business-gold-card', 'chase-ink-business-cash-credit-card']
-            },
-            {
-                'category': 'Rent (if you pay rent)',
-                'cards': ['bilt-mastercard']
+                'title': 'The Redemption',
+                'description': 'Transfer points to World of Hyatt. A 30k point night at a Park Hyatt can be worth $1,000+.'
             }
         ]
     },
     {
-        'name': 'Luxury Jetsetter',
-        'slug': 'luxury-jetsetter',
-        'tagline': 'The Black Card Flexer',
-        'description': 'Airport lounges, hotel status, concierge, upgrades, metal cards that make people whisper "what\'s that?" You pay for the lifestyle and you get the lifestyle.',
-        'wallet_setup': [
+        'name': 'Wallet Freak',
+        'slug': 'wallet-freak',
+        'tagline': 'The Ultimate Optimizer',
+        'description': 'You are the final boss of this game. You track every portal, every transfer partner, every retention offer, and you make the issuers cry.',
+        'stats': {
+            'annual_fees': 1200,
+            'credit_value': 1400,
+            'points_value': 2500,
+            'net_value': 2700
+        },
+        'slots': [
             {
-                'category': 'Ultra-Premium Perks Card',
-                'cards': ['american-express-platinum-card', 'chase-sapphire-reserve-card']
+                'name': 'Premium Hub',
+                'description': 'Lounge access and transfer partners.',
+                'cards': ['american-express-platinum-card', 'capital-one-venture-x-rewards-credit-card']
             },
             {
-                'category': 'Best-Value Premium Alternative',
-                'cards': ['capital-one-venture-x-rewards-credit-card']
+                'name': 'Dining & Grocery',
+                'description': 'Maximum multipliers on food.',
+                'cards': ['american-express-gold-card']
             },
             {
-                'category': 'Hotel Status Card',
-                'cards': ['hilton-honors-aspire-card-from-american-express', 'marriott-bonvoy-brilliant-american-express-card']
+                'name': 'Catch-All',
+                'description': 'For everything else.',
+                'cards': ['blue-business-plus-credit-card-from-american-express', 'chase-freedom-unlimited-card']
+            }
+        ],
+        'rules': [
+            {
+                'title': 'Maximize Credits',
+                'description': 'Ensure you use every single monthly credit (Uber, Dining, etc.) to offset the high fees.'
             },
             {
-                'category': 'Airline Status Card (optional)',
-                'cards': ['delta-skymiles-reserve-american-express-card', 'united-club-infinite-card']
+                'title': 'Retention Offers',
+                'description': 'Call every year when the annual fee hits to ask for a retention offer.'
+            },
+            {
+                'title': 'Business Cards',
+                'description': 'Use business cards to keep your personal credit report clean and earn more points.'
             }
         ]
     },
@@ -226,22 +251,32 @@ PERSONALITIES = [
         'slug': 'points-strategist',
         'tagline': 'The Transfer Partner Ninja',
         'description': 'You want transferable points and know every sweet spot redemption. You don\'t need Amex Platinum coupons — you just want the highest cents-per-point possible.',
-        'wallet_setup': [
+        'stats': {
+            'annual_fees': 395,
+            'credit_value': 300,
+            'points_value': 800,
+            'net_value': 705
+        },
+        'slots': [
             {
-                'category': 'Main Transferable Points Hub',
-                'cards': ['chase-sapphire-preferred-card', 'citi-strata-premier-card', 'capital-one-venture-x-rewards-credit-card']
+                'name': 'The Hub',
+                'description': 'Your main travel card.',
+                'cards': ['capital-one-venture-x-rewards-credit-card', 'chase-sapphire-preferred-card']
             },
             {
-                'category': 'Everyday Multiplier → Transfers to Hub',
-                'cards': ['chase-freedom-unlimited-card']
+                'name': 'The Multiplier',
+                'description': 'Earns 2x-3x on categories.',
+                'cards': ['capital-one-savorone-cash-rewards-credit-card', 'chase-freedom-flex-card']
+            }
+        ],
+        'rules': [
+            {
+                'title': 'Transfer Partners',
+                'description': 'Never redeem for cash back. Always transfer to airline or hotel partners.'
             },
             {
-                'category': 'Dining & Groceries Booster',
-                'cards': ['american-express-gold-card']
-            },
-            {
-                'category': 'Rotating Categories Add-on',
-                'cards': ['chase-freedom-flex-card']
+                'title': 'The Duo',
+                'description': 'Combine cards from the same ecosystem (e.g. Capital One Duo or Chase Trifecta) to pool points.'
             }
         ]
     },
@@ -250,18 +285,32 @@ PERSONALITIES = [
         'slug': 'business-powerhouse',
         'tagline': 'The 0.5–3x Everything Monster',
         'description': 'You run real money through cards — ads, software, inventory, shipping, travel. You want uncapped 3–5x on the categories that matter most to your business.',
-        'wallet_setup': [
+        'stats': {
+            'annual_fees': 690,
+            'credit_value': 400,
+            'points_value': 2000,
+            'net_value': 1710
+        },
+        'slots': [
             {
-                'category': 'Business Points Hub',
-                'cards': ['chase-ink-business-preferred-credit-card', 'american-express-business-gold-card']
+                'name': 'Ad Spend & Software',
+                'description': '4x points on top business categories.',
+                'cards': ['american-express-business-gold-card', 'chase-ink-business-preferred-credit-card']
             },
             {
-                'category': 'High-Limit Cash Back',
-                'cards': ['chase-ink-business-cash-credit-card', 'chase-ink-business-unlimited-card']
+                'name': 'Flat Rate Business',
+                'description': '2x or 1.5x on all other business spend.',
+                'cards': ['blue-business-plus-credit-card-from-american-express', 'chase-ink-business-unlimited-card']
+            }
+        ],
+        'rules': [
+            {
+                'title': 'Separate Expenses',
+                'description': 'Keep business expenses strictly on business cards for easier accounting.'
             },
             {
-                'category': 'Personal Travel Pair (to transfer Ink points)',
-                'cards': ['chase-sapphire-preferred-card', 'chase-sapphire-reserve-card']
+                'title': 'Employee Cards',
+                'description': 'Issue cards to employees to earn points on their spend too.'
             }
         ]
     },
@@ -270,14 +319,32 @@ PERSONALITIES = [
         'slug': 'cashback-pragmatist',
         'tagline': 'Points Are a Scam, Give Me Cash',
         'description': 'You want real cash, no games, no portals, no annual fees (or tiny ones).',
-        'wallet_setup': [
+        'stats': {
+            'annual_fees': 0,
+            'credit_value': 0,
+            'points_value': 500,
+            'net_value': 500
+        },
+        'slots': [
             {
-                'category': 'Main Everyday Card (2%+ cash back)',
-                'cards': ['wells-fargo-active-cash-card', 'citi-double-cash-card', 'chase-freedom-unlimited-card']
+                'name': 'Flat Rate',
+                'description': '2% cash back on everything.',
+                'cards': ['wells-fargo-active-cash-card', 'citi-double-cash-card']
             },
             {
-                'category': 'Optional Category Booster (no fee)',
-                'cards': ['citi-custom-cash-card', 'us-bank-cash-plus-visa-signature-card']
+                'name': 'Category Booster',
+                'description': '5% on your top category.',
+                'cards': ['citi-custom-cash-card']
+            }
+        ],
+        'rules': [
+            {
+                'title': 'Keep it Simple',
+                'description': 'Focus on cards with no annual fee and high cash back rates.'
+            },
+            {
+                'title': 'Auto-Redeem',
+                'description': 'Set up auto-redemption to your bank account so you never have to think about it.'
             }
         ]
     },
@@ -286,46 +353,91 @@ PERSONALITIES = [
         'slug': 'foodie-grocery-king',
         'tagline': '6% groceries / 4–5% dining or nothing',
         'description': 'Your biggest spend is eating. You need the absolute highest return on restaurants, grocery stores, and food delivery.',
-        'wallet_setup': [
+        'stats': {
+            'annual_fees': 250,
+            'credit_value': 240,
+            'points_value': 800,
+            'net_value': 790
+        },
+        'slots': [
             {
-                'category': 'Grocery Maximizer',
-                'cards': ['blue-cash-preferred-card-from-american-express', 'american-express-gold-card']
+                'name': 'Dining & Groceries',
+                'description': 'The heavy hitters for food spend.',
+                'cards': ['american-express-gold-card', 'capital-one-savorone-cash-rewards-credit-card']
             },
             {
-                'category': 'Dining & Food Delivery',
-                'cards': ['american-express-gold-card', 'capital-one-savorone-cash-rewards-credit-card', 'us-bank-altitude-go-visa-signature-card']
+                'name': 'Supermarkets',
+                'description': '6% back at US supermarkets.',
+                'cards': ['blue-cash-preferred-card-from-american-express']
+            }
+        ],
+        'rules': [
+            {
+                'title': 'Dining Credits',
+                'description': 'Use the monthly dining credits on the Gold card to offset the fee.'
             },
             {
-                'category': 'Everything Else',
-                'cards': ['wells-fargo-active-cash-card', 'citi-double-cash-card']
+                'title': 'Grocery Cap',
+                'description': 'Watch out for the $6k annual cap on the Blue Cash Preferred.'
             }
         ]
     },
     {
         'name': 'Simple Minimalist',
         'slug': 'simple-minimalist',
-        'tagline': 'One card, peace of mind, decent return',
+        'tagline': 'One card, peace of mind',
         'description': 'You want one card that does everything reasonably well and you never want to think about it again.',
-        'wallet_setup': [
+        'stats': {
+            'annual_fees': 0,
+            'credit_value': 0,
+            'points_value': 400,
+            'net_value': 400
+        },
+        'slots': [
             {
-                'category': 'Your One Perfect Card',
-                'cards': ['citi-double-cash-card', 'wells-fargo-active-cash-card', 'chase-freedom-unlimited-card', 'capital-one-quicksilver-cash-rewards-credit-card']
+                'name': 'The One Card',
+                'description': 'Your daily driver for everything.',
+                'cards': ['citi-double-cash-card', 'wells-fargo-active-cash-card', 'capital-one-quicksilver-cash-rewards-credit-card']
+            }
+        ],
+        'rules': [
+            {
+                'title': 'Set and Forget',
+                'description': 'Put everything on autopay and use this one card for every purchase.'
             }
         ]
     },
     {
         'name': 'Value Traveler',
         'slug': 'value-traveler',
-        'tagline': 'Good travel perks without $550+ fee pain',
+        'tagline': 'Good travel perks without the pain',
         'description': 'You love travel but want the fee easily offset. Venture X and CSP are your sweet spot.',
-        'wallet_setup': [
+        'stats': {
+            'annual_fees': 95,
+            'credit_value': 50,
+            'points_value': 600,
+            'net_value': 555
+        },
+        'slots': [
             {
-                'category': 'Main Travel Card',
-                'cards': ['capital-one-venture-x-rewards-credit-card', 'chase-sapphire-preferred-card', 'citi-strata-premier-card']
+                'name': 'Travel Hub',
+                'description': 'Great value travel card.',
+                'cards': ['chase-sapphire-preferred-card', 'capital-one-venture-rewards-credit-card']
             },
             {
-                'category': 'Everyday Pair',
-                'cards': ['chase-freedom-unlimited-card', 'capital-one-savorone-cash-rewards-credit-card']
+                'name': 'Everyday',
+                'description': 'Earns points on daily spend.',
+                'cards': ['chase-freedom-unlimited-card']
+            }
+        ],
+        'rules': [
+            {
+                'title': 'Hotel Credit',
+                'description': 'Use the $50 hotel credit on the Sapphire Preferred to reduce the effective fee.'
+            },
+            {
+                'title': 'Transfer Partners',
+                'description': 'Learn to use Hyatt or airline partners for outsized value.'
             }
         ]
     },
@@ -334,38 +446,61 @@ PERSONALITIES = [
         'slug': 'category-hunter',
         'tagline': '5% rotating categories = dopamine',
         'description': 'You activate every quarterly category and love stacking offers.',
-        'wallet_setup': [
+        'stats': {
+            'annual_fees': 0,
+            'credit_value': 0,
+            'points_value': 600,
+            'net_value': 600
+        },
+        'slots': [
             {
-                'category': 'Quarterly/Rotating King',
-                'cards': ['chase-freedom-flex-card', 'discover-it-cash-back-card', 'us-bank-cash-plus-visa-signature-card']
+                'name': 'Rotating Categories',
+                'description': '5% back on changing categories.',
+                'cards': ['chase-freedom-flex-card', 'discover-it-cash-back-card']
             },
             {
-                'category': 'Custom 5% Category Card',
+                'name': 'Custom Category',
+                'description': '5% on your top spend category.',
                 'cards': ['citi-custom-cash-card']
+            }
+        ],
+        'rules': [
+            {
+                'title': 'Activate Quarterly',
+                'description': 'Set a reminder to activate your 5% categories every quarter.'
             },
             {
-                'category': 'Flat Rate Backup',
-                'cards': ['citi-double-cash-card']
+                'title': 'Max Out',
+                'description': 'Try to hit the $1,500 spend cap on the 5% categories.'
             }
         ]
     },
     {
         'name': 'Student Starter',
         'slug': 'student-starter',
-        'tagline': 'Building credit while eating out and shopping',
+        'tagline': 'Building credit while eating out',
         'description': 'You\'re in school or just graduated, want no annual fee, high rewards on dining/Amazon/Uber, and easy approval.',
-        'wallet_setup': [
+        'stats': {
+            'annual_fees': 0,
+            'credit_value': 0,
+            'points_value': 200,
+            'net_value': 200
+        },
+        'slots': [
             {
-                'category': 'Best Student Card',
+                'name': 'Student Card',
+                'description': 'Great rewards with no credit history needed.',
                 'cards': ['discover-it-student-cash-back-card', 'capital-one-savorone-student-cash-rewards-credit-card']
+            }
+        ],
+        'rules': [
+            {
+                'title': 'Pay in Full',
+                'description': 'Always pay your full balance every month to build good credit.'
             },
             {
-                'category': 'No-Fee Everyday Card',
-                'cards': ['capital-one-quicksilver-student-cash-rewards-credit-card']
-            },
-            {
-                'category': 'First "Real" Travel Card (post-grad upgrade path)',
-                'cards': ['chase-freedom-unlimited-card', 'capital-one-ventureone-rewards-credit-card']
+                'title': 'Keep it Open',
+                'description': 'Keep your oldest card open to maintain a long credit history.'
             }
         ]
     }

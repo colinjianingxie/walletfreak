@@ -10,6 +10,13 @@ def personality_list(request):
         print(f"Warning: Failed to fetch personalities: {e}")
         personalities = []
     
+    # Fetch quiz questions from Firestore
+    try:
+        quiz_questions = db.get_quiz_questions()
+    except Exception as e:
+        print(f"Warning: Failed to fetch quiz questions: {e}")
+        quiz_questions = []
+
     # Get user's assigned personality if authenticated
     assigned_personality = None
     if request.user.is_authenticated:
@@ -26,7 +33,6 @@ def personality_list(request):
         all_cards = db.get_cards()
         for card in all_cards:
             # Add some derived fields for the modal
-            # Calculate rough value estimates if not present
             if 'annual_fee' not in card:
                 card['annual_fee'] = 0
             
@@ -40,12 +46,14 @@ def personality_list(request):
 
     # Convert personalities and cards to JSON for JavaScript
     personalities_json = json.dumps(personalities)
-    cards_json = json.dumps(all_cards_dict, default=str) # default=str to handle dates/objects
+    cards_json = json.dumps(all_cards_dict, default=str)
+    questions_json = json.dumps(quiz_questions)
     
     return render(request, 'cards/personality_list.html', {
         'personalities': personalities,
         'personalities_json': personalities_json,
         'cards_json': cards_json,
+        'questions_json': questions_json,
         'assigned_personality': assigned_personality
     })
 
@@ -59,76 +67,38 @@ def personality_detail(request, personality_id):
     if not personality:
         raise Http404("Personality not found")
     
-    # Fetch recommended cards
-    recommended_cards = []
-    total_annual_fees = 0
+    # Fetch recommended cards for the slots
+    # We need to fetch full card details for each card in the slots
     
-    # Categories map for deriving card categories
-    categories_map = {
-        'Travel': ['travel', 'flight', 'hotel', 'mile', 'vacation', 'rental car', 'transit'],
-        'Hotel': ['hotel', 'marriott', 'hilton', 'hyatt', 'ihg'],
-        'Flights': ['flight', 'airline', 'delta', 'united', 'southwest', 'british airways', 'avios', 'aeroplan'],
-        'Dining': ['dining', 'restaurant', 'food', 'eats'],
-        'Groceries': ['groceries', 'supermarket', 'whole foods'],
-        'Gas': ['gas'],
-        'Student': ['student'],
-        'Cash Back': ['cash back', 'cash rewards'],
-        'Luxury': ['lounge', 'luxury', 'platinum', 'reserve']
-    }
-    
+    # Create a map of all cards for easy lookup
+    all_cards_map = {}
     try:
-        for card_id in personality.get('recommended_cards', []):
-            try:
-                card = db.get_card_by_slug(card_id)
-                if card:
-                    # Calculate annual fees
-                    annual_fee = card.get('annual_fee', 0)
-                    total_annual_fees += annual_fee
-                    
-                    # Derive categories for the card
-                    card_cats = set()
-                    text_to_check = (card.get('name', '') + ' ' + str(card.get('rewards_structure', '')) + ' ' + str(card.get('benefits', ''))).lower()
-                    
-                    for cat, keywords in categories_map.items():
-                        if any(k in text_to_check for k in keywords):
-                            card_cats.add(cat)
-                    
-                    # Special cases
-                    if annual_fee == 0:
-                        card_cats.add('No Annual Fee')
-                    
-                    card['categories'] = sorted(list(card_cats))
-                    recommended_cards.append(card)
-            except Exception:
-                continue
+        all_cards = db.get_cards()
+        for card in all_cards:
+            all_cards_map[card['id']] = card
+            all_cards_map[card.get('slug')] = card # Support slug lookup too
     except Exception:
         pass
+
+    # Hydrate slots with card objects
+    if 'slots' in personality:
+        for slot in personality['slots']:
+            hydrated_cards = []
+            for card_slug in slot.get('cards', []):
+                card = all_cards_map.get(card_slug)
+                if card:
+                    hydrated_cards.append(card)
+            slot['hydrated_cards'] = hydrated_cards
+
+    # Stats are already in personality object from Firestore
     
-    # Calculate financial metrics (using rough estimates)
-    # These could be made more sophisticated based on actual card benefits
-    credit_value = total_annual_fees * 1.15  # Rough estimate: 115% of fees back in credits
-    points_value = total_annual_fees * 1.8   # Rough estimate: 180% of fees in points value
-    net_value = credit_value + points_value - total_annual_fees
-    
-    # Create cards dictionary for modal
-    all_cards_dict = {}
-    for card in recommended_cards:
-        all_cards_dict[card['id']] = card
-    
-    cards_json = json.dumps(all_cards_dict, default=str)
-    
-    import sys
-    sys.stderr.write(f"DEBUG: Fetched personality for {personality_id}: {personality}\n")
+    cards_json = json.dumps(all_cards_map, default=str)
     
     return render(request, 'cards/personality_detail.html', {
         'personality': personality,
-        'recommended_cards': recommended_cards,
         'cards_json': cards_json,
-        'total_annual_fees': int(total_annual_fees),
-        'credit_value': int(credit_value),
-        'points_value': int(points_value),
-        'net_value': int(net_value)
     })
+
 
 def card_list(request):
     import json

@@ -15,14 +15,14 @@
             <!-- Left: Personality Icon -->
             <div>
                 <div style="width: 120px; height: 120px; background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 40px rgba(139, 92, 246, 0.4);">
-                    <img src="{% static 'img/personalities/'|add:personality.id|add:'.svg' %}" alt="{{ personality.name }}" style="width: 60%; height: 60%; object-fit: contain;" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'font-size: 3rem;\'>💳</span>'">
+                    <img src="{% static 'img/personalities/'|add:personality.slug|add:'.svg' %}" alt="{{ personality.name }}" style="width: 60%; height: 60%; object-fit: contain;" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'font-size: 3rem;\'>💳</span>'">
                 </div>
             </div>
 
             <!-- Right: Personality Info -->
             <div>
                 <div style="display: inline-block; background: rgba(139, 92, 246, 0.2); color: #c4b5fd; padding: 0.4rem 1rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; margin-bottom: 1rem; text-transform: uppercase;">
-                    {{ personality.tagline|default:"MAXIMUM OPTIMIZATION - COMPLEX REDEMPTIONS"|upper }}
+                    {{ personality.slug|upper|slice:":20"|cut:"-" }}
                 </div>
 
                 <h1 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1rem; line-height: 1.1; color: white;">
@@ -38,7 +38,7 @@
 </section>
 
 <!-- Financial Metrics Section -->
-<section class="container" style="padding: 0; transform: translateY(-2rem);">
+<section class="container" style="padding: 0; transform: translateY(-2rem); position: relative; z-index: 10;">
     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;">
         <!-- Annual Fees -->
         <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;">
@@ -46,8 +46,8 @@
                 <span style="color: #ef4444;">📊</span>
                 <span>Annual Fees</span>
             </div>
-            <div style="font-size: 2rem; font-weight: 700; color: #ef4444;">
-                -${{ total_annual_fees|default:"1390" }}
+            <div id="metric-annual-fees" style="font-size: 2rem; font-weight: 700; color: #ef4444;">
+                $0
             </div>
         </div>
 
@@ -57,8 +57,8 @@
                 <span style="color: #3b82f6;">⭕</span>
                 <span>Credit Value</span>
             </div>
-            <div style="font-size: 2rem; font-weight: 700; color: #10b981;">
-                +${{ credit_value|default:"1600" }}
+            <div id="metric-credit-value" style="font-size: 2rem; font-weight: 700; color: #10b981;">
+                $0
             </div>
         </div>
 
@@ -68,8 +68,8 @@
                 <span style="color: #8b5cf6;">✓</span>
                 <span>Points Value</span>
             </div>
-            <div style="font-size: 2rem; font-weight: 700; color: #10b981;">
-                +${{ points_value|default:"2500" }}
+            <div id="metric-points-value" style="font-size: 2rem; font-weight: 700; color: #10b981;">
+                $0
             </div>
         </div>
 
@@ -79,78 +79,84 @@
                 <span style="color: #10b981;">⚡</span>
                 <span>Net Value</span>
             </div>
-            <div style="font-size: 2rem; font-weight: 700; color: #10b981;">
-                +${{ net_value|default:"2710" }}
+            <div id="metric-net-value" style="font-size: 2rem; font-weight: 700; color: #10b981;">
+                $0
             </div>
         </div>
     </div>
+    <div style="text-align: right; margin-top: 0.5rem; font-size: 0.8rem; color: #6b7280; font-style: italic;">
+        * Approximate values based on sign-up bonuses and annual fees.
+    </div>
 </section>
 
-<!-- The Perfect Loadout Section -->
-<section class="container" style="padding: 4rem 0;">
+<!-- Build Your Loadout Section -->
+<section class="container" style="padding: 2rem 0 4rem 0;">
     <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem;">
         <span style="font-size: 1.5rem;">⚡</span>
         <h2 style="font-size: clamp(1.75rem, 3vw, 2.25rem); font-weight: 700; margin: 0;">
-            The Perfect Loadout
+            Build Your Loadout
         </h2>
     </div>
 
-    {% if recommended_cards %}
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
-        {% for card in recommended_cards %}
-        <div style="background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer;" 
-            onclick="openCardModal('{{ card.id }}')" 
-            onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.15)';" 
-            onmouseout="this.style.transform=''; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)';">
-            <div style="text-decoration: none; color: inherit;">
-                <!-- Card Visual -->
-                <div style="padding: 2rem; {% if 'american express' in card.name|lower or 'amex' in card.name|lower %}{% if 'platinum' in card.name|lower %}background: linear-gradient(135deg, #D7D7D7 0%, #A8A8A8 100%);{% elif 'gold' in card.name|lower %}background: linear-gradient(135deg, #F4E5C3 0%, #D4AF37 100%);{% else %}background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);{% endif %}{% elif 'chase' in card.name|lower %}background: linear-gradient(135deg, #1E40AF 0%, #1E3A8A 100%);{% elif 'capital one' in card.name|lower %}{% if 'venture x' in card.name|lower %}background: linear-gradient(135deg, #1F2937 0%, #111827 100%);{% else %}background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);{% endif %}{% elif 'citi' in card.name|lower %}background: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%);{% else %}background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);{% endif %} min-height: 200px; display: flex; flex-direction: column; justify-content: space-between; color: white; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
-                    <!-- Issuer -->
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                        <div style="font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; opacity: 0.9;">
-                            {{ card.issuer|upper|default:"CREDIT CARD" }}
-                        </div>
-                        <div style="width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
-                            <span style="font-size: 1.5rem;">💳</span>
-                        </div>
-                    </div>
-
-                    <!-- Card Number -->
-                    <div>
-                        <div style="width: 45px; height: 35px; background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); border-radius: 6px; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.2);"></div>
-                        <div style="font-family: 'Courier New', monospace; font-size: 1rem; letter-spacing: 0.15em; margin-bottom: 1rem; opacity: 0.95;">
-                            •••• •••• •••• {{ forloop.counter }}234
-                        </div>
-                        <div style="font-size: 0.85rem; font-weight: 600; opacity: 0.9;">
-                            FUTURE YOU
-                        </div>
-                    </div>
+    {% if personality.slots %}
+    <div style="display: grid; gap: 2rem;">
+        {% for slot in personality.slots %}
+        <div style="background: white; border-radius: 20px; padding: 2rem; border: 1px solid #e5e7eb; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: grid; grid-template-columns: 300px 1fr; gap: 3rem; align-items: start;">
+            <!-- Slot Info -->
+            <div>
+                <div style="display: inline-block; background: #f3f4f6; color: #4b5563; padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem;">
+                    SLOT {{ forloop.counter }}
                 </div>
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem; color: #111827;">{{ slot.name }}</h3>
+                <p style="color: #6b7280; line-height: 1.6; font-size: 0.95rem;">
+                    {{ slot.description }}
+                </p>
+            </div>
 
-                <!-- Card Info -->
-                <div style="padding: 1.5rem;">
-                    <div style="font-weight: 700; font-size: 1.05rem; color: #111827; margin-bottom: 0.5rem;">
-                        {{ card.name }}
-                    </div>
-                    <div style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">
-                        ${{ card.annual_fee|default:0 }}<span style="font-size: 0.75rem; font-weight: 400; color: #6b7280;"> annual fee</span>
-                    </div>
+            <!-- Cards in Slot -->
+            <div style="display: flex; flex-wrap: wrap; gap: 1.5rem;">
+                {% for card in slot.hydrated_cards %}
+                <div class="card-option" 
+                     data-id="{{ card.id }}"
+                     data-fee="{{ card.annual_fee|default:0 }}"
+                     data-bonus-value="{{ card.sign_up_bonus.value|default:0 }}"
+                     data-bonus-currency="{{ card.sign_up_bonus.currency|default:'points' }}"
+                     data-slot="{{ forloop.parentloop.counter }}"
+                     onclick="toggleCardSelection(this, {{ forloop.parentloop.counter }})"
+                     style="position: relative; width: 320px; flex-shrink: 0; cursor: pointer; transition: transform 0.2s;">
                     
-                    <!-- Categories/Tags -->
-                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                        {% if card.categories %}
-                            {% for category in card.categories|slice:":2" %}
-                            <span style="background: #f3f4f6; color: #4b5563; padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.75rem; font-weight: 500;">
-                                ⭕ {{ category }}
-                            </span>
-                            {% endfor %}
-                        {% else %}
-                            <span style="background: #dbeafe; color: #1e40af; padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.75rem; font-weight: 500;">
-                                ⭕ Dining/Groceries
-                            </span>
-                        {% endif %}
+                    <!-- Selection Indicator -->
+                    <div class="selection-indicator" style="position: absolute; top: 1rem; right: 1rem; width: 24px; height: 24px; background: rgba(255,255,255,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; border: 1px solid rgba(255,255,255,0.5);">
+                        <span class="material-icons status-icon" style="font-size: 16px; color: white;">add</span>
+                    </div>
+
+                    <!-- Info Icon -->
+                    <div style="position: absolute; top: 1rem; left: 1rem; z-index: 10; opacity: 0.7;" onclick="event.stopPropagation(); openCardModal('{{ card.id }}')">
+                        <span class="material-icons" style="font-size: 20px; color: white;">info</span>
+                    </div>
+
+                    <!-- Card Visual -->
+                    <div style="background: {% if 'american express' in card.name|lower or 'amex' in card.name|lower %}{% if 'platinum' in card.name|lower %}linear-gradient(135deg, #D7D7D7 0%, #A8A8A8 100%){% elif 'gold' in card.name|lower %}linear-gradient(135deg, #F4E5C3 0%, #D4AF37 100%){% else %}linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%){% endif %}{% elif 'chase' in card.name|lower %}linear-gradient(135deg, #1E40AF 0%, #1E3A8A 100%){% elif 'capital one' in card.name|lower %}{% if 'venture x' in card.name|lower %}linear-gradient(135deg, #1F2937 0%, #111827 100%){% else %}linear-gradient(135deg, #DC2626 0%, #991B1B 100%){% endif %}{% elif 'citi' in card.name|lower %}linear-gradient(135deg, #2563EB 0%, #1E40AF 100%){% else %}linear-gradient(135deg, #6366F1 0%, #4F46E5 100%){% endif %}; 
+                        border-radius: 16px; padding: 1.5rem; color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15); height: 200px; display: flex; flex-direction: column; justify-content: space-between; border: 2px solid transparent;">
+                        
+                        <div style="display: flex; justify-content: flex-end; align-items: flex-start; margin-bottom: 1rem; height: 24px;">
+                            <!-- Icons are absolutely positioned -->
+                        </div>
+                        
+                        <div style="font-family: 'Courier New', monospace; font-size: 1.1rem; letter-spacing: 0.1em; opacity: 0.9;">
+                            •••• •••• •••• 4242
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                            <div>
+                                <div style="font-size: 0.6rem; font-weight: 600; opacity: 0.8; margin-bottom: 0.25rem;">STRATEGY</div>
+                                <div style="font-size: 0.9rem; font-weight: 700; line-height: 1.2;">{{ card.name }}</div>
+                            </div>
+                            <div style="width: 30px; height: 30px; background: rgba(255,255,255,0.2); border-radius: 50%;"></div>
+                        </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
         </div>
         {% endfor %}
@@ -159,66 +165,36 @@
     <!-- Empty State -->
     <div style="text-align: center; padding: 4rem 2rem; background: white; border-radius: 16px; border: 2px dashed #e5e7eb;">
         <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;">💳</div>
-        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">No recommendations yet</h3>
+        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">No loadout defined</h3>
         <p style="color: #6b7280;">We're still building out card recommendations for this personality.</p>
     </div>
     {% endif %}
 </section>
 
 <!-- Rules of Engagement Section -->
+{% if personality.rules %}
 <section class="container" style="padding: 0 0 4rem 0;">
-    <div style="background: white; padding: 3rem; border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;">
+    <div style="background: white; padding: 3rem; border-radius: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;">
         <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 2rem; color: #111827;">
             Rules of Engagement
         </h2>
 
         <div style="display: grid; gap: 1.5rem;">
-            <!-- Rule 1 -->
-            <div style="display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start;">
-                <div style="width: 40px; height: 40px; background: #111827; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">
-                    1
+            {% for rule in personality.rules %}
+            <div style="display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: start;">
+                <div style="width: 32px; height: 32px; background: #111827; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0; margin-top: 0.25rem;">
+                    {{ forloop.counter }}
                 </div>
                 <div>
-                    <h3 style="font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem; color: #111827;">The Foundation</h3>
-                    <p style="color: #6b7280; line-height: 1.6;">Use Venture X for all non-category spend. This effectively costs ~$5/yr after the travel credit.</p>
+                    <h3 style="font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem; color: #111827;">{{ rule.title }}</h3>
+                    <p style="color: #6b7280; line-height: 1.6; margin: 0;">{{ rule.description }}</p>
                 </div>
             </div>
-
-            <!-- Rule 2 -->
-            <div style="display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start;">
-                <div style="width: 40px; height: 40px; background: #111827; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">
-                    2
-                </div>
-                <div>
-                    <h3 style="font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem; color: #111827;">The Daily Driver</h3>
-                    <p style="color: #6b7280; line-height: 1.6;">Put every single calorie you eat on the Gold Card. 4x points is unbeatable for dining/groceries.</p>
-                </div>
-            </div>
-
-            <!-- Rule 3 -->
-            <div style="display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start;">
-                <div style="width: 40px; height: 40px; background: #111827; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">
-                    3
-                </div>
-                <div>
-                    <h3 style="font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem; color: #111827;">The Perks</h3>
-                    <p style="color: #6b7280; line-height: 1.6;">The Platinum stays in the sock drawer. It only comes out for flights (5x) and lounge access. Use UberSats credit monthly.</p>
-                </div>
-            </div>
-
-            <!-- Rule 4 -->
-            <div style="display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start;">
-                <div style="width: 40px; height: 40px; background: #111827; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">
-                    4
-                </div>
-                <div>
-                    <h3 style="font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem; color: #111827;">The End Game</h3>
-                    <p style="color: #6b7280; line-height: 1.6;">Transfer Amex MR points to Aна for flights to Japan, or Virgin Atlantic for Delta One. Never use points for cash back.</p>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>
+{% endif %}
 
 <!-- CTA Section -->
 <section style="background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); padding: 4rem 0; color: white; position: relative; overflow: hidden;">
@@ -245,8 +221,9 @@
             grid-template-columns: repeat(2, 1fr) !important;
         }
         
-        section .container > div[style*="grid-template-columns: repeat(3, 1fr)"] {
-            grid-template-columns: repeat(2, 1fr) !important;
+        div[style*="grid-template-columns: 300px 1fr"] {
+            grid-template-columns: 1fr !important;
+            gap: 1.5rem !important;
         }
     }
 
@@ -256,12 +233,129 @@
             text-align: center;
         }
         
-        section .container > div[style*="grid-template-columns: repeat(4, 1fr)"],
-        section .container > div[style*="grid-template-columns: repeat(3, 1fr)"] {
+        section .container > div[style*="grid-template-columns: repeat(4, 1fr)"] {
             grid-template-columns: 1fr !important;
         }
     }
+
+    /* Selected state styles */
+    .card-option.selected .selection-indicator {
+        background: #10b981 !important;
+        border-color: #10b981 !important;
+    }
+    .card-option.selected .status-icon {
+        content: 'check';
+    }
+    .card-option.selected > div:last-child {
+        border-color: #10b981 !important;
+        box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2) !important;
+    }
 </style>
+
+<script>
+    // Initialize selected cards map
+    const selectedCards = {};
+
+    function toggleCardSelection(element, slotIndex) {
+        const cardId = element.dataset.id;
+        
+        // Deselect other cards in the same slot
+        const slotCards = document.querySelectorAll(`.card-option[data-slot="${slotIndex}"]`);
+        
+        // If clicking already selected card, do nothing (or toggle off? usually radio behavior implies one must be selected if we want a valid config, but let's allow toggling off for "0" state)
+        // Actually, let's implement radio behavior: clicking another selects it, clicking same does nothing (or toggles off).
+        // Let's allow toggle off to see "0" state.
+        
+        if (element.classList.contains('selected')) {
+            element.classList.remove('selected');
+            element.querySelector('.status-icon').textContent = 'add';
+            delete selectedCards[slotIndex];
+        } else {
+            slotCards.forEach(el => {
+                el.classList.remove('selected');
+                el.querySelector('.status-icon').textContent = 'add';
+            });
+            
+            element.classList.add('selected');
+            element.querySelector('.status-icon').textContent = 'check';
+            
+            selectedCards[slotIndex] = {
+                fee: parseFloat(element.dataset.fee),
+                bonusValue: parseFloat(element.dataset.bonusValue),
+                bonusCurrency: element.dataset.bonusCurrency
+            };
+        }
+        
+        calculateMetrics();
+    }
+
+    function calculateMetrics() {
+        let totalFees = 0;
+        let creditValue = 0;
+        let pointsValue = 0;
+        
+        Object.values(selectedCards).forEach(card => {
+            totalFees += card.fee;
+            
+            if (card.bonusCurrency.toLowerCase() === 'cash') {
+                creditValue += card.bonusValue;
+            } else {
+                // Assume points/miles are 1 cent per point
+                pointsValue += (card.bonusValue * 0.01);
+            }
+        });
+        
+        const netValue = creditValue + pointsValue - totalFees;
+        
+        // Update DOM with animation
+        animateValue('metric-annual-fees', -totalFees, true);
+        animateValue('metric-credit-value', creditValue);
+        animateValue('metric-points-value', pointsValue);
+        animateValue('metric-net-value', netValue);
+    }
+    
+    function animateValue(id, end, isNegative=false) {
+        const obj = document.getElementById(id);
+        const start = parseFloat(obj.textContent.replace(/[^0-9.-]+/g,"")) || 0;
+        const duration = 500;
+        let startTimestamp = null;
+        
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            const current = Math.floor(progress * (end - start) + start);
+            
+            const formatted = Math.abs(current).toLocaleString();
+            const sign = current < 0 ? '-' : (current > 0 ? '+' : '');
+            
+            obj.textContent = `${sign}$${formatted}`;
+            
+            // Color logic for Net Value
+            if (id === 'metric-net-value') {
+                obj.style.color = current >= 0 ? '#10b981' : '#ef4444';
+            }
+            
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        
+        window.requestAnimationFrame(step);
+    }
+
+    // Auto-select first card in each slot on load
+    document.addEventListener('DOMContentLoaded', () => {
+        const slots = new Set();
+        document.querySelectorAll('.card-option').forEach(el => slots.add(el.dataset.slot));
+        
+        slots.forEach(slot => {
+            const firstCard = document.querySelector(`.card-option[data-slot="${slot}"]`);
+            if (firstCard) {
+                toggleCardSelection(firstCard, slot);
+            }
+        });
+    });
+</script>
 
 {% include 'cards/includes/card_modal.html' %}
 {% endblock %}

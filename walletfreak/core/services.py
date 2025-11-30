@@ -59,6 +59,12 @@ class FirestoreService:
     def get_personality_by_slug(self, slug):
         return self.get_document('personalities', slug)
 
+    def get_quiz_questions(self):
+        """Get all quiz questions sorted by stage"""
+        query = self.db.collection('quiz_questions').order_by('stage')
+        return [doc.to_dict() | {'id': doc.id} for doc in query.stream()]
+
+
     # User Methods
     def get_user_profile(self, uid):
         return self.get_document('users', uid)
