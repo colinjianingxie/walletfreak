@@ -56,6 +56,29 @@
 
 
 
+            <!-- Welcome Offer -->
+            <div id="modal-welcome-offer-container" style="display: none; margin-bottom: 2rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; color: #94A3B8; font-weight: 600; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase;">
+                    <span class="material-icons" style="font-size: 16px;">card_giftcard</span> WELCOME OFFER
+                </div>
+                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 1.5rem;">
+                    <div style="flex: 1;">
+                        <div style="display: flex; align-items: baseline; gap: 0.4rem;">
+                            <div id="modal-welcome-value" style="font-size: 1.75rem; font-weight: 800; color: #0F172A; line-height: 1;">
+                                60,000
+                            </div>
+                            <div id="modal-welcome-currency" style="font-size: 1rem; font-weight: 700; color: #0F172A;">
+                                Points
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width: 1px; height: 32px; background: #E2E8F0;"></div>
+                    <div id="modal-welcome-terms" style="flex: 1; color: #64748B; font-size: 0.8rem; line-height: 1.4; font-weight: 500;">
+                        after $4k spend in 6 months
+                    </div>
+                </div>
+            </div>
+
             <div style="height: 1px; background: #E2E8F0; margin-bottom: 1.5rem;"></div>
 
             <!-- All Benefits -->
@@ -181,7 +204,30 @@ function openCardModal(cardId) {
     const verdict = card.verdict || card.description || 'This card offers great value for your spending needs.';
     document.getElementById('modal-verdict').textContent = verdict;
     
-
+    // Welcome Offer
+    const welcomeOffer = card.sign_up_bonus;
+    const welcomeContainer = document.getElementById('modal-welcome-offer-container');
+    
+    if (welcomeOffer && welcomeOffer.value > 0) {
+        welcomeContainer.style.display = 'block';
+        
+        let valueNum = '';
+        let valueCurrency = '';
+        
+        if (welcomeOffer.currency && welcomeOffer.currency.toLowerCase() === 'cash') {
+            valueNum = `$${welcomeOffer.value}`;
+            valueCurrency = 'Cash Back';
+        } else {
+            valueNum = welcomeOffer.value.toLocaleString();
+            valueCurrency = welcomeOffer.currency || 'Points';
+        }
+        
+        document.getElementById('modal-welcome-value').textContent = valueNum;
+        document.getElementById('modal-welcome-currency').textContent = valueCurrency;
+        document.getElementById('modal-welcome-terms').textContent = welcomeOffer.terms || '';
+    } else {
+        welcomeContainer.style.display = 'none';
+    }
     
     // Parse benefits from Firestore structure
     const benefits = card.benefits || [];

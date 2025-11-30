@@ -2,6 +2,37 @@ import csv
 from collections import defaultdict
 from django.utils.text import slugify
 
+def parse_signup_bonuses_csv(csv_path):
+    """
+    Parse the signup bonuses CSV and return a dictionary of bonuses.
+    
+    CSV Format: Vendor|CardName|EffectiveDate|Terms|SignUpBonusValue|Currency
+    """
+    bonuses = {}
+    try:
+        with open(csv_path, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f, delimiter='|')
+            for row in reader:
+                card_name = row['CardName'].strip()
+                
+                # Parse value
+                value = 0
+                try:
+                    value = int(row['SignUpBonusValue'].strip())
+                except ValueError:
+                    pass
+                    
+                bonuses[card_name] = {
+                    'terms': row['Terms'].strip(),
+                    'value': value,
+                    'currency': row['Currency'].strip(),
+                    'effective_date': row['EffectiveDate'].strip()
+                }
+    except FileNotFoundError:
+        print(f"Warning: Signup bonus CSV not found at {csv_path}")
+        
+    return bonuses
+
 def parse_benefits_csv(csv_path):
     """
     Parse the benefits CSV and return structured card data.
@@ -182,7 +213,10 @@ def convert_to_firestore_format(cards_dict):
             'benefits': card_data['benefits'],
             'image_url': '',
             'referral_links': [],
-            'user_type': []
+            'image_url': '',
+            'referral_links': [],
+            'sign_up_bonus': card_data.get('sign_up_bonus', {}),
+            'verdict': card_data.get('verdict', '')
         }
         
         firestore_cards.append(card_doc)
@@ -190,11 +224,18 @@ def convert_to_firestore_format(cards_dict):
     return firestore_cards
 
 
-def generate_cards_from_csv(csv_path):
+def generate_cards_from_csv(csv_path, signup_csv_path=None):
     """
     Main function to parse CSV and return Firestore-ready card data.
     """
     cards_dict = parse_benefits_csv(csv_path)
+    
+    if signup_csv_path:
+        signup_data = parse_signup_bonuses_csv(signup_csv_path)
+        for card_name, card in cards_dict.items():
+            if card_name in signup_data:
+                card['sign_up_bonus'] = signup_data[card_name]
+                
     return convert_to_firestore_format(cards_dict)
 
 
@@ -202,7 +243,8 @@ if __name__ == '__main__':
     # For testing
     import os
     csv_path = os.path.join(os.path.dirname(__file__), '../../../default_cards_2025_11_27.csv')
-    cards = generate_cards_from_csv(csv_path)
+    signup_csv_path = os.path.join(os.path.dirname(__file__), '../../../default_signup_2025_11_30.csv')
+    cards = generate_cards_from_csv(csv_path, signup_csv_path)
     print(f"Parsed {len(cards)} cards")
     for card in cards[:2]:  # Print first 2 as sample
         print(f"\n{card['name']} ({card['issuer']}):")

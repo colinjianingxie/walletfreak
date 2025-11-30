@@ -20,7 +20,7 @@ class CreditCard(models.Model):
     best_for = models.JSONField(default=list, blank=True)
     
     # New fields
-    user_type = models.JSONField(default=list, blank=True)
+    verdict = models.TextField(blank=True)
     referral_links = models.JSONField(default=list, blank=True)
     
     class Meta:

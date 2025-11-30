@@ -259,27 +259,17 @@
     function toggleCardSelection(element, slotIndex) {
         const cardId = element.dataset.id;
         
-        // Deselect other cards in the same slot
-        const slotCards = document.querySelectorAll(`.card-option[data-slot="${slotIndex}"]`);
-        
-        // If clicking already selected card, do nothing (or toggle off? usually radio behavior implies one must be selected if we want a valid config, but let's allow toggling off for "0" state)
-        // Actually, let's implement radio behavior: clicking another selects it, clicking same does nothing (or toggles off).
-        // Let's allow toggle off to see "0" state.
+        // Allow multiple selections per slot (soft-select)
         
         if (element.classList.contains('selected')) {
             element.classList.remove('selected');
             element.querySelector('.status-icon').textContent = 'add';
-            delete selectedCards[slotIndex];
+            delete selectedCards[cardId];
         } else {
-            slotCards.forEach(el => {
-                el.classList.remove('selected');
-                el.querySelector('.status-icon').textContent = 'add';
-            });
-            
             element.classList.add('selected');
             element.querySelector('.status-icon').textContent = 'check';
             
-            selectedCards[slotIndex] = {
+            selectedCards[cardId] = {
                 fee: parseFloat(element.dataset.fee),
                 bonusValue: parseFloat(element.dataset.bonusValue),
                 bonusCurrency: element.dataset.bonusCurrency
