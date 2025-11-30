@@ -206,7 +206,8 @@ def dashboard(request):
                         current_period_used = p_used
 
                     benefit_obj = {
-                        'card_id': card['id'],
+                        'user_card_id': card['id'],  # Firestore document ID for user_cards subcollection
+                        'card_id': card['card_id'],  # Card slug for filtering
                         'card_name': card_details['name'],
                         'benefit_id': benefit_id,
                         'benefit_name': benefit['description'][:50] + '...' if len(benefit['description']) > 50 else benefit['description'],
