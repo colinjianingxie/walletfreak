@@ -229,32 +229,76 @@
         <h2 style="font-size: 1.25rem; font-weight: 800; margin: 0; color: #1F2937;">Maxed Out <span style="color: #94A3B8; font-weight: 600; font-size: 1rem; margin-left: 0.25rem;">({{ maxed_out_benefits|length }})</span></h2>
     </div>
 
-    <div style="background: white; border-radius: 24px; border: 1px solid #F3F4F6; overflow: hidden;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); gap: 1.5rem;">
         {% for benefit in maxed_out_benefits %}
-        <div style="padding: 1.5rem; display: flex; align-items: center; gap: 1.5rem; border-bottom: 1px solid #F3F4F6; cursor: pointer; transition: background 0.2s;"
-             onclick="openBenefitModal('{{ benefit.card_id }}', '{{ benefit.benefit_id }}', '{{ benefit.benefit_name|escapejs }}', {{ benefit.amount }}, {{ benefit.used }}, '{{ benefit.frequency|escapejs }}', '{{ benefit.periods.0.key }}', '{{ benefit.periods.0.label }}', '{{ benefit.periods.0.status }}')"
-             onmouseover="this.style.background='#F8FAFC'"
-             onmouseout="this.style.background='white'">
-            
-            <div style="width: 48px; height: 32px; background: #CBD5E1; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.7rem; font-weight: 700;">
-                {% if 'platinum' in benefit.card_name|lower %}PLATINUM{% elif 'gold' in benefit.card_name|lower %}GOLD{% elif 'sapphire' in benefit.card_name|lower %}SAPPHIRE{% else %}CARD{% endif %}
-            </div>
-            
-            <div style="flex: 1;">
-                <h3 style="font-size: 1rem; font-weight: 700; margin: 0; color: #1F2937;">{{ benefit.benefit_name }}</h3>
-                <div style="font-size: 0.75rem; font-weight: 600; color: #94A3B8; letter-spacing: 0.05em; text-transform: uppercase;">
-                    {{ benefit.card_name }} • {{ benefit.frequency }}
+        <div class="benefit-card" style="background: white; border-radius: 24px; padding: 1.5rem; border: 1px solid #F3F4F6; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); transition: all 0.2s;">
+            <!-- Card Header -->
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                <div style="display: flex; gap: 1rem;">
+                    <div style="width: 48px; height: 32px; background: #CBD5E1; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.7rem; font-weight: 700;">
+                        {% if 'platinum' in benefit.card_name|lower %}PLATINUM{% elif 'gold' in benefit.card_name|lower %}GOLD{% elif 'sapphire' in benefit.card_name|lower %}SAPPHIRE{% else %}CARD{% endif %}
+                    </div>
+                    <div>
+                        <h3 style="font-size: 1.125rem; font-weight: 700; margin: 0 0 0.25rem 0; color: #1F2937;">{{ benefit.benefit_name }}</h3>
+                        <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em; text-transform: uppercase;">
+                            {{ benefit.card_name }} • {{ benefit.frequency }}
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-size: 1.25rem; font-weight: 800; color: #1F2937;">${{ benefit.amount|floatformat:0 }}</div>
+                    <div style="font-size: 0.7rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em; text-transform: uppercase;">PER PERIOD</div>
                 </div>
             </div>
-            
-            <div style="text-align: right;">
-                <div style="font-size: 1rem; font-weight: 800; color: #1F2937;">${{ benefit.amount|floatformat:0 }}</div>
-                <div style="font-size: 0.7rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em; text-transform: uppercase;">PER PERIOD</div>
+
+            <!-- Tracker -->
+            {% if 'Monthly' in benefit.frequency %}
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                {% for period in benefit.periods %}
+                <div class="period-pill {% if period.status == 'full' %}full{% elif period.status == 'partial' %}partial{% endif %} {% if period.is_current %}current{% endif %} {% if not period.is_available %}unavailable{% endif %}"
+                     {% if period.is_available %}onclick="openBenefitModal('{{ benefit.card_id }}', '{{ benefit.benefit_id }}', '{{ benefit.benefit_name|escapejs }}', {{ period.max_value|default:benefit.amount }}, {{ benefit.used }}, '{{ benefit.frequency|escapejs }}', '{{ period.key }}', '{{ period.label }}', '{{ period.status }}')"{% endif %}
+                     style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; {% if not period.is_available %}opacity: 0.3; cursor: not-allowed;{% else %}cursor: pointer;{% endif %}">
+                    <div class="pill-label">{{ period.label }}</div>
+                    <div style="font-size: 0.65rem; font-weight: 600; color: #64748B;">${{ period.max_value|floatformat:0 }}</div>
+                    <div class="pill-status">
+                        {% if period.status == 'full' %}
+                        <span class="material-icons" style="font-size: 12px;">check</span>
+                        {% elif period.status == 'partial' %}
+                        <div style="width: 6px; height: 2px; background: #3B82F6; border-radius: 1px;"></div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
             </div>
-            
-            <div style="width: 32px; height: 32px; background: #DCFCE7; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #16A34A;">
-                <span class="material-icons" style="font-size: 18px;">check</span>
+            {% elif 'Quarterly' in benefit.frequency or 'Semi-annually' in benefit.frequency %}
+            <div style="display: flex; gap: 1rem;">
+                {% for period in benefit.periods %}
+                <div class="period-pill large {% if period.status == 'full' %}full{% elif period.status == 'partial' %}partial{% endif %} {% if period.is_current %}current{% endif %} {% if not period.is_available %}unavailable{% endif %}"
+                     {% if period.is_available %}onclick="openBenefitModal('{{ benefit.card_id }}', '{{ benefit.benefit_id }}', '{{ benefit.benefit_name|escapejs }}', {{ period.max_value|default:benefit.amount }}, {{ benefit.used }}, '{{ benefit.frequency|escapejs }}', '{{ period.key }}', '{{ period.label }}', '{{ period.status }}')"{% endif %}
+                     style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; {% if not period.is_available %}opacity: 0.3; cursor: not-allowed;{% else %}cursor: pointer;{% endif %}">
+                    <div class="pill-label">{{ period.label }}</div>
+                    <div style="font-size: 0.875rem; font-weight: 700; color: #1F2937;">${{ period.max_value|floatformat:0 }}</div>
+                    <div class="pill-status">
+                        {% if period.status == 'full' %}
+                        <span class="material-icons" style="font-size: 16px;">check</span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
             </div>
+            {% else %}
+            <!-- Annual Progress Bar -->
+            <div style="background: #F8FAFC; border-radius: 12px; padding: 1rem; border: 1px solid #E2E8F0; cursor: pointer;"
+                 onclick="openBenefitModal('{{ benefit.card_id }}', '{{ benefit.benefit_id }}', '{{ benefit.benefit_name|escapejs }}', {{ benefit.amount }}, {{ benefit.used }}, '{{ benefit.frequency|escapejs }}', '{{ benefit.periods.0.key }}', '{{ benefit.periods.0.label }}', '{{ benefit.periods.0.status }}')">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.875rem; font-weight: 600; color: #64748B;">
+                    <span>{{ benefit.periods.0.label }}</span>
+                    {% if benefit.used > 0 %}<span style="color: #6366F1;">${{ benefit.used|floatformat:0 }} used</span>{% endif %}
+                </div>
+                <div style="height: 8px; background: #E2E8F0; border-radius: 4px; overflow: hidden;">
+                    <div style="width: 100%; height: 100%; background: #16A34A; border-radius: 4px;"></div>
+                </div>
+            </div>
+            {% endif %}
         </div>
         {% endfor %}
     </div>
@@ -476,6 +520,49 @@
                     Save Log
                 </button>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Anniversary Date Modal -->
+<div id="anniversary-modal" class="modal" style="display: none;">
+    <div class="modal-content" style="max-width: 450px;">
+        <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <div>
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 0.5rem 0;">Set Card Anniversary</h3>
+                <p style="color: #64748B; margin: 0; font-size: 0.875rem;">When did you get this card?</p>
+            </div>
+            <button class="modal-close" onclick="closeAnniversaryModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #94A3B8;">×</button>
+        </div>
+
+        <!-- Card Info -->
+        <div style="background: #F9FAFB; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
+            <div style="font-size: 0.75rem; font-weight: 700; color: #64748B; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.5rem;">CARD</div>
+            <div id="anniversary-card-name" style="font-weight: 700; font-size: 1.125rem; color: #1F2937;">Loading...</div>
+        </div>
+
+        <!-- Date Input -->
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1F2937;">Anniversary Date</label>
+            <input type="date" id="anniversary-date-input" 
+                   style="width: 100%; padding: 0.875rem 1rem; border: 2px solid #E5E7EB; border-radius: 10px; font-size: 1rem; font-weight: 600;">
+            <p style="color: #64748B; font-size: 0.875rem; margin-top: 0.5rem;">This helps track which months/quarters are available for benefit tracking.</p>
+        </div>
+
+        <!-- Example -->
+        <div style="background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+            <div style="font-weight: 600; color: #92400E; margin-bottom: 0.25rem; font-size: 0.875rem;">💡 Example</div>
+            <div style="color: #78350F; font-size: 0.875rem;">If you got your card in October 2025, months before October will be grayed out.</div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="display: flex; gap: 0.75rem;">
+            <button onclick="closeAnniversaryModal()" style="flex: 1; background: #F3F4F6; color: #64748B; border: none; padding: 0.875rem; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                Cancel
+            </button>
+            <button onclick="saveAnniversaryDate()" style="flex: 1; background: #7C3AED; color: white; border: none; padding: 0.875rem; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                Save Anniversary
+            </button>
         </div>
     </div>
 </div>
@@ -867,7 +954,28 @@
     function addSelectedCard() {
         if (!selectedAddCard) return;
         
-        // Submit form to add card
+        // Prompt for anniversary date
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        const currentMonth = String(now.getMonth() + 1).padStart(2, '0');
+        const defaultDate = `${currentYear}-${currentMonth}-01`;
+        
+        const message = "When did you get this card? (This helps track your benefits correctly)\n\nFormat: YYYY-MM-DD\nExample: 2025-10-01";
+        const anniversaryDate = prompt(message, defaultDate);
+        
+        if (!anniversaryDate) {
+            // User cancelled
+            return;
+        }
+        
+        // Validate date format
+        const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+        if (!datePattern.test(anniversaryDate)) {
+            alert('Invalid date format. Please use YYYY-MM-DD format (e.g., 2025-10-01)');
+            return;
+        }
+        
+        // Submit form to add card with anniversary date
         const form = document.createElement('form');
         form.method = 'POST';
         form.action = `/dashboard/add-card/${selectedAddCard.id}/`;
@@ -878,6 +986,13 @@
         csrfInput.name = 'csrfmiddlewaretoken';
         csrfInput.value = csrfToken;
         form.appendChild(csrfInput);
+        
+        // Add anniversary date
+        const dateInput = document.createElement('input');
+        dateInput.type = 'hidden';
+        dateInput.name = 'anniversary_date';
+        dateInput.value = anniversaryDate;
+        form.appendChild(dateInput);
         
         document.body.appendChild(form);
         form.submit();
