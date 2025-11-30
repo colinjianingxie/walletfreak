@@ -401,21 +401,6 @@ def update_benefit_usage(request, user_card_id, benefit_id):
         return JsonResponse({'success': False, 'error': str(e)}, status=500)
 
 
-@login_required
-def personality_survey(request):
-    """Display personality survey"""
-    try:
-        personalities = db.get_personalities()
-    except Exception as e:
-        print(f"Error fetching personalities: {e}")
-        personalities = []
-    
-    context = {
-        'personalities': personalities,
-    }
-    
-    return render(request, 'dashboard/personality_survey.html', context)
-
 
 @login_required
 @require_POST
