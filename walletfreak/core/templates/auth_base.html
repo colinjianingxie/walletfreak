@@ -61,8 +61,8 @@
                 ☰
             </button>
 
-            <div class="nav-links" id="nav-links" style="flex: 1; justify-content: space-between;">
-                <div style="display: flex; gap: 2rem; align-items: center;">
+            <div class="nav-links" id="nav-links">
+                <div class="nav-items">
                     {% if user.is_authenticated %}
                     <a href="{% url 'dashboard' %}">Dashboard</a>
                     {% else %}

@@ -114,7 +114,7 @@ def dashboard(request):
                     # Get period values mapping from benefit
                     period_values = benefit.get('period_values', {})
                     
-                    if 'Monthly' in frequency:
+                    if 'monthly' in frequency.lower():
                         # Generate 12 months
                         for m_idx, m_name in enumerate(months):
                             period_key = f"{current_year}_{m_idx+1:02d}"
@@ -148,7 +148,7 @@ def dashboard(request):
                                 current_period_status = status
                                 current_period_used = p_used
 
-                    elif 'Semi-annually' in frequency:
+                    elif 'semi-annually' in frequency.lower():
                         # H1 (Jan-Jun), H2 (Jul-Dec)
                         h1_key = f"{current_year}_H1"
                         h2_key = f"{current_year}_H2"
@@ -182,7 +182,7 @@ def dashboard(request):
                             current_period_status = h2_status
                             current_period_used = h2_data.get('used', 0)
 
-                    elif 'Quarterly' in frequency:
+                    elif 'quarterly' in frequency.lower():
                         # Q1-Q4
                         curr_q = (current_month - 1) // 3 + 1
                         anniversary_q = (anniversary_month - 1) // 3 + 1
@@ -212,7 +212,7 @@ def dashboard(request):
                         p_full = p_data.get('is_full', False)
                         
                         status = 'full' if (p_full or p_used >= dollar_value) else ('partial' if p_used > 0 else 'empty')
-                        periods.append({'label': str(current_year), 'key': period_key, 'status': status, 'is_current': True})
+                        periods.append({'label': str(current_year), 'key': period_key, 'status': status, 'is_current': True, 'max_value': dollar_value})
                         
                         current_period_status = status
                         current_period_used = p_used

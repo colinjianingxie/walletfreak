@@ -3,16 +3,49 @@
 {% block content %}
 <!-- Wallet Header -->
 <div style="margin-bottom: 2.5rem;">
-    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-        <div>
-            <h1 style="font-size: 2rem; font-weight: 700; margin: 0 0 0.5rem 0;">My Wallet</h1>
-            <p style="color: var(--text-muted); margin: 0;">Manage your active credit cards.</p>
+    <div class="desktop-only" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <div>
+        <h1 style="font-size: 2rem; font-weight: 700; color: var(--dark); margin-bottom: 0.5rem;">Wallet</h1>
+        <p style="color: var(--text-muted);">Manage your card stack and track benefits.</p>
+    </div>
+    <button onclick="openAddCardModal()" class="btn btn-primary" style="display: flex; align-items: center; gap: 0.5rem;">
+        <span class="material-icons">add</span>
+        Add Card
+    </button>
+</div>
+
+<!-- Mobile Header -->
+<div class="wallet-header-mobile">
+    <h1 style="font-size: 1.5rem; font-weight: 700; color: var(--dark); margin-bottom: 1.5rem;">Manage Wallet</h1>
+    
+    <div class="wallet-stat-row">
+        <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--primary); font-weight: 600;">
+            <span class="material-icons">account_balance_wallet</span>
+            My Stack
         </div>
-        <button class="btn" style="background: var(--dark); color: white; padding: 0.875rem 1.5rem; font-weight: 600;"
-            onclick="openAddCardModal()">
-            + Add Card
+        <div style="background: #F1F5F9; padding: 0.25rem 0.75rem; border-radius: 6px; font-weight: 700; color: var(--dark);">
+            {{ active_cards|length }}
+        </div>
+    </div>
+    
+    <div onclick="openAddCardModal()" class="wallet-stat-row" style="cursor: pointer; color: var(--text-muted);">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <span class="material-icons">add</span>
+            Add New Card
+        </div>
+    </div>
+    
+    <p style="font-size: 0.8rem; color: #94A3B8; margin-top: 1rem; line-height: 1.5;">
+        Tip: Removing a card will archive its history but keep your data safe.
+    </p>
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; margin-bottom: 1rem;">
+        <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--dark);">Active Cards</h2>
+        <button onclick="openAddCardModal()" style="background: none; border: none; color: var(--primary); font-weight: 600; font-size: 0.9rem; cursor: pointer;">
+            + Add Another
         </button>
     </div>
+</div>
 </div>
 
 {% if not active_cards %}
@@ -30,9 +63,46 @@
 </div>
 {% else %}
 
+<!-- Mobile List View -->
+<div class="wallet-mobile-list">
+    {% for card in active_cards %}
+    <div class="wallet-list-item">
+        <div class="wallet-list-img" style="background-image: url('{{ card.card.image_url }}');"></div>
+        <div class="wallet-list-info">
+            <div class="wallet-list-name">{{ card.card.name }}</div>
+            <div class="wallet-list-num">•••• {{ card.last_4_digits }}</div>
+        </div>
+        <div class="wallet-list-actions">
+            <span class="wallet-list-badge">Active</span>
+            <button onclick="removeCard('{{ card.id }}')" style="background: none; border: none; color: #94A3B8; cursor: pointer; padding: 0.25rem;">
+                <span class="material-icons" style="font-size: 1.25rem;">delete_outline</span>
+            </button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Mobile List View -->
+<div class="wallet-mobile-list">
+    {% for card in active_cards %}
+    <div class="wallet-list-item">
+        <div class="wallet-list-img" style="background-image: url('{{ card.card.image_url }}');"></div>
+        <div class="wallet-list-info">
+            <div class="wallet-list-name">{{ card.card.name }}</div>
+            <div class="wallet-list-num">•••• {{ card.last_4_digits }}</div>
+        </div>
+        <div class="wallet-list-actions">
+            <span class="wallet-list-badge">Active</span>
+            <button onclick="removeCard('{{ card.id }}')" style="background: none; border: none; color: #94A3B8; cursor: pointer; padding: 0.25rem;">
+                <span class="material-icons" style="font-size: 1.25rem;">delete_outline</span>
+            </button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
 <!-- Card Grid -->
-<div
-    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+<div class="grid-cards" style="margin-bottom: 3rem;">
     {% for card in active_cards %}
     <div>
         <!-- 3D Credit Card -->

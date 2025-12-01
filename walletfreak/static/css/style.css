@@ -561,6 +561,8 @@ footer {
         background: transparent !important;
         padding: 0 !important;
         gap: 2rem !important;
+        flex: 1 !important;
+        justify-content: space-between !important;
     }
 
     .nav-links a {
@@ -1506,5 +1508,300 @@ footer {
         width: 120px;
         height: 120px;
         font-size: 3rem;
+    }
+}
+
+.grid-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 2rem;
+}
+
+@media (max-width: 768px) {
+    .grid-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+.nav-items {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .nav-items {
+        flex-direction: column;
+        width: 100%;
+    }
+}
+
+/* ========================================
+   RESPONSIVE UTILITIES (ADDED)
+   ======================================== */
+
+/* Responsive Grid System */
+.grid-responsive-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.grid-responsive-hero {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.grid-responsive-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+.grid-responsive-slot {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.grid-responsive-footer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 3rem;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 1024px) {
+    .grid-responsive-hero {
+        grid-template-columns: 1fr !important;
+        gap: 3rem;
+        text-align: center;
+    }
+
+    .grid-responsive-hero>div:first-child {
+        order: 1;
+    }
+
+    .grid-responsive-hero>div:last-child {
+        order: 2;
+        display: flex;
+        justify-content: center;
+    }
+
+    .grid-responsive-slot {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+    }
+
+    .grid-responsive-4 {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .grid-responsive-2 {
+        grid-template-columns: 1fr !important;
+        gap: 2rem;
+    }
+
+    .grid-responsive-4 {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Hamburger Menu & Nav */
+    .navbar .container {
+        padding: 1rem;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: white;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        z-index: 1000;
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+        padding: 6rem 2rem 2rem 2rem;
+    }
+
+    .nav-links.mobile-open {
+        transform: translateX(0);
+        display: flex !important;
+    }
+
+    .nav-items {
+        flex-direction: column;
+        width: 100%;
+        gap: 2rem;
+        align-items: flex-start;
+    }
+
+    .nav-items a {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--dark);
+    }
+
+    .mobile-menu-toggle {
+        display: block !important;
+        z-index: 1001;
+        position: absolute;
+        right: 1rem;
+        top: 1.25rem;
+    }
+
+    /* Mobile Login Button */
+    .nav-links .btn-login {
+        margin-top: auto;
+        width: 100%;
+        background: #0F172A !important;
+        color: white !important;
+        padding: 1rem !important;
+        border-radius: 12px !important;
+        text-align: center;
+        justify-content: center;
+    }
+
+    /* Adjust card stack scaling for mobile */
+    .card-stack-container {
+        transform: scale(0.7);
+        margin: -2rem 0;
+    }
+
+    /* Personality Page Mobile */
+    .personality-header-grid {
+        grid-template-columns: 1fr !important;
+        text-align: center;
+        justify-items: center;
+    }
+
+    .personality-header-grid>div:first-child {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Wallet Mobile List View */
+.wallet-mobile-list {
+    display: none;
+}
+
+.wallet-list-item {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.wallet-list-img {
+    width: 60px;
+    height: 38px;
+    border-radius: 6px;
+    background-color: #CBD5E1;
+    background-size: cover;
+    background-position: center;
+}
+
+.wallet-list-info {
+    flex: 1;
+}
+
+.wallet-list-name {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--dark);
+    margin-bottom: 0.25rem;
+}
+
+.wallet-list-num {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-family: monospace;
+}
+
+.wallet-list-badge {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10B981;
+    padding: 0.25rem 0.75rem;
+    border-radius: 99px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.wallet-list-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.wallet-header-mobile {
+    display: none;
+    margin-bottom: 2rem;
+}
+
+.wallet-stat-row {
+    background: white;
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    border: 1px solid #E5E7EB;
+}
+
+@media (max-width: 768px) {
+    .grid-cards {
+        display: none;
+    }
+
+    .wallet-mobile-list {
+        display: block;
+    }
+
+    .wallet-header-mobile {
+        display: block;
+    }
+
+    /* Hide desktop header elements on mobile if needed */
+    .desktop-only {
+        display: none !important;
+    }
+}
+
+.grid-responsive-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.personality-header-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+@media (max-width: 1024px) {
+    .grid-responsive-3 {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .grid-responsive-3 {
+        grid-template-columns: 1fr !important;
     }
 }

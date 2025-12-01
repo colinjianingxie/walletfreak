@@ -11,7 +11,7 @@
             <span>Back to Archetypes</span>
         </a>
 
-        <div style="display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: center; margin-top: 2rem;">
+        <div class="personality-header-grid">
             <!-- Left: Personality Icon -->
             <div>
                 <div style="width: 120px; height: 120px; background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 40px rgba(139, 92, 246, 0.4);">
@@ -39,7 +39,7 @@
 
 <!-- Financial Metrics Section -->
 <section class="container" style="padding: 0; transform: translateY(-2rem); position: relative; z-index: 10;">
-    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;">
+    <div class="grid-responsive-4">
         <!-- Annual Fees -->
         <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;">
             <div style="display: flex; align-items: center; gap: 0.5rem; color: #6b7280; font-size: 0.85rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">
@@ -101,7 +101,7 @@
     {% if personality.slots %}
     <div style="display: grid; gap: 2rem;">
         {% for slot in personality.slots %}
-        <div style="background: white; border-radius: 20px; padding: 2rem; border: 1px solid #e5e7eb; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: grid; grid-template-columns: 300px 1fr; gap: 3rem; align-items: start;">
+        <div class="grid-responsive-slot" style="background: white; border-radius: 20px; padding: 2rem; border: 1px solid #e5e7eb; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
             <!-- Slot Info -->
             <div>
                 <div style="display: inline-block; background: #f3f4f6; color: #4b5563; padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem;">

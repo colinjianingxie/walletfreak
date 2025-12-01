@@ -159,7 +159,7 @@
 <!-- Hero Section -->
 <section style="background: linear-gradient(135deg, #F9FAFB 0%, #FFFFFF 100%); padding: 8rem 0 6rem; position: relative; overflow: hidden;">
     <div style="position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 0 2rem;">
-        <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: center;">
+        <div class="grid-responsive-hero">
             <!-- Left side: Content -->
             <div>
                 <!-- BETA Badge -->
@@ -252,7 +252,7 @@
         </p>
     </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+    <div class="grid-responsive-2">
         <!-- Left Side: Benefit Cards Preview -->
         <div style="position: relative;">
             <!-- Benefit Card 1 -->
@@ -385,7 +385,7 @@
         Breaking news and strategies for the credit obsessed.
     </p>
 
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+    <div class="grid-responsive-3">
         {% for post in blog_posts|slice:":3" %}
         <a href="{% url 'blog_detail' post.slug %}" class="blog-card-item">
             <div class="blog-card-image" style="background-image: url('{{ post.featured_image }}');">
@@ -415,7 +415,7 @@
 <!-- Find Your Next Power Player -->
 <section style="background: #0F172A; padding: 6rem 0; color: white; position: relative; overflow: hidden;">
     <div class="container">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;">
+        <div class="grid-responsive-2" style="gap: 6rem;">
             <!-- Left Content -->
             <div>
                 <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); padding: 0.375rem 0.875rem; border-radius: 99px; margin-bottom: 2rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em;">
