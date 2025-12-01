@@ -7,11 +7,11 @@
 <div style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
     <!-- Header Section -->
     <div style="margin-bottom: 2.5rem;">
-        <div style="display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.75rem;">
+        <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 0.75rem;">
             <h1 style="font-size: 2.25rem; font-weight: 800; color: #0F172A; margin: 0;">
                 Explore Cards
             </h1>
-            <span id="total-cards-count" style="font-size: 1.125rem; font-weight: 500; color: #94A3B8;">{{ total_cards }}</span>
+            <span id="total-cards-count" style="font-size: 1rem; font-weight: 600; color: #94A3B8;">{{ total_cards }}</span>
         </div>
         <p style="color: #64748B; font-size: 1.125rem; margin: 0;">
             Find the perfect addition to your wallet.
@@ -60,18 +60,18 @@
         <div style="display: flex; flex-direction: column; gap: 3rem;">
             <!-- Annual Fee Filter -->
             <div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
                     <h3 style="font-size: 0.75rem; font-weight: 800; color: #0F172A; margin: 0; letter-spacing: 0.05em; text-transform: uppercase;">ANNUAL FEE</h3>
                     <span id="fee-range-display" style="font-size: 0.875rem; font-weight: 700; color: #6366F1;">$0 - $1000</span>
                 </div>
 
-                <div style="position: relative; height: 6px; background: #E2E8F0; border-radius: 3px; margin-bottom: 1rem;">
-                    <div id="slider-track" style="position: absolute; left: 0; right: 0; height: 100%; background: #6366F1; border-radius: 3px;"></div>
-                    <input type="range" id="min-fee-slider" min="0" max="1000" value="0" step="10" style="position: absolute; width: 100%; height: 100%; -webkit-appearance: none; pointer-events: none; margin: 0; top: 0; background: transparent; border: none; outline: none;">
-                    <input type="range" id="max-fee-slider" min="0" max="1000" value="1000" step="10" style="position: absolute; width: 100%; height: 100%; -webkit-appearance: none; pointer-events: none; margin: 0; top: 0; background: transparent; border: none; outline: none;">
+                <div class="slider-container" style="position: relative; height: 4px; background: #E2E8F0; border-radius: 2px; margin-bottom: 1rem;">
+                    <div id="slider-track" style="position: absolute; left: 0; width: 100%; height: 100%; background: #6366F1; border-radius: 2px;"></div>
+                    <input type="range" id="min-fee-slider" min="0" max="1000" value="0" step="10" style="position: absolute; width: calc(100% + 40px); height: 100%; -webkit-appearance: none; pointer-events: none; margin: 0; top: 0; left: -20px; background: transparent; border: none; outline: none; box-shadow: none;">
+                    <input type="range" id="max-fee-slider" min="0" max="1000" value="1000" step="10" style="position: absolute; width: calc(100% + 40px); height: 100%; -webkit-appearance: none; pointer-events: none; margin: 0; top: 0; left: -20px; background: transparent; border: none; outline: none; box-shadow: none;">
                 </div>
                 
-                <div style="display: flex; justify-content: space-between;">
+                <div style="display: flex; justify-content: space-between; margin: 0 -10px;">
                     <span style="font-size: 0.75rem; color: #94A3B8; font-weight: 500;">$0</span>
                     <span style="font-size: 0.75rem; color: #94A3B8; font-weight: 500;">$1000+</span>
                 </div>
@@ -276,8 +276,15 @@ function updateSlider() {
     const percent1 = (minVal / 1000) * 100;
     const percent2 = (maxVal / 1000) * 100;
     
-    sliderTrack.style.left = percent1 + '%';
-    sliderTrack.style.width = (percent2 - percent1) + '%';
+    // Calculate track position to center under thumbs
+    // Thumbs are 20px wide, input is calc(100% + 20px) positioned at -10px
+    // At 0%, thumb center is at 0px; at 100%, thumb center is at 100%
+    const containerWidth = sliderTrack.parentElement.offsetWidth;
+    const leftPos = (percent1 / 100) * containerWidth;
+    const rightPos = (percent2 / 100) * containerWidth;
+    
+    sliderTrack.style.left = leftPos + 'px';
+    sliderTrack.style.width = (rightPos - leftPos) + 'px';
     
     // Z-index management for overlapping thumbs
     if (minVal > 900) {
@@ -378,8 +385,7 @@ function filterCards() {
         const matchesSearch = query === '' || name.includes(query) || issuerRaw.toLowerCase().includes(query) || categories.includes(query);
         const matchesFee = fee >= minFee && fee <= maxFee;
         
-        // Robust issuer matching: check if issuer includes any of the selected issuers (or vice versa)
-        // This handles cases like "American Express" vs "Amex" if the value is "American Express"
+        // Robust issuer matching
         const matchesIssuer = selectedIssuers.length === 0 || selectedIssuers.some(si => issuerNorm.includes(si) || si.includes(issuerNorm));
         
         const matchesCategory = activeCategory === '' || categories.includes(activeCategory);
@@ -480,6 +486,11 @@ window.addEventListener('DOMContentLoaded', () => {
         allCatBtn.style.border = '1px solid #1E293B';
     }
     
+    // Explicitly set initial slider values to ensure they're at extremes
+    minFeeSlider.value = 0;
+    maxFeeSlider.value = 1000;
+    
+    // Force update to position track and ensure rendering
     updateSlider();
 });
 </script>
@@ -497,6 +508,12 @@ input[type=range]:focus {
     outline: none;
 }
 
+/* Hide the native track */
+input[type=range]::-webkit-slider-runnable-track {
+    background: transparent;
+    border: none;
+}
+
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     pointer-events: all;
@@ -504,11 +521,11 @@ input[type=range]::-webkit-slider-thumb {
     height: 20px;
     -webkit-border-radius: 50%;
     border-radius: 50%;
-    background: #6366F1;
-    border: 3px solid white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    background: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
     cursor: pointer;
-    margin-top: -7px; /* (6px track - 20px thumb) / 2 = -7px */
+    margin-top: -16px;
 }
 
 input[type=range]::-moz-range-thumb {
@@ -516,11 +533,11 @@ input[type=range]::-moz-range-thumb {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #6366F1;
-    border: 3px solid white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    background: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
     cursor: pointer;
-    /* Firefox doesn't need margin-top usually if height is correct, but let's test */
+    margin-top: -16px;
 }
 
 /* Gradient card backgrounds */
