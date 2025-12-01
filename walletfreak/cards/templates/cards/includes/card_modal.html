@@ -1,110 +1,101 @@
 <!-- Card Detail Modal -->
 <div id="card-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s;">
-    <div class="modal-content" style="background: #F8FAFC; width: 90%; max-width: 900px; border-radius: 32px; overflow: hidden; display: flex; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); transform: scale(0.95); transition: transform 0.3s;">
+    <div class="modal-content" style="background: white; width: 90%; max-width: 1000px; border-radius: 32px; overflow: hidden; display: flex; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); transform: scale(0.95); transition: transform 0.3s; height: 85vh;">
         
         <!-- Left Side: Card Visual -->
-        <div style="width: 40%; background: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%); padding: 3rem; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;">
-            <div id="modal-card-visual" style="width: 280px; height: 176px; background: linear-gradient(135deg, #FFD700 0%, #B8860B 100%); border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); position: relative; overflow: hidden; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; color: white;">
+        <div style="width: 35%; background: #F8FAFC; padding: 3rem 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; border-right: 1px solid #F1F5F9;">
+            <div id="modal-card-visual" style="width: 260px; height: 164px; background: linear-gradient(135deg, #FFD700 0%, #B8860B 100%); border-radius: 16px; box-shadow: 0 20px 40px -5px rgba(0,0,0,0.3); position: relative; overflow: hidden; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; color: white; margin-bottom: 2rem;">
                 <!-- Card content will be injected via JS -->
-                <div style="font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;" id="modal-card-issuer-visual">AMERICAN EXPRESS</div>
-                <div style="display: flex; gap: 4px; margin: 1rem 0;">
-                    <div style="width: 32px; height: 24px; background: rgba(255,255,255,0.2); border-radius: 4px;"></div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div style="font-size: 0.65rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.9;" id="modal-card-issuer-visual">AMERICAN EXPRESS</div>
+                    <span class="material-icons" style="font-size: 20px; opacity: 0.8;">contactless</span>
                 </div>
-                <div style="font-size: 1rem; letter-spacing: 0.15em; font-family: 'Courier New', monospace;" id="modal-card-number">•••• •••• •••• 4242</div>
-                <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-                    <div style="font-size: 0.75rem;" id="modal-card-holder">YOUR NAME</div>
-                    <div style="display: flex; gap: 2px;">
-                        <div style="width: 18px; height: 18px; background: #EB001B; border-radius: 50%;"></div>
-                        <div style="width: 18px; height: 18px; background: #F79E1B; border-radius: 50%; margin-left: -6px;"></div>
-                    </div>
+                
+                <div>
+                    <div style="width: 36px; height: 26px; background: rgba(255,255,255,0.3); border-radius: 4px; margin-bottom: 1rem; backdrop-filter: blur(4px);"></div>
+                    <div style="font-family: monospace; font-size: 0.9rem; letter-spacing: 0.15em; margin-bottom: 0.5rem; opacity: 0.9; text-shadow: 0 1px 2px rgba(0,0,0,0.1);" id="modal-card-number">•••• •••• •••• 4242</div>
+                    <div style="font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.8;" id="modal-card-holder">YOUR NAME</div>
+                </div>
+
+                <div style="position: absolute; bottom: 1.25rem; right: 1.25rem; display: flex;">
+                    <div style="width: 20px; height: 20px; background: rgba(255,255,255,0.4); border-radius: 50%;"></div>
+                    <div style="width: 20px; height: 20px; background: rgba(255,255,255,0.4); border-radius: 50%; margin-left: -8px;"></div>
                 </div>
             </div>
             
-            <div style="margin-top: 2rem; text-align: center;">
-                <div style="background: white; border-radius: 10px; padding: 0.5rem 1rem; display: inline-flex; align-items: center; gap: 0.4rem; box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);">
-                    <span style="color: #F59E0B; font-size: 18px;" class="material-icons">star</span>
-                    <span style="font-weight: 700; color: #1E293B; font-size: 0.9rem;">Recommended</span>
+            <div style="text-align: center; width: 100%;">
+                <div style="background: white; border: 1px solid #E2E8F0; border-radius: 12px; padding: 0.75rem 1.5rem; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); margin-bottom: 2rem;">
+                    <span style="color: #F59E0B; font-size: 20px;" class="material-icons">star</span>
+                    <span id="modal-match-score" style="font-weight: 800; color: #0F172A; font-size: 1rem;">98% Match</span>
                 </div>
-                <div style="margin-top: 1rem;">
-                    <div style="font-size: 0.7rem; color: #64748B; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">ANNUAL FEE</div>
-                    <div id="modal-annual-fee" style="font-size: 1.75rem; font-weight: 800; color: #0F172A;">$250</div>
+                
+                <div>
+                    <div style="font-size: 0.7rem; color: #94A3B8; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.25rem;">ANNUAL FEE</div>
+                    <div id="modal-annual-fee" style="font-size: 1.75rem; font-weight: 800; color: #0F172A;">$550</div>
                 </div>
             </div>
         </div>
 
         <!-- Right Side: Details -->
-        <div style="width: 60%; padding: 3rem; position: relative; max-height: 90vh; overflow-y: auto;">
-            <button onclick="closeCardModal()" style="position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; cursor: pointer; color: #94A3B8; transition: color 0.2s;">
+        <div style="width: 65%; padding: 3rem; position: relative; overflow-y: auto; display: flex; flex-direction: column;">
+            <button onclick="closeCardModal()" style="position: absolute; top: 2rem; right: 2rem; background: none; border: none; cursor: pointer; color: #94A3B8; transition: color 0.2s; padding: 0.5rem; border-radius: 50%;">
                 <span class="material-icons" style="font-size: 24px;">close</span>
             </button>
 
-            <h2 id="modal-card-name" style="font-size: 2rem; font-weight: 800; color: #0F172A; margin: 0 0 0.25rem 0; line-height: 1.1;">Gold Card</h2>
-            <div id="modal-issuer" style="font-size: 1rem; color: #64748B; margin-bottom: 1.5rem;">American Express</div>
+            <!-- Header -->
+            <div style="margin-bottom: 1.5rem;">
+                <h2 id="modal-card-name" style="font-size: 2.25rem; font-weight: 800; color: #0F172A; margin: 0 0 0.25rem 0; line-height: 1.1; letter-spacing: -0.02em;">Sapphire Reserve</h2>
+                <div id="modal-issuer" style="font-size: 1rem; color: #64748B; font-weight: 500;">Chase</div>
+            </div>
+
+            <!-- Action Buttons (Top) -->
+            <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                <button id="add-wallet-btn" onclick="addToWalletFromModal()" style="background: #0F172A; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.9375rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; min-width: 160px; justify-content: center;">
+                    <span id="add-wallet-text">Add to Wallet</span>
+                    <span class="material-icons" id="add-wallet-icon" style="font-size: 18px;">check</span>
+                    <span class="material-icons" id="add-wallet-loader" style="display: none; animation: spin 1s linear infinite; font-size: 18px;">hourglass_empty</span>
+                </button>
+                <a id="modal-apply-link" href="#" target="_blank" style="padding: 0.75rem 1.5rem; background: white; color: #0F172A; border: 1px solid #E2E8F0; border-radius: 8px; font-weight: 600; font-size: 0.9375rem; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                    Apply <span class="material-icons" style="font-size: 18px;">open_in_new</span>
+                </a>
+            </div>
 
             <!-- Freak Verdict -->
-            <div style="background: #F5F3FF; border: 1px solid #E9D5FF; border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem; display: flex; gap: 0.75rem;">
-                <div style="width: 32px; height: 32px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #7C3AED;">
-                    <span class="material-icons" style="font-size: 18px;">bolt</span>
+            <div style="background: #F5F3FF; border: 1px solid #E9D5FF; border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem; display: flex; gap: 1rem;">
+                <div style="width: 40px; height: 40px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #7C3AED; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                    <span class="material-icons" style="font-size: 20px;">bolt</span>
                 </div>
                 <div>
-                    <div style="font-size: 0.7rem; font-weight: 700; color: #4C1D95; letter-spacing: 0.05em; margin-bottom: 0.25rem;">THE FREAK VERDICT</div>
-                    <p id="modal-verdict" style="margin: 0; color: #4B5563; line-height: 1.5; font-size: 0.9rem;">
-                        The absolute king of food points. If you eat, you need this card. The credits effectively lower the fee to $10.
+                    <div style="font-size: 0.75rem; font-weight: 800; color: #5B21B6; letter-spacing: 0.05em; margin-bottom: 0.5rem; text-transform: uppercase;">THE FREAK VERDICT</div>
+                    <p id="modal-verdict" style="margin: 0; color: #4B5563; line-height: 1.6; font-size: 0.9375rem;">
+                        The easiest travel card to use. The $300 credit applies automatically to any travel, making the effective fee $250.
                     </p>
                 </div>
             </div>
 
-
-
             <!-- Welcome Offer -->
-            <div id="modal-welcome-offer-container" style="display: none; margin-bottom: 2rem;">
-                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; color: #94A3B8; font-weight: 600; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase;">
+            <div id="modal-welcome-offer-container" style="margin-bottom: 2.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; color: #94A3B8; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase;">
                     <span class="material-icons" style="font-size: 16px;">card_giftcard</span> WELCOME OFFER
                 </div>
-                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 1.5rem;">
-                    <div style="flex: 1;">
-                        <div style="display: flex; align-items: baseline; gap: 0.4rem;">
-                            <div id="modal-welcome-value" style="font-size: 1.75rem; font-weight: 800; color: #0F172A; line-height: 1;">
-                                60,000
-                            </div>
-                            <div id="modal-welcome-currency" style="font-size: 1rem; font-weight: 700; color: #0F172A;">
-                                Points
-                            </div>
-                        </div>
+                <div style="background: #F8FAFC; border: 1px solid #F1F5F9; border-radius: 16px; padding: 1.5rem; display: flex; align-items: center; gap: 2rem;">
+                    <div id="modal-welcome-value" style="font-size: 2rem; font-weight: 800; color: #0F172A; line-height: 1;">
+                        60,000 Points
                     </div>
-                    <div style="width: 1px; height: 32px; background: #E2E8F0;"></div>
-                    <div id="modal-welcome-terms" style="flex: 1; color: #64748B; font-size: 0.8rem; line-height: 1.4; font-weight: 500;">
-                        after $4k spend in 6 months
+                    <div style="width: 1px; height: 40px; background: #E2E8F0;"></div>
+                    <div id="modal-welcome-terms" style="color: #64748B; font-size: 0.9375rem; font-weight: 500;">
+                        after $4k spend in 3 months
                     </div>
                 </div>
             </div>
 
-            <div style="height: 1px; background: #E2E8F0; margin-bottom: 1.5rem;"></div>
-
-            <!-- All Benefits -->
-            <div style="margin-bottom: 3rem;">
-                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; color: #94A3B8; font-weight: 600; font-size: 0.875rem; letter-spacing: 0.05em;">
-                    <span class="material-icons" style="font-size: 18px;">card_giftcard</span> BENEFITS
-                </div>
-                <div id="modal-all-benefits">
-                    <!-- Injected via JS -->
-                </div>
-            </div>
-
-            <!-- Actions -->
-            <div style="display: flex; gap: 1rem;">
-                <button id="add-wallet-btn" onclick="addToWalletFromModal()" style="flex: 1; background: #0F172A; color: white; border: none; padding: 1rem; border-radius: 12px; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.2s;">
-                    <span id="add-wallet-text">Add to Wallet</span>
-                    <span class="material-icons" id="add-wallet-icon">check</span>
-                    <span class="material-icons" id="add-wallet-loader" style="display: none; animation: spin 1s linear infinite;">hourglass_empty</span>
-                </button>
-                <a id="modal-apply-link" href="#" target="_blank" style="padding: 1rem 2rem; background: white; color: #0F172A; border: 1px solid #E2E8F0; border-radius: 12px; font-weight: 600; font-size: 1rem; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: background 0.2s;">
-                    Apply <span class="material-icons" style="font-size: 18px;">open_in_new</span>
-                </a>
+            <!-- Benefits Columns -->
+            <div id="modal-all-benefits" style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+                <!-- Injected via JS -->
             </div>
             
-            <div style="margin-top: 1.5rem; text-align: center; font-size: 0.75rem; color: #94A3B8;">
-                Variable APR: 21.24% - 29.24% Var. Terms apply. Rates as of Oct 2024.
+            <div style="margin-top: auto; padding-top: 2rem; text-align: center; font-size: 0.75rem; color: #94A3B8;">
+                Variable APR: 22.49% - 29.49% Var. Terms apply. Rates as of Oct 2024.
             </div>
         </div>
     </div>
@@ -131,32 +122,16 @@
 }
 
 /* Accordion styles for card modal */
-.modal-benefit-accordion {
-    cursor: pointer;
-    transition: all 0.2s;
+.modal-benefit-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #F1F5F9;
 }
 
-.modal-benefit-accordion:hover {
-    background: #F1F5F9 !important;
-}
-
-.modal-benefit-details {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
-}
-
-.modal-benefit-details.expanded {
-    max-height: 500px;
-    transition: max-height 0.3s ease-in;
-}
-
-.modal-chevron-icon {
-    transition: transform 0.3s;
-}
-
-.modal-chevron-icon.rotated {
-    transform: rotate(90deg);
+.modal-benefit-row:last-child {
+    border-bottom: none;
 }
 </style>
 
@@ -182,22 +157,32 @@ function openCardModal(cardId) {
     const annualFee = card.annual_fee || 0;
     document.getElementById('modal-annual-fee').textContent = '$' + annualFee;
     
+    // Update Match Score
+    const matchScore = userMatchScores[cardId] || 0;
+    document.getElementById('modal-match-score').textContent = `${matchScore}% Match`;
+    
     // Update card visual background color based on issuer
     const cardVisual = document.getElementById('modal-card-visual');
     if (card.issuer && card.issuer.toLowerCase().includes('american express')) {
         if (card.name.toLowerCase().includes('platinum')) {
-            cardVisual.style.background = 'linear-gradient(135deg, #8B9BA7 0%, #6B7B88 100%)';
+            cardVisual.style.background = 'linear-gradient(135deg, #E2E8F0 0%, #94A3B8 100%)';
+            cardVisual.style.color = '#1F2937';
         } else if (card.name.toLowerCase().includes('gold')) {
-            cardVisual.style.background = 'linear-gradient(135deg, #FFD700 0%, #DAA520 100%)';
+            cardVisual.style.background = 'linear-gradient(135deg, #FCD34D 0%, #F59E0B 100%)';
+            cardVisual.style.color = '#78350F';
         } else {
-            cardVisual.style.background = 'linear-gradient(135deg, #8B9BA7 0%, #6B7B88 100%)';
+            cardVisual.style.background = 'linear-gradient(135deg, #94A3B8 0%, #64748B 100%)';
+            cardVisual.style.color = 'white';
         }
     } else if (card.issuer && card.issuer.toLowerCase().includes('chase')) {
-        cardVisual.style.background = 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)';
+        cardVisual.style.background = 'linear-gradient(135deg, #1040C1 0%, #002685 100%)';
+        cardVisual.style.color = 'white';
     } else if (card.issuer && card.issuer.toLowerCase().includes('capital one')) {
-        cardVisual.style.background = 'linear-gradient(135deg, #1E293B 0%, #0F172A 100%)';
+        cardVisual.style.background = 'linear-gradient(135deg, #002D5C 0%, #001529 100%)';
+        cardVisual.style.color = 'white';
     } else {
-        cardVisual.style.background = 'linear-gradient(135deg, #6B7280 0%, #4B5563 100%)';
+        cardVisual.style.background = 'linear-gradient(135deg, #6366F1 0%, #4F46E5 100%)';
+        cardVisual.style.color = 'white';
     }
     
     // Update verdict
@@ -211,42 +196,34 @@ function openCardModal(cardId) {
     if (welcomeOffer && welcomeOffer.value > 0) {
         welcomeContainer.style.display = 'block';
         
-        let valueNum = '';
-        let valueCurrency = '';
+        let valueText = '';
         
         if (welcomeOffer.currency && welcomeOffer.currency.toLowerCase() === 'cash') {
-            valueNum = `$${welcomeOffer.value}`;
-            valueCurrency = 'Cash Back';
+            valueText = `$${welcomeOffer.value} Cash Back`;
         } else {
-            valueNum = welcomeOffer.value.toLocaleString();
-            valueCurrency = welcomeOffer.currency || 'Points';
+            valueText = `${welcomeOffer.value.toLocaleString()} ${welcomeOffer.currency || 'Points'}`;
         }
         
-        document.getElementById('modal-welcome-value').textContent = valueNum;
-        document.getElementById('modal-welcome-currency').textContent = valueCurrency;
+        document.getElementById('modal-welcome-value').textContent = valueText;
         document.getElementById('modal-welcome-terms').textContent = welcomeOffer.terms || '';
     } else {
         welcomeContainer.style.display = 'none';
     }
     
-    // Parse benefits from Firestore structure
+    // Parse benefits
     const benefits = card.benefits || [];
     const allBenefitsContainer = document.getElementById('modal-all-benefits');
-    allBenefitsContainer.innerHTML = '';
     
     if (benefits.length > 0) {
-        // Separate benefits into multipliers and credits
         const multipliers = [];
         const credits = [];
         
         benefits.forEach((benefit) => {
             const desc = benefit.description || '';
             const shortDesc = benefit.short_description || desc;
-            const additionalDetails = benefit.additional_details || '';
             const benefitType = benefit.benefit_type || '';
             const numericValue = benefit.numeric_value;
             
-            // Format value based on type
             let formattedValue = '';
             if (benefitType === 'Multiplier' && numericValue) {
                 formattedValue = `${numericValue}x`;
@@ -254,130 +231,85 @@ function openCardModal(cardId) {
                 formattedValue = `${numericValue}%`;
             } else if (benefitType === 'Credit' && numericValue) {
                 formattedValue = `$${numericValue}`;
-            } else if (benefitType === 'Bonus' && numericValue) {
-                 // Heuristic for points vs percent if not explicit, but usually points for bonus
-                 // If it's small (<=100), maybe percent? But usually bonus is points.
-                 // Let's just show the number if we can't be sure, or rely on description.
-                 // For now, let's leave it empty or try to parse if needed, but the design focuses on Multipliers/Credits.
-                 // Actually, let's use the numeric value if reasonable.
+            } else if (numericValue) {
                  formattedValue = numericValue.toLocaleString();
             }
 
             const benefitData = {
-                description: desc,
                 shortDescription: shortDesc,
-                additionalDetails: additionalDetails,
                 formattedValue: formattedValue,
                 benefitType: benefitType
             };
             
             if (benefitType === 'Credit') {
                 credits.push(benefitData);
-            } else if (benefitType === 'Multiplier' || benefitType === 'Cashback') {
-                multipliers.push(benefitData);
             } else {
-                // For now, put others in multipliers or ignore? 
-                // The design only has 2 columns. Let's put 'Perk', 'Access', 'Status' etc. in a separate list or append to one?
-                // User said "Represent it properly".
-                // Let's add them to a "Perks" list if we had one, but we don't in the design.
-                // Let's treat them as "Multipliers" (left column) for layout balance if they are important, 
-                // or maybe just "Credits" (right column) if they are monetary-like.
-                // Actually, let's put them in the left column for now as "Other Benefits" if needed, 
-                // but strictly speaking the design shows "Multipliers" and "Credits".
-                // Let's add them to multipliers list but without the blue badge if no value.
                 multipliers.push(benefitData);
             }
         });
         
-        // Render 2-column layout
         let html = `
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-                <!-- Multipliers / Earning Rates Column -->
-                <div>
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; color: #94A3B8; font-weight: 600; font-size: 0.7rem; letter-spacing: 0.05em; text-transform: uppercase;">
-                        <span class="material-icons" style="font-size: 14px;">trending_up</span> EARNING RATES
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <!-- Multipliers Column -->
+            <div>
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: #94A3B8; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase;">
+                    <span class="material-icons" style="font-size: 16px;">trending_up</span> MULTIPLIERS
+                </div>
+                <div style="display: flex; flex-direction: column;">
         `;
         
         if (multipliers.length > 0) {
-            multipliers.forEach((benefit, idx) => {
-                const benefitId = `modal-mult-${idx}`;
+            multipliers.forEach(benefit => {
                 html += `
-                    <div style="background: white; border: 1px solid #F1F5F9; border-radius: 8px; overflow: hidden; transition: all 0.2s;">
-                        <div class="modal-benefit-accordion" onclick="toggleModalBenefitAccordion('${benefitId}')" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; cursor: pointer;">
-                            <div style="display: flex; align-items: center; gap: 0.4rem;">
-                                <span class="material-icons modal-chevron-icon" id="${benefitId}-icon" style="font-size: 14px; color: #CBD5E1;">chevron_right</span>
-                                <span style="color: #334155; font-size: 0.8rem; font-weight: 600;">${benefit.shortDescription}</span>
-                            </div>
-                            ${benefit.formattedValue ? `<div style="font-size: 0.75rem; font-weight: 700; color: #2563EB; background: #EFF6FF; padding: 0.2rem 0.5rem; border-radius: 4px;">${benefit.formattedValue}</div>` : ''}
-                        </div>
-                        <div class="modal-benefit-details" id="${benefitId}" style="padding: 0 0.75rem; background: #F8FAFC;">
-                            <div style="padding: 0.5rem 0; border-top: 1px solid #F1F5F9;">
-                                <div style="font-size: 0.75rem; color: #64748B; line-height: 1.5;">${benefit.description}</div>
-                                ${benefit.additionalDetails ? `<div style="font-size: 0.7rem; color: #94A3B8; margin-top: 0.25rem; line-height: 1.4;">${benefit.additionalDetails}</div>` : ''}
-                            </div>
-                        </div>
+                    <div class="modal-benefit-row">
+                        <span style="color: #334155; font-size: 0.9375rem; font-weight: 500;">${benefit.shortDescription}</span>
+                        ${benefit.formattedValue ? `<div style="font-size: 0.875rem; font-weight: 700; color: #2563EB; background: #EFF6FF; padding: 0.25rem 0.625rem; border-radius: 6px;">${benefit.formattedValue}</div>` : ''}
                     </div>
                 `;
             });
         } else {
-            html += `<div style="color: #94A3B8; font-size: 0.85rem; font-style: italic;">No multipliers</div>`;
+            html += `<div style="color: #94A3B8; font-size: 0.875rem; font-style: italic;">No multipliers</div>`;
         }
         
         html += `
-                    </div>
                 </div>
-                
-                <!-- Credits Column -->
-                <div>
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; color: #94A3B8; font-weight: 600; font-size: 0.7rem; letter-spacing: 0.05em; text-transform: uppercase;">
-                        <span class="material-icons" style="font-size: 14px;">verified_user</span> CREDITS
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            </div>
+            
+            <!-- Credits Column -->
+            <div>
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: #94A3B8; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase;">
+                    <span class="material-icons" style="font-size: 16px;">verified_user</span> CREDITS
+                </div>
+                <div style="display: flex; flex-direction: column;">
         `;
         
         if (credits.length > 0) {
-            credits.forEach((benefit, idx) => {
-                const benefitId = `modal-credit-${idx}`;
+            credits.forEach(benefit => {
                 html += `
-                    <div style="background: white; border: 1px solid #F1F5F9; border-radius: 8px; overflow: hidden; transition: all 0.2s;">
-                        <div class="modal-benefit-accordion" onclick="toggleModalBenefitAccordion('${benefitId}')" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; cursor: pointer;">
-                            <div style="display: flex; align-items: center; gap: 0.4rem;">
-                                <span class="material-icons modal-chevron-icon" id="${benefitId}-icon" style="font-size: 14px; color: #CBD5E1;">chevron_right</span>
-                                <span style="color: #334155; font-size: 0.8rem; font-weight: 600;">${benefit.shortDescription}</span>
-                            </div>
-                            <div style="font-size: 0.75rem; font-weight: 700; color: #16A34A; background: #DCFCE7; padding: 0.2rem 0.5rem; border-radius: 4px;">${benefit.formattedValue}</div>
-                        </div>
-                        <div class="modal-benefit-details" id="${benefitId}" style="padding: 0 0.75rem; background: #F8FAFC;">
-                            <div style="padding: 0.5rem 0; border-top: 1px solid #F1F5F9;">
-                                <div style="font-size: 0.75rem; color: #64748B; line-height: 1.5;">${benefit.description}</div>
-                                ${benefit.additionalDetails ? `<div style="font-size: 0.7rem; color: #94A3B8; margin-top: 0.25rem; line-height: 1.4;">${benefit.additionalDetails}</div>` : ''}
-                            </div>
-                        </div>
+                    <div class="modal-benefit-row">
+                        <span style="color: #334155; font-size: 0.9375rem; font-weight: 500;">${benefit.shortDescription}</span>
+                        <div style="font-size: 0.875rem; font-weight: 700; color: #16A34A; background: #DCFCE7; padding: 0.25rem 0.625rem; border-radius: 6px;">${benefit.formattedValue}</div>
                     </div>
                 `;
             });
         } else {
-            html += `<div style="color: #94A3B8; font-size: 0.85rem; font-style: italic;">No credits</div>`;
+            html += `<div style="color: #94A3B8; font-size: 0.875rem; font-style: italic;">No credits</div>`;
         }
         
         html += `
-                    </div>
                 </div>
             </div>
         `;
         
         allBenefitsContainer.innerHTML = html;
     } else {
-        allBenefitsContainer.innerHTML = '<div style="color: #9CA3AF; font-size: 0.875rem; text-align: center; padding: 1rem;">No benefits available</div>';
+        allBenefitsContainer.innerHTML = '<div style="grid-column: 1 / -1; color: #9CA3AF; font-size: 0.875rem; text-align: center; padding: 1rem;">No benefits available</div>';
     }
     
     // Update apply link
     const applyLink = document.getElementById('modal-apply-link');
     applyLink.href = card.application_url || '#';
     
-    // Show modal with animation
+    // Show modal
     const modal = document.getElementById('card-modal');
     modal.style.display = 'flex';
     setTimeout(() => {
@@ -406,7 +338,7 @@ function addToWalletFromModal() {
     const loader = document.getElementById('add-wallet-loader');
     
     btn.disabled = true;
-    btn.style.opacity = '0.6';
+    btn.style.opacity = '0.8';
     btn.style.cursor = 'not-allowed';
     text.textContent = 'Adding...';
     icon.style.display = 'none';
@@ -423,7 +355,6 @@ function addToWalletFromModal() {
     csrfInput.value = getCookie('csrftoken');
     form.appendChild(csrfInput);
     
-    // Add hidden input for AJAX detection
     const ajaxInput = document.createElement('input');
     ajaxInput.type = 'hidden';
     ajaxInput.name = 'ajax';
@@ -432,7 +363,6 @@ function addToWalletFromModal() {
     
     document.body.appendChild(form);
     
-    // Use fetch to submit as AJAX
     const formData = new FormData(form);
     
     fetch(form.action, {
@@ -444,10 +374,8 @@ function addToWalletFromModal() {
     })
     .then(res => res.json())
     .then(data => {
-        // Remove form
         document.body.removeChild(form);
         
-        // Reset button
         btn.disabled = false;
         btn.style.opacity = '1';
         btn.style.cursor = 'pointer';
@@ -463,12 +391,10 @@ function addToWalletFromModal() {
         }
     })
     .catch(err => {
-        // Remove form
         if (document.body.contains(form)) {
             document.body.removeChild(form);
         }
         
-        // Reset button
         btn.disabled = false;
         btn.style.opacity = '1';
         btn.style.cursor = 'pointer';
@@ -495,26 +421,8 @@ function closeSuccessModal() {
     modal.style.opacity = '0';
     setTimeout(() => {
         modal.style.display = 'none';
-        // Reload page to show updated wallet
         window.location.reload();
     }, 300);
-}
-
-function toggleModalBenefitAccordion(accordionId) {
-    const details = document.getElementById(accordionId);
-    const icon = document.getElementById(accordionId + '-icon');
-    
-    if (details && icon) {
-        const isExpanded = details.classList.contains('expanded');
-        
-        if (isExpanded) {
-            details.classList.remove('expanded');
-            icon.classList.remove('rotated');
-        } else {
-            details.classList.add('expanded');
-            icon.classList.add('rotated');
-        }
-    }
 }
 
 function getCookie(name) {
@@ -532,7 +440,6 @@ function getCookie(name) {
     return cookieValue;
 }
 
-// Close modal on background click
 document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('card-modal');
     if (modal) {

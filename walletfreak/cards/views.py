@@ -211,7 +211,7 @@ def card_list(request):
     max_fee = max(fees) if fees else 1000
 
     # Apply filters (Server-side fallback)
-    selected_issuers = request.GET.getlist('issuer')
+    selected_issuers = [i.strip() for i in request.GET.getlist('issuer')]
     selected_categories = request.GET.getlist('category')
     min_fee_filter = request.GET.get('min_fee')
     max_fee_filter = request.GET.get('max_fee')
@@ -222,7 +222,7 @@ def card_list(request):
     filtered_cards = all_cards
     
     if selected_issuers:
-        filtered_cards = [c for c in filtered_cards if c.get('issuer') in selected_issuers]
+        filtered_cards = [c for c in filtered_cards if c.get('issuer', '').strip() in selected_issuers]
         
     if selected_categories:
         filtered_cards = [c for c in filtered_cards if any(cat in c.get('categories', []) for cat in selected_categories)]
@@ -263,7 +263,7 @@ def card_list(request):
         filtered_cards = sorted(filtered_cards, key=lambda c: c.get('annual_fee', 0), reverse=True)
 
     # Pagination
-    paginator = Paginator(filtered_cards, 12)  # 12 cards per page
+    paginator = Paginator(filtered_cards, 200)  # Show all cards (client-side filtering)
     page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
 
