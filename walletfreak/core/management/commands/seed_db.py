@@ -13,14 +13,17 @@ class Command(BaseCommand):
         # 1. Credit Cards Data - Parse from CSV
         from .parse_benefits_csv import generate_cards_from_csv
         
-        # Get the CSV path
-        csv_path = os.path.join(
-            os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))),
-            'default_cards_2025_11_27.csv'
-        )
+        # Get the CSV paths
+        base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+        csv_path = os.path.join(base_dir, 'default_cards_2025_11_27.csv')
+        signup_csv_path = os.path.join(base_dir, 'default_signup_2025_11_30.csv')
+        rates_csv_path = os.path.join(base_dir, 'default_rates_2025_11_30.csv')
         
         self.stdout.write(f'Parsing cards from: {csv_path}')
-        cards_data = generate_cards_from_csv(csv_path)
+        self.stdout.write(f'Parsing signup bonuses from: {signup_csv_path}')
+        self.stdout.write(f'Parsing earning rates from: {rates_csv_path}')
+        
+        cards_data = generate_cards_from_csv(csv_path, signup_csv_path, rates_csv_path)
         
         card_slug_map = {} # Name -> Slug
 
@@ -29,7 +32,8 @@ class Command(BaseCommand):
             card_slug_map[card['name']] = slug
             
             db.create_document('credit_cards', card, doc_id=slug)
-            self.stdout.write(f'Seeded card: {card["name"]} with {len(card["benefits"])} benefits')
+            earning_rates_count = len(card.get('earning_rates', []))
+            self.stdout.write(f'Seeded card: {card["name"]} with {len(card["benefits"])} benefits and {earning_rates_count} earning rates')
 
         # 2. Personalities Data with Wallet Setup
         for p in PERSONALITIES:

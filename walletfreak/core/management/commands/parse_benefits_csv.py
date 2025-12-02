@@ -33,6 +33,54 @@ def parse_signup_bonuses_csv(csv_path):
         
     return bonuses
 
+def parse_earning_rates_csv(csv_path):
+    """
+    Parse the earning rates CSV and return a dictionary of earning rates by card.
+    
+    CSV Format: Vendor|CardName|EarningRate|Currency|BenefitCategory|AdditionalDetails
+    
+    Returns a dictionary mapping card names to their earning rates:
+    {
+        'card_name': {
+            'earning_rates': [
+                {
+                    'rate': float,
+                    'currency': str,  # 'points', 'miles', 'cash back', etc.
+                    'category': str,  # 'Travel', 'Dining', 'All Purchases', etc.
+                    'details': str
+                }
+            ]
+        }
+    }
+    """
+    rates_dict = defaultdict(lambda: {'earning_rates': []})
+    
+    try:
+        with open(csv_path, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f, delimiter='|')
+            for row in reader:
+                card_name = row['CardName'].strip()
+                
+                # Parse earning rate
+                rate = 0.0
+                try:
+                    rate = float(row['EarningRate'].strip())
+                except ValueError:
+                    pass
+                
+                earning_rate = {
+                    'rate': rate,
+                    'currency': row['Currency'].strip(),
+                    'category': row['BenefitCategory'].strip(),
+                    'details': row.get('AdditionalDetails', '').strip()
+                }
+                
+                rates_dict[card_name]['earning_rates'].append(earning_rate)
+    except FileNotFoundError:
+        print(f"Warning: Earning rates CSV not found at {csv_path}")
+    
+    return dict(rates_dict)
+
 def parse_benefits_csv(csv_path):
     """
     Parse the benefits CSV and return structured card data.
@@ -211,12 +259,12 @@ def convert_to_firestore_format(cards_dict):
             'issuer': card_data['issuer'],
             'annual_fee': card_data['annual_fee'],
             'benefits': card_data['benefits'],
-            'image_url': '',
-            'referral_links': [],
+            'earning_rates': card_data.get('earning_rates', []),
             'image_url': '',
             'referral_links': [],
             'sign_up_bonus': card_data.get('sign_up_bonus', {}),
-            'verdict': card_data.get('verdict', '')
+            'verdict': card_data.get('verdict', ''),
+            'rewards_summary': card_data.get('rewards_summary', '')
         }
         
         firestore_cards.append(card_doc)
@@ -224,7 +272,7 @@ def convert_to_firestore_format(cards_dict):
     return firestore_cards
 
 
-def generate_cards_from_csv(csv_path, signup_csv_path=None):
+def generate_cards_from_csv(csv_path, signup_csv_path=None, rates_csv_path=None):
     """
     Main function to parse CSV and return Firestore-ready card data.
     """
@@ -235,6 +283,12 @@ def generate_cards_from_csv(csv_path, signup_csv_path=None):
         for card_name, card in cards_dict.items():
             if card_name in signup_data:
                 card['sign_up_bonus'] = signup_data[card_name]
+    
+    if rates_csv_path:
+        rates_data = parse_earning_rates_csv(rates_csv_path)
+        for card_name, card in cards_dict.items():
+            if card_name in rates_data:
+                card['earning_rates'] = rates_data[card_name]['earning_rates']
                 
     return convert_to_firestore_format(cards_dict)
 

@@ -22,12 +22,6 @@
                 </div>
             </div>
 
-            <!-- Mobile: Card Name & Fee (shown on mobile next to card visual) -->
-            <div class="mobile-card-info">
-                <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.25rem;">ANNUAL FEE</div>
-                <div id="modal-annual-fee-mobile" style="font-size: 1.5rem; font-weight: 800; color: #1F2937;">$0</div>
-            </div>
-
             <!-- Desktop: Match Badge -->
             <div class="match-badge">
                 <span class="material-icons" style="font-size: 16px;">star</span>
@@ -73,9 +67,6 @@
                 <button class="card-tab" onclick="switchCardTab('benefits')">
                     <span class="material-icons">verified</span> Benefits
                 </button>
-                <button class="card-tab" onclick="switchCardTab('protections')">
-                    <span class="material-icons">umbrella</span> Protections
-                </button>
             </div>
 
             <!-- Tab Content -->
@@ -110,14 +101,10 @@
                     </div>
 
                     <!-- Key Stats Grid -->
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
                         <div class="stat-box">
                             <div class="stat-label">CREDITS VALUE</div>
                             <div class="stat-value" style="color: #10B981;" id="modal-credits-value">$0</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">VARIABLE APR</div>
-                            <div class="stat-value" style="font-size: 1rem;" id="modal-apr">Var</div>
                         </div>
                     </div>
                 </div>
@@ -136,13 +123,6 @@
                 <!-- Benefits Tab -->
                 <div id="tab-benefits" class="tab-pane">
                     <div id="modal-benefits-rows">
-                        <!-- Populated by JS with expandable rows -->
-                    </div>
-                </div>
-
-                <!-- Protections Tab -->
-                <div id="tab-protections" class="tab-pane">
-                    <div id="modal-protections-rows">
                         <!-- Populated by JS with expandable rows -->
                     </div>
                 </div>
@@ -268,14 +248,12 @@ function openCardModal(cardId) {
         document.getElementById('modal-welcome-container').style.display = 'none';
     }
 
-    // Credits & APR
+    // Credits
     document.getElementById('modal-credits-value').textContent = '$' + (card.creditsValue || 0);
-    document.getElementById('modal-apr').textContent = card.apr || 'Var';
     
-    // Sync annual fee to both desktop and mobile
+    // Set annual fee
     const annualFee = '$' + (card.annualFee || card.annual_fee || 0);
     document.getElementById('modal-annual-fee').textContent = annualFee;
-    document.getElementById('modal-annual-fee-mobile').textContent = annualFee;
     
     // Check if card is already in wallet and update Add to Wallet button
     const addBtn = document.getElementById('modal-add-btn');
@@ -303,12 +281,43 @@ function openCardModal(cardId) {
     const earningContainer = document.getElementById('modal-earning-rows');
     earningContainer.innerHTML = '';
     
-    const earning = card.earning || card.rewards_structure || [];
+    // Support multiple field names for earning rates
+    const earning = card.earning_rates || card.earning || card.rewards_structure || [];
     if (Array.isArray(earning) && earning.length > 0) {
+        // Find the highest earning rate for Pro Tip
+        let highestRate = 0;
+        let highestCategory = '';
+        
         earning.forEach((item, index) => {
-            const cat = item.cat || item.category || item.description;
-            const mult = item.mult || item.multiplier || item.value;
-            const details = item.details || item.description_long || `Earn ${mult} on ${cat}.`;
+            // Support different field structures
+            const cat = item.category || item.cat || item.description || 'Category';
+            const rate = item.rate || item.mult || item.multiplier || item.value || 0;
+            const currency = item.currency || 'points';
+            
+            // Track highest rate (excluding "All Purchases" or generic categories)
+            if (rate > highestRate && !cat.toLowerCase().includes('all purchases') && !cat.toLowerCase().includes('everything')) {
+                highestRate = rate;
+                highestCategory = cat;
+            }
+            
+            // Format multiplier display (e.g., "10x", "5x", "2%")
+            let mult;
+            if (currency.toLowerCase().includes('cash') || currency.toLowerCase().includes('%')) {
+                mult = `${rate}%`;
+            } else {
+                mult = `${rate}x`;
+            }
+            
+            // Build details text
+            let details = item.details || item.description_long || item.additional_details || '';
+            if (!details) {
+                // Generate default details text
+                if (currency.toLowerCase().includes('cash')) {
+                    details = `Earn ${rate}% cash back on ${cat.toLowerCase()}.`;
+                } else {
+                    details = `Earn ${rate}x ${currency} on ${cat.toLowerCase()}.`;
+                }
+            }
             
             const wrapper = document.createElement('div');
             wrapper.className = 'expandable-row-wrapper';
@@ -326,6 +335,11 @@ function openCardModal(cardId) {
             `;
             earningContainer.appendChild(wrapper);
         });
+        
+        // Update Pro Tip with highest earning category
+        if (highestCategory) {
+            document.getElementById('modal-pro-tip-text').innerHTML = `Pro Tip: Use this card for <strong>${highestCategory}</strong> to maximize your return on spend.`;
+        }
     } else {
         earningContainer.innerHTML = '<div style="color: #64748B; text-align: center; padding: 2rem;">No earning information available.</div>';
     }
@@ -389,47 +403,6 @@ function openCardModal(cardId) {
         benefitsContainer.innerHTML = '<div style="color: #64748B; text-align: center; padding: 2rem;">No benefits information available.</div>';
     }
 
-    // Protections Tab Population with Expandable Rows
-    const protectionsContainer = document.getElementById('modal-protections-rows');
-    protectionsContainer.innerHTML = '';
-    
-    const protections = card.protections || [];
-    if (Array.isArray(protections) && protections.length > 0) {
-        protections.forEach((protection, index) => {
-            const name = protection.name || protection.title || 'Unnamed Protection';
-            const value = protection.value || protection.coverage || 'Included';
-            const details = protection.details || protection.description || 'No additional details available.';
-            
-            // Format value with proper styling
-            let valueDisplay = value;
-            let valueClass = 'benefit-value';
-            if (String(value).includes('$')) {
-                valueClass += ' benefit-value-money';
-            } else if (String(value).toLowerCase() === 'included') {
-                valueClass += ' benefit-value-included';
-            } else if (String(value).includes('+') || String(value).includes('Year')) {
-                valueClass += ' benefit-value-extra';
-            }
-            
-            const wrapper = document.createElement('div');
-            wrapper.className = 'expandable-row-wrapper';
-            wrapper.innerHTML = `
-                <div class="expandable-row" onclick="toggleExpandable(this)">
-                    <div class="earning-cat">${name}</div>
-                    <div style="display: flex; align-items: center; gap: 0.5rem;">
-                        <div class="${valueClass}">${valueDisplay}</div>
-                        <span class="material-icons expand-arrow" style="font-size: 20px; color: #94A3B8;">expand_more</span>
-                    </div>
-                </div>
-                <div class="expandable-content">
-                    <div class="expandable-content-inner">${details}</div>
-                </div>
-            `;
-            protectionsContainer.appendChild(wrapper);
-        });
-    } else {
-        protectionsContainer.innerHTML = '<div style="color: #64748B; text-align: center; padding: 2rem;">No protections information available.</div>';
-    }
 
     // Reset Tabs
     switchCardTab('overview');

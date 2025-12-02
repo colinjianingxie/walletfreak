@@ -210,15 +210,104 @@
 .pro-tip {
     background: #FFFBEB;
     color: #92400E;
-    padding: 1rem;
-    border-radius: 8px;
-    font-size: 0.9rem;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    font-size: 0.875rem;
     margin-bottom: 1.5rem;
     display: flex;
     gap: 0.75rem;
     align-items: flex-start;
+    line-height: 1.5;
 }
 
+/* Expandable Row Wrapper */
+.expandable-row-wrapper {
+    border-bottom: 1px solid #F1F5F9;
+    transition: all 0.2s ease;
+}
+
+.expandable-row-wrapper:last-child {
+    border-bottom: none;
+}
+
+.expandable-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.expandable-row:hover {
+    background: #F9FAFB;
+    margin: 0 -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 8px;
+}
+
+.earning-cat {
+    font-weight: 600;
+    color: #1F2937;
+    font-size: 1rem;
+}
+
+.earning-mult {
+    background: #EFF6FF;
+    color: #2563EB;
+    font-weight: 700;
+    padding: 0.375rem 0.875rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+/* Expandable Content */
+.expandable-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.expandable-row-wrapper.expanded .expandable-content {
+    max-height: 500px;
+}
+
+.expandable-content-inner {
+    padding: 0 0 1.25rem 0;
+    color: #64748B;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.expand-arrow {
+    transition: transform 0.3s ease;
+}
+
+/* Benefit Value Styles */
+.benefit-value {
+    font-weight: 700;
+    padding: 0.375rem 0.875rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+.benefit-value-money {
+    background: #ECFDF5;
+    color: #059669;
+}
+
+.benefit-value-included {
+    background: #F3F4F6;
+    color: #6B7280;
+}
+
+.benefit-value-extra {
+    background: #FEF3C7;
+    color: #D97706;
+}
+
+/* Legacy earning row styles (kept for compatibility) */
 .earning-row {
     display: flex;
     justify-content: space-between;
@@ -229,20 +318,6 @@
 
 .earning-row:last-child {
     border-bottom: none;
-}
-
-.earning-cat {
-    font-weight: 500;
-    color: #1F2937;
-}
-
-.earning-mult {
-    background: #EFF6FF;
-    color: #2563EB;
-    font-weight: 700;
-    padding: 0.25rem 0.75rem;
-    border-radius: 6px;
-    font-size: 0.9rem;
 }
 
 /* Action Buttons */
