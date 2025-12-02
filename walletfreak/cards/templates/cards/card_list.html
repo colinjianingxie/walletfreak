@@ -227,6 +227,12 @@
 {% include 'cards/includes/card_modal.html' %}
 
 <script>
+// Define allCardsData for modal usage
+const allCardsData = {{ cards_json|safe }};
+
+// Track which cards are already in wallet
+const walletCardIds = new Set({{ wallet_card_ids|safe|default:'[]' }});
+
 // Template filter for dictionary access
 const userMatchScores = {{ user_match_scores|safe|default:'{}' }};
 

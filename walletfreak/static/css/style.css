@@ -1805,3 +1805,609 @@ footer {
         grid-template-columns: 1fr !important;
     }
 }
+
+/* ========================================
+   CARD DETAILS MODAL STYLING
+   ======================================== */
+
+/* Modal Overlay */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.modal[style*="display: flex"] {
+    display: flex !important;
+}
+
+/* Modal Content - Two Column Layout */
+.card-details-content {
+    background-color: #F8FAFC;
+    border-radius: 24px;
+    max-width: 1100px;
+    width: 100%;
+    height: 90vh;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 0;
+}
+
+/* Left Column */
+.card-details-left {
+    background: white;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 24px 0 0 24px;
+    overflow-y: auto;
+}
+
+.card-visual-container {
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.card-visual-container .credit-card {
+    width: 100%;
+    max-width: 100%;
+    transform: scale(1);
+    margin: 0;
+}
+
+/* Match Badge */
+.match-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #ECFDF5;
+    color: #16A34A;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+}
+
+/* Action Buttons */
+.card-actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: auto;
+}
+
+.btn-add-wallet {
+    width: 100%;
+    background: #0F172A;
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: 'Outfit', sans-serif;
+}
+
+.btn-add-wallet:hover {
+    background: #1E293B;
+}
+
+.btn-add-wallet:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-apply {
+    width: 100%;
+    background: white;
+    color: #1F2937;
+    padding: 1rem;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: 'Outfit', sans-serif;
+}
+
+.btn-apply:hover {
+    border-color: #CBD5E1;
+    background: #F8FAFC;
+}
+
+/* Right Column */
+.card-details-right {
+    background: #F8FAFC;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    max-height: 90vh;
+}
+
+/* Header */
+.card-details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #E2E8F0;
+    flex-shrink: 0;
+}
+
+.modal-close-desktop {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #94A3B8;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.2s;
+    flex-shrink: 0;
+    margin-left: 1rem;
+}
+
+.modal-close-desktop:hover {
+    color: #64748B;
+}
+
+.modal-close-mobile {
+    display: none;
+}
+
+/* Tabs */
+.card-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #E2E8F0;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+}
+
+.card-tab {
+    background: transparent;
+    border: none;
+    color: #64748B;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Outfit', sans-serif;
+}
+
+.card-tab .material-icons {
+    font-size: 18px;
+}
+
+.card-tab:hover {
+    background: rgba(99, 102, 241, 0.1);
+    color: #6366F1;
+}
+
+.card-tab.active {
+    background: white;
+    color: #6366F1;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Tab Content - THIS IS THE KEY FIX FOR HEIGHT */
+.card-tab-content {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+/* Freak Verdict Section */
+.freak-verdict {
+    background: #F5F3FF;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.verdict-icon {
+    width: 40px;
+    height: 40px;
+    background: #6366F1;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.verdict-icon .material-icons {
+    color: white;
+    font-size: 24px;
+}
+
+.verdict-title {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #6366F1;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.verdict-text {
+    color: #475569;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+}
+
+/* Welcome Offer Box */
+.welcome-offer-box {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+/* Stat Box */
+.stat-box {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-align: center;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #94A3B8;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1F2937;
+}
+
+/* Pro Tip */
+.pro-tip {
+    background: #EFF6FF;
+    border-left: 3px solid #6366F1;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.6;
+}
+
+/* Earning Rows */
+.earning-row {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    transition: all 0.2s;
+}
+
+.earning-row:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.earning-cat {
+    font-size: 0.9375rem;
+    color: #1F2937;
+    font-weight: 500;
+}
+
+.earning-mult {
+    font-size: 1rem;
+    color: #6366F1;
+    font-weight: 800;
+}
+
+/* Responsive Modal */
+@media (max-width: 1024px) {
+    .card-details-content {
+        grid-template-columns: 1fr;
+        height: 95vh;
+        max-height: 95vh;
+    }
+
+    .card-details-left {
+        padding: 1.5rem;
+        padding-bottom: 1rem;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 1rem;
+        border-radius: 24px 24px 0 0;
+        flex-shrink: 0;
+        overflow-y: visible;
+    }
+
+    .card-visual-container {
+        width: 100px;
+        flex-shrink: 0;
+        margin-bottom: 0;
+    }
+
+    .card-visual-container .credit-card {
+        width: 100px;
+        height: 63px;
+        font-size: 0.5rem;
+    }
+
+    .card-visual-container .credit-card .credit-card-chip {
+        width: 20px;
+        height: 16px;
+        margin-bottom: 0.25rem;
+    }
+
+    .card-visual-container .credit-card .credit-card-number {
+        font-size: 0.5rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .card-visual-container .credit-card .credit-card-name {
+        font-size: 0.4rem;
+    }
+
+    /* Mobile header content - card name and fee */
+    .card-details-left>div:not(.card-visual-container):not(.card-actions) {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .match-badge {
+        display: none;
+    }
+
+    /* Hide action buttons from left column on mobile */
+    .card-details-left .card-actions {
+        display: none;
+    }
+
+    /* Mobile element visibility */
+    .mobile-card-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .desktop-annual-fee {
+        display: none;
+    }
+
+    .card-details-right {
+        border-radius: 0 0 24px 24px;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        height: calc(95vh - 120px);
+    }
+
+    .card-details-header {
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    .card-tabs {
+        margin-bottom: 1rem;
+        flex-shrink: 0;
+    }
+
+    .card-tab-content {
+        flex: 1;
+        overflow-y: auto;
+        min-height: 0;
+        padding-bottom: 80px;
+    }
+
+    .modal-close-desktop {
+        display: block;
+    }
+
+    .modal-close-mobile {
+        display: none;
+    }
+
+    /* Sticky footer for action buttons on mobile */
+    .card-details-right::after {
+        content: '';
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 80px;
+        background: white;
+        border-top: 1px solid #E2E8F0;
+        z-index: 10;
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .modal {
+        padding: 0;
+    }
+
+    .card-details-content {
+        border-radius: 0;
+        height: 100vh;
+        max-height: 100vh;
+    }
+
+    .card-details-left {
+        border-radius: 0;
+        padding: 1rem;
+    }
+
+    .card-details-right {
+        border-radius: 0;
+        padding: 1rem;
+        height: calc(100vh - 100px);
+    }
+
+    .card-details-header h2 {
+        font-size: 1.25rem;
+    }
+
+    .card-tabs {
+        gap: 0.25rem;
+    }
+
+    .card-tab {
+        padding: 0.625rem 0.75rem;
+        font-size: 0.8125rem;
+    }
+
+    .card-tab .material-icons {
+        font-size: 16px;
+    }
+}
+
+/* Expandable Row System */
+.expandable-row-wrapper {
+    margin-bottom: 0.75rem;
+}
+
+.expandable-row {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.expandable-row:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-color: #CBD5E1;
+}
+
+.expandable-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.expandable-row-wrapper.expanded .expandable-content {
+    max-height: 500px;
+    transition: max-height 0.3s ease-in;
+}
+
+.expandable-content-inner {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    padding: 1.25rem 1.5rem;
+    color: #475569;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.expand-arrow {
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+/* Benefit Value Badges */
+.benefit-value {
+    font-size: 1rem;
+    font-weight: 800;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+}
+
+.benefit-value-money {
+    color: #10B981;
+    background: #ECFDF5;
+}
+
+.benefit-value-included {
+    color: #6366F1;
+    background: #EEF2FF;
+}
+
+.benefit-value-extra {
+    color: #F59E0B;
+    background: #FEF3C7;
+}
+
+@media (max-width: 768px) {
+    .expandable-row {
+        padding: 1rem 1.25rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .expandable-row>div:last-child {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .expandable-content-inner {
+        padding: 1rem 1.25rem;
+    }
+}

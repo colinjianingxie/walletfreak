@@ -227,7 +227,8 @@ def dashboard(request):
                         'used': current_period_used,
                         'periods': periods,
                         'frequency': frequency,
-                        'current_period_status': current_period_status
+                        'current_period_status': current_period_status,
+                        'script_id': f"{card['card_id']}_{benefit_id}"  # Unique ID for DOM elements
                     }
                     
                     all_benefits.append(benefit_obj)
@@ -358,7 +359,7 @@ def remove_card(request, user_card_id):
     
     try:
         db.remove_card_from_user(uid, user_card_id)
-        return redirect('dashboard')
+        return redirect('wallet')  # Stay on wallet page for better UX
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)}, status=500)
 

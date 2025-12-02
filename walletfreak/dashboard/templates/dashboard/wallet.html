@@ -149,185 +149,221 @@
 </div>
 {% endif %}
 
-<!-- Add Card Modal -->
-<div id="add-card-modal" class="modal" style="display: none;">
-    <div class="modal-content" style="max-width: 700px; max-height: 90vh; overflow-y: auto;">
-        <div class="modal-header"
-            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-            <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0;">Add New Card</h3>
-            <button class="modal-close" onclick="closeAddCardModal()"
-                style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted);">×</button>
-        </div>
+<!-- Include Shared Modal -->
+{% include 'cards/includes/card_modal.html' %}
 
-        <!-- Search Bar -->
-        <div style="margin-bottom: 1.5rem;">
-            <input type="text" id="modal-search" placeholder="Search e.g. 'Sapphire' or 'Amex'"
-                style="width: 100%; padding: 0.875rem 1rem; border: 1px solid #E5E7EB; border-radius: var(--radius-md); font-size: 0.95rem;">
-        </div>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/card_modal.css' %}">
+{% endblock %}
 
-        <!-- Popular Issuers Filters -->
-        <div style="margin-bottom: 1.5rem;">
-            <div
-                style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; font-weight: 600;">
-                POPULAR ISSUERS</div>
-            <div class="filter-pills" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                <button class="filter-pill active" data-issuer="all" onclick="filterModalCards('all')">All</button>
-                <button class="filter-pill" data-issuer="Chase" onclick="filterModalCards('Chase')">Chase</button>
-                <button class="filter-pill" data-issuer="American Express"
-                    onclick="filterModalCards('American Express')">Amex</button>
-                <button class="filter-pill" data-issuer="Capital One" onclick="filterModalCards('Capital One')">Capital
-                    One</button>
-                <button class="filter-pill" data-issuer="Citi" onclick="filterModalCards('Citi')">Citi</button>
-            </div>
-        </div>
-
-        <!-- Card Selection List -->
-        <div id="modal-card-list" style="max-height: 300px; overflow-y: auto; margin-bottom: 1.5rem;">
-            <!-- Cards will be populated dynamically -->
-        </div>
-
-        <!-- Add to Wallet Button -->
-        <button id="add-to-wallet-btn" class="btn btn-primary"
-            style="width: 100%; padding: 1rem; font-size: 1rem; display: none;" disabled>
-            + Add to Wallet
-        </button>
-    </div>
-</div>
-
+{% block extra_js %}
 <script>
-// Modal Logic
-let selectedCard = null;
-
-// Sample cards data since we don't have an API yet
+// Define allCardsData for the shared modal
+// Using sampleCards as the source since we don't have backend data yet in this view
 const sampleCards = [
-{ id: 1, name: 'Sapphire Preferred', issuer: 'Chase', image: 'card-chase' },
-{ id: 2, name: 'Sapphire Reserve', issuer: 'Chase', image: 'card-chase' },
-{ id: 3, name: 'Platinum Card', issuer: 'American Express', image: 'card-amex-platinum' },
-{ id: 4, name: 'Gold Card', issuer: 'American Express', image: 'card-gold' },
-{ id: 5, name: 'Venture X', issuer: 'Capital One', image: 'card-capital-one' },
-{ id: 6, name: 'Double Cash', issuer: 'Citi', image: 'card-citi' },
-{ id: 7, name: 'Freedom Unlimited', issuer: 'Chase', image: 'card-chase' }
+    { 
+        id: 1, 
+        name: 'Sapphire Preferred', 
+        issuer: 'Chase', 
+        imageClass: 'card-chase',
+        matchScore: '95%',
+        annualFee: 95,
+        verdict: 'The best starter card in the game. Unlocks Chase transfer partners like Hyatt which provide massive value.',
+        welcomeOffer: { value: '60,000 Points', terms: 'after $4k spend in 3 months' },
+        creditsValue: 50,
+        apr: '21.49% - 28.49% Var',
+        earning: [
+            { cat: 'Travel', mult: '2x' },
+            { cat: 'Dining', mult: '3x' },
+            { cat: 'Streaming', mult: '3x' },
+            { cat: 'Online Grocery', mult: '3x' }
+        ]
+    },
+    { 
+        id: 2, 
+        name: 'Sapphire Reserve', 
+        issuer: 'Chase', 
+        imageClass: 'card-chase',
+        matchScore: '92%',
+        annualFee: 550,
+        verdict: 'Premium travel card with lounge access and $300 travel credit.',
+        welcomeOffer: { value: '60,000 Points', terms: 'after $4k spend in 3 months' },
+        creditsValue: 300,
+        apr: '22.49% - 29.49% Var',
+        earning: [
+            { cat: 'Travel', mult: '3x' },
+            { cat: 'Dining', mult: '3x' }
+        ]
+    },
+    { 
+        id: 3, 
+        name: 'Platinum Card', 
+        issuer: 'American Express', 
+        imageClass: 'card-amex-platinum',
+        matchScore: '88%',
+        annualFee: 695,
+        verdict: 'The ultimate luxury travel card. Unbeatable lounge access and status.',
+        welcomeOffer: { value: '80,000 Points', terms: 'after $8k spend in 6 months' },
+        creditsValue: 1500,
+        apr: '21.24% - 29.24% Var',
+        earning: [
+            { cat: 'Flights', mult: '5x' },
+            { cat: 'Hotels', mult: '5x' }
+        ]
+    },
+    { 
+        id: 4, 
+        name: 'Gold Card', 
+        issuer: 'American Express', 
+        imageClass: 'card-gold',
+        matchScore: '98%',
+        annualFee: 250,
+        verdict: 'The daily driver for foodies. 4x on dining and groceries is huge.',
+        welcomeOffer: { value: '60,000 Points', terms: 'after $6k spend in 6 months' },
+        creditsValue: 240,
+        apr: '21.24% - 29.24% Var',
+        earning: [
+            { cat: 'Dining', mult: '4x' },
+            { cat: 'Groceries', mult: '4x' },
+            { cat: 'Flights', mult: '3x' }
+        ]
+    },
+    { 
+        id: 5, 
+        name: 'Venture X', 
+        issuer: 'Capital One', 
+        imageClass: 'card-capital-one',
+        matchScore: '94%',
+        annualFee: 395,
+        verdict: 'The card that pays you to keep it. Easy $300 credit + 10k anniversary miles.',
+        welcomeOffer: { value: '75,000 Miles', terms: 'after $4k spend in 3 months' },
+        creditsValue: 300,
+        apr: '19.99% - 29.99% Var',
+        earning: [
+            { cat: 'Everything', mult: '2x' },
+            { cat: 'Hotels/Rental Cars', mult: '10x' },
+            { cat: 'Flights', mult: '5x' }
+        ]
+    },
+    { 
+        id: 6, 
+        name: 'Double Cash', 
+        issuer: 'Citi', 
+        imageClass: 'card-citi',
+        matchScore: '85%',
+        annualFee: 0,
+        verdict: 'Simple, effective 2% cash back on everything.',
+        welcomeOffer: { value: '$200 Cash', terms: 'after $1.5k spend in 6 months' },
+        creditsValue: 0,
+        apr: '19.24% - 29.24% Var',
+        earning: [
+            { cat: 'Everything', mult: '2x' }
+        ]
+    },
+    { 
+        id: 7, 
+        name: 'Freedom Unlimited', 
+        issuer: 'Chase', 
+        imageClass: 'card-chase',
+        matchScore: '90%',
+        annualFee: 0,
+        verdict: 'Great catch-all card for the Chase ecosystem.',
+        welcomeOffer: { value: '20,000 Points', terms: 'after $500 spend in 3 months' },
+        creditsValue: 0,
+        apr: '20.49% - 29.24% Var',
+        earning: [
+            { cat: 'Everything', mult: '1.5x' },
+            { cat: 'Dining', mult: '3x' },
+            { cat: 'Drugstores', mult: '3x' }
+        ]
+    }
 ];
 
+// Map sampleCards to an object for ID lookup, or just use the array in the shared modal
+// The shared modal logic handles arrays now.
+const allCardsData = sampleCards;
+
 function openAddCardModal() {
-document.getElementById('add-card-modal').style.display = 'flex';
-renderModalCards(sampleCards);
+    document.getElementById('add-card-modal').style.display = 'flex';
+    renderModalCards(sampleCards);
 }
 
 function closeAddCardModal() {
-document.getElementById('add-card-modal').style.display = 'none';
-selectedCard = null;
-document.getElementById('add-to-wallet-btn').style.display = 'none';
+    document.getElementById('add-card-modal').style.display = 'none';
 }
 
 function renderModalCards(cards) {
-const container = document.getElementById('modal-card-list');
-container.innerHTML = '';
+    const container = document.getElementById('modal-card-list');
+    container.innerHTML = '';
 
-if (cards.length === 0) {
-container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-muted);">No cards found</div>';
-return;
-}
+    if (cards.length === 0) {
+        container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-muted);">No cards found</div>';
+        return;
+    }
 
-cards.forEach(card => {
-const div = document.createElement('div');
-div.className = 'modal-card-item';
-div.style.cssText = `
-display: flex; align-items: center; gap: 1rem; padding: 1rem;
-border: 1px solid #E5E7EB; border-radius: 12px; margin-bottom: 0.75rem; cursor: pointer; transition: all 0.2s;
-`;
-div.onclick = () => selectCard(card, div);
+    cards.forEach(card => {
+        const div = document.createElement('div');
+        div.className = 'modal-card-item';
+        div.style.cssText = `
+            display: flex; align-items: center; gap: 1rem; padding: 1rem;
+            border: 1px solid #E5E7EB; border-radius: 12px; margin-bottom: 0.75rem; cursor: pointer; transition: all 0.2s;
+        `;
+        // Use openCardModal from the shared template
+        div.onclick = () => {
+            closeAddCardModal();
+            openCardModal(card.id);
+        };
 
-div.innerHTML = `
-<div
-    style="width: 60px; height: 40px; background: #eee; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
-    <span class="material-icons" style="font-size: 24px; color: #64748B;">credit_card</span></div>
-<div>
-    <div style="font-weight: 700; color: var(--dark);">${card.name}</div>
-    <div style="font-size: 0.85rem; color: var(--text-muted);">${card.issuer}</div>
-</div>
-<div style="margin-left: auto; width: 24px; height: 24px; border: 2px solid #E5E7EB; border-radius: 50%; display: flex; align-items: center; justify-content: center;"
-    class="check-circle">
-</div>
-`;
-container.appendChild(div);
-});
-}
-
-function selectCard(card, element) {
-// Deselect all
-document.querySelectorAll('.modal-card-item').forEach(el => {
-el.style.borderColor = '#E5E7EB';
-el.style.background = 'white';
-el.querySelector('.check-circle').innerHTML = '';
-el.querySelector('.check-circle').style.borderColor = '#E5E7EB';
-el.querySelector('.check-circle').style.background = 'transparent';
-});
-
-// Select clicked
-element.style.borderColor = '#8b5cf6';
-element.style.background = '#f5f3ff';
-const check = element.querySelector('.check-circle');
-check.style.borderColor = '#8b5cf6';
-check.style.background = '#8b5cf6';
-check.innerHTML = '<span style="color: white; font-size: 0.8rem;">✓</span>';
-
-selectedCard = card;
-const btn = document.getElementById('add-to-wallet-btn');
-btn.style.display = 'block';
-btn.disabled = false;
-btn.textContent = `+ Add ${card.name} to Wallet`;
-btn.onclick = () => addToWallet(card);
-}
-
-function addToWallet(card) {
-// In a real app, this would be an AJAX call
-// For now, we'll simulate it by redirecting to wallet page
-// Ideally we would POST to an endpoint
-alert(`Added ${card.name} to your wallet!`);
-window.location.reload();
+        div.innerHTML = `
+            <div
+                style="width: 60px; height: 40px; background: #eee; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                <span class="material-icons" style="font-size: 24px; color: #64748B;">credit_card</span></div>
+            <div>
+                <div style="font-weight: 700; color: var(--dark);">${card.name}</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">${card.issuer}</div>
+            </div>
+            <div style="margin-left: auto; color: #6366F1; font-weight: 600; font-size: 0.85rem;">
+                View Details
+            </div>
+        `;
+        container.appendChild(div);
+    });
 }
 
 function filterModalCards(issuer) {
-document.querySelectorAll('.filter-pill').forEach(pill => {
-pill.classList.remove('active');
-if (pill.dataset.issuer === issuer) {
-pill.classList.add('active');
-}
-});
+    document.querySelectorAll('.filter-pill').forEach(pill => {
+        pill.classList.remove('active');
+        if (pill.dataset.issuer === issuer) {
+            pill.classList.add('active');
+        }
+    });
 
-const search = document.getElementById('modal-search').value.toLowerCase();
-let filtered = sampleCards;
+    const search = document.getElementById('modal-search').value.toLowerCase();
+    let filtered = sampleCards;
 
-if (issuer !== 'all') {
-filtered = filtered.filter(c => c.issuer === issuer);
-}
+    if (issuer !== 'all') {
+        filtered = filtered.filter(c => c.issuer === issuer);
+    }
 
-if (search) {
-filtered = filtered.filter(c => c.name.toLowerCase().includes(search) || c.issuer.toLowerCase().includes(search));
-}
+    if (search) {
+        filtered = filtered.filter(c => c.name.toLowerCase().includes(search) || c.issuer.toLowerCase().includes(search));
+    }
 
-renderModalCards(filtered);
+    renderModalCards(filtered);
 }
 
 document.getElementById('modal-search').addEventListener('input', (e) => {
-const activeIssuer = document.querySelector('.filter-pill.active').dataset.issuer;
-filterModalCards(activeIssuer);
+    const activeIssuer = document.querySelector('.filter-pill.active').dataset.issuer;
+    filterModalCards(activeIssuer);
 });
 
 // Close modal when clicking outside
-document.getElementById('add-card-modal')?.addEventListener('click', function(e) {
-if (e.target.id === 'add-card-modal') {
-closeAddCardModal();
-}
-});
-</script>
-
-<style>
-    @media (max-width: 768px) {
-        div[style*="grid-template-columns: repeat(auto-fill, minmax(340px, 1fr))"] {
-            grid-template-columns: 1fr !important;
-        }
+window.onclick = function(event) {
+    const addModal = document.getElementById('add-card-modal');
+    if (event.target == addModal) {
+        closeAddCardModal();
     }
-</style>
+    // Shared modal close logic is handled in its own script
+}
+</script>
 {% endblock %}

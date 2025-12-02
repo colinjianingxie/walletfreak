@@ -279,6 +279,7 @@ def card_list(request):
         'page_obj': page_obj,
         'total_cards': len(filtered_cards),
         'cards_json': cards_json,
+        'wallet_card_ids': list(wallet_card_ids),  # Pass to JavaScript for button state
         'issuers': issuers,
         'categories': all_categories,
         'selected_issuers': selected_issuers,
