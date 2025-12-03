@@ -267,60 +267,6 @@ def dashboard(request):
 
 
 @login_required
-def wallet(request):
-    """Wallet view showing detailed card management"""
-    uid = request.session.get('uid')
-    if not uid:
-        return redirect('login')
-    
-    # Get all user's cards
-    try:
-        user_cards = db.get_user_cards(uid)
-    except Exception as e:
-        print(f"Error fetching user cards: {e}")
-        user_cards = []
-    
-    # Enrich with full card details
-    enriched_cards = []
-    for user_card in user_cards:
-        try:
-            card_details = db.get_card_by_slug(user_card['card_id'])
-            if card_details:
-                user_card['details'] = card_details
-                enriched_cards.append(user_card)
-        except Exception as e:
-            print(f"Error fetching card details: {e}")
-            continue
-    
-    # Get all available cards for the modal
-    all_cards_dict = {}
-    try:
-        all_cards = db.get_cards()
-        for card in all_cards:
-            # Ensure essential fields exist
-            if 'annual_fee' not in card:
-                card['annual_fee'] = 0
-            if 'benefits' not in card:
-                card['benefits'] = []
-            
-            # Normalize earning rates if needed (depending on DB structure)
-            # Assuming DB has 'earning_rates' or 'rewards_structure'
-            
-            all_cards_dict[card['id']] = card
-    except Exception as e:
-        print(f"Error fetching all cards: {e}")
-
-    cards_json = json.dumps(all_cards_dict, default=str)
-    
-    context = {
-        'user_cards': enriched_cards,
-        'cards_json': cards_json,
-    }
-    
-    return render(request, 'dashboard/wallet.html', context)
-
-
-@login_required
 @require_POST
 def add_card(request, card_id):
     """Add a card to user's wallet"""
@@ -380,7 +326,7 @@ def remove_card(request, user_card_id):
     
     try:
         db.remove_card_from_user(uid, user_card_id)
-        return redirect('wallet')  # Stay on wallet page for better UX
+        return redirect('dashboard')  # Redirect to dashboard after removing card
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)}, status=500)
 

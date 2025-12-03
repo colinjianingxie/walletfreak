@@ -2502,7 +2502,15 @@ footer {
 
 @media (max-width: 768px) {
     .modal {
-        padding: 0;
+        padding: 0 !important;
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        z-index: 9999 !important;
     }
 
     .card-details-content {
