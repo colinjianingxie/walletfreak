@@ -1,0 +1,334 @@
+[
+    {
+        "stage": 1,
+        "question": "What sounds most exciting to you?",
+        "subtitle": "Pick up to 3",
+        "max_selections": 3,
+        "options": [
+            {
+                "id": "free_travel",
+                "text": "Getting free flights or hotel stays",
+                "personalities": [
+                    "luxury-jetsetter",
+                    "points-strategist",
+                    "value-traveler",
+                    "wallet-freak",
+                    "yuppie",
+                    "balanced-food-travel"
+                ]
+            },
+            {
+                "id": "cash_back",
+                "text": "Real cash back I can actually spend",
+                "personalities": [
+                    "cashback-pragmatist",
+                    "simple-minimalist",
+                    "category-hunter",
+                    "gas-freak",
+                    "online-shopping-freak",
+                    "drugstore-freak"
+                ]
+            },
+            {
+                "id": "airport_lounges",
+                "text": "Chilling in airport lounges with free food/drinks",
+                "personalities": [
+                    "luxury-jetsetter",
+                    "wallet-freak",
+                    "yuppie"
+                ]
+            },
+            {
+                "id": "hotel_upgrades",
+                "text": "Getting hotel upgrades or free nights",
+                "personalities": [
+                    "luxury-jetsetter",
+                    "points-strategist",
+                    "value-traveler",
+                    "yuppie"
+                ]
+            },
+            {
+                "id": "business_expenses",
+                "text": "I have business/side-hustle expenses I want rewarded",
+                "personalities": [
+                    "business-powerhouse",
+                    "wallet-freak",
+                    "office-supply-freak"
+                ]
+            },
+            {
+                "id": "welcome_bonuses",
+                "text": "Huge welcome bonuses when I sign up",
+                "personalities": [
+                    "wallet-freak",
+                    "points-strategist",
+                    "category-hunter",
+                    "gas-freak",
+                    "online-shopping-freak",
+                    "drugstore-freak"
+                ]
+            },
+            {
+                "id": "vip_perks",
+                "text": "VIP perks (concierge, credits, black card vibes)",
+                "personalities": [
+                    "luxury-jetsetter",
+                    "wallet-freak",
+                    "yuppie"
+                ]
+            },
+            {
+                "id": "niche_categories",
+                "text": "Insane 5-6% on one specific category (gas, drugstores, streaming, etc)",
+                "personalities": [
+                    "gas-freak",
+                    "drugstore-freak",
+                    "online-shopping-freak",
+                    "office-supply-freak",
+                    "streaming-freak",
+                    "category-hunter"
+                ]
+            },
+            {
+                "id": "family_scale",
+                "text": "Rewards that work great for big family grocery bills & kids stuff",
+                "personalities": [
+                    "family-freak"
+                ]
+            }
+        ]
+    },
+    {
+        "stage": 2,
+        "question": "Where do you actually spend the most money every month?",
+        "subtitle": "Select all that apply (the more honest, the better your match)",
+        "max_selections": null,
+        "options": [
+            {
+                "id": "dining",
+                "text": "Restaurants, bars, food delivery",
+                "personalities": [
+                    "foodie-grocery-king",
+                    "wallet-freak",
+                    "yuppie",
+                    "balanced-food-travel",
+                    "family-freak"
+                ]
+            },
+            {
+                "id": "groceries",
+                "text": "Groceries & supermarkets",
+                "personalities": [
+                    "foodie-grocery-king",
+                    "family-freak",
+                    "balanced-food-travel",
+                    "category-hunter"
+                ]
+            },
+            {
+                "id": "travel",
+                "text": "Flights, hotels, vacations",
+                "personalities": [
+                    "luxury-jetsetter",
+                    "points-strategist",
+                    "value-traveler",
+                    "wallet-freak",
+                    "yuppie",
+                    "balanced-food-travel"
+                ]
+            },
+            {
+                "id": "online_shopping",
+                "text": "Amazon, Target, Walmart, online",
+                "personalities": [
+                    "online-shopping-freak",
+                    "family-freak",
+                    "student-starter",
+                    "category-hunter",
+                    "yuppie"
+                ]
+            },
+            {
+                "id": "gas",
+                "text": "Gas stations or EV charging",
+                "personalities": [
+                    "gas-freak",
+                    "category-hunter",
+                    "family-freak"
+                ]
+            },
+            {
+                "id": "streaming",
+                "text": "Netflix, Spotify, Disney+, YouTube, etc",
+                "personalities": [
+                    "streaming-freak",
+                    "family-freak"
+                ]
+            },
+            {
+                "id": "drugstores",
+                "text": "CVS, Walgreens, Rite Aid (including gift cards)",
+                "personalities": [
+                    "drugstore-freak",
+                    "category-hunter"
+                ]
+            },
+            {
+                "id": "digital_business",
+                "text": "Ads, software, subscriptions, utilities",
+                "personalities": [
+                    "business-powerhouse",
+                    "wallet-freak",
+                    "office-supply-freak"
+                ]
+            },
+            {
+                "id": "high_spend",
+                "text": "I spend a lot on everything (high monthly spend)",
+                "personalities": [
+                    "wallet-freak",
+                    "luxury-jetsetter",
+                    "business-powerhouse",
+                    "yuppie",
+                    "family-freak"
+                ]
+            }
+        ]
+    },
+    {
+        "stage": 3,
+        "question": "How do you feel about annual fees?",
+        "subtitle": "Pick one",
+        "max_selections": 1,
+        "options": [
+            {
+                "id": "no_fee",
+                "text": "Absolutely not — $0 only",
+                "personalities": [
+                    "cashback-pragmatist",
+                    "simple-minimalist",
+                    "student-starter"
+                ]
+            },
+            {
+                "id": "low_fee",
+                "text": "$95–$150 is fine if it pays for itself fast",
+                "personalities": [
+                    "value-traveler",
+                    "balanced-food-travel",
+                    "family-freak",
+                    "foodie-grocery-king"
+                ]
+            },
+            {
+                "id": "mid_fee",
+                "text": "$250–$400 is okay if the value is real",
+                "personalities": [
+                    "points-strategist",
+                    "foodie-grocery-king",
+                    "family-freak",
+                    "wallet-freak"
+                ]
+            },
+            {
+                "id": "high_fee",
+                "text": "$550+ is totally fine if I get way more value",
+                "personalities": [
+                    "luxury-jetsetter",
+                    "wallet-freak",
+                    "yuppie"
+                ]
+            }
+        ]
+    },
+    {
+        "stage": 4,
+        "question": "Which of these sound like YOU?",
+        "subtitle": "Select all that apply",
+        "max_selections": null,
+        "options": [
+            {
+                "id": "optimizer",
+                "text": "I love spreadsheets and optimizing every dollar",
+                "personalities": [
+                    "wallet-freak",
+                    "points-strategist",
+                    "category-hunter",
+                    "gas-freak",
+                    "drugstore-freak",
+                    "online-shopping-freak",
+                    "office-supply-freak",
+                    "streaming-freak"
+                ]
+            },
+            {
+                "id": "one_card",
+                "text": "I just want one perfect card and never think again",
+                "personalities": [
+                    "simple-minimalist",
+                    "cashback-pragmatist"
+                ]
+            },
+            {
+                "id": "churner",
+                "text": "I’m happy to open/close cards for big bonuses",
+                "personalities": [
+                    "wallet-freak",
+                    "points-strategist",
+                    "category-hunter",
+                    "gas-freak",
+                    "drugstore-freak"
+                ]
+            },
+            {
+                "id": "business",
+                "text": "I have business or side-hustle expenses",
+                "personalities": [
+                    "business-powerhouse",
+                    "wallet-freak",
+                    "office-supply-freak"
+                ]
+            },
+            {
+                "id": "student",
+                "text": "I’m a student or just starting my credit journey",
+                "personalities": [
+                    "student-starter"
+                ]
+            },
+            {
+                "id": "family",
+                "text": "Big family, kids, minivan, Disney+ addiction",
+                "personalities": [
+                    "family-freak"
+                ]
+            },
+            {
+                "id": "yuppie_vibes",
+                "text": "City life, metal cards, looking rich",
+                "personalities": [
+                    "yuppie"
+                ]
+            },
+            {
+                "id": "balanced_life",
+                "text": "Groceries/dining heavy but I still travel sometimes",
+                "personalities": [
+                    "balanced-food-travel"
+                ]
+            },
+            {
+                "id": "high_spender",
+                "text": "I easily put $3,000+ per month on cards",
+                "personalities": [
+                    "wallet-freak",
+                    "luxury-jetsetter",
+                    "business-powerhouse",
+                    "yuppie",
+                    "family-freak"
+                ]
+            }
+        ]
+    }
+]
