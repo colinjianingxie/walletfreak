@@ -36,6 +36,25 @@ function filterBenefits(cardId) {
     // You might want to show a "No benefits found" message if visibleCount === 0
 }
 
+// Helper function to get active cards count dynamically
+function getActiveCardsCount() {
+    // Try to get the count from the desktop sidebar first (most reliable)
+    const desktopCountElement = document.querySelector('.modal-sidebar .modal-sidebar-item span[style*="background: #E2E8F0"]');
+    if (desktopCountElement) {
+        return desktopCountElement.textContent.trim();
+    }
+    
+    // Fallback: try to get from the mobile My Stack screen if it exists
+    const mobileMyStackTab = document.querySelector('#mobile-my-stack-tab div div:last-child');
+    if (mobileMyStackTab) {
+        return mobileMyStackTab.textContent.trim();
+    }
+    
+    // Final fallback: count active card elements in the DOM
+    const activeCardElements = document.querySelectorAll('[data-card-id]');
+    return activeCardElements.length.toString();
+}
+
 // Mobile screen management functions
 function showMobileMyStackScreen() {
     // Hide ALL screens first
@@ -182,7 +201,13 @@ function showMobileCardDetail(card) {
     
     const container = document.getElementById('mobile-card-detail-screen');
     container.innerHTML = `
-        <div style="height: 100vh; overflow-y: auto; background: white; padding-top: 80px;">
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background: white; position: relative;">
+            <h1 style="font-size: 1.5rem; font-weight: 700; color: #1F2937; margin: 0;">Manage Wallet</h1>
+            <button class="modal-close-btn" onclick="closeManageWalletModal()" style="background: none; border: none; color: #64748B; font-size: 1.5rem; cursor: pointer; padding: 0.5rem; position: absolute; top: 1rem; right: 1rem;">×</button>
+        </div>
+        
+        <div style="height: calc(100vh - 80px); overflow-y: auto; background: white;">
             <!-- Tab Navigation -->
             <div style="padding: 1.5rem; background: white;">
                 <div style="display: flex; gap: 1rem;">
@@ -190,7 +215,7 @@ function showMobileCardDetail(card) {
                         <span class="material-icons" style="font-size: 24px;">account_balance_wallet</span>
                         <div>
                             <div style="font-size: 0.875rem; font-weight: 500;">My Stack</div>
-                            <div style="font-size: 1.25rem; font-weight: 700;">3</div>
+                            <div style="font-size: 1.25rem; font-weight: 700;">${getActiveCardsCount()}</div>
                         </div>
                     </button>
                     
