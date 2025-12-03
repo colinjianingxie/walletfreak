@@ -67,6 +67,9 @@ def personality_detail(request, personality_id):
     if not personality:
         raise Http404("Personality not found")
     
+    # Ensure slug is available for template
+    personality['slug'] = personality['id']
+    
     # Fetch recommended cards for the slots
     # We need to fetch full card details for each card in the slots
     
