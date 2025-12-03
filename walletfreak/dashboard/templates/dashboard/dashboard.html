@@ -982,6 +982,9 @@
         const modal = document.getElementById('manage-wallet-modal');
         modal.style.display = 'flex';
         
+        // Disable body scrolling when modal is open
+        document.body.style.overflow = 'hidden';
+        
         // Check if mobile
         if (window.innerWidth <= 768) {
             // Hide desktop content (CSS will handle most of this)
@@ -1017,6 +1020,9 @@
 
     function closeManageWalletModal() {
         document.getElementById('manage-wallet-modal').style.display = 'none';
+        
+        // Re-enable body scrolling when modal is closed
+        document.body.style.overflow = '';
         
         // Reset preview (desktop)
         if (document.getElementById('card-preview-empty')) {
@@ -1626,7 +1632,12 @@
     // Close modal on outside click
     window.onclick = function(event) {
         if (event.target.classList.contains('modal')) {
-            event.target.style.display = "none";
+            // Use proper close function to restore body scrolling
+            if (event.target.id === 'manage-wallet-modal') {
+                closeManageWalletModal();
+            } else {
+                event.target.style.display = "none";
+            }
         }
     }
 </script>
