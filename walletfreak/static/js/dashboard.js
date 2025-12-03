@@ -38,24 +38,67 @@ function filterBenefits(cardId) {
 
 // Mobile screen management functions
 function showMobileMyStackScreen() {
-    document.getElementById('mobile-my-stack-screen').style.display = 'flex';
-    document.getElementById('mobile-add-new-screen').style.display = 'none';
-    document.getElementById('mobile-card-detail-screen').style.display = 'none';
+    // Hide ALL screens first
+    const mobileScreens = ['mobile-my-stack-screen', 'mobile-add-new-screen', 'mobile-card-detail-screen'];
+    mobileScreens.forEach(screenId => {
+        const screen = document.getElementById(screenId);
+        if (screen) {
+            screen.classList.remove('active');
+            screen.style.display = 'none';
+        }
+    });
+    
+    // Show only my stack screen
+    const myStackScreen = document.getElementById('mobile-my-stack-screen');
+    if (myStackScreen) {
+        myStackScreen.classList.add('active');
+        myStackScreen.style.display = 'flex';
+    }
 }
 
 function showMobileAddNewScreen() {
-    document.getElementById('mobile-my-stack-screen').style.display = 'none';
-    document.getElementById('mobile-add-new-screen').style.display = 'flex';
-    document.getElementById('mobile-card-detail-screen').style.display = 'none';
+    // Hide ALL screens first
+    const mobileScreens = ['mobile-my-stack-screen', 'mobile-add-new-screen', 'mobile-card-detail-screen'];
+    mobileScreens.forEach(screenId => {
+        const screen = document.getElementById(screenId);
+        if (screen) {
+            screen.classList.remove('active');
+            screen.style.display = 'none';
+        }
+    });
     
-    // Load cards when showing add new screen
-    loadMobileCards();
+    // Show only add new screen
+    const addNewScreen = document.getElementById('mobile-add-new-screen');
+    if (addNewScreen) {
+        addNewScreen.classList.add('active');
+        addNewScreen.style.display = 'flex';
+    }
+    
+    // Load cards when showing add new screen - use actual availableCards data
+    if (typeof availableCards !== 'undefined') {
+        renderMobileCards(availableCards);
+    } else {
+        loadMobileCards(); // fallback to sample data
+    }
 }
 
 function showMobileCardDetailScreen() {
-    document.getElementById('mobile-my-stack-screen').style.display = 'none';
-    document.getElementById('mobile-add-new-screen').style.display = 'none';
-    document.getElementById('mobile-card-detail-screen').style.display = 'flex';
+    // Hide ALL screens first
+    const mobileScreens = ['mobile-my-stack-screen', 'mobile-add-new-screen', 'mobile-card-detail-screen'];
+    mobileScreens.forEach(screenId => {
+        const screen = document.getElementById(screenId);
+        if (screen) {
+            screen.classList.remove('active');
+            screen.style.display = 'none';
+        }
+    });
+    
+    // Show only card detail screen
+    const cardDetailScreen = document.getElementById('mobile-card-detail-screen');
+    if (cardDetailScreen) {
+        cardDetailScreen.classList.add('active');
+        cardDetailScreen.style.display = 'flex';
+    }
 }
 
 function backToMobileSearch() {
@@ -64,8 +107,7 @@ function backToMobileSearch() {
 
 // Mobile card loading and filtering
 function loadMobileCards() {
-    // This would typically load cards from an API
-    // For now, we'll create some sample cards
+    // Fallback sample cards if availableCards is not defined
     const sampleCards = [
         { id: 1, name: 'Sapphire Preferred', issuer: 'Chase' },
         { id: 2, name: 'Sapphire Reserve', issuer: 'Chase' },
@@ -81,25 +123,19 @@ function renderMobileCards(cards) {
     const container = document.getElementById('mobile-card-results-list');
     container.innerHTML = '';
     
+    if (cards.length === 0) {
+        container.innerHTML = '<div style="padding: 2rem; text-align: center; color: #94A3B8;">No cards found</div>';
+        return;
+    }
+    
     cards.forEach(card => {
         const cardElement = document.createElement('div');
-        cardElement.style.cssText = `
-            background: white;
-            border: 1px solid #E5E7EB;
-            border-radius: 12px;
-            padding: 1rem 1.25rem;
-            margin-bottom: 0.75rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.2s;
-        `;
+        cardElement.className = 'mobile-card-item';
         
         cardElement.innerHTML = `
             <div>
-                <div style="font-weight: 700; color: #1F2937; font-size: 1rem; margin-bottom: 0.25rem;">${card.name}</div>
-                <div style="font-size: 0.875rem; color: #64748B;">${card.issuer}</div>
+                <div class="card-name">${card.name}</div>
+                <div class="card-issuer">${card.issuer}</div>
             </div>
             <span class="material-icons" style="color: #CBD5E1; font-size: 20px;">chevron_right</span>
         `;
@@ -110,26 +146,47 @@ function renderMobileCards(cards) {
 }
 
 function filterMobileCards(issuer) {
-    // Filter logic would go here
-    console.log('Filtering by:', issuer);
+    if (typeof availableCards === 'undefined') {
+        console.log('availableCards not available, filtering by:', issuer);
+        return;
+    }
+    
+    let searchIssuer = issuer;
+    if (issuer === 'American Express') {
+        searchIssuer = 'American Express';
+    }
+    
+    const filtered = availableCards.filter(c =>
+        c.issuer.toLowerCase().includes(searchIssuer.toLowerCase())
+    );
+    renderMobileCards(filtered);
 }
 
 function showMobileCardDetail(card) {
     showMobileCardDetailScreen();
     
+    // Set the selected card for adding
+    if (typeof selectedAddCard !== 'undefined') {
+        selectedAddCard = card;
+    }
+    
+    // Determine card background color based on issuer
+    let cardBackground = 'linear-gradient(135deg, #6366F1, #8B5CF6)';
+    if (card.name.toLowerCase().includes('chase')) {
+        cardBackground = 'linear-gradient(135deg, #117ACA 0%, #005EB8 100%)';
+    } else if (card.name.toLowerCase().includes('amex') || card.name.toLowerCase().includes('american express')) {
+        cardBackground = 'linear-gradient(135deg, #2563EB 0%, #1E40AF 100%)';
+    } else if (card.name.toLowerCase().includes('capital')) {
+        cardBackground = 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)';
+    }
+    
     const container = document.getElementById('mobile-card-detail-screen');
     container.innerHTML = `
-        <div style="height: 100vh; overflow-y: auto; background: white;">
-            <!-- Header -->
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background: white; position: relative;">
-                <h1 style="font-size: 1.5rem; font-weight: 700; color: #1F2937; margin: 0;">Manage Wallet</h1>
-                <button onclick="closeManageWalletModal()" style="background: none; border: none; color: #64748B; font-size: 1.5rem; cursor: pointer; padding: 0.5rem; position: absolute; top: 1rem; right: 1rem;">×</button>
-            </div>
-            
+        <div style="height: 100vh; overflow-y: auto; background: white; padding-top: 80px;">
             <!-- Tab Navigation -->
             <div style="padding: 1.5rem; background: white;">
                 <div style="display: flex; gap: 1rem;">
-                    <button onclick="showMobileMyStackScreen()" style="flex: 1; background: white; border: 1px solid #E5E7EB; border-radius: 12px; padding: 1rem; display: flex; align-items: center; gap: 0.75rem; cursor: pointer; color: #6366F1; font-weight: 600;">
+                    <button onclick="showMobileMyStackScreen()" class="mobile-tab-button">
                         <span class="material-icons" style="font-size: 24px;">account_balance_wallet</span>
                         <div>
                             <div style="font-size: 0.875rem; font-weight: 500;">My Stack</div>
@@ -137,7 +194,7 @@ function showMobileCardDetail(card) {
                         </div>
                     </button>
                     
-                    <button style="flex: 1; background: white; border: 1px solid #E5E7EB; border-radius: 12px; padding: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; color: #6366F1; font-weight: 600; cursor: pointer;">
+                    <button onclick="showMobileAddNewScreen()" class="mobile-tab-button active">
                         <span class="material-icons">add</span>
                         Add New
                     </button>
@@ -154,7 +211,7 @@ function showMobileCardDetail(card) {
 
             <!-- Card Visual -->
             <div style="padding: 0 1.5rem; margin-bottom: 2rem;">
-                <div style="width: 100%; max-width: 100%; margin: 0; border-radius: 16px; background: linear-gradient(135deg, #6366F1, #8B5CF6); padding: 1.25rem; color: white; box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25);">
+                <div style="width: 100%; max-width: 100%; margin: 0; border-radius: 16px; background: ${cardBackground}; padding: 1.25rem; color: white; box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25);">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
                         <div style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.9;">${card.issuer.toUpperCase()}</div>
                         <span class="material-icons" style="font-size: 28px; opacity: 0.8;">contactless</span>
@@ -173,7 +230,7 @@ function showMobileCardDetail(card) {
 
             <!-- Add Button -->
             <div style="padding: 0 1.5rem; margin-bottom: 2rem;">
-                <button style="background: #6366F1; width: 100%; padding: 1rem; border-radius: 12px; color: white; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 0.5rem; cursor: pointer; border: none; font-size: 1rem;">
+                <button onclick="addMobileSelectedCard()" style="background: #6366F1; width: 100%; padding: 1rem; border-radius: 12px; color: white; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 0.5rem; cursor: pointer; border: none; font-size: 1rem;">
                     <span class="material-icons">add</span> Add to Wallet
                 </button>
             </div>
@@ -184,32 +241,105 @@ function showMobileCardDetail(card) {
                     <span class="material-icons" style="font-size: 16px; color: #94A3B8;">trending_up</span>
                     <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.1em; text-transform: uppercase;">EARNING RATES</div>
                 </div>
-                <div style="background: white; border-radius: 12px; overflow: hidden;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.875rem 0; border-bottom: 1px solid #F3F4F6;">
-                        <div style="font-weight: 600; color: #1F2937; font-size: 1rem;">Travel</div>
-                        <div style="display: flex; align-items: center; gap: 0.75rem;">
-                            <div style="color: #2563EB; font-weight: 700; font-size: 1rem;">2x</div>
-                            <span class="material-icons" style="font-size: 18px; color: #D1D5DB;">expand_more</span>
-                        </div>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.875rem 0; border-bottom: 1px solid #F3F4F6;">
-                        <div style="font-weight: 600; color: #1F2937; font-size: 1rem;">Dining</div>
-                        <div style="display: flex; align-items: center; gap: 0.75rem;">
-                            <div style="color: #2563EB; font-weight: 700; font-size: 1rem;">3x</div>
-                            <span class="material-icons" style="font-size: 18px; color: #D1D5DB;">expand_more</span>
-                        </div>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.875rem 0;">
-                        <div style="font-weight: 600; color: #1F2937; font-size: 1rem;">Streaming</div>
-                        <div style="display: flex; align-items: center; gap: 0.75rem;">
-                            <div style="color: #2563EB; font-weight: 700; font-size: 1rem;">3x</div>
-                            <span class="material-icons" style="font-size: 18px; color: #D1D5DB;">expand_more</span>
-                        </div>
-                    </div>
-                </div>
+                ${generateMobileEarningRates(card)}
             </div>
         </div>
     `;
+}
+
+// Helper function to generate earning rates for mobile view
+function generateMobileEarningRates(card) {
+    let earning = card.earning_rates || card.earning || card.rewards_structure || [];
+    
+    // If no earning rates found, extract from benefits with benefit_type "Multiplier" or "Cashback"
+    if (!earning || earning.length === 0) {
+        const benefits = card.benefits || [];
+        earning = benefits.filter(b => b.benefit_type === 'Multiplier' || b.benefit_type === 'Cashback').map(b => ({
+            category: b.short_description || b.name || b.title || b.description,
+            rate: b.numeric_value || b.value || b.multiplier,
+            currency: b.benefit_type === 'Cashback' ? 'cash' : (b.currency || 'points')
+        }));
+    }
+    
+    if (!Array.isArray(earning) || earning.length === 0) {
+        return '<div style="color: #9CA3AF; font-size: 0.9rem; text-align: center; padding: 1rem;">No earning rates available</div>';
+    }
+    
+    let html = '<div style="background: white; border-radius: 12px; overflow: hidden;">';
+    earning.forEach((item, index) => {
+        const cat = item.category || item.cat || item.description || 'Category';
+        const rate = item.rate || item.mult || item.multiplier || item.value || 0;
+        const currency = item.currency || 'points';
+        
+        let mult;
+        if (currency.toLowerCase().includes('cash') || currency.toLowerCase().includes('%')) {
+            mult = `${rate}%`;
+        } else {
+            mult = `${rate}x`;
+        }
+        
+        const borderBottom = index < earning.length - 1 ? 'border-bottom: 1px solid #F3F4F6;' : '';
+        
+        html += `
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.875rem 0; ${borderBottom}">
+                <div style="font-weight: 600; color: #1F2937; font-size: 1rem;">${cat}</div>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div style="color: #2563EB; font-weight: 700; font-size: 1rem;">${mult}</div>
+                    <span class="material-icons" style="font-size: 18px; color: #D1D5DB;">expand_more</span>
+                </div>
+            </div>
+        `;
+    });
+    html += '</div>';
+    
+    return html;
+}
+
+// Function to handle adding card from mobile detail view
+function addMobileSelectedCard() {
+    if (typeof selectedAddCard !== 'undefined' && selectedAddCard) {
+        // Use the same logic as desktop version
+        if (typeof addSelectedCard === 'function') {
+            addSelectedCard();
+        } else {
+            // Fallback - directly trigger anniversary modal
+            if (typeof currentAnniversaryCardId !== 'undefined') {
+                currentAnniversaryCardId = 'ADD_NEW_CARD';
+                document.getElementById('anniversary-card-name').textContent = selectedAddCard.name;
+                
+                const now = new Date();
+                const currentYear = now.getFullYear();
+                const currentMonth = String(now.getMonth() + 1).padStart(2, '0');
+                const defaultDate = `${currentYear}-${currentMonth}-01`;
+                
+                document.getElementById('anniversary-date-input').value = defaultDate;
+                document.getElementById('anniversary-modal').style.display = 'flex';
+            }
+        }
+    }
+}
+
+// Handle mobile search input
+function handleMobileSearch(searchTerm) {
+    if (typeof availableCards === 'undefined') {
+        console.log('availableCards not available for search:', searchTerm);
+        return;
+    }
+    
+    let term = searchTerm.toLowerCase();
+    
+    // Alias mapping
+    if (term === 'amex') {
+        term = 'american express';
+    }
+    
+    const filtered = availableCards.filter(c =>
+        c.name.toLowerCase().includes(term) ||
+        c.issuer.toLowerCase().includes(term) ||
+        (term === 'amex' && c.issuer.toLowerCase().includes('american express'))
+    );
+    
+    renderMobileCards(filtered);
 }
 
 // Initialize tooltips or other interactive elements if needed

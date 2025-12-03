@@ -1,0 +1,275 @@
+/* Mobile Modal Styles for Manage Wallet */
+
+/* Mobile responsive grid adjustments for main dashboard */
+@media (max-width: 768px) {
+    /* Make dashboard grid responsive */
+    div[style*="grid-template-columns: 1.5fr 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+    
+    div[style*="grid-template-columns: repeat(auto-fill, minmax(520px, 1fr))"] {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Monthly pills responsive */
+    .monthly-pills-grid {
+        grid-template-columns: repeat(6, 1fr) !important;
+    }
+}
+
+/* Mobile full-screen modal styles */
+@media (max-width: 768px) {
+    #manage-wallet-modal {
+        padding: 0 !important;
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        z-index: 9999 !important;
+        background: rgba(0, 0, 0, 0.5) !important;
+    }
+    
+    #manage-wallet-modal .modal-content {
+        width: 100vw !important;
+        height: 100vh !important;
+        max-width: 100vw !important;
+        max-height: 100vh !important;
+        border-radius: 0 !important;
+        flex-direction: column !important;
+        margin: 0 !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        box-shadow: none !important;
+        background: white !important;
+        display: flex !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+    }
+    
+    /* Hide desktop content on mobile - work with JavaScript */
+    .modal-sidebar {
+        display: none;
+    }
+    
+    #content-stack,
+    #content-add {
+        display: none;
+    }
+    
+    /* Hide the desktop close button on mobile */
+    .modal-content > .modal-close-btn {
+        display: none;
+    }
+    
+    /* Force mobile screens to be visible and take full space */
+    #mobile-my-stack-screen.active,
+    #mobile-add-new-screen.active,
+    #mobile-card-detail-screen.active {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        height: 100vh !important;
+        width: 100vw !important;
+        position: relative !important;
+        left: 0 !important;
+        top: 0 !important;
+        z-index: 1000 !important;
+    }
+    
+    /* Only show active mobile screens - let JavaScript handle the rest */
+    #mobile-my-stack-screen.active,
+    #mobile-add-new-screen.active,
+    #mobile-card-detail-screen.active {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        z-index: 1000 !important;
+        background: white !important;
+    }
+    
+    /* Mobile screens - ensure they're visible and properly sized */
+    #mobile-my-stack-screen,
+    #mobile-add-new-screen,
+    #mobile-card-detail-screen {
+        position: relative !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        background: white !important;
+        overflow-y: auto !important;
+        flex-direction: column !important;
+        z-index: 1 !important;
+    }
+    
+    /* Default state - show My Stack screen */
+    #mobile-my-stack-screen {
+        display: flex !important;
+    }
+    
+    #mobile-add-new-screen,
+    #mobile-card-detail-screen {
+        display: none !important;
+    }
+    
+    /* Active states */
+    #mobile-my-stack-screen.active {
+        display: flex !important;
+    }
+    
+    #mobile-add-new-screen.active {
+        display: flex !important;
+    }
+    
+    #mobile-card-detail-screen.active {
+        display: flex !important;
+    }
+    
+    /* Ensure inactive screens are hidden */
+    #mobile-my-stack-screen:not(.active) {
+        display: none !important;
+    }
+    
+    #mobile-add-new-screen:not(.active) {
+        display: none !important;
+    }
+    
+    #mobile-card-detail-screen:not(.active) {
+        display: none !important;
+    }
+}
+
+/* Larger mobile breakpoint for tablets */
+@media (max-width: 1024px) and (min-width: 769px) {
+    #manage-wallet-modal .modal-content {
+        width: 90vw !important;
+        height: 85vh !important;
+        max-width: 90vw !important;
+        max-height: 85vh !important;
+        margin: auto !important;
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        border-radius: 24px !important;
+    }
+}
+
+/* Additional modal responsive adjustments */
+@media (max-width: 768px) {
+    .modal-content {
+        flex-direction: column !important;
+        height: 90vh !important;
+        width: 95vw !important;
+    }
+    
+    .modal-sidebar {
+        width: 100% !important;
+        flex-direction: row !important;
+        overflow-x: auto !important;
+        border-right: none !important;
+        border-bottom: 1px solid #E2E8F0 !important;
+        padding: 1rem !important;
+    }
+    
+    .modal-sidebar-item {
+        white-space: nowrap !important;
+    }
+
+    #content-add > div {
+        flex-direction: column !important;
+    }
+    
+    #content-add > div > div:first-child {
+        border-right: none !important;
+        border-bottom: 1px solid #E2E8F0 !important;
+    }
+
+    div[style*="width: 360px"] {
+        width: 100% !important;
+    }
+}
+
+/* Mobile card result styling */
+.mobile-card-item {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.mobile-card-item:hover {
+    background: #F8FAFC;
+    border-color: #6366F1;
+    transform: translateY(-1px);
+}
+
+.mobile-card-item .card-name {
+    font-weight: 700;
+    color: #1F2937;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.mobile-card-item .card-issuer {
+    font-size: 0.875rem;
+    color: #64748B;
+}
+
+/* Mobile tab button styles */
+.mobile-tab-button {
+    flex: 1;
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    font-weight: 600;
+    border: 1px solid #E5E7EB;
+    background: white;
+    color: #6366F1;
+    transition: all 0.2s;
+}
+
+.mobile-tab-button.active {
+    background: #6366F1;
+    border-color: #6366F1;
+    color: white;
+}
+
+.mobile-tab-button:hover {
+    background: #F8FAFC;
+    border-color: #6366F1;
+}
+
+.mobile-tab-button.active:hover {
+    background: #5B5BD6;
+}
+
+/* Mobile quick add buttons */
+.mobile-quick-add-btn {
+    background: white;
+    border: 1px solid #E5E7EB;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    color: #1F2937;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.mobile-quick-add-btn:hover {
+    background: #F8FAFC;
+    border-color: #6366F1;
+    color: #6366F1;
+}
