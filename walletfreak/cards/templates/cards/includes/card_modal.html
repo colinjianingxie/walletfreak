@@ -282,7 +282,19 @@ function openCardModal(cardId) {
     earningContainer.innerHTML = '';
     
     // Support multiple field names for earning rates
-    const earning = card.earning_rates || card.earning || card.rewards_structure || [];
+    // Also check benefits for Multiplier and Cashback type items
+    let earning = card.earning_rates || card.earning || card.rewards_structure || [];
+    
+    // If no earning rates found, extract from benefits with benefit_type "Multiplier" or "Cashback"
+    if (!earning || earning.length === 0) {
+        const benefits = card.benefits || [];
+        earning = benefits.filter(b => b.benefit_type === 'Multiplier' || b.benefit_type === 'Cashback').map(b => ({
+            category: b.short_description || b.name || b.title || b.description,
+            rate: b.numeric_value || b.value || b.multiplier,
+            currency: b.benefit_type === 'Cashback' ? 'cash' : (b.currency || 'points')
+        }));
+    }
+    
     if (Array.isArray(earning) && earning.length > 0) {
         // Find the highest earning rate for Pro Tip
         let highestRate = 0;
@@ -349,8 +361,8 @@ function openCardModal(cardId) {
     benefitsContainer.innerHTML = '';
     
     const benefits = card.benefits || [];
-    // Filter out benefits with benefit_type "Multiplier"
-    const filteredBenefits = benefits.filter(b => b.benefit_type !== 'Multiplier');
+    // Filter out benefits with benefit_type "Multiplier" or "Cashback"
+    const filteredBenefits = benefits.filter(b => b.benefit_type !== 'Multiplier' && b.benefit_type !== 'Cashback');
     
     if (Array.isArray(filteredBenefits) && filteredBenefits.length > 0) {
         filteredBenefits.forEach((benefit, index) => {

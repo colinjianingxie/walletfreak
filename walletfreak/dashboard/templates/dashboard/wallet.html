@@ -149,6 +149,49 @@
 </div>
 {% endif %}
 
+<!-- Add Card Modal -->
+<div id="add-card-modal" class="modal" style="display: none;">
+    <div class="modal-content add-card-content">
+        <button class="modal-close-desktop" onclick="closeAddCardModal()">×</button>
+        
+        <!-- Left: Search & List -->
+        <div class="add-card-left">
+            <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #1F2937;">Find a Card</h2>
+            <p style="color: #64748B; margin-bottom: 1.5rem;">Search by name or issuer.</p>
+            
+            <!-- Search -->
+            <div class="search-container">
+                <span class="material-icons">search</span>
+                <input type="text" id="modal-search" placeholder="Search e.g. 'Sapphire' or 'Amex'">
+            </div>
+            
+            <!-- Quick Add Filters -->
+            <div style="margin-bottom: 1.5rem;">
+                <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; margin-bottom: 0.75rem; letter-spacing: 0.05em;">QUICK ADD</div>
+                <div class="filter-pills">
+                    <button class="filter-pill active" onclick="filterModalCards('all', this)" data-issuer="all">All</button>
+                    <button class="filter-pill" onclick="filterModalCards('Chase', this)" data-issuer="Chase">Chase</button>
+                    <button class="filter-pill" onclick="filterModalCards('American Express', this)" data-issuer="American Express">Amex</button>
+                    <button class="filter-pill" onclick="filterModalCards('Capital One', this)" data-issuer="Capital One">Capital One</button>
+                    <button class="filter-pill" onclick="filterModalCards('Citi', this)" data-issuer="Citi">Citi</button>
+                </div>
+            </div>
+            
+            <!-- Card List -->
+            <div id="modal-card-list" class="add-card-list">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+        
+        <!-- Right: Preview -->
+        <div class="add-card-right">
+            <div id="add-card-preview-content" style="height: 100%; display: flex; flex-direction: column; padding: 2rem; overflow-y: auto;">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Include Shared Modal -->
 {% include 'cards/includes/card_modal.html' %}
 
@@ -159,133 +202,22 @@
 {% block extra_js %}
 <script>
 // Define allCardsData for the shared modal
-// Using sampleCards as the source since we don't have backend data yet in this view
-const sampleCards = [
-    { 
-        id: 1, 
-        name: 'Sapphire Preferred', 
-        issuer: 'Chase', 
-        imageClass: 'card-chase',
-        matchScore: '95%',
-        annualFee: 95,
-        verdict: 'The best starter card in the game. Unlocks Chase transfer partners like Hyatt which provide massive value.',
-        welcomeOffer: { value: '60,000 Points', terms: 'after $4k spend in 3 months' },
-        creditsValue: 50,
-        apr: '21.49% - 28.49% Var',
-        earning: [
-            { cat: 'Travel', mult: '2x' },
-            { cat: 'Dining', mult: '3x' },
-            { cat: 'Streaming', mult: '3x' },
-            { cat: 'Online Grocery', mult: '3x' }
-        ]
-    },
-    { 
-        id: 2, 
-        name: 'Sapphire Reserve', 
-        issuer: 'Chase', 
-        imageClass: 'card-chase',
-        matchScore: '92%',
-        annualFee: 550,
-        verdict: 'Premium travel card with lounge access and $300 travel credit.',
-        welcomeOffer: { value: '60,000 Points', terms: 'after $4k spend in 3 months' },
-        creditsValue: 300,
-        apr: '22.49% - 29.49% Var',
-        earning: [
-            { cat: 'Travel', mult: '3x' },
-            { cat: 'Dining', mult: '3x' }
-        ]
-    },
-    { 
-        id: 3, 
-        name: 'Platinum Card', 
-        issuer: 'American Express', 
-        imageClass: 'card-amex-platinum',
-        matchScore: '88%',
-        annualFee: 695,
-        verdict: 'The ultimate luxury travel card. Unbeatable lounge access and status.',
-        welcomeOffer: { value: '80,000 Points', terms: 'after $8k spend in 6 months' },
-        creditsValue: 1500,
-        apr: '21.24% - 29.24% Var',
-        earning: [
-            { cat: 'Flights', mult: '5x' },
-            { cat: 'Hotels', mult: '5x' }
-        ]
-    },
-    { 
-        id: 4, 
-        name: 'Gold Card', 
-        issuer: 'American Express', 
-        imageClass: 'card-gold',
-        matchScore: '98%',
-        annualFee: 250,
-        verdict: 'The daily driver for foodies. 4x on dining and groceries is huge.',
-        welcomeOffer: { value: '60,000 Points', terms: 'after $6k spend in 6 months' },
-        creditsValue: 240,
-        apr: '21.24% - 29.24% Var',
-        earning: [
-            { cat: 'Dining', mult: '4x' },
-            { cat: 'Groceries', mult: '4x' },
-            { cat: 'Flights', mult: '3x' }
-        ]
-    },
-    { 
-        id: 5, 
-        name: 'Venture X', 
-        issuer: 'Capital One', 
-        imageClass: 'card-capital-one',
-        matchScore: '94%',
-        annualFee: 395,
-        verdict: 'The card that pays you to keep it. Easy $300 credit + 10k anniversary miles.',
-        welcomeOffer: { value: '75,000 Miles', terms: 'after $4k spend in 3 months' },
-        creditsValue: 300,
-        apr: '19.99% - 29.99% Var',
-        earning: [
-            { cat: 'Everything', mult: '2x' },
-            { cat: 'Hotels/Rental Cars', mult: '10x' },
-            { cat: 'Flights', mult: '5x' }
-        ]
-    },
-    { 
-        id: 6, 
-        name: 'Double Cash', 
-        issuer: 'Citi', 
-        imageClass: 'card-citi',
-        matchScore: '85%',
-        annualFee: 0,
-        verdict: 'Simple, effective 2% cash back on everything.',
-        welcomeOffer: { value: '$200 Cash', terms: 'after $1.5k spend in 6 months' },
-        creditsValue: 0,
-        apr: '19.24% - 29.24% Var',
-        earning: [
-            { cat: 'Everything', mult: '2x' }
-        ]
-    },
-    { 
-        id: 7, 
-        name: 'Freedom Unlimited', 
-        issuer: 'Chase', 
-        imageClass: 'card-chase',
-        matchScore: '90%',
-        annualFee: 0,
-        verdict: 'Great catch-all card for the Chase ecosystem.',
-        welcomeOffer: { value: '20,000 Points', terms: 'after $500 spend in 3 months' },
-        creditsValue: 0,
-        apr: '20.49% - 29.24% Var',
-        earning: [
-            { cat: 'Everything', mult: '1.5x' },
-            { cat: 'Dining', mult: '3x' },
-            { cat: 'Drugstores', mult: '3x' }
-        ]
-    }
-];
+// Parse cards from Django context
+const allCardsMap = JSON.parse('{{ cards_json|escapejs }}');
+const allCardsData = Object.values(allCardsMap);
 
-// Map sampleCards to an object for ID lookup, or just use the array in the shared modal
-// The shared modal logic handles arrays now.
-const allCardsData = sampleCards;
+// Sort cards by name for the list
+allCardsData.sort((a, b) => a.name.localeCompare(b.name));
+
+let selectedAddCardId = null;
 
 function openAddCardModal() {
     document.getElementById('add-card-modal').style.display = 'flex';
     renderModalCards(sampleCards);
+    // Select first card by default
+    if (sampleCards.length > 0) {
+        selectCard(sampleCards[0].id);
+    }
 }
 
 function closeAddCardModal() {
@@ -303,46 +235,195 @@ function renderModalCards(cards) {
 
     cards.forEach(card => {
         const div = document.createElement('div');
-        div.className = 'modal-card-item';
-        div.style.cssText = `
-            display: flex; align-items: center; gap: 1rem; padding: 1rem;
-            border: 1px solid #E5E7EB; border-radius: 12px; margin-bottom: 0.75rem; cursor: pointer; transition: all 0.2s;
-        `;
-        // Use openCardModal from the shared template
-        div.onclick = () => {
-            closeAddCardModal();
-            openCardModal(card.id);
-        };
+        div.className = 'add-card-list-item';
+        div.dataset.id = card.id;
+        div.onclick = () => selectCard(card.id);
 
         div.innerHTML = `
-            <div
-                style="width: 60px; height: 40px; background: #eee; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
-                <span class="material-icons" style="font-size: 24px; color: #64748B;">credit_card</span></div>
-            <div>
-                <div style="font-weight: 700; color: var(--dark);">${card.name}</div>
-                <div style="font-size: 0.85rem; color: var(--text-muted);">${card.issuer}</div>
-            </div>
-            <div style="margin-left: auto; color: #6366F1; font-weight: 600; font-size: 0.85rem;">
-                View Details
-            </div>
+            <div style="font-weight: 700; color: #1F2937; font-size: 1rem;">${card.name}</div>
+            <div style="font-size: 0.85rem; color: #64748B;">${card.issuer}</div>
         `;
         container.appendChild(div);
     });
 }
 
-function filterModalCards(issuer) {
-    document.querySelectorAll('.filter-pill').forEach(pill => {
-        pill.classList.remove('active');
-        if (pill.dataset.issuer === issuer) {
-            pill.classList.add('active');
+function selectCard(cardId) {
+    selectedAddCardId = cardId;
+    const card = sampleCards.find(c => c.id === cardId);
+    if (!card) return;
+
+    // Update active state in list
+    document.querySelectorAll('.add-card-list-item').forEach(item => {
+        item.classList.remove('active');
+        if (parseInt(item.dataset.id) === cardId) {
+            item.classList.add('active');
         }
     });
+
+    // Update Preview Pane
+    const container = document.getElementById('add-card-preview-content');
+    
+    // Determine card class
+    let imageClass = 'card-default';
+    if (card.imageClass) {
+        imageClass = card.imageClass;
+    } else {
+        const nameLower = card.name.toLowerCase();
+        const issuerLower = (card.issuer || '').toLowerCase();
+        
+        if (issuerLower.includes('american express') || issuerLower.includes('amex')) {
+            if (nameLower.includes('platinum')) imageClass = 'card-amex-platinum';
+            else if (nameLower.includes('gold')) imageClass = 'card-gold';
+            else imageClass = 'card-amex-platinum'; // Fallback
+        } else if (issuerLower.includes('chase')) {
+            imageClass = 'card-chase';
+        } else if (issuerLower.includes('capital one')) {
+            imageClass = 'card-capital-one';
+        } else if (issuerLower.includes('citi')) {
+            imageClass = 'card-citi';
+        }
+    }
+    
+    // Build Earning Rates HTML
+    let earningHtml = '';
+    
+    // Support multiple field names for earning rates
+    // Also check benefits for Multiplier and Cashback type items
+    let earning = card.earning_rates || card.earning || card.rewards_structure || [];
+    
+    // If no earning rates found, extract from benefits with benefit_type "Multiplier" or "Cashback"
+    if (!earning || earning.length === 0) {
+        const benefits = card.benefits || [];
+        earning = benefits.filter(b => b.benefit_type === 'Multiplier' || b.benefit_type === 'Cashback').map(b => ({
+            category: b.short_description || b.name || b.title || b.description,
+            rate: b.numeric_value || b.value || b.multiplier,
+            currency: b.benefit_type === 'Cashback' ? 'cash' : (b.currency || 'points')
+        }));
+    }
+    
+    if (Array.isArray(earning) && earning.length > 0) {
+        earningHtml = earning.map(rate => {
+            // Handle various field names for rate objects
+            const cat = rate.cat || rate.category || rate.description || 'Category';
+            const rateValue = rate.rate || rate.mult || rate.multiplier || rate.value || 0;
+            const currency = rate.currency || 'points';
+            
+            // Format multiplier display (e.g., "10x", "5x", "2%")
+            let multDisplay;
+            if (currency.toLowerCase().includes('cash') || currency.toLowerCase().includes('%')) {
+                multDisplay = `${rateValue}%`;
+            } else {
+                multDisplay = `${rateValue}x`;
+            }
+            
+            return `
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.875rem 0; border-bottom: 1px solid #F3F4F6;">
+                <div style="font-weight: 500; color: #1F2937; font-size: 0.95rem;">${cat}</div>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div style="color: #6366F1; font-weight: 700; font-size: 0.95rem;">${multDisplay}</div>
+                    <span class="material-icons" style="font-size: 18px; color: #D1D5DB;">chevron_right</span>
+                </div>
+            </div>
+            `;
+        }).join('');
+    }
+
+    // Build Credits HTML
+    let creditsHtml = '';
+    
+    // Filter out benefits with benefit_type "Multiplier" or "Cashback"
+    const benefits = card.benefits || [];
+    const filteredBenefits = benefits.filter(b => b.benefit_type !== 'Multiplier' && b.benefit_type !== 'Cashback');
+    
+    if (Array.isArray(filteredBenefits) && filteredBenefits.length > 0) {
+        creditsHtml = filteredBenefits.map(benefit => {
+            // Use the correct field names from database
+            const name = benefit.short_description || benefit.name || benefit.title || 'Unnamed Benefit';
+            const value = benefit.numeric_value || benefit.value || benefit.amount || benefit.dollar_value;
+            
+            // Format value with proper display
+            let valueDisplay = String(value);
+            if (value && (typeof value === 'number' || !isNaN(parseFloat(value)))) {
+                if (!valueDisplay.includes('$')) {
+                    valueDisplay = '$' + valueDisplay;
+                }
+            } else if (!value || valueDisplay.toLowerCase() === 'included') {
+                valueDisplay = 'Included';
+            }
+            
+            return `
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.875rem 0; border-bottom: 1px solid #F3F4F6;">
+                <div style="font-weight: 500; color: #1F2937; font-size: 0.95rem;">${name}</div>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div style="color: #6366F1; font-weight: 700; font-size: 0.95rem;">${valueDisplay}</div>
+                    <span class="material-icons" style="font-size: 18px; color: #D1D5DB;">chevron_right</span>
+                </div>
+            </div>
+            `;
+        }).join('');
+    }
+
+    container.innerHTML = `
+        <!-- Card Visual -->
+        <div class="card-visual-container" style="margin-bottom: 1.5rem;">
+            <div class="credit-card ${imageClass}" style="transform: scale(1); margin: 0;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                    <div style="font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.9;">${card.issuer.toUpperCase()}</div>
+                    <span class="material-icons" style="font-size: 24px; opacity: 0.7;">contactless</span>
+                </div>
+                <div style="width: 40px; height: 28px; background: linear-gradient(135deg, #FFD700, #FFA500); border-radius: 4px; opacity: 0.9;"></div>
+                <div>
+                    <div style="font-size: 1rem; letter-spacing: 0.15em; font-family: 'Courier New', monospace; opacity: 0.85; margin-bottom: 0.75rem;">•••• •••• •••• 4242</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="font-size: 0.7rem; opacity: 0.85; letter-spacing: 0.05em;">YOUR NAME</div>
+                        <div style="display: flex; gap: 2px;">
+                            <div style="width: 18px; height: 18px; background: #EB001B; border-radius: 50%; opacity: 0.9;"></div>
+                            <div style="width: 18px; height: 18px; background: #F79E1B; border-radius: 50%; margin-left: -6px; opacity: 0.9;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Button -->
+        <button onclick="openAnniversaryModal(${card.id}, '${card.name}')" class="btn-add-wallet" style="background: #6366F1; width: 100%; margin-bottom: 2rem; padding: 1rem; border-radius: 12px; color: white; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 0.5rem; cursor: pointer; border: none;">
+            <span class="material-icons">add</span> Add to Wallet
+        </button>
+
+        <!-- Earning Rates -->
+        ${earningHtml ? `
+        <div style="margin-bottom: 2rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                <span class="material-icons" style="font-size: 14px; color: #9CA3AF;">trending_up</span>
+                <div style="font-size: 0.7rem; font-weight: 700; color: #9CA3AF; letter-spacing: 0.1em; text-transform: uppercase;">EARNING RATES</div>
+            </div>
+            <div>${earningHtml}</div>
+        </div>
+        ` : ''}
+
+        <!-- Credits -->
+        ${creditsHtml ? `
+        <div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                <span class="material-icons" style="font-size: 14px; color: #9CA3AF;">bolt</span>
+                <div style="font-size: 0.7rem; font-weight: 700; color: #9CA3AF; letter-spacing: 0.1em; text-transform: uppercase;">CREDITS</div>
+            </div>
+            <div>${creditsHtml}</div>
+        </div>
+        ` : ''}
+    `;
+}
+
+function filterModalCards(issuer, btnElement) {
+    // Update pills
+    document.querySelectorAll('.filter-pill').forEach(pill => pill.classList.remove('active'));
+    if (btnElement) btnElement.classList.add('active');
 
     const search = document.getElementById('modal-search').value.toLowerCase();
     let filtered = sampleCards;
 
     if (issuer !== 'all') {
-        filtered = filtered.filter(c => c.issuer === issuer);
+        filtered = filtered.filter(c => c.issuer === issuer || (issuer === 'American Express' && (c.issuer === 'American Express' || c.issuer === 'Amex')));
     }
 
     if (search) {
@@ -350,11 +431,19 @@ function filterModalCards(issuer) {
     }
 
     renderModalCards(filtered);
+    
+    // Select first result if available
+    if (filtered.length > 0) {
+        selectCard(filtered[0].id);
+    } else {
+        document.getElementById('add-card-preview-content').innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #94A3B8;">No card selected</div>';
+    }
 }
 
 document.getElementById('modal-search').addEventListener('input', (e) => {
-    const activeIssuer = document.querySelector('.filter-pill.active').dataset.issuer;
-    filterModalCards(activeIssuer);
+    const activePill = document.querySelector('.filter-pill.active');
+    const issuer = activePill ? activePill.dataset.issuer : 'all';
+    filterModalCards(issuer, activePill);
 });
 
 // Close modal when clicking outside
@@ -363,7 +452,14 @@ window.onclick = function(event) {
     if (event.target == addModal) {
         closeAddCardModal();
     }
-    // Shared modal close logic is handled in its own script
+    const detailsModal = document.getElementById('card-details-modal');
+    if (event.target == detailsModal) {
+        closeCardDetailsModal();
+    }
+    const annivModal = document.getElementById('anniversary-modal');
+    if (event.target == annivModal) {
+        closeAnniversaryModal();
+    }
 }
 </script>
 {% endblock %}

@@ -445,33 +445,50 @@
                             <p style="font-size: 0.9rem;">Choose a card from the list to<br>preview its benefits.</p>
                         </div>
                         
-                        <div id="card-preview-content" style="display: none; width: 100%;">
+                        <div id="card-preview-content" style="display: none; width: 100%; padding: 0 1rem;">
                             <!-- Card Visual -->
-                            <div id="preview-card-visual" style="width: 100%; max-width: 300px; height: 190px; background: linear-gradient(135deg, #6366F1, #8B5CF6); border-radius: 16px; margin: 0 auto 2rem; box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.4); padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; color: white; position: relative; overflow: hidden;">
-                                <div id="preview-issuer" style="font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;">CHASE</div>
-                                <div style="font-size: 1.1rem; letter-spacing: 0.15em; font-family: 'Courier New', monospace; opacity: 0.8;">•••• •••• •••• 4242</div>
-                                <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-                                    <div style="font-size: 0.75rem; opacity: 0.9;">YOUR NAME</div>
-                                    <div style="display: flex; gap: 2px;">
-                                        <div style="width: 20px; height: 20px; background: #EB001B; border-radius: 50%; opacity: 0.9;"></div>
-                                        <div style="width: 20px; height: 20px; background: #F79E1B; border-radius: 50%; margin-left: -8px; opacity: 0.9;"></div>
+                            <div id="preview-card-visual" style="width: 100%; height: 180px; background: linear-gradient(135deg, #6366F1, #8B5CF6); border-radius: 16px; margin: 0 0 1.5rem 0; box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25); padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; color: white; position: relative; overflow: hidden;">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                    <div id="preview-issuer" style="font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; opacity: 0.9;">AMERICAN EXPRESS</div>
+                                    <span class="material-icons" style="font-size: 24px; opacity: 0.7;">contactless</span>
+                                </div>
+                                <div style="width: 40px; height: 28px; background: linear-gradient(135deg, #FFD700, #FFA500); border-radius: 4px; opacity: 0.9;"></div>
+                                <div>
+                                    <div style="font-size: 1rem; letter-spacing: 0.15em; font-family: 'Courier New', monospace; opacity: 0.85; margin-bottom: 0.75rem;">•••• •••• •••• 4242</div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div style="font-size: 0.7rem; opacity: 0.85; letter-spacing: 0.05em;">YOUR NAME</div>
+                                        <div style="display: flex; gap: 2px;">
+                                            <div style="width: 18px; height: 18px; background: #EB001B; border-radius: 50%; opacity: 0.9;"></div>
+                                            <div style="width: 18px; height: 18px; background: #F79E1B; border-radius: 50%; margin-left: -6px; opacity: 0.9;"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             
-                            <h3 id="preview-card-name" style="font-size: 1.5rem; font-weight: 800; color: #1F2937; margin: 0 0 0.25rem 0; text-align: center;">Sapphire Preferred</h3>
-                            <p id="preview-card-issuer-text" style="color: #64748B; margin: 0 0 2rem 0; text-align: center;">Chase</p>
-                            
                             <!-- Add to Wallet Button -->
-                            <button id="add-card-btn" onclick="addSelectedCard()" style="width: 100%; padding: 1rem; background: #111827; color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.2s; margin-bottom: 2rem;">
+                            <button id="add-card-btn" onclick="addSelectedCard()" style="width: 100%; padding: 1rem; background: #6366F1; color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.2s; margin-bottom: 2rem;">
                                 <span class="material-icons" style="font-size: 20px;">add</span>
                                 Add to Wallet
                             </button>
 
-                            <!-- Benefits List -->
+                            <!-- Earning Rates -->
+                            <div style="width: 100%; margin-bottom: 2rem;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                    <span class="material-icons" style="font-size: 14px; color: #9CA3AF;">trending_up</span>
+                                    <div style="font-size: 0.7rem; font-weight: 700; color: #9CA3AF; letter-spacing: 0.1em; text-transform: uppercase;">EARNING RATES</div>
+                                </div>
+                                <div id="preview-earning-rates" style="display: flex; flex-direction: column;">
+                                    <!-- Populated via JS -->
+                                </div>
+                            </div>
+
+                            <!-- Credits -->
                             <div style="width: 100%;">
-                                <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em; margin-bottom: 1rem; text-transform: uppercase;">Benefits & Credits</div>
-                                <div id="preview-credits" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                    <span class="material-icons" style="font-size: 14px; color: #9CA3AF;">bolt</span>
+                                    <div style="font-size: 0.7rem; font-weight: 700; color: #9CA3AF; letter-spacing: 0.1em; text-transform: uppercase;">CREDITS</div>
+                                </div>
+                                <div id="preview-credits" style="display: flex; flex-direction: column;">
                                     <!-- Populated via JS -->
                                 </div>
                             </div>
@@ -962,37 +979,90 @@
         }
         
         document.getElementById('preview-issuer').innerText = card.issuer.toUpperCase();
-        document.getElementById('preview-card-name').innerText = card.name;
-        document.getElementById('preview-card-issuer-text').innerText = card.issuer;
         
-        // Render Benefits
+        // Render Earning Rates
         const earningContainer = document.getElementById('preview-earning-rates');
         earningContainer.innerHTML = '';
-        if (card.earning_rates) {
-            card.earning_rates.forEach(rate => {
-                earningContainer.innerHTML += `
-                    <div style="background: white; padding: 0.75rem; border-radius: 12px; border: 1px solid #E2E8F0;">
-                        <div style="font-size: 1.25rem; font-weight: 800; color: #1F2937;">${rate.multiplier}x</div>
-                        <div style="font-size: 0.75rem; color: #64748B; font-weight: 600;">${rate.category}</div>
-                    </div>
-                `;
-            });
+        
+        // Support multiple field names for earning rates (same as card modal)
+        // Also check benefits for Multiplier and Cashback type items
+        let earning = card.earning_rates || card.earning || card.rewards_structure || [];
+        
+        // If no earning rates found, extract from benefits with benefit_type "Multiplier" or "Cashback"
+        if (!earning || earning.length === 0) {
+            const benefits = card.benefits || [];
+            earning = benefits.filter(b => b.benefit_type === 'Multiplier' || b.benefit_type === 'Cashback').map(b => ({
+                category: b.short_description || b.name || b.title || b.description,
+                rate: b.numeric_value || b.value || b.multiplier,
+                currency: b.benefit_type === 'Cashback' ? 'cash' : (b.currency || 'points')
+            }));
         }
         
-        const creditsContainer = document.getElementById('preview-credits');
-        creditsContainer.innerHTML = '';
-        if (card.credits) {
-            card.credits.forEach(credit => {
-                creditsContainer.innerHTML += `
-                    <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: white; border-radius: 12px; border: 1px solid #E2E8F0;">
-                        <div style="width: 32px; height: 32px; background: #DCFCE7; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #16A34A; font-weight: 700; font-size: 0.75rem;">$${credit.amount}</div>
-                        <div>
-                            <div style="font-weight: 700; color: #1F2937; font-size: 0.9rem;">${credit.name}</div>
-                            <div style="font-size: 0.75rem; color: #64748B;">${credit.frequency}</div>
+        if (Array.isArray(earning) && earning.length > 0) {
+            earning.forEach((item, index) => {
+                // Support different field structures (same as card modal)
+                const cat = item.category || item.cat || item.description || 'Category';
+                const rate = item.rate || item.mult || item.multiplier || item.value || 0;
+                const currency = item.currency || 'points';
+                
+                // Format multiplier display (e.g., "10x", "5x", "2%")
+                let mult;
+                if (currency.toLowerCase().includes('cash') || currency.toLowerCase().includes('%')) {
+                    mult = `${rate}%`;
+                } else {
+                    mult = `${rate}x`;
+                }
+                
+                earningContainer.innerHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.875rem 0; border-bottom: 1px solid #F3F4F6;">
+                        <div style="font-weight: 500; color: #1F2937; font-size: 0.95rem;">${cat}</div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <div style="color: #6366F1; font-weight: 700; font-size: 0.95rem;">${mult}</div>
+                            <span class="material-icons" style="font-size: 18px; color: #D1D5DB;">chevron_right</span>
                         </div>
                     </div>
                 `;
             });
+        } else {
+            earningContainer.innerHTML = '<div style="color: #9CA3AF; font-size: 0.9rem; text-align: center; padding: 1rem;">No earning rates available</div>';
+        }
+        
+        // Render Credits
+        const creditsContainer = document.getElementById('preview-credits');
+        creditsContainer.innerHTML = '';
+        
+        // Filter out benefits with benefit_type "Multiplier" or "Cashback" (same as card modal)
+        const benefits = card.benefits || [];
+        const filteredBenefits = benefits.filter(b => b.benefit_type !== 'Multiplier' && b.benefit_type !== 'Cashback');
+        
+        if (Array.isArray(filteredBenefits) && filteredBenefits.length > 0) {
+            filteredBenefits.forEach((benefit, index) => {
+                // Use the correct field names from database (same as card modal)
+                const name = benefit.short_description || benefit.name || benefit.title || 'Unnamed Benefit';
+                const value = benefit.numeric_value || benefit.value || benefit.amount || benefit.dollar_value;
+                
+                // Format value with proper display
+                let valueDisplay = String(value);
+                if (value && (typeof value === 'number' || !isNaN(parseFloat(value)))) {
+                    if (!valueDisplay.includes('$')) {
+                        valueDisplay = '$' + valueDisplay;
+                    }
+                } else if (!value || valueDisplay.toLowerCase() === 'included') {
+                    valueDisplay = 'Included';
+                }
+                
+                creditsContainer.innerHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.875rem 0; border-bottom: 1px solid #F3F4F6;">
+                        <div style="font-weight: 500; color: #1F2937; font-size: 0.95rem;">${name}</div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <div style="color: #6366F1; font-weight: 700; font-size: 0.95rem;">${valueDisplay}</div>
+                            <span class="material-icons" style="font-size: 18px; color: #D1D5DB;">chevron_right</span>
+                        </div>
+                    </div>
+                `;
+            });
+        } else {
+            creditsContainer.innerHTML = '<div style="color: #9CA3AF; font-size: 0.9rem; text-align: center; padding: 1rem;">No credits available</div>';
         }
     }
 

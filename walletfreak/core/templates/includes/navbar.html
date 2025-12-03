@@ -1,0 +1,221 @@
+{% load static %}
+
+<nav class="navbar">
+    <div class="container" style="display: flex; align-items: center; gap: 3rem;">
+        <a href="{% if user.is_authenticated %}{% url 'dashboard' %}{% else %}/{% endif %}" class="logo" style="display: flex; align-items: center; gap: 0.75rem; text-decoration: none;">
+            <img src="{% static 'images/logo-mascot.svg' %}" alt="WalletFreak" style="height: 40px; width: auto;">
+            <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.5rem; color: var(--dark); letter-spacing: -0.02em;">WalletFreak</span>
+        </a>
+
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+            <span class="material-icons">menu</span>
+        </button>
+
+        <!-- Desktop Nav Links -->
+        <div class="nav-links desktop-only" id="nav-links">
+            <div class="nav-items">
+                {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                {% else %}
+                <a href="{% url 'features' %}">Features</a>
+                {% endif %}
+                <a href="{% url 'card_list' %}">Explore</a>
+                <a href="{% url 'personality_list' %}">Personalities</a>
+                <a href="{% url 'blog_list' %}">Blog</a>
+            </div>
+
+            {% if user.is_authenticated %}
+            <div class="user-dropdown">
+                <button class="user-dropdown-toggle" id="user-dropdown-toggle" aria-label="User menu">
+                    <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
+                        <span class="material-icons" style="font-size: 20px;">flight</span>
+                    </div>
+                    <span style="font-weight: 600; font-size: 0.95rem; color: var(--dark);">{{ user.first_name|default:"Alex" }}</span>
+                </button>
+                
+                <div class="user-dropdown-menu" id="user-dropdown-menu">
+                    <div class="user-dropdown-header">
+                        <div class="user-dropdown-name">{{ user.first_name|default:"Alex" }} {{ user.last_name|default:"Smith" }}</div>
+                        <div class="user-dropdown-tagline">The Jetsetter</div>
+                    </div>
+                    
+                    <a href="{% url 'profile' %}" class="user-dropdown-menu-item">
+                        <span class="material-icons" style="font-size: 20px;">person</span>
+                        Profile
+                    </a>
+                    
+                    <a href="{% url 'settings' %}" class="user-dropdown-menu-item">
+                        <span class="material-icons" style="font-size: 20px;">settings</span>
+                        Settings
+                    </a>
+                    
+                    <a href="#" onclick="handleLogout(event)" class="user-dropdown-menu-item logout">
+                        <span class="material-icons" style="font-size: 20px;">logout</span>
+                        Log Out
+                    </a>
+                </div>
+            </div>
+            {% else %}
+            <a href="{% url 'login' %}" class="btn btn-login">Log In</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+        <div class="mobile-menu-header">
+            <a href="/" class="logo">
+                <img src="{% static 'images/logo-mascot.svg' %}" alt="WalletFreak" style="height: 32px; width: auto;">
+                <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.25rem; color: var(--dark);">WalletFreak</span>
+            </a>
+            <button class="mobile-menu-close" id="mobile-menu-close">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+
+        <div class="mobile-menu-content">
+            {% if user.is_authenticated %}
+            <!-- Logged In State -->
+            <div class="mobile-user-profile">
+                <div class="mobile-user-avatar">
+                    <span class="material-icons">flight</span> <!-- Placeholder for user avatar/icon -->
+                </div>
+                <div class="mobile-user-info">
+                    <div class="mobile-user-name">{{ user.first_name|default:"Alex" }} {{ user.last_name|default:"Smith" }}</div>
+                    <div class="mobile-user-tagline">The Wallet Freak</div>
+                </div>
+                <button class="mobile-user-edit">
+                    <span class="material-icons">edit</span>
+                </button>
+            </div>
+
+            <a href="{% url 'dashboard' %}" class="mobile-menu-item active">
+                <div class="mobile-menu-icon" style="background: #2563EB; color: white;">
+                    <span class="material-icons">dashboard</span>
+                </div>
+                <span class="mobile-menu-text">Dashboard</span>
+                <span class="mobile-menu-indicator"></span>
+            </a>
+
+            <a href="{% url 'card_list' %}" class="mobile-menu-item">
+                <div class="mobile-menu-icon" style="background: #F8FAFC; color: #2563EB;">
+                    <span class="material-icons">explore</span>
+                </div>
+                <span class="mobile-menu-text">Explore Cards</span>
+            </a>
+
+            <a href="{% url 'personality_list' %}" class="mobile-menu-item">
+                <div class="mobile-menu-icon" style="background: #F8FAFC; color: #A855F7;">
+                    <span class="material-icons">auto_awesome</span>
+                </div>
+                <span class="mobile-menu-text">Personalities</span>
+            </a>
+
+            <a href="{% url 'blog_list' %}" class="mobile-menu-item">
+                <div class="mobile-menu-icon" style="background: #FFF7ED; color: #EA580C;">
+                    <span class="material-icons">menu_book</span>
+                </div>
+                <span class="mobile-menu-text">Blog</span>
+            </a>
+
+            <a href="{% url 'settings' %}" class="mobile-menu-item">
+                <div class="mobile-menu-icon" style="background: #F8FAFC; color: #64748B;">
+                    <span class="material-icons">settings</span>
+                </div>
+                <span class="mobile-menu-text">Settings</span>
+            </a>
+
+            {% else %}
+            <!-- Logged Out State -->
+            <a href="{% url 'features' %}" class="mobile-menu-item">
+                <div class="mobile-menu-icon" style="background: #F0FDF4; color: #16A34A;">
+                    <span class="material-icons">layers</span>
+                </div>
+                <span class="mobile-menu-text">Features</span>
+            </a>
+
+            <a href="{% url 'card_list' %}" class="mobile-menu-item">
+                <div class="mobile-menu-icon" style="background: #EFF6FF; color: #2563EB;">
+                    <span class="material-icons">explore</span>
+                </div>
+                <span class="mobile-menu-text">Explore Cards</span>
+            </a>
+
+            <a href="{% url 'personality_list' %}" class="mobile-menu-item">
+                <div class="mobile-menu-icon" style="background: #FAF5FF; color: #A855F7;">
+                    <span class="material-icons">auto_awesome</span>
+                </div>
+                <span class="mobile-menu-text">Personalities</span>
+            </a>
+
+            <a href="{% url 'blog_list' %}" class="mobile-menu-item">
+                <div class="mobile-menu-icon" style="background: #FFF7ED; color: #EA580C;">
+                    <span class="material-icons">menu_book</span>
+                </div>
+                <span class="mobile-menu-text">Blog</span>
+            </a>
+            {% endif %}
+        </div>
+
+        <div class="mobile-menu-footer">
+            {% if user.is_authenticated %}
+            <a href="#" onclick="handleLogout(event)" class="btn-mobile-action logout">
+                <span class="material-icons">logout</span>
+                Log Out
+            </a>
+            {% else %}
+            <a href="{% url 'login' %}" class="btn-mobile-action login">
+                Log In
+                <span class="material-icons">arrow_forward</span>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    
+    <script>
+        function handleLogout(e) {
+            e.preventDefault();
+            firebase.auth().signOut().then(() => {
+                window.location.href = "/logout/";
+            });
+        }
+
+        // Mobile menu toggle logic
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
+            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+
+            function toggleMenu() {
+                mobileMenuOverlay.classList.toggle('active');
+                document.body.style.overflow = mobileMenuOverlay.classList.contains('active') ? 'hidden' : '';
+            }
+
+            if (mobileMenuToggle) {
+                mobileMenuToggle.addEventListener('click', toggleMenu);
+            }
+
+            if (mobileMenuClose) {
+                mobileMenuClose.addEventListener('click', toggleMenu);
+            }
+
+            // User dropdown toggle (Desktop)
+            const userDropdownToggle = document.getElementById('user-dropdown-toggle');
+            const userDropdownMenu = document.getElementById('user-dropdown-menu');
+
+            if (userDropdownToggle && userDropdownMenu) {
+                userDropdownToggle.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    userDropdownMenu.classList.toggle('active');
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function (e) {
+                    if (!userDropdownMenu.contains(e.target) && !userDropdownToggle.contains(e.target)) {
+                        userDropdownMenu.classList.remove('active');
+                    }
+                });
+            }
+        });
+    </script>
+</nav>

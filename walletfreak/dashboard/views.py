@@ -292,8 +292,29 @@ def wallet(request):
             print(f"Error fetching card details: {e}")
             continue
     
+    # Get all available cards for the modal
+    all_cards_dict = {}
+    try:
+        all_cards = db.get_cards()
+        for card in all_cards:
+            # Ensure essential fields exist
+            if 'annual_fee' not in card:
+                card['annual_fee'] = 0
+            if 'benefits' not in card:
+                card['benefits'] = []
+            
+            # Normalize earning rates if needed (depending on DB structure)
+            # Assuming DB has 'earning_rates' or 'rewards_structure'
+            
+            all_cards_dict[card['id']] = card
+    except Exception as e:
+        print(f"Error fetching all cards: {e}")
+
+    cards_json = json.dumps(all_cards_dict, default=str)
+    
     context = {
         'user_cards': enriched_cards,
+        'cards_json': cards_json,
     }
     
     return render(request, 'dashboard/wallet.html', context)
