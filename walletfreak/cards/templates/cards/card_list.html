@@ -54,10 +54,32 @@
         {% endfor %}
     </div>
 
+    <!-- Mobile Filter & Sort Bar -->
+    <div class="mobile-controls" style="display: none; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <button 
+            onclick="openFilters()"
+            style="display: flex; align-items: center; gap: 0.5rem; background: white; border: 1px solid #E2E8F0; padding: 0.75rem 1.25rem; border-radius: 12px; font-weight: 600; color: #0F172A; font-family: 'Outfit', sans-serif;"
+        >
+            <span class="material-icons" style="font-size: 20px;">tune</span>
+            Filters
+        </button>
+        
+        <!-- Mobile Sort (Moved here for mobile layout) -->
+        <div class="mobile-sort-container"></div>
+    </div>
+
     <!-- Main Content: Sidebar + Cards Grid -->
-    <div style="display: grid; grid-template-columns: 280px 1fr; gap: 4rem;">
+    <div class="main-grid" style="display: grid; grid-template-columns: 280px 1fr; gap: 4rem;">
         <!-- Left Sidebar: Filters -->
-        <div style="display: flex; flex-direction: column; gap: 3rem;">
+        <!-- Left Sidebar: Filters -->
+        <div id="filters-sidebar" class="filters-sidebar" style="display: flex; flex-direction: column; gap: 3rem;">
+            <!-- Mobile Header -->
+            <div class="mobile-filter-header" style="display: none; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2 style="font-size: 1.5rem; font-weight: 800; color: #0F172A; margin: 0;">Filters</h2>
+                <button onclick="closeFilters()" style="background: none; border: none; padding: 0.5rem; cursor: pointer; color: #64748B;">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
             <!-- Annual Fee Filter -->
             <div>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
@@ -104,12 +126,21 @@
                 <span class="material-icons" style="font-size: 18px;">close</span>
                 Reset Filters
             </button>
+            
+            <!-- Mobile Apply Button -->
+            <button 
+                class="mobile-apply-btn"
+                onclick="closeFilters()"
+                style="display: none; width: 100%; background: #0F172A; color: white; padding: 1rem; border-radius: 16px; font-weight: 600; margin-top: auto; border: none; font-family: 'Outfit', sans-serif;"
+            >
+                Show Results
+            </button>
         </div>
 
         <!-- Right Content: Cards Grid -->
         <div>
-            <!-- Sort By Header -->
-            <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 2rem;">
+            <!-- Sort By Header (Desktop) -->
+            <div class="desktop-sort" style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 2rem;">
                 <div style="display: flex; align-items: center; gap: 0.75rem;">
                     <span style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em;">SORT BY</span>
                     <div style="position: relative;">
@@ -222,7 +253,11 @@
             </div>
         </div>
     </div>
+    </div>
 </div>
+
+<!-- Mobile Filter Overlay -->
+<div id="filter-overlay" onclick="closeFilters()" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 40; backdrop-filter: blur(4px);"></div>
 
 {% include 'cards/includes/card_modal.html' %}
 
@@ -498,7 +533,53 @@ window.addEventListener('DOMContentLoaded', () => {
     
     // Force update to position track and ensure rendering
     updateSlider();
+    
+    // Move sort to mobile container if needed
+    handleResize();
+    window.addEventListener('resize', handleResize);
 });
+
+function openFilters() {
+    document.getElementById('filters-sidebar').classList.add('active');
+    document.getElementById('filter-overlay').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeFilters() {
+    document.getElementById('filters-sidebar').classList.remove('active');
+    document.getElementById('filter-overlay').style.display = 'none';
+    document.body.style.overflow = '';
+}
+
+function handleResize() {
+    const sortContainer = document.querySelector('.desktop-sort');
+    const mobileSortContainer = document.querySelector('.mobile-sort-container');
+    const sortContent = document.getElementById('sort-content-wrapper');
+    
+    // We need to wrap the sort content first if not already
+    if (!sortContent && sortContainer) {
+        const wrapper = document.createElement('div');
+        wrapper.id = 'sort-content-wrapper';
+        wrapper.style.display = 'flex';
+        wrapper.style.alignItems = 'center';
+        wrapper.style.gap = '0.75rem';
+        while (sortContainer.firstChild) {
+            wrapper.appendChild(sortContainer.firstChild);
+        }
+        sortContainer.appendChild(wrapper);
+    }
+    
+    const wrapper = document.getElementById('sort-content-wrapper');
+    if (window.innerWidth <= 1024) {
+        if (mobileSortContainer && wrapper && !mobileSortContainer.contains(wrapper)) {
+            mobileSortContainer.appendChild(wrapper);
+        }
+    } else {
+        if (sortContainer && wrapper && !sortContainer.contains(wrapper)) {
+            sortContainer.appendChild(wrapper);
+        }
+    }
+}
 </script>
 
 <style>
@@ -557,9 +638,57 @@ input[type=range]::-moz-range-thumb {
 .card-default { background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%); }
 
 /* Responsive */
+/* Responsive */
 @media (max-width: 1024px) {
-    div[style*="grid-template-columns: 280px 1fr"] {
+    .main-grid {
         grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+    }
+    
+    .desktop-sort {
+        display: none !important;
+    }
+    
+    .mobile-controls {
+        display: flex !important;
+    }
+    
+    .filters-sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        max-width: 320px; /* Or 100% for full screen, design usually full height side drawer */
+        height: 100vh;
+        background: white;
+        z-index: 50;
+        padding: 2rem;
+        transition: left 0.3s ease;
+        overflow-y: auto;
+        box-shadow: 4px 0 12px rgba(0,0,0,0.1);
+    }
+    
+    .filters-sidebar.active {
+        left: 0;
+    }
+    
+    .mobile-filter-header {
+        display: flex !important;
+    }
+    
+    .mobile-apply-btn {
+        display: block !important;
+    }
+    
+    #cards-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .filters-sidebar {
+        max-width: 100%;
+        border-radius: 0;
     }
 }
 </style>

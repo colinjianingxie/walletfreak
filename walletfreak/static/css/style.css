@@ -2639,3 +2639,211 @@ footer {
         padding: 1rem 1.25rem;
     }
 }
+
+/* User Dropdown Styles */
+.user-dropdown {
+    position: relative;
+}
+
+.user-dropdown-toggle {
+    background: white;
+    border: 1px solid #E2E8F0;
+    padding: 0.35rem 0.5rem 0.35rem 0.35rem;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.user-dropdown-toggle:hover {
+    background: #F8FAFC;
+    border-color: #CBD5E1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.user-dropdown-toggle-avatar {
+    width: 36px;
+    height: 36px;
+    background: #2563EB;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.user-dropdown-toggle-avatar .material-icons {
+    font-size: 18px;
+}
+
+.user-dropdown-toggle-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #1E293B;
+}
+
+.user-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 1rem);
+    right: 0;
+    width: 340px;
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1000;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.user-dropdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.user-dropdown-header {
+    background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);
+    padding: 2.5rem 2rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.user-dropdown-avatar-large {
+    width: 72px;
+    height: 72px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.user-dropdown-avatar-large::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-dropdown-avatar-large .material-icons {
+    font-size: 36px;
+    color: #FCD34D;
+    /* Yellow/Gold */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-dropdown-info {
+    flex: 1;
+}
+
+.user-dropdown-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.user-dropdown-tagline {
+    font-size: 0.75rem;
+    font-weight: 700;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.user-dropdown-tagline .material-icons {
+    font-size: 14px;
+}
+
+.user-dropdown-content {
+    padding: 1.5rem;
+}
+
+.user-dropdown-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.875rem 1rem;
+    color: #475569;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: 12px;
+    transition: all 0.2s;
+    margin-bottom: 0.25rem;
+}
+
+.user-dropdown-menu-item:hover {
+    background: #F8FAFC;
+    color: #1E293B;
+}
+
+.user-dropdown-icon {
+    width: 40px;
+    height: 40px;
+    background: #F1F5F9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748B;
+    transition: all 0.2s;
+}
+
+.user-dropdown-menu-item:hover .user-dropdown-icon {
+    background: #E2E8F0;
+    color: #334155;
+}
+
+.user-dropdown-badge {
+    margin-left: auto;
+    background: #F1F5F9;
+    color: #64748B;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.6rem;
+    border-radius: 99px;
+}
+
+.user-dropdown-divider {
+    height: 1px;
+    background: #F1F5F9;
+    margin: 1rem 1rem;
+}
+
+.user-dropdown-menu-item.logout {
+    color: #EF4444;
+    margin-top: 0.5rem;
+}
+
+.user-dropdown-menu-item.logout .user-dropdown-icon {
+    background: #FEF2F2;
+    color: #EF4444;
+}
+
+.user-dropdown-menu-item.logout:hover {
+    background: #FEF2F2;
+}
+
+.user-dropdown-menu-item.logout:hover .user-dropdown-icon {
+    background: #FEE2E2;
+}

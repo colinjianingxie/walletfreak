@@ -27,32 +27,59 @@
             {% if user.is_authenticated %}
             <div class="user-dropdown">
                 <button class="user-dropdown-toggle" id="user-dropdown-toggle" aria-label="User menu">
-                    <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
-                        <span class="material-icons" style="font-size: 20px;">flight</span>
+                    <div class="user-dropdown-toggle-avatar">
+                        <span class="material-icons">flight</span>
                     </div>
-                    <span style="font-weight: 600; font-size: 0.95rem; color: var(--dark);">{{ user.first_name|default:"Alex" }}</span>
+                    <span class="user-dropdown-toggle-name">{{ user.first_name|default:"Alex" }}</span>
+                    <span class="material-icons" style="color: #94A3B8; font-size: 20px;">expand_more</span>
                 </button>
                 
                 <div class="user-dropdown-menu" id="user-dropdown-menu">
                     <div class="user-dropdown-header">
-                        <div class="user-dropdown-name">{{ user.first_name|default:"Alex" }} {{ user.last_name|default:"Smith" }}</div>
-                        <div class="user-dropdown-tagline">The Jetsetter</div>
+                        <div class="user-dropdown-avatar-large">
+                            <span class="material-icons">flight</span>
+                        </div>
+                        <div class="user-dropdown-info">
+                            <div class="user-dropdown-name">{{ user.first_name|default:"Alex" }} {{ user.last_name|default:"Smith" }}</div>
+                            <div class="user-dropdown-tagline">
+                                <span class="material-icons">auto_awesome</span>
+                                THE WALLET FREAK
+                            </div>
+                        </div>
                     </div>
                     
-                    <a href="{% url 'profile' %}" class="user-dropdown-menu-item">
-                        <span class="material-icons" style="font-size: 20px;">person</span>
-                        Profile
-                    </a>
-                    
-                    <a href="{% url 'settings' %}" class="user-dropdown-menu-item">
-                        <span class="material-icons" style="font-size: 20px;">settings</span>
-                        Settings
-                    </a>
-                    
-                    <a href="#" onclick="handleLogout(event)" class="user-dropdown-menu-item logout">
-                        <span class="material-icons" style="font-size: 20px;">logout</span>
-                        Log Out
-                    </a>
+                    <div class="user-dropdown-content">
+                        <a href="{% url 'profile' %}" class="user-dropdown-menu-item">
+                            <div class="user-dropdown-icon">
+                                <span class="material-icons">person_outline</span>
+                            </div>
+                            <span>My Profile</span>
+                        </a>
+
+                        <a href="{% url 'dashboard' %}" class="user-dropdown-menu-item">
+                            <div class="user-dropdown-icon">
+                                <span class="material-icons">credit_card</span>
+                            </div>
+                            <span>My Wallet</span>
+                            <span class="user-dropdown-badge">3</span>
+                        </a>
+                        
+                        <a href="{% url 'settings' %}" class="user-dropdown-menu-item">
+                            <div class="user-dropdown-icon">
+                                <span class="material-icons">settings</span>
+                            </div>
+                            <span>Settings</span>
+                        </a>
+                        
+                        <div class="user-dropdown-divider"></div>
+                        
+                        <a href="#" onclick="handleLogout(event)" class="user-dropdown-menu-item logout">
+                            <div class="user-dropdown-icon">
+                                <span class="material-icons">logout</span>
+                            </div>
+                            <span>Log Out</span>
+                        </a>
+                    </div>
                 </div>
             </div>
             {% else %}

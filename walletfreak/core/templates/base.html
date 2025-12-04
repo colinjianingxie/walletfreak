@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
@@ -65,10 +65,12 @@
 
 
     <main style="{% block main_style %}padding: 3rem 0; background: #F7F7F7; min-height: calc(100vh - 70px);{% endblock %}">
+        {% block full_width_content %}
         <div class="container" style="max-width: 1400px;">
             {% block content %}
             {% endblock %}
         </div>
+        {% endblock %}
     </main>
 
     <footer style="background: var(--dark); color: white; padding: 4rem 0; margin-top: auto;">

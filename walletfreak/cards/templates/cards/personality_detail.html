@@ -3,118 +3,326 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/card_modal.css' %}">
+<style>
+    /* Custom Styles for Personality Detail */
+    .personality-hero {
+        background: radial-gradient(circle at 20% 50%, #1e3a8a 0%, #0f172a 50%, #020617 100%);
+        padding: 4rem 0 8rem 0;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .personality-hero::before {
+        content: '';
+        position: absolute;
+        top: -20%;
+        right: -10%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    .personality-back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        font-size: 0.9rem;
+        margin-bottom: 3rem;
+        transition: color 0.2s;
+    }
+
+    .personality-back-link:hover {
+        color: white;
+    }
+
+    .personality-content-grid {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 4rem;
+        align-items: center;
+    }
+
+    .personality-avatar-large {
+        width: 280px;
+        height: 280px;
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 60px rgba(37, 99, 235, 0.3);
+        position: relative;
+    }
+
+    .personality-avatar-large::after {
+        content: '';
+        position: absolute;
+        inset: -10px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .personality-tagline-pill {
+        display: inline-block;
+        background: rgba(30, 58, 138, 0.6);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        color: #93c5fd;
+        padding: 0.5rem 1rem;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 1.5rem;
+    }
+
+    .personality-title {
+        font-size: 4rem;
+        font-weight: 800;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        letter-spacing: -0.02em;
+        color: white;
+    }
+
+    .personality-description {
+        font-size: 1.25rem;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.8);
+        max-width: 700px;
+    }
+
+    .stats-cards-container {
+        transform: translateY(-4rem);
+        position: relative;
+        z-index: 10;
+        margin-bottom: 2rem;
+    }
+
+    .stats-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .stats-card-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.5rem;
+        color: #64748b;
+    }
+
+    .stats-card-value {
+        font-size: 2.5rem;
+        font-weight: 800;
+        line-height: 1;
+    }
+
+    .stats-card.dark {
+        background: #0f172a;
+        color: white;
+        box-shadow: 0 20px 40px rgba(15, 23, 42, 0.4);
+    }
+
+    .stats-card.dark .stats-card-label {
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Credit Card Visual Styles */
+    .credit-card {
+        background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%); /* Default */
+        border-radius: 16px;
+        padding: 1.5rem;
+        color: white;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        height: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border: 2px solid transparent;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .credit-card-chip {
+        width: 40px;
+        height: 30px;
+        background: linear-gradient(135deg, #e0e0e0 0%, #c0c0c0 100%);
+        border-radius: 6px;
+        margin-bottom: 1rem;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .credit-card-number {
+        font-family: 'Courier New', monospace;
+        font-size: 1.1rem;
+        letter-spacing: 0.1em;
+        opacity: 0.9;
+        margin-bottom: 1rem;
+    }
+
+    /* Card Specific Styles */
+    .card-amex-platinum { background: linear-gradient(135deg, #D7D7D7 0%, #A8A8A8 100%); }
+    .card-gold { background: linear-gradient(135deg, #F4E5C3 0%, #D4AF37 100%); }
+    .card-chase { background: linear-gradient(135deg, #1E40AF 0%, #1E3A8A 100%); }
+    .card-capital-one { background: linear-gradient(135deg, #1F2937 0%, #111827 100%); }
+    .card-citi { background: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%); }
+
+
+    /* Responsive Adjustments */
+    @media (max-width: 1024px) {
+        .personality-content-grid {
+            grid-template-columns: 1fr;
+            text-align: center;
+            gap: 2rem;
+        }
+
+        .personality-avatar-large {
+            margin: 0 auto;
+            width: 200px;
+            height: 200px;
+        }
+
+        .personality-title {
+            font-size: 3rem;
+        }
+
+        .personality-description {
+            margin: 0 auto;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .personality-hero {
+            padding-bottom: 6rem;
+        }
+        .personality-title {
+            font-size: 2.5rem;
+        }
+        .personality-description {
+            font-size: 1.1rem;
+        }
+        .stats-cards-container {
+            transform: translateY(-2rem);
+        }
+        .stats-card-value {
+            font-size: 2rem;
+        }
+        .card-option {
+            width: 100% !important;
+        }
+    }
+</style>
 {% endblock %}
 
-{% block content %}
-<!-- Personality Header - Dark Theme -->
-<section style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); padding: 3rem 0 4rem 0; color: white;">
+{% block main_style %}padding: 0; background: #F8FAFC;{% endblock %}
+
+{% block full_width_content %}
+<!-- Hero Section -->
+<section class="personality-hero">
     <div class="container">
-        <!-- Back to Archetypes Link -->
-        <a href="{% url 'personality_list' %}" style="display: inline-flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; margin-bottom: 2rem; transition: color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,1)';" onmouseout="this.style.color='rgba(255,255,255,0.7)';">
-            <span>←</span>
-            <span>Back to Archetypes</span>
+        <a href="{% url 'personality_list' %}" class="personality-back-link">
+            <span class="material-icons" style="font-size: 16px;">arrow_back</span>
+            Back to Archetypes
         </a>
 
-        <div class="personality-header-grid">
-            <!-- Left: Personality Icon -->
-            <div>
-                <div style="width: 120px; height: 120px; background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 40px rgba(139, 92, 246, 0.4);">
-                    <img src="{% static 'img/personalities/'|add:personality.slug|add:'.svg' %}" alt="{{ personality.name }}" style="width: 60%; height: 60%; object-fit: contain;" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'font-size: 3rem;\'>💳</span>'">
-                </div>
+        <div class="personality-content-grid">
+            <div class="personality-avatar-large">
+                <img src="{% static 'img/personalities/'|add:personality.slug|add:'.svg' %}" alt="{{ personality.name }}" style="width: 60%; height: 60%; object-fit: contain; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));">
             </div>
 
-            <!-- Right: Personality Info -->
             <div>
-                <div style="display: inline-block; background: rgba(139, 92, 246, 0.2); color: #c4b5fd; padding: 0.4rem 1rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; margin-bottom: 1rem; text-transform: uppercase;">
-                    {{ personality.slug|upper|slice:":20"|cut:"-" }}
+                <div class="personality-tagline-pill">
+                    CHASE ECOSYSTEM • HYATT TRANSFERS
                 </div>
-
-                <h1 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1rem; line-height: 1.1; color: white;">
-                    {{ personality.name }}
-                </h1>
-
-                <p style="font-size: 1.1rem; line-height: 1.7; color: rgba(255,255,255,0.7); max-width: 800px;">
-                    {{ personality.description }}
-                </p>
+                <h1 class="personality-title">{{ personality.name }}</h1>
+                <p class="personality-description">{{ personality.description }}</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Financial Metrics Section -->
-<section class="container" style="padding: 0; transform: translateY(-2rem); position: relative; z-index: 10;">
-    <div class="grid-responsive-4">
+<!-- Stats Cards -->
+<div class="container stats-cards-container">
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem;">
         <!-- Annual Fees -->
-        <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;">
-            <div style="display: flex; align-items: center; gap: 0.5rem; color: #6b7280; font-size: 0.85rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">
-                <span style="color: #ef4444;">📊</span>
-                <span>Annual Fees</span>
+        <div class="stats-card">
+            <div class="stats-card-label">
+                <span class="material-icons" style="font-size: 16px; color: #ef4444;">warning</span>
+                ANNUAL FEES
             </div>
-            <div id="metric-annual-fees" style="font-size: 2rem; font-weight: 700; color: #ef4444;">
-                $0
+            <div id="metric-annual-fees" class="stats-card-value" style="color: #1e293b;">
+                -$550
             </div>
         </div>
 
         <!-- Credit Value -->
-        <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;">
-            <div style="display: flex; align-items: center; gap: 0.5rem; color: #6b7280; font-size: 0.85rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">
-                <span style="color: #3b82f6;">⭕</span>
-                <span>Credit Value</span>
+        <div class="stats-card">
+            <div class="stats-card-label">
+                <span class="material-icons" style="font-size: 16px; color: #3b82f6;">verified_user</span>
+                CREDIT VALUE
             </div>
-            <div id="metric-credit-value" style="font-size: 2rem; font-weight: 700; color: #10b981;">
-                $0
+            <div id="metric-credit-value" class="stats-card-value" style="color: #1e293b;">
+                +$300
             </div>
         </div>
 
         <!-- Points Value -->
-        <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;">
-            <div style="display: flex; align-items: center; gap: 0.5rem; color: #6b7280; font-size: 0.85rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">
-                <span style="color: #8b5cf6;">✓</span>
-                <span>Points Value</span>
+        <div class="stats-card">
+            <div class="stats-card-label">
+                <span class="material-icons" style="font-size: 16px; color: #8b5cf6;">trending_up</span>
+                POINTS VALUE
             </div>
-            <div id="metric-points-value" style="font-size: 2rem; font-weight: 700; color: #10b981;">
-                $0
+            <div id="metric-points-value" class="stats-card-value" style="color: #1e293b;">
+                +$1200
             </div>
         </div>
 
         <!-- Net Value -->
-        <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); padding: 2rem; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);">
-            <div style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">
-                <span style="color: #10b981;">⚡</span>
-                <span>Net Value</span>
+        <div class="stats-card dark">
+            <div class="stats-card-label">
+                <span class="material-icons" style="font-size: 16px; color: #10b981;">emoji_events</span>
+                NET VALUE
             </div>
-            <div id="metric-net-value" style="font-size: 2rem; font-weight: 700; color: #10b981;">
-                $0
+            <div id="metric-net-value" class="stats-card-value" style="color: #10b981;">
+                +$950
             </div>
         </div>
     </div>
-    <div style="text-align: right; margin-top: 0.5rem; font-size: 0.8rem; color: #6b7280; font-style: italic;">
-        * Approximate values based on sign-up bonuses and annual fees.
-    </div>
-</section>
+</div>
 
-<!-- Build Your Loadout Section -->
-<section class="container" style="padding: 2rem 0 4rem 0;">
+<!-- Build Your Loadout -->
+<div class="container" style="padding-bottom: 6rem;">
     <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem;">
-        <span style="font-size: 1.5rem;">⚡</span>
-        <h2 style="font-size: clamp(1.75rem, 3vw, 2.25rem); font-weight: 700; margin: 0;">
-            Build Your Loadout
-        </h2>
+        <span class="material-icons" style="color: #2563eb; font-size: 28px;">bolt</span>
+        <h2 style="font-size: 1.75rem; font-weight: 700; margin: 0; color: #0f172a;">Build Your Loadout</h2>
     </div>
 
     {% if personality.slots %}
     <div style="display: grid; gap: 2rem;">
         {% for slot in personality.slots %}
-        <div class="grid-responsive-slot" style="background: white; border-radius: 20px; padding: 2rem; border: 1px solid #e5e7eb; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+        <div style="background: white; border-radius: 24px; padding: 2.5rem; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
             <!-- Slot Info -->
-            <div>
-                <div style="display: inline-block; background: #f3f4f6; color: #4b5563; padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem;">
+            <div style="margin-bottom: 2rem;">
+                <div style="display: inline-block; background: #f1f5f9; color: #64748b; padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">
                     SLOT {{ forloop.counter }}
                 </div>
-                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem; color: #111827;">{{ slot.name }}</h3>
-                <p style="color: #6b7280; line-height: 1.6; font-size: 0.95rem;">
-                    {{ slot.description }}
-                </p>
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #0f172a;">{{ slot.name }}</h3>
+                <p style="color: #64748b; line-height: 1.6;">{{ slot.description }}</p>
             </div>
 
             <!-- Cards in Slot -->
@@ -127,36 +335,37 @@
                      data-bonus-currency="{{ card.sign_up_bonus.currency|default:'points' }}"
                      data-slot="{{ forloop.parentloop.counter }}"
                      onclick="toggleCardSelection(this, {{ forloop.parentloop.counter }})"
-                     style="position: relative; width: 320px; flex-shrink: 0; cursor: pointer; transition: transform 0.2s;">
+                     style="position: relative; width: 340px; flex-shrink: 0; cursor: pointer; transition: transform 0.2s;">
                     
                     <!-- Selection Indicator -->
-                    <div class="selection-indicator" style="position: absolute; top: 1rem; right: 1rem; width: 24px; height: 24px; background: rgba(255,255,255,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; border: 1px solid rgba(255,255,255,0.5);">
-                        <span class="material-icons status-icon" style="font-size: 16px; color: white;">add</span>
+                    <div class="selection-indicator" style="position: absolute; top: 1rem; right: 1rem; width: 28px; height: 28px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; border: 1px solid rgba(255,255,255,0.4); transition: all 0.2s;">
+                        <span class="material-icons status-icon" style="font-size: 18px; color: white;">add</span>
                     </div>
 
                     <!-- Info Icon -->
-                    <div style="position: absolute; top: 1rem; left: 1rem; z-index: 10; opacity: 0.7;" onclick="event.stopPropagation(); openCardModal('{{ card.id }}')">
-                        <span class="material-icons" style="font-size: 20px; color: white;">info</span>
+                    <div style="position: absolute; top: 1rem; left: 1rem; z-index: 10; opacity: 0.8; transition: opacity 0.2s;" onclick="event.stopPropagation(); openCardModal('{{ card.id }}')">
+                        <span class="material-icons" style="font-size: 24px; color: white;">info_outline</span>
                     </div>
 
                     <!-- Card Visual -->
-                    <div style="background: {% if 'american express' in card.name|lower or 'amex' in card.name|lower %}{% if 'platinum' in card.name|lower %}linear-gradient(135deg, #D7D7D7 0%, #A8A8A8 100%){% elif 'gold' in card.name|lower %}linear-gradient(135deg, #F4E5C3 0%, #D4AF37 100%){% else %}linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%){% endif %}{% elif 'chase' in card.name|lower %}linear-gradient(135deg, #1E40AF 0%, #1E3A8A 100%){% elif 'capital one' in card.name|lower %}{% if 'venture x' in card.name|lower %}linear-gradient(135deg, #1F2937 0%, #111827 100%){% else %}linear-gradient(135deg, #DC2626 0%, #991B1B 100%){% endif %}{% elif 'citi' in card.name|lower %}linear-gradient(135deg, #2563EB 0%, #1E40AF 100%){% else %}linear-gradient(135deg, #6366F1 0%, #4F46E5 100%){% endif %}; 
-                        border-radius: 16px; padding: 1.5rem; color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15); height: 200px; display: flex; flex-direction: column; justify-content: space-between; border: 2px solid transparent;">
+                    <div class="credit-card {% if 'american express' in card.name|lower or 'amex' in card.name|lower %}{% if 'platinum' in card.name|lower %}card-amex-platinum{% elif 'gold' in card.name|lower %}card-gold{% else %}card-chase{% endif %}{% elif 'chase' in card.name|lower %}card-chase{% elif 'capital one' in card.name|lower %}card-capital-one{% elif 'citi' in card.name|lower %}card-citi{% else %}card-chase{% endif %}" style="height: 215px;">
                         
                         <div style="display: flex; justify-content: flex-end; align-items: flex-start; margin-bottom: 1rem; height: 24px;">
                             <!-- Icons are absolutely positioned -->
                         </div>
                         
-                        <div style="font-family: 'Courier New', monospace; font-size: 1.1rem; letter-spacing: 0.1em; opacity: 0.9;">
+                        <div class="credit-card-chip"></div>
+                        
+                        <div class="credit-card-number">
                             •••• •••• •••• 4242
                         </div>
                         
                         <div style="display: flex; justify-content: space-between; align-items: flex-end;">
                             <div>
-                                <div style="font-size: 0.6rem; font-weight: 600; opacity: 0.8; margin-bottom: 0.25rem;">STRATEGY</div>
-                                <div style="font-size: 0.9rem; font-weight: 700; line-height: 1.2;">{{ card.name }}</div>
+                                <div style="font-size: 0.65rem; font-weight: 700; opacity: 0.8; margin-bottom: 0.25rem; letter-spacing: 0.1em;">STRATEGY</div>
+                                <div style="font-size: 1rem; font-weight: 700; line-height: 1.2;">{{ card.name }}</div>
                             </div>
-                            <div style="width: 30px; height: 30px; background: rgba(255,255,255,0.2); border-radius: 50%;"></div>
+                            <div style="width: 32px; height: 32px; background: rgba(255,255,255,0.3); border-radius: 50%;"></div>
                         </div>
                     </div>
                 </div>
@@ -173,7 +382,7 @@
         <p style="color: #6b7280;">We're still building out card recommendations for this personality.</p>
     </div>
     {% endif %}
-</section>
+</div>
 
 <!-- Rules of Engagement Section -->
 {% if personality.rules %}
@@ -219,43 +428,6 @@
     </div>
 </section>
 
-<style>
-    @media (max-width: 1024px) {
-        section .container > div[style*="grid-template-columns: repeat(4, 1fr)"] {
-            grid-template-columns: repeat(2, 1fr) !important;
-        }
-        
-        div[style*="grid-template-columns: 300px 1fr"] {
-            grid-template-columns: 1fr !important;
-            gap: 1.5rem !important;
-        }
-    }
-
-    @media (max-width: 768px) {
-        section .container > div[style*="grid-template-columns: auto 1fr"] {
-            grid-template-columns: 1fr !important;
-            text-align: center;
-        }
-        
-        section .container > div[style*="grid-template-columns: repeat(4, 1fr)"] {
-            grid-template-columns: 1fr !important;
-        }
-    }
-
-    /* Selected state styles */
-    .card-option.selected .selection-indicator {
-        background: #10b981 !important;
-        border-color: #10b981 !important;
-    }
-    .card-option.selected .status-icon {
-        content: 'check';
-    }
-    .card-option.selected > div:last-child {
-        border-color: #10b981 !important;
-        box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2) !important;
-    }
-</style>
-
 <script>
     // Initialize allCardsData for shared modal
     const allCardsData = {{ cards_json|safe }};
@@ -265,16 +437,25 @@
 
     function toggleCardSelection(element, slotIndex) {
         const cardId = element.dataset.id;
-        
-        // Allow multiple selections per slot (soft-select)
+        const selectionIndicator = element.querySelector('.selection-indicator');
+        const statusIcon = element.querySelector('.status-icon');
+        const cardVisual = element.querySelector('.credit-card');
         
         if (element.classList.contains('selected')) {
             element.classList.remove('selected');
-            element.querySelector('.status-icon').textContent = 'add';
+            statusIcon.textContent = 'add';
+            selectionIndicator.style.background = 'rgba(255,255,255,0.2)';
+            selectionIndicator.style.borderColor = 'rgba(255,255,255,0.4)';
+            cardVisual.style.boxShadow = '';
+            cardVisual.style.transform = '';
             delete selectedCards[cardId];
         } else {
             element.classList.add('selected');
-            element.querySelector('.status-icon').textContent = 'check';
+            statusIcon.textContent = 'check';
+            selectionIndicator.style.background = '#10b981';
+            selectionIndicator.style.borderColor = '#10b981';
+            cardVisual.style.boxShadow = '0 0 0 4px rgba(16, 185, 129, 0.4), 0 10px 25px rgba(0,0,0,0.2)';
+            cardVisual.style.transform = 'translateY(-4px)';
             
             selectedCards[cardId] = {
                 fee: parseFloat(element.dataset.fee),
@@ -305,13 +486,13 @@
         const netValue = creditValue + pointsValue - totalFees;
         
         // Update DOM with animation
-        animateValue('metric-annual-fees', -totalFees, true);
+        animateValue('metric-annual-fees', -totalFees);
         animateValue('metric-credit-value', creditValue);
         animateValue('metric-points-value', pointsValue);
         animateValue('metric-net-value', netValue);
     }
     
-    function animateValue(id, end, isNegative=false) {
+    function animateValue(id, end) {
         const obj = document.getElementById(id);
         const start = parseFloat(obj.textContent.replace(/[^0-9.-]+/g,"")) || 0;
         const duration = 500;
@@ -330,6 +511,10 @@
             // Color logic for Net Value
             if (id === 'metric-net-value') {
                 obj.style.color = current >= 0 ? '#10b981' : '#ef4444';
+            } else if (id === 'metric-annual-fees') {
+                obj.style.color = current < 0 ? '#ef4444' : '#1e293b';
+            } else {
+                obj.style.color = current > 0 ? '#10b981' : '#1e293b';
             }
             
             if (progress < 1) {
