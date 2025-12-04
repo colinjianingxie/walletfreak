@@ -464,13 +464,13 @@
                     </div>
                     
                     <!-- Quick Add Filters -->
-                    <div style="margin-bottom: 1.5rem;">
+                    <div style="margin-bottom: 1.5rem; background: #FFFFFF; padding-top: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #F3F4F6;">
                         <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; margin-bottom: 0.75rem; letter-spacing: 0.1em;">QUICK ADD</div>
                         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                            <button onclick="filterMobileCards('Chase')" class="mobile-quick-add-btn">Chase</button>
-                            <button onclick="filterMobileCards('American Express')" class="mobile-quick-add-btn">Amex</button>
-                            <button onclick="filterMobileCards('Capital One')" class="mobile-quick-add-btn">Capital One</button>
-                            <button onclick="filterMobileCards('Citi')" class="mobile-quick-add-btn">Citi</button>
+                            <button onclick="toggleMobileFilter('Chase')" id="filter-Chase" class="mobile-quick-add-btn">Chase</button>
+                            <button onclick="toggleMobileFilter('American Express')" id="filter-American Express" class="mobile-quick-add-btn">Amex</button>
+                            <button onclick="toggleMobileFilter('Capital One')" id="filter-Capital One" class="mobile-quick-add-btn">Capital One</button>
+                            <button onclick="toggleMobileFilter('Citi')" id="filter-Citi" class="mobile-quick-add-btn">Citi</button>
                         </div>
                     </div>
                     
@@ -682,7 +682,8 @@
 </div>
 
 <!-- Anniversary Date Modal -->
-<div id="anniversary-modal" class="modal" style="display: none;">
+<!-- Anniversary Date Modal -->
+<div id="anniversary-modal" class="modal" style="display: none; align-items: center; justify-content: center;">
     <div class="modal-content" style="max-width: 450px;">
         <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
             <div>

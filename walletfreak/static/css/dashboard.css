@@ -110,4 +110,38 @@
     #preview-card-visual {
         height: 200px !important;
     }
+
+    /* Benefit & Anniversary Modal Mobile Fullscreen */
+    #benefit-modal,
+    #anniversary-modal {
+        padding: 0 !important;
+        align-items: flex-start !important;
+    }
+
+    #benefit-modal .modal-content,
+    #anniversary-modal .modal-content {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        border-radius: 0 !important;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #benefit-modal .modal-content>div:last-child,
+    #anniversary-modal .modal-content>div:last-child {
+        flex: 1;
+        overflow-y: auto;
+    }
+
+    /* Anniversary Modal Buttons - Vertical on Mobile */
+    #anniversary-modal .modal-content>div:last-child {
+        flex-direction: column !important;
+    }
+
+    #anniversary-modal .modal-content>div:last-child button {
+        width: 100% !important;
+        flex: none !important;
+    }
 }
