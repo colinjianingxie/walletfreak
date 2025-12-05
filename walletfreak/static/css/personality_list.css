@@ -1,0 +1,137 @@
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.quiz-option {
+    background: rgba(30, 41, 59, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.125rem 1.25rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.quiz-option:hover {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.4);
+    transform: translateY(-2px);
+}
+
+.quiz-option.selected {
+    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+.quiz-option .icon {
+    font-size: 1.75rem;
+    flex-shrink: 0;
+}
+
+.quiz-option .text {
+    flex: 1;
+    text-align: left;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: white;
+}
+
+.quiz-option .checkmark {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.quiz-option.selected .checkmark {
+    display: flex;
+}
+
+#continue-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+#back-btn:hover {
+    background: rgba(100, 116, 139, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 1024px) {
+
+    #quiz-container,
+    #loading-container,
+    #results-container {
+        max-width: 750px !important;
+    }
+
+    #options-container {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    #options-container {
+        grid-template-columns: 1fr !important;
+    }
+
+    .quiz-option {
+        padding: 1.25rem;
+    }
+
+    .quiz-option .text {
+        font-size: 0.9rem;
+    }
+}
+
+.personality-card-link:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12) !important;
+}
+
+.personality-card-link a:hover {
+    background: #0F172A !important;
+}
+
+@media (max-width: 1024px) {
+    #options-container {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+
+    #personalities-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    #options-container {
+        grid-template-columns: 1fr !important;
+    }
+
+    .option-card {
+        min-height: 140px !important;
+        padding: 1.5rem 1rem !important;
+    }
+
+    #personalities-grid {
+        grid-template-columns: 1fr !important;
+    }
+}

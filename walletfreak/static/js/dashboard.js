@@ -491,3 +491,611 @@ function toggleMobileDetail(id) {
 document.addEventListener('DOMContentLoaded', function () {
     // Any initialization logic
 });
+
+// --- Extracted from dashboard.html ---
+
+let selectedAddCard = null;
+
+function openManageWalletModal(view = 'stack') {
+    const modal = document.getElementById('manage-wallet-modal');
+    modal.style.display = 'flex';
+
+    // Disable body scrolling when modal is open
+    document.body.style.overflow = 'hidden';
+
+    // Check if mobile
+    if (window.innerWidth <= 768) {
+        // Hide desktop content (CSS will handle most of this)
+        const contentStack = document.getElementById('content-stack');
+        const contentAdd = document.getElementById('content-add');
+        const modalSidebar = document.querySelector('.modal-sidebar');
+
+        if (contentStack) contentStack.style.display = 'none';
+        if (contentAdd) contentAdd.style.display = 'none';
+        if (modalSidebar) modalSidebar.style.display = 'none';
+
+        // Reset mobile screens
+        const mobileScreens = ['mobile-my-stack-screen', 'mobile-add-new-screen', 'mobile-card-detail-screen'];
+        mobileScreens.forEach(screenId => {
+            const screen = document.getElementById(screenId);
+            if (screen) {
+                screen.classList.remove('active');
+                screen.style.display = 'none';
+            }
+        });
+
+        // Show the requested mobile view
+        if (view === 'stack') {
+            showMobileMyStackScreen();
+        } else {
+            showMobileAddNewScreen();
+        }
+    } else {
+        // Desktop view
+        switchTab(view);
+    }
+}
+
+function closeManageWalletModal() {
+    document.getElementById('manage-wallet-modal').style.display = 'none';
+
+    // Re-enable body scrolling when modal is closed
+    document.body.style.overflow = '';
+
+    // Reset preview (desktop)
+    if (document.getElementById('card-preview-empty')) {
+        document.getElementById('card-preview-empty').style.display = 'block';
+    }
+    if (document.getElementById('card-preview-content')) {
+        document.getElementById('card-preview-content').style.display = 'none';
+    }
+    selectedAddCard = null;
+
+    // Reset mobile screens
+    const mobileScreens = ['mobile-my-stack-screen', 'mobile-add-new-screen', 'mobile-card-detail-screen'];
+    mobileScreens.forEach(screenId => {
+        const screen = document.getElementById(screenId);
+        if (screen) {
+            screen.classList.remove('active');
+            screen.style.display = 'none';
+        }
+    });
+
+    // Reset desktop content visibility (let CSS handle the rest)
+    const contentStack = document.getElementById('content-stack');
+    const contentAdd = document.getElementById('content-add');
+    const modalSidebar = document.querySelector('.modal-sidebar');
+
+    if (contentStack) contentStack.style.display = '';
+    if (contentAdd) contentAdd.style.display = '';
+    if (modalSidebar) modalSidebar.style.display = '';
+}
+
+function switchTab(view) {
+    // Check if mobile
+    if (window.innerWidth <= 768) {
+        if (view === 'stack') {
+            showMobileMyStackScreen();
+        } else {
+            showMobileAddNewScreen();
+        }
+        return;
+    }
+
+    // Desktop behavior
+    // Update Sidebar/Tabs
+    document.querySelectorAll('.modal-sidebar-item').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + view).classList.add('active');
+
+    // Update Content
+    document.getElementById('content-stack').style.display = 'none';
+    document.getElementById('content-add').style.display = 'none';
+
+    if (view === 'stack') {
+        document.getElementById('content-stack').style.display = 'flex';
+    } else {
+        document.getElementById('content-add').style.display = 'block';
+        renderCardResults(availableCards);
+    }
+}
+
+function renderCardResults(cards) {
+    const container = document.getElementById('card-results-list');
+    container.innerHTML = '';
+
+    if (cards.length === 0) {
+        container.innerHTML = '<div style="padding: 1rem; color: #94A3B8; text-align: center;">No cards found</div>';
+        return;
+    }
+
+    cards.forEach(card => {
+        const div = document.createElement('div');
+        div.className = 'card-result-item';
+        div.onclick = () => selectCardForPreview(card, div);
+
+        div.innerHTML = `
+            <div style="font-weight: 700; color: #1F2937; margin-bottom: 0.25rem;">${card.name}</div>
+            <div style="font-size: 0.85rem; color: #64748B;">${card.issuer}</div>
+        `;
+        container.appendChild(div);
+    });
+}
+
+function selectCardForPreview(card, element) {
+    // Highlight selection
+    document.querySelectorAll('.card-result-item').forEach(el => el.classList.remove('selected'));
+    element.classList.add('selected');
+
+    selectedAddCard = card;
+
+    // Update Preview
+    document.getElementById('card-preview-empty').style.display = 'none';
+    document.getElementById('card-preview-content').style.display = 'block';
+
+    // Visual
+    const visual = document.getElementById('preview-card-visual');
+    if (card.name.toLowerCase().includes('chase')) {
+        visual.style.background = 'linear-gradient(135deg, #117ACA 0%, #005EB8 100%)';
+    } else if (card.name.toLowerCase().includes('amex') || card.name.toLowerCase().includes('american express')) {
+        visual.style.background = 'linear-gradient(135deg, #2563EB 0%, #1E40AF 100%)';
+    } else if (card.name.toLowerCase().includes('capital')) {
+        visual.style.background = 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)';
+    } else {
+        visual.style.background = 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)';
+    }
+
+    document.getElementById('preview-issuer').innerText = card.issuer.toUpperCase();
+
+    // Render Earning Rates
+    const earningContainer = document.getElementById('preview-earning-rates');
+    earningContainer.innerHTML = '';
+
+    // Support multiple field names for earning rates (same as card modal)
+    // Also check benefits for Multiplier and Cashback type items
+    let earning = card.earning_rates || card.earning || card.rewards_structure || [];
+
+    // If no earning rates found, extract from benefits with benefit_type "Multiplier" or "Cashback"
+    if (!earning || earning.length === 0) {
+        const benefits = card.benefits || [];
+        earning = benefits.filter(b => b.benefit_type === 'Multiplier' || b.benefit_type === 'Cashback').map(b => ({
+            category: b.short_description || b.name || b.title || b.description,
+            rate: b.numeric_value || b.value || b.multiplier,
+            currency: b.benefit_type === 'Cashback' ? 'cash' : (b.currency || 'points')
+        }));
+    }
+
+    if (Array.isArray(earning) && earning.length > 0) {
+        earning.forEach((item, index) => {
+            // Support different field structures (same as card modal)
+            const cat = item.category || item.cat || item.description || 'Category';
+            const rate = item.rate || item.mult || item.multiplier || item.value || 0;
+            const currency = item.currency || 'points';
+
+            // Format multiplier display (e.g., "10x", "5x", "2%")
+            let mult;
+            if (currency.toLowerCase().includes('cash') || currency.toLowerCase().includes('%')) {
+                mult = `${rate}%`;
+            } else {
+                mult = `${rate}x`;
+            }
+
+            earningContainer.innerHTML += `
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.875rem 0; border-bottom: 1px solid #F3F4F6;">
+                    <div style="font-weight: 500; color: #1F2937; font-size: 0.95rem;">${cat}</div>
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <div style="color: #6366F1; font-weight: 700; font-size: 0.95rem;">${mult}</div>
+                        <span class="material-icons" style="font-size: 18px; color: #D1D5DB;">chevron_right</span>
+                    </div>
+                </div>
+            `;
+        });
+    } else {
+        earningContainer.innerHTML = '<div style="color: #9CA3AF; font-size: 0.9rem; text-align: center; padding: 1rem;">No earning rates available</div>';
+    }
+
+    // Render Credits
+    const creditsContainer = document.getElementById('preview-credits');
+    creditsContainer.innerHTML = '';
+
+    // Filter out benefits with benefit_type "Multiplier" or "Cashback" (same as card modal)
+    const benefits = card.benefits || [];
+    const filteredBenefits = benefits.filter(b => b.benefit_type !== 'Multiplier' && b.benefit_type !== 'Cashback');
+
+    if (Array.isArray(filteredBenefits) && filteredBenefits.length > 0) {
+        filteredBenefits.forEach((benefit, index) => {
+            // Use the correct field names from database (same as card modal)
+            const name = benefit.short_description || benefit.name || benefit.title || 'Unnamed Benefit';
+            const value = benefit.numeric_value || benefit.value || benefit.amount || benefit.dollar_value;
+
+            // Format value with proper display
+            let valueDisplay = String(value);
+            if (value && (typeof value === 'number' || !isNaN(parseFloat(value)))) {
+                if (!valueDisplay.includes('$')) {
+                    valueDisplay = '$' + valueDisplay;
+                }
+            } else if (!value || valueDisplay.toLowerCase() === 'included') {
+                valueDisplay = 'Included';
+            }
+
+            creditsContainer.innerHTML += `
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.875rem 0; border-bottom: 1px solid #F3F4F6;">
+                    <div style="font-weight: 500; color: #1F2937; font-size: 0.95rem;">${name}</div>
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <div style="color: #6366F1; font-weight: 700; font-size: 0.95rem;">${valueDisplay}</div>
+                        <span class="material-icons" style="font-size: 18px; color: #D1D5DB;">chevron_right</span>
+                    </div>
+                </div>
+            `;
+        });
+    } else {
+        creditsContainer.innerHTML = '<div style="color: #9CA3AF; font-size: 0.9rem; text-align: center; padding: 1rem;">No credits available</div>';
+    }
+}
+
+function filterCards(issuer) {
+    let searchIssuer = issuer;
+    if (issuer === 'Amex') {
+        searchIssuer = 'American Express';
+    }
+    const filtered = availableCards.filter(c => c.issuer.includes(searchIssuer));
+    renderCardResults(filtered);
+}
+
+document.getElementById('card-search-input')?.addEventListener('input', (e) => {
+    let term = e.target.value.toLowerCase();
+
+    // Alias mapping
+    if (term === 'amex') {
+        term = 'american express';
+    }
+
+    const filtered = availableCards.filter(c =>
+        c.name.toLowerCase().includes(term) || c.issuer.toLowerCase().includes(term) ||
+        (term === 'amex' && c.issuer.toLowerCase().includes('american express'))
+    );
+    renderCardResults(filtered);
+});
+
+function addSelectedCard() {
+    if (!selectedAddCard) return;
+
+    // Open anniversary modal in "add" mode
+    // We pass null as cardId to indicate we are adding a new card
+    // But we store the selectedAddCard.id in a separate variable or reuse currentAnniversaryCardId with a flag
+
+    currentAnniversaryCardId = 'ADD_NEW_CARD'; // Special flag
+    document.getElementById('anniversary-card-name').textContent = selectedAddCard.name;
+
+    // Default to current month
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = String(now.getMonth() + 1).padStart(2, '0');
+    const defaultDate = `${currentYear}-${currentMonth}-01`;
+
+    document.getElementById('anniversary-date-input').value = defaultDate;
+    document.getElementById('anniversary-modal').style.display = 'flex';
+}
+
+// --- Anniversary Modal Logic ---
+let currentAnniversaryCardId = null;
+
+function openAnniversaryModal(cardId, cardName, currentDate) {
+    currentAnniversaryCardId = cardId;
+    document.getElementById('anniversary-card-name').textContent = cardName;
+    document.getElementById('anniversary-date-input').value = currentDate || '';
+    document.getElementById('anniversary-modal').style.display = 'flex';
+}
+
+function closeAnniversaryModal() {
+    document.getElementById('anniversary-modal').style.display = 'none';
+    currentAnniversaryCardId = null;
+}
+
+function saveAnniversaryDate() {
+    if (!currentAnniversaryCardId) return;
+
+    const date = document.getElementById('anniversary-date-input').value;
+    if (!date) {
+        alert('Please select a date');
+        return;
+    }
+
+    // Check if we are adding a new card
+    if (currentAnniversaryCardId === 'ADD_NEW_CARD') {
+        if (!selectedAddCard) return;
+
+        // Submit form to add card with anniversary date
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `/dashboard/add-card/${selectedAddCard.id}/`;
+
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = 'csrfmiddlewaretoken';
+        csrfInput.value = csrfToken;
+        form.appendChild(csrfInput);
+
+        // Add anniversary date
+        const dateInput = document.createElement('input');
+        dateInput.type = 'hidden';
+        dateInput.name = 'anniversary_date';
+        dateInput.value = date;
+        form.appendChild(dateInput);
+
+        document.body.appendChild(form);
+        form.submit();
+
+        closeAnniversaryModal();
+        return;
+    }
+
+    // Otherwise, we are updating an existing card
+    const formData = new FormData();
+    formData.append('anniversary_date', date);
+    formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+
+    fetch(`/dashboard/update-anniversary/${currentAnniversaryCardId}/`, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert('Error saving date: ' + (data.error || 'Unknown error'));
+            }
+        })
+        .catch(err => {
+            console.error('Error:', err);
+            alert('Error saving date: ' + err.message);
+        });
+}
+
+// --- Benefit Modal Logic ---
+let currentBenefitData = {};
+let currentBenefitPeriods = [];
+let currentPeriodIndex = 0;
+
+function openBenefitModal(cardId, benefitId, benefitName, amount, used, frequency, periodKey, scriptId) {
+    // Parse periods from json_script
+    const script = document.getElementById(scriptId);
+    if (script) {
+        currentBenefitPeriods = JSON.parse(script.textContent);
+    } else {
+        // Fallback
+        currentBenefitPeriods = [{ key: periodKey, label: 'Current', max_value: amount, status: 'unknown' }];
+    }
+
+    // Find index
+    currentPeriodIndex = currentBenefitPeriods.findIndex(p => p.key === periodKey);
+    if (currentPeriodIndex === -1) currentPeriodIndex = 0;
+
+    currentBenefitData = {
+        cardId,
+        benefitId,
+        benefitName,
+        amount, // Base amount
+        frequency
+    };
+
+    updateBenefitModalUI();
+    document.getElementById('benefit-modal').style.display = 'flex';
+}
+
+function updateBenefitModalUI() {
+    const period = currentBenefitPeriods[currentPeriodIndex];
+    const maxVal = period.max_value || currentBenefitData.amount;
+
+    let usedVal = 0;
+    if (period.status === 'full') {
+        usedVal = maxVal;
+    } else if (period.key === currentBenefitPeriods.find(p => p.is_current)?.key) {
+        usedVal = 0;
+    }
+
+    // Update Header
+    document.getElementById('benefit-modal-title').textContent = currentBenefitData.benefitName;
+    document.getElementById('benefit-modal-subtitle').textContent = `${period.label} Usage`;
+
+    // Update Period Label in Navigator
+    document.getElementById('benefit-period-label').textContent = period.label;
+
+    // Update Values
+    document.getElementById('benefit-current-used-display').textContent = `$${usedVal}`;
+    document.getElementById('benefit-total-value-display').textContent = `$${maxVal}`;
+
+    updateProgress(usedVal, maxVal);
+
+    // Update Input
+    document.getElementById('benefit-amount-input').value = '';
+    document.getElementById('benefit-amount-input').placeholder = `Remaining: $${maxVal - usedVal}`;
+
+    // Update Mark as Full Button
+    const markBtn = document.getElementById('mark-full-btn');
+    if (markBtn) {
+        markBtn.innerHTML = `Mark <span style="margin: 0 0.25rem;">${period.label}</span> as Full`;
+        if (period.status === 'full') {
+            markBtn.innerHTML = `<span class="material-icons" style="font-size: 18px; margin-right: 0.5rem;">check</span> ${period.label} is Full`;
+            markBtn.disabled = true;
+            markBtn.style.opacity = '0.7';
+        } else {
+            markBtn.disabled = false;
+            markBtn.style.opacity = '1';
+        }
+    }
+}
+
+function navigatePeriod(direction) {
+    const newIndex = currentPeriodIndex + direction;
+    if (newIndex >= 0 && newIndex < currentBenefitPeriods.length) {
+        currentPeriodIndex = newIndex;
+        updateBenefitModalUI();
+    }
+}
+
+function closeBenefitModal() {
+    document.getElementById('benefit-modal').style.display = 'none';
+    currentBenefitData = {};
+    currentBenefitPeriods = [];
+}
+
+function updateProgress(used, total) {
+    const percentage = Math.min(100, Math.max(0, (used / total) * 100));
+    document.getElementById('benefit-circular-progress').style.setProperty('--progress', percentage + '%');
+}
+
+document.getElementById('benefit-amount-input')?.addEventListener('input', (e) => {
+    const val = parseFloat(e.target.value) || 0;
+});
+
+function markAsFull() {
+    const period = currentBenefitPeriods[currentPeriodIndex];
+    const maxVal = period.max_value || currentBenefitData.amount;
+
+    const btn = document.getElementById('mark-full-btn');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<span class="loader"></span> Marking...';
+    btn.disabled = true;
+
+    const formData = new FormData();
+    formData.append('amount', maxVal);
+    formData.append('period_key', period.key);
+    formData.append('is_full', 'true');
+    formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+
+    fetch(`/dashboard/update-benefit/${currentBenefitData.cardId}/${currentBenefitData.benefitId}/`, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert('Error: ' + (data.error || 'Unknown error'));
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error marking as full: ' + error.message);
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        });
+}
+
+function saveBenefitUsage() {
+    const amount = parseFloat(document.getElementById('benefit-amount-input').value);
+    if (isNaN(amount) || amount <= 0) return;
+
+    const period = currentBenefitPeriods[currentPeriodIndex];
+    const btn = document.getElementById('btn-log-usage');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<span class="loader"></span>';
+    btn.disabled = true;
+
+    const formData = new FormData();
+    formData.append('amount', amount);
+    formData.append('period_key', period.key);
+    formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+
+    fetch(`/dashboard/update-benefit/${currentBenefitData.cardId}/${currentBenefitData.benefitId}/`, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert('Error: ' + (data.error || 'Unknown error'));
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error logging usage: ' + error.message);
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        });
+}
+
+// Handle window resize to switch between mobile and desktop modal layouts
+function handleModalResize() {
+    const modal = document.getElementById('manage-wallet-modal');
+    if (modal && modal.style.display === 'flex') {
+        const isMobile = window.innerWidth <= 768;
+
+        if (isMobile) {
+            // Switch to mobile layout
+            const contentStack = document.getElementById('content-stack');
+            const contentAdd = document.getElementById('content-add');
+            const modalSidebar = document.querySelector('.modal-sidebar');
+
+            if (contentStack) contentStack.style.display = 'none';
+            if (contentAdd) contentAdd.style.display = 'none';
+            if (modalSidebar) modalSidebar.style.display = 'none';
+
+            // Show appropriate mobile screen
+            const myStackScreen = document.getElementById('mobile-my-stack-screen');
+            const addNewScreen = document.getElementById('mobile-add-new-screen');
+            const cardDetailScreen = document.getElementById('mobile-card-detail-screen');
+
+            // Determine which screen should be active based on current state
+            if (addNewScreen && addNewScreen.classList.contains('active')) {
+                showMobileAddNewScreen();
+            } else if (cardDetailScreen && cardDetailScreen.classList.contains('active')) {
+                // Keep detail screen active
+            } else {
+                showMobileMyStackScreen();
+            }
+        } else {
+            // Switch to desktop layout
+            const contentStack = document.getElementById('content-stack');
+            const contentAdd = document.getElementById('content-add');
+            const modalSidebar = document.querySelector('.modal-sidebar');
+
+            if (modalSidebar) modalSidebar.style.display = 'flex';
+
+            // Determine which tab should be active
+            const addNewScreen = document.getElementById('mobile-add-new-screen');
+            if (addNewScreen && addNewScreen.classList.contains('active')) {
+                switchTab('add');
+            } else {
+                switchTab('stack');
+            }
+        }
+    }
+}
+
+window.addEventListener('resize', handleModalResize);

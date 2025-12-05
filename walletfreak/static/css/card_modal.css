@@ -336,7 +336,7 @@
     background: #111827;
     color: white;
     border: none;
-    padding: 1rem;
+    padding: 1rem 1.5rem;
     border-radius: 12px;
     font-weight: 700;
     font-size: 1rem;
@@ -346,6 +346,7 @@
     justify-content: center;
     gap: 0.5rem;
     transition: all 0.2s;
+    white-space: nowrap;
 }
 
 .btn-add-wallet:hover {
@@ -361,7 +362,7 @@
     /* Blue text */
     border: none;
     /* No border */
-    padding: 1rem;
+    padding: 1rem 1.5rem;
     border-radius: 12px;
     font-weight: 700;
     font-size: 1rem;
@@ -371,6 +372,7 @@
     justify-content: center;
     gap: 0.5rem;
     transition: all 0.2s;
+    white-space: nowrap;
 }
 
 .btn-apply:hover {

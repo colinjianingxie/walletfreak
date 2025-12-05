@@ -1,0 +1,139 @@
+/* Custom Range Slider Styles */
+input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    outline: none;
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+/* Hide the native track */
+input[type=range]::-webkit-slider-runnable-track {
+    background: transparent;
+    border: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    pointer-events: all;
+    width: 20px;
+    height: 20px;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    margin-top: -16px;
+}
+
+input[type=range]::-moz-range-thumb {
+    pointer-events: all;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    margin-top: -16px;
+}
+
+/* Gradient card backgrounds */
+.gradient-card {
+    color: white;
+}
+
+.card-chase {
+    background: linear-gradient(135deg, #1040C1 0%, #002685 100%);
+}
+
+.card-amex {
+    background: linear-gradient(135deg, #94A3B8 0%, #64748B 100%);
+}
+
+.card-platinum {
+    background: linear-gradient(135deg, #E2E8F0 0%, #94A3B8 100%);
+    color: #1F2937;
+}
+
+.card-gold {
+    background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 100%);
+    color: #78350F;
+}
+
+.card-capital-one {
+    background: linear-gradient(135deg, #002D5C 0%, #001529 100%);
+}
+
+.card-citi {
+    background: linear-gradient(135deg, #004C97 0%, #002C5F 100%);
+}
+
+.card-default {
+    background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .main-grid {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+    }
+
+    .desktop-sort {
+        display: none !important;
+    }
+
+    .mobile-controls {
+        display: flex !important;
+    }
+
+    .filters-sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        max-width: 320px;
+        /* Or 100% for full screen, design usually full height side drawer */
+        height: 100vh;
+        background: white;
+        z-index: 50;
+        padding: 2rem;
+        transition: left 0.3s ease;
+        overflow-y: auto;
+        box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .filters-sidebar.active {
+        left: 0;
+    }
+
+    .mobile-filter-header {
+        display: flex !important;
+    }
+
+    .mobile-apply-btn {
+        display: block !important;
+    }
+
+    #cards-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    #cards-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .filters-sidebar {
+        max-width: 100%;
+        border-radius: 0;
+    }
+}
