@@ -1,0 +1,167 @@
+{% extends 'auth_base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+    .status-badge {
+        padding: 0.375rem 0.875rem;
+        border-radius: 8px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    .status-draft { background: #FEF3C7; color: #D97706; }
+    .status-published { background: #D1FAE5; color: #059669; }
+    .status-archived { background: #F3F4F6; color: #6B7280; }
+    
+    .status-btn {
+        padding: 0.5rem 1rem;
+        border: 2px solid;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        background: white;
+    }
+    .status-btn:hover {
+        transform: translateY(-1px);
+    }
+    .status-btn.active {
+        color: white;
+    }
+    .status-btn-draft { border-color: #F59E0B; color: #D97706; }
+    .status-btn-draft.active { background: #F59E0B; }
+    .status-btn-published { border-color: #10B981; color: #059669; }
+    .status-btn-published.active { background: #10B981; }
+    .status-btn-archived { border-color: #9CA3AF; color: #6B7280; }
+    .status-btn-archived.active { background: #9CA3AF; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div style="max-width: 1400px; margin: 0 auto; padding: 2rem 1rem;">
+    <!-- Header -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <div>
+            <h1 style="font-size: 2rem; font-weight: 800; margin: 0 0 0.5rem 0; color: #1F2937;">Manage Post Status</h1>
+            <p style="color: #64748B; margin: 0;">Quickly change the status of your blog posts.</p>
+        </div>
+        <a href="{% url 'blog_list' %}" style="background: #F3F4F6; color: #64748B; padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; text-decoration: none; transition: all 0.2s;">
+            ← Back to Blog
+        </a>
+    </div>
+
+    <!-- Posts Table -->
+    <div style="background: white; border-radius: 24px; border: 1px solid #F3F4F6; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background: #F9FAFB; border-bottom: 1px solid #E5E7EB;">
+                    <th style="padding: 1rem 1.5rem; text-align: left; font-size: 0.75rem; font-weight: 700; color: #6B7280; text-transform: uppercase; letter-spacing: 0.05em;">Title</th>
+                    <th style="padding: 1rem 1.5rem; text-align: left; font-size: 0.75rem; font-weight: 700; color: #6B7280; text-transform: uppercase; letter-spacing: 0.05em;">Current Status</th>
+                    <th style="padding: 1rem 1.5rem; text-align: left; font-size: 0.75rem; font-weight: 700; color: #6B7280; text-transform: uppercase; letter-spacing: 0.05em;">Updated</th>
+                    <th style="padding: 1rem 1.5rem; text-align: left; font-size: 0.75rem; font-weight: 700; color: #6B7280; text-transform: uppercase; letter-spacing: 0.05em;">Change Status</th>
+                    <th style="padding: 1rem 1.5rem; text-align: left; font-size: 0.75rem; font-weight: 700; color: #6B7280; text-transform: uppercase; letter-spacing: 0.05em;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in all_blogs %}
+                <tr id="row-{{ post.id }}" style="border-bottom: 1px solid #F3F4F6;">
+                    <td style="padding: 1.25rem 1.5rem;">
+                        <div style="font-weight: 600; color: #1F2937; margin-bottom: 0.25rem;">{{ post.title }}</div>
+                        <div style="font-size: 0.875rem; color: #94A3B8;">{{ post.author_name }}</div>
+                    </td>
+                    <td style="padding: 1.25rem 1.5rem;">
+                        <span class="status-badge status-{{ post.status }}" id="badge-{{ post.id }}">{{ post.status }}</span>
+                    </td>
+                    <td style="padding: 1.25rem 1.5rem;">
+                        <div style="font-size: 0.875rem; color: #64748B;">{{ post.updated_at|date:"M d, Y" }}</div>
+                        <div style="font-size: 0.75rem; color: #94A3B8;">{{ post.updated_at|date:"g:i A" }}</div>
+                    </td>
+                    <td style="padding: 1.25rem 1.5rem;">
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button onclick="changeStatus('{{ post.id }}', 'draft')" class="status-btn status-btn-draft {% if post.status == 'draft' %}active{% endif %}" id="btn-draft-{{ post.id }}">Draft</button>
+                            <button onclick="changeStatus('{{ post.id }}', 'published')" class="status-btn status-btn-published {% if post.status == 'published' %}active{% endif %}" id="btn-published-{{ post.id }}">Published</button>
+                            <button onclick="changeStatus('{{ post.id }}', 'archived')" class="status-btn status-btn-archived {% if post.status == 'archived' %}active{% endif %}" id="btn-archived-{{ post.id }}">Archived</button>
+                        </div>
+                    </td>
+                    <td style="padding: 1.25rem 1.5rem;">
+                        <a href="{% url 'blog_edit' post.slug %}" style="color: #6366F1; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 0.25rem;">
+                            <span class="material-icons" style="font-size: 18px;">edit</span>
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" style="padding: 3rem; text-align: center; color: #94A3B8;">
+                        No posts found
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function changeStatus(blogId, newStatus) {
+    const csrftoken = getCookie('csrftoken');
+    
+    fetch(`/blog/api/${blogId}/status/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': csrftoken
+        },
+        body: `status=${newStatus}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Update badge
+            const badge = document.getElementById(`badge-${blogId}`);
+            badge.className = `status-badge status-${newStatus}`;
+            badge.textContent = newStatus;
+            
+            // Update button states
+            ['draft', 'published', 'archived'].forEach(status => {
+                const btn = document.getElementById(`btn-${status}-${blogId}`);
+                if (status === newStatus) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Flash row to show update
+            const row = document.getElementById(`row-${blogId}`);
+            row.style.background = '#F0FDF4';
+            setTimeout(() => {
+                row.style.background = '';
+            }, 1000);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to update status');
+    });
+}
+</script>
+{% endblock %}

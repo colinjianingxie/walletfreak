@@ -1,0 +1,141 @@
+{% extends 'auth_base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #1F2937;
+        font-size: 0.875rem;
+    }
+    .form-input, .form-textarea, .form-select {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        border: 1px solid #E5E7EB;
+        border-radius: 12px;
+        font-size: 1rem;
+        color: #1F2937;
+        transition: all 0.2s;
+    }
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+        outline: none;
+        border-color: #6366F1;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    }
+    .form-textarea {
+        resize: vertical;
+        min-height: 300px;
+        font-family: inherit;
+        line-height: 1.6;
+    }
+    .btn-primary {
+        background: #6366F1;
+        color: white;
+        padding: 0.875rem 1.5rem;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .btn-primary:hover {
+        background: #4F46E5;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+    .btn-secondary {
+        background: #F3F4F6;
+        color: #64748B;
+        padding: 0.875rem 1.5rem;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+        background: #E5E7EB;
+    }
+    .error-message {
+        background: #FEE2E2;
+        color: #DC2626;
+        padding: 1rem;
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div style="max-width: 900px; margin: 0 auto; padding: 2rem 1rem;">
+    <!-- Header -->
+    <div style="margin-bottom: 2rem;">
+        <h1 style="font-size: 2rem; font-weight: 800; margin: 0 0 0.5rem 0; color: #1F2937;">Create New Blog Post</h1>
+        <p style="color: #64748B; margin: 0;">Share your insights and expertise with the community.</p>
+    </div>
+
+    {% if error %}
+    <div class="error-message">{{ error }}</div>
+    {% endif %}
+
+    <!-- Form -->
+    <form method="POST" style="background: white; border-radius: 24px; padding: 2rem; border: 1px solid #F3F4F6; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label class="form-label" for="title">Title *</label>
+            <input type="text" id="title" name="title" class="form-input" required value="{{ form_data.title|default:'' }}" placeholder="Enter blog post title">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="excerpt">Excerpt</label>
+            <textarea id="excerpt" name="excerpt" class="form-textarea" rows="3" placeholder="Brief description for preview (optional)" style="min-height: 100px;">{{ form_data.excerpt|default:'' }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="content">Content * (Markdown Supported)</label>
+            <textarea id="content" name="content" class="form-textarea" required placeholder="Write your blog post content here...">{{ form_data.content|default:'' }}</textarea>
+            <div style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748B;">
+                <strong>Markdown Tips:</strong> Use <code>![alt text](image-url)</code> for images, <code>**bold**</code> for bold, <code>_italic_</code> for italic, <code>### Heading</code> for headings
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="featured_image">Featured Image URL</label>
+            <input type="url" id="featured_image" name="featured_image" class="form-input" value="{{ form_data.featured_image|default:'' }}" placeholder="https://example.com/image.jpg">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="tags">Tags</label>
+            <input type="text" id="tags" name="tags" class="form-input" value="{{ form_data.tags|default:'' }}" placeholder="credit cards, rewards, travel (comma-separated)">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="status">Status *</label>
+            <select id="status" name="status" class="form-select">
+                <option value="draft" {% if form_data.status == 'draft' or not form_data.status %}selected{% endif %}>Draft</option>
+                <option value="published" {% if form_data.status == 'published' %}selected{% endif %}>Published</option>
+                <option value="archived" {% if form_data.status == 'archived' %}selected{% endif %}>Archived</option>
+            </select>
+        </div>
+
+        <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+            <button type="submit" class="btn-primary">
+                <span style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="material-icons" style="font-size: 20px;">add</span>
+                    Create Post
+                </span>
+            </button>
+            <a href="{% url 'blog_list' %}" class="btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

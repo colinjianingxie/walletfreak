@@ -1,0 +1,291 @@
+{% extends 'auth_base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+    .upload-zone {
+        border: 2px dashed #CBD5E1;
+        border-radius: 16px;
+        padding: 3rem;
+        text-align: center;
+        background: #F9FAFB;
+        transition: all 0.2s;
+        cursor: pointer;
+    }
+    .upload-zone:hover, .upload-zone.drag-over {
+        border-color: #6366F1;
+        background: #EEF2FF;
+    }
+    .asset-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+   .asset-card {
+        position: relative;
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid #E5E7EB;
+        transition: all 0.2s;
+    }
+    .asset-card:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+    }
+    .asset-preview {
+        width: 100%;
+        aspect-ratio: 16/9;
+        background: #F3F4F6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    .asset-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .asset-preview video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .asset-info {
+        padding: 1rem;
+    }
+    .asset-actions {
+        display: flex;
+        gap: 0.5rem;
+        padding: 0 1rem 1rem 1rem;
+    }
+    .btn-icon {
+        padding: 0.5rem;
+        border-radius: 8px;
+        border: none;
+        background: #F3F4F6;
+        color: #64748B;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        gap: 0.5rem;
+        font-weight: 600;
+        font-size: 0.875rem;
+    }
+    .btn-icon:hover {
+        background: #E5E7EB;
+    }
+    .btn-icon.copied {
+        background: #D1FAE5;
+        color: #059669;
+    }
+    .btn-delete {
+        background: #FEE2E2;
+        color: #DC2626;
+    }
+    .btn-delete:hover {
+        background: #FCA5A5;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div style="max-width: 1400px; margin: 0 auto; padding: 2rem 1rem;">
+    <!-- Header -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <div>
+            <h1 style="font-size: 2rem; font-weight: 800; margin: 0 0 0.5rem 0; color: #1F2937;">Media Library</h1>
+            <p style="color: #64748B; margin: 0;">Upload and manage images and videos for your blog posts.</p>
+        </div>
+        <a href="{% url 'blog_list' %}" style="background: #F3F4F6; color: #64748B; padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; text-decoration: none; transition: all 0.2s;">
+            ← Back to Blog
+        </a>
+    </div>
+
+    <!-- Upload Zone -->
+    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+        <input type="file" id="fileInput" accept="image/*,video/*" style="display: none;" onchange="uploadFile(this.files[0])">
+        <span class="material-icons" style="font-size: 48px; color: #94A3B8; margin-bottom: 1rem;">cloud_upload</span>
+        <h3 style="font-size: 1.125rem; font-weight: 700; margin: 0 0 0.5rem 0; color: #1F2937;">Drop files here or click to upload</h3>
+        <p style="color: #64748B; margin: 0; font-size: 0.875rem;">Supports: JPG, PNG, GIF, WebP, MP4, WebM (Max 50MB)</p>
+        <div id="uploadProgress" style="display: none; margin-top: 1rem;">
+            <div style="background: #E5E7EB; border-radius: 999px; height: 8px; overflow: hidden;">
+                <div id="progressBar" style="background: #6366F1; height: 100%; width: 0%; transition: width 0.3s;"></div>
+            </div>
+            <p id="uploadStatus" style="margin-top: 0.5rem; color: #64748B; font-size: 0.875rem;"></p>
+        </div>
+    </div>
+
+    <!-- Assets Grid -->
+    <div style="margin-top: 3rem;">
+        <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem; color: #1F2937;">
+            Your Assets ({{ assets|length }})
+        </h2>
+        
+        <div class="asset-grid" id="assetGrid">
+            {% for asset in assets %}
+            <div class="asset-card" id="asset-{{ asset.id }}">
+                <div class="asset-preview">
+                    {% if 'image' in asset.content_type %}
+                        <img src="{{ asset.url }}" alt="{{ asset.filename }}">
+                    {% elif 'video' in asset.content_type %}
+                        <video src="{{ asset.url }}" controls></video>
+                    {% else %}
+                        <span class="material-icons" style="font-size: 48px; color: #CBD5E1;">insert_drive_file</span>
+                    {% endif %}
+                </div>
+                <div class="asset-info">
+                    <div style="font-weight: 600; color: #1F2937; font-size: 0.875rem; margin-bottom: 0.25rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        {{ asset.filename }}
+                    </div>
+                    <div style="font-size: 0.75rem; color: #94A3B8;">
+                        {{ asset.uploaded_at|date:"M d, Y" }}
+                    </div>
+                </div>
+                <div class="asset-actions">
+                    <button class="btn-icon copy-btn" onclick="copyURL('{{ asset.url }}', '{{ asset.id }}')" id="copy-btn-{{ asset.id }}">
+                        <span class="material-icons" style="font-size: 18px;">content_copy</span>
+                        <span class="copy-text">Copy URL</span>
+                    </button>
+                    <button class="btn-icon btn-delete" onclick="deleteAsset('{{ asset.id }}')">
+                        <span class="material-icons" style="font-size: 18px;">delete</span>
+                    </button>
+                </div>
+            </div>
+            {% empty %}
+            <div style="grid-column: 1 / -1; padding: 4rem; text-align: center; background: #F9FAFB; border-radius: 16px; border: 1px dashed #E5E7EB;">
+                <span class="material-icons" style="font-size: 64px; color: #D1D5DB; margin-bottom: 1rem;">photo_library</span>
+                <p style="color: #64748B; margin: 0; font-size: 1.125rem;">No assets yet. Upload your first image or video!</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Drag and drop
+const uploadZone = document.getElementById('uploadZone');
+
+uploadZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadZone.classList.add('drag-over');
+});
+
+uploadZone.addEventListener('dragleave', () => {
+    uploadZone.classList.remove('drag-over');
+});
+
+uploadZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadZone.classList.remove('drag-over');
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+        uploadFile(files[0]);
+    }
+});
+
+function uploadFile(file) {
+    if (!file) return;
+    
+   const formData = new FormData();
+    formData.append('file', file);
+    
+    const progress = document.getElementById('uploadProgress');
+    const progressBar = document.getElementById('progressBar');
+    const status = document.getElementById('uploadStatus');
+    
+    progress.style.display = 'block';
+    status.textContent = 'Uploading...';
+    progressBar.style.width = '50%';
+    
+    fetch('{% url "upload_media" %}', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            progressBar.style.width = '100%';
+            status.textContent = 'Upload complete!';
+            setTimeout(() => {
+                location.reload();
+            }, 500);
+        } else {
+            status.textContent = 'Error: ' + data.error;
+            status.style.color = '#DC2626';
+        }
+    })
+    .catch(error => {
+        status.textContent = 'Upload failed!';
+        status.style.color = '#DC2626';
+        console.error('Error:', error);
+    });
+}
+
+function copyURL(url, assetId) {
+    navigator.clipboard.writeText(url).then(() => {
+        const btn = document.getElementById(`copy-btn-${assetId}`);
+        const text = btn.querySelector('.copy-text');
+        btn.classList.add('copied');
+        text.textContent = 'Copied!';
+        
+        setTimeout(() => {
+            btn.classList.remove('copied');
+            text.textContent = 'Copy URL';
+        }, 2000);
+    });
+}
+
+function deleteAsset(assetId) {
+    if (!confirm('Are you sure you want to delete this asset? This action cannot be undone.')) {
+        return;
+    }
+    
+    fetch(`/blog/media/${assetId}/delete/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const card = document.getElementById(`asset-${assetId}`);
+            card.style.opacity = '0';
+            card.style.transform = 'scale(0.8)';
+            setTimeout(() => {
+                card.remove();
+            }, 300);
+        } else {
+            alert('Failed to delete asset: ' + data.error);
+        }
+    })
+    .catch(error => {
+        alert('Delete failed!');
+        console.error('Error:', error);
+    });
+}
+</script>
+{% endblock %}

@@ -242,22 +242,8 @@
                 style="background: white; border-radius: 20px; padding: 2.5rem; border: 1px solid #E5E7EB; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: all 0.3s; display: flex; flex-direction: column; align-items: center; text-align: center;">
                 
                 <!-- Avatar Icon -->
-                <div style="width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;
-                    {% if 'freak' in personality.id|lower or 'wallet-freak' in personality.id|lower %}
-                        background: linear-gradient(135deg, #A855F7 0%, #C084FC 100%);
-                    {% elif 'jetsetter' in personality.id|lower %}
-                        background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
-                    {% elif 'hunter' in personality.id|lower or 'value' in personality.id|lower %}
-                        background: linear-gradient(135deg, #10B981 0%, #34D399 100%);
-                    {% elif 'seeker' in personality.id|lower or 'experience' in personality.id|lower %}
-                        background: linear-gradient(135deg, #EC4899 0%, #F472B6 100%);
-                    {% elif 'optimizer' in personality.id|lower %}
-                        background: linear-gradient(135deg, #1E293B 0%, #475569 100%);
-                    {% else %}
-                        background: linear-gradient(135deg, #6366F1 0%, #818CF8 100%);
-                    {% endif %}
-                    box-shadow: 0 8px 20px rgba(0,0,0,0.15);">
-                    <img src="{% static 'img/personalities/'|add:personality.id|add:'.svg' %}" alt="{{ personality.name }}" style="width: 70%; height: 70%; object-fit: contain;">
+                <div style="width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.1), 0 0 30px rgba(59, 130, 246, 0.15), 0 8px 20px rgba(0,0,0,0.08);">
+                    <img src="{% static 'img/personalities/'|add:personality.slug|add:'.png' %}" alt="{{ personality.name }}" style="width: 70%; height: 70%; object-fit: contain;">
                 </div>
 
                 <!-- Personality Name -->

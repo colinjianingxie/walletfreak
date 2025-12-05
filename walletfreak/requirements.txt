@@ -2,7 +2,7 @@ django>=5.0
 firebase-admin>=6.2.0
 gunicorn>=21.2.0
 requests
-python-dotenv
+pillow
 python-dateutil
+markdown>=3.9
 whitenoise
-

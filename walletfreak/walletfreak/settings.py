@@ -156,16 +156,23 @@ import os
 FIREBASE_CREDENTIALS_PATH = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS', BASE_DIR / 'serviceAccountKey.json')
 
 if not firebase_admin._apps:
-    if os.path.exists(FIREBASE_CREDENTIALS_PATH):
-        cred = credentials.Certificate(FIREBASE_CREDENTIALS_PATH)
-        firebase_admin.initialize_app(cred)
-    else:
-        # Fallback for when no credentials are present (e.g. build time)
-        # or rely on default Google credentials in Cloud Run
+    if FIREBASE_CREDENTIALS_PATH and os.path.exists(FIREBASE_CREDENTIALS_PATH):
         try:
-            firebase_admin.initialize_app()
+            cred = credentials.Certificate(FIREBASE_CREDENTIALS_PATH)
+            firebase_admin.initialize_app(cred, {
+                'storageBucket': 'walletfreak-cc.firebasestorage.app'
+            })
+            print(f"✅ Firebase initialized successfully with credentials from {FIREBASE_CREDENTIALS_PATH}")
         except Exception as e:
-            print(f"Warning: Firebase not initialized. {e}")
+            print(f"❌ Failed to initialize Firebase: {e}")
+    else:
+        try:
+            firebase_admin.initialize_app(options={
+                'storageBucket': 'walletfreak-cc.firebasestorage.app'
+            })
+            print("✅ Firebase initialized with default credentials")
+        except Exception as e:
+            print(f"❌ Failed to initialize Firebase with default credentials: {e}")
 
 FIREBASE_CLIENT_CONFIG = {
     "apiKey": "AIzaSyDZ4JTnyOBlkXoRlR7FbiQs6nPrwRlixEM",

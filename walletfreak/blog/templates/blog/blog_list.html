@@ -16,17 +16,42 @@
             <!-- Filters & Search -->
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
                 <div style="display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.5rem;">
-                    <button class="filter-btn active">All</button>
-                    <button class="filter-btn">Reviews</button>
-                    <button class="filter-btn">Guides</button>
-                    <button class="filter-btn">Tips</button>
-                    <button class="filter-btn">News</button>
+                    <a href="?category=All" class="filter-btn {% if not current_category or current_category == 'All' %}active{% endif %}">All</a>
+                    <a href="?category=Reviews" class="filter-btn {% if current_category == 'Reviews' %}active{% endif %}">Reviews</a>
+                    <a href="?category=Guides" class="filter-btn {% if current_category == 'Guides' %}active{% endif %}">Guides</a>
+                    <a href="?category=Tips" class="filter-btn {% if current_category == 'Tips' %}active{% endif %}">Tips</a>
+                    <a href="?category=News" class="filter-btn {% if current_category == 'News' %}active{% endif %}">News</a>
                 </div>
                 
-                <div style="position: relative; width: 300px;">
-                    <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #94A3B8;">🔍</span>
-                    <input type="text" placeholder="Search articles..." 
-                           style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem; border: 1px solid #E2E8F0; border-radius: 99px; font-size: 0.9rem; outline: none; transition: all 0.2s;">
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    {% if is_editor %}
+                    <a href="{% url 'media_library' %}" style="background: #F0FDF4; color: #059669; padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; white-space: nowrap;">
+                        <span class="material-icons" style="font-size: 20px;">photo_library</span>
+                        Media Library
+                    </a>
+                    <a href="{% url 'blog_manage_status' %}" style="background: #EEF2FF; color: #6366F1; padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; white-space: nowrap;">
+                        <span class="material-icons" style="font-size: 20px;">toggle_on</span>
+                        Manage Status
+                    </a>
+                    <a href="{% url 'blog_drafts' %}" style="background: #F3F4F6; color: #64748B; padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; white-space: nowrap;">
+                        <span class="material-icons" style="font-size: 20px;">drafts</span>
+                        My Drafts
+                    </a>
+                    <a href="{% url 'blog_create' %}" style="background: #6366F1; color: white; padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; white-space: nowrap;">
+                        <span class="material-icons" style="font-size: 20px;">add</span>
+                        Create Post
+                    </a>
+                    {% endif %}
+                    <form action="." method="GET" style="position: relative; width: 300px;">
+                        {% if current_category and current_category != 'All' %}
+                        <input type="hidden" name="category" value="{{ current_category }}">
+                        {% endif %}
+                        <button type="submit" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); background: none; border: none; padding: 0; color: #94A3B8; cursor: pointer; display: flex; align-items: center;">
+                            <span class="material-icons" style="font-size: 20px;">search</span>
+                        </button>
+                        <input type="text" name="q" placeholder="Search articles..." value="{{ search_query|default:'' }}"
+                               style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem; border: 1px solid #E2E8F0; border-radius: 99px; font-size: 0.9rem; outline: none; transition: all 0.2s;">
+                    </form>
                 </div>
             </div>
         </div>
@@ -41,6 +66,13 @@
                 <!-- Background Image with Overlay -->
                 <div style="position: absolute; inset: 0; background-image: url('{{ featured.featured_image }}'); background-size: cover; background-position: center; opacity: 0.6;"></div>
                 <div style="position: absolute; inset: 0; background: linear-gradient(to top, #0F172A 0%, transparent 100%);"></div>
+                
+                {% if is_editor %}
+                <a href="{% url 'blog_edit' featured.slug %}" onclick="event.stopPropagation();" style="position: absolute; top: 2rem; right: 2rem; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 0.75rem 1.25rem; border-radius: 12px; display: flex; align-items: center; gap: 0.5rem; text-decoration: none; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); z-index: 2;">
+                    <span class="material-icons" style="font-size: 20px; color: #6366F1;">edit</span>
+                    <span style="color: #1F2937; font-weight: 600;">Edit Featured</span>
+                </a>
+                {% endif %}
                 
                 <div style="position: relative; z-index: 1; padding: 3rem; max-width: 800px;">
                     <span style="background: #6366F1; color: white; padding: 0.375rem 0.875rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; display: inline-block; margin-bottom: 1.5rem;">
@@ -80,6 +112,11 @@
                         {% elif 'News' in post.tags %}NEWS
                         {% else %}STORY{% endif %}
                     </div>
+                    {% if is_editor %}
+                    <a href="{% url 'blog_edit' post.slug %}" onclick="event.stopPropagation();" style="position: absolute; top: 1rem; right: 1rem; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 0.5rem; border-radius: 8px; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
+                        <span class="material-icons" style="font-size: 20px; color: #6366F1;">edit</span>
+                    </a>
+                    {% endif %}
                 </div>
                 
                 <div class="blog-card-content">
@@ -110,6 +147,8 @@
         cursor: pointer;
         transition: all 0.2s;
         white-space: nowrap;
+        text-decoration: none;
+        display: inline-block;
     }
     
     .filter-btn:hover {

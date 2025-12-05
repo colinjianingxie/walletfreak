@@ -173,6 +173,12 @@
                 <div style="text-align: right;">
                     <div style="font-size: 1.25rem; font-weight: 800; color: #1F2937;">${{ benefit.amount|floatformat:0 }}</div>
                     <div style="font-size: 0.7rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em; text-transform: uppercase;">PER PERIOD</div>
+                    {% if benefit.days_until_expiration is not None %}
+                    <div style="margin-top: 0.5rem; padding: 0.25rem 0.5rem; border-radius: 6px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; 
+                        {% if benefit.days_until_expiration < 7 %}background: #FEE2E2; color: #DC2626;{% elif benefit.days_until_expiration < 30 %}background: #FEF3C7; color: #D97706;{% else %}background: #F3F4F6; color: #6B7280;{% endif %}">
+                        {% if benefit.days_until_expiration == 0 %}EXPIRES TODAY{% elif benefit.days_until_expiration == 1 %}EXPIRES TOMORROW{% else %}{{ benefit.days_until_expiration }} DAYS LEFT{% endif %}
+                    </div>
+                    {% endif %}
                 </div>
             </div>
 

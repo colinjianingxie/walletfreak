@@ -418,7 +418,7 @@ footer {
 
     /* Container */
     .container {
-        padding: 0 1rem;
+        padding: 0 1.25rem;
     }
 
     /* Navbar */
@@ -533,7 +533,7 @@ footer {
     }
 
     .container {
-        padding: 0 0.75rem;
+        padding: 0 1.25rem;
     }
 
     .btn {
@@ -1829,6 +1829,12 @@ footer {
 
     .grid-responsive-4 {
         grid-template-columns: 1fr !important;
+    }
+
+    /* Landing page sections - override inline padding for mobile breathing room */
+    .landing-section {
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
     }
 
     /* Hamburger Menu & Nav */

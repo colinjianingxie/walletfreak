@@ -1,0 +1,89 @@
+{% extends 'auth_base.html' %}
+{% load static %}
+
+{% block content %}
+<div style="max-width: 1200px; margin: 0 auto; padding: 2rem 1rem;">
+    <!-- Header -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <div>
+            <h1 style="font-size: 2rem; font-weight: 800; margin: 0 0 0.5rem 0; color: #1F2937;">My Drafts</h1>
+            <p style="color: #64748B; margin: 0;">Manage your unpublished and archived posts.</p>
+        </div>
+        <a href="{% url 'blog_list' %}" style="background: #F3F4F6; color: #64748B; padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; text-decoration: none; transition: all 0.2s;">
+            ← Back to Blog
+        </a>
+    </div>
+
+    <!-- Draft Posts -->
+    <div style="margin-bottom: 3rem;">
+        <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem; color: #1F2937;">
+            Drafts ({{ draft_blogs|length }})
+        </h2>
+        
+        {% if draft_blogs %}
+        <div style="display: grid; gap: 1rem;">
+            {% for post in draft_blogs %}
+            <div style="background: white; border-radius: 16px; padding: 1.5rem; border: 1px solid #F3F4F6; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center;">
+                <div style="flex: 1;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                        <h3 style="font-size: 1.125rem; font-weight: 700; margin: 0; color: #1F2937;">{{ post.title }}</h3>
+                        <span style="background: #FEF3C7; color: #D97706; padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">Draft</span>
+                    </div>
+                    <p style="color: #64748B; margin: 0 0 0.5rem 0; font-size: 0.875rem;">{{ post.excerpt|truncatewords:20 }}</p>
+                    <div style="color: #94A3B8; font-size: 0.75rem;">
+                        Last updated: {{ post.updated_at|date:"M d, Y" }}
+                    </div>
+                </div>
+                <div style="display: flex; gap: 0.75rem;">
+                    <a href="{% url 'blog_edit' post.slug %}" style="background: #6366F1; color: white; padding: 0.75rem 1.25rem; border-radius: 10px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="material-icons" style="font-size: 18px;">edit</span>
+                        Edit
+                    </a>
+                    <a href="{% url 'blog_detail' post.slug %}" style="background: #F3F4F6; color: #64748B; padding: 0.75rem 1.25rem; border-radius: 10px; font-weight: 600; text-decoration: none;">
+                        Preview
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="background: #F9FAFB; border: 1px dashed #E5E7EB; border-radius: 16px; padding: 3rem; text-align: center;">
+            <span class="material-icons" style="font-size: 48px; color: #D1D5DB; margin-bottom: 1rem;">description</span>
+            <p style="color: #64748B; margin: 0;">No drafts yet. Start writing!</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Archived Posts -->
+    {% if archived_blogs %}
+    <div>
+        <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem; color: #1F2937;">
+            Archived ({{ archived_blogs|length }})
+        </h2>
+        
+        <div style="display: grid; gap: 1rem;">
+            {% for post in archived_blogs %}
+            <div style="background: white; border-radius: 16px; padding: 1.5rem; border: 1px solid #F3F4F6; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; opacity: 0.7;">
+                <div style="flex: 1;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                        <h3 style="font-size: 1.125rem; font-weight: 700; margin: 0; color: #1F2937;">{{ post.title }}</h3>
+                        <span style="background: #F3F4F6; color: #6B7280; padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">Archived</span>
+                    </div>
+                    <p style="color: #64748B; margin: 0 0 0.5rem 0; font-size: 0.875rem;">{{ post.excerpt|truncatewords:20 }}</p>
+                    <div style="color: #94A3B8; font-size: 0.75rem;">
+                        Archived on: {{ post.updated_at|date:"M d, Y" }}
+                    </div>
+                </div>
+                <div style="display: flex; gap: 0.75rem;">
+                    <a href="{% url 'blog_edit' post.slug %}" style="background: #6366F1; color: white; padding: 0.75rem 1.25rem; border-radius: 10px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="material-icons" style="font-size: 18px;">edit</span>
+                        Edit
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

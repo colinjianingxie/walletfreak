@@ -3,7 +3,8 @@ from django.http import JsonResponse, HttpResponseForbidden
 from django.views.decorators.http import require_http_methods, require_POST
 from django.contrib.auth.decorators import login_required
 from core.services import db
-from datetime import datetime
+from datetime import datetime, timedelta
+from calendar import monthrange
 import json
 
 
@@ -217,6 +218,47 @@ def dashboard(request):
                         current_period_status = status
                         current_period_used = p_used
 
+                    # Calculate days until current period expires
+                    days_until_expiration = None
+                    now = datetime.now()
+                    
+                    if 'monthly' in frequency.lower():
+                        # Current month end
+                        last_day = monthrange(current_year, current_month)[1]
+                        period_end = datetime(current_year, current_month, last_day, 23, 59, 59)
+                        days_until_expiration = (period_end - now).days
+                    elif 'quarterly' in frequency.lower():
+                        # Current quarter end
+                        curr_q = (current_month - 1) // 3 + 1
+                        quarter_end_month = curr_q * 3
+                        last_day = monthrange(current_year, quarter_end_month)[1]
+                        period_end = datetime(current_year, quarter_end_month, last_day, 23, 59, 59)
+                        days_until_expiration = (period_end - now).days
+                    elif 'semi-annually' in frequency.lower():
+                        # Current half-year end (June 30 or Dec 31)
+                        if current_month <= 6:
+                            period_end = datetime(current_year, 6, 30, 23, 59, 59)
+                        else:
+                            period_end = datetime(current_year, 12, 31, 23, 59, 59)
+                        days_until_expiration = (period_end - now).days
+                    else:
+                        # Annual - end of year or anniversary date
+                        if 'anniversary' in frequency.lower() and anniversary_month:
+                            # Use anniversary date as expiration
+                            # If we're past this year's anniversary, next expiration is next year
+                            if current_month > anniversary_month or (current_month == anniversary_month and now.day > anniversary_date.day if anniversary_date_str else False):
+                                next_anniversary_year = current_year + 1
+                            else:
+                                next_anniversary_year = current_year
+                            last_day = monthrange(next_anniversary_year, anniversary_month)[1]
+                            # Use actual anniversary day if available
+                            anniversary_day = anniversary_date.day if anniversary_date_str else last_day
+                            period_end = datetime(next_anniversary_year, anniversary_month, min(anniversary_day, last_day), 23, 59, 59)
+                        else:
+                            # Calendar year - Dec 31
+                            period_end = datetime(current_year, 12, 31, 23, 59, 59)
+                        days_until_expiration = (period_end - now).days
+                    
                     benefit_obj = {
                         'user_card_id': card['id'],  # Firestore document ID for user_cards subcollection
                         'card_id': card['card_id'],  # Card slug for filtering
@@ -228,7 +270,8 @@ def dashboard(request):
                         'periods': periods,
                         'frequency': frequency,
                         'current_period_status': current_period_status,
-                        'script_id': f"{card['card_id']}_{benefit_id}"  # Unique ID for DOM elements
+                        'script_id': f"{card['card_id']}_{benefit_id}",  # Unique ID for DOM elements
+                        'days_until_expiration': days_until_expiration
                     }
                     
                     all_benefits.append(benefit_obj)

@@ -1,6 +1,8 @@
 import firebase_admin
-from firebase_admin import firestore
+from firebase_admin import firestore, storage
 from django.conf import settings
+from datetime import timedelta
+import uuid
 
 class FirestoreService:
     def __init__(self):
@@ -9,12 +11,19 @@ class FirestoreService:
              # This fallback is mostly for local testing if settings didn't catch it
              pass
         self._db = None
+        self._bucket = None
 
     @property
     def db(self):
         if self._db is None:
             self._db = firestore.client()
         return self._db
+    
+    @property
+    def bucket(self):
+        if self._bucket is None:
+            self._bucket = storage.bucket()
+        return self._bucket
 
     def get_collection(self, collection_name, limit=None):
         ref = self.db.collection(collection_name)
@@ -28,6 +37,20 @@ class FirestoreService:
         doc = doc_ref.get()
         if doc.exists:
             return {**doc.to_dict(), 'id': doc.id}
+        return None
+
+    def get_blog_by_slug(self, slug):
+        """Get blog post by slug"""
+        blogs = self.db.collection('blogs').where('slug', '==', slug).limit(1).stream()
+        for blog in blogs:
+            return blog.to_dict() | {'id': blog.id}
+        return None
+    
+    def get_blog_by_id(self, blog_id):
+        """Get blog post by document ID"""
+        doc = self.db.collection('blogs').document(blog_id).get()
+        if doc.exists:
+            return doc.to_dict() | {'id': doc.id}
         return None
 
     def create_document(self, collection_name, data, doc_id=None):
@@ -301,4 +324,79 @@ class FirestoreService:
         """Delete a blog post"""
         self.delete_document('blogs', blog_id)
 
+    # Media Asset Management Methods
+    def upload_media_asset(self, file_obj, filename, content_type, uploaded_by_uid):
+        """Upload a media file to Google Cloud Storage and track it in Firestore"""
+        import uuid
+        from datetime import datetime
+        from google.cloud.firestore import Query
+        
+        # Generate unique filename to avoid collisions
+        file_extension = filename.rsplit('.', 1)[-1] if '.' in filename else ''
+        unique_filename = f"blog-assets/{uuid.uuid4()}.{file_extension}"
+        
+        # Upload to Cloud Storage
+        blob = self.bucket.blob(unique_filename)
+        blob.upload_from_file(file_obj, content_type=content_type)
+        
+        # Make the file publicly accessible
+        blob.make_public()
+        
+        # Get public URL
+        public_url = blob.public_url
+        
+        # Track in Firestore
+        asset_data = {
+            'filename': filename,
+            'storage_path': unique_filename,
+            'url': public_url,
+            'content_type': content_type,
+            'uploaded_by': uploaded_by_uid,
+            'uploaded_at': datetime.now(),
+            'size': blob.size
+        }
+        
+        doc_ref = self.db.collection('media_assets').document()
+        doc_ref.set(asset_data)
+        
+        return {
+            'id': doc_ref.id,
+            'url': public_url,
+            **asset_data
+        }
+    
+    def list_media_assets(self, limit=50):
+        """List all media assets from Firestore"""
+        from google.cloud.firestore import Query
+        assets_ref = self.db.collection('media_assets').order_by('uploaded_at', direction=Query.DESCENDING).limit(limit)
+        return [doc.to_dict() | {'id': doc.id} for doc in assets_ref.stream()]
+    
+    def delete_media_asset(self, asset_id):
+        """Delete a media asset from both Storage and Firestore"""
+        # Get asset info from Firestore
+        asset_doc = self.db.collection('media_assets').document(asset_id).get()
+        if not asset_doc.exists:
+            return False
+        
+        asset_data = asset_doc.to_dict()
+        storage_path = asset_data.get('storage_path')
+        
+        # Delete from Cloud Storage
+        if storage_path:
+            blob = self.bucket.blob(storage_path)
+            try:
+                blob.delete()
+            except Exception as e:
+                print(f"Error deleting from storage: {e}")
+        
+        # Delete from Firestore
+        self.db.collection('media_assets').document(asset_id).delete()
+        return True
+    
+    def get_media_url(self, storage_path):
+        """Get public URL for a media asset"""
+        blob = self.bucket.blob(storage_path)
+        return blob.public_url
+
+# Create singleton instance
 db = FirestoreService()
