@@ -276,27 +276,26 @@
 
     /* Personality Slot Container Mobile */
     .personality-slot-container {
-        padding: 1.25rem 1rem !important;
-        /* Reduced padding further */
+        padding: 2rem 1.5rem !important;
     }
 
     /* Reduce vertical spacing in slot info */
     .personality-slot-container>div:first-child {
-        margin-bottom: 0.75rem !important;
+        margin-bottom: 1.5rem !important;
         text-align: center;
     }
 
     .personality-slot-container h3 {
-        font-size: 1.25rem !important;
-        /* Compact title */
-        margin-bottom: 0.25rem !important;
+        font-size: 1.5rem !important;
+        margin-bottom: 0.5rem !important;
+        font-weight: 700 !important;
     }
 
     .personality-slot-container p {
-        font-size: 0.9rem !important;
-        /* Compact description */
-        line-height: 1.4 !important;
+        font-size: 1rem !important;
+        line-height: 1.5 !important;
         margin-bottom: 0 !important;
+        color: #64748b !important;
     }
 
     /* Carousel Styles */
@@ -304,32 +303,32 @@
         position: relative;
         display: flex;
         justify-content: center;
-        /* Center the card */
-        padding: 0 3rem;
-        /* Make room for arrows */
+        padding: 0;
         flex-direction: column;
-        /* Allow dots to flow below */
     }
 
     .carousel-btn {
         display: flex;
-        /* Show on mobile */
         position: absolute;
         top: 50%;
-        /* Center vertically relative to CARD */
-        transform: translateY(-100%);
-        /* Offset slightly up to match card visual center */
-        width: 36px;
-        height: 36px;
+        transform: translateY(-50%);
+        width: 48px;
+        height: 48px;
         background: white;
         border-radius: 50%;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         align-items: center;
         justify-content: center;
         cursor: pointer;
         z-index: 20;
-        color: #1e293b;
+        color: #64748b;
         border: 1px solid #e2e8f0;
+        transition: all 0.2s;
+    }
+
+    .carousel-btn:hover {
+        background: #f8fafc;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     /* Metadata below card */
@@ -359,12 +358,24 @@
         right: 0;
     }
 
-    /* Mobile Card Sizing for Arrows */
+    /* Mobile Card Sizing - Add blue border container */
     .card-option {
         width: 100% !important;
-        /* Full width of track */
-        padding: 0 1rem;
-        /* Internal padding if needed, or track padding */
+        max-width: 440px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem;
+        background: white;
+        border: 3px solid #3b82f6;
+        border-radius: 32px;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+    }
+
+    .carousel-track {
+        padding: 0 3.5rem !important;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     /* Pagination Dots */
@@ -372,21 +383,22 @@
         display: flex;
         justify-content: center;
         gap: 0.5rem;
-        margin-top: 1.5rem;
+        margin-top: 2rem;
     }
 
     .pagination-dot {
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
-        background: #e2e8f0;
-        transition: all 0.2s;
+        background: #cbd5e1;
+        transition: all 0.3s;
+        cursor: pointer;
     }
 
     .pagination-dot.active {
         background: #6366f1;
-        /* Primary color */
-        transform: scale(1.2);
+        width: 24px;
+        border-radius: 5px;
     }
 }
 
@@ -449,7 +461,7 @@
     }
 }
 
-/* Hide carousel buttons AND dots on desktop */
+/* Desktop Layout */
 @media (min-width: 769px) {
 
     .carousel-btn,
@@ -457,14 +469,23 @@
         display: none !important;
     }
 
-    /* Desktop Grid Layout: Show all cards left-to-right */
+    /* Desktop: Show all cards horizontally with white containers */
     .card-option {
         display: block !important;
-        /* Override inline display: none */
-        width: 340px !important;
-        margin-bottom: 2rem;
-        /* Add spacing for wrapped rows */
-        padding: 0;
+        width: 300px !important;
+        margin-bottom: 0;
+        padding: 1.25rem;
+        background: white;
+        border: 2px solid transparent;
+        border-radius: 20px;
+        transition: all 0.3s;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Selected card gets blue border */
+    .card-option.selected {
+        border-color: #3b82f6 !important;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
     }
 
     .slot-carousel {
@@ -472,7 +493,16 @@
     }
 
     .carousel-track {
-        flex-wrap: wrap !important;
-        gap: 1.5rem !important;
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        gap: 1rem !important;
         justify-content: flex-start !important;
+        overflow-x: auto;
+        padding-bottom: 1rem;
     }
+
+
+    .personality-slot-container {
+        padding: 2rem !important;
+    }
+}

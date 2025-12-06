@@ -1,599 +1,623 @@
 [
     {
-        "name": "The Global Entry",
+        "name": "Luxury Jetsetter",
         "slug": "luxury-jetsetter",
-        "tagline": "The gold standard for travel.",
-        "description": "Flexible points that transfer to high-value partners like Hyatt, plus unbeatable travel insurance.",
+        "tagline": "First-class treatment, Park Hyatt robes, 3+ cents per point redemptions",
+        "description": "You don’t just travel — you arrive. Park Hyatt Paris for 30k points, private transfers, trip delay insurance that actually pays out when your bag does ballet in Frankfurt. This is the setup for people who want the very best redemptions and protections without running 17 cards.",
         "slots": [
             {
                 "name": "The Hub",
-                "description": "The core card that unlocks transfer partners and travel insurance.",
+                "description": "Unlocks transfer partners + 1.5x portal + god-tier insurance.",
                 "cards": [
                     "chase-sapphire-reserve-card",
                     "chase-sapphire-preferred-card"
                 ]
             },
             {
-                "name": "The Point Generator",
-                "description": "Earns points faster on everyday purchases to transfer to your Hub.",
+                "name": "Multiplier Engine",
+                "description": "Feeds the hub with 3–5x on everyday spend → transferable.",
                 "cards": [
                     "chase-freedom-unlimited-card",
-                    "chase-freedom-flex-card"
+                    "chase-freedom-flex",
+                    "ink-business-unlimited-credit-card"
+                ]
+            },
+            {
+                "name": "Rent & Dining Engine",
+                "description": "If you pay rent, Bilt turns it into points (1x) and adds 3x dining / 2x travel that still feed your hub.",
+                "cards": [
+                    "bilt-mastercard"
                 ]
             }
         ],
         "rules": [
             {
-                "title": "The Anchor",
-                "description": "The Sapphire Reserve is your hub. It unlocks 50% more value for travel and enables point transfers."
+                "title": "Reserve > Preferred",
+                "description": "If you can offset the fee, Reserve wins every time — insurance + 1.5x portal is worth way more than $455 difference."
             },
             {
-                "title": "The Accumulator",
-                "description": "Use Freedom Unlimited for everything else. Move those points to your Sapphire account to boost their value."
+                "title": "Feed The Beast",
+                "description": "Everything non-bonus goes on Freedom Unlimited → transfer to Reserve → redeem Hyatt, Virgin, United, SW for 3–6 cpp."
             },
             {
-                "title": "The Redemption",
-                "description": "Transfer points to World of Hyatt. A 30k point night at a Park Hyatt can be worth $1,000+."
+                "title": "No Redemption Under 2.5 cpp",
+                "description": "If it's not at least 2.5 cents per point, use the portal or go home."
             }
         ]
     },
     {
         "name": "Wallet Freak",
         "slug": "wallet-freak",
-        "tagline": "The Ultimate Optimizer",
-        "description": "You are the final boss of this game. You track every portal, every transfer partner, every retention offer, and you make the issuers cry.",
+        "tagline": "The Final Boss — Issuers Fear You",
+        "description": "You track every Amex Offer, every retention script, every pay-yourself-back category. Banks literally send you letters begging you to slow down. You are the endgame.",
         "slots": [
             {
-                "name": "Premium Hub",
-                "description": "Lounge access and transfer partners.",
+                "name": "Premium Hub Trio",
+                "description": "You run all three because you can offset every fee and abuse every ecosystem.",
                 "cards": [
                     "american-express-platinum-card",
-                    "capital-one-venture-x-rewards-credit-card"
+                    "capital-one-venture-x-rewards-credit-card",
+                    "chase-sapphire-reserve-card"
                 ]
             },
             {
-                "name": "Dining & Grocery",
-                "description": "Maximum multipliers on food.",
+                "name": "Food Warlord",
+                "description": "Maximum calories-to-points conversion.",
                 "cards": [
-                    "american-express-gold-card"
+                    "american-express-gold-card",
+                    "blue-cash-preferred-card-from-american-express"
                 ]
             },
             {
-                "name": "Catch-All",
-                "description": "For everything else.",
+                "name": "Pure Feeder Layer",
+                "description": "Uncapped 2x+ (incl. rent) that feeds a hub.",
                 "cards": [
                     "blue-business-plus-credit-card-from-american-express",
-                    "chase-freedom-unlimited-card"
+                    "ink-business-unlimited-credit-card",
+                    "bilt-mastercard"
                 ]
             }
         ],
         "rules": [
             {
-                "title": "Maximize Credits",
-                "description": "Ensure you use every single monthly credit (Uber, Dining, etc.) to offset the high fees."
+                "title": "Every Credit Is Mandatory",
+                "description": "Miss one $10 credit and you owe the group chat $100."
             },
             {
-                "title": "Retention Offers",
-                "description": "Call every year when the annual fee hits to ask for a retention offer."
+                "title": "Retention = Religion",
+                "description": "Annual fee posts → secure message/script → 30–60k or PC/cancel. Every card, every year."
             },
             {
-                "title": "Business Cards",
-                "description": "Use business cards to keep your personal credit report clean and earn more points."
+                "title": "Business Cards Only For Big Spend",
+                "description": "Keep personal reports clean, hit SUBs faster, earn more."
             }
         ]
     },
     {
         "name": "Points Strategist",
         "slug": "points-strategist",
-        "tagline": "The Transfer Partner Ninja",
-        "description": "You want transferable points and know every sweet spot redemption. You don't need Amex Platinum coupons — you just want the highest cents-per-point possible.",
+        "tagline": "Transfer Partner Only — 5+ cpp or bust",
+        "description": "Lounges are nice, credits are cute, but you live for ANA business class, Hyatt Globalist on points, and Flying Blue promos. Your redemptions make grown men cry.",
         "slots": [
             {
-                "name": "The Hub",
-                "description": "Your main travel card.",
+                "name": "Primary Transfer Hub",
+                "description": "Best partners + strong multipliers.",
                 "cards": [
+                    "chase-sapphire-reserve-card",
                     "capital-one-venture-x-rewards-credit-card",
-                    "chase-sapphire-preferred-card"
+                    "citi-strata-premier-card"
                 ]
             },
             {
-                "name": "The Multiplier",
-                "description": "Earns 2x-3x on categories.",
+                "name": "Secondary/Alternative Hub",
+                "description": "For specific sweet spots or backup.",
                 "cards": [
-                    "capital-one-savorone-cash-rewards-credit-card",
-                    "chase-freedom-flex-card"
+                    "chase-sapphire-preferred-card",
+                    "american-express-gold-card"
+                ]
+            },
+            {
+                "name": "Max Multiplier Feeder",
+                "description": "2x+ uncapped on everything else → transfer for massive cpp.",
+                "cards": [
+                    "blue-business-plus-credit-card-from-american-express",
+                    "ink-business-unlimited-credit-card"
                 ]
             }
         ],
         "rules": [
             {
-                "title": "Transfer Partners",
-                "description": "Never redeem for cash back. Always transfer to airline or hotel partners."
+                "title": "Portal Is For Mortals",
+                "description": "You transfer. Always. Minimum 2.5 cpp, preferably 4+."
             },
             {
-                "title": "The Duo",
-                "description": "Combine cards from the same ecosystem (e.g. Capital One Duo or Chase Trifecta) to pool points."
+                "title": "Sweet Spot Calendar Tattooed On Arm",
+                "description": "You never miss a Flying Blue Promo, Virgin delta award drop, or Hyatt peak change."
             }
         ]
     },
     {
         "name": "Business Powerhouse",
         "slug": "business-powerhouse",
-        "tagline": "The 0.5–3x Everything Monster",
-        "description": "You run real money through cards — ads, software, inventory, shipping, travel. You want uncapped 3–5x on the categories that matter most to your business.",
+        "tagline": "5x ads, 5x software, 3x shipping — pure profit",
+        "description": "You run millions through cards. Personal limits are irrelevant. Your points pay for first-class team offsites.",
         "slots": [
             {
-                "name": "Ad Spend & Software",
-                "description": "4x points on top business categories.",
+                "name": "Ad Spend & Software Beast",
+                "description": "Maximize 4–5x categories on ads, software, and other business essentials.",
                 "cards": [
                     "american-express-business-gold-card",
-                    "chase-ink-business-preferred-credit-card"
+                    "ink-business-cash-card"
                 ]
             },
             {
-                "name": "Flat Rate Business",
-                "description": "2x or 1.5x on all other business spend.",
+                "name": "Uncapped Everything Else",
+                "description": "Simple, high-earn multipliers on all non-bonus business spend.",
                 "cards": [
-                    "blue-business-plus-credit-card-from-american-express",
-                    "chase-ink-business-unlimited-card"
+                    "ink-business-unlimited-credit-card",
+                    "blue-business-plus-credit-card-from-american-express"
+                ]
+            },
+            {
+                "name": "Travel Redemption Closer",
+                "description": "Turn all those points into premium travel for you and the team.",
+                "cards": [
+                    "chase-sapphire-reserve-card",
+                    "capital-one-venture-x-rewards-credit-card"
                 ]
             }
         ],
         "rules": [
             {
-                "title": "Separate Expenses",
-                "description": "Keep business expenses strictly on business cards for easier accounting."
+                "title": "Ads Routing Bible",
+                "description": "Meta/Google/TikTok → Biz Gold 4x. Office supply gift cards → Ink Cash 5x."
             },
             {
-                "title": "Employee Cards",
-                "description": "Issue cards to employees to earn points on their spend too."
+                "title": "Employee Cards = Free Money",
+                "description": "Every employee gets one. Their lunch = your Maldives trip."
             }
         ]
     },
     {
         "name": "Cashback Pragmatist",
         "slug": "cashback-pragmatist",
-        "tagline": "Points Are a Scam, Give Me Cash",
-        "description": "You want real cash, no games, no portals, no annual fees (or tiny ones).",
+        "tagline": "Points Are Cope. Cash Is King.",
+        "description": "You looked at the points circus, laughed, and took real money instead. Zero annual fees, zero games, maximum sleep.",
         "slots": [
             {
-                "name": "Flat Rate",
-                "description": "2% cash back on everything.",
+                "name": "True 2% Core",
+                "description": "Simple flat-rate cash back everywhere — no tracking, no thinking.",
                 "cards": [
                     "wells-fargo-active-cash-card",
-                    "citi-double-cash-card"
+                    "citi-double-cash-card",
+                    "paypal-cashback-mastercard"
                 ]
             },
             {
-                "name": "Category Booster",
-                "description": "5% on your top category.",
+                "name": "5% Spice (Optional)",
+                "description": "A little extra work for big boosts on your top categories.",
                 "cards": [
-                    "citi-custom-cash-card"
+                    "citi-custom-cash-card",
+                    "us-bank-altitude-go-visa-signature-card"
                 ]
             }
         ],
         "rules": [
             {
-                "title": "Keep it Simple",
-                "description": "Focus on cards with no annual fee and high cash back rates."
+                "title": "No Fee, No Mercy",
+                "description": "If it has an annual fee, it better give you $1,000+ value."
             },
             {
-                "title": "Auto-Redeem",
-                "description": "Set up auto-redemption to your bank account so you never have to think about it."
+                "title": "Auto-Redemption To Investments",
+                "description": "Cash back → brokerage every month. Points people seethe."
             }
         ]
     },
     {
         "name": "Foodie & Grocery King",
         "slug": "foodie-grocery-king",
-        "tagline": "6% groceries / 4–5% dining or nothing",
-        "description": "Your biggest spend is eating. You need the absolute highest return on restaurants, grocery stores, and food delivery.",
+        "tagline": "6% groceries + 4–5x dining or I starve",
+        "description": "Your grocery bill scares normal people. You treat calories like basis points. Every meal must return at least 10% effective.",
         "slots": [
             {
-                "name": "Dining & Groceries",
-                "description": "The heavy hitters for food spend.",
-                "cards": [
-                    "american-express-gold-card",
-                    "capital-one-savorone-cash-rewards-credit-card"
-                ]
-            },
-            {
-                "name": "Supermarkets",
-                "description": "6% back at US supermarkets.",
-                "cards": [
-                    "blue-cash-preferred-card-from-american-express"
-                ]
-            }
-        ],
-        "rules": [
-            {
-                "title": "Dining Credits",
-                "description": "Use the monthly dining credits on the Gold card to offset the fee."
-            },
-            {
-                "title": "Grocery Cap",
-                "description": "Watch out for the $6k annual cap on the Blue Cash Preferred."
-            }
-        ]
-    },
-    {
-        "name": "Simple Minimalist",
-        "slug": "simple-minimalist",
-        "tagline": "One card, peace of mind",
-        "description": "You want one card that does everything reasonably well and you never want to think about it again.",
-        "slots": [
-            {
-                "name": "The One Card",
-                "description": "Your daily driver for everything.",
-                "cards": [
-                    "citi-double-cash-card",
-                    "wells-fargo-active-cash-card",
-                    "capital-one-quicksilver-cash-rewards-credit-card"
-                ]
-            }
-        ],
-        "rules": [
-            {
-                "title": "Set and Forget",
-                "description": "Put everything on autopay and use this one card for every purchase."
-            }
-        ]
-    },
-    {
-        "name": "Value Traveler",
-        "slug": "value-traveler",
-        "tagline": "Good travel perks without the pain",
-        "description": "You love travel but want the fee easily offset. Venture X and CSP are your sweet spot.",
-        "slots": [
-            {
-                "name": "Travel Hub",
-                "description": "Great value travel card.",
-                "cards": [
-                    "chase-sapphire-preferred-card",
-                    "capital-one-venture-rewards-credit-card"
-                ]
-            },
-            {
-                "name": "Everyday",
-                "description": "Earns points on daily spend.",
-                "cards": [
-                    "chase-freedom-unlimited-card"
-                ]
-            }
-        ],
-        "rules": [
-            {
-                "title": "Hotel Credit",
-                "description": "Use the $50 hotel credit on the Sapphire Preferred to reduce the effective fee."
-            },
-            {
-                "title": "Transfer Partners",
-                "description": "Learn to use Hyatt or airline partners for outsized value."
-            }
-        ]
-    },
-    {
-        "name": "Category Hunter",
-        "slug": "category-hunter",
-        "tagline": "5% rotating categories = dopamine",
-        "description": "You activate every quarterly category and love stacking offers.",
-        "slots": [
-            {
-                "name": "Rotating Categories",
-                "description": "5% back on changing categories.",
-                "cards": [
-                    "chase-freedom-flex-card",
-                    "discover-it-cash-back-card"
-                ]
-            },
-            {
-                "name": "Custom Category",
-                "description": "5% on your top spend category.",
-                "cards": [
-                    "citi-custom-cash-card"
-                ]
-            }
-        ],
-        "rules": [
-            {
-                "title": "Activate Quarterly",
-                "description": "Set a reminder to activate your 5% categories every quarter."
-            },
-            {
-                "title": "Max Out",
-                "description": "Try to hit the $1,500 spend cap on the 5% categories."
-            }
-        ]
-    },
-    {
-        "name": "Student Starter",
-        "slug": "student-starter",
-        "tagline": "Building credit while eating out",
-        "description": "You're in school or just graduated, want no annual fee, high rewards on dining/Amazon/Uber, and easy approval.",
-        "slots": [
-            {
-                "name": "Student Card",
-                "description": "Great rewards with no credit history needed.",
-                "cards": [
-                    "discover-it-student-cash-back-card",
-                    "capital-one-savorone-student-cash-rewards-credit-card"
-                ]
-            }
-        ],
-        "rules": [
-            {
-                "title": "Pay in Full",
-                "description": "Always pay your full balance every month to build good credit."
-            },
-            {
-                "title": "Keep it Open",
-                "description": "Keep your oldest card open to maintain a long credit history."
-            }
-        ]
-    },
-    {
-        "name": "Yuppie",
-        "slug": "yuppie",
-        "tagline": "Metal cards, city perks, looking rich",
-        "description": "Young urban professional who wants the heaviest metal cards, Centurion lounge access, Uber credits, Saks credits, and to flex at dinner.",
-        "slots": [
-            {
-                "name": "Status Symbol",
-                "description": "The card you pull out to impress.",
-                "cards": [
-                    "american-express-platinum-card",
-                    "chase-sapphire-reserve-card"
-                ]
-            },
-            {
-                "name": "Dining & Lifestyle Credits",
-                "description": "4x dining worldwide + monthly credits you actually use.",
-                "cards": [
-                    "american-express-gold-card"
-                ]
-            },
-            {
-                "name": "Non-Category",
-                "description": "2x on everything else to feed the hub.",
-                "cards": [
-                    "blue-business-plus-credit-card-from-american-express"
-                ]
-            }
-        ],
-        "rules": [
-            {
-                "title": "Flex the Metal",
-                "description": "Always use the Platinum or Reserve when paying the bill at dinner – it matters."
-            },
-            {
-                "title": "Use Every Credit",
-                "description": "Uber, Saks, airline fee, hotel collection – hit them all or you’re leaving money on the table."
-            },
-            {
-                "title": "Lounge Life",
-                "description": "Centurion, Delta Sky Club, Priority Pass – make airports your office."
-            }
-        ]
-    },
-    {
-        "name": "Balanced Food & Travel",
-        "slug": "balanced-food-travel",
-        "tagline": "Groceries first, dining second, travel when I can",
-        "description": "Groceries are your biggest spend, restaurants are regular, and you take a few nice trips a year. You want strong grocery/dining rewards with solid travel upside, but nothing too complicated.",
-        "slots": [
-            {
-                "name": "Food Heavy Hitter",
-                "description": "High returns on groceries and dining with transfer partner access.",
-                "cards": [
-                    "american-express-gold-card"
-                ]
-            },
-            {
-                "name": "Grocery Max Alternative",
-                "description": "6% groceries if you’re under the cap and prefer cash.",
+                "name": "Max Grocery (Capped)",
+                "description": "6% up to $6k — you always max it.",
                 "cards": [
                     "blue-cash-preferred-card-from-american-express"
                 ]
             },
             {
-                "name": "Travel & Catch-All",
-                "description": "Transferable points for trips or flat-rate on everything else.",
+                "name": "Unlimited Food Warlord",
+                "description": "4x groceries after cap + 4x dining worldwide + credits.",
                 "cards": [
-                    "chase-sapphire-preferred-card",
-                    "chase-freedom-unlimited-card"
+                    "american-express-gold-card"
+                ]
+            },
+            {
+                "name": "Backup/Alternative Food Cards",
+                "description": "Sidegrades for specific bonus structures or if you also want rent/travel coverage via Bilt.",
+                "cards": [
+                    "capital-one-savor-cash-rewards-credit-card",
+                    "citi-strata-premier-card",
+                    "bilt-mastercard"
                 ]
             }
         ],
         "rules": [
             {
-                "title": "Food on Gold",
-                "description": "Put all groceries and dining on the Gold card for 4x Membership Rewards."
+                "title": "$6,000.01 = Switch to Gold",
+                "description": "Track it obsessively. Hit cap → Gold for rest of year."
             },
             {
-                "title": "Use the Credits",
-                "description": "Hit your $10/month dining and Uber credits religiously – it basically pays the fee."
-            },
-            {
-                "title": "Occasional Big Redemptions",
-                "description": "Save MR or UR points for a nice Hyatt stay or flight once or twice a year."
+                "title": "Credits Are Non-Negotiable",
+                "description": "Every $10 dining/Uber Eats/Grubhub credit must be used or you failed."
             }
         ]
     },
     {
         "name": "Family Freak",
         "slug": "family-freak",
-        "tagline": "Groceries for 6+, Disney+, minivan gas – maxed or nothing",
-        "description": "Big family = massive grocery bills, endless kids streaming, Amazon Prime addiction, and constant school-run gas. You squeeze every single family dollar for the absolute highest return, stacking cards and offers like a pro.",
+        "tagline": "Groceries for an army, Disney+ bundle, EV charging — all maxed",
+        "description": "Big family = massive predictable spend. You turn diapers and chicken nuggets into free vacations.",
         "slots": [
             {
-                "name": "Family Core Beast",
-                "description": "6% groceries (to $6k), 6% streaming uncapped, 3% gas & transit – the ultimate family daily driver (2025 meta).",
+                "name": "2025 Family God Card",
+                "description": "6% groceries ($6k), 6% streaming uncapped, 3% gas/transit.",
                 "cards": [
                     "blue-cash-preferred-card-from-american-express"
                 ]
             },
             {
-                "name": "Overflow Grocery & Dining",
-                "description": "After $6k grocery cap → 4x unlimited groceries + 4x dining worldwide.",
+                "name": "Overflow + Dining Worldwide",
+                "description": "Overflow grocery/dining after caps plus Bilt if you also want rent and 2x travel/3x dining.",
+                "cards": [
+                    "american-express-gold-card",
+                    "bilt-mastercard"
+                ]
+            },
+            {
+                "name": "Amazon/Target/Walmart Rotators",
+                "description": "Optimize all big-box and online hauls through quarterly and store-specific bonuses.",
+                "cards": [
+                    "chase-prime-visa",
+                    "target-redcard",
+                    "chase-freedom-flex",
+                    "discover-it-cash-back"
+                ]
+            }
+        ],
+        "rules": [
+            {
+                "title": "BCP Until Caps Explode",
+                "description": "Groceries, streaming, gas for kid runs → BCP first."
+            },
+            {
+                "title": "Quarterly Wholesale Raids",
+                "description": "Costco/Sam’s/Target in rotation = stock up + gift cards."
+            }
+        ]
+    },
+    {
+        "name": "Gas/EV Charging Freak",
+        "slug": "gas-freak",
+        "tagline": "5%+ on every gallon/kWh or civil unrest",
+        "description": "Commute or Tesla — doesn't matter. Fuel is your biggest expense and you will destroy it.",
+        "slots": [
+            {
+                "name": "Quarterly 5% Rotator",
+                "description": "Chase/Discover 5% quarters when gas/EV is live = go nuclear.",
+                "cards": [
+                    "chase-freedom-flex",
+                    "discover-it-cash-back"
+                ]
+            },
+            {
+                "name": "Permanent 5% Lock",
+                "description": "Lock in 5% year-round by pointing your custom category at gas/EV.",
+                "cards": [
+                    "citi-custom-cash-card",
+                    "bank-of-america-customized-cash-rewards"
+                ]
+            },
+            {
+                "name": "3–4% Reliable Backup",
+                "description": "Solid backup options when quarters or custom categories are already capped.",
+                "cards": [
+                    "blue-cash-preferred-card-from-american-express",
+                    "pnc-cash-rewards-visa-credit-card"
+                ]
+            }
+        ],
+        "rules": [
+            {
+                "title": "Stack Fuel Apps",
+                "description": "Upside/GetUpside + card = 30–50¢ off per gallon normal."
+            },
+            {
+                "title": "Costco Gas + Prime Visa",
+                "description": "If Prime member, always use Prime Visa at Costco pumps."
+            }
+        ]
+    },
+    {
+        "name": "Online Shopping Addict",
+        "slug": "online-shopping-freak",
+        "tagline": "5–15% back online or I’m not buying",
+        "description": "Amazon, Target, Walmart, everything delivered. Your mailman is on payroll.",
+        "slots": [
+            {
+                "name": "Quarterly Online Rotator",
+                "description": "Play the quarterly 5% game on PayPal/online shopping/wholesale clubs.",
+                "cards": [
+                    "chase-freedom-flex",
+                    "discover-it-cash-back",
+                    "bank-of-america-customized-cash-rewards"
+                ]
+            },
+            {
+                "name": "Amazon Prime Beast",
+                "description": "Max rewards on Amazon and Whole Foods when you live in Bezos’ kingdom.",
+                "cards": [
+                    "chase-prime-visa"
+                ]
+            },
+            {
+                "name": "Portal Power",
+                "description": "Use flexible travel/points cards to stack portals, offers, and solid base earn.",
+                "cards": [
+                    "capital-one-venture-x-rewards-credit-card",
+                    "citi-strata-premier-card"
+                ]
+            }
+        ],
+        "rules": [
+            {
+                "title": "Portal Stack Every Purchase",
+                "description": "Rakuten/TopCashback + card + portal = normal prices are theft."
+            },
+            {
+                "title": "PayPal Quarterly = Extra 5%",
+                "description": "Route everything possible through PayPal when it's 5% quarter."
+            }
+        ]
+    },
+    {
+        "name": "Simple Minimalist",
+        "slug": "simple-minimalist",
+        "tagline": "One Card. Zero Drama. Maximum Peace.",
+        "description": "You hate complexity, make great money, just want the best single-card return and to never think about this again.",
+        "slots": [
+            {
+                "name": "The Only Card",
+                "description": "Your single go-to card setup — flat rewards or simple travel value with zero mental overhead.",
+                "cards": [
+                    "wells-fargo-active-cash-card",
+                    "citi-double-cash-card",
+                    "capital-one-venture-x-rewards-credit-card"
+                ]
+            }
+        ],
+        "rules": [
+            {
+                "title": "Autopay Everything",
+                "description": "One card, every bill, every purchase. Done. Sleep."
+            }
+        ]
+    },
+    {
+        "name": "Yuppie Flexer",
+        "slug": "yuppie",
+        "tagline": "Metal cards, Centurion access, bottle service energy",
+        "description": "Young professional in HCOL city. You want the heaviest metal, the best lounges, and to flex at dinner without looking try-hard.",
+        "slots": [
+            {
+                "name": "Status Symbol",
+                "description": "Heavy metal, premium lounges, and maximum flex factor at check-in and checkout.",
+                "cards": [
+                    "american-express-platinum-card",
+                    "chase-sapphire-reserve-card"
+                ]
+            },
+            {
+                "name": "Food & Lifestyle Credits",
+                "description": "High-earning food spend plus lifestyle credits that fund your going-out habit.",
                 "cards": [
                     "american-express-gold-card"
                 ]
             },
             {
-                "name": "Rotating Family Boosters",
-                "description": "Wholesale clubs, Amazon, Target, Walmart when they hit 5%.",
+                "name": "2x Feeder",
+                "description": "Uncapped 2x everywhere for non-bonus spend that quietly feeds your ecosystem.",
                 "cards": [
-                    "chase-freedom-flex-card",
-                    "discover-it-cash-back-card"
+                    "blue-business-plus-credit-card-from-american-express"
                 ]
             },
             {
-                "name": "Amazon & Online Addiction",
-                "description": "Diapers, toys, everything delivered.",
+                "name": "Rent & City Loft",
+                "description": "If you're renting in an HCOL city, Bilt turns your rent into points while also covering 3x dining and 2x travel.",
                 "cards": [
-                    "amazon-prime-store-card",
-                    "bank-of-america-customized-cash-rewards"
+                    "bilt-mastercard"
                 ]
             }
         ],
         "rules": [
             {
-                "title": "Blue Cash Preferred First",
-                "description": "Groceries, streaming, gas stations, Uber for kid pickups – always this card until caps hit."
+                "title": "Metal Only At The Table",
+                "description": "Gold card never sees daylight at dinner. Platinum or Reserve only."
             },
             {
-                "title": "Switch at $6k",
-                "description": "Hit $6,000 grocery cap on BCP → immediately switch all food spend to Gold for 4x."
-            },
-            {
-                "title": "Quarterly Wholesale Runs",
-                "description": "Stock up at Costco/Sam’s/Target the second wholesale clubs rotate in – combine with gift cards from grocery runs."
-            },
-            {
-                "title": "Credit Stacking",
-                "description": "Use every Gold dining/Uber/Grubhub credit – that’s free money for family takeout nights."
+                "title": "Every Credit Or You’re Mid",
+                "description": "Uber, Saks, airline, Resy, Equinox — hit them all."
             }
         ]
     },
     {
-        "name": "Gas Freak",
-        "slug": "gas-freak",
-        "tagline": "5%+ gas/EV charging or I riot",
-        "description": "Long commute, road trips, or EV owner — every gallon or kWh must earn the absolute maximum rewards, stacked to hell.",
+        "name": "Value Traveler",
+        "slug": "value-traveler",
+        "tagline": "Premium perks, fee fully offset, minimal effort",
+        "description": "You travel a lot but refuse to pay net annual fees. You want lounges, good redemptions, and easy credits.",
         "slots": [
             {
-                "name": "Quarterly Gas Rotator",
-                "description": "5% when gas stations or EV charging is in rotation.",
+                "name": "Core Travel Card",
+                "description": "One premium-but-efficient travel card that covers lounges, insurance, and decent redemptions.",
                 "cards": [
-                    "chase-freedom-flex-card",
-                    "discover-it-cash-back-card"
+                    "capital-one-venture-x-rewards-credit-card",
+                    "chase-sapphire-preferred-card"
                 ]
             },
             {
-                "name": "Custom Gas Maxer",
-                "description": "Lock in gas stations or EV charging as your 5% category.",
+                "name": "Everyday Feeder",
+                "description": "2–5% on daily spend plus Bilt for rent (1x), 3x dining and 2x travel if you rent.",
                 "cards": [
-                    "citi-custom-cash-card"
-                ]
-            },
-            {
-                "name": "Backup Gas Card",
-                "description": "Reliable 3%+ on gas when no 5% is active.",
-                "cards": [
-                    "blue-cash-preferred-card-from-american-express",
-                    "bank-of-america-customized-cash-rewards"
+                    "chase-freedom-unlimited-card",
+                    "chase-freedom-flex",
+                    "bilt-mastercard"
                 ]
             }
         ],
         "rules": [
             {
-                "title": "Quarterly Activation",
-                "description": "Activate the second the new quarter drops — gas and EV charging appear often."
+                "title": "$300/$300 Credits Mandatory",
+                "description": "Book any travel through portal → instant offset → card is free + profit."
             },
             {
-                "title": "Stack Fuel Apps",
-                "description": "Always run Upside or fuel-specific apps on top of card rewards."
+                "title": "Transfer Only When >2cpp",
+                "description": "Otherwise portal 1.5x is fine and brain-dead easy."
+            }
+        ]
+    },
+    {
+        "name": "Category Hunter",
+        "slug": "category-hunter",
+        "tagline": "5% rotating categories = pure dopamine",
+        "description": "You live for the quarterly activation reminder. Stacking offers gives you life.",
+        "slots": [
+            {
+                "name": "Rotating Category Kings",
+                "description": "Chase and Discover 5% quarters on whatever categories the gods bless this year.",
+                "cards": [
+                    "chase-freedom-flex",
+                    "discover-it-cash-back"
+                ]
+            },
+            {
+                "name": "Custom Category Lock",
+                "description": "Lock 5% in your top category plus Bilt as a permanent 3x dining / 2x travel and rent engine when rotations miss.",
+                "cards": [
+                    "citi-custom-cash-card",
+                    "bank-of-america-customized-cash-rewards",
+                    "bilt-mastercard"
+                ]
+            }
+        ],
+        "rules": [
+            {
+                "title": "Activate At 12:01am",
+                "description": "Or you're soft."
+            },
+            {
+                "title": "Max Every Cap",
+                "description": "Gift cards, charity, whatever — hit $1,500 every quarter."
+            }
+        ]
+    },
+    {
+        "name": "Student Starter",
+        "slug": "student-starter",
+        "tagline": "Build credit while eating out & Ubering",
+        "description": "College or recent grad, thin file, high food/Uber spend. Easy approval, no AF, solid rewards.",
+        "slots": [
+            {
+                "name": "Student Daily Driver",
+                "description": "Easy-approval student cards; add Bilt if you already have solid credit and want rent + 3x dining / 2x travel.",
+                "cards": [
+                    "discover-it-student-cash-back-card",
+                    "capital-one-savorone-student-cash-rewards-credit-card",
+                    "chase-freedom-student-card",
+                    "bilt-mastercard"
+                ]
+            }
+        ],
+        "rules": [
+            {
+                "title": "Pay In Full Every Month",
+                "description": "800+ score incoming."
+            },
+            {
+                "title": "Upgrade Path Ready",
+                "description": "Graduation → real SavorOne, Freedom Unlimited, etc."
+            }
+        ]
+    },
+    {
+        "name": "Balanced Food & Travel",
+        "slug": "balanced-food-travel",
+        "tagline": "Groceries & dining first, nice trips second",
+        "description": "Big grocery spend, regular dining out, a few nice trips per year. You want strong food rewards + solid travel upside without insanity.",
+        "slots": [
+            {
+                "name": "Food Heavy Hitter",
+                "description": "Max out grocery and dining rewards with a two-card combo that prints points and cash back.",
+                "cards": [
+                    "american-express-gold-card",
+                    "blue-cash-preferred-card-from-american-express"
+                ]
+            },
+            {
+                "name": "Travel & Catch-All",
+                "description": "Portal redemptions, basic insurance, and a place for non-food spend; Bilt adds rent + 3x dining / 2x travel if you rent.",
+                "cards": [
+                    "chase-sapphire-preferred-card",
+                    "chase-freedom-unlimited-card",
+                    "bilt-mastercard"
+                ]
+            }
+        ],
+        "rules": [
+            {
+                "title": "Food on Gold (or BCP if under cap)",
+                "description": "4x groceries + 4x dining + credits usually wins."
+            },
+            {
+                "title": "Credits Pay The Fee",
+                "description": "$10 dining + $10 Uber Eats monthly = basically free Gold."
+            },
+            {
+                "title": "Save Points For Big Redemptions",
+                "description": "Hyatt stays or business class once a year makes it worth it."
             }
         ]
     },
     {
         "name": "Drugstore Freak",
         "slug": "drugstore-freak",
-        "tagline": "5% drugstores + gift cards = profit",
-        "description": "You live at CVS, Walgreens, Rite Aid every week buying gift cards, deals, and whatever moves the needle.",
+        "tagline": "5% CVS/Walgreens + gift cards = profit",
+        "description": "You know every deal, every stack, every resale rate. Drugstore quarters are your Super Bowl.",
         "slots": [
             {
                 "name": "Quarterly Drugstore Rotator",
-                "description": "5% when drugstores are quarterly.",
+                "description": "Ride the 5% drugstore quarters hard with rotating cards.",
                 "cards": [
-                    "chase-freedom-flex-card",
-                    "discover-it-cash-back-card"
+                    "chase-freedom-flex",
+                    "discover-it-cash-back"
                 ]
             },
             {
-                "name": "Custom Drugstore Maxer",
-                "description": "Lock drugstores as your permanent 5% category.",
+                "name": "Permanent Drugstore Lock",
+                "description": "Lock in 5% at pharmacies year-round on your custom card.",
                 "cards": [
                     "citi-custom-cash-card"
                 ]
-            },
-            {
-                "name": "Gift Card Stack",
-                "description": "Amex offers and store deals on gift cards.",
-                "cards": [
-                    "american-express-gold-card",
-                    "blue-cash-preferred-card-from-american-express"
-                ]
             }
         ],
         "rules": [
             {
-                "title": "Gift Card Runs",
-                "description": "Buy $500 Visa/MC gift cards whenever possible to move spend or meet bonuses."
+                "title": "VGC/MSR Machine",
+                "description": "$500 Visa/MC gift cards every visit."
             },
             {
-                "title": "Stack Every Offer",
-                "description": "Amex Offers, Chase Offers, store coupons, Ibotta — layer everything."
-            }
-        ]
-    },
-    {
-        "name": "Online Shopping Freak",
-        "slug": "online-shopping-freak",
-        "tagline": "5–6% online or I’m not buying it",
-        "description": "Everything is bought online — Amazon, Target, Walmart, PayPal, digital goods — you demand the highest return.",
-        "slots": [
-            {
-                "name": "Quarterly Online Rotator",
-                "description": "5% when PayPal, Amazon, Walmart+, etc are quarterly.",
-                "cards": [
-                    "chase-freedom-flex-card",
-                    "discover-it-cash-back-card"
-                ]
-            },
-            {
-                "name": "Custom Online Shopping",
-                "description": "Choose online shopping as your boosted category.",
-                "cards": [
-                    "bank-of-america-customized-cash-rewards"
-                ]
-            },
-            {
-                "name": "Amazon Prime Beast",
-                "description": "5% on Amazon.com with Prime membership.",
-                "cards": [
-                    "amazon-prime-store-card"
-                ]
-            }
-        ],
-        "rules": [
-            {
-                "title": "Portal Stacking",
-                "description": "Always check Rakuten/TopCashback + card for double dip."
-            },
-            {
-                "title": "PayPal Everywhere",
-                "description": "Use PayPal whenever possible to hit quarterly categories."
+                "title": "Stack Everything",
+                "description": "Amex Offers + Chase Offers + coupons + Ibotta = free money."
             }
         ]
     },
@@ -601,65 +625,65 @@
         "name": "Office Supply Freak",
         "slug": "office-supply-freak",
         "tagline": "5% Staples/Office Depot or nothing",
-        "description": "You buy gift cards at office supply stores to manufacture spend, meet bonuses, or liquidate.",
+        "description": "You manufacture spend like a factory. Staples gift cards are your oxygen.",
         "slots": [
             {
                 "name": "Office Supply Maxer",
-                "description": "5% on office supply stores + internet/cable/phone (up to $25k/year).",
+                "description": "Go all-in on 5% at office supply stores plus utilities.",
                 "cards": [
-                    "chase-ink-business-cash-card"
+                    "ink-business-cash-card"
                 ]
             },
             {
-                "name": "Backup Business Catch-All",
-                "description": "When you hit the cap or for non-office spend.",
+                "name": "Backup Catch-All",
+                "description": "Simple, high earners for non-office-supply business expenses.",
                 "cards": [
-                    "chase-ink-business-unlimited-card",
+                    "ink-business-unlimited-credit-card",
                     "blue-business-plus-credit-card-from-american-express"
                 ]
             }
         ],
         "rules": [
             {
-                "title": "Gift Card Liquidation",
-                "description": "Staples Visa/MC gift cards are your best friend for meeting SUBs."
+                "title": "VGC Liquidation Lifestyle",
+                "description": "Staples → $500 VGC → liquidate → repeat."
             },
             {
-                "title": "Utilities Bonus",
-                "description": "Pay phone/internet/cable bills with Ink Cash for 5%."
+                "title": "Utilities On Ink Cash",
+                "description": "Internet/cable/phone bills = 5x."
             }
         ]
     },
     {
         "name": "Streaming Freak",
         "slug": "streaming-freak",
-        "tagline": "6% streaming or I cancel the sub",
-        "description": "You subscribe to everything — Netflix, Spotify, Disney+, Apple, Hulu — and you demand max rewards on every subscription.",
+        "tagline": "6% streaming or I cancel",
+        "description": "Netflix, Spotify, Disney+, Hulu, Apple, Paramount+ — all of them, all 6%.",
         "slots": [
             {
-                "name": "Streaming Maxer",
-                "description": "6% on select U.S. streaming services (no cap).",
+                "name": "Streaming God Card",
+                "description": "Put every streaming subscription you own on one uncapped 6% monster.",
                 "cards": [
                     "blue-cash-preferred-card-from-american-express"
                 ]
             },
             {
                 "name": "Backup Streaming Cards",
-                "description": "3%+ streaming when you need alternatives.",
+                "description": "Use these when BCP isn’t an option or when you want a no-AF setup.",
                 "cards": [
-                    "capital-one-savorone-cash-rewards-credit-card",
+                    "capital-one-savor-cash-rewards-credit-card",
                     "bank-of-america-customized-cash-rewards"
                 ]
             }
         ],
         "rules": [
             {
-                "title": "No Cap = Unlimited",
-                "description": "Blue Cash Preferred has no cap on streaming — put every subscription here."
+                "title": "Uncapped 6% = Put Everything Here",
+                "description": "Every streaming sub on BCP. No cap = unlimited."
             },
             {
-                "title": "Bundle for Extra",
-                "description": "Use bundles (Disney+/Hulu, Spotify Family) to maximize one card swipe."
+                "title": "Bundle For One Swipe",
+                "description": "Disney+/Hulu/ESPN or Spotify Family = maximum efficiency."
             }
         ]
     }
