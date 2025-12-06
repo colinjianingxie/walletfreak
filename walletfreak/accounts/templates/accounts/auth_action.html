@@ -1,0 +1,166 @@
+{% extends 'auth_base.html' %}
+
+{% block content %}
+<div style="max-width: 450px; margin: 2rem auto;">
+    
+    <!-- Loading State -->
+    <div id="loading-state" style="text-align: center; padding: 2rem;">
+        <div class="spinner" style="width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem;"></div>
+        <p>Verifying link...</p>
+    </div>
+
+    <!-- Reset Password Form -->
+    <div id="reset-password-mode" style="display: none; background: white; padding: 2rem; border-radius: var(--radius-lg); box-shadow: var(--elevation-2);">
+        <h2 style="text-align: center; margin-bottom: 1.5rem; font-weight: 700;">Reset Password</h2>
+        <form id="reset-password-form">
+            <div style="margin-bottom: 1rem;">
+                <label style="display: block; font-weight: 500; margin-bottom: 0.5rem;">New Password</label>
+                <input type="password" id="new-password" class="form-control" required minlength="6" style="width: 100%;">
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Save New Password</button>
+        </form>
+    </div>
+
+    <!-- Verify Email Mode -->
+    <div id="verify-email-mode" style="display: none; background: white; padding: 2rem; border-radius: var(--radius-lg); box-shadow: var(--elevation-2); text-align: center;">
+        <h2 style="margin-bottom: 1rem;">Verifying Email...</h2>
+    </div>
+
+    <!-- Success Message -->
+    <div id="success-message" style="display: none; background: white; padding: 2rem; border-radius: var(--radius-lg); box-shadow: var(--elevation-2); text-align: center;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">✅</div>
+        <h2 id="success-title" style="margin-bottom: 1rem;">Success!</h2>
+        <p id="success-text" style="color: var(--text-muted); margin-bottom: 1.5rem;"></p>
+        <a href="{% url 'login' %}" class="btn btn-primary" style="width: 100%;">Back to Login</a>
+    </div>
+
+    <!-- Error Message -->
+    <div id="error-message" style="display: none; background: white; padding: 2rem; border-radius: var(--radius-lg); box-shadow: var(--elevation-2); text-align: center;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">❌</div>
+        <h2 style="margin-bottom: 1rem;">Error</h2>
+        <p id="error-text" style="color: var(--text-muted); margin-bottom: 1.5rem;"></p>
+        <a href="{% url 'login' %}" class="btn btn-outline" style="width: 100%;">Back to Login</a>
+    </div>
+</div>
+
+<style>
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Parse URL query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const mode = urlParams.get('mode');
+    const oobCode = urlParams.get('oobCode');
+
+    const loadingState = document.getElementById('loading-state');
+    const resetPasswordMode = document.getElementById('reset-password-mode');
+    const verifyEmailMode = document.getElementById('verify-email-mode');
+    const successMessage = document.getElementById('success-message');
+    const errorMessage = document.getElementById('error-message');
+
+    if (!mode || !oobCode) {
+        showError("Invalid link. Please request a new one.");
+        return;
+    }
+
+    // Handle different modes
+    switch (mode) {
+        case 'resetPassword':
+            handleResetPassword(oobCode);
+            break;
+        case 'recoverEmail':
+            handleRecoverEmail(oobCode);
+            break;
+        case 'verifyEmail':
+            handleVerifyEmail(oobCode);
+            break;
+        default:
+            showError("Invalid mode.");
+    }
+
+    function showView(view) {
+        loadingState.style.display = 'none';
+        resetPasswordMode.style.display = 'none';
+        verifyEmailMode.style.display = 'none';
+        successMessage.style.display = 'none';
+        errorMessage.style.display = 'none';
+        
+        view.style.display = 'block';
+    }
+
+    function showError(message) {
+        document.getElementById('error-text').innerText = message;
+        showView(errorMessage);
+    }
+
+    function showSuccess(title, text) {
+        document.getElementById('success-title').innerText = title;
+        document.getElementById('success-text').innerText = text;
+        showView(successMessage);
+    }
+
+    function handleResetPassword(actionCode) {
+        // Verify the code first
+        firebase.auth().verifyPasswordResetCode(actionCode)
+            .then((email) => {
+                showView(resetPasswordMode);
+                
+                // Handle form submit
+                document.getElementById('reset-password-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const newPassword = document.getElementById('new-password').value;
+                    
+                    if(newPassword.length < 6) return;
+                    
+                    const btn = e.target.querySelector('button');
+                    const originalText = btn.innerText;
+                    btn.innerText = 'Saving...';
+                    btn.disabled = true;
+
+                    firebase.auth().confirmPasswordReset(actionCode, newPassword)
+                        .then(() => {
+                            showSuccess('Password Reset', 'Your password has been successfully updated. You can now login with your new password.');
+                        })
+                        .catch((error) => {
+                            showError(error.message);
+                        });
+                });
+            })
+            .catch((error) => {
+                showError("This link is invalid or has expired. Please request a new password reset.");
+            });
+    }
+
+    function handleVerifyEmail(actionCode) {
+        showView(verifyEmailMode);
+        firebase.auth().applyActionCode(actionCode)
+            .then(() => {
+                showSuccess('Email Verified', 'Your email has been successfully verified.');
+            })
+            .catch((error) => {
+                showError("This link is invalid or has expired.");
+            });
+    }
+
+    function handleRecoverEmail(actionCode) {
+        // Less common case, but good to handle
+        loadingState.style.display = 'block';
+        firebase.auth().checkActionCode(actionCode)
+            .then((info) => {
+                firebase.auth().applyActionCode(actionCode)
+                    .then(() => {
+                        showSuccess('Email Recovered', 'Your email has been restored.');
+                    });
+            })
+            .catch((error) => {
+                showError("Invalid link.");
+            });
+    }
+});
+</script>
+{% endblock %}

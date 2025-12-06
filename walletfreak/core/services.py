@@ -94,6 +94,38 @@ class FirestoreService:
 
     def create_user_profile(self, uid, data):
         return self.create_document('users', data, doc_id=uid)
+        
+    def update_user_email(self, uid, email):
+        """Update user email in Firestore"""
+        self.db.collection('users').document(uid).update({'email': email})
+
+    def get_user_notification_preferences(self, uid):
+        """Get user notification preferences"""
+        user = self.get_user_profile(uid)
+        default_prefs = {
+            'benefit_expiration': {
+                'enabled': True,
+                'frequency': 5  # days before
+            },
+            'annual_fee': {
+                'enabled': True,
+                'frequency': 30  # days before
+            }
+        }
+        if user and 'notification_preferences' in user:
+            # Merge with defaults to ensure structure
+            user_prefs = user['notification_preferences']
+            for key, value in default_prefs.items():
+                if key not in user_prefs:
+                    user_prefs[key] = value
+            return user_prefs
+        return default_prefs
+
+    def update_user_notification_preferences(self, uid, preferences):
+        """Update user notification preferences"""
+        self.db.collection('users').document(uid).update({
+            'notification_preferences': preferences
+        })
 
     def add_card_to_user(self, uid, card_id, status='active', anniversary_date=None):
         # status: 'active', 'inactive', 'eyeing'

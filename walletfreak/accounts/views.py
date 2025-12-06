@@ -164,8 +164,62 @@ def profile(request):
 def settings(request):
     uid = request.session.get('uid')
     user_profile = db.get_user_profile(uid)
+    notification_preferences = db.get_user_notification_preferences(uid)
     
     context = {
         'user_profile': user_profile,
+        'notification_preferences': notification_preferences,
     }
     return render(request, 'accounts/settings.html', context)
+
+@csrf_exempt
+@login_required
+def ajax_update_notifications(request):
+    """AJAX endpoint to update notification preferences"""
+    if request.method != 'POST':
+        return JsonResponse({'status': 'error', 'message': 'Method not allowed'}, status=405)
+        
+    try:
+        data = json.loads(request.body)
+        preferences = data.get('preferences')
+        
+        if not preferences:
+            return JsonResponse({'status': 'error', 'message': 'No preferences provided'}, status=400)
+            
+        uid = request.session.get('uid')
+        db.update_user_notification_preferences(uid, preferences)
+        
+        return JsonResponse({'status': 'success'})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
+@csrf_exempt
+@login_required
+def ajax_sync_profile(request):
+    """AJAX endpoint to sync profile changes (like email) from Firebase to backend"""
+    if request.method != 'POST':
+        return JsonResponse({'status': 'error', 'message': 'Method not allowed'}, status=405)
+        
+    try:
+        data = json.loads(request.body)
+        email = data.get('email')
+        
+        if not email:
+            return JsonResponse({'status': 'error', 'message': 'No email provided'}, status=400)
+            
+        uid = request.session.get('uid')
+        
+        # Update Django User
+        request.user.email = email
+        request.user.save()
+        
+        # Update Firestore
+        db.update_user_email(uid, email)
+        
+        return JsonResponse({'status': 'success'})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
+def auth_action(request):
+    """View to handle Firebase Auth actions (reset password, verify email)"""
+    return render(request, 'accounts/auth_action.html')
