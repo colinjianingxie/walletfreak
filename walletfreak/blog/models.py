@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.db.models import Count, Q
 
 
 class Blog(models.Model):
@@ -53,3 +54,49 @@ class Blog(models.Model):
         if self.tags:
             return [tag.strip() for tag in self.tags.split(',')]
         return []
+    
+    @property
+    def upvote_count(self):
+        """Return the number of upvotes"""
+        return self.votes.filter(vote_type='upvote').count()
+    
+    @property
+    def downvote_count(self):
+        """Return the number of downvotes"""
+        return self.votes.filter(vote_type='downvote').count()
+    
+    @property
+    def total_score(self):
+        """Return the total score (upvotes - downvotes)"""
+        return self.upvote_count - self.downvote_count
+    
+    def get_user_vote(self, user_uid):
+        """Get the vote type for a specific user"""
+        try:
+            vote = self.votes.get(user_uid=user_uid)
+            return vote.vote_type
+        except Vote.DoesNotExist:
+            return None
+
+
+class Vote(models.Model):
+    """
+    Model to track individual user votes on blog posts.
+    """
+    VOTE_CHOICES = [
+        ('upvote', 'Upvote'),
+        ('downvote', 'Downvote'),
+    ]
+    
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='votes')
+    user_uid = models.CharField(max_length=128)  # Firebase UID
+    vote_type = models.CharField(max_length=10, choices=VOTE_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        unique_together = ('blog', 'user_uid')  # One vote per user per blog
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return f"{self.user_uid} - {self.vote_type} on {self.blog.title}"

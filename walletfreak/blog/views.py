@@ -2,51 +2,64 @@ from django.shortcuts import render, redirect
 from django.http import Http404, HttpResponseForbidden, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 from django.utils.text import slugify
 from django.utils.safestring import mark_safe
 from core.services import db
 from datetime import datetime
 import markdown
+from .models import Blog, Vote
 
 def blog_list(request):
     """Display list of published blogs with search and filtering"""
     # Get filter parameters
     category = request.GET.get('category')
     search_query = request.GET.get('q')
+    uid = request.session.get('uid')
     
-    # Get all published blogs
-    blogs = db.get_blogs(status='published')
-    
-    # Filter by category if specified
-    if category and category != 'All':
-        # Map plural categories to singular tags where necessary
-        tag_mapping = {
-            'reviews': 'review',
-            'guides': 'guide',
-            'tips': 'tips',
-            'news': 'news'
-        }
+    # Handle saved posts category
+    if category == 'Saved':
+        if not uid:
+            # If user is not logged in, show empty list
+            blogs = []
+        else:
+            # Get user's saved posts
+            saved_posts = db.get_user_saved_posts(uid)
+            blogs = saved_posts if saved_posts else []
+    else:
+        # Get all published blogs
+        blogs = db.get_blogs(status='published')
         
-        target_tag = tag_mapping.get(category.lower(), category.lower())
-        
-        filtered_blogs = []
-        for b in blogs:
-            tags = b.get('tags')
-            if not tags:
-                continue
+        # Filter by category if specified
+        if category and category != 'All':
+            # Map plural categories to singular tags where necessary
+            tag_mapping = {
+                'reviews': 'review',
+                'guides': 'guide',
+                'tips': 'tips',
+                'news': 'news'
+            }
             
-            if isinstance(tags, list):
-                # Check if target tag matches any tag in the list (case-insensitive)
-                if any(target_tag == str(t).lower() for t in tags):
-                    filtered_blogs.append(b)
-            else:
-                # Check if target tag is in the string tag
-                if target_tag in str(tags).lower():
-                    filtered_blogs.append(b)
-        blogs = filtered_blogs
+            target_tag = tag_mapping.get(category.lower(), category.lower())
+            
+            filtered_blogs = []
+            for b in blogs:
+                tags = b.get('tags')
+                if not tags:
+                    continue
+                
+                if isinstance(tags, list):
+                    # Check if target tag matches any tag in the list (case-insensitive)
+                    if any(target_tag == str(t).lower() for t in tags):
+                        filtered_blogs.append(b)
+                else:
+                    # Check if target tag is in the string tag
+                    if target_tag in str(tags).lower():
+                        filtered_blogs.append(b)
+            blogs = filtered_blogs
     
     # Filter by search query if specified
-    if search_query:
+    if search_query and category != 'Saved':
         query = search_query.lower()
         filtered_blogs = []
         for b in blogs:
@@ -73,14 +86,34 @@ def blog_list(request):
     
     # Check if user is an editor
     is_editor = False
-    if request.session.get('uid'):
-        is_editor = db.can_manage_blogs(request.session.get('uid'))
+    if uid:
+        is_editor = db.can_manage_blogs(uid)
+    
+    # Get user's saved post IDs for UI state
+    user_saved_posts = []
+    if uid:
+        user_saved_posts = db.get_user_saved_post_ids(uid)
+    
+    # Add vote counts and user votes to each blog
+    for blog in blogs:
+        blog_id = blog.get('id')
+        if blog_id:
+            blog['upvote_count'] = db.get_blog_vote_count(blog_id, 'upvote')
+            blog['downvote_count'] = db.get_blog_vote_count(blog_id, 'downvote')
+            blog['total_score'] = blog['upvote_count'] - blog['downvote_count']
+            
+            if uid:
+                blog['user_vote'] = db.get_user_vote_on_blog(uid, blog_id)
+            else:
+                blog['user_vote'] = None
     
     return render(request, 'blog/blog_list.html', {
         'blogs': blogs,
         'is_editor': is_editor,
         'current_category': category,
-        'search_query': search_query
+        'search_query': search_query,
+        'user_saved_posts': user_saved_posts,
+        'is_authenticated': bool(uid)
     })
 
 @login_required
@@ -108,8 +141,9 @@ def blog_detail(request, slug):
     
     # Check if user is an editor (can view drafts)
     is_editor = False
-    if request.session.get('uid'):
-        is_editor = db.can_manage_blogs(request.session.get('uid'))
+    uid = request.session.get('uid')
+    if uid:
+        is_editor = db.can_manage_blogs(uid)
     
     # Only show published blogs to non-editors
     if blog.get('status') != 'published' and not is_editor:
@@ -120,9 +154,22 @@ def blog_detail(request, slug):
     html_content = mark_safe(md.convert(blog.get('content', '')))
     blog['html_content'] = html_content
     
+    # Get voting information
+    blog_id = blog.get('id')
+    upvote_count = db.get_blog_vote_count(blog_id, 'upvote')
+    downvote_count = db.get_blog_vote_count(blog_id, 'downvote')
+    user_vote = None
+    
+    if uid:
+        user_vote = db.get_user_vote_on_blog(uid, blog_id)
+    
     return render(request, 'blog/blog_detail.html', {
         'blog': blog,
-        'is_editor': is_editor
+        'is_editor': is_editor,
+        'upvote_count': upvote_count,
+        'downvote_count': downvote_count,
+        'user_vote': user_vote,
+        'is_authenticated': bool(uid)
     })
 
 @login_required
@@ -306,7 +353,106 @@ def blog_quick_status_change(request, blog_id):
             update_data['published_at'] = datetime.now()
     
     db.update_blog(blog_id, update_data)
-    
     return JsonResponse({'success': True, 'status': new_status})
+
+@require_POST
+def save_post(request, slug):
+    """Save a blog post for the current user"""
+    try:
+        # Check authentication for AJAX requests
+        uid = request.session.get('uid')
+        if not uid:
+            return JsonResponse({'success': False, 'error': 'Not authenticated'}, status=401)
+        
+        # Get the blog post
+        blog = db.get_blog_by_slug(slug)
+        if not blog:
+            return JsonResponse({'success': False, 'error': 'Post not found'}, status=404)
+        
+        # Save the post for the user
+        success = db.save_post_for_user(uid, blog['id'])
+        
+        return JsonResponse({'success': success})
+    except Exception as e:
+        print(f"Error in save_post: {e}")
+        return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
+@require_POST
+def unsave_post(request, slug):
+    """Unsave a blog post for the current user"""
+    try:
+        # Check authentication for AJAX requests
+        uid = request.session.get('uid')
+        if not uid:
+            return JsonResponse({'success': False, 'error': 'Not authenticated'}, status=401)
+        
+        # Get the blog post
+        blog = db.get_blog_by_slug(slug)
+        if not blog:
+            return JsonResponse({'success': False, 'error': 'Post not found'}, status=404)
+        
+        # Unsave the post for the user
+        success = db.unsave_post_for_user(uid, blog['id'])
+        
+        return JsonResponse({'success': success})
+    except Exception as e:
+        print(f"Error in unsave_post: {e}")
+        return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
+@require_POST
+def vote_blog(request, slug):
+    """Vote on a blog post (authenticated users only)"""
+    try:
+        # Check authentication
+        uid = request.session.get('uid')
+        if not uid:
+            return JsonResponse({'success': False, 'error': 'Not authenticated'}, status=401)
+        
+        # Get the blog post
+        blog = db.get_blog_by_slug(slug)
+        if not blog:
+            return JsonResponse({'success': False, 'error': 'Post not found'}, status=404)
+        
+        # Get vote type from request
+        vote_type = request.POST.get('vote_type')
+        if vote_type not in ['upvote', 'downvote']:
+            return JsonResponse({'success': False, 'error': 'Invalid vote type'}, status=400)
+        
+        blog_id = blog['id']
+        
+        # Check if user already voted
+        existing_vote = db.get_user_vote_on_blog(uid, blog_id)
+        
+        if existing_vote == vote_type:
+            # User is trying to vote the same way again - remove the vote
+            success = db.remove_user_vote_on_blog(uid, blog_id)
+            new_vote = None
+        elif existing_vote:
+            # User is changing their vote
+            success = db.update_user_vote_on_blog(uid, blog_id, vote_type)
+            new_vote = vote_type
+        else:
+            # User is voting for the first time
+            success = db.add_user_vote_on_blog(uid, blog_id, vote_type)
+            new_vote = vote_type
+        
+        if success:
+            # Get updated vote counts
+            upvote_count = db.get_blog_vote_count(blog_id, 'upvote')
+            downvote_count = db.get_blog_vote_count(blog_id, 'downvote')
+            
+            return JsonResponse({
+                'success': True,
+                'user_vote': new_vote,
+                'upvote_count': upvote_count,
+                'downvote_count': downvote_count
+            })
+        else:
+            return JsonResponse({'success': False, 'error': 'Failed to process vote'}, status=500)
+            
+    except Exception as e:
+        print(f"Error in vote_blog: {e}")
+        return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
 
 

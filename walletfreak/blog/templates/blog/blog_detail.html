@@ -8,6 +8,7 @@
 {% block main_style %}background: #F8F9FA; min-height: 100vh; padding: 0;{% endblock %}
 
 {% block full_width_content %}
+{% csrf_token %}
 <div class="blog-detail-container">
     <!-- Header Navigation -->
     <div class="detail-header">
@@ -107,13 +108,28 @@
             <!-- Post Actions Footer -->
             <div class="post-actions-footer">
                 <div class="action-group">
-                    <button class="action-btn upvote-btn">
+                    {% if is_authenticated %}
+                    <button class="action-btn upvote-btn {% if user_vote == 'upvote' %}active{% endif %}" data-vote-type="upvote">
                         <span class="material-icons">trending_up</span>
-                        <span class="action-count">1.4k</span>
+                        <span class="action-count">{{ upvote_count|default:0 }}</span>
                     </button>
+                    <button class="action-btn downvote-btn {% if user_vote == 'downvote' %}active{% endif %}" data-vote-type="downvote">
+                        <span class="material-icons">trending_down</span>
+                        <span class="action-count">{{ downvote_count|default:0 }}</span>
+                    </button>
+                    {% else %}
+                    <button class="action-btn upvote-btn" onclick="alert('Please log in to vote')">
+                        <span class="material-icons">trending_up</span>
+                        <span class="action-count">{{ upvote_count|default:0 }}</span>
+                    </button>
+                    <button class="action-btn downvote-btn" onclick="alert('Please log in to vote')">
+                        <span class="material-icons">trending_down</span>
+                        <span class="action-count">{{ downvote_count|default:0 }}</span>
+                    </button>
+                    {% endif %}
                     <button class="action-btn comment-btn">
                         <span class="material-icons">chat_bubble_outline</span>
-                        <span class="action-count">89</span>
+                        <span class="action-count">0</span>
                     </button>
                     <button class="action-btn share-btn">
                         <span class="material-icons">share</span>
@@ -172,19 +188,47 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Upvote functionality
-    document.querySelectorAll('.upvote-btn').forEach(btn => {
+    // Voting functionality
+    document.querySelectorAll('.upvote-btn, .downvote-btn').forEach(btn => {
         btn.addEventListener('click', function() {
-            this.classList.toggle('active');
-            const count = this.querySelector('.action-count');
-            if (count) {
-                const currentCount = parseFloat(count.textContent);
-                if (this.classList.contains('active')) {
-                    count.textContent = (currentCount + 0.1).toFixed(1) + 'k';
+            {% if is_authenticated %}
+            const voteType = this.dataset.voteType;
+            const slug = '{{ blog.slug }}';
+            
+            // Send AJAX request
+            fetch(`/blog/${slug}/vote/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: `vote_type=${voteType}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update vote counts
+                    document.querySelector('.upvote-btn .action-count').textContent = data.upvote_count;
+                    document.querySelector('.downvote-btn .action-count').textContent = data.downvote_count;
+                    
+                    // Update active states
+                    document.querySelector('.upvote-btn').classList.remove('active');
+                    document.querySelector('.downvote-btn').classList.remove('active');
+                    
+                    if (data.user_vote === 'upvote') {
+                        document.querySelector('.upvote-btn').classList.add('active');
+                    } else if (data.user_vote === 'downvote') {
+                        document.querySelector('.downvote-btn').classList.add('active');
+                    }
                 } else {
-                    count.textContent = (currentCount - 0.1).toFixed(1) + 'k';
+                    alert('Error: ' + data.error);
                 }
-            }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while voting');
+            });
+            {% endif %}
         });
     });
 });

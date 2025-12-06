@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% csrf_token %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/blog_community.css' %}">
@@ -30,7 +31,18 @@
                     <a href="?category=Guides" class="category-tab {% if current_category == 'Guides' %}active{% endif %}">Guides</a>
                     <a href="?category=Tips" class="category-tab {% if current_category == 'Tips' %}active{% endif %}">Tips</a>
                     <a href="?category=News" class="category-tab {% if current_category == 'News' %}active{% endif %}">News</a>
+                    <a href="?category=Saved" class="category-tab {% if current_category == 'Saved' %}active{% endif %}">Saved</a>
                 </div>
+            </div>
+            
+            <!-- Mobile Category Tabs (shown only on mobile, right below search) -->
+            <div class="mobile-category-tabs">
+                <a href="?category=All" class="mobile-tab {% if not current_category or current_category == 'All' %}active{% endif %}">All</a>
+                <a href="?category=Reviews" class="mobile-tab {% if current_category == 'Reviews' %}active{% endif %}">Reviews</a>
+                <a href="?category=Guides" class="mobile-tab {% if current_category == 'Guides' %}active{% endif %}">Guides</a>
+                <a href="?category=Tips" class="mobile-tab {% if current_category == 'Tips' %}active{% endif %}">Tips</a>
+                <a href="?category=News" class="mobile-tab {% if current_category == 'News' %}active{% endif %}">News</a>
+                <a href="?category=Saved" class="mobile-tab {% if current_category == 'Saved' %}active{% endif %}">Saved</a>
             </div>
         </div>
     </div>
@@ -41,16 +53,28 @@
             <!-- Posts Feed -->
             <div class="posts-feed">
                 {% for post in blogs %}
-                <article class="post-card">
+                <article class="post-card" data-href="{% url 'blog_detail' post.slug %}" data-slug="{{ post.slug }}">
                     <!-- Post Vote Section -->
-                    <div class="post-vote">
-                        <button class="vote-btn upvote">
+                    <div class="post-vote" onclick="event.stopPropagation();">
+                        {% if is_authenticated %}
+                        <button class="vote-btn upvote {% if post.user_vote == 'upvote' %}active{% endif %}"
+                                data-slug="{{ post.slug }}" data-vote-type="upvote">
                             <span class="material-icons">trending_up</span>
                         </button>
-                        <span class="vote-count">{{ post.id|add:1000|add:400 }}</span>
-                        <button class="vote-btn downvote">
+                        <span class="vote-count">{{ post.total_score|default:0 }}</span>
+                        <button class="vote-btn downvote {% if post.user_vote == 'downvote' %}active{% endif %}"
+                                data-slug="{{ post.slug }}" data-vote-type="downvote">
                             <span class="material-icons">trending_down</span>
                         </button>
+                        {% else %}
+                        <button class="vote-btn upvote" onclick="alert('Please log in to vote')">
+                            <span class="material-icons">trending_up</span>
+                        </button>
+                        <span class="vote-count">{{ post.total_score|default:0 }}</span>
+                        <button class="vote-btn downvote" onclick="alert('Please log in to vote')">
+                            <span class="material-icons">trending_down</span>
+                        </button>
+                        {% endif %}
                     </div>
 
                     <!-- Post Main Content -->
@@ -79,13 +103,14 @@
                         <div class="post-content">
                             <div class="post-text">
                                 <h2 class="post-title">
-                                    <a href="{% url 'blog_detail' post.slug %}">{{ post.title }}</a>
+                                    {{ post.title }}
                                 </h2>
                                 
+                                <!-- TL;DR Section -->
                                 {% if post.excerpt %}
-                                <div class="post-excerpt">
-                                    <span class="excerpt-label">TL;DR</span>
-                                    {{ post.excerpt|truncatewords:25 }}
+                                <div class="post-tldr">
+                                    <span class="tldr-label">TL;DR</span>
+                                    <span class="tldr-text">{{ post.excerpt|truncatewords:25 }}</span>
                                 </div>
                                 {% endif %}
                             </div>
@@ -98,7 +123,7 @@
                         </div>
 
                         <!-- Post Actions -->
-                        <div class="post-actions">
+                        <div class="post-actions" onclick="event.stopPropagation();">
                             <div class="action-group">
                                 <button class="action-btn comment-btn">
                                     <span class="material-icons">chat_bubble_outline</span>
@@ -109,9 +134,9 @@
                                     <span class="action-text">Share</span>
                                 </button>
                             </div>
-                            <button class="action-btn save-btn">
-                                <span class="material-icons">bookmark_border</span>
-                                <span class="action-text">Save</span>
+                            <button class="action-btn save-btn {% if post.id in user_saved_posts %}active{% endif %}" data-slug="{{ post.slug }}">
+                                <span class="material-icons">{% if post.id in user_saved_posts %}bookmark{% else %}bookmark_border{% endif %}</span>
+                                <span class="action-text">{% if post.id in user_saved_posts %}Saved{% else %}Save{% endif %}</span>
                             </button>
                         </div>
                     </div>
@@ -209,14 +234,6 @@
     </div>
 </div>
 
-<!-- Mobile Category Tabs (shown only on mobile) -->
-<div class="mobile-category-tabs">
-    <a href="?category=All" class="mobile-tab {% if not current_category or current_category == 'All' %}active{% endif %}">All</a>
-    <a href="?category=Reviews" class="mobile-tab {% if current_category == 'Reviews' %}active{% endif %}">Reviews</a>
-    <a href="?category=Guides" class="mobile-tab {% if current_category == 'Guides' %}active{% endif %}">Guides</a>
-    <a href="?category=Tips" class="mobile-tab {% if current_category == 'Tips' %}active{% endif %}">Tips</a>
-    <a href="?category=News" class="mobile-tab {% if current_category == 'News' %}active{% endif %}">News</a>
-</div>
 
 {% if is_editor %}
 <!-- Floating Action Button for Editors -->
@@ -228,62 +245,189 @@
 <script>
 // Add interactivity for post actions
 document.addEventListener('DOMContentLoaded', function() {
+    // Make post cards clickable
+    document.querySelectorAll('.post-card').forEach(card => {
+        card.addEventListener('click', function() {
+            const href = this.getAttribute('data-href');
+            if (href) {
+                window.location.href = href;
+            }
+        });
+    });
+
     // Vote buttons
     document.querySelectorAll('.vote-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const postCard = this.closest('.post-card');
-            const voteCount = postCard.querySelector('.vote-count');
-            const isUpvote = this.classList.contains('upvote');
-            const isDownvote = this.classList.contains('downvote');
-            const otherBtn = isUpvote ?
-                postCard.querySelector('.vote-btn.downvote') :
-                postCard.querySelector('.vote-btn.upvote');
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevent card click
             
-            let currentCount = parseInt(voteCount.textContent);
+            {% if is_authenticated %}
+            const slug = this.getAttribute('data-slug');
+            const voteType = this.getAttribute('data-vote-type');
             
-            // Remove active state from other button
-            otherBtn.classList.remove('active');
-            
-            // Toggle current button
-            if (this.classList.contains('active')) {
-                this.classList.remove('active');
-                // Revert vote
-                if (isUpvote) currentCount--;
-                else currentCount++;
-            } else {
-                this.classList.add('active');
-                // Apply vote
-                if (isUpvote) currentCount++;
-                else currentCount--;
+            if (!slug || !voteType) {
+                console.error('Missing slug or vote type');
+                return;
             }
             
-            voteCount.textContent = currentCount;
+            // Get CSRF token
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            
+            const csrftoken = getCookie('csrftoken') || document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
+            
+            // Make AJAX request
+            fetch(`/blog/${slug}/vote/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrftoken
+                },
+                body: `vote_type=${voteType}`,
+                credentials: 'same-origin'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const postCard = this.closest('.post-card');
+                    const voteCount = postCard.querySelector('.vote-count');
+                    const upvoteBtn = postCard.querySelector('.vote-btn.upvote');
+                    const downvoteBtn = postCard.querySelector('.vote-btn.downvote');
+                    
+                    // Update vote count (total score)
+                    const totalScore = data.upvote_count - data.downvote_count;
+                    voteCount.textContent = totalScore;
+                    
+                    // Update active states
+                    upvoteBtn.classList.remove('active');
+                    downvoteBtn.classList.remove('active');
+                    
+                    if (data.user_vote === 'upvote') {
+                        upvoteBtn.classList.add('active');
+                    } else if (data.user_vote === 'downvote') {
+                        downvoteBtn.classList.add('active');
+                    }
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while voting');
+            });
+            {% endif %}
         });
     });
 
     // Save buttons
     document.querySelectorAll('.save-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            this.classList.toggle('active');
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevent card click
+            
+            const slug = this.getAttribute('data-slug');
+            const isCurrentlySaved = this.classList.contains('active');
             const icon = this.querySelector('.material-icons');
-            icon.textContent = this.classList.contains('active') ? 'bookmark' : 'bookmark_border';
+            const text = this.querySelector('.action-text');
+            
+            // Optimistically update UI
+            if (isCurrentlySaved) {
+                this.classList.remove('active');
+                icon.textContent = 'bookmark_border';
+                text.textContent = 'Save';
+            } else {
+                this.classList.add('active');
+                icon.textContent = 'bookmark';
+                text.textContent = 'Saved';
+            }
+            
+            // Make API call
+            const url = isCurrentlySaved ? `/blog/${slug}/unsave/` : `/blog/${slug}/save/`;
+            
+            // Get CSRF token from cookie or meta tag
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            
+            const csrftoken = getCookie('csrftoken') || document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
+            
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrftoken,
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                credentials: 'same-origin'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success) {
+                    // Revert UI changes if API call failed
+                    if (isCurrentlySaved) {
+                        this.classList.add('active');
+                        icon.textContent = 'bookmark';
+                        text.textContent = 'Saved';
+                    } else {
+                        this.classList.remove('active');
+                        icon.textContent = 'bookmark_border';
+                        text.textContent = 'Save';
+                    }
+                    console.error('Failed to save/unsave post:', data.error);
+                }
+            })
+            .catch(error => {
+                // Revert UI changes if request failed
+                if (isCurrentlySaved) {
+                    this.classList.add('active');
+                    icon.textContent = 'bookmark';
+                    text.textContent = 'Saved';
+                } else {
+                    this.classList.remove('active');
+                    icon.textContent = 'bookmark_border';
+                    text.textContent = 'Save';
+                }
+                console.error('Error saving/unsaving post:', error);
+            });
         });
     });
 
     // Share buttons
     document.querySelectorAll('.share-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevent card click
             // Simple share functionality
+            const postCard = this.closest('.post-card');
+            const postTitle = postCard.querySelector('.post-title').textContent;
+            const postUrl = window.location.origin + postCard.getAttribute('data-href');
+            
             if (navigator.share) {
-                const postTitle = this.closest('.post-card').querySelector('.post-title a').textContent;
-                const postUrl = this.closest('.post-card').querySelector('.post-title a').href;
                 navigator.share({
                     title: postTitle,
                     url: postUrl
                 });
             } else {
                 // Fallback: copy to clipboard
-                const postUrl = this.closest('.post-card').querySelector('.post-title a').href;
                 navigator.clipboard.writeText(postUrl);
                 // Show feedback
                 const originalText = this.querySelector('.action-text');
@@ -294,6 +438,19 @@ document.addEventListener('DOMContentLoaded', function() {
                         originalText.textContent = original;
                     }, 2000);
                 }
+            }
+        });
+    });
+
+    // Comment buttons
+    document.querySelectorAll('.comment-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevent card click
+            // Navigate to post detail page and scroll to comments
+            const postCard = this.closest('.post-card');
+            const href = postCard.getAttribute('data-href');
+            if (href) {
+                window.location.href = href + '#comments';
             }
         });
     });

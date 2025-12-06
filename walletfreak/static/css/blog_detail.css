@@ -13,9 +13,7 @@
     background: white;
     border-bottom: 1px solid #E5E7EB;
     padding: 1rem 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    position: relative;
 }
 
 .header-nav {
@@ -342,8 +340,13 @@
 }
 
 .upvote-btn.active {
-    color: #059669 !important;
-    background: #ECFDF5 !important;
+    color: #F59E0B !important;
+    background: #FEF3C7 !important;
+}
+
+.downvote-btn.active {
+    color: #EF4444 !important;
+    background: #FEE2E2 !important;
 }
 
 .save-btn.active {

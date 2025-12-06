@@ -1291,7 +1291,7 @@ footer {
     min-width: 280px;
     padding: 1.5rem;
     display: none;
-    z-index: 2000;
+    z-index: 99999;
 }
 
 .user-dropdown-menu.active {
@@ -2703,7 +2703,7 @@ footer {
     visibility: hidden;
     transform: translateY(10px);
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 1000;
+    z-index: 99999;
     overflow: hidden;
     border: 1px solid rgba(0, 0, 0, 0.05);
 }

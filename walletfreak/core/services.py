@@ -430,5 +430,144 @@ class FirestoreService:
         blob = self.bucket.blob(storage_path)
         return blob.public_url
 
+    # User Saved Posts Methods
+    def save_post_for_user(self, uid, blog_id):
+        """Save a blog post for a user"""
+        try:
+            # Add to user's saved_posts subcollection
+            user_ref = self.db.collection('users').document(uid)
+            saved_posts_ref = user_ref.collection('saved_posts')
+            
+            # Check if already saved
+            existing = saved_posts_ref.document(blog_id).get()
+            if existing.exists:
+                return True  # Already saved
+            
+            # Save the post reference
+            saved_posts_ref.document(blog_id).set({
+                'blog_id': blog_id,
+                'saved_at': firestore.SERVER_TIMESTAMP
+            })
+            return True
+        except Exception as e:
+            print(f"Error saving post for user: {e}")
+            return False
+
+    def unsave_post_for_user(self, uid, blog_id):
+        """Remove a saved blog post for a user"""
+        try:
+            # Remove from user's saved_posts subcollection
+            user_ref = self.db.collection('users').document(uid)
+            saved_posts_ref = user_ref.collection('saved_posts')
+            saved_posts_ref.document(blog_id).delete()
+            return True
+        except Exception as e:
+            print(f"Error unsaving post for user: {e}")
+            return False
+
+    def get_user_saved_post_ids(self, uid):
+        """Get list of blog post IDs that user has saved"""
+        try:
+            user_ref = self.db.collection('users').document(uid)
+            saved_posts_ref = user_ref.collection('saved_posts')
+            saved_docs = saved_posts_ref.stream()
+            return [doc.id for doc in saved_docs]
+        except Exception as e:
+            print(f"Error getting user saved post IDs: {e}")
+            return []
+
+    def get_user_saved_posts(self, uid):
+        """Get full blog post objects that user has saved"""
+        try:
+            # Get saved post IDs
+            saved_post_ids = self.get_user_saved_post_ids(uid)
+            if not saved_post_ids:
+                return []
+            
+            # Get the actual blog posts
+            saved_posts = []
+            for blog_id in saved_post_ids:
+                blog = self.get_blog_by_id(blog_id)
+                if blog and blog.get('status') == 'published':  # Only include published posts
+                    saved_posts.append(blog)
+            
+            # Sort by saved date (most recent first)
+            # Since we don't have saved_at in the blog object, sort by published_at
+            saved_posts.sort(key=lambda x: x.get('published_at', ''), reverse=True)
+            return saved_posts
+        except Exception as e:
+            print(f"Error getting user saved posts: {e}")
+            return []
+
+    # Blog Voting Methods
+    def get_blog_vote_count(self, blog_id, vote_type):
+        """Get the count of votes for a blog post by type"""
+        try:
+            votes_ref = self.db.collection('blog_votes')
+            votes = votes_ref.where('blog_id', '==', blog_id).where('vote_type', '==', vote_type).stream()
+            return len(list(votes))
+        except Exception as e:
+            print(f"Error getting blog vote count: {e}")
+            return 0
+
+    def get_user_vote_on_blog(self, uid, blog_id):
+        """Get the user's vote on a specific blog post"""
+        try:
+            votes_ref = self.db.collection('blog_votes')
+            votes = votes_ref.where('user_uid', '==', uid).where('blog_id', '==', blog_id).limit(1).stream()
+            for vote in votes:
+                return vote.to_dict().get('vote_type')
+            return None
+        except Exception as e:
+            print(f"Error getting user vote on blog: {e}")
+            return None
+
+    def add_user_vote_on_blog(self, uid, blog_id, vote_type):
+        """Add a user's vote on a blog post"""
+        try:
+            vote_data = {
+                'user_uid': uid,
+                'blog_id': blog_id,
+                'vote_type': vote_type,
+                'created_at': firestore.SERVER_TIMESTAMP,
+                'updated_at': firestore.SERVER_TIMESTAMP
+            }
+            self.db.collection('blog_votes').add(vote_data)
+            return True
+        except Exception as e:
+            print(f"Error adding user vote on blog: {e}")
+            return False
+
+    def update_user_vote_on_blog(self, uid, blog_id, vote_type):
+        """Update a user's existing vote on a blog post"""
+        try:
+            votes_ref = self.db.collection('blog_votes')
+            votes = votes_ref.where('user_uid', '==', uid).where('blog_id', '==', blog_id).limit(1).stream()
+            
+            for vote in votes:
+                vote.reference.update({
+                    'vote_type': vote_type,
+                    'updated_at': firestore.SERVER_TIMESTAMP
+                })
+                return True
+            return False
+        except Exception as e:
+            print(f"Error updating user vote on blog: {e}")
+            return False
+
+    def remove_user_vote_on_blog(self, uid, blog_id):
+        """Remove a user's vote on a blog post"""
+        try:
+            votes_ref = self.db.collection('blog_votes')
+            votes = votes_ref.where('user_uid', '==', uid).where('blog_id', '==', blog_id).limit(1).stream()
+            
+            for vote in votes:
+                vote.reference.delete()
+                return True
+            return False
+        except Exception as e:
+            print(f"Error removing user vote on blog: {e}")
+            return False
+
 # Create singleton instance
 db = FirestoreService()

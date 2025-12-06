@@ -13,6 +13,9 @@ urlpatterns = [
     path('<str:slug>/', views.blog_detail, name='blog_detail'),
     path('<str:slug>/edit/', views.blog_edit, name='blog_edit'),
     path('<str:slug>/delete/', views.blog_delete, name='blog_delete'),
+    path('<str:slug>/save/', views.save_post, name='save_post'),
+    path('<str:slug>/unsave/', views.unsave_post, name='unsave_post'),
+    path('<str:slug>/vote/', views.vote_blog, name='vote_blog'),
     path('api/<str:blog_id>/status/', views.blog_quick_status_change, name='blog_quick_status_change'),
 ]
 
