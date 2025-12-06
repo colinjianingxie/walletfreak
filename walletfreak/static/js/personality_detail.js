@@ -91,15 +91,17 @@ function animateValue(id, end) {
     window.requestAnimationFrame(step);
 }
 
-// Auto-select first card in each slot on load
-document.addEventListener('DOMContentLoaded', () => {
-    const slots = new Set();
-    document.querySelectorAll('.card-option').forEach(el => slots.add(el.dataset.slot));
+// Auto-select first card in each slot on load - delay to allow carousel initialization
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        const slots = new Set();
+        document.querySelectorAll('.card-option').forEach(el => slots.add(el.dataset.slot));
 
-    slots.forEach(slot => {
-        const firstCard = document.querySelector(`.card-option[data-slot="${slot}"]`);
-        if (firstCard) {
-            toggleCardSelection(firstCard, slot);
-        }
-    });
+        slots.forEach(slot => {
+            const firstCard = document.querySelector(`.card-option[data-slot="${slot}"][style*="display: block"], .card-option[data-slot="${slot}"]:not([style*="display: none"])`);
+            if (firstCard) {
+                toggleCardSelection(firstCard, slot);
+            }
+        });
+    }, 100);
 });

@@ -247,14 +247,23 @@
     const currentSlotIndices = {};
 
     function changeCard(slotIndex, direction) {
+        // Try to find cards using the slot-card class first
         const slotClass = `slot-card-${slotIndex}`;
-        const cards = document.querySelectorAll(`.${slotClass}`);
-        if (cards.length <= 1) return;
+        let cards = document.querySelectorAll(`.${slotClass}`);
+        
+        // If no cards found with slot-card class, use data-slot attribute
+        if (cards.length === 0) {
+            cards = document.querySelectorAll(`.card-option[data-slot="${slotIndex}"]`);
+        }
+        
+        if (cards.length <= 1) {
+            return;
+        }
 
         // Get current index
         let currentIndex = currentSlotIndices[slotIndex] || 0;
 
-        // Hide current
+        // Hide current card
         cards[currentIndex].style.display = 'none';
 
         // Calculate new index
@@ -262,11 +271,11 @@
         if (currentIndex < 0) currentIndex = cards.length - 1;
         if (currentIndex >= cards.length) currentIndex = 0;
 
-        // Show new and update tracker
+        // Show new card and update tracker
         cards[currentIndex].style.display = 'block';
         currentSlotIndices[slotIndex] = currentIndex;
 
-        // Update Dots
+        // Update pagination dots
         const dotsContainer = document.getElementById(`dots-slot-${slotIndex}`);
         if (dotsContainer) {
             const dots = dotsContainer.querySelectorAll('.pagination-dot');
@@ -279,6 +288,43 @@
             });
         }
     }
+
+    // Initialize carousel after personality_detail.js has loaded
+    window.addEventListener('load', function() {
+        // Initialize current indices for all slots
+        const slots = document.querySelectorAll('.slot-carousel');
+        slots.forEach((slot, index) => {
+            const slotIndex = index + 1;
+            const cards = slot.querySelectorAll(`.slot-card-${slotIndex}`);
+            
+            if (cards.length > 1) {
+                // Initialize the current index
+                currentSlotIndices[slotIndex] = 0;
+                
+                // Hide all cards except the first one
+                cards.forEach((card, cardIndex) => {
+                    if (cardIndex === 0) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // Set first dot as active
+                const dotsContainer = document.getElementById(`dots-slot-${slotIndex}`);
+                if (dotsContainer) {
+                    const dots = dotsContainer.querySelectorAll('.pagination-dot');
+                    dots.forEach((dot, dotIndex) => {
+                        if (dotIndex === 0) {
+                            dot.classList.add('active');
+                        } else {
+                            dot.classList.remove('active');
+                        }
+                    });
+                }
+            }
+        });
+    });
 </script>
 <script src="{% static 'js/personality_detail.js' %}"></script>
 
