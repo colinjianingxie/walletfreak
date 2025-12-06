@@ -107,13 +107,52 @@ def blog_list(request):
             else:
                 blog['user_vote'] = None
     
+    # Get trending posts (top 3 most upvoted published posts)
+    trending_posts = []
+    top_contributors = []
+    
+    if category != 'Saved':  # Don't show trending for saved posts view
+        all_published_blogs = db.get_blogs(status='published')
+        
+        # Add vote counts to all published blogs for sorting
+        for blog in all_published_blogs:
+            blog_id = blog.get('id')
+            if blog_id:
+                blog['upvote_count'] = db.get_blog_vote_count(blog_id, 'upvote')
+                blog['total_score'] = blog['upvote_count'] - db.get_blog_vote_count(blog_id, 'downvote')
+        
+        # Sort by upvote count (descending) and take top 3
+        trending_posts = sorted(all_published_blogs, key=lambda x: x.get('upvote_count', 0), reverse=True)[:3]
+        
+        # Calculate top contributors by post count
+        author_post_counts = {}
+        for blog in all_published_blogs:
+            author_uid = blog.get('author_uid')
+            author_name = blog.get('author_name')
+            if author_uid and author_name:
+                if author_uid not in author_post_counts:
+                    author_post_counts[author_uid] = {
+                        'name': author_name,
+                        'post_count': 0
+                    }
+                author_post_counts[author_uid]['post_count'] += 1
+        
+        # Sort by post count and take top 3
+        top_contributors = sorted(
+            author_post_counts.values(),
+            key=lambda x: x['post_count'],
+            reverse=True
+        )[:3]
+    
     return render(request, 'blog/blog_list.html', {
         'blogs': blogs,
         'is_editor': is_editor,
         'current_category': category,
         'search_query': search_query,
         'user_saved_posts': user_saved_posts,
-        'is_authenticated': bool(uid)
+        'is_authenticated': bool(uid),
+        'trending_posts': trending_posts,
+        'top_contributors': top_contributors
     })
 
 @login_required
@@ -163,13 +202,24 @@ def blog_detail(request, slug):
     if uid:
         user_vote = db.get_user_vote_on_blog(uid, blog_id)
     
+    # Get related posts (other published posts, excluding current one)
+    related_posts = []
+    all_published = db.get_blogs(status='published')
+    for post in all_published:
+        if post.get('id') != blog_id:
+            related_posts.append(post)
+    
+    # Limit to 3 related posts
+    related_posts = related_posts[:3]
+    
     return render(request, 'blog/blog_detail.html', {
         'blog': blog,
         'is_editor': is_editor,
         'upvote_count': upvote_count,
         'downvote_count': downvote_count,
         'user_vote': user_vote,
-        'is_authenticated': bool(uid)
+        'is_authenticated': bool(uid),
+        'related_posts': related_posts
     })
 
 @login_required

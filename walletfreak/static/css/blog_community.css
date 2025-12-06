@@ -567,6 +567,13 @@
     font-size: 0.875rem;
     line-height: 1.4;
     margin-bottom: 0.25rem;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.trending-title:hover {
+    color: #6366F1;
+    text-decoration: none;
 }
 
 .trending-score {
@@ -646,6 +653,54 @@
     box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
     transition: all 0.2s;
     z-index: 1000;
+}
+
+/* Voting Loader Modal */
+.voting-loader-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.voting-loader-modal.show {
+    display: flex;
+}
+
+.voting-loader-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    min-width: 200px;
+}
+
+.voting-loader-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #E5E7EB;
+    border-top: 4px solid #6366F1;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.voting-loader-content p {
+    margin: 0;
+    color: #6B7280;
+    font-weight: 500;
 }
 
 .fab:hover {

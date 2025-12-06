@@ -189,27 +189,23 @@
                         <h4>TRENDING TOPICS</h4>
                     </div>
                     <div class="trending-list">
+                        {% for post in trending_posts %}
+                        <div class="trending-item">
+                            <span class="trending-rank">{{ forloop.counter }}</span>
+                            <div class="trending-content">
+                                <a href="{% url 'blog_detail' post.slug %}" class="trending-title">{{ post.title }}</a>
+                                <span class="trending-score">{{ post.upvote_count|default:0 }} upvote{{ post.upvote_count|pluralize }}</span>
+                            </div>
+                        </div>
+                        {% empty %}
                         <div class="trending-item">
                             <span class="trending-rank">1</span>
                             <div class="trending-content">
-                                <span class="trending-title">Retention Offer Data Points 2024</span>
-                                <span class="trending-score">324 score</span>
+                                <span class="trending-title">No trending posts yet</span>
+                                <span class="trending-score">Start voting!</span>
                             </div>
                         </div>
-                        <div class="trending-item">
-                            <span class="trending-rank">2</span>
-                            <div class="trending-content">
-                                <span class="trending-title">Hyatt Category Changes incoming?</span>
-                                <span class="trending-score">156 score</span>
-                            </div>
-                        </div>
-                        <div class="trending-item">
-                            <span class="trending-rank">3</span>
-                            <div class="trending-content">
-                                <span class="trending-title">Which card for tax payments?</span>
-                                <span class="trending-score">89 score</span>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
 
@@ -220,13 +216,23 @@
                         <h4>TOP CONTRIBUTORS</h4>
                     </div>
                     <div class="contributors-list">
+                        {% for contributor in top_contributors %}
                         <div class="contributor-item">
                             <div class="contributor-avatar">
                                 <span class="material-icons">person</span>
                             </div>
-                            <span class="contributor-name">@TheFreak</span>
-                            <span class="contributor-points">120k pts</span>
+                            <span class="contributor-name">@{{ contributor.name|lower|cut:" " }}</span>
+                            <span class="contributor-points">{{ contributor.post_count }} post{{ contributor.post_count|pluralize }}</span>
                         </div>
+                        {% empty %}
+                        <div class="contributor-item">
+                            <div class="contributor-avatar">
+                                <span class="material-icons">person</span>
+                            </div>
+                            <span class="contributor-name">No contributors yet</span>
+                            <span class="contributor-points">Start writing!</span>
+                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -234,6 +240,13 @@
     </div>
 </div>
 
+<!-- Loading Modal for Voting -->
+<div id="voting-loader" class="voting-loader-modal">
+    <div class="voting-loader-content">
+        <div class="voting-loader-spinner"></div>
+        <p>Updating vote...</p>
+    </div>
+</div>
 
 {% if is_editor %}
 <!-- Floating Action Button for Editors -->
@@ -287,6 +300,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const csrftoken = getCookie('csrftoken') || document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
             
+            // Show loading modal
+            const loader = document.getElementById('voting-loader');
+            loader.classList.add('show');
+            
             // Make AJAX request
             fetch(`/blog/${slug}/vote/`, {
                 method: 'POST',
@@ -299,6 +316,9 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => response.json())
             .then(data => {
+                // Hide loading modal
+                loader.classList.remove('show');
+                
                 if (data.success) {
                     const postCard = this.closest('.post-card');
                     const voteCount = postCard.querySelector('.vote-count');
@@ -323,6 +343,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
             .catch(error => {
+                // Hide loading modal on error
+                loader.classList.remove('show');
                 console.error('Error:', error);
                 alert('An error occurred while voting');
             });

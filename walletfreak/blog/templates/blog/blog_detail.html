@@ -143,11 +143,31 @@
             </div>
         </article>
 
-        <!-- Related Posts or Comments Section -->
+        <!-- Related Posts Section -->
+        {% if related_posts %}
         <div class="related-section">
-            <h3>Continue Reading</h3>
-            <p>More posts from The Ledger community coming soon...</p>
+            <h3>Related Posts</h3>
+            <div class="related-posts-list">
+                {% for post in related_posts %}
+                <div class="related-post-item">
+                    <a href="{% url 'blog_detail' post.slug %}" class="related-post-link">
+                        <h4>{{ post.title }}</h4>
+                        <p>{{ post.excerpt|default:"Read more about this topic..." }}</p>
+                        <span class="related-post-author">by {{ post.author_name }}</span>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
         </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Loading Modal for Voting -->
+<div id="voting-loader" class="voting-loader-modal">
+    <div class="voting-loader-content">
+        <div class="voting-loader-spinner"></div>
+        <p>Updating vote...</p>
     </div>
 </div>
 
@@ -195,6 +215,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const voteType = this.dataset.voteType;
             const slug = '{{ blog.slug }}';
             
+            // Show loading modal
+            const loader = document.getElementById('voting-loader');
+            loader.classList.add('show');
+            
             // Send AJAX request
             fetch(`/blog/${slug}/vote/`, {
                 method: 'POST',
@@ -206,6 +230,9 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => response.json())
             .then(data => {
+                // Hide loading modal
+                loader.classList.remove('show');
+                
                 if (data.success) {
                     // Update vote counts
                     document.querySelector('.upvote-btn .action-count').textContent = data.upvote_count;
@@ -225,6 +252,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
             .catch(error => {
+                // Hide loading modal on error
+                loader.classList.remove('show');
                 console.error('Error:', error);
                 alert('An error occurred while voting');
             });

@@ -360,15 +360,63 @@
     padding: 2rem;
     margin: 2rem 0;
     border: 1px solid #E5E7EB;
-    text-align: center;
-    color: #6B7280;
 }
 
 .related-section h3 {
     color: #1F2937;
     font-size: 1.25rem;
     font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.related-posts-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.related-post-item {
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.2s;
+}
+
+.related-post-item:hover {
+    border-color: #6366F1;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+}
+
+.related-post-link {
+    display: block;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+}
+
+.related-post-link h4 {
+    color: #1F2937;
+    font-size: 1rem;
+    font-weight: 600;
     margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.related-post-link p {
+    color: #6B7280;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+}
+
+.related-post-author {
+    color: #9CA3AF;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.related-post-link:hover h4 {
+    color: #6366F1;
 }
 
 @media (max-width: 768px) {
@@ -531,4 +579,52 @@
     .related-section {
         padding: 1rem 0.75rem;
     }
+}
+
+/* Voting Loader Modal */
+.voting-loader-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.voting-loader-modal.show {
+    display: flex;
+}
+
+.voting-loader-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    min-width: 200px;
+}
+
+.voting-loader-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #E5E7EB;
+    border-top: 4px solid #6366F1;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.voting-loader-content p {
+    margin: 0;
+    color: #6B7280;
+    font-weight: 500;
 }
