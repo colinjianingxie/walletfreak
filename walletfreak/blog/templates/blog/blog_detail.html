@@ -2,115 +2,191 @@
 {% load static %}
 
 {% block extra_css %}
-<style>
-    .blog-content {
-        line-height: 1.8;
-        font-size: 1.125rem;
-        color: #1F2937;
-    }
-    .blog-content h1, .blog-content h2, .blog-content h3 {
-        font-weight: 700;
-        margin-top: 2rem;
-        margin-bottom: 1rem;
-        color: #0F172A;
-    }
-    .blog-content h1 { font-size: 2rem; }
-    .blog-content h2 { font-size: 1.5rem; }
-    .blog-content h3 { font-size: 1.25rem; }
-    .blog-content p {
-        margin-bottom: 1.5rem;
-    }
-    .blog-content img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 12px;
-        margin: 2rem 0;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-    .blog-content a {
-        color: #6366F1;
-        text-decoration: none;
-        font-weight: 600;
-    }
-    .blog-content a:hover {
-        text-decoration: underline;
-    }
-    .blog-content code {
-        background: #F3F4F6;
-        padding: 0.2rem 0.4rem;
-        border-radius: 4px;
-        font-family: 'Monaco', 'Courier New', monospace;
-        font-size: 0.9em;
-    }
-    .blog-content pre {
-        background: #1F2937;
-        color: #F9FAFB;
-        padding: 1.5rem;
-        border-radius: 12px;
-        overflow-x: auto;
-        margin: 1.5rem 0;
-    }
-    .blog-content pre code {
-        background: none;
-        padding: 0;
-        color: inherit;
-    }
-    .blog-content ul, .blog-content ol {
-        margin-bottom: 1.5rem;
-        padding-left: 2rem;
-    }
-    .blog-content li {
-        margin-bottom: 0.5rem;
-    }
-    .blog-content blockquote {
-        border-left: 4px solid #6366F1;
-        padding-left: 1.5rem;
-        margin: 1.5rem 0;
-        color: #64748B;
-        font-style: italic;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'css/blog_detail.css' %}">
 {% endblock %}
 
-{% block content %}
-<div style="background: white; min-height: 100vh; padding: 4rem 0;">
-    <div class="container" style="max-width: 800px;">
-        <!-- Header -->
-        <div style="margin-bottom: 3rem;">
-            <h1 style="font-size: 2.5rem; font-weight: 800; color: #0F172A; margin-bottom: 1rem;">{{ blog.title }}</h1>
-            <div style="display: flex; align-items: center; gap: 1.5rem; color: #94A3B8; font-size: 0.875rem;">
-                <span>By {{ blog.author_name }}</span>
-                <span>•</span>
-                <span>{{ blog.published_at|date:"M d, Y" }}</span>
-                {% if is_editor %}
-                <span>•</span>
-                <span style="background: #FEF3C7; color: #D97706; padding: 0.25rem 0.75rem; border-radius: 6px; font-weight: 700; text-transform: uppercase;">{{ blog.status }}</span>
-                {% endif %}
+{% block main_style %}background: #F8F9FA; min-height: 100vh; padding: 0;{% endblock %}
+
+{% block full_width_content %}
+<div class="blog-detail-container">
+    <!-- Header Navigation -->
+    <div class="detail-header">
+        <div class="container">
+            <div class="header-nav">
+                <a href="{% url 'blog_list' %}" class="back-btn">
+                    <span class="material-icons">arrow_back</span>
+                    <span>Back to Feed</span>
+                </a>
+                
+                <div class="header-actions">
+                    <button class="action-btn bookmark-btn">
+                        <span class="material-icons">bookmark_border</span>
+                    </button>
+                    <button class="action-btn share-btn">
+                        <span class="material-icons">share</span>
+                    </button>
+                    {% if is_editor %}
+                    <a href="{% url 'blog_edit' blog.slug %}" class="action-btn edit-btn">
+                        <span class="material-icons">edit</span>
+                    </a>
+                    {% endif %}
+                </div>
             </div>
         </div>
+    </div>
 
-        <!-- Featured Image -->
-        {% if blog.featured_image %}
-        <img src="{{ blog.featured_image }}" alt="{{ blog.title }}" style="width: 100%; border-radius: 16px; margin-bottom: 3rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-        {% endif %}
+    <!-- Post Content -->
+    <div class="container">
+        <article class="post-detail">
+            <!-- Post Category -->
+            <div class="post-category-badge">
+                {% if 'review' in blog.tags|lower %}REVIEWS
+                {% elif 'guide' in blog.tags|lower %}GUIDES
+                {% elif 'tips' in blog.tags|lower %}TIPS
+                {% elif 'news' in blog.tags|lower %}NEWS
+                {% else %}REVIEWS{% endif %}
+            </div>
 
-        <!-- Content -->
-        <div class="blog-content">
-            {{ blog.html_content }}
+            <!-- Featured Image -->
+            {% if blog.featured_image %}
+            <div class="featured-image">
+                <img src="{{ blog.featured_image }}" alt="{{ blog.title }}">
+            </div>
+            {% endif %}
+
+            <!-- Post Header -->
+            <div class="post-header">
+                <h1 class="post-title">{{ blog.title }}</h1>
+                
+                <div class="post-meta">
+                    <div class="author-info">
+                        <div class="author-avatar">
+                            <span class="material-icons">person</span>
+                        </div>
+                        <div class="author-details">
+                            <span class="author-name">{{ blog.author_name }}</span>
+                            <span class="author-handle">@{{ blog.author_name|lower|cut:" " }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="post-stats">
+                        <div class="stat-item">
+                            <span class="material-icons">schedule</span>
+                            <span>{{ blog.published_at|timesince }} ago</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="material-icons">trending_up</span>
+                            <span>1.4k Score</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="material-icons">access_time</span>
+                            <span>5 min read</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TL;DR Section -->
+            {% if blog.excerpt %}
+            <div class="tldr-section">
+                <div class="tldr-header">
+                    <span class="material-icons">bolt</span>
+                    <span class="tldr-label">TOO LONG; DIDN'T READ</span>
+                </div>
+                <div class="tldr-content">
+                    {{ blog.excerpt }}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Post Content -->
+            <div class="post-content">
+                {{ blog.html_content }}
+            </div>
+
+            <!-- Post Actions Footer -->
+            <div class="post-actions-footer">
+                <div class="action-group">
+                    <button class="action-btn upvote-btn">
+                        <span class="material-icons">trending_up</span>
+                        <span class="action-count">1.4k</span>
+                    </button>
+                    <button class="action-btn comment-btn">
+                        <span class="material-icons">chat_bubble_outline</span>
+                        <span class="action-count">89</span>
+                    </button>
+                    <button class="action-btn share-btn">
+                        <span class="material-icons">share</span>
+                        <span class="action-text">Share</span>
+                    </button>
+                </div>
+                <button class="action-btn save-btn">
+                    <span class="material-icons">bookmark_border</span>
+                    <span class="action-text">Save</span>
+                </button>
+            </div>
+        </article>
+
+        <!-- Related Posts or Comments Section -->
+        <div class="related-section">
+            <h3>Continue Reading</h3>
+            <p>More posts from The Ledger community coming soon...</p>
         </div>
-
-        <!-- Editor Actions -->
-        {% if is_editor %}
-        <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; gap: 1rem;">
-            <a href="{% url 'blog_edit' blog.slug %}" style="background: #6366F1; color: white; padding: 0.875rem 1.5rem; border-radius: 12px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
-                <span class="material-icons" style="font-size: 20px;">edit</span>
-                Edit Post
-            </a>
-            <a href="{% url 'blog_list' %}" style="background: #F3F4F6; color: #64748B; padding: 0.875rem 1.5rem; border-radius: 12px; font-weight: 600; text-decoration: none;">
-                Back to Blog
-            </a>
-        </div>
-        {% endif %}
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Bookmark functionality
+    document.querySelectorAll('.bookmark-btn, .save-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.classList.toggle('active');
+            const icon = this.querySelector('.material-icons');
+            if (icon.textContent === 'bookmark_border') {
+                icon.textContent = 'bookmark';
+            } else if (icon.textContent === 'bookmark') {
+                icon.textContent = 'bookmark_border';
+            }
+        });
+    });
+
+    // Share functionality
+    document.querySelectorAll('.share-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            if (navigator.share) {
+                navigator.share({
+                    title: document.title,
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                const originalText = this.querySelector('.action-text');
+                if (originalText) {
+                    const original = originalText.textContent;
+                    originalText.textContent = 'Copied!';
+                    setTimeout(() => {
+                        originalText.textContent = original;
+                    }, 2000);
+                }
+            }
+        });
+    });
+
+    // Upvote functionality
+    document.querySelectorAll('.upvote-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.classList.toggle('active');
+            const count = this.querySelector('.action-count');
+            if (count) {
+                const currentCount = parseFloat(count.textContent);
+                if (this.classList.contains('active')) {
+                    count.textContent = (currentCount + 0.1).toFixed(1) + 'k';
+                } else {
+                    count.textContent = (currentCount - 0.1).toFixed(1) + 'k';
+                }
+            }
+        });
+    });
+});
+</script>
 {% endblock %}

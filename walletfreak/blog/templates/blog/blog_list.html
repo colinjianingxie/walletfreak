@@ -1,232 +1,302 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block content %}
-<div style="background: white; min-height: 100vh; padding-bottom: 6rem;">
-    <!-- Header Section -->
-    <div style="background: white; border-bottom: 1px solid #E2E8F0; padding: 4rem 0 2rem;">
-        <div class="container">
-            <h1 style="font-size: 3.5rem; font-weight: 800; color: #0F172A; margin-bottom: 1rem; letter-spacing: -0.02em;">
-                The Ledger
-            </h1>
-            <p style="font-size: 1.25rem; color: #64748B; margin-bottom: 3rem;">
-                Tips, tricks, and hot takes on the credit card industry.
-            </p>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog_community.css' %}">
+{% endblock %}
 
-            <!-- Filters & Search -->
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-                <div style="display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.5rem;">
-                    <a href="?category=All" class="filter-btn {% if not current_category or current_category == 'All' %}active{% endif %}">All</a>
-                    <a href="?category=Reviews" class="filter-btn {% if current_category == 'Reviews' %}active{% endif %}">Reviews</a>
-                    <a href="?category=Guides" class="filter-btn {% if current_category == 'Guides' %}active{% endif %}">Guides</a>
-                    <a href="?category=Tips" class="filter-btn {% if current_category == 'Tips' %}active{% endif %}">Tips</a>
-                    <a href="?category=News" class="filter-btn {% if current_category == 'News' %}active{% endif %}">News</a>
-                </div>
-                
-                <div style="display: flex; gap: 1rem; align-items: center;">
-                    {% if is_editor %}
-                    <a href="{% url 'media_library' %}" style="background: #F0FDF4; color: #059669; padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; white-space: nowrap;">
-                        <span class="material-icons" style="font-size: 20px;">photo_library</span>
-                        Media Library
-                    </a>
-                    <a href="{% url 'blog_manage_status' %}" style="background: #EEF2FF; color: #6366F1; padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; white-space: nowrap;">
-                        <span class="material-icons" style="font-size: 20px;">toggle_on</span>
-                        Manage Status
-                    </a>
-                    <a href="{% url 'blog_drafts' %}" style="background: #F3F4F6; color: #64748B; padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; white-space: nowrap;">
-                        <span class="material-icons" style="font-size: 20px;">drafts</span>
-                        My Drafts
-                    </a>
-                    <a href="{% url 'blog_create' %}" style="background: #6366F1; color: white; padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; white-space: nowrap;">
-                        <span class="material-icons" style="font-size: 20px;">add</span>
-                        Create Post
-                    </a>
-                    {% endif %}
-                    <form action="." method="GET" style="position: relative; width: 300px;">
+{% block main_style %}background: #F8F9FA; min-height: 100vh; padding: 0;{% endblock %}
+
+{% block full_width_content %}
+<div class="blog-container">
+    <!-- Header with Search -->
+    <div class="blog-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="search-wrapper">
+                    <span class="search-icon material-icons">search</span>
+                    <form action="." method="GET" style="width: 100%;">
                         {% if current_category and current_category != 'All' %}
                         <input type="hidden" name="category" value="{{ current_category }}">
                         {% endif %}
-                        <button type="submit" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); background: none; border: none; padding: 0; color: #94A3B8; cursor: pointer; display: flex; align-items: center;">
-                            <span class="material-icons" style="font-size: 20px;">search</span>
-                        </button>
-                        <input type="text" name="q" placeholder="Search articles..." value="{{ search_query|default:'' }}"
-                               style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem; border: 1px solid #E2E8F0; border-radius: 99px; font-size: 0.9rem; outline: none; transition: all 0.2s;">
+                        <input type="text" name="q" placeholder="Search the community..." value="{{ search_query|default:'' }}" class="search-input">
                     </form>
+                </div>
+                
+                <!-- Category Tabs -->
+                <div class="category-tabs">
+                    <a href="?category=All" class="category-tab {% if not current_category or current_category == 'All' %}active{% endif %}">All</a>
+                    <a href="?category=Reviews" class="category-tab {% if current_category == 'Reviews' %}active{% endif %}">Reviews</a>
+                    <a href="?category=Guides" class="category-tab {% if current_category == 'Guides' %}active{% endif %}">Guides</a>
+                    <a href="?category=Tips" class="category-tab {% if current_category == 'Tips' %}active{% endif %}">Tips</a>
+                    <a href="?category=News" class="category-tab {% if current_category == 'News' %}active{% endif %}">News</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container" style="padding-top: 3rem;">
-        <!-- Featured Article -->
-        {% if blogs %}
-        {% with featured=blogs.0 %}
-        <a href="{% url 'blog_detail' featured.slug %}" style="text-decoration: none; display: block; margin-bottom: 3rem;">
-            <div style="background: #0F172A; border-radius: 24px; overflow: hidden; position: relative; min-height: 500px; display: flex; flex-direction: column; justify-content: flex-end;">
-                <!-- Background Image with Overlay -->
-                <div style="position: absolute; inset: 0; background-image: url('{{ featured.featured_image }}'); background-size: cover; background-position: center; opacity: 0.6;"></div>
-                <div style="position: absolute; inset: 0; background: linear-gradient(to top, #0F172A 0%, transparent 100%);"></div>
-                
-                {% if is_editor %}
-                <a href="{% url 'blog_edit' featured.slug %}" onclick="event.stopPropagation();" style="position: absolute; top: 2rem; right: 2rem; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 0.75rem 1.25rem; border-radius: 12px; display: flex; align-items: center; gap: 0.5rem; text-decoration: none; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); z-index: 2;">
-                    <span class="material-icons" style="font-size: 20px; color: #6366F1;">edit</span>
-                    <span style="color: #1F2937; font-weight: 600;">Edit Featured</span>
-                </a>
-                {% endif %}
-                
-                <div style="position: relative; z-index: 1; padding: 3rem; max-width: 800px;">
-                    <span style="background: #6366F1; color: white; padding: 0.375rem 0.875rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; display: inline-block; margin-bottom: 1.5rem;">
-                        FEATURED REVIEW
-                    </span>
-                    
-                    <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; color: white; line-height: 1.1; margin-bottom: 1.5rem;">
-                        {{ featured.title }}
-                    </h2>
-                    
-                    <p style="font-size: 1.125rem; color: #CBD5E1; line-height: 1.6; margin-bottom: 2rem; max-width: 600px;">
-                        {{ featured.excerpt|truncatewords:30 }}
+    <!-- Main Content -->
+    <div class="container">
+        <div class="blog-layout">
+            <!-- Posts Feed -->
+            <div class="posts-feed">
+                {% for post in blogs %}
+                <article class="post-card">
+                    <!-- Post Vote Section -->
+                    <div class="post-vote">
+                        <button class="vote-btn upvote">
+                            <span class="material-icons">trending_up</span>
+                        </button>
+                        <span class="vote-count">{{ post.id|add:1000|add:400 }}</span>
+                        <button class="vote-btn downvote">
+                            <span class="material-icons">trending_down</span>
+                        </button>
+                    </div>
+
+                    <!-- Post Main Content -->
+                    <div class="post-main">
+                        <!-- Post Header -->
+                        <div class="post-header">
+                            <div class="post-author">
+                                <div class="author-avatar">
+                                    <span class="material-icons">person</span>
+                                </div>
+                                <div class="author-info">
+                                    <span class="author-name">@{{ post.author_name|lower|cut:" " }}</span>
+                                    <span class="post-time">{{ post.published_at|timesince }} ago</span>
+                                </div>
+                            </div>
+                            <div class="post-category">
+                                {% if 'review' in post.tags|lower %}REVIEWS
+                                {% elif 'guide' in post.tags|lower %}GUIDES
+                                {% elif 'tips' in post.tags|lower %}TIPS
+                                {% elif 'news' in post.tags|lower %}NEWS
+                                {% else %}REVIEWS{% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Post Content -->
+                        <div class="post-content">
+                            <div class="post-text">
+                                <h2 class="post-title">
+                                    <a href="{% url 'blog_detail' post.slug %}">{{ post.title }}</a>
+                                </h2>
+                                
+                                {% if post.excerpt %}
+                                <div class="post-excerpt">
+                                    <span class="excerpt-label">TL;DR</span>
+                                    {{ post.excerpt|truncatewords:25 }}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            {% if post.featured_image %}
+                            <div class="post-image">
+                                <img src="{{ post.featured_image }}" alt="{{ post.title }}">
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Post Actions -->
+                        <div class="post-actions">
+                            <div class="action-group">
+                                <button class="action-btn comment-btn">
+                                    <span class="material-icons">chat_bubble_outline</span>
+                                    <span class="action-count">{{ post.id|add:50|add:39 }} Comments</span>
+                                </button>
+                                <button class="action-btn share-btn">
+                                    <span class="material-icons">share</span>
+                                    <span class="action-text">Share</span>
+                                </button>
+                            </div>
+                            <button class="action-btn save-btn">
+                                <span class="material-icons">bookmark_border</span>
+                                <span class="action-text">Save</span>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+                {% empty %}
+                <div class="empty-state">
+                    <span class="material-icons">article</span>
+                    <h3>No posts found</h3>
+                    <p>Try adjusting your search or category filter.</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Sidebar -->
+            <div class="blog-sidebar">
+                <!-- Community Info -->
+                <div class="sidebar-card community-card">
+                    <div class="community-header">
+                        <div class="community-icon">
+                            <span class="material-icons">bolt</span>
+                        </div>
+                        <div class="community-info">
+                            <h3>The Ledger</h3>
+                            <span class="community-status">
+                                <span class="status-dot"></span>
+                                120 Online
+                            </span>
+                        </div>
+                    </div>
+                    <p class="community-description">
+                        The unofficial official headquarters for credit card optimizers, point hoarders, and spreadsheet enthusiasts.
                     </p>
-                    
-                    <div style="display: flex; align-items: center; gap: 1.5rem; color: #94A3B8; font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
-                        <span>By {{ featured.author_name }}</span>
-                        <span>•</span>
-                        <span>{{ featured.published_at|date:"M d, Y" }}</span>
-                        <span>•</span>
-                        <span>10 min read</span>
+                    <div class="community-stats">
+                        <div class="stat">
+                            <span class="stat-number">14.2k</span>
+                            <span class="stat-label">MEMBERS</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">Top 1%</span>
+                            <span class="stat-label">RANK</span>
+                        </div>
+                    </div>
+                    <button class="join-btn">Join Community</button>
+                </div>
+
+                <!-- Trending Topics -->
+                <div class="sidebar-card trending-card">
+                    <div class="card-header">
+                        <span class="material-icons">local_fire_department</span>
+                        <h4>TRENDING TOPICS</h4>
+                    </div>
+                    <div class="trending-list">
+                        <div class="trending-item">
+                            <span class="trending-rank">1</span>
+                            <div class="trending-content">
+                                <span class="trending-title">Retention Offer Data Points 2024</span>
+                                <span class="trending-score">324 score</span>
+                            </div>
+                        </div>
+                        <div class="trending-item">
+                            <span class="trending-rank">2</span>
+                            <div class="trending-content">
+                                <span class="trending-title">Hyatt Category Changes incoming?</span>
+                                <span class="trending-score">156 score</span>
+                            </div>
+                        </div>
+                        <div class="trending-item">
+                            <span class="trending-rank">3</span>
+                            <div class="trending-content">
+                                <span class="trending-title">Which card for tax payments?</span>
+                                <span class="trending-score">89 score</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Contributors -->
+                <div class="sidebar-card contributors-card">
+                    <div class="card-header">
+                        <span class="material-icons">emoji_events</span>
+                        <h4>TOP CONTRIBUTORS</h4>
+                    </div>
+                    <div class="contributors-list">
+                        <div class="contributor-item">
+                            <div class="contributor-avatar">
+                                <span class="material-icons">person</span>
+                            </div>
+                            <span class="contributor-name">@TheFreak</span>
+                            <span class="contributor-points">120k pts</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </a>
-        {% endwith %}
-        {% endif %}
-
-        <!-- Article Grid -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2rem;">
-            {% for post in blogs|slice:"1:" %}
-            <a href="{% url 'blog_detail' post.slug %}" class="blog-card">
-                <div class="blog-card-image" style="background-image: url('{{ post.featured_image }}');">
-                    <div class="blog-badge">
-                        {% if 'Guide' in post.tags %}GUIDES
-                        {% elif 'Review' in post.tags %}REVIEWS
-                        {% elif 'Tips' in post.tags %}TIPS
-                        {% elif 'News' in post.tags %}NEWS
-                        {% else %}STORY{% endif %}
-                    </div>
-                    {% if is_editor %}
-                    <a href="{% url 'blog_edit' post.slug %}" onclick="event.stopPropagation();" style="position: absolute; top: 1rem; right: 1rem; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 0.5rem; border-radius: 8px; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
-                        <span class="material-icons" style="font-size: 20px; color: #6366F1;">edit</span>
-                    </a>
-                    {% endif %}
-                </div>
-                
-                <div class="blog-card-content">
-                    <div class="blog-meta">
-                        {{ post.published_at|date:"M d" }} • 5 MIN READ
-                    </div>
-                    
-                    <h3 class="blog-title">{{ post.title }}</h3>
-                    
-                    <!-- Optional: Excerpt for grid items if needed, but design shows mostly title -->
-                    <!-- <p class="blog-excerpt">{{ post.excerpt|truncatewords:15 }}</p> -->
-                </div>
-            </a>
-            {% endfor %}
         </div>
     </div>
 </div>
 
-<style>
-    .filter-btn {
-        background: white;
-        border: 1px solid #E2E8F0;
-        padding: 0.5rem 1.25rem;
-        border-radius: 99px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: #64748B;
-        cursor: pointer;
-        transition: all 0.2s;
-        white-space: nowrap;
-        text-decoration: none;
-        display: inline-block;
-    }
-    
-    .filter-btn:hover {
-        border-color: #CBD5E1;
-        color: #1F2937;
-    }
-    
-    .filter-btn.active {
-        background: #0F172A;
-        border-color: #0F172A;
-        color: white;
-    }
-    
-    .blog-card {
-        background: white;
-        border-radius: 16px;
-        overflow: hidden;
-        text-decoration: none;
-        color: inherit;
-        transition: all 0.3s ease;
-        display: flex;
-        flex-direction: column;
-        border: 1px solid #E2E8F0;
-    }
-    
-    .blog-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-    }
-    
-    .blog-card-image {
-        height: 220px;
-        background-size: cover;
-        background-position: center;
-        position: relative;
-    }
-    
-    .blog-badge {
-        position: absolute;
-        top: 1rem;
-        left: 1rem;
-        background: white;
-        color: #1F2937;
-        font-size: 0.7rem;
-        font-weight: 800;
-        padding: 0.25rem 0.75rem;
-        border-radius: 4px;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-    
-    .blog-card-content {
-        padding: 1.5rem;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .blog-meta {
-        font-size: 0.75rem;
-        color: #94A3B8;
-        font-weight: 700;
-        margin-bottom: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-    
-    .blog-title {
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: #0F172A;
-        margin-bottom: 0.5rem;
-        line-height: 1.3;
-    }
-    
-    input:focus {
-        border-color: #6366F1 !important;
-        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-    }
-</style>
+<!-- Mobile Category Tabs (shown only on mobile) -->
+<div class="mobile-category-tabs">
+    <a href="?category=All" class="mobile-tab {% if not current_category or current_category == 'All' %}active{% endif %}">All</a>
+    <a href="?category=Reviews" class="mobile-tab {% if current_category == 'Reviews' %}active{% endif %}">Reviews</a>
+    <a href="?category=Guides" class="mobile-tab {% if current_category == 'Guides' %}active{% endif %}">Guides</a>
+    <a href="?category=Tips" class="mobile-tab {% if current_category == 'Tips' %}active{% endif %}">Tips</a>
+    <a href="?category=News" class="mobile-tab {% if current_category == 'News' %}active{% endif %}">News</a>
+</div>
+
+{% if is_editor %}
+<!-- Floating Action Button for Editors -->
+<a href="{% url 'blog_create' %}" class="fab">
+    <span class="material-icons">add</span>
+</a>
+{% endif %}
+
+<script>
+// Add interactivity for post actions
+document.addEventListener('DOMContentLoaded', function() {
+    // Vote buttons
+    document.querySelectorAll('.vote-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const postCard = this.closest('.post-card');
+            const voteCount = postCard.querySelector('.vote-count');
+            const isUpvote = this.classList.contains('upvote');
+            const isDownvote = this.classList.contains('downvote');
+            const otherBtn = isUpvote ?
+                postCard.querySelector('.vote-btn.downvote') :
+                postCard.querySelector('.vote-btn.upvote');
+            
+            let currentCount = parseInt(voteCount.textContent);
+            
+            // Remove active state from other button
+            otherBtn.classList.remove('active');
+            
+            // Toggle current button
+            if (this.classList.contains('active')) {
+                this.classList.remove('active');
+                // Revert vote
+                if (isUpvote) currentCount--;
+                else currentCount++;
+            } else {
+                this.classList.add('active');
+                // Apply vote
+                if (isUpvote) currentCount++;
+                else currentCount--;
+            }
+            
+            voteCount.textContent = currentCount;
+        });
+    });
+
+    // Save buttons
+    document.querySelectorAll('.save-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.classList.toggle('active');
+            const icon = this.querySelector('.material-icons');
+            icon.textContent = this.classList.contains('active') ? 'bookmark' : 'bookmark_border';
+        });
+    });
+
+    // Share buttons
+    document.querySelectorAll('.share-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Simple share functionality
+            if (navigator.share) {
+                const postTitle = this.closest('.post-card').querySelector('.post-title a').textContent;
+                const postUrl = this.closest('.post-card').querySelector('.post-title a').href;
+                navigator.share({
+                    title: postTitle,
+                    url: postUrl
+                });
+            } else {
+                // Fallback: copy to clipboard
+                const postUrl = this.closest('.post-card').querySelector('.post-title a').href;
+                navigator.clipboard.writeText(postUrl);
+                // Show feedback
+                const originalText = this.querySelector('.action-text');
+                if (originalText) {
+                    const original = originalText.textContent;
+                    originalText.textContent = 'Copied!';
+                    setTimeout(() => {
+                        originalText.textContent = original;
+                    }, 2000);
+                }
+            }
+        });
+    });
+});
+</script>
 {% endblock %}
