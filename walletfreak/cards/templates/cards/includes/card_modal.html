@@ -101,24 +101,17 @@
                     </div>
 
                     <!-- Key Stats Grid -->
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                        <div class="stat-box">
+                    <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
+                        <div class="stat-box" style="text-align: center;">
                             <div class="stat-label">CREDITS VALUE</div>
-                            <div class="stat-value" style="color: #10B981;" id="modal-credits-value">$0</div>
-                        </div>
-                         <div class="stat-box">
-                            <div class="stat-label">VARIABLE APR</div>
-                            <div class="stat-value" style="color: #1F2937;" id="modal-apr-value">22.49% - 29.49% Var</div>
+                            <div class="stat-value" style="color: #10B981; font-size: 2rem;" id="modal-credits-value">$0</div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Earning Tab -->
                 <div id="tab-earning" class="tab-pane">
-                    <div class="pro-tip">
-                        <span class="material-icons" style="color: #6366F1; font-size: 16px;">lightbulb</span>
-                        <span id="modal-pro-tip-text">Pro Tip: Use this card for <strong>Travel</strong> to maximize your return on spend.</span>
-                    </div>
+                    <!-- Pro Tip Removed -->
                     <div id="modal-earning-rows">
                         <!-- Populated by JS with expandable rows -->
                     </div>
@@ -253,10 +246,10 @@ function openCardModal(cardId) {
     }
 
     // Credits
+    // Credits
     document.getElementById('modal-credits-value').textContent = '$' + (card.creditsValue || 0);
     
-    // APR (Mock or Real)
-    document.getElementById('modal-apr-value').textContent = card.apr || '20.49% - 27.49% Var';
+    // APR removed
     
     // Set annual fee
     const annualFee = '$' + (card.annualFee || card.annual_fee || 0);
@@ -355,10 +348,7 @@ function openCardModal(cardId) {
             earningContainer.appendChild(wrapper);
         });
         
-        // Update Pro Tip with highest earning category
-        if (highestCategory) {
-            document.getElementById('modal-pro-tip-text').innerHTML = `Pro Tip: Use this card for <strong>${highestCategory}</strong> to maximize your return on spend.`;
-        }
+        // Pro Tip removed - no longer updating
     } else {
         earningContainer.innerHTML = '<div style="color: #64748B; text-align: center; padding: 2rem;">No earning information available.</div>';
     }
@@ -424,14 +414,17 @@ function openCardModal(cardId) {
 
 
     // Reset Tabs
+    // Reset Tabs
     switchCardTab('overview');
     
     modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // Lock scroll
 }
 
 function closeCardDetailsModal() {
     document.getElementById('card-details-modal').style.display = 'none';
     currentModalCardId = null;
+    document.body.style.overflow = ''; // Unlock scroll
 }
 
 function switchCardTab(tabName) {
@@ -619,6 +612,71 @@ style.innerHTML = `
 @keyframes spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    /* Compact Modal Title */
+    #modal-card-name {
+        font-size: 1.25rem !important;
+        margin-bottom: 0 !important;
+    }
+    #modal-card-issuer {
+        font-size: 0.875rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    /* Compact Modal Header Padding */
+    .card-details-header {
+        padding: 1.5rem 1.5rem 0.5rem 1.5rem !important; /* Reduced top/bottom */
+    }
+    
+    /* Compact Tabs */
+    .card-tabs {
+        margin-bottom: 1rem !important;
+    }
+    .card-tab {
+        padding: 0.5rem !important;
+        font-size: 0.8rem !important;
+    }
+    
+    /* Compact Overview Content */
+    .freak-verdict {
+        padding: 0.75rem !important; /* Reduced padding */
+        margin-bottom: 0.75rem !important; /* Reduced margin */
+    }
+    .verdict-title {
+        font-size: 0.65rem !important;
+        margin-bottom: 0.25rem !important;
+    }
+    .verdict-text {
+        font-size: 0.85rem !important;
+    }
+    
+    /* Compact Welcome Offer */
+    #modal-welcome-container {
+        margin-bottom: 0.75rem !important;
+    }
+    /* Assuming welcome-offer-box style is handled elsewhere or inline, overrides here if class exists in css files */
+    
+    #modal-bonus-value {
+        font-size: 1.5rem !important;
+    }
+    
+    /* Compact Stats Box */
+    .stat-box {
+        padding: 0.75rem !important;
+    }
+    .stat-value {
+        font-size: 1.5rem !important;
+    }
+    
+    /* Overall Content Padding */
+    .card-details-right {
+        padding: 0 !important;
+    }
+    .card-tab-content {
+        padding: 0 1.5rem 2rem 1.5rem !important;
+    }
 }
 `;
 document.head.appendChild(style);

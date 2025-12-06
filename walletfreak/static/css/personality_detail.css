@@ -266,8 +266,37 @@
         font-size: 0.65rem;
     }
 
+    .stats-card-label {
+        font-size: 0.65rem;
+    }
+
     .card-option {
         width: 100% !important;
+    }
+
+    /* Personality Slot Container Mobile */
+    .personality-slot-container {
+        padding: 1.25rem 1rem !important;
+        /* Reduced padding further */
+    }
+
+    /* Reduce vertical spacing in slot info */
+    .personality-slot-container>div:first-child {
+        margin-bottom: 0.75rem !important;
+        text-align: center;
+    }
+
+    .personality-slot-container h3 {
+        font-size: 1.25rem !important;
+        /* Compact title */
+        margin-bottom: 0.25rem !important;
+    }
+
+    .personality-slot-container p {
+        font-size: 0.9rem !important;
+        /* Compact description */
+        line-height: 1.4 !important;
+        margin-bottom: 0 !important;
     }
 
     /* Carousel Styles */
@@ -278,17 +307,20 @@
         /* Center the card */
         padding: 0 3rem;
         /* Make room for arrows */
+        flex-direction: column;
+        /* Allow dots to flow below */
     }
 
     .carousel-btn {
         display: flex;
         /* Show on mobile */
         position: absolute;
-        top: 40%;
-        /* Vertically centered relative to card visual approx */
-        transform: translateY(-50%);
-        width: 40px;
-        height: 40px;
+        top: 50%;
+        /* Center vertically relative to CARD */
+        transform: translateY(-100%);
+        /* Offset slightly up to match card visual center */
+        width: 36px;
+        height: 36px;
         background: white;
         border-radius: 50%;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -298,6 +330,25 @@
         z-index: 20;
         color: #1e293b;
         border: 1px solid #e2e8f0;
+    }
+
+    /* Metadata below card */
+    .card-option>div:last-child {
+        margin-top: 0.5rem !important;
+        /* Reduced from 1rem */
+    }
+
+    /* Adjust Card Height for Mobile (Maintain Aspect Ratio) */
+    .credit-card {
+        height: auto !important;
+        aspect-ratio: 1.586;
+        /* Standard Credit Card Ratio */
+        padding: 1rem !important;
+    }
+
+    .credit-card-number {
+        font-size: 0.9rem !important;
+        margin-bottom: 0.5rem !important;
     }
 
     .carousel-btn.prev {

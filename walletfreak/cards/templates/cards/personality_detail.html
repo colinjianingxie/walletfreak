@@ -92,7 +92,7 @@
     {% if personality.slots %}
     <div style="display: grid; gap: 2rem;">
         {% for slot in personality.slots %}
-        <div style="background: white; border-radius: 24px; padding: 2.5rem; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+        <div class="personality-slot-container" style="background: white; border-radius: 24px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
             <!-- Slot Info -->
             <div style="margin-bottom: 2rem;">
                 <div style="display: inline-block; background: #f1f5f9; color: #64748b; padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">
@@ -133,7 +133,7 @@
                         </div>
 
                         <!-- Card Visual -->
-                        <div class="credit-card {% if 'american express' in card.name|lower or 'amex' in card.name|lower %}{% if 'platinum' in card.name|lower %}card-amex-platinum{% elif 'gold' in card.name|lower %}card-gold{% else %}card-chase{% endif %}{% elif 'chase' in card.name|lower %}card-chase{% elif 'capital one' in card.name|lower %}card-capital-one{% elif 'citi' in card.name|lower %}card-citi{% else %}card-chase{% endif %}" style="height: 215px; position: relative;">
+                        <div class="credit-card {% if 'american express' in card.name|lower or 'amex' in card.name|lower %}{% if 'platinum' in card.name|lower %}card-amex-platinum{% elif 'gold' in card.name|lower %}card-gold{% else %}card-chase{% endif %}{% elif 'chase' in card.name|lower %}card-chase{% elif 'capital one' in card.name|lower %}card-capital-one{% elif 'citi' in card.name|lower %}card-citi{% else %}card-chase{% endif %}" style="position: relative;">
                             
                             <!-- Selection Indicator (Moved Inside) -->
                             <div class="selection-indicator" style="position: absolute; top: 1rem; right: 1rem; width: 28px; height: 28px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; border: 1px solid rgba(255,255,255,0.4); transition: all 0.2s;">
@@ -170,6 +170,15 @@
                     </div>
                     {% endfor %}
                 </div>
+                
+                <!-- Pagination Dots -->
+                {% if slot.hydrated_cards|length > 1 %}
+                <div class="pagination-dots" id="dots-slot-{{ forloop.counter }}">
+                    {% for card in slot.hydrated_cards %}
+                    <div class="pagination-dot {% if forloop.first %}active{% endif %}"></div>
+                    {% endfor %}
+                </div>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
