@@ -422,7 +422,8 @@
     }
 
     .card-details-header {
-        padding: 1.5rem;
+        padding: 2rem 1.5rem 1rem 1.5rem;
+        /* Increased top padding for correct spacing */
     }
 
     .modal-close-desktop {
@@ -430,19 +431,24 @@
     }
 
     .modal-close-mobile {
-        display: block;
-        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        /* Fixed to viewport */
         top: 1rem;
         right: 1rem;
         background: white;
-        border: none;
-        width: 36px;
-        height: 36px;
+        border: 1px solid #E2E8F0;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
-        font-size: 1.5rem;
+        font-size: 1.75rem;
+        line-height: 1;
         color: #64748B;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        z-index: 20;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        z-index: 99999;
+        /* Ensure on top of everything */
         cursor: pointer;
     }
 
@@ -458,8 +464,30 @@
         padding: 0.75rem 0;
     }
 
+    /* Force row layout for earning/benefits on mobile to override style.css */
+    .expandable-row {
+        flex-direction: row !important;
+        align-items: center !important;
+        padding: 1.25rem 0 !important;
+        gap: 0 !important;
+        justify-content: space-between !important;
+
+        /* Reset styles from style.css leakage ONLY for mobile */
+        background: transparent !important;
+        border: none !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        box-shadow: none !important;
+    }
+
+    .expandable-row>div:last-child {
+        width: auto !important;
+    }
+
     .card-tab-content {
-        padding: 1.5rem;
+        padding: 1.5rem 2rem 8rem 2rem;
+        /* Increased side padding and button space */
     }
 
     /* Sticky Footer for Mobile */

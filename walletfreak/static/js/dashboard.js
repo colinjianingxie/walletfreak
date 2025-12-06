@@ -244,14 +244,21 @@ function showMobileCardDetail(card) {
     }
 
     const container = document.getElementById('mobile-card-detail-screen');
+    // Use Flexbox for robust full-height layout
+    container.style.display = 'flex';
+    container.style.flexDirection = 'column';
+    container.style.height = '100vh';
+    container.style.overflow = 'hidden';
+
     container.innerHTML = `
-        <!-- Header -->
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background: white; position: relative;">
+        <!-- Header (Fixed) -->
+        <div style="flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background: white; border-bottom: 1px solid #F3F4F6;">
             <h1 style="font-size: 1.5rem; font-weight: 700; color: #1F2937; margin: 0;">Manage Wallet</h1>
-            <button class="modal-close-btn" onclick="closeManageWalletModal()" style="background: none; border: none; color: #64748B; font-size: 1.5rem; cursor: pointer; padding: 0.5rem; position: absolute; top: 1rem; right: 1rem;">×</button>
+            <button class="modal-close-btn" onclick="closeManageWalletModal()" style="background: none; border: none; color: #64748B; font-size: 1.5rem; cursor: pointer; padding: 0.5rem;">×</button>
         </div>
         
-        <div style="height: calc(100vh - 80px); overflow-y: auto; background: white;">
+        <!-- Scrollable Content Body -->
+        <div style="flex: 1; overflow-y: auto; background: white; padding-bottom: 2rem;">
             <!-- Tab Navigation -->
             <div style="padding: 1.5rem; background: white;">
                 <div style="display: flex; gap: 1rem;">
@@ -339,7 +346,12 @@ function generateMobileBenefits(card) {
     filteredBenefits.forEach((benefit, index) => {
         const name = benefit.short_description || benefit.name || benefit.title || 'Benefit';
         const value = benefit.numeric_value || benefit.value || benefit.amount || 'Included';
-        const description = benefit.long_description || benefit.description || 'No additional details available.';
+        let description = benefit.long_description || benefit.description || '';
+        if (benefit.additional_details) {
+            description += (description ? '<br><br>' : '') + benefit.additional_details;
+        }
+        if (!description) description = 'No additional details available.';
+
         const uniqueId = `mobile-benefit-${card.id}-${index}`;
 
         // Format value
@@ -387,7 +399,8 @@ function generateMobileEarningRates(card) {
         earning = benefits.filter(b => b.benefit_type === 'Multiplier' || b.benefit_type === 'Cashback').map(b => ({
             category: b.short_description || b.name || b.title || b.description,
             rate: b.numeric_value || b.value || b.multiplier,
-            currency: b.benefit_type === 'Cashback' ? 'cash' : (b.currency || 'points')
+            currency: b.benefit_type === 'Cashback' ? 'cash' : (b.currency || 'points'),
+            details: b.description || b.long_description || b.additional_details
         }));
     }
 
@@ -408,14 +421,31 @@ function generateMobileEarningRates(card) {
             mult = `${rate}x`;
         }
 
+        // Build details text similar to card modal logic
+        let details = item.details || item.description_long || item.additional_details || '';
+        if (!details) {
+            if (currency.toLowerCase().includes('cash')) {
+                details = `Earn ${rate}% cash back on ${cat.toLowerCase()}.`;
+            } else {
+                details = `Earn ${rate}x ${currency} on ${cat.toLowerCase()}.`;
+            }
+        }
+
+        const uniqueId = `mobile-earning-${card.id}-${index}`;
         const borderBottom = index < earning.length - 1 ? 'border-bottom: 1px solid #F3F4F6;' : '';
 
+        // Add onclick interaction and hidden details content
         html += `
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.875rem 1rem; ${borderBottom}">
-                <div style="font-weight: 600; color: #1F2937; font-size: 1rem; max-width: 70%;">${cat}</div>
-                <div style="display: flex; align-items: center; gap: 0.75rem;">
-                    <div style="color: #2563EB; font-weight: 700; font-size: 1rem;">${mult}</div>
-                    <span class="material-icons" style="font-size: 18px; color: #D1D5DB;">expand_more</span>
+            <div onclick="toggleMobileDetail('${uniqueId}')" style="cursor: pointer;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.875rem 1rem; ${borderBottom}">
+                    <div style="font-weight: 600; color: #1F2937; font-size: 1rem; max-width: 70%;">${cat}</div>
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <div style="color: #2563EB; font-weight: 700; font-size: 1rem;">${mult}</div>
+                         <span id="icon-${uniqueId}" class="material-icons" style="font-size: 18px; color: #D1D5DB; transition: transform 0.2s;">expand_more</span>
+                    </div>
+                </div>
+                <div id="${uniqueId}" style="display: none; padding: 0 1rem 1rem 1rem; color: #64748B; font-size: 0.9rem; line-height: 1.5; border-bottom: 1px solid #F3F4F6;">
+                    ${details}
                 </div>
             </div>
         `;
@@ -660,7 +690,8 @@ function selectCardForPreview(card, element) {
         earning = benefits.filter(b => b.benefit_type === 'Multiplier' || b.benefit_type === 'Cashback').map(b => ({
             category: b.short_description || b.name || b.title || b.description,
             rate: b.numeric_value || b.value || b.multiplier,
-            currency: b.benefit_type === 'Cashback' ? 'cash' : (b.currency || 'points')
+            currency: b.benefit_type === 'Cashback' ? 'cash' : (b.currency || 'points'),
+            details: b.description || b.long_description || b.additional_details
         }));
     }
 
@@ -679,12 +710,29 @@ function selectCardForPreview(card, element) {
                 mult = `${rate}x`;
             }
 
+            // Build details text similar to card modal logic
+            let details = item.details || item.description_long || item.additional_details || '';
+            if (!details) {
+                if (currency.toLowerCase().includes('cash')) {
+                    details = `Earn ${rate}% cash back on ${cat.toLowerCase()}.`;
+                } else {
+                    details = `Earn ${rate}x ${currency} on ${cat.toLowerCase()}.`;
+                }
+            }
+
+            const uniqueId = `desktop-earning-${card.id}-${index}`;
+
             earningContainer.innerHTML += `
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.875rem 0; border-bottom: 1px solid #F3F4F6;">
-                    <div style="font-weight: 500; color: #1F2937; font-size: 0.95rem;">${cat}</div>
-                    <div style="display: flex; align-items: center; gap: 0.75rem;">
-                        <div style="color: #6366F1; font-weight: 700; font-size: 0.95rem;">${mult}</div>
-                        <span class="material-icons" style="font-size: 18px; color: #D1D5DB;">chevron_right</span>
+                <div onclick="toggleMobileDetail('${uniqueId}')" style="cursor: pointer;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.875rem 0; border-bottom: 1px solid #F3F4F6;">
+                        <div style="font-weight: 500; color: #1F2937; font-size: 0.95rem;">${cat}</div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <div style="color: #6366F1; font-weight: 700; font-size: 0.95rem;">${mult}</div>
+                            <span id="icon-${uniqueId}" class="material-icons" style="font-size: 18px; color: #D1D5DB; transition: transform 0.2s;">chevron_right</span>
+                        </div>
+                    </div>
+                    <div id="${uniqueId}" style="display: none; padding: 0 0 1rem 0; color: #64748B; font-size: 0.9rem; line-height: 1.5; border-bottom: 1px solid #F3F4F6;">
+                        ${details}
                     </div>
                 </div>
             `;
@@ -706,6 +754,11 @@ function selectCardForPreview(card, element) {
             // Use the correct field names from database (same as card modal)
             const name = benefit.short_description || benefit.name || benefit.title || 'Unnamed Benefit';
             const value = benefit.numeric_value || benefit.value || benefit.amount || benefit.dollar_value;
+            let description = benefit.long_description || benefit.description || '';
+            if (benefit.additional_details) {
+                description += (description ? '<br><br>' : '') + benefit.additional_details;
+            }
+            if (!description) description = 'No additional details available.';
 
             // Format value with proper display
             let valueDisplay = String(value);
@@ -717,12 +770,19 @@ function selectCardForPreview(card, element) {
                 valueDisplay = 'Included';
             }
 
+            const uniqueId = `desktop-benefit-${card.id}-${index}`;
+
             creditsContainer.innerHTML += `
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.875rem 0; border-bottom: 1px solid #F3F4F6;">
-                    <div style="font-weight: 500; color: #1F2937; font-size: 0.95rem;">${name}</div>
-                    <div style="display: flex; align-items: center; gap: 0.75rem;">
-                        <div style="color: #6366F1; font-weight: 700; font-size: 0.95rem;">${valueDisplay}</div>
-                        <span class="material-icons" style="font-size: 18px; color: #D1D5DB;">chevron_right</span>
+                <div onclick="toggleMobileDetail('${uniqueId}')" style="cursor: pointer;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.875rem 0; border-bottom: 1px solid #F3F4F6;">
+                        <div style="font-weight: 500; color: #1F2937; font-size: 0.95rem;">${name}</div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <div style="color: #6366F1; font-weight: 700; font-size: 0.95rem;">${valueDisplay}</div>
+                            <span id="icon-${uniqueId}" class="material-icons" style="font-size: 18px; color: #D1D5DB; transition: transform 0.2s;">chevron_right</span>
+                        </div>
+                    </div>
+                    <div id="${uniqueId}" style="display: none; padding: 0 0 1rem 0; color: #64748B; font-size: 0.9rem; line-height: 1.5; border-bottom: 1px solid #F3F4F6;">
+                        ${description}
                     </div>
                 </div>
             `;

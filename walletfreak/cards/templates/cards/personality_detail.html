@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/card_modal.css' %}">
+
 <link rel="stylesheet" href="{% static 'css/personality_detail.css' %}">
 {% endblock %}
 
@@ -35,7 +35,7 @@
 
 <!-- Stats Cards -->
 <div class="container stats-cards-container">
-    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem;">
+    <div class="grid stats-grid">
         <!-- Annual Fees -->
         <div class="stats-card">
             <div class="stats-card-label">
@@ -102,51 +102,74 @@
                 <p style="color: #64748b; line-height: 1.6;">{{ slot.description }}</p>
             </div>
 
-            <!-- Cards in Slot -->
-            <div style="display: flex; flex-wrap: wrap; gap: 1.5rem;">
-                {% for card in slot.hydrated_cards %}
-                <div class="card-option" 
-                     data-id="{{ card.id }}"
-                     data-fee="{{ card.annual_fee|default:0 }}"
-                     data-bonus-value="{{ card.sign_up_bonus.value|default:0 }}"
-                     data-bonus-currency="{{ card.sign_up_bonus.currency|default:'points' }}"
-                     data-slot="{{ forloop.parentloop.counter }}"
-                     onclick="toggleCardSelection(this, {{ forloop.parentloop.counter }})"
-                     style="position: relative; width: 340px; flex-shrink: 0; cursor: pointer; transition: transform 0.2s;">
-                    
-                    <!-- Selection Indicator -->
-                    <div class="selection-indicator" style="position: absolute; top: 1rem; right: 1rem; width: 28px; height: 28px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; border: 1px solid rgba(255,255,255,0.4); transition: all 0.2s;">
-                        <span class="material-icons status-icon" style="font-size: 18px; color: white;">add</span>
-                    </div>
-
-                    <!-- Info Icon -->
-                    <div style="position: absolute; top: 1rem; left: 1rem; z-index: 10; opacity: 0.8; transition: opacity 0.2s;" onclick="event.stopPropagation(); openCardModal('{{ card.id }}')">
-                        <span class="material-icons" style="font-size: 24px; color: white;">info_outline</span>
-                    </div>
-
-                    <!-- Card Visual -->
-                    <div class="credit-card {% if 'american express' in card.name|lower or 'amex' in card.name|lower %}{% if 'platinum' in card.name|lower %}card-amex-platinum{% elif 'gold' in card.name|lower %}card-gold{% else %}card-chase{% endif %}{% elif 'chase' in card.name|lower %}card-chase{% elif 'capital one' in card.name|lower %}card-capital-one{% elif 'citi' in card.name|lower %}card-citi{% else %}card-chase{% endif %}" style="height: 215px;">
-                        
-                        <div style="display: flex; justify-content: flex-end; align-items: flex-start; margin-bottom: 1rem; height: 24px;">
-                            <!-- Icons are absolutely positioned -->
-                        </div>
-                        
-                        <div class="credit-card-chip"></div>
-                        
-                        <div class="credit-card-number">
-                            •••• •••• •••• 4242
-                        </div>
-                        
-                        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-                            <div>
-                                <div style="font-size: 0.65rem; font-weight: 700; opacity: 0.8; margin-bottom: 0.25rem; letter-spacing: 0.1em;">STRATEGY</div>
-                                <div style="font-size: 1rem; font-weight: 700; line-height: 1.2;">{{ card.name }}</div>
-                            </div>
-                            <div style="width: 32px; height: 32px; background: rgba(255,255,255,0.3); border-radius: 50%;"></div>
-                        </div>
-                    </div>
+            <!-- Cards in Slot (Carousel) -->
+            <div class="slot-carousel" id="carousel-slot-{{ forloop.counter }}">
+                <!-- Navigation Buttons (only for JS) -->
+                {% if slot.hydrated_cards|length > 1 %}
+                <div class="carousel-btn prev" onclick="changeCard({{ forloop.counter }}, -1)">
+                    <span class="material-icons">chevron_left</span>
                 </div>
-                {% endfor %}
+                <div class="carousel-btn next" onclick="changeCard({{ forloop.counter }}, 1)">
+                    <span class="material-icons">chevron_right</span>
+                </div>
+                {% endif %}
+
+                <div class="carousel-track" style="display: flex; overflow: hidden; justify-content: center; width: 100%;">
+                    {% for card in slot.hydrated_cards %}
+                    <div class="card-option" 
+                        data-id="{{ card.id }}"
+                        data-fee="{{ card.annual_fee|default:0 }}"
+                        data-bonus-value="{{ card.sign_up_bonus.value|default:0 }}"
+                        data-bonus-currency="{{ card.sign_up_bonus.currency|default:'points' }}"
+                        data-slot="{{ forloop.parentloop.counter }}"
+                        data-index="{{ forloop.counter0 }}"
+                        onclick="toggleCardSelection(this, {{ forloop.parentloop.counter }})"
+                        style="position: relative; width: 340px; flex-shrink: 0; cursor: pointer; transition: transform 0.2s; {% if not forloop.first %}display: none;{% endif %}"
+                        class="slot-card-{{ forloop.parentloop.counter }}">
+                        
+                        <!-- Info Icon -->
+                        <div style="position: absolute; top: 1rem; left: 1rem; z-index: 10; opacity: 0.8; transition: opacity 0.2s;" onclick="event.stopPropagation(); openCardModal('{{ card.id }}')">
+                            <span class="material-icons" style="font-size: 24px; color: white;">info_outline</span>
+                        </div>
+
+                        <!-- Card Visual -->
+                        <div class="credit-card {% if 'american express' in card.name|lower or 'amex' in card.name|lower %}{% if 'platinum' in card.name|lower %}card-amex-platinum{% elif 'gold' in card.name|lower %}card-gold{% else %}card-chase{% endif %}{% elif 'chase' in card.name|lower %}card-chase{% elif 'capital one' in card.name|lower %}card-capital-one{% elif 'citi' in card.name|lower %}card-citi{% else %}card-chase{% endif %}" style="height: 215px; position: relative;">
+                            
+                            <!-- Selection Indicator (Moved Inside) -->
+                            <div class="selection-indicator" style="position: absolute; top: 1rem; right: 1rem; width: 28px; height: 28px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; border: 1px solid rgba(255,255,255,0.4); transition: all 0.2s;">
+                                <span class="material-icons status-icon" style="font-size: 18px; color: white;">add</span>
+                            </div>
+
+                            <div style="display: flex; justify-content: flex-end; align-items: flex-start; margin-bottom: 1rem; height: 24px;">
+                                <!-- Icons are absolutely positioned -->
+                            </div>
+                            
+                            <div class="credit-card-chip"></div>
+                            
+                            <div class="credit-card-number">
+                                •••• •••• •••• 4242
+                            </div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                                <div>
+                                    <div style="font-size: 0.65rem; font-weight: 700; opacity: 0.8; margin-bottom: 0.25rem; letter-spacing: 0.1em;">STRATEGY</div>
+                                </div>
+                                <div style="width: 32px; height: 32px; background: rgba(255,255,255,0.3); border-radius: 50%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Card Metadata (Below) -->
+                        <div style="text-align: center; margin-top: 1rem; padding: 0 0.5rem;">
+                            <div style="font-weight: 700; font-size: 1rem; color: #1e293b; margin-bottom: 0.25rem;">{{ card.name }}</div>
+                            <div style="font-size: 0.75rem; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
+                                <span style="color: #94a3b8;">${{ card.annual_fee|default:0 }}</span>
+                                <span style="margin: 0 0.5rem; color: #cbd5e1;">•</span>
+                                <span style="color: #3b82f6;">{{ card.categories.0|default:'CREDIT' }} STRATEGY</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
         {% endfor %}
@@ -208,6 +231,45 @@
 <script>
     // Initialize allCardsData for shared modal
     const allCardsData = {{ cards_json|safe }};
+    const walletCardIds = new Set({{ wallet_card_ids|safe|default:'[]' }});
+    const userMatchScores = {{ user_match_scores|safe|default:'{}' }};
+
+    // Track current index for each slot
+    const currentSlotIndices = {};
+
+    function changeCard(slotIndex, direction) {
+        const slotClass = `slot-card-${slotIndex}`;
+        const cards = document.querySelectorAll(`.${slotClass}`);
+        if (cards.length <= 1) return;
+
+        // Get current index
+        let currentIndex = currentSlotIndices[slotIndex] || 0;
+
+        // Hide current
+        cards[currentIndex].style.display = 'none';
+
+        // Calculate new index
+        currentIndex += direction;
+        if (currentIndex < 0) currentIndex = cards.length - 1;
+        if (currentIndex >= cards.length) currentIndex = 0;
+
+        // Show new and update tracker
+        cards[currentIndex].style.display = 'block';
+        currentSlotIndices[slotIndex] = currentIndex;
+
+        // Update Dots
+        const dotsContainer = document.getElementById(`dots-slot-${slotIndex}`);
+        if (dotsContainer) {
+            const dots = dotsContainer.querySelectorAll('.pagination-dot');
+            dots.forEach((dot, index) => {
+                if (index === currentIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+    }
 </script>
 <script src="{% static 'js/personality_detail.js' %}"></script>
 

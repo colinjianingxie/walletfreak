@@ -64,6 +64,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Security settings
+# Allow Google Auth popups to work
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
+
 # Authentication backends
 AUTHENTICATION_BACKENDS = [
     'core.admin_auth.FirebaseAdminBackend',  # Firebase admin authentication

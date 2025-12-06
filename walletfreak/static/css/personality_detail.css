@@ -97,6 +97,12 @@
     margin-bottom: 2rem;
 }
 
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
 .stats-card {
     background: white;
     padding: 2rem;
@@ -231,11 +237,191 @@
         transform: translateY(-2rem);
     }
 
+    .stats-cards-container .grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.75rem;
+        padding-bottom: 0;
+        margin: 0;
+        padding-left: 0;
+        padding-right: 0;
+        overflow-x: visible;
+    }
+
+    .stats-card {
+        min-width: 0;
+        /* Allow shrinking */
+        width: 100%;
+        padding: 1.25rem 1rem;
+        /* Compact padding */
+        scroll-snap-align: none;
+    }
+
     .stats-card-value {
-        font-size: 2rem;
+        font-size: 1.5rem;
+        /* Smaller font for mobile grid */
+    }
+
+    .stats-card-label {
+        font-size: 0.65rem;
     }
 
     .card-option {
         width: 100% !important;
     }
+
+    /* Carousel Styles */
+    .slot-carousel {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        /* Center the card */
+        padding: 0 3rem;
+        /* Make room for arrows */
+    }
+
+    .carousel-btn {
+        display: flex;
+        /* Show on mobile */
+        position: absolute;
+        top: 40%;
+        /* Vertically centered relative to card visual approx */
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        background: white;
+        border-radius: 50%;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 20;
+        color: #1e293b;
+        border: 1px solid #e2e8f0;
+    }
+
+    .carousel-btn.prev {
+        left: 0;
+    }
+
+    .carousel-btn.next {
+        right: 0;
+    }
+
+    /* Mobile Card Sizing for Arrows */
+    .card-option {
+        width: 100% !important;
+        /* Full width of track */
+        padding: 0 1rem;
+        /* Internal padding if needed, or track padding */
+    }
+
+    /* Pagination Dots */
+    .pagination-dots {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .pagination-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #e2e8f0;
+        transition: all 0.2s;
+    }
+
+    .pagination-dot.active {
+        background: #6366f1;
+        /* Primary color */
+        transform: scale(1.2);
+    }
 }
+
+/* ========================================
+   MODAL MOBILE OVERRIDES (Restoring Fixes)
+   ======================================== */
+@media (max-width: 768px) {
+
+    /* Fix Modal Header Padding */
+    .card-details-header {
+        padding: 2rem 1.5rem 1rem 1.5rem !important;
+    }
+
+    /* Restore Mobile Close Button */
+    .modal-close-desktop {
+        display: none !important;
+    }
+
+    .modal-close-mobile {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        background: white;
+        border: 1px solid #E2E8F0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        font-size: 1.75rem;
+        line-height: 1;
+        color: #64748B;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        z-index: 99999;
+        cursor: pointer;
+    }
+
+    /* Reset Big Box styles from style.css for cleaner list view */
+    .expandable-row {
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 1.25rem 0 !important;
+        gap: 0 !important;
+        background: transparent !important;
+        border: none !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        box-shadow: none !important;
+    }
+
+    .expandable-row>div:last-child {
+        width: auto !important;
+    }
+
+    .card-tab-content {
+        padding: 1.5rem 2rem 8rem 2rem !important;
+    }
+}
+
+/* Hide carousel buttons AND dots on desktop */
+@media (min-width: 769px) {
+
+    .carousel-btn,
+    .pagination-dots {
+        display: none !important;
+    }
+
+    /* Desktop Grid Layout: Show all cards left-to-right */
+    .card-option {
+        display: block !important;
+        /* Override inline display: none */
+        width: 340px !important;
+        margin-bottom: 2rem;
+        /* Add spacing for wrapped rows */
+        padding: 0;
+    }
+
+    .slot-carousel {
+        padding: 0;
+    }
+
+    .carousel-track {
+        flex-wrap: wrap !important;
+        gap: 1.5rem !important;
+        justify-content: flex-start !important;
+    }

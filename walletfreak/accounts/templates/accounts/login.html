@@ -176,7 +176,8 @@
     });
 
     // Google Sign Up/In (no verification needed)
-    document.getElementById('googleSignup').addEventListener('click', async () => {
+    document.getElementById('googleSignup').addEventListener('click', async (e) => {
+        e.preventDefault();
         const provider = new firebase.auth.GoogleAuthProvider();
         try {
             const result = await firebase.auth().signInWithPopup(provider);
@@ -192,13 +193,22 @@
                 window.location.href = '/dashboard/';
             }
         } catch (error) {
-            document.getElementById('signup-error').textContent = error.message;
+            console.error(error);
+            let errorMessage = error.message;
+            if (error.code === 'auth/account-exists-with-different-credential') {
+                errorMessage = 'An account already exists with the same email address but different sign-in credentials. Sign in using a provider associated with this email address.';
+            } else if (error.code === 'auth/popup-closed-by-user') {
+                errorMessage = 'Sign-in cancelled. Please try again.';
+            }
+            
+            document.getElementById('signup-error').textContent = errorMessage;
             document.getElementById('signup-error').style.display = 'block';
         }
     });
 
     // Google Sign In (same as signup - Google handles verification)
-    document.getElementById('googleLogin').addEventListener('click', async () => {
+    document.getElementById('googleLogin').addEventListener('click', async (e) => {
+        e.preventDefault();
         const provider = new firebase.auth.GoogleAuthProvider();
         try {
             const result = await firebase.auth().signInWithPopup(provider);
@@ -214,7 +224,14 @@
                 window.location.href = '/dashboard/';
             }
         } catch (error) {
-            document.getElementById('login-error').textContent = error.message;
+            console.error(error);
+            let errorMessage = error.message;
+            if (error.code === 'auth/account-exists-with-different-credential') {
+                errorMessage = 'An account already exists with the same email address but different sign-in credentials. Sign in using a provider associated with this email address.';
+            } else if (error.code === 'auth/popup-closed-by-user') {
+                errorMessage = 'Sign-in cancelled. Please try again.';
+            }
+            document.getElementById('login-error').textContent = errorMessage;
             document.getElementById('login-error').style.display = 'block';
         }
     });

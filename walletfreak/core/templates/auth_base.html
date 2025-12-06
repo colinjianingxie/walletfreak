@@ -30,7 +30,12 @@
                     const idToken = await user.getIdToken();
                     const isDjangoAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}" === "true";
 
-                    if (!isDjangoAuthenticated) {
+                if (!isDjangoAuthenticated) {
+                        // Skip if we are on the login page - let the specific login handler handle it
+                        if (window.location.pathname === '/accounts/login/') {
+                            return;
+                        }
+                        
                         const idToken = await user.getIdToken();
                         fetch('/accounts/api/login/', {
                             method: 'POST',

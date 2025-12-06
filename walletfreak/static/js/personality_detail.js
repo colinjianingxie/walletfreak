@@ -18,9 +18,9 @@ function toggleCardSelection(element, slotIndex) {
     } else {
         element.classList.add('selected');
         statusIcon.textContent = 'check';
-        selectionIndicator.style.background = '#10b981';
-        selectionIndicator.style.borderColor = '#10b981';
-        cardVisual.style.boxShadow = '0 0 0 4px rgba(16, 185, 129, 0.4), 0 10px 25px rgba(0,0,0,0.2)';
+        selectionIndicator.style.background = '#3b82f6';
+        selectionIndicator.style.borderColor = '#3b82f6';
+        cardVisual.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.4), 0 10px 25px rgba(0,0,0,0.2)';
         cardVisual.style.transform = 'translateY(-4px)';
 
         selectedCards[cardId] = {

@@ -89,16 +89,39 @@
 }
 
 @media (max-width: 768px) {
+    #quiz-container {
+        padding: 1.5rem 1rem !important;
+    }
+
     #options-container {
-        grid-template-columns: 1fr !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.5rem;
     }
 
     .quiz-option {
-        padding: 1.25rem;
+        padding: 0.75rem;
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+        justify-content: center;
+        min-height: 80px;
     }
 
     .quiz-option .text {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
+        text-align: center;
+        line-height: 1.3;
+    }
+
+    .quiz-option .checkmark {
+        top: 0.5rem;
+        right: 0.5rem;
+        width: 20px;
+        height: 20px;
+    }
+
+    .quiz-option .checkmark .material-icons {
+        font-size: 14px !important;
     }
 }
 
@@ -123,7 +146,7 @@
 
 @media (max-width: 768px) {
     #options-container {
-        grid-template-columns: 1fr !important;
+        grid-template-columns: repeat(2, 1fr) !important;
     }
 
     .option-card {

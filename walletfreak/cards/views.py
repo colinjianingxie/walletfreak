@@ -93,13 +93,83 @@ def personality_detail(request, personality_id):
                     hydrated_cards.append(card)
             slot['hydrated_cards'] = hydrated_cards
 
-    # Stats are already in personality object from Firestore
+    # --- ENRICHMENT LOGIC (Copied from card_list) ---
+    
+    # Get user wallet and personality for matching
+    wallet_card_ids = set()
+    user_personality = None
+    if request.user.is_authenticated:
+        uid = request.session.get('uid')
+        if uid:
+            try:
+                user_cards = db.get_user_cards(uid)
+                wallet_card_ids = {c['card_id'] for c in user_cards}
+            except Exception:
+                pass
+            try:
+                user_personality = db.get_user_assigned_personality(uid)
+            except Exception:
+                pass
+
+    # Categories Mapping
+    categories_map = {
+        'Travel': ['travel', 'flight', 'hotel', 'mile', 'vacation', 'rental car', 'transit'],
+        'Hotel': ['hotel', 'marriott', 'hilton', 'hyatt', 'ihg'],
+        'Flights': ['flight', 'airline', 'delta', 'united', 'southwest', 'british airways', 'avios', 'aeroplan'],
+        'Dining': ['dining', 'restaurant', 'food', 'eats'],
+        'Groceries': ['groceries', 'supermarket', 'whole foods'],
+        'Gas': ['gas'],
+        'Student': ['student'],
+        'Cash Back': ['cash back', 'cash rewards'],
+        'Luxury': ['lounge', 'luxury', 'platinum', 'reserve']
+    }
+
+    # Enrich all cards in the map
+    user_match_scores = {}
+    
+    for card in all_cards_map.values():
+        # 1. Categories
+        card_cats = set()
+        text_to_check = (card.get('name', '') + ' ' + str(card.get('rewards_structure', '')) + ' ' + str(card.get('benefits', ''))).lower()
+        for cat, keywords in categories_map.items():
+            if any(k in text_to_check for k in keywords):
+                card_cats.add(cat)
+        if card.get('annual_fee', 0) == 0:
+            card_cats.add('No Annual Fee')
+        card['categories'] = sorted(list(card_cats))
+
+        # 2. Wallet Status
+        card['in_wallet'] = card.get('id') in wallet_card_ids
+
+        # 3. Match Score
+        if request.user.is_authenticated and user_personality:
+            personality_categories = set(user_personality.get('focus_categories', []))
+            score = 50
+            card_categories = set(card.get('categories', []))
+            if personality_categories:
+                category_overlap = len(card_categories & personality_categories)
+                score += min(30, category_overlap * 10)
+            
+            annual_fee = card.get('annual_fee', 0)
+            if annual_fee == 0: score += 10
+            elif annual_fee > 500: score -= 10
+            
+            if card.get('in_wallet', False): score -= 30
+            
+            score = max(0, min(100, score))
+            card['match_score'] = score
+            user_match_scores[card['id']] = score
+
+    # Store match scores in session or context if needed, but mainly we updated the card objects themselves 
+    # which will be serialized into cards_json.
     
     cards_json = json.dumps(all_cards_map, default=str)
     
     return render(request, 'cards/personality_detail.html', {
         'personality': personality,
         'cards_json': cards_json,
+        'wallet_card_ids': list(wallet_card_ids),
+        'user_match_scores': user_match_scores
     })
 
 
