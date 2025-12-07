@@ -655,6 +655,56 @@
     z-index: 1000;
 }
 
+/* Mobile Vote Buttons - Hidden on desktop by default */
+.mobile-vote-btn {
+    display: none;
+    align-items: center;
+    gap: 0.25rem;
+    color: #6B7280;
+    transition: all 0.2s;
+}
+
+.mobile-vote-btn.active {
+    color: #6366F1;
+}
+
+.mobile-vote-btn .material-icons {
+    font-size: 18px;
+}
+
+.mobile-vote-btn .action-count {
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.mobile-downvote-btn {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: -40px;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    padding: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    color: #6B7280;
+    transition: all 0.2s;
+}
+
+.mobile-downvote-btn.active {
+    color: #EF4444;
+}
+
+.mobile-downvote-btn .material-icons {
+    font-size: 18px;
+}
+
+/* Show downvote on long press/hover */
+.post-actions:hover .mobile-downvote-btn,
+.post-actions.show-downvote .mobile-downvote-btn {
+    display: flex;
+}
+
 /* Voting Loader Modal */
 .voting-loader-modal {
     position: fixed;
@@ -894,6 +944,23 @@
     .action-btn .material-icons {
         font-size: 18px;
     }
+    
+    /* Mobile vote button styling to match mockup */
+    .mobile-vote-btn {
+        display: flex !important;
+        color: #F59E0B !important;
+        font-weight: 600;
+    }
+    
+    .mobile-vote-btn.active {
+        color: #D97706 !important;
+    }
+    
+    .mobile-vote-btn .action-count {
+        color: #F59E0B;
+        font-weight: 700;
+    }
+    
     
     .fab {
         bottom: 1rem;

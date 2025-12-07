@@ -193,10 +193,9 @@ def blog_detail(request, slug):
     html_content = mark_safe(md.convert(blog.get('content', '')))
     blog['html_content'] = html_content
     
-    # Get voting information
+    # Get voting information (upvotes only)
     blog_id = blog.get('id')
     upvote_count = db.get_blog_vote_count(blog_id, 'upvote')
-    downvote_count = db.get_blog_vote_count(blog_id, 'downvote')
     user_vote = None
     
     if uid:
@@ -216,7 +215,6 @@ def blog_detail(request, slug):
         'blog': blog,
         'is_editor': is_editor,
         'upvote_count': upvote_count,
-        'downvote_count': downvote_count,
         'user_vote': user_vote,
         'is_authenticated': bool(uid),
         'related_posts': related_posts
@@ -463,10 +461,10 @@ def vote_blog(request, slug):
         if not blog:
             return JsonResponse({'success': False, 'error': 'Post not found'}, status=404)
         
-        # Get vote type from request
+        # Get vote type from request (only upvote allowed)
         vote_type = request.POST.get('vote_type')
-        if vote_type not in ['upvote', 'downvote']:
-            return JsonResponse({'success': False, 'error': 'Invalid vote type'}, status=400)
+        if vote_type != 'upvote':
+            return JsonResponse({'success': False, 'error': 'Only upvotes are allowed'}, status=400)
         
         blog_id = blog['id']
         
@@ -487,15 +485,13 @@ def vote_blog(request, slug):
             new_vote = vote_type
         
         if success:
-            # Get updated vote counts
+            # Get updated vote count (upvotes only)
             upvote_count = db.get_blog_vote_count(blog_id, 'upvote')
-            downvote_count = db.get_blog_vote_count(blog_id, 'downvote')
             
             return JsonResponse({
                 'success': True,
                 'user_vote': new_vote,
-                'upvote_count': upvote_count,
-                'downvote_count': downvote_count
+                'upvote_count': upvote_count
             })
         else:
             return JsonResponse({'success': False, 'error': 'Failed to process vote'}, status=500)

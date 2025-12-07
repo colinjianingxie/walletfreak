@@ -340,14 +340,10 @@
 }
 
 .upvote-btn.active {
-    color: #F59E0B !important;
-    background: #FEF3C7 !important;
-}
-
-.downvote-btn.active {
     color: #EF4444 !important;
     background: #FEE2E2 !important;
 }
+
 
 .save-btn.active {
     color: #DC2626 !important;

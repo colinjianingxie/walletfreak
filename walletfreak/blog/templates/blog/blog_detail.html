@@ -76,8 +76,8 @@
                             <span>{{ blog.published_at|timesince }} ago</span>
                         </div>
                         <div class="stat-item">
-                            <span class="material-icons">trending_up</span>
-                            <span>1.4k Score</span>
+                            <span class="material-icons">local_fire_department</span>
+                            <span>{{ upvote_count|default:0 }} upvote{{ upvote_count|pluralize }}</span>
                         </div>
                         <div class="stat-item">
                             <span class="material-icons">access_time</span>
@@ -110,21 +110,13 @@
                 <div class="action-group">
                     {% if is_authenticated %}
                     <button class="action-btn upvote-btn {% if user_vote == 'upvote' %}active{% endif %}" data-vote-type="upvote">
-                        <span class="material-icons">trending_up</span>
+                        <span class="material-icons">local_fire_department</span>
                         <span class="action-count">{{ upvote_count|default:0 }}</span>
-                    </button>
-                    <button class="action-btn downvote-btn {% if user_vote == 'downvote' %}active{% endif %}" data-vote-type="downvote">
-                        <span class="material-icons">trending_down</span>
-                        <span class="action-count">{{ downvote_count|default:0 }}</span>
                     </button>
                     {% else %}
                     <button class="action-btn upvote-btn" onclick="alert('Please log in to vote')">
-                        <span class="material-icons">trending_up</span>
+                        <span class="material-icons">local_fire_department</span>
                         <span class="action-count">{{ upvote_count|default:0 }}</span>
-                    </button>
-                    <button class="action-btn downvote-btn" onclick="alert('Please log in to vote')">
-                        <span class="material-icons">trending_down</span>
-                        <span class="action-count">{{ downvote_count|default:0 }}</span>
                     </button>
                     {% endif %}
                     <button class="action-btn comment-btn">
@@ -209,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Voting functionality
-    document.querySelectorAll('.upvote-btn, .downvote-btn').forEach(btn => {
+    document.querySelectorAll('.upvote-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             {% if is_authenticated %}
             const voteType = this.dataset.voteType;
@@ -234,18 +226,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 loader.classList.remove('show');
                 
                 if (data.success) {
-                    // Update vote counts
+                    // Update vote count
                     document.querySelector('.upvote-btn .action-count').textContent = data.upvote_count;
-                    document.querySelector('.downvote-btn .action-count').textContent = data.downvote_count;
                     
-                    // Update active states
+                    // Update active state
                     document.querySelector('.upvote-btn').classList.remove('active');
-                    document.querySelector('.downvote-btn').classList.remove('active');
                     
                     if (data.user_vote === 'upvote') {
                         document.querySelector('.upvote-btn').classList.add('active');
-                    } else if (data.user_vote === 'downvote') {
-                        document.querySelector('.downvote-btn').classList.add('active');
                     }
                 } else {
                     alert('Error: ' + data.error);
