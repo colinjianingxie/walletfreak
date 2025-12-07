@@ -98,8 +98,9 @@ def blog_list(request):
     for blog in blogs:
         blog_id = blog.get('id')
         if blog_id:
-            blog['upvote_count'] = db.get_blog_vote_count(blog_id, 'upvote')
-            blog['downvote_count'] = db.get_blog_vote_count(blog_id, 'downvote')
+            # Use stored counts if available, otherwise 0
+            blog['upvote_count'] = blog.get('upvote_count', 0)
+            blog['downvote_count'] = blog.get('downvote_count', 0)
             blog['total_score'] = blog['upvote_count'] - blog['downvote_count']
             
             if uid:
@@ -118,8 +119,8 @@ def blog_list(request):
         for blog in all_published_blogs:
             blog_id = blog.get('id')
             if blog_id:
-                blog['upvote_count'] = db.get_blog_vote_count(blog_id, 'upvote')
-                blog['total_score'] = blog['upvote_count'] - db.get_blog_vote_count(blog_id, 'downvote')
+                blog['upvote_count'] = blog.get('upvote_count', 0)
+                blog['total_score'] = blog.get('upvote_count', 0) - blog.get('downvote_count', 0)
         
         # Sort by upvote count (descending) and take top 3
         trending_posts = sorted(all_published_blogs, key=lambda x: x.get('upvote_count', 0), reverse=True)[:3]
@@ -152,7 +153,8 @@ def blog_list(request):
         'user_saved_posts': user_saved_posts,
         'is_authenticated': bool(uid),
         'trending_posts': trending_posts,
-        'top_contributors': top_contributors
+        'top_contributors': top_contributors,
+        'now': datetime.now()  # Useful for calculating time since
     })
 
 @login_required
@@ -195,7 +197,8 @@ def blog_detail(request, slug):
     
     # Get voting information (upvotes only)
     blog_id = blog.get('id')
-    upvote_count = db.get_blog_vote_count(blog_id, 'upvote')
+    # Use stored count
+    upvote_count = blog.get('upvote_count', 0)
     user_vote = None
     
     if uid:
@@ -211,14 +214,125 @@ def blog_detail(request, slug):
     # Limit to 3 related posts
     related_posts = related_posts[:3]
     
+    # Increment view count
+    db.increment_blog_view_count(blog_id)
+    
+    # Get comments
+    raw_comments = db.get_blog_comments(blog_id)
+    
+    # Process comments into a tree structure
+    comments_map = {c['id']: {**c, 'replies': []} for c in raw_comments}
+    root_comments = []
+    
+    for c in raw_comments:
+        comment_id = c['id']
+        parent_id = c.get('parent_id')
+        
+        # Add basic time info if not present (it should be though)
+        if 'created_at' not in c:
+             c['created_at'] = datetime.now()
+
+        if parent_id and parent_id in comments_map:
+            comments_map[parent_id]['replies'].append(comments_map[comment_id])
+        else:
+            root_comments.append(comments_map[comment_id])
+            
+    # Count total comments
+    total_comments = len(raw_comments)
+
     return render(request, 'blog/blog_detail.html', {
         'blog': blog,
         'is_editor': is_editor,
         'upvote_count': upvote_count,
         'user_vote': user_vote,
         'is_authenticated': bool(uid),
-        'related_posts': related_posts
+        'related_posts': related_posts,
+        'comments': root_comments,
+        'total_comments': total_comments
     })
+
+@require_POST
+def add_comment(request, slug):
+    """Add a comment to a blog post"""
+    uid = request.session.get('uid')
+    if not uid:
+        return JsonResponse({'success': False, 'error': 'Not authenticated'}, status=401)
+        
+    blog = db.get_blog_by_slug(slug)
+    if not blog:
+        return JsonResponse({'success': False, 'error': 'Post not found'}, status=404)
+        
+    content = request.POST.get('content')
+    parent_id = request.POST.get('parent_id')
+    
+    if not content:
+        return JsonResponse({'success': False, 'error': 'Content required'}, status=400)
+        
+    comment = db.add_blog_comment(blog['id'], uid, content, parent_id)
+    
+    if comment:
+        return JsonResponse({
+            'success': True, 
+            'comment': {
+                'id': comment['id'],
+                'content': comment['content'],
+                'author_name': comment['author_name'],
+                'created_at_formatted': 'Just now'
+            }
+        })
+    else:
+        return JsonResponse({'success': False, 'error': 'Failed to add comment'}, status=500)
+
+@require_POST
+def vote_comment(request, slug, comment_id):
+    """Vote on a comment"""
+    uid = request.session.get('uid')
+    if not uid:
+        return JsonResponse({'success': False, 'error': 'Not authenticated'}, status=401)
+        
+    blog = db.get_blog_by_slug(slug)
+    if not blog:
+        return JsonResponse({'success': False, 'error': 'Post not found'}, status=404)
+        
+    vote_type = request.POST.get('vote_type')
+    result = db.vote_comment(blog['id'], comment_id, uid, vote_type)
+    
+    if result:
+        return JsonResponse({'success': True, 'action': result})
+    else:
+        return JsonResponse({'success': False, 'error': 'Failed to vote'}, status=500)
+@require_POST
+def delete_comment(request, slug, comment_id):
+    """Delete a comment from a blog post"""
+    uid = request.session.get('uid')
+    if not uid:
+        return JsonResponse({'success': False, 'error': 'Not authenticated'}, status=401)
+        
+    blog = db.get_blog_by_slug(slug)
+    if not blog:
+        return JsonResponse({'success': False, 'error': 'Post not found'}, status=404)
+    
+    # Verify ownership or permissions
+    # Need to fetch comment first to check owner
+    comments = db.get_blog_comments(blog['id'])
+    target_comment = next((c for c in comments if c['id'] == comment_id), None)
+    
+    if not target_comment:
+        return JsonResponse({'success': False, 'error': 'Comment not found'}, status=404)
+        
+    # Check if user is author OR acts as moderator (e.g. blog author or editor)
+    is_author = target_comment.get('author_uid') == uid
+    can_manage = db.can_manage_blogs(uid)
+    
+    if not is_author and not can_manage:
+        return JsonResponse({'success': False, 'error': 'Permission denied'}, status=403)
+        
+    result = db.delete_blog_comment(blog['id'], comment_id)
+    
+    if result:
+        return JsonResponse({'success': True})
+    else:
+        return JsonResponse({'success': False, 'error': 'Failed to delete comment'}, status=500)
 
 @login_required
 def blog_create(request):
@@ -254,7 +368,7 @@ def blog_create(request):
         
         # Get user profile for author info
         user_profile = db.get_user_profile(uid)
-        author_name = user_profile.get('name', 'Unknown') if user_profile else 'Unknown'
+        author_name = user_profile.get('username') or user_profile.get('name') or 'Unknown'
         
         # Prepare blog data
         blog_data = {
@@ -263,7 +377,7 @@ def blog_create(request):
             'content': content,
             'excerpt': excerpt,
             'author_uid': uid,
-            'author_name': author_name,
+            # 'author_name': author_name, # Storing author_name deprecated, fetched dynamically
             'status': status,
             'featured_image': featured_image,
             'tags': tags,

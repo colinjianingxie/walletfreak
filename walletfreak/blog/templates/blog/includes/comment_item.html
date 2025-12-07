@@ -1,0 +1,69 @@
+<div class="comment-item" id="comment-{{ comment.id }}">
+    <div class="comment-sidebar">
+        <div class="comment-avatar">
+            {% if comment.author_avatar %}
+                <img src="{{ comment.author_avatar }}" alt="{{ comment.author_name }}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+            {% else %}
+                {{ comment.author_name|slice:":1" }}
+            {% endif %}
+        </div>
+        <div class="comment-thread-line"></div>
+    </div>
+    
+    <div class="comment-content">
+        <div class="comment-header">
+            <span class="comment-author">{{ comment.author_real_name|default:comment.author_name }}</span>
+            <span class="comment-username" style="color: #6c757d; font-size: 0.9em; margin-left: 4px;">@{{ comment.author_username|default:"unknown" }}</span>
+            <span class="comment-date">&bull; {{ comment.created_at|timesince }} ago</span>
+        </div>
+        
+        <div class="comment-body">
+            {{ comment.content|linebreaksbr }}
+        </div>
+        
+        <div class="comment-footer">
+            <div class="vote-actions">
+                <button class="comment-action-btn vote-btn upvote" onclick="voteComment('{{ comment.id }}', 'upvote')">
+                    <span class="material-icons">local_fire_department</span>
+                </button>
+                <span class="vote-count" id="vote-count-{{ comment.id }}">
+                    {{ comment.upvote_count|default:0|add:comment.downvote_count|default:0 }}
+                </span>
+            </div>
+            
+            <button class="comment-action-btn reply-btn" onclick="toggleReply('{{ comment.id }}')">
+                Reply
+            </button>
+            
+            <button class="comment-action-btn share-btn">
+                Share
+            </button>
+            
+            {% if request.session.uid == comment.author_uid or is_editor %}
+            <button class="comment-action-btn delete-btn" onclick="deleteComment('{{ comment.id }}')" style="color: #EF4444;">
+                Delete
+            </button>
+            {% endif %}
+        </div>
+        
+        <!-- Reply Form (Hidden by default) -->
+        <div class="reply-form-container" id="reply-form-{{ comment.id }}" style="display: none;">
+            <form class="comment-form reply-form" onsubmit="submitComment(event, '{{ comment.id }}')">
+                <textarea placeholder="What are your thoughts?" rows="3"></textarea>
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="toggleReply('{{ comment.id }}')">Cancel</button>
+                    <button type="submit" class="btn-submit">Reply</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Nested Replies -->
+        {% if comment.replies %}
+        <div class="comment-replies">
+            {% for reply in comment.replies %}
+                {% include "blog/includes/comment_item.html" with comment=reply %}
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>

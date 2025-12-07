@@ -17,5 +17,8 @@ urlpatterns = [
     path('<str:slug>/unsave/', views.unsave_post, name='unsave_post'),
     path('<str:slug>/vote/', views.vote_blog, name='vote_blog'),
     path('api/<str:blog_id>/status/', views.blog_quick_status_change, name='blog_quick_status_change'),
+    path('<str:slug>/comment/add/', views.add_comment, name='add_comment'),
+    path('<str:slug>/comment/<str:comment_id>/vote/', views.vote_comment, name='vote_comment'),
+    path('<str:slug>/comment/<str:comment_id>/delete/', views.delete_comment, name='delete_comment'),
 ]
 

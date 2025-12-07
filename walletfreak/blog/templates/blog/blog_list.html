@@ -79,8 +79,8 @@
                                     <span class="material-icons">person</span>
                                 </div>
                                 <div class="author-info">
-                                    <span class="author-name">@{{ post.author_name|lower|cut:" " }}</span>
-                                    <span class="post-time">{{ post.published_at|timesince }} ago</span>
+                                    <span class="author-name">@{{ post.author_username|default:"Unknown" }}</span>
+                                    <span class="post-time">{{ post.published_at|timesince }} ago &bull; {{ post.view_count|default:0 }} views</span>
                                 </div>
                             </div>
                             <div class="post-category">
@@ -103,7 +103,7 @@
                                 {% if post.excerpt %}
                                 <div class="post-tldr">
                                     <span class="tldr-label">TL;DR</span>
-                                    <span class="tldr-text">{{ post.excerpt|truncatewords:25 }}</span>
+                                    <span class="tldr-text">{{ post.excerpt }}</span>
                                 </div>
                                 {% endif %}
                             </div>
@@ -134,7 +134,7 @@
                                 
                                 <button class="action-btn comment-btn">
                                     <span class="material-icons">chat_bubble_outline</span>
-                                    <span class="action-count">{{ post.id|add:50|add:39 }}</span>
+                                    <span class="action-count">{{ post.comment_count|default:0 }}</span>
                                     <span class="action-text">Comments</span>
                                 </button>
                                 <button class="action-btn share-btn">

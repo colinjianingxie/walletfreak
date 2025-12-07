@@ -39,18 +39,75 @@ class FirestoreService:
             return {**doc.to_dict(), 'id': doc.id}
         return None
 
+    def _enrich_with_author_data(self, data, user):
+        """Helper to inject standardized author data into a dict."""
+        if user:
+            data['author_username'] = user.get('username') or 'Unknown'
+            # Construct real name
+            real_name = user.get('name')
+            if not real_name:
+                first = user.get('first_name', '').strip()
+                last = user.get('last_name', '').strip()
+                real_name = f"{first} {last}".strip()
+            
+            # Fallback to username if real name is still empty
+            if not real_name:
+                real_name = user.get('username', 'Unknown')
+                
+            data['author_real_name'] = real_name
+            
+            # Support legacy 'author_name' using the best available name
+            data['author_name'] = data['author_real_name']
+            
+            data['author_avatar'] = user.get('photo_url')
+        else:
+            # User lookup failed (or no user)
+            # Try to preserve legacy author_name if available
+            legacy_name = data.get('author_name', 'Unknown')
+            
+            # Use legacy name as username fallback (removing spaces to make it handle-like)
+            data['author_username'] = legacy_name.replace(' ', '') if legacy_name != 'Unknown' else 'Unknown'
+            data['author_real_name'] = legacy_name
+            
+            # Don't overwrite author_name with 'Unknown' if we have a value
+            if 'author_name' not in data:
+                data['author_name'] = 'Unknown'
+                
+            data['author_avatar'] = None
+        return data
+
     def get_blog_by_slug(self, slug):
-        """Get blog post by slug"""
+        """Get blog post by slug with dynamic author info"""
+        # Debugging print
+        print(f"Fetching blog by slug: {slug}")
         blogs = self.db.collection('blogs').where('slug', '==', slug).limit(1).stream()
         for blog in blogs:
-            return blog.to_dict() | {'id': blog.id}
+            data = blog.to_dict() | {'id': blog.id}
+            # Fetch author info
+            uid = data.get('author_uid')
+            print(f"Blog found. Author UID: {uid}")
+            if uid:
+                user = self.get_user_profile(uid)
+                print(f"User lookup result: {user.get('username') if user else 'None'}")
+                self._enrich_with_author_data(data, user)
+            else:
+                self._enrich_with_author_data(data, None)
+            return data
         return None
     
     def get_blog_by_id(self, blog_id):
-        """Get blog post by document ID"""
+        """Get blog post by document ID with dynamic author info"""
         doc = self.db.collection('blogs').document(blog_id).get()
         if doc.exists:
-            return doc.to_dict() | {'id': doc.id}
+            data = doc.to_dict() | {'id': doc.id}
+            # Fetch author info
+            # Fetch author info
+            if data.get('author_uid'):
+                 user = self.get_user_profile(data['author_uid'])
+                 self._enrich_with_author_data(data, user)
+            else:
+                 self._enrich_with_author_data(data, None)
+            return data
         return None
 
     def create_document(self, collection_name, data, doc_id=None):
@@ -98,6 +155,81 @@ class FirestoreService:
     def update_user_email(self, uid, email):
         """Update user email in Firestore"""
         self.db.collection('users').document(uid).update({'email': email})
+
+    def get_users_by_ids(self, uids):
+        """Get multiple user profiles by IDs"""
+        if not uids:
+            return {}
+            
+        try:
+            # Firestore 'in' query is limited to 30 items
+            # We need to chunk the requests
+            unique_uids = list(set(uids))
+            users_map = {}
+            # Chunk into groups of 30
+            chunk_size = 30
+            for i in range(0, len(unique_uids), chunk_size):
+                chunk = unique_uids[i:i + chunk_size]
+                if not chunk:
+                    continue
+                    
+                # Use '__name__' sentinel for document ID filtering
+                # Note: For 'in' queries with document IDs, we might need to use references or just try __name__
+                # But '__name__' usually expects full paths (collection/id).
+                # A safer way with the python client is often just FieldPath.document_id() but imports are failing.
+                # Let's try importing FieldPath from google.cloud.firestore_v1
+                try:
+                    from google.cloud.firestore_v1.field_path import FieldPath
+                    query = self.db.collection('users').where(FieldPath.document_id(), 'in', chunk)
+                except ImportError:
+                    # Fallback to string literal if import fails (though __name__ might behave differently depending on client version)
+                    query = self.db.collection('users').where('__name__', 'in', chunk)
+                    
+                docs = query.stream()
+                
+                for doc in docs:
+                    users_map[doc.id] = doc.to_dict()
+                    
+            return users_map
+        except Exception as e:
+            print(f"Error getting users by IDs: {e}")
+            return {}
+
+    def is_username_taken(self, username, exclude_uid=None):
+        """Check if a username is already taken by another user"""
+        try:
+            # Case insensitive check would be better but requires specific index or storing lowercase
+            # For MVP we will assume exact match or rely on client sending lowercase/standardized
+            # Ideally we store a 'username_lower' field.
+            
+            # Simple query on 'username' field
+            users_ref = self.db.collection('users')
+            query = users_ref.where('username', '==', username).limit(1)
+            docs = list(query.stream())
+            
+            if not docs:
+                return False
+                
+            # If we found a doc, check if it's the same user (in case they are saving same name)
+            if exclude_uid and docs[0].id == exclude_uid:
+                return False
+                
+            return True
+        except Exception as e:
+            print(f"Error checking username availability: {e}")
+            return True # Fail safe
+
+    def update_user_username(self, uid, username):
+        """Update user username in Firestore"""
+        # 0. Check uniqueness again (race condition minimal but possible)
+        if self.is_username_taken(username, exclude_uid=uid):
+             raise ValueError("Username is already taken")
+
+        # 1. Update user profile
+        self.db.collection('users').document(uid).set({'username': username}, merge=True)
+        
+        # 2. No need to propagate to blogs anymore as we fetch dynamically
+
 
     def get_user_notification_preferences(self, uid):
         """Get user notification preferences"""
@@ -322,7 +454,7 @@ class FirestoreService:
 
     # Blog Methods
     def get_blogs(self, status=None, limit=None):
-        """Get blogs, optionally filtered by status"""
+        """Get blogs, optionally filtered by status, with dynamic author info"""
         from google.cloud.firestore import FieldFilter
         query = self.db.collection('blogs')
         if status:
@@ -330,7 +462,22 @@ class FirestoreService:
         query = query.order_by('created_at', direction=firestore.Query.DESCENDING)
         if limit:
             query = query.limit(limit)
-        return [doc.to_dict() | {'id': doc.id} for doc in query.stream()]
+            
+        blogs = [doc.to_dict() | {'id': doc.id} for doc in query.stream()]
+        
+        # Batch fetch authors
+        author_uids = list(set(b.get('author_uid') for b in blogs if b.get('author_uid')))
+        if author_uids:
+            users_map = self.get_users_by_ids(author_uids)
+            for blog in blogs:
+                uid = blog.get('author_uid')
+                if uid and uid in users_map:
+                    user = users_map[uid]
+                    self._enrich_with_author_data(blog, user)
+                else:
+                    self._enrich_with_author_data(blog, None)
+                    
+        return blogs
 
     def get_blog_by_id(self, blog_id):
         return self.get_document('blogs', blog_id)
@@ -355,6 +502,151 @@ class FirestoreService:
     def delete_blog(self, blog_id):
         """Delete a blog post"""
         self.delete_document('blogs', blog_id)
+
+    def increment_blog_view_count(self, blog_id):
+        """Increment the view count for a blog post"""
+        try:
+            doc_ref = self.db.collection('blogs').document(blog_id)
+            doc_ref.update({'view_count': firestore.Increment(1)})
+            return True
+        except Exception as e:
+            print(f"Error incrementing view count: {e}")
+            return False
+
+    # Comment Methods
+    def get_blog_comments(self, blog_id):
+        """Get all comments for a blog post, ordered by date"""
+        try:
+            comments_ref = self.db.collection('blogs').document(blog_id).collection('comments')
+            query = comments_ref.order_by('created_at', direction=firestore.Query.DESCENDING)
+            comments = [doc.to_dict() | {'id': doc.id} for doc in query.stream()]
+            
+            # Collect author UIDs using a set to handle duplicates
+            author_uids = []
+            for c in comments:
+                if c.get('author_uid'):
+                    author_uids.append(c.get('author_uid'))
+            
+            if not author_uids:
+                return comments
+                
+            # Fetch user profiles
+            users_map = self.get_users_by_ids(author_uids)
+            
+            # Map user data to comments
+            for c in comments:
+                uid = c.get('author_uid')
+                if uid and uid in users_map:
+                    user = users_map[uid]
+                    # Dynamic author data
+                    self._enrich_with_author_data(c, user)
+                    # Backward compat for templates expecting 'author_name'
+                    c['author_name'] = c['author_real_name']
+                else:
+                    self._enrich_with_author_data(c, None)
+                    c['author_name'] = 'Anonymous'
+            
+            return comments
+        except Exception as e:
+            print(f"Error getting blog comments: {e}")
+            return []
+
+    def add_blog_comment(self, blog_id, user_uid, content, parent_id=None):
+        """Add a comment to a blog post"""
+        try:
+            comment_data = {
+                'content': content,
+                'author_uid': user_uid,
+                # 'author_name': author_name, # Removed storage of static author data
+                # 'author_avatar': author_avatar, # Removed storage of static author data
+                'created_at': firestore.SERVER_TIMESTAMP,
+                'updated_at': firestore.SERVER_TIMESTAMP,
+                'parent_id': parent_id,
+                'upvote_count': 0,
+                'downvote_count': 0
+            }
+            
+            comments_ref = self.db.collection('blogs').document(blog_id).collection('comments')
+            _, doc_ref = comments_ref.add(comment_data)
+            
+            # Increment comment count on blog
+            self.db.collection('blogs').document(blog_id).update({
+                'comment_count': firestore.Increment(1)
+            })
+            
+            return {**comment_data, 'id': doc_ref.id}
+        except Exception as e:
+            print(f"Error adding blog comment: {e}")
+            return None
+
+    def delete_blog_comment(self, blog_id, comment_id):
+        """Delete a comment"""
+        try:
+            self.db.collection('blogs').document(blog_id).collection('comments').document(comment_id).delete()
+            
+            # Decrement comment count on blog
+            self.db.collection('blogs').document(blog_id).update({
+                'comment_count': firestore.Increment(-1)
+            })
+            
+            return True
+        except Exception as e:
+            print(f"Error deleting blog comment: {e}")
+            return False
+
+    def vote_comment(self, blog_id, comment_id, user_uid, vote_type):
+        """Vote on a comment (upvote/downvote)"""
+        if vote_type not in ['upvote', 'downvote']:
+            return False
+            
+        try:
+            # simple implementation: store votes in a subcollection of the comment
+            comment_ref = self.db.collection('blogs').document(blog_id).collection('comments').document(comment_id)
+            vote_ref = comment_ref.collection('votes').document(user_uid)
+            
+            doc = vote_ref.get()
+            old_vote = doc.to_dict().get('type') if doc.exists else None
+            
+            if old_vote == vote_type:
+                # Toggle off (remove vote)
+                vote_ref.delete()
+                # Decrement count
+                if vote_type == 'upvote':
+                    comment_ref.update({'upvote_count': firestore.Increment(-1)})
+                else:
+                    comment_ref.update({'downvote_count': firestore.Increment(-1)})
+                return 'removed'
+            else:
+                # Set new vote
+                vote_ref.set({
+                    'type': vote_type,
+                    'timestamp': firestore.SERVER_TIMESTAMP
+                })
+                
+                # Update counts
+                if old_vote:
+                    # Switch vote
+                    if vote_type == 'upvote':
+                        comment_ref.update({
+                            'upvote_count': firestore.Increment(1),
+                            'downvote_count': firestore.Increment(-1)
+                        })
+                    else:
+                        comment_ref.update({
+                            'upvote_count': firestore.Increment(-1),
+                            'downvote_count': firestore.Increment(1)
+                        })
+                else:
+                    # New vote
+                    if vote_type == 'upvote':
+                        comment_ref.update({'upvote_count': firestore.Increment(1)})
+                    else:
+                        comment_ref.update({'downvote_count': firestore.Increment(1)})
+                return 'voted'
+                
+        except Exception as e:
+            print(f"Error voting on comment: {e}")
+            return False
 
     # Media Asset Management Methods
     def upload_media_asset(self, file_obj, filename, content_type, uploaded_by_uid):
@@ -533,6 +825,17 @@ class FirestoreService:
                 'updated_at': firestore.SERVER_TIMESTAMP
             }
             self.db.collection('blog_votes').add(vote_data)
+        
+            # Increment updated count on blog
+            if vote_type == 'upvote':
+                self.db.collection('blogs').document(blog_id).update({
+                    'upvote_count': firestore.Increment(1)
+                })
+            elif vote_type == 'downvote':
+                 self.db.collection('blogs').document(blog_id).update({
+                    'downvote_count': firestore.Increment(1)
+                })
+                
             return True
         except Exception as e:
             print(f"Error adding user vote on blog: {e}")
@@ -562,7 +865,22 @@ class FirestoreService:
             votes = votes_ref.where('user_uid', '==', uid).where('blog_id', '==', blog_id).limit(1).stream()
             
             for vote in votes:
+                # Check type before deleting to decrement correct counter
+                data = vote.to_dict()
+                vote_type = data.get('vote_type')
+                
                 vote.reference.delete()
+                
+                # Decrement counter
+                if vote_type == 'upvote':
+                    self.db.collection('blogs').document(blog_id).update({
+                        'upvote_count': firestore.Increment(-1)
+                    })
+                elif vote_type == 'downvote':
+                    self.db.collection('blogs').document(blog_id).update({
+                        'downvote_count': firestore.Increment(-1)
+                    })
+                    
                 return True
             return False
         except Exception as e:

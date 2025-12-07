@@ -196,25 +196,42 @@ def ajax_update_notifications(request):
 @csrf_exempt
 @login_required
 def ajax_sync_profile(request):
-    """AJAX endpoint to sync profile changes (like email) from Firebase to backend"""
+    """AJAX endpoint to sync profile changes from frontend"""
     if request.method != 'POST':
         return JsonResponse({'status': 'error', 'message': 'Method not allowed'}, status=405)
         
     try:
         data = json.loads(request.body)
-        email = data.get('email')
-        
-        if not email:
-            return JsonResponse({'status': 'error', 'message': 'No email provided'}, status=400)
-            
         uid = request.session.get('uid')
         
-        # Update Django User
-        request.user.email = email
-        request.user.save()
-        
-        # Update Firestore
-        db.update_user_email(uid, email)
+        # Handle Email Update
+        if 'email' in data:
+            email = data.get('email')
+            request.user.email = email
+            request.user.save()
+            db.update_user_email(uid, email)
+            
+        # Handle Username Update
+        if 'username' in data:
+            username = data.get('username').strip()
+            # Simple validation
+            if len(username) < 3:
+                return JsonResponse({'status': 'error', 'message': 'Username must be at least 3 characters'}, status=400)
+            
+            # Regex validation (alphanumeric and underscore only)
+            import re
+            if not re.match(r'^[a-zA-Z0-9_]+$', username):
+                return JsonResponse({'status': 'error', 'message': 'Username can only contain letters, numbers, and underscores'}, status=400)
+                
+            # Check uniqueness
+            if db.is_username_taken(username, exclude_uid=uid):
+                return JsonResponse({'status': 'error', 'message': 'Username is already taken'}, status=400)
+            
+            # Update in Firestore
+            try:
+                db.update_user_username(uid, username)
+            except ValueError as e:
+                return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
         
         return JsonResponse({'status': 'success'})
     except Exception as e:
