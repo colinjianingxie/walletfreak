@@ -2,22 +2,21 @@
     {
         "stage": 1,
         "question": "What gets you most excited about credit cards?",
-        "subtitle": "Pick up to 3 – these are the strongest signals",
+        "subtitle": "Pick up to 3",
         "max_selections": 3,
         "options": [
             {
-                "id": "aspirational_redemptions",
-                "text": "Lie-flat business class or 5-star hotels for almost free using transferable points",
+                "id": "aspirational",
+                "text": "Lie-flat business class or 5-star hotels for almost nothing using points",
                 "personalities": [
                     "luxury-jetsetter",
                     "points-strategist",
-                    "wallet-freak",
-                    "yuppie"
+                    "wallet-freak"
                 ]
             },
             {
                 "id": "hotel_status",
-                "text": "Hotel elite status – suite upgrades, free breakfast, lounge access, annual free nights",
+                "text": "Hotel elite status — suite upgrades, free breakfast, annual free nights",
                 "personalities": [
                     "hotel-status-chaser",
                     "luxury-jetsetter",
@@ -27,15 +26,14 @@
             },
             {
                 "id": "airline_perks",
-                "text": "Airline companion passes, free checked bags, priority boarding, airline club access",
+                "text": "Companion passes, free checked bags, priority boarding, airline club access",
                 "personalities": [
-                    "airline-companion-chaser",
-                    "luxury-jetsetter"
+                    "airline-companion-chaser"
                 ]
             },
             {
-                "id": "network_lounges",
-                "text": "Priority Pass / Centurion / Capital One lounge access (hundreds of lounges worldwide)",
+                "id": "lounges",
+                "text": "Unlimited airport lounge access everywhere (Centurion, Capital One, Priority Pass)",
                 "personalities": [
                     "luxury-jetsetter",
                     "value-traveler",
@@ -45,151 +43,114 @@
             },
             {
                 "id": "easy_credits",
-                "text": "Big easy-to-use statement credits that wipe out the annual fee (travel, dining, Dell, etc)",
+                "text": "Huge easy-to-use credits that wipe out (or profit) the annual fee",
                 "personalities": [
                     "value-traveler",
                     "wallet-freak",
-                    "yuppie",
-                    "business-powerhouse"
+                    "business-powerhouse",
+                    "yuppie"
                 ]
             },
             {
-                "id": "pure_cashback",
-                "text": "Straight cash back or flexible rewards I can cash out anytime",
+                "id": "pure_cash",
+                "text": "Straight cash back or fully cash-out-able rewards",
                 "personalities": [
                     "cashback-pragmatist",
                     "simple-minimalist"
                 ]
             },
             {
-                "id": "monster_sub",
-                "text": "Huge limited-time welcome bonuses (100k+ points or $1,000+ cash)",
+                "id": "big_bonus",
+                "text": "Massive limited-time welcome bonuses (100k+ points or $800+ cash)",
                 "personalities": [
                     "wallet-freak",
                     "points-strategist",
-                    "category-hunter",
-                    "churner"
+                    "category-hunter"
                 ]
             },
             {
-                "id": "niche_5plus",
-                "text": "Insane 5%+ in one killer category (gas, groceries, streaming, office supplies, drugstores, ads)",
+                "id": "niche_5x",
+                "text": "Insane 5%+ in one killer category (gas, groceries, ads, office supplies, etc)",
                 "personalities": [
                     "gas-freak",
                     "foodie-grocery-king",
-                    "streaming-freak",
-                    "drugstore-freak",
-                    "office-supply-freak",
                     "business-powerhouse",
                     "category-hunter"
                 ]
             },
             {
                 "id": "family_max",
-                "text": "Maximizing huge family grocery, kids, Costco, Disney+, Amazon bills",
+                "text": "Turning huge family grocery, Costco, Amazon, kids bills into free trips",
                 "personalities": [
-                    "family-freak",
-                    "foodie-grocery-king"
-                ]
-            },
-            {
-                "id": "vip_flex",
-                "text": "Heavy metal cards, concierge, Resy reservations, black card energy",
-                "personalities": [
-                    "yuppie",
-                    "luxury-jetsetter",
-                    "wallet-freak"
+                    "family-freak"
                 ]
             }
         ]
     },
     {
         "stage": 2,
-        "question": "Where do you actually drop the most money every month?",
-        "subtitle": "Select all that apply – be brutally honest",
+        "question": "Where do you actually spend the most money every month?",
+        "subtitle": "Select all that apply – be honest",
         "max_selections": null,
         "options": [
             {
                 "id": "dining",
-                "text": "Restaurants, takeout, bars, delivery",
+                "text": "Restaurants, delivery, bars, takeout",
                 "personalities": [
                     "foodie-grocery-king",
                     "yuppie",
                     "wallet-freak",
-                    "balanced-food-travel",
-                    "student-starter"
+                    "family-freak"
                 ]
             },
             {
                 "id": "groceries",
-                "text": "Groceries / supermarkets / Costco runs",
+                "text": "Groceries, supermarkets, Costco runs",
                 "personalities": [
                     "foodie-grocery-king",
-                    "family-freak",
-                    "balanced-food-travel"
+                    "family-freak"
                 ]
             },
             {
                 "id": "travel",
-                "text": "Flights, hotels, Airbnb, rental cars",
+                "text": "Flights, hotels, Airbnb, vacations",
                 "personalities": [
                     "luxury-jetsetter",
                     "points-strategist",
                     "value-traveler",
                     "hotel-status-chaser",
                     "airline-companion-chaser",
-                    "yuppie",
-                    "wallet-freak"
+                    "yuppie"
                 ]
             },
             {
-                "id": "online_shopping",
-                "text": "Amazon, Target, Walmart, online everything",
+                "id": "online",
+                "text": "Amazon, Target, Walmart, online shopping",
                 "personalities": [
                     "online-shopping-freak",
                     "family-freak",
-                    "student-starter",
                     "yuppie"
                 ]
             },
             {
                 "id": "gas_ev",
-                "text": "Gas or EV charging",
+                "text": "Gas stations or EV charging",
                 "personalities": [
-                    "gas-freak",
-                    "family-freak"
+                    "gas-freak"
                 ]
             },
             {
-                "id": "streaming",
-                "text": "Netflix, Spotify, Disney+, Hulu, YouTube Premium, etc",
+                "id": "business",
+                "text": "Ads, software, shipping, office supplies, utilities",
                 "personalities": [
-                    "streaming-freak",
-                    "family-freak"
-                ]
-            },
-            {
-                "id": "drugstores_gc",
-                "text": "CVS / Walgreens / Rite Aid (including gift cards)",
-                "personalities": [
-                    "drugstore-freak",
-                    "category-hunter"
-                ]
-            },
-            {
-                "id": "office_ads",
-                "text": "Office supplies, online ads, software, shipping, utilities",
-                "personalities": [
-                    "business-powerhouse",
-                    "office-supply-freak",
-                    "wallet-freak"
+                    "business-powerhouse"
                 ]
             },
             {
                 "id": "rent",
-                "text": "Rent/mortgage paid by card (no fees)",
+                "text": "Rent (paid by card, no fees)",
                 "personalities": [
-                    "bilt-mastercard users → luxury-jetsetter",
+                    "luxury-jetsetter",
                     "wallet-freak",
                     "points-strategist",
                     "yuppie",
@@ -199,7 +160,7 @@
             },
             {
                 "id": "everything",
-                "text": "I spend $4,000+ per month across the board",
+                "text": "I spend $4,000+ per month across all categories",
                 "personalities": [
                     "wallet-freak",
                     "luxury-jetsetter",
@@ -212,13 +173,13 @@
     },
     {
         "stage": 3,
-        "question": "Real talk: annual fees?",
-        "subtitle": "Pick one",
-        "max_selections": 1,
+        "question": "Which of these are true for you?",
+        "subtitle": "Select all that apply",
+        "max_selections": null,
         "options": [
             {
-                "id": "zero",
-                "text": "Hard no – $0 forever",
+                "id": "no_af",
+                "text": "I will never pay an annual fee",
                 "personalities": [
                     "cashback-pragmatist",
                     "simple-minimalist",
@@ -226,46 +187,28 @@
                 ]
             },
             {
-                "id": "low",
-                "text": "$95–$150 max, and only if it pays for itself in year 1",
+                "id": "low_af",
+                "text": "$95–$150 max, and only if it pays for itself fast",
                 "personalities": [
                     "value-traveler",
-                    "balanced-food-travel",
-                    "foodie-grocery-king",
-                    "category-hunter"
+                    "category-hunter",
+                    "foodie-grocery-king"
                 ]
             },
             {
-                "id": "mid",
-                "text": "$250–$450 is fine if the math clearly works",
-                "personalities": [
-                    "points-strategist",
-                    "business-powerhouse",
-                    "airline-companion-chaser",
-                    "family-freak"
-                ]
-            },
-            {
-                "id": "high",
-                "text": "$550–$895+ is totally okay – I’ll easily get 2–3x value",
+                "id": "high_af_ok",
+                "text": "$550+ annual fees are fine if I get 2–3× the value",
                 "personalities": [
                     "luxury-jetsetter",
                     "wallet-freak",
                     "yuppie",
-                    "hotel-status-chaser"
+                    "hotel-status-chaser",
+                    "airline-companion-chaser"
                 ]
-            }
-        ]
-    },
-    {
-        "stage": 4,
-        "question": "Which of these is actually you?",
-        "subtitle": "Select all that apply",
-        "max_selections": null,
-        "options": [
+            },
             {
-                "id": "spreadsheet_god",
-                "text": "I live in spreadsheets and optimize every single dollar",
+                "id": "spreadsheets",
+                "text": "I love spreadsheets and optimizing every single purchase",
                 "personalities": [
                     "wallet-freak",
                     "points-strategist",
@@ -273,8 +216,8 @@
                 ]
             },
             {
-                "id": "one_card_zen",
-                "text": "I want one (maybe two) cards and never think about this again",
+                "id": "one_card",
+                "text": "I want 1–2 cards max and zero mental overhead",
                 "personalities": [
                     "simple-minimalist",
                     "cashback-pragmatist",
@@ -282,64 +225,32 @@
                 ]
             },
             {
-                "id": "serial_churner",
-                "text": "I’ll open and close cards all day for bonuses",
+                "id": "churn",
+                "text": "I’ll open/close cards all year long for bonuses",
                 "personalities": [
                     "wallet-freak",
-                    "category-hunter",
-                    "drugstore-freak",
-                    "office-supply-freak"
-                ]
-            },
-            {
-                "id": "business_owner",
-                "text": "I have real business or side-hustle expenses (ads, software, shipping, etc)",
-                "personalities": [
-                    "business-powerhouse",
-                    "office-supply-freak",
-                    "wallet-freak"
+                    "category-hunter"
                 ]
             },
             {
                 "id": "big_family",
-                "text": "Big family, Costco pallets, Disney+ household, feeding an army",
+                "text": "Big family, Costco pallets, Disney+, feeding an army",
                 "personalities": [
                     "family-freak"
                 ]
             },
             {
-                "id": "city_yuppie",
-                "text": "City life, metal cards in hand at dinner, Resy Global Dining Access",
-                "personalities": [
-                    "yuppie"
-                ]
-            },
-            {
-                "id": "hotel_loyal",
-                "text": "I want Diamond/Platinum/Globalist status and free nights every year",
-                "personalities": [
-                    "hotel-status-chaser"
-                ]
-            },
-            {
-                "id": "airline_loyal",
-                "text": "I’m loyal to one airline and want the companion pass or certificate",
-                "personalities": [
-                    "airline-companion-chaser"
-                ]
-            },
-            {
-                "id": "balanced",
-                "text": "Heavy on food/groceries but still want nice trips a few times a year",
-                "personalities": [
-                    "balanced-food-travel"
-                ]
-            },
-            {
                 "id": "student",
-                "text": "Student or early 20s – building credit and eating out too much",
+                "text": "Student or early 20s – just building credit",
                 "personalities": [
                     "student-starter"
+                ]
+            },
+            {
+                "id": "city_flex",
+                "text": "City life, metal cards at dinner, Resy vibes",
+                "personalities": [
+                    "yuppie"
                 ]
             }
         ]

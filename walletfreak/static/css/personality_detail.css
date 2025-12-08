@@ -368,7 +368,8 @@
     .card-option {
         width: 100% !important;
         max-width: 440px;
-        margin: 0 auto;
+        margin-left: auto !important;
+        margin-right: auto !important;
         padding: 2rem 1.5rem;
         background: white;
         border: 3px solid #3b82f6;
@@ -377,11 +378,11 @@
     }
 
     .carousel-track {
-        padding: 0 3.5rem !important;
+        padding: 0 4rem !important;
         position: relative;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: center !important;
     }
 
     /* Pagination Dots */
@@ -496,6 +497,8 @@
 
     .slot-carousel {
         padding: 0;
+        width: 100%;
+        overflow: hidden;
     }
 
     .carousel-track {
@@ -505,6 +508,8 @@
         justify-content: flex-start !important;
         overflow-x: auto;
         padding-bottom: 1rem;
+        width: 100%;
+        scroll-snap-type: x mandatory;
     }
 
 

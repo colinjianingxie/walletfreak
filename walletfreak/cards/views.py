@@ -84,6 +84,35 @@ def personality_detail(request, personality_id):
         pass
 
     # Hydrate slots with card objects
+    # --- OPTIMIZATION START ---
+    # Only keep cards that are actually used in the slots
+    slots = personality.get('slots', [])
+    needed_card_slugs = set()
+    for slot in slots:
+        for card_slug in slot.get('cards', []):
+            needed_card_slugs.add(card_slug)
+            
+    # Filter all_cards_map to only needed cards
+    # Use slugs to look up IDs if needed, then rebuild map with IDs
+    optimized_cards_map = {}
+    
+    # We need to find the card objects for the slugs
+    for slug in needed_card_slugs:
+        card = all_cards_map.get(slug)
+        if card:
+            optimized_cards_map[card['id']] = card
+            
+    # Also ensure we have the referenced cards by ID if they were standard IDs
+    for card_id in needed_card_slugs:
+        if card_id in all_cards_map:
+             optimized_cards_map[all_cards_map[card_id]['id']] = all_cards_map[card_id]
+
+    # Replace the main map with the optimized one for the loop below
+    # We only want to process and send these cards
+    all_cards_map = optimized_cards_map
+    # --- OPTIMIZATION END ---
+
+    # Hydrate slots with card objects (Restored)
     if 'slots' in personality:
         for slot in personality['slots']:
             hydrated_cards = []
@@ -91,6 +120,14 @@ def personality_detail(request, personality_id):
                 card = all_cards_map.get(card_slug)
                 if card:
                     hydrated_cards.append(card)
+            # Find cards by ID if slug didn't work (fallback)
+            if not hydrated_cards:
+                 for card_slug in slot.get('cards', []):
+                    # Try to find by ID in our optimized map
+                     for c in all_cards_map.values():
+                         if str(c.get('id')) == str(card_slug):
+                             hydrated_cards.append(c)
+                             break
             slot['hydrated_cards'] = hydrated_cards
 
     # --- ENRICHMENT LOGIC (Copied from card_list) ---

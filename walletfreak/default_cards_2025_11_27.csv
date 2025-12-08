@@ -1,19 +1,19 @@
 Vendor|CardName|AnnualFee|BenefitDescription|AdditionalDetails|BenefitCategory|TimeCategory|DollarValue|EnrollmentRequired|EffectiveDate|BenefitDescriptionShort|BenefitType|NumericValue
-Chase|Chase Sapphire Preferred® Card|95|5x total points on travel purchased through Chase Travel|excludes hotel purchases that qualify for $50 credit|Travel|Permanent|N/A|False|2025-11-29|Chase Travel Bonus|Multiplier|5
-Chase|Chase Sapphire Preferred® Card|95|3x points on dining online grocery purchases and select streaming services|including eligible delivery/takeout|Dining,Groceries,Streaming|Permanent|N/A|False|2025-11-29|Dining & More|Multiplier|3
-Chase|Chase Sapphire Preferred® Card|95|2x points on all other travel purchases||Travel|Permanent|N/A|False|2025-11-29|Travel Bonus|Multiplier|2
-Chase|Chase Sapphire Preferred® Card|95|1x points on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Earnings|Multiplier|1
-Chase|Chase Sapphire Preferred® Card|95|$50 Annual Chase Travel Hotel Credit||Hotel|Annually (anniversary year)|50|False|2025-11-29|Hotel Credit|Credit|50
-Chase|Chase Sapphire Preferred® Card|95|10% anniversary points bonus based on total purchases in prior account anniversary year||Anniversary Bonus|Annually (anniversary year)|N/A|False|2025-11-29|Anniversary Bonus|Bonus|10
-Chase|Chase Sapphire Preferred® Card|95|Complimentary DashPass membership|activate by 12/31/2027|Delivery|Minimum 12 months from activation|120|False|2025-11-29|DashPass|Perk|N/A
-American Express|American Express® Gold Card|325|4x Membership Rewards points at restaurants worldwide|up to $50,000 per calendar year then 1x|Dining|Permanent|N/A|False|2025-11-29|Restaurants Bonus|Multiplier|4
-American Express|American Express® Gold Card|325|4x Membership Rewards points at U.S. supermarkets|up to $25,000 per calendar year then 1x|Groceries|Permanent|N/A|False|2025-11-29|Supermarkets Bonus|Multiplier|4
-American Express|American Express® Gold Card|325|3x Membership Rewards points on flights booked directly with airlines or Amex Travel||Flights|Permanent|N/A|False|2025-11-29|Flights Bonus|Multiplier|3
-American Express|American Express® Gold Card|325|$120 Uber Cash for U.S. rides & Uber Eats|$10 monthly|Rideshare,Food Delivery|Monthly|120|False|2025-11-29|Uber Cash|Credit|120
-American Express|American Express® Gold Card|325|$120 Dining Credit|$10 monthly at Grubhub The Cheesecake Factory Goldbelly Wine.com Five Guys|Dining|Monthly|120|True|2025-11-29|Dining Credit|Credit|120
-American Express|American Express® Gold Card|325|$100 Resy Credit|$50 semi-annually|Dining|Semi-annually|100|True|2025-11-29|Resy Credit|Credit|100
-American Express|American Express® Gold Card|325|$84 Dunkin' Credit|$7 monthly|Dining|Monthly|84|True|2025-11-29|Dunkin Credit|Credit|84
-American Express|American Express® Gold Card|325|$100 Hotel Collection Credit on qualifying 2-night minimum stays via Amex Travel||Hotel|Per qualifying stay|100|False|2025-11-29|Hotel Credit|Credit|100
+Chase|Chase Sapphire Preferred Card|95|5x total points on travel purchased through Chase Travel|excludes hotel purchases that qualify for $50 credit|Travel|Permanent|N/A|False|2025-11-29|Chase Travel Bonus|Multiplier|5
+Chase|Chase Sapphire Preferred Card|95|3x points on dining online grocery purchases and select streaming services|including eligible delivery/takeout|Dining,Groceries,Streaming|Permanent|N/A|False|2025-11-29|Dining & More|Multiplier|3
+Chase|Chase Sapphire Preferred Card|95|2x points on all other travel purchases||Travel|Permanent|N/A|False|2025-11-29|Travel Bonus|Multiplier|2
+Chase|Chase Sapphire Preferred Card|95|1x points on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Earnings|Multiplier|1
+Chase|Chase Sapphire Preferred Card|95|$50 Annual Chase Travel Hotel Credit||Hotel|Annually (anniversary year)|50|False|2025-11-29|Hotel Credit|Credit|50
+Chase|Chase Sapphire Preferred Card|95|10% anniversary points bonus based on total purchases in prior account anniversary year||Anniversary Bonus|Annually (anniversary year)|N/A|False|2025-11-29|Anniversary Bonus|Bonus|10
+Chase|Chase Sapphire Preferred Card|95|Complimentary DashPass membership|activate by 12/31/2027|Delivery|Minimum 12 months from activation|120|False|2025-11-29|DashPass|Perk|N/A
+American Express|American Express Gold Card|325|4x Membership Rewards points at restaurants worldwide|up to $50,000 per calendar year then 1x|Dining|Permanent|N/A|False|2025-11-29|Restaurants Bonus|Multiplier|4
+American Express|American Express Gold Card|325|4x Membership Rewards points at U.S. supermarkets|up to $25,000 per calendar year then 1x|Groceries|Permanent|N/A|False|2025-11-29|Supermarkets Bonus|Multiplier|4
+American Express|American Express Gold Card|325|3x Membership Rewards points on flights booked directly with airlines or Amex Travel||Flights|Permanent|N/A|False|2025-11-29|Flights Bonus|Multiplier|3
+American Express|American Express Gold Card|325|$120 Uber Cash for U.S. rides & Uber Eats|$10 monthly|Rideshare,Food Delivery|Monthly|120|False|2025-11-29|Uber Cash|Credit|120
+American Express|American Express Gold Card|325|$120 Dining Credit|$10 monthly at Grubhub The Cheesecake Factory Goldbelly Wine.com Five Guys|Dining|Monthly|120|True|2025-11-29|Dining Credit|Credit|120
+American Express|American Express Gold Card|325|$100 Resy Credit|$50 semi-annually|Dining|Semi-annually|100|True|2025-11-29|Resy Credit|Credit|100
+American Express|American Express Gold Card|325|$84 Dunkin' Credit|$7 monthly|Dining|Monthly|84|True|2025-11-29|Dunkin Credit|Credit|84
+American Express|American Express Gold Card|325|$100 Hotel Collection Credit on qualifying 2-night minimum stays via Amex Travel||Hotel|Per qualifying stay|100|False|2025-11-29|Hotel Credit|Credit|100
 Capital One|Capital One Venture X Rewards Credit Card|395|10x miles on hotels & rental cars booked through Capital One Travel||Hotel,Rental Cars|Permanent|N/A|False|2025-11-29|Portal Hotels|Multiplier|10
 Capital One|Capital One Venture X Rewards Credit Card|395|5x miles on flights & vacation rentals booked through Capital One Travel||Flights,Vacation Rentals|Permanent|N/A|False|2025-11-29|Portal Flights|Multiplier|5
 Capital One|Capital One Venture X Rewards Credit Card|395|2x miles on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Miles|Multiplier|2
@@ -22,85 +22,85 @@ Capital One|Capital One Venture X Rewards Credit Card|395|10,000 anniversary bon
 Capital One|Capital One Venture X Rewards Credit Card|395|Unlimited Capital One Lounge & Priority Pass lounge access|+2 guests free|Lounge Access|Permanent|N/A|False|2025-11-29|Lounge Access|Access|N/A
 Capital One|Capital One Venture X Rewards Credit Card|395|Global Entry or TSA PreCheck application fee credit|up to $120|Travel Security|Every 4 years|120|False|2025-11-29|TSA Credit|Credit|120
 Capital One|Capital One Venture X Rewards Credit Card|395|Hertz President's Circle elite status|enrollment required|Rental Cars|Permanent|N/A|True|2025-11-29|Hertz Status|Status|N/A
-Chase|Chase Freedom Unlimited®|0|5% cash back on travel purchased through Chase Travel||Travel|Permanent|N/A|False|2025-11-29|Chase Travel Bonus|Cashback|5
-Chase|Chase Freedom Unlimited®|0|3% cash back on dining and drugstore purchases|including takeout & eligible delivery|Dining,Drugstores|Permanent|N/A|False|2025-11-29|Dining Bonus|Cashback|3
-Chase|Chase Freedom Unlimited®|0|1.5% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1.5
-Chase|Chase Freedom Unlimited®|0|Complimentary DashPass membership|activate by 12/31/2027|Delivery|Minimum 12 months from activation|120|False|2025-11-29|DashPass|Perk|N/A
-Wells Fargo|Wells Fargo Active Cash® Card|0|Unlimited 2% cash rewards on all purchases||All Purchases|Permanent|N/A|False|2025-11-29|Flat Cashback|Cashback|2
-Wells Fargo|Wells Fargo Active Cash® Card|0|Cell phone protection when bill paid with card|up to $600 per claim $25 deductible|Cell Phone Protection|Permanent (per claim)|600|False|2025-11-29|Phone Protection|Protection|600
-American Express|Blue Cash Preferred® Card from American Express|95|6% cash back at U.S. supermarkets|up to $6,000 per calendar year then 1%|Groceries|Permanent|N/A|False|2025-11-29|Supermarkets Bonus|Cashback|6
-American Express|Blue Cash Preferred® Card from American Express|95|6% cash back on select U.S. streaming subscriptions||Streaming|Permanent|N/A|False|2025-11-29|Streaming Bonus|Cashback|6
-American Express|Blue Cash Preferred® Card from American Express|95|3% cash back at U.S. gas stations and on transit||Gas,Transit|Permanent|N/A|False|2025-11-29|Gas & Transit|Cashback|3
-American Express|Blue Cash Preferred® Card from American Express|95|1% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1
-American Express|Blue Cash Preferred® Card from American Express|95|$120 Disney Bundle Credit|$10 monthly for enrolled bundle subscription|Streaming|Monthly|120|False|2025-11-29|Disney Credit|Credit|120
-Citi|Citi Double Cash® Card|0|2% cash back on all purchases|1% when you buy + 1% when you pay|All Purchases|Permanent|N/A|False|2025-11-29|Flat Cashback|Cashback|2
+Chase|Chase Freedom Unlimited|0|5% cash back on travel purchased through Chase Travel||Travel|Permanent|N/A|False|2025-11-29|Chase Travel Bonus|Cashback|5
+Chase|Chase Freedom Unlimited|0|3% cash back on dining and drugstore purchases|including takeout & eligible delivery|Dining,Drugstores|Permanent|N/A|False|2025-11-29|Dining Bonus|Cashback|3
+Chase|Chase Freedom Unlimited|0|1.5% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1.5
+Chase|Chase Freedom Unlimited|0|Complimentary DashPass membership|activate by 12/31/2027|Delivery|Minimum 12 months from activation|120|False|2025-11-29|DashPass|Perk|N/A
+Wells Fargo|Wells Fargo Active Cash Card|0|Unlimited 2% cash rewards on all purchases||All Purchases|Permanent|N/A|False|2025-11-29|Flat Cashback|Cashback|2
+Wells Fargo|Wells Fargo Active Cash Card|0|Cell phone protection when bill paid with card|up to $600 per claim $25 deductible|Cell Phone Protection|Permanent (per claim)|600|False|2025-11-29|Phone Protection|Protection|600
+American Express|Blue Cash Preferred Card from American Express|95|6% cash back at U.S. supermarkets|up to $6,000 per calendar year then 1%|Groceries|Permanent|N/A|False|2025-11-29|Supermarkets Bonus|Cashback|6
+American Express|Blue Cash Preferred Card from American Express|95|6% cash back on select U.S. streaming subscriptions||Streaming|Permanent|N/A|False|2025-11-29|Streaming Bonus|Cashback|6
+American Express|Blue Cash Preferred Card from American Express|95|3% cash back at U.S. gas stations and on transit||Gas,Transit|Permanent|N/A|False|2025-11-29|Gas & Transit|Cashback|3
+American Express|Blue Cash Preferred Card from American Express|95|1% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1
+American Express|Blue Cash Preferred Card from American Express|95|$120 Disney Bundle Credit|$10 monthly for enrolled bundle subscription|Streaming|Monthly|120|False|2025-11-29|Disney Credit|Credit|120
+Citi|Citi Double Cash Card|0|2% cash back on all purchases|1% when you buy + 1% when you pay|All Purchases|Permanent|N/A|False|2025-11-29|Flat Cashback|Cashback|2
 Capital One|Capital One Venture Rewards Credit Card|95|5x miles on hotels vacation rentals & rental cars booked through Capital One Travel||Hotel,Vacation Rentals,Rental Cars|Permanent|N/A|False|2025-11-29|Portal Hotels|Multiplier|5
 Capital One|Capital One Venture Rewards Credit Card|95|2x miles on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Miles|Multiplier|2
 Capital One|Capital One Venture Rewards Credit Card|95|Global Entry or TSA PreCheck application fee credit|up to $120|Travel Security|Every 4 years|120|False|2025-11-29|TSA Credit|Credit|120
-Chase|Chase Sapphire Reserve®|795|10x points on hotels & car rentals through Chase Travel|after $300 credit exhausted|Hotel,Rental Cars|Permanent|N/A|False|2025-11-29|Portal Hotels|Multiplier|10
-Chase|Chase Sapphire Reserve®|795|8x points on other Chase Travel purchases|after $300 credit|Travel|Permanent|N/A|False|2025-11-29|Chase Travel Bonus|Multiplier|8
-Chase|Chase Sapphire Reserve®|795|3x points on dining & all other travel worldwide||Dining,Travel|Permanent|N/A|False|2025-11-29|Dining & Travel|Multiplier|3
-Chase|Chase Sapphire Reserve®|795|$300 Annual Travel Credit|any travel purchase|Travel|Annually (anniversary year)|300|False|2025-11-29|Travel Credit|Credit|300
-Chase|Chase Sapphire Reserve®|795|$500 The Edit hotel credit|$250 semi-annually on 2-night min prepaid stays|Hotel|Semi-annually (calendar year)|500|False|2025-11-29|Edit Hotel Credit|Credit|500
-Chase|Chase Sapphire Reserve®|795|$300 Sapphire Exclusive Tables dining credit|$150 semi-annually|Dining|Semi-annually (calendar year)|300|False|2025-11-29|Tables Credit|Credit|300
-Chase|Chase Sapphire Reserve®|795|Priority Pass Select unlimited + Chase Sapphire Lounge unlimited|+2 guests|Lounge Access|Permanent|469|False|2025-11-29|Lounge Access|Access|469
-Chase|Chase Sapphire Reserve®|795|Global Entry/TSA PreCheck/NEXUS fee credit|up to $120|Travel Security|Every 4 years|120|False|2025-11-29|TSA Credit|Credit|120
-American Express|American Express Platinum Card®|895|5x Membership Rewards points on flights booked directly or via Amex Travel & prepaid hotels via Amex Travel|up to $500,000/calendar year|Flights,Hotel|Permanent|N/A|False|2025-11-29|Flights & Hotels|Multiplier|5
-American Express|American Express Platinum Card®|895|$200 Airline Fee Credit|selected airline|Airline|Annually (calendar year)|200|True|2025-11-29|Airline Credit|Credit|200
-American Express|American Express Platinum Card®|895|$600 Hotel Credit on prepaid Fine Hotels + Resorts or The Hotel Collection|$300 semi-annually|Hotel|Semi-annually|600|False|2025-11-29|Hotel Credit|Credit|600
-American Express|American Express Platinum Card®|895|$209 CLEAR® Plus Credit||Travel Security|Annually (calendar year)|209|True|2025-11-29|CLEAR Credit|Credit|209
-American Express|American Express Platinum Card®|895|$200 Uber Cash|$15 monthly + $20 bonus December|Rideshare,Food Delivery|Monthly|200|False|2025-11-29|Uber Cash|Credit|200
-American Express|American Express Platinum Card®|895|$300 Digital Entertainment Credit|$25 monthly|Streaming,Entertainment|Monthly|300|True|2025-11-29|Entertainment Credit|Credit|300
-American Express|American Express Platinum Card®|895|$400 Resy Credit|$100 quarterly|Dining|Quarterly|400|True|2025-11-29|Resy Credit|Credit|400
-American Express|American Express Platinum Card®|895|$300 lululemon Credit|$75 quarterly|Shopping,Fitness|Quarterly|300|True|2025-11-29|lululemon Credit|Credit|300
-American Express|American Express Platinum Card®|895|$155 Walmart+ monthly membership credit|plus tax|Shopping|Monthly|155|False|2025-11-29|Walmart+ Credit|Credit|155
-American Express|American Express Platinum Card®|895|$100 Saks Fifth Avenue credit|$50 semi-annually|Shopping|Semi-annually|100|True|2025-11-29|Saks Credit|Credit|100
-American Express|American Express Platinum Card®|895|$300 Equinox Credit||Fitness|Annually (calendar year)|300|True|2025-11-29|Equinox Credit|Credit|300
-American Express|American Express Platinum Card®|895|$200 Oura Ring Credit||Fitness,Wellness|Annually (calendar year)|200|True|2025-11-29|Oura Credit|Credit|200
+Chase|Chase Sapphire Reserve|795|10x points on hotels & car rentals through Chase Travel|after $300 credit exhausted|Hotel,Rental Cars|Permanent|N/A|False|2025-11-29|Portal Hotels|Multiplier|10
+Chase|Chase Sapphire Reserve|795|8x points on other Chase Travel purchases|after $300 credit|Travel|Permanent|N/A|False|2025-11-29|Chase Travel Bonus|Multiplier|8
+Chase|Chase Sapphire Reserve|795|3x points on dining & all other travel worldwide||Dining,Travel|Permanent|N/A|False|2025-11-29|Dining & Travel|Multiplier|3
+Chase|Chase Sapphire Reserve|795|$300 Annual Travel Credit|any travel purchase|Travel|Annually (anniversary year)|300|False|2025-11-29|Travel Credit|Credit|300
+Chase|Chase Sapphire Reserve|795|$500 The Edit hotel credit|$250 semi-annually on 2-night min prepaid stays|Hotel|Semi-annually (calendar year)|500|False|2025-11-29|Edit Hotel Credit|Credit|500
+Chase|Chase Sapphire Reserve|795|$300 Sapphire Exclusive Tables dining credit|$150 semi-annually|Dining|Semi-annually (calendar year)|300|False|2025-11-29|Tables Credit|Credit|300
+Chase|Chase Sapphire Reserve|795|Priority Pass Select unlimited + Chase Sapphire Lounge unlimited|+2 guests|Lounge Access|Permanent|469|False|2025-11-29|Lounge Access|Access|469
+Chase|Chase Sapphire Reserve|795|Global Entry/TSA PreCheck/NEXUS fee credit|up to $120|Travel Security|Every 4 years|120|False|2025-11-29|TSA Credit|Credit|120
+American Express|American Express Platinum Card|895|5x Membership Rewards points on flights booked directly or via Amex Travel & prepaid hotels via Amex Travel|up to $500,000/calendar year|Flights,Hotel|Permanent|N/A|False|2025-11-29|Flights & Hotels|Multiplier|5
+American Express|American Express Platinum Card|895|$200 Airline Fee Credit|selected airline|Airline|Annually (calendar year)|200|True|2025-11-29|Airline Credit|Credit|200
+American Express|American Express Platinum Card|895|$600 Hotel Credit on prepaid Fine Hotels + Resorts or The Hotel Collection|$300 semi-annually|Hotel|Semi-annually|600|False|2025-11-29|Hotel Credit|Credit|600
+American Express|American Express Platinum Card|895|$209 CLEAR Plus Credit||Travel Security|Annually (calendar year)|209|True|2025-11-29|CLEAR Credit|Credit|209
+American Express|American Express Platinum Card|895|$200 Uber Cash|$15 monthly + $20 bonus December|Rideshare,Food Delivery|Monthly|200|False|2025-11-29|Uber Cash|Credit|200
+American Express|American Express Platinum Card|895|$300 Digital Entertainment Credit|$25 monthly|Streaming,Entertainment|Monthly|300|True|2025-11-29|Entertainment Credit|Credit|300
+American Express|American Express Platinum Card|895|$400 Resy Credit|$100 quarterly|Dining|Quarterly|400|True|2025-11-29|Resy Credit|Credit|400
+American Express|American Express Platinum Card|895|$300 lululemon Credit|$75 quarterly|Shopping,Fitness|Quarterly|300|True|2025-11-29|lululemon Credit|Credit|300
+American Express|American Express Platinum Card|895|$155 Walmart+ monthly membership credit|plus tax|Shopping|Monthly|155|False|2025-11-29|Walmart+ Credit|Credit|155
+American Express|American Express Platinum Card|895|$100 Saks Fifth Avenue credit|$50 semi-annually|Shopping|Semi-annually|100|True|2025-11-29|Saks Credit|Credit|100
+American Express|American Express Platinum Card|895|$300 Equinox Credit||Fitness|Annually (calendar year)|300|True|2025-11-29|Equinox Credit|Credit|300
+American Express|American Express Platinum Card|895|$200 Oura Ring Credit||Fitness,Wellness|Annually (calendar year)|200|True|2025-11-29|Oura Credit|Credit|200
 Chase|Prime Visa|0|5% back at Amazon.com Amazon Fresh Whole Foods Market & Chase Travel|with eligible Prime membership|Groceries,Shopping,Amazon|Permanent|N/A|False|2025-11-29|Amazon Bonus|Cashback|5
 Chase|Prime Visa|0|10% back or more on rotating Amazon categories/items||Shopping,Amazon|Permanent (rotating)|N/A|False|2025-11-29|Rotating Amazon|Cashback|10
 Chase|Prime Visa|0|2% back at gas stations restaurants local transit/commuting||Gas,Dining,Transit|Permanent|N/A|False|2025-11-29|Gas & Dining|Cashback|2
 Chase|Prime Visa|0|1% back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1
-Discover|Discover it® Cash Back|0|5% cash back in rotating quarterly categories|up to $1,500 per quarter upon activation|Rotating Categories|Quarterly|N/A|False|2025-11-29|Rotating Bonus|Cashback|5
-Discover|Discover it® Cash Back|0|1% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1
-Wells Fargo|Wells Fargo Reflect® Card|0|Cell phone protection when bill paid with card|up to $600 per claim $25 deductible|Cell Phone Protection|Permanent (per claim)|600|False|2025-11-29|Phone Protection|Protection|600
+Discover|Discover it Cash Back|0|5% cash back in rotating quarterly categories|up to $1,500 per quarter upon activation|Rotating Categories|Quarterly|N/A|False|2025-11-29|Rotating Bonus|Cashback|5
+Discover|Discover it Cash Back|0|1% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1
+Wells Fargo|Wells Fargo Reflect Card|0|Cell phone protection when bill paid with card|up to $600 per claim $25 deductible|Cell Phone Protection|Permanent (per claim)|600|False|2025-11-29|Phone Protection|Protection|600
 Capital One|Capital One Savor Cash Rewards Credit Card|95|Unlimited 3% cash back on dining entertainment popular streaming services & grocery stores|excluding superstores|Dining,Entertainment,Streaming,Groceries|Permanent|N/A|False|2025-11-29|Dining & More|Cashback|3
 Capital One|Capital One Savor Cash Rewards Credit Card|95|1% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1
-Chase|Chase Freedom Flex®|0|5% cash back on quarterly rotating categories|up to $1,500 upon activation|Rotating Categories|Quarterly|N/A|False|2025-11-29|Rotating Bonus|Cashback|5
-Chase|Chase Freedom Flex®|0|5% cash back on travel through Chase Travel||Travel|Permanent|N/A|False|2025-11-29|Chase Travel Bonus|Cashback|5
-Chase|Chase Freedom Flex®|0|3% cash back on dining & drugstore purchases||Dining,Drugstores|Permanent|N/A|False|2025-11-29|Dining Bonus|Cashback|3
-Chase|Chase Freedom Flex®|0|Complimentary DashPass membership|activate by 12/31/2027|Delivery|Minimum 12 months from activation|120|False|2025-11-29|DashPass|Perk|N/A
-Citi|Citi Strata Premier® Card|95|10x ThankYou points on hotels car rentals & attractions through CitiTravel.com||Hotel,Rental Cars,Attractions|Permanent|N/A|False|2025-11-29|Portal Bonus|Multiplier|10
-Citi|Citi Strata Premier® Card|95|3x ThankYou points on air travel gas/EV charging restaurants supermarkets & hotels||Flights,Gas,Dining,Groceries,Hotel|Permanent|N/A|False|2025-11-29|Bonus Categories|Multiplier|3
-Citi|Citi Strata Premier® Card|95|$100 annual hotel savings benefit on $500+ single stay through CitiTravel.com||Hotel|Annually (calendar year)|100|False|2025-11-29|Hotel Savings|Credit|100
-American Express|Blue Cash Everyday® Card from American Express|0|3% cash back at U.S. supermarkets|up to $6,000 per calendar year then 1%|Groceries|Permanent|N/A|False|2025-11-29|Supermarkets Bonus|Cashback|3
-American Express|Blue Cash Everyday® Card from American Express|0|3% cash back on U.S. online retail purchases|up to $6,000 per calendar year then 1%|Online Shopping|Permanent|N/A|False|2025-11-29|Online Retail|Cashback|3
-American Express|Blue Cash Everyday® Card from American Express|0|3% cash back at U.S. gas stations|up to $6,000 per calendar year then 1%|Gas|Permanent|N/A|False|2025-11-29|Gas Bonus|Cashback|3
-American Express|Blue Cash Everyday® Card from American Express|0|$84 Disney Bundle Credit|$7 monthly for enrolled bundle|Streaming|Monthly|84|True|2025-11-29|Disney Credit|Credit|84
+Chase|Chase Freedom Flex|0|5% cash back on quarterly rotating categories|up to $1,500 upon activation|Rotating Categories|Quarterly|N/A|False|2025-11-29|Rotating Bonus|Cashback|5
+Chase|Chase Freedom Flex|0|5% cash back on travel through Chase Travel||Travel|Permanent|N/A|False|2025-11-29|Chase Travel Bonus|Cashback|5
+Chase|Chase Freedom Flex|0|3% cash back on dining & drugstore purchases||Dining,Drugstores|Permanent|N/A|False|2025-11-29|Dining Bonus|Cashback|3
+Chase|Chase Freedom Flex|0|Complimentary DashPass membership|activate by 12/31/2027|Delivery|Minimum 12 months from activation|120|False|2025-11-29|DashPass|Perk|N/A
+Citi|Citi Strata Premier Card|95|10x ThankYou points on hotels car rentals & attractions through CitiTravel.com||Hotel,Rental Cars,Attractions|Permanent|N/A|False|2025-11-29|Portal Bonus|Multiplier|10
+Citi|Citi Strata Premier Card|95|3x ThankYou points on air travel gas/EV charging restaurants supermarkets & hotels||Flights,Gas,Dining,Groceries,Hotel|Permanent|N/A|False|2025-11-29|Bonus Categories|Multiplier|3
+Citi|Citi Strata Premier Card|95|$100 annual hotel savings benefit on $500+ single stay through CitiTravel.com||Hotel|Annually (calendar year)|100|False|2025-11-29|Hotel Savings|Credit|100
+American Express|Blue Cash Everyday Card from American Express|0|3% cash back at U.S. supermarkets|up to $6,000 per calendar year then 1%|Groceries|Permanent|N/A|False|2025-11-29|Supermarkets Bonus|Cashback|3
+American Express|Blue Cash Everyday Card from American Express|0|3% cash back on U.S. online retail purchases|up to $6,000 per calendar year then 1%|Online Shopping|Permanent|N/A|False|2025-11-29|Online Retail|Cashback|3
+American Express|Blue Cash Everyday Card from American Express|0|3% cash back at U.S. gas stations|up to $6,000 per calendar year then 1%|Gas|Permanent|N/A|False|2025-11-29|Gas Bonus|Cashback|3
+American Express|Blue Cash Everyday Card from American Express|0|$84 Disney Bundle Credit|$7 monthly for enrolled bundle|Streaming|Monthly|84|True|2025-11-29|Disney Credit|Credit|84
 Capital One|Capital One Quicksilver Cash Rewards Credit Card|0|Unlimited 1.5% cash back on every purchase||All Purchases|Permanent|N/A|False|2025-11-29|Flat Cashback|Cashback|1.5
 Capital One|Capital One Quicksilver Cash Rewards Credit Card|0|5% cash back on hotels & rental cars booked through Capital One Travel||Hotel,Rental Cars|Permanent|N/A|False|2025-11-29|Portal Hotels|Cashback|5
-Chase|United℠ Explorer Card|95|2 miles per $1 on United purchases dining and direct hotel bookings|including delivery|Airline,Dining,Hotel|Permanent|N/A|False|2025-11-29|United Bonus|Multiplier|2
-Chase|United℠ Explorer Card|95|Free first checked bag for cardholder + 1 companion on United flights|terms apply|Airline|Permanent|N/A|False|2025-11-29|Free Bag|Perk|N/A
-Chase|United℠ Explorer Card|95|Priority boarding on United flights||Airline|Permanent|N/A|False|2025-11-29|Priority Boarding|Perk|N/A
-Chase|United℠ Explorer Card|95|2 United Club one-time passes each cardmember anniversary||Lounge Access|Annually (anniversary year)|N/A|False|2025-11-29|Club Passes|Perk|2
-Chase|United℠ Explorer Card|95|Global Entry/TSA PreCheck/NEXUS fee credit|up to $120|Travel Security|Every 4 years|120|False|2025-11-29|TSA Credit|Credit|120
-Chase|United℠ Explorer Card|95|25% back on United inflight & Club premium drink purchases||Airline|Permanent|N/A|False|2025-11-29|Inflight Savings|Savings|25
-Chase|Marriott Bonvoy Boundless® Credit Card|95|Up to 17x total points at Marriott Bonvoy hotels||Hotel|Permanent|N/A|False|2025-11-29|Hotel Points|Multiplier|17
-Chase|Marriott Bonvoy Boundless® Credit Card|95|Free Night Award each cardmember anniversary|up to 35,000 points|Hotel|Annually (anniversary year)|N/A|False|2025-11-29|Free Night|Free Night|35000
-Chase|Marriott Bonvoy Boundless® Credit Card|95|15 Elite Night Credits annually||Hotel Status|Permanent (calendar year)|N/A|False|2025-11-29|Elite Credits|Bonus|15
-American Express|Delta SkyMiles® Platinum American Express Card|350|3x miles on Delta purchases & direct hotel bookings||Airline,Hotel|Permanent|N/A|False|2025-11-29|Delta & Hotels|Multiplier|3
-American Express|Delta SkyMiles® Platinum American Express Card|350|$120 Resy Credit $120 Rideshare Credit $150 Delta Stays Credit||Dining,Rideshare,Hotel|Various|N/A|True|2025-11-29|Bonus Credits|Credit|150
-American Express|Delta SkyMiles® Platinum American Express Card|350|Annual Companion Certificate|Main Cabin domestic/round-trip|Airline|Annually (renewal)|N/A|False|2025-11-29|Companion Certificate|Perk|N/A
-American Express|Delta SkyMiles® Platinum American Express Card|350|Global Entry/TSA PreCheck credit||Travel Security|Every 4-4.5 years|120|False|2025-11-29|TSA Credit|Credit|120
-American Express|Hilton Honors American Express Surpass® Card|150|14x Hilton Honors points at Hilton properties||Hotel|Permanent|N/A|False|2025-11-29|Hotel Points|Multiplier|14
-American Express|Hilton Honors American Express Surpass® Card|150|Hilton Honors Gold status||Hotel Status|Permanent|N/A|True|2025-11-29|Gold Status|Status|N/A
-American Express|Hilton Honors American Express Surpass® Card|150|$200 Hilton credit|$50 quarterly|Hotel|Quarterly|200|False|2025-11-29|Hilton Credit|Credit|200
-American Express|Hilton Honors American Express Surpass® Card|150|Free Night Reward after $15,000 spend in calendar year||Hotel|Calendar year|N/A|False|2025-11-29|Free Night|Perk|N/A
-Chase|Southwest Rapid Rewards® Priority Credit Card|149|7,500 anniversary bonus points each year||Anniversary Bonus|Annually (anniversary year)|N/A|False|2025-11-29|Anniversary Points|Bonus|7500
-Chase|Southwest Rapid Rewards® Priority Credit Card|149|$75 annual Southwest travel credit||Airline|Annually (calendar year)|75|False|2025-11-29|Southwest Credit|Credit|75
-Chase|Southwest Rapid Rewards® Priority Credit Card|149|4 Upgraded Boardings per year|when available|Airline|Per year|N/A|False|2025-11-29|Upgraded Boardings|Perk|4
-Chase|Southwest Rapid Rewards® Priority Credit Card|149|25% back on inflight purchases||Airline|Permanent|N/A|False|2025-11-29|Inflight Savings|Savings|25
-Discover|Discover it® Miles|0|Unlimited 1.5 miles per $1 on all purchases||All Purchases|Permanent|N/A|False|2025-11-29|Flat Miles|Multiplier|1.5
+Chase|United Explorer Card|95|2 miles per $1 on United purchases dining and direct hotel bookings|including delivery|Airline,Dining,Hotel|Permanent|N/A|False|2025-11-29|United Bonus|Multiplier|2
+Chase|United Explorer Card|95|Free first checked bag for cardholder + 1 companion on United flights|terms apply|Airline|Permanent|N/A|False|2025-11-29|Free Bag|Perk|N/A
+Chase|United Explorer Card|95|Priority boarding on United flights||Airline|Permanent|N/A|False|2025-11-29|Priority Boarding|Perk|N/A
+Chase|United Explorer Card|95|2 United Club one-time passes each cardmember anniversary||Lounge Access|Annually (anniversary year)|N/A|False|2025-11-29|Club Passes|Perk|2
+Chase|United Explorer Card|95|Global Entry/TSA PreCheck/NEXUS fee credit|up to $120|Travel Security|Every 4 years|120|False|2025-11-29|TSA Credit|Credit|120
+Chase|United Explorer Card|95|25% back on United inflight & Club premium drink purchases||Airline|Permanent|N/A|False|2025-11-29|Inflight Savings|Savings|25
+Chase|Marriott Bonvoy Boundless Credit Card|95|Up to 17x total points at Marriott Bonvoy hotels||Hotel|Permanent|N/A|False|2025-11-29|Hotel Points|Multiplier|17
+Chase|Marriott Bonvoy Boundless Credit Card|95|Free Night Award each cardmember anniversary|up to 35,000 points|Hotel|Annually (anniversary year)|N/A|False|2025-11-29|Free Night|Free Night|35000
+Chase|Marriott Bonvoy Boundless Credit Card|95|15 Elite Night Credits annually||Hotel Status|Permanent (calendar year)|N/A|False|2025-11-29|Elite Credits|Bonus|15
+American Express|Delta SkyMiles Platinum American Express Card|350|3x miles on Delta purchases & direct hotel bookings||Airline,Hotel|Permanent|N/A|False|2025-11-29|Delta & Hotels|Multiplier|3
+American Express|Delta SkyMiles Platinum American Express Card|350|$120 Resy Credit $120 Rideshare Credit $150 Delta Stays Credit||Dining,Rideshare,Hotel|Various|N/A|True|2025-11-29|Bonus Credits|Credit|150
+American Express|Delta SkyMiles Platinum American Express Card|350|Annual Companion Certificate|Main Cabin domestic/round-trip|Airline|Annually (renewal)|N/A|False|2025-11-29|Companion Certificate|Perk|N/A
+American Express|Delta SkyMiles Platinum American Express Card|350|Global Entry/TSA PreCheck credit||Travel Security|Every 4-4.5 years|120|False|2025-11-29|TSA Credit|Credit|120
+American Express|Hilton Honors American Express Surpass Card|150|14x Hilton Honors points at Hilton properties||Hotel|Permanent|N/A|False|2025-11-29|Hotel Points|Multiplier|14
+American Express|Hilton Honors American Express Surpass Card|150|Hilton Honors Gold status||Hotel Status|Permanent|N/A|True|2025-11-29|Gold Status|Status|N/A
+American Express|Hilton Honors American Express Surpass Card|150|$200 Hilton credit|$50 quarterly|Hotel|Quarterly|200|False|2025-11-29|Hilton Credit|Credit|200
+American Express|Hilton Honors American Express Surpass Card|150|Free Night Reward after $15,000 spend in calendar year||Hotel|Calendar year|N/A|False|2025-11-29|Free Night|Perk|N/A
+Chase|Southwest Rapid Rewards Priority Credit Card|149|7,500 anniversary bonus points each year||Anniversary Bonus|Annually (anniversary year)|N/A|False|2025-11-29|Anniversary Points|Bonus|7500
+Chase|Southwest Rapid Rewards Priority Credit Card|149|$75 annual Southwest travel credit||Airline|Annually (calendar year)|75|False|2025-11-29|Southwest Credit|Credit|75
+Chase|Southwest Rapid Rewards Priority Credit Card|149|4 Upgraded Boardings per year|when available|Airline|Per year|N/A|False|2025-11-29|Upgraded Boardings|Perk|4
+Chase|Southwest Rapid Rewards Priority Credit Card|149|25% back on inflight purchases||Airline|Permanent|N/A|False|2025-11-29|Inflight Savings|Savings|25
+Discover|Discover it Miles|0|Unlimited 1.5 miles per $1 on all purchases||All Purchases|Permanent|N/A|False|2025-11-29|Flat Miles|Multiplier|1.5
 Capital One|Capital One VentureOne Rewards Credit Card|0|5x miles on hotels & rental cars through Capital One Travel||Hotel,Rental Cars|Permanent|N/A|False|2025-11-29|Portal Hotels|Multiplier|5
 Capital One|Capital One VentureOne Rewards Credit Card|0|1.25x miles on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Miles|Multiplier|1.25
 Chase|IHG One Rewards Premier Credit Card|99|Up to 26x total points at IHG hotels||Hotel|Permanent|N/A|False|2025-11-29|Hotel Points|Multiplier|26
@@ -108,115 +108,115 @@ Chase|IHG One Rewards Premier Credit Card|99|Anniversary Free Night Award|up to 
 Chase|IHG One Rewards Premier Credit Card|99|$100 statement credit + 10,000 points after $20,000 spend annually||Hotel|Calendar year|N/A|False|2025-11-29|Spend Bonus|Bonus|10000
 Chase|IHG One Rewards Premier Credit Card|99|Global Entry/TSA PreCheck credit||Travel Security|Every 4 years|120|False|2025-11-29|TSA Credit|Credit|120
 Chase|IHG One Rewards Premier Credit Card|99|Platinum Elite status||Hotel Status|Permanent|N/A|False|2025-11-29|Platinum Status|Status|N/A
-American Express|American Express® Green Card|150|3x Membership Rewards points on travel & transit||Travel,Transit|Permanent|N/A|False|2025-11-29|Travel & Transit|Multiplier|3
-American Express|American Express® Green Card|150|$189 CLEAR Plus Credit||Travel Security|Annually (calendar year)|189|True|2025-11-29|CLEAR Credit|Credit|189
-American Express|American Express® Green Card|150|$100 LoungeBuddy credit||Lounge Access|Annually (calendar year)|100|False|2025-11-29|LoungeBuddy Credit|Credit|100
-Chase|United Quest℠ Card|250|Free first & second checked bag on United flights|terms apply|Airline|Permanent|N/A|False|2025-11-29|Free Bags|Perk|N/A
-Chase|United Quest℠ Card|250|$125 annual United purchase credit||Airline|Annually (calendar year)|125|False|2025-11-29|United Credit|Credit|125
-Chase|United Quest℠ Card|250|Up to 10,000-mile award flight discount|twice per year|Airline|Calendar year|N/A|False|2025-11-29|Award Discount|Bonus|10000
-Citi|Citi Simplicity® Card|0|No late fees no penalty rate no annual fee||Card Protection|Permanent|N/A|False|2025-11-29|No Fees|Perk|N/A
-Discover|Discover it® Chrome|0|2% cash back at gas stations & restaurants|up to $1,000 quarterly then 1%|Gas,Dining|Quarterly|N/A|False|2025-11-29|Gas & Dining|Cashback|2
-Discover|Discover it® Chrome|0|1% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1
+American Express|American Express Green Card|150|3x Membership Rewards points on travel & transit||Travel,Transit|Permanent|N/A|False|2025-11-29|Travel & Transit|Multiplier|3
+American Express|American Express Green Card|150|$189 CLEAR Plus Credit||Travel Security|Annually (calendar year)|189|True|2025-11-29|CLEAR Credit|Credit|189
+American Express|American Express Green Card|150|$100 LoungeBuddy credit||Lounge Access|Annually (calendar year)|100|False|2025-11-29|LoungeBuddy Credit|Credit|100
+Chase|United Quest Card|250|Free first & second checked bag on United flights|terms apply|Airline|Permanent|N/A|False|2025-11-29|Free Bags|Perk|N/A
+Chase|United Quest Card|250|$125 annual United purchase credit||Airline|Annually (calendar year)|125|False|2025-11-29|United Credit|Credit|125
+Chase|United Quest Card|250|Up to 10,000-mile award flight discount|twice per year|Airline|Calendar year|N/A|False|2025-11-29|Award Discount|Bonus|10000
+Citi|Citi Simplicity Card|0|No late fees no penalty rate no annual fee||Card Protection|Permanent|N/A|False|2025-11-29|No Fees|Perk|N/A
+Discover|Discover it Chrome|0|2% cash back at gas stations & restaurants|up to $1,000 quarterly then 1%|Gas,Dining|Quarterly|N/A|False|2025-11-29|Gas & Dining|Cashback|2
+Discover|Discover it Chrome|0|1% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1
 Chase|The World of Hyatt Credit Card|95|Up to 9x total points at Hyatt properties||Hotel|Permanent|N/A|False|2025-11-29|Hotel Points|Multiplier|9
 Chase|The World of Hyatt Credit Card|95|Anniversary Free Night Award|Category 1-4|Hotel|Annually (anniversary year)|N/A|False|2025-11-29|Free Night|Perk|N/A
 Chase|The World of Hyatt Credit Card|95|Additional Free Night Award after $15,000 spend annually||Hotel|Calendar year|N/A|False|2025-11-29|Spend Free Night|Perk|N/A
 Chase|The World of Hyatt Credit Card|95|Discoverist status||Hotel Status|Permanent|N/A|False|2025-11-29|Discoverist Status|Status|N/A
 Capital One|Capital One QuicksilverOne Cash Rewards Credit Card|39|Unlimited 1.5% cash back on every purchase||All Purchases|Permanent|N/A|False|2025-11-29|Flat Cashback|Cashback|1.5
-American Express|Marriott Bonvoy Brilliant® American Express® Card|650|6x Marriott Bonvoy points at Marriott hotels||Hotel|Permanent|N/A|False|2025-11-29|Hotel Points|Multiplier|6
-American Express|Marriott Bonvoy Brilliant® American Express® Card|650|Platinum Elite status||Hotel Status|Permanent|N/A|False|2025-11-29|Platinum Status|Status|N/A
-American Express|Marriott Bonvoy Brilliant® American Express® Card|650|$300 Marriott dining statement credit|up to $25 monthly|Dining,Hotel|Monthly|300|False|2025-11-29|Marriott Dining|Credit|300
-American Express|Marriott Bonvoy Brilliant® American Express® Card|650|85,000-point Free Night Award annually after renewal||Hotel|Annually (anniversary year)|N/A|False|2025-11-29|Free Night|Free Night|85000
-American Express|Delta SkyMiles® Reserve American Express Card|650|4x miles on Delta purchases||Airline|Permanent|N/A|False|2025-11-29|Delta Bonus|Multiplier|4
-American Express|Delta SkyMiles® Reserve American Express Card|650|Annual Companion Certificate|First Class/Comfort+/Main Cabin|Airline|Annually (renewal)|N/A|False|2025-11-29|Companion Certificate|Perk|N/A
-American Express|Delta SkyMiles® Reserve American Express Card|650|Delta Sky Club access|15 visits per year; unlimited after $75,000 spend|Lounge Access|Permanent (Medallion year)|N/A|False|2025-11-29|Sky Club Access|Access|15
+American Express|Marriott Bonvoy Brilliant American Express Card|650|6x Marriott Bonvoy points at Marriott hotels||Hotel|Permanent|N/A|False|2025-11-29|Hotel Points|Multiplier|6
+American Express|Marriott Bonvoy Brilliant American Express Card|650|Platinum Elite status||Hotel Status|Permanent|N/A|False|2025-11-29|Platinum Status|Status|N/A
+American Express|Marriott Bonvoy Brilliant American Express Card|650|$300 Marriott dining statement credit|up to $25 monthly|Dining,Hotel|Monthly|300|False|2025-11-29|Marriott Dining|Credit|300
+American Express|Marriott Bonvoy Brilliant American Express Card|650|85,000-point Free Night Award annually after renewal||Hotel|Annually (anniversary year)|N/A|False|2025-11-29|Free Night|Free Night|85000
+American Express|Delta SkyMiles Reserve American Express Card|650|4x miles on Delta purchases||Airline|Permanent|N/A|False|2025-11-29|Delta Bonus|Multiplier|4
+American Express|Delta SkyMiles Reserve American Express Card|650|Annual Companion Certificate|First Class/Comfort+/Main Cabin|Airline|Annually (renewal)|N/A|False|2025-11-29|Companion Certificate|Perk|N/A
+American Express|Delta SkyMiles Reserve American Express Card|650|Delta Sky Club access|15 visits per year; unlimited after $75,000 spend|Lounge Access|Permanent (Medallion year)|N/A|False|2025-11-29|Sky Club Access|Access|15
 American Express|Hilton Honors Aspire Card from American Express|550|14x Hilton Honors points at Hilton properties||Hotel|Permanent|N/A|False|2025-11-29|Hotel Points|Multiplier|14
 American Express|Hilton Honors Aspire Card from American Express|550|Diamond status||Hotel Status|Permanent|N/A|False|2025-11-29|Diamond Status|Status|N/A
 American Express|Hilton Honors Aspire Card from American Express|550|$250 Hilton resort credit||Hotel|Annually (calendar year)|250|False|2025-11-29|Resort Credit|Credit|250
 American Express|Hilton Honors Aspire Card from American Express|550|$250 airline fee credit||Airline|Annually (calendar year)|250|False|2025-11-29|Airline Credit|Credit|250
 American Express|Hilton Honors Aspire Card from American Express|550|Annual Free Weekend Night Reward||Hotel|Annually (anniversary year)|N/A|False|2025-11-29|Free Night|Perk|N/A
-Chase|Aeroplan® Credit Card|95|Up to 7x points on Air Canada purchases||Airline|Permanent|N/A|False|2025-11-29|Air Canada Bonus|Multiplier|7
-Chase|Aeroplan® Credit Card|95|Free first checked bag on Air Canada flights|for cardholder + up to 8 companions|Airline|Permanent|N/A|False|2025-11-29|Free Bag|Perk|N/A
-Chase|Aeroplan® Credit Card|95|Global Entry/TSA PreCheck credit||Travel Security|Every 4 years|120|False|2025-11-29|TSA Credit|Credit|120
-Chase|British Airways Visa Signature® Card|95|Up to 3x Avios on British Airways Aer Lingus Iberia LEVEL purchases||Airline|Permanent|N/A|False|2025-11-29|Airline Bonus|Multiplier|3
-Chase|British Airways Visa Signature® Card|95|Travel Together Ticket after $30,000 spend annually||Airline|Calendar year|N/A|False|2025-11-29|Travel Together|Perk|N/A
+Chase|Aeroplan Credit Card|95|Up to 7x points on Air Canada purchases||Airline|Permanent|N/A|False|2025-11-29|Air Canada Bonus|Multiplier|7
+Chase|Aeroplan Credit Card|95|Free first checked bag on Air Canada flights|for cardholder + up to 8 companions|Airline|Permanent|N/A|False|2025-11-29|Free Bag|Perk|N/A
+Chase|Aeroplan Credit Card|95|Global Entry/TSA PreCheck credit||Travel Security|Every 4 years|120|False|2025-11-29|TSA Credit|Credit|120
+Chase|British Airways Visa Signature Card|95|Up to 3x Avios on British Airways Aer Lingus Iberia LEVEL purchases||Airline|Permanent|N/A|False|2025-11-29|Airline Bonus|Multiplier|3
+Chase|British Airways Visa Signature Card|95|Travel Together Ticket after $30,000 spend annually||Airline|Calendar year|N/A|False|2025-11-29|Travel Together|Perk|N/A
 U.S. Bank|U.S. Bank Smartly Visa Signature Card|0|Up to 4% cash back with qualifying U.S. Bank accounts|base 2%|All Purchases|Permanent|N/A|False|2025-11-29|Smartly Bonus|Cashback|4
 Capital One|Capital One Savor Student Cash Rewards Credit Card|0|Unlimited 3% cash back on dining entertainment popular streaming & grocery stores||Dining,Entertainment,Streaming,Groceries|Permanent|N/A|False|2025-11-29|Dining & More|Cashback|3
-Discover|Discover it® Secured Credit Card|0|2% cash back at gas stations & restaurants|up to $1,000 quarterly|Gas,Dining|Quarterly|N/A|False|2025-11-29|Gas & Dining|Cashback|2
-Discover|Discover it® Secured Credit Card|0|1% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1
+Discover|Discover it Secured Credit Card|0|2% cash back at gas stations & restaurants|up to $1,000 quarterly|Gas,Dining|Quarterly|N/A|False|2025-11-29|Gas & Dining|Cashback|2
+Discover|Discover it Secured Credit Card|0|1% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1
 Capital One|Capital One Platinum Secured Credit Card|0|Credit line increase potential after on-time payments||Credit Building|Permanent|N/A|False|2025-11-29|Credit Building|Perk|N/A
-Chase|Chase Slate Edge®|0|0% intro APR offers|ongoing benefit is potential APR reduction with on-time payments|Credit Building|Permanent|N/A|False|2025-11-29|APR Reduction|Perk|N/A
+Chase|Chase Slate Edge|0|0% intro APR offers|ongoing benefit is potential APR reduction with on-time payments|Credit Building|Permanent|N/A|False|2025-11-29|APR Reduction|Perk|N/A
 Chase|IHG One Rewards Traveler Credit Card|0|Up to 17x total points at IHG hotels||Hotel|Permanent|N/A|False|2025-11-29|Hotel Points|Multiplier|17
 Chase|IHG One Rewards Traveler Credit Card|0|Silver Elite status||Hotel Status|Permanent|N/A|False|2025-11-29|Silver Status|Status|N/A
 Chase|IHG One Rewards Traveler Credit Card|0|Fourth Reward Night Free on award stays||Hotel|Permanent|N/A|False|2025-11-29|Fourth Night Free|Perk|N/A
-Chase|United Club℠ Card|525|United Club membership|unlimited access + 2 guests|Lounge Access|Permanent|N/A|False|2025-11-29|Club Membership|Access|N/A
-Chase|United Club℠ Card|525|Free first & second checked bag on United flights||Airline|Permanent|N/A|False|2025-11-29|Free Bags|Perk|N/A
-Bank of America|Bank of America® Customized Cash Rewards credit card for Students|0|3% cash back in choice category|including online shopping dining travel drug stores home improvement; monthly choice|Choice Category|Permanent|N/A|False|2025-11-29|Choice Bonus|Cashback|3
-Bank of America|Bank of America® Customized Cash Rewards credit card for Students|0|2% cash back at grocery stores & wholesale clubs|up to $2,500 quarterly combined with choice category|Groceries|Quarterly|N/A|False|2025-11-29|Grocery Bonus|Cashback|2
-Discover|Discover it® Student Cash Back|0|5% cash back in rotating quarterly categories|up to $1,500 upon activation|Rotating Categories|Quarterly|N/A|False|2025-11-29|Rotating Bonus|Cashback|5
-Discover|Discover it® Student Cash Back|0|1% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1
+Chase|United Club Card|525|United Club membership|unlimited access + 2 guests|Lounge Access|Permanent|N/A|False|2025-11-29|Club Membership|Access|N/A
+Chase|United Club Card|525|Free first & second checked bag on United flights||Airline|Permanent|N/A|False|2025-11-29|Free Bags|Perk|N/A
+Bank of America|Bank of America Customized Cash Rewards credit card for Students|0|3% cash back in choice category|including online shopping dining travel drug stores home improvement; monthly choice|Choice Category|Permanent|N/A|False|2025-11-29|Choice Bonus|Cashback|3
+Bank of America|Bank of America Customized Cash Rewards credit card for Students|0|2% cash back at grocery stores & wholesale clubs|up to $2,500 quarterly combined with choice category|Groceries|Quarterly|N/A|False|2025-11-29|Grocery Bonus|Cashback|2
+Discover|Discover it Student Cash Back|0|5% cash back in rotating quarterly categories|up to $1,500 upon activation|Rotating Categories|Quarterly|N/A|False|2025-11-29|Rotating Bonus|Cashback|5
+Discover|Discover it Student Cash Back|0|1% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1
 Capital One|Capital One Quicksilver Student Cash Rewards Credit Card|0|Unlimited 1.5% cash back on all purchases||All Purchases|Permanent|N/A|False|2025-11-29|Flat Cashback|Cashback|1.5
 Capital One|Capital One Quicksilver Student Cash Rewards Credit Card|0|5% cash back on hotels & rental cars through Capital One Travel||Hotel,Rental Cars|Permanent|N/A|False|2025-11-29|Portal Hotels|Cashback|5
-Discover|Discover it® Student Chrome|0|2% cash back at gas stations & restaurants|up to $1,000 quarterly|Gas,Dining|Quarterly|N/A|False|2025-11-29|Gas & Dining|Cashback|2
-Discover|Discover it® Student Chrome|0|1% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1
+Discover|Discover it Student Chrome|0|2% cash back at gas stations & restaurants|up to $1,000 quarterly|Gas,Dining|Quarterly|N/A|False|2025-11-29|Gas & Dining|Cashback|2
+Discover|Discover it Student Chrome|0|1% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1
 Capital One|Capital One Quicksilver Secured Cash Rewards Credit Card|0|Unlimited 1.5% cash back on every purchase||All Purchases|Permanent|N/A|False|2025-11-29|Flat Cashback|Cashback|1.5
 Capital One|Capital One Quicksilver Secured Cash Rewards Credit Card|0|5% cash back on hotels & rental cars through Capital One Travel||Hotel,Rental Cars|Permanent|N/A|False|2025-11-29|Portal Hotels|Cashback|5
-U.S. Bank|U.S. Bank Shield™ Visa® Card|0|Cell phone protection up to $600 per claim|$25 deductible|Cell Phone Protection|Permanent (per claim)|600|False|2025-11-29|Phone Protection|Protection|600
+U.S. Bank|U.S. Bank Shield™ Visa Card|0|Cell phone protection up to $600 per claim|$25 deductible|Cell Phone Protection|Permanent (per claim)|600|False|2025-11-29|Phone Protection|Protection|600
 Goldman Sachs|Apple Card|0|3% Daily Cash back at Apple and select partners when using Apple Card with Apple Pay||Apple,Shopping|Permanent|N/A|False|2025-11-29|Apple Bonus|Cashback|3
 Goldman Sachs|Apple Card|0|2% Daily Cash back on all purchases using Apple Card with Apple Pay||All Purchases|Permanent|N/A|False|2025-11-29|Apple Pay Bonus|Cashback|2
 Goldman Sachs|Apple Card|0|1% Daily Cash back on purchases using the physical Apple Card||All Purchases|Permanent|N/A|False|2025-11-29|Physical Card|Cashback|1
 Goldman Sachs|Apple Card|0|Daily Cash deposited daily|can be automatic to Savings account with interest|Savings Interest|Permanent|N/A|False|2025-11-29|Daily Cash|Perk|N/A
-Citi|Costco Anywhere Visa® Card by Citi|0|5% cash back on gas at Costco||Gas|Permanent|N/A|False|2025-11-29|Costco Gas|Cashback|5
-Citi|Costco Anywhere Visa® Card by Citi|0|4% cash back on eligible gas and EV charging worldwide|combined with Costco gas up to $7,000 per year then 1%|Gas|Permanent (annual cap)|N/A|False|2025-11-29|Gas Bonus|Cashback|4
-Citi|Costco Anywhere Visa® Card by Citi|0|3% cash back on restaurants and eligible travel|including Costco Travel|Dining,Travel|Permanent|N/A|False|2025-11-29|Dining & Travel|Cashback|3
-Citi|Costco Anywhere Visa® Card by Citi|0|2% cash back on all other Costco and Costco.com purchases||Shopping|Permanent|N/A|False|2025-11-29|Costco Purchases|Cashback|2
-Citi|Costco Anywhere Visa® Card by Citi|0|1% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1
-Citi|Costco Anywhere Visa® Card by Citi|0|Annual reward certificate redeemable at U.S. Costco warehouses||Shopping|Annually (February statement)|N/A|False|2025-11-29|Reward Certificate|Perk|N/A
-Bank of America|Bank of America® Travel Rewards Credit Card|0|Unlimited 1.5 points per $1 on all purchases||All Purchases|Permanent|N/A|False|2025-11-29|Flat Points|Multiplier|1.5
-Bank of America|Bank of America® Travel Rewards Credit Card|0|3 points per $1 on purchases through the Bank of America Travel Center||Travel|Permanent|N/A|False|2025-11-29|Portal Travel|Multiplier|3
-Bank of America|Bank of America® Premium Rewards® Credit Card|95|2 points per $1 on travel and dining purchases||Travel,Dining|Permanent|N/A|False|2025-11-29|Travel & Dining|Multiplier|2
-Bank of America|Bank of America® Premium Rewards® Credit Card|95|1.5 points per $1 on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Points|Multiplier|1.5
-Bank of America|Bank of America® Premium Rewards® Credit Card|95|Up to 75% more points with Preferred Rewards status||Rewards Boost|Permanent|N/A|False|2025-11-29|Rewards Boost|Bonus|75
-Bank of America|Bank of America® Premium Rewards® Credit Card|95|$100 annual airline incidental credit||Airline|Annually (calendar year)|100|False|2025-11-29|Airline Credit|Credit|100
-Bank of America|Bank of America® Premium Rewards® Credit Card|95|Up to $100 Global Entry or TSA PreCheck application fee credit||Travel Security|Every 4 years|100|False|2025-11-29|TSA Credit|Credit|100
-Chase|Ink Business Cash® Credit Card|0|5% cash back on the first $25,000 spent in combined purchases at office supply stores and on internet cable and phone services each account anniversary year||Office Supplies,Telecom|Permanent (anniversary year cap)|N/A|False|2025-11-29|Office & Telecom|Cashback|5
-Chase|Ink Business Cash® Credit Card|0|2% cash back on the first $25,000 spent in combined purchases at gas stations and restaurants each account anniversary year||Gas,Dining|Permanent (anniversary year cap)|N/A|False|2025-11-29|Gas & Dining|Cashback|2
-Chase|Ink Business Cash® Credit Card|0|1% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1
-Chase|Ink Business Unlimited® Credit Card|0|Unlimited 1.5% cash back on all business purchases||All Purchases|Permanent|N/A|False|2025-11-29|Flat Cashback|Cashback|1.5
-Citi|Citi® Custom Cash® Card|0|5% cash back on your top eligible spend category each billing cycle|up to $500 spent then 1%|Top Category|Permanent (monthly)|N/A|False|2025-11-29|Top Category|Cashback|5
-Citi|Citi® Custom Cash® Card|0|1% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1
-Citi|Citi® Secured Mastercard®|0|No rewards or cash back|credit-building card|Credit Building|Permanent|N/A|False|2025-11-29|Credit Building|Perk|N/A
-Synchrony|Best Buy® Credit Card|0|5% back in rewards on Best Buy purchases|or special financing|Electronics|Permanent|N/A|False|2025-11-29|Best Buy Bonus|Cashback|5
+Citi|Costco Anywhere Visa Card by Citi|0|5% cash back on gas at Costco||Gas|Permanent|N/A|False|2025-11-29|Costco Gas|Cashback|5
+Citi|Costco Anywhere Visa Card by Citi|0|4% cash back on eligible gas and EV charging worldwide|combined with Costco gas up to $7,000 per year then 1%|Gas|Permanent (annual cap)|N/A|False|2025-11-29|Gas Bonus|Cashback|4
+Citi|Costco Anywhere Visa Card by Citi|0|3% cash back on restaurants and eligible travel|including Costco Travel|Dining,Travel|Permanent|N/A|False|2025-11-29|Dining & Travel|Cashback|3
+Citi|Costco Anywhere Visa Card by Citi|0|2% cash back on all other Costco and Costco.com purchases||Shopping|Permanent|N/A|False|2025-11-29|Costco Purchases|Cashback|2
+Citi|Costco Anywhere Visa Card by Citi|0|1% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1
+Citi|Costco Anywhere Visa Card by Citi|0|Annual reward certificate redeemable at U.S. Costco warehouses||Shopping|Annually (February statement)|N/A|False|2025-11-29|Reward Certificate|Perk|N/A
+Bank of America|Bank of America Travel Rewards Credit Card|0|Unlimited 1.5 points per $1 on all purchases||All Purchases|Permanent|N/A|False|2025-11-29|Flat Points|Multiplier|1.5
+Bank of America|Bank of America Travel Rewards Credit Card|0|3 points per $1 on purchases through the Bank of America Travel Center||Travel|Permanent|N/A|False|2025-11-29|Portal Travel|Multiplier|3
+Bank of America|Bank of America Premium Rewards Credit Card|95|2 points per $1 on travel and dining purchases||Travel,Dining|Permanent|N/A|False|2025-11-29|Travel & Dining|Multiplier|2
+Bank of America|Bank of America Premium Rewards Credit Card|95|1.5 points per $1 on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Points|Multiplier|1.5
+Bank of America|Bank of America Premium Rewards Credit Card|95|Up to 75% more points with Preferred Rewards status||Rewards Boost|Permanent|N/A|False|2025-11-29|Rewards Boost|Bonus|75
+Bank of America|Bank of America Premium Rewards Credit Card|95|$100 annual airline incidental credit||Airline|Annually (calendar year)|100|False|2025-11-29|Airline Credit|Credit|100
+Bank of America|Bank of America Premium Rewards Credit Card|95|Up to $100 Global Entry or TSA PreCheck application fee credit||Travel Security|Every 4 years|100|False|2025-11-29|TSA Credit|Credit|100
+Chase|Ink Business Cash Credit Card|0|5% cash back on the first $25,000 spent in combined purchases at office supply stores and on internet cable and phone services each account anniversary year||Office Supplies,Telecom|Permanent (anniversary year cap)|N/A|False|2025-11-29|Office & Telecom|Cashback|5
+Chase|Ink Business Cash Credit Card|0|2% cash back on the first $25,000 spent in combined purchases at gas stations and restaurants each account anniversary year||Gas,Dining|Permanent (anniversary year cap)|N/A|False|2025-11-29|Gas & Dining|Cashback|2
+Chase|Ink Business Cash Credit Card|0|1% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1
+Chase|Ink Business Unlimited Credit Card|0|Unlimited 1.5% cash back on all business purchases||All Purchases|Permanent|N/A|False|2025-11-29|Flat Cashback|Cashback|1.5
+Citi|Citi Custom Cash Card|0|5% cash back on your top eligible spend category each billing cycle|up to $500 spent then 1%|Top Category|Permanent (monthly)|N/A|False|2025-11-29|Top Category|Cashback|5
+Citi|Citi Custom Cash Card|0|1% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1
+Citi|Citi Secured Mastercard|0|No rewards or cash back|credit-building card|Credit Building|Permanent|N/A|False|2025-11-29|Credit Building|Perk|N/A
+Synchrony|Best Buy Credit Card|0|5% back in rewards on Best Buy purchases|or special financing|Electronics|Permanent|N/A|False|2025-11-29|Best Buy Bonus|Cashback|5
 Synchrony|Amazon Prime Store Card|0|5% back at Amazon.com with eligible Prime membership|or special financing|Shopping,Amazon|Permanent|N/A|False|2025-11-29|Amazon Bonus|Cashback|5
 Synchrony|Amazon Store Card|0|Special financing offers on Amazon.com purchases|no rewards without Prime|Shopping,Amazon|Permanent|N/A|False|2025-11-29|Special Financing|Perk|N/A
-Wells Fargo|Wells Fargo Active Cash® Secured Credit Card|0|Unlimited 2% cash rewards on purchases||All Purchases|Permanent|N/A|False|2025-11-29|Flat Cashback|Cashback|2
-Wells Fargo|Wells Fargo Autograph® Card|0|Unlimited 3x points on restaurants travel gas/EV charging transit popular streaming services phone plans||Dining,Travel,Gas,Transit,Streaming,Telecom|Permanent|N/A|False|2025-11-29|Bonus Categories|Multiplier|3
-Wells Fargo|Wells Fargo Autograph® Card|0|1x points on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Points|Multiplier|1
-Wells Fargo|Wells Fargo Reflect® Secured Credit Card|0|Cell phone protection up to $600 per claim|$25 deductible|Cell Phone Protection|Permanent (per claim)|600|False|2025-11-29|Phone Protection|Protection|600
-USAA|USAA® Cashback Rewards Plus American Express® Card|0|5% cash back on up to $3,000 in gas and military base purchases annually||Gas|Permanent (annual cap)|N/A|False|2025-11-29|Gas Bonus|Cashback|5
-USAA|USAA® Cashback Rewards Plus American Express® Card|0|2% cash back on up to $3,000 in grocery purchases annually||Groceries|Permanent (annual cap)|N/A|False|2025-11-29|Grocery Bonus|Cashback|2
-USAA|USAA® Cashback Rewards Plus American Express® Card|0|1% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1
-USAA|USAA® Preferred Cash Rewards Visa Signature® Card|0|Unlimited 1.5% cash back on all purchases||All Purchases|Permanent|N/A|False|2025-11-29|Flat Cashback|Cashback|1.5
-PNC|PNC Core® Visa® Credit Card|0|Unlimited 1.5% cash back on all purchases|some versions higher with relationship|All Purchases|Permanent|N/A|False|2025-11-29|Flat Cashback|Cashback|1.5
-PNC|PNC Premier Traveler® Visa Signature® Credit Card|0|3x miles on travel purchases||Travel|Permanent|N/A|False|2025-11-29|Travel Miles|Multiplier|3
-PNC|PNC Premier Traveler® Visa Signature® Credit Card|0|2x miles on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Miles|Multiplier|2
-Navy Federal|Navy Federal nRewards® Secured Credit Card|0|1 point per $1 on all purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Points|Multiplier|1
-PenFed|PenFed Power Cash Rewards Visa Signature® Card|0|2% cash back for Honors Advantage members|otherwise 1.5%|All Purchases|Permanent|N/A|False|2025-11-29|Cash Back|Cashback|2
-PenFed|PenFed Pathfinder® Rewards Visa Signature® Card|95|4x points on travel|5x for Honors Advantage|Travel|Permanent|N/A|False|2025-11-29|Travel Bonus|Multiplier|4
-PenFed|PenFed Pathfinder® Rewards Visa Signature® Card|95|$100 annual airline credit||Airline|Permanent (calendar year)|100|False|2025-11-29|Airline Credit|Credit|100
-Huntington|Huntington Voice® Visa® Card|0|3x points in choice category|10 choices quarterly change|Choice Category|Permanent (quarterly choice)|N/A|False|2025-11-29|Choice Bonus|Multiplier|3
-U.S. Bank|U.S. Bank Altitude® Connect Visa Signature® Card|0|5x points on prepaid hotels & car rentals booked through Altitude Rewards Center||Hotel,Rental Cars|Permanent|N/A|False|2025-11-29|Portal Hotels|Multiplier|5
-U.S. Bank|U.S. Bank Altitude® Connect Visa Signature® Card|0|4x points on travel and gas/EV charging|gas/EV on first $1,000 per quarter|Travel,Gas|Permanent|N/A|False|2025-11-29|Travel & Gas|Multiplier|4
-U.S. Bank|U.S. Bank Altitude® Connect Visa Signature® Card|0|2x points on dining grocery stores streaming services||Dining,Groceries,Streaming|Permanent|N/A|False|2025-11-29|Dining & Grocery|Multiplier|2
-U.S. Bank|U.S. Bank Altitude® Connect Visa Signature® Card|0|Up to $100 Global Entry/TSA PreCheck credit||Travel Security|Every 4 years|100|False|2025-11-29|TSA Credit|Credit|100
-U.S. Bank|U.S. Bank Altitude® Connect Visa Signature® Card|0|4 Priority Pass Select visits per year||Lounge Access|Permanent|N/A|False|2025-11-29|Priority Pass|Access|4
-U.S. Bank|U.S. Bank Altitude® Reserve Visa Infinite® Card|400|$325 annual travel/dining credit||Travel,Dining|Annually (anniversary year)|325|False|2025-11-29|Travel & Dining Credit|Credit|325
-U.S. Bank|U.S. Bank Altitude® Reserve Visa Infinite® Card|400|12 Priority Pass visits per year|unlimited guests at $32 each after|Lounge Access|Permanent|N/A|False|2025-11-29|Priority Pass|Access|12
-U.S. Bank|U.S. Bank Altitude® Reserve Visa Infinite® Card|400|Global Entry/TSA PreCheck credit||Travel Security|Every 4 years|100|False|2025-11-29|TSA Credit|Credit|100
-Synchrony|Lowe’s® Advantage Card|0|5% off every day at Lowe's|or special financing|Home Improvement|Permanent|N/A|False|2025-11-29|Lowe's Discount|Cashback|5
-Synchrony|Sam’s Club® Mastercard®|0|5% cash back on gas 3% dining & takeout 1% other|up to $6,000/year|Gas,Dining|Permanent|N/A|False|2025-11-29|Gas Bonus|Cashback|5
-Synchrony|PayPal Credit®|0|Promotional financing offers on PayPal purchases||Online Shopping|Permanent|N/A|False|2025-11-29|Promotional Financing|Perk|N/A
-PNC|PNC Cash Rewards® Visa Credit Card|0|4% cash back on gas 3% restaurants 2% grocery|up to caps|Gas,Dining,Groceries|Permanent|N/A|False|2025-11-29|Bonus Categories|Cashback|4
-Santander|Santander Unlimited Cash® Rewards Card|0|Unlimited 1.5% cash back on all purchases||All Purchases|Permanent|N/A|False|2025-11-29|Flat Cashback|Cashback|1.5
+Wells Fargo|Wells Fargo Active Cash Secured Credit Card|0|Unlimited 2% cash rewards on purchases||All Purchases|Permanent|N/A|False|2025-11-29|Flat Cashback|Cashback|2
+Wells Fargo|Wells Fargo Autograph Card|0|Unlimited 3x points on restaurants travel gas/EV charging transit popular streaming services phone plans||Dining,Travel,Gas,Transit,Streaming,Telecom|Permanent|N/A|False|2025-11-29|Bonus Categories|Multiplier|3
+Wells Fargo|Wells Fargo Autograph Card|0|1x points on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Points|Multiplier|1
+Wells Fargo|Wells Fargo Reflect Secured Credit Card|0|Cell phone protection up to $600 per claim|$25 deductible|Cell Phone Protection|Permanent (per claim)|600|False|2025-11-29|Phone Protection|Protection|600
+USAA|USAA Cashback Rewards Plus American Express Card|0|5% cash back on up to $3,000 in gas and military base purchases annually||Gas|Permanent (annual cap)|N/A|False|2025-11-29|Gas Bonus|Cashback|5
+USAA|USAA Cashback Rewards Plus American Express Card|0|2% cash back on up to $3,000 in grocery purchases annually||Groceries|Permanent (annual cap)|N/A|False|2025-11-29|Grocery Bonus|Cashback|2
+USAA|USAA Cashback Rewards Plus American Express Card|0|1% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Cashback|Cashback|1
+USAA|USAA Preferred Cash Rewards Visa Signature Card|0|Unlimited 1.5% cash back on all purchases||All Purchases|Permanent|N/A|False|2025-11-29|Flat Cashback|Cashback|1.5
+PNC|PNC Core Visa Credit Card|0|Unlimited 1.5% cash back on all purchases|some versions higher with relationship|All Purchases|Permanent|N/A|False|2025-11-29|Flat Cashback|Cashback|1.5
+PNC|PNC Premier Traveler Visa Signature Credit Card|0|3x miles on travel purchases||Travel|Permanent|N/A|False|2025-11-29|Travel Miles|Multiplier|3
+PNC|PNC Premier Traveler Visa Signature Credit Card|0|2x miles on all other purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Miles|Multiplier|2
+Navy Federal|Navy Federal nRewards Secured Credit Card|0|1 point per $1 on all purchases||All Purchases|Permanent|N/A|False|2025-11-29|Everyday Points|Multiplier|1
+PenFed|PenFed Power Cash Rewards Visa Signature Card|0|2% cash back for Honors Advantage members|otherwise 1.5%|All Purchases|Permanent|N/A|False|2025-11-29|Cash Back|Cashback|2
+PenFed|PenFed Pathfinder Rewards Visa Signature Card|95|4x points on travel|5x for Honors Advantage|Travel|Permanent|N/A|False|2025-11-29|Travel Bonus|Multiplier|4
+PenFed|PenFed Pathfinder Rewards Visa Signature Card|95|$100 annual airline credit||Airline|Permanent (calendar year)|100|False|2025-11-29|Airline Credit|Credit|100
+Huntington|Huntington Voice Visa Card|0|3x points in choice category|10 choices quarterly change|Choice Category|Permanent (quarterly choice)|N/A|False|2025-11-29|Choice Bonus|Multiplier|3
+U.S. Bank|U.S. Bank Altitude Connect Visa Signature Card|0|5x points on prepaid hotels & car rentals booked through Altitude Rewards Center||Hotel,Rental Cars|Permanent|N/A|False|2025-11-29|Portal Hotels|Multiplier|5
+U.S. Bank|U.S. Bank Altitude Connect Visa Signature Card|0|4x points on travel and gas/EV charging|gas/EV on first $1,000 per quarter|Travel,Gas|Permanent|N/A|False|2025-11-29|Travel & Gas|Multiplier|4
+U.S. Bank|U.S. Bank Altitude Connect Visa Signature Card|0|2x points on dining grocery stores streaming services||Dining,Groceries,Streaming|Permanent|N/A|False|2025-11-29|Dining & Grocery|Multiplier|2
+U.S. Bank|U.S. Bank Altitude Connect Visa Signature Card|0|Up to $100 Global Entry/TSA PreCheck credit||Travel Security|Every 4 years|100|False|2025-11-29|TSA Credit|Credit|100
+U.S. Bank|U.S. Bank Altitude Connect Visa Signature Card|0|4 Priority Pass Select visits per year||Lounge Access|Permanent|N/A|False|2025-11-29|Priority Pass|Access|4
+U.S. Bank|U.S. Bank Altitude Reserve Visa Infinite Card|400|$325 annual travel/dining credit||Travel,Dining|Annually (anniversary year)|325|False|2025-11-29|Travel & Dining Credit|Credit|325
+U.S. Bank|U.S. Bank Altitude Reserve Visa Infinite Card|400|12 Priority Pass visits per year|unlimited guests at $32 each after|Lounge Access|Permanent|N/A|False|2025-11-29|Priority Pass|Access|12
+U.S. Bank|U.S. Bank Altitude Reserve Visa Infinite Card|400|Global Entry/TSA PreCheck credit||Travel Security|Every 4 years|100|False|2025-11-29|TSA Credit|Credit|100
+Synchrony|Lowe’s Advantage Card|0|5% off every day at Lowe's|or special financing|Home Improvement|Permanent|N/A|False|2025-11-29|Lowe's Discount|Cashback|5
+Synchrony|Sam’s Club Mastercard|0|5% cash back on gas 3% dining & takeout 1% other|up to $6,000/year|Gas,Dining|Permanent|N/A|False|2025-11-29|Gas Bonus|Cashback|5
+Synchrony|PayPal Credit|0|Promotional financing offers on PayPal purchases||Online Shopping|Permanent|N/A|False|2025-11-29|Promotional Financing|Perk|N/A
+PNC|PNC Cash Rewards Visa Credit Card|0|4% cash back on gas 3% restaurants 2% grocery|up to caps|Gas,Dining,Groceries|Permanent|N/A|False|2025-11-29|Bonus Categories|Cashback|4
+Santander|Santander Unlimited Cash Rewards Card|0|Unlimited 1.5% cash back on all purchases||All Purchases|Permanent|N/A|False|2025-11-29|Flat Cashback|Cashback|1.5
 Wells Fargo|Bilt Mastercard|0|1x points on rent payments|up to 100,000 points per calendar year; no transaction fees when paid through Bilt App; requires at least 5 posted transactions per billing cycle to earn points|Rent|Permanent (calendar year cap)|N/A|False|2025-12-06|Rent Points|Multiplier|1
 Wells Fargo|Bilt Mastercard|0|3x points on dining|including takeout & eligible delivery; requires at least 5 posted transactions per billing cycle to earn points|Dining|Permanent|N/A|False|2025-12-06|Dining Bonus|Multiplier|3
 Wells Fargo|Bilt Mastercard|0|2x points on travel|booked directly with airlines, hotels, car rentals, cruise lines, or travel agencies; requires at least 5 posted transactions per billing cycle to earn points|Travel|Permanent|N/A|False|2025-12-06|Travel Bonus|Multiplier|2
@@ -224,33 +224,33 @@ Wells Fargo|Bilt Mastercard|0|1x points on all other purchases|requires at least
 Wells Fargo|Bilt Mastercard|0|Rent Day double points bonus (1st of each month)|doubles non-rent categories (6x dining, 4x travel, 2x other); max 10,000 bonus points per Rent Day|Dining,Travel,All Purchases|Monthly|N/A|False|2025-12-06|Rent Day Bonus|Bonus|10000
 Wells Fargo|Bilt Mastercard|0|Cell phone protection when bill paid with card|up to $800 per claim, $25 deductible (max $1,000 reimbursement per 12-month period)|Cell Phone Protection|Permanent (per claim)|800|False|2025-12-06|Phone Protection|Protection|800
 Wells Fargo|Bilt Mastercard|0|No foreign transaction fees||Travel|Permanent|N/A|False|2025-12-06|No FTF|Perk|N/A
-Chase|Ink Business Preferred® Credit Card|95|3 points per $1 on the first $150,000 spent in combined purchases on travel, shipping, internet/cable/phone services, and advertising on social media/search engines each account anniversary year||Travel,Shipping,Telecom,Advertising|Annually (anniversary year)|N/A|False|2025-12-07|Business Categories Bonus|Multiplier|3
-Chase|Ink Business Preferred® Credit Card|95|Unlimited 1 point per $1 on all other purchases||All Purchases|Permanent|N/A|False|2025-12-07|Everyday Earnings|Multiplier|1
-Chase|Ink Business Preferred® Credit Card|95|5x total points on Lyft rides|through September 30, 2027|Rideshare|Permanent|N/A|False|2025-12-07|Lyft Bonus|Multiplier|5
-Chase|Ink Business Preferred® Credit Card|95|Complimentary DashPass membership|activate by 12/31/2027|Delivery|Minimum 12 months from activation|N/A|True|2025-12-07|DashPass|Perk|N/A
-Chase|Ink Business Preferred® Credit Card|95|Up to $10 quarterly statement credit on one non-restaurant DoorDash order||Delivery|Quarterly|40|True|2025-12-07|DoorDash Non-Restaurant Credit|Credit|40
-Chase|Ink Business Preferred® Credit Card|95|Cell phone protection|up to $1,000 per claim ($100 deductible), max 3 claims per 12 months|Cell Phone Protection|Per Claim|1000|False|2025-12-07|Cell Phone Protection|Protection|1000
-Chase|Ink Business Preferred® Credit Card|95|Primary auto rental collision damage waiver|up to vehicle MSRP value (most vehicles)|Rental Cars|Per Claim|N/A|False|2025-12-07|Primary Rental Coverage|Protection|N/A
-Chase|Ink Business Preferred® Credit Card|95|No foreign transaction fees||Travel|Permanent|N/A|False|2025-12-07|No FTF|Perk|N/A
-Chase|Ink Business Premier® Credit Card|195|Unlimited 2.5% cash back on every purchase of $5,000 or more||Large Purchases|Permanent|N/A|False|2025-12-07|Large Purchase Bonus|Cashback|2.5
-Chase|Ink Business Premier® Credit Card|195|Unlimited 2% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-12-07|Everyday Cashback|Cashback|2
-Chase|Ink Business Premier® Credit Card|195|5% cash back on travel purchased through Chase Travel||Travel|Permanent|N/A|False|2025-12-07|Portal Travel Bonus|Cashback|5
-Chase|Ink Business Premier® Credit Card|195|Cell phone protection|up to $1,000 per claim ($100 deductible), max 3 claims per 12 months|Cell Phone Protection|Per Claim|1000|False|2025-12-07|Cell Phone Protection|Protection|1000
-American Express|The Business Platinum Card® from American Express|695|5x points on flights and prepaid hotels booked through Amex Travel||Flights,Hotel|Permanent|N/A|False|2025-12-07|Flights & Prepaid Hotels Bonus|Multiplier|5
-American Express|The Business Platinum Card® from American Express|695|1.5x points on eligible purchases of $5,000+ and 8 select business categories|up to $2M per calendar year then 1x|Business Categories,Large Purchases|Permanent|N/A|False|2025-12-07|Large & Select Business Bonus|Multiplier|1.5
-American Express|The Business Platinum Card® from American Express|695|$200 Airline Fee Credit|incidental fees, selected airline, enrollment required|Airline|Annually (calendar year)|200|True|2025-12-07|Airline Fee Credit|Credit|200
-American Express|The Business Platinum Card® from American Express|695|$400 Dell Technologies Credit|$200 semi-annually, enrollment required|Tech|Semi-annually|400|True|2025-12-07|Dell Credit|Credit|400
-American Express|The Business Platinum Card® from American Express|695|$360 Indeed Credit|$90 quarterly, enrollment required|Hiring|Quarterly|360|True|2025-12-07|Indeed Credit|Credit|360
-American Express|The Business Platinum Card® from American Express|695|$150 Adobe Annual Credit|enrollment required|Software|Annually|150|True|2025-12-07|Adobe Credit|Credit|150
-American Express|The Business Platinum Card® from American Express|695|$120 Wireless Telephone Credit|$10 monthly on U.S. providers, enrollment required|Telecom|Monthly|120|True|2025-12-07|Wireless Credit|Credit|120
-American Express|The Business Platinum Card® from American Express|695|$189 CLEAR® Plus Credit|enrollment required|Travel Security|Annually|189|True|2025-12-07|CLEAR Credit|Credit|189
-American Express|The Business Platinum Card® from American Express|695|$155 Walmart+ monthly membership credit||Shopping|Monthly|155|True|2025-12-07|Walmart+ Credit|Credit|155
-American Express|The Business Platinum Card® from American Express|695|Centurion, Priority Pass, Delta Sky Club & more lounge access|unlimited + 2 guests (some networks)|Lounge Access|Permanent|N/A|True|2025-12-07|Global Lounge Access|Access|N/A
-American Express|American Express® Business Gold Card|375|4x points on the top 2 eligible categories each billing cycle (up to $150,000 combined per calendar year, then 1x)|6 categories: airfare direct, U.S. advertising (select media), U.S. gas stations, U.S. restaurants, U.S. electronic goods/software/cloud, transit|Business Categories|Permanent|N/A|False|2025-12-07|Top 2 Categories Bonus|Multiplier|4
-American Express|American Express® Business Gold Card|375|3x points on flights and prepaid hotels booked on AmexTravel.com||Flights,Hotel|Permanent|N/A|False|2025-12-07|Flights & Hotels Bonus|Multiplier|3
-American Express|American Express® Business Gold Card|375|$240 Flexible Business Credit|$20 monthly at select merchants (FedEx, Grubhub, office supplies), enrollment required|Business Expenses|Monthly|240|True|2025-12-07|Flexible Business Credit|Credit|240
-American Express|American Express® Business Gold Card|375|$155 Walmart+ monthly membership credit||Shopping|Monthly|155|True|2025-12-07|Walmart+ Credit|Credit|155
-American Express|Blue Business® Plus Credit Card from American Express|0|2x Membership Rewards points on everyday business purchases|up to $50,000 per calendar year then 1x|All Purchases|Permanent|N/A|False|2025-12-07|Everyday Bonus|Multiplier|2
+Chase|Ink Business Preferred Credit Card|95|3 points per $1 on the first $150,000 spent in combined purchases on travel, shipping, internet/cable/phone services, and advertising on social media/search engines each account anniversary year||Travel,Shipping,Telecom,Advertising|Annually (anniversary year)|N/A|False|2025-12-07|Business Categories Bonus|Multiplier|3
+Chase|Ink Business Preferred Credit Card|95|Unlimited 1 point per $1 on all other purchases||All Purchases|Permanent|N/A|False|2025-12-07|Everyday Earnings|Multiplier|1
+Chase|Ink Business Preferred Credit Card|95|5x total points on Lyft rides|through September 30, 2027|Rideshare|Permanent|N/A|False|2025-12-07|Lyft Bonus|Multiplier|5
+Chase|Ink Business Preferred Credit Card|95|Complimentary DashPass membership|activate by 12/31/2027|Delivery|Minimum 12 months from activation|N/A|True|2025-12-07|DashPass|Perk|N/A
+Chase|Ink Business Preferred Credit Card|95|Up to $10 quarterly statement credit on one non-restaurant DoorDash order||Delivery|Quarterly|40|True|2025-12-07|DoorDash Non-Restaurant Credit|Credit|40
+Chase|Ink Business Preferred Credit Card|95|Cell phone protection|up to $1,000 per claim ($100 deductible), max 3 claims per 12 months|Cell Phone Protection|Per Claim|1000|False|2025-12-07|Cell Phone Protection|Protection|1000
+Chase|Ink Business Preferred Credit Card|95|Primary auto rental collision damage waiver|up to vehicle MSRP value (most vehicles)|Rental Cars|Per Claim|N/A|False|2025-12-07|Primary Rental Coverage|Protection|N/A
+Chase|Ink Business Preferred Credit Card|95|No foreign transaction fees||Travel|Permanent|N/A|False|2025-12-07|No FTF|Perk|N/A
+Chase|Ink Business Premier Credit Card|195|Unlimited 2.5% cash back on every purchase of $5,000 or more||Large Purchases|Permanent|N/A|False|2025-12-07|Large Purchase Bonus|Cashback|2.5
+Chase|Ink Business Premier Credit Card|195|Unlimited 2% cash back on all other purchases||All Purchases|Permanent|N/A|False|2025-12-07|Everyday Cashback|Cashback|2
+Chase|Ink Business Premier Credit Card|195|5% cash back on travel purchased through Chase Travel||Travel|Permanent|N/A|False|2025-12-07|Portal Travel Bonus|Cashback|5
+Chase|Ink Business Premier Credit Card|195|Cell phone protection|up to $1,000 per claim ($100 deductible), max 3 claims per 12 months|Cell Phone Protection|Per Claim|1000|False|2025-12-07|Cell Phone Protection|Protection|1000
+American Express|The Business Platinum Card from American Express|695|5x points on flights and prepaid hotels booked through Amex Travel||Flights,Hotel|Permanent|N/A|False|2025-12-07|Flights & Prepaid Hotels Bonus|Multiplier|5
+American Express|The Business Platinum Card from American Express|695|1.5x points on eligible purchases of $5,000+ and 8 select business categories|up to $2M per calendar year then 1x|Business Categories,Large Purchases|Permanent|N/A|False|2025-12-07|Large & Select Business Bonus|Multiplier|1.5
+American Express|The Business Platinum Card from American Express|695|$200 Airline Fee Credit|incidental fees, selected airline, enrollment required|Airline|Annually (calendar year)|200|True|2025-12-07|Airline Fee Credit|Credit|200
+American Express|The Business Platinum Card from American Express|695|$400 Dell Technologies Credit|$200 semi-annually, enrollment required|Tech|Semi-annually|400|True|2025-12-07|Dell Credit|Credit|400
+American Express|The Business Platinum Card from American Express|695|$360 Indeed Credit|$90 quarterly, enrollment required|Hiring|Quarterly|360|True|2025-12-07|Indeed Credit|Credit|360
+American Express|The Business Platinum Card from American Express|695|$150 Adobe Annual Credit|enrollment required|Software|Annually|150|True|2025-12-07|Adobe Credit|Credit|150
+American Express|The Business Platinum Card from American Express|695|$120 Wireless Telephone Credit|$10 monthly on U.S. providers, enrollment required|Telecom|Monthly|120|True|2025-12-07|Wireless Credit|Credit|120
+American Express|The Business Platinum Card from American Express|695|$189 CLEAR Plus Credit|enrollment required|Travel Security|Annually|189|True|2025-12-07|CLEAR Credit|Credit|189
+American Express|The Business Platinum Card from American Express|695|$155 Walmart+ monthly membership credit||Shopping|Monthly|155|True|2025-12-07|Walmart+ Credit|Credit|155
+American Express|The Business Platinum Card from American Express|695|Centurion, Priority Pass, Delta Sky Club & more lounge access|unlimited + 2 guests (some networks)|Lounge Access|Permanent|N/A|True|2025-12-07|Global Lounge Access|Access|N/A
+American Express|American Express Business Gold Card|375|4x points on the top 2 eligible categories each billing cycle (up to $150,000 combined per calendar year, then 1x)|6 categories: airfare direct, U.S. advertising (select media), U.S. gas stations, U.S. restaurants, U.S. electronic goods/software/cloud, transit|Business Categories|Permanent|N/A|False|2025-12-07|Top 2 Categories Bonus|Multiplier|4
+American Express|American Express Business Gold Card|375|3x points on flights and prepaid hotels booked on AmexTravel.com||Flights,Hotel|Permanent|N/A|False|2025-12-07|Flights & Hotels Bonus|Multiplier|3
+American Express|American Express Business Gold Card|375|$240 Flexible Business Credit|$20 monthly at select merchants (FedEx, Grubhub, office supplies), enrollment required|Business Expenses|Monthly|240|True|2025-12-07|Flexible Business Credit|Credit|240
+American Express|American Express Business Gold Card|375|$155 Walmart+ monthly membership credit||Shopping|Monthly|155|True|2025-12-07|Walmart+ Credit|Credit|155
+American Express|Blue Business Plus Credit Card from American Express|0|2x Membership Rewards points on everyday business purchases|up to $50,000 per calendar year then 1x|All Purchases|Permanent|N/A|False|2025-12-07|Everyday Bonus|Multiplier|2
 American Express|Blue Business Cash™ Card from American Express|0|2% cash back on eligible business purchases|up to $50,000 per calendar year then 1%|All Purchases|Permanent|N/A|False|2025-12-07|Everyday Cashback|Cashback|2
 Capital One|Capital One Spark Cash Plus|150|Unlimited 2% cash back on every purchase||All Purchases|Permanent|N/A|False|2025-12-07|Flat Cashback|Cashback|2
 Capital One|Capital One Spark Cash Plus|150|5% cash back on hotels and rental cars booked through Capital One Travel||Hotel,Rental Cars|Permanent|N/A|False|2025-12-07|Portal Hotels & Cars|Cashback|5
