@@ -180,3 +180,23 @@ Wells Fargo|Bilt Mastercard|1|points|Rent|up to 100,000 points per calendar year
 Wells Fargo|Bilt Mastercard|3|points|Dining|restaurants worldwide, takeout & eligible delivery services; requires at least 5 posted transactions per billing cycle to earn points
 Wells Fargo|Bilt Mastercard|2|points|Travel|airfare, hotels, car rentals, cruises (direct or via travel agencies); requires at least 5 posted transactions per billing cycle to earn points
 Wells Fargo|Bilt Mastercard|1|points|All Purchases|everything else (non-rent, non-dining, non-travel); requires at least 5 posted transactions per billing cycle to earn points
+Vendor|CardName|EarningRate|Currency|BenefitCategory|AdditionalDetails
+Chase|Ink Business Preferred® Credit Card|3|points|Business Categories|first $150,000 combined annually on travel, shipping, internet/cable/phone, social media & search engine advertising
+Chase|Ink Business Preferred® Credit Card|1|points|All Purchases|everything else
+Chase|Ink Business Premier® Credit Card|5|cash back|Travel|purchased through Chase Travel
+Chase|Ink Business Premier® Credit Card|2.5|cash back|Large Purchases|every purchase of $5,000 or more
+Chase|Ink Business Premier® Credit Card|2|cash back|All Purchases|everything else
+American Express|The Business Platinum Card® from American Express|5|points|Flights & Prepaid Hotels|flights booked directly or via Amex Travel + prepaid hotels via Amex Travel
+American Express|The Business Platinum Card® from American Express|1.5|points|Key Business Categories & Large Purchases|U.S. electronics/software/cloud, U.S. shipping, U.S. advertising (select media), U.S. construction/hardware, U.S. gas stations, wireless services, transit + all purchases $5,000+ (up to $2M combined per year, then 1x)
+American Express|The Business Platinum Card® from American Express|1|points|All Purchases|everything else
+American Express|American Express® Business Gold Card|4|points|Top 2 Categories Monthly|automatically the 2 highest-spend categories from the 6 eligible (U.S. gas stations, U.S. restaurants, U.S. advertising select media, U.S. shipping, U.S. tech providers/electronics/software/cloud, transit/airfare direct from airlines) – up to $150,000 combined per calendar year, then 1x
+American Express|American Express® Business Gold Card|3|points|Flights & Prepaid Hotels|flights & prepaid hotels booked on AmexTravel.com
+American Express|American Express® Business Gold Card|1|points|All Purchases|everything else
+American Express|Blue Business® Plus Credit Card from American Express|2|points|All Purchases|everyday business purchases up to $50,000 per calendar year
+American Express|Blue Business® Plus Credit Card from American Express|1|points|All Purchases|after $50,000 per calendar year
+American Express|Blue Business Cash™ Card from American Express|2|cash back|All Purchases|eligible business purchases up to $50,000 per calendar year
+American Express|Blue Business Cash™ Card from American Express|1|cash back|All Purchases|after $50,000 per calendar year
+Capital One|Capital One Spark Cash Plus|5|cash back|Hotels & Rental Cars|booked through Capital One Travel
+Capital One|Capital One Spark Cash Plus|2|cash back|All Purchases|unlimited on every purchase
+Capital One|Capital One Spark Miles for Business|5|miles|Hotels & Rental Cars|booked through Capital One Travel
+Capital One|Capital One Spark Miles for Business|2|miles|All Purchases|unlimited on every purchase

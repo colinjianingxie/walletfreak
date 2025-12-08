@@ -130,10 +130,17 @@ def blog_list(request):
         for blog in all_published_blogs:
             author_uid = blog.get('author_uid')
             author_name = blog.get('author_name')
-            if author_uid and author_name:
+            author_username = blog.get('author_username')
+            
+            if author_uid:
                 if author_uid not in author_post_counts:
+                    # Use username if available, otherwise fallback to name
+                    display_name = author_name
+                    username = author_username if author_username and author_username != 'Unknown' else author_name
+                    
                     author_post_counts[author_uid] = {
-                        'name': author_name,
+                        'name': display_name,
+                        'username': username,
                         'post_count': 0
                     }
                 author_post_counts[author_uid]['post_count'] += 1

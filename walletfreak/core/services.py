@@ -78,17 +78,13 @@ class FirestoreService:
 
     def get_blog_by_slug(self, slug):
         """Get blog post by slug with dynamic author info"""
-        # Debugging print
-        print(f"Fetching blog by slug: {slug}")
         blogs = self.db.collection('blogs').where('slug', '==', slug).limit(1).stream()
         for blog in blogs:
             data = blog.to_dict() | {'id': blog.id}
             # Fetch author info
             uid = data.get('author_uid')
-            print(f"Blog found. Author UID: {uid}")
             if uid:
                 user = self.get_user_profile(uid)
-                print(f"User lookup result: {user.get('username') if user else 'None'}")
                 self._enrich_with_author_data(data, user)
             else:
                 self._enrich_with_author_data(data, None)
@@ -479,17 +475,7 @@ class FirestoreService:
                     
         return blogs
 
-    def get_blog_by_id(self, blog_id):
-        return self.get_document('blogs', blog_id)
 
-    def get_blog_by_slug(self, slug):
-        """Get blog by slug field"""
-        from google.cloud.firestore import FieldFilter
-        query = self.db.collection('blogs').where(filter=FieldFilter('slug', '==', slug)).limit(1)
-        docs = list(query.stream())
-        if docs:
-            return docs[0].to_dict() | {'id': docs[0].id}
-        return None
 
     def create_blog(self, data):
         """Create a new blog post"""

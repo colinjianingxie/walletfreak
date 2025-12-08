@@ -230,7 +230,7 @@
                             <div class="contributor-avatar">
                                 <span class="material-icons">person</span>
                             </div>
-                            <span class="contributor-name">@{{ contributor.name|lower|cut:" " }}</span>
+                            <span class="contributor-name">@{{ contributor.username }}</span>
                             <span class="contributor-points">{{ contributor.post_count }} post{{ contributor.post_count|pluralize }}</span>
                         </div>
                         {% empty %}

@@ -188,6 +188,11 @@ FIREBASE_CLIENT_CONFIG = {
     "measurementId": "G-DJSZXRZH6V"
 }
 
+
 # Authentication settings
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
+
+# Email Backend (Console for Development)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
