@@ -1,5 +1,4 @@
-// Initialize selected cards map
-const selectedCards = {};
+const selectedCards = new Set();
 
 function toggleCardSelection(element, slotIndex) {
     const cardId = element.dataset.id;
@@ -14,7 +13,7 @@ function toggleCardSelection(element, slotIndex) {
         selectionIndicator.style.borderColor = 'rgba(255,255,255,0.4)';
         cardVisual.style.boxShadow = '';
         cardVisual.style.transform = '';
-        delete selectedCards[cardId];
+        selectedCards.delete(cardId);
     } else {
         element.classList.add('selected');
         statusIcon.textContent = 'check';
@@ -22,12 +21,7 @@ function toggleCardSelection(element, slotIndex) {
         selectionIndicator.style.borderColor = '#3b82f6';
         cardVisual.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.4), 0 10px 25px rgba(0,0,0,0.2)';
         cardVisual.style.transform = 'translateY(-4px)';
-
-        selectedCards[cardId] = {
-            fee: parseFloat(element.dataset.fee),
-            bonusValue: parseFloat(element.dataset.bonusValue),
-            bonusCurrency: element.dataset.bonusCurrency
-        };
+        selectedCards.add(cardId);
     }
 
     calculateMetrics();
@@ -38,18 +32,31 @@ function calculateMetrics() {
     let creditValue = 0;
     let pointsValue = 0;
 
-    Object.values(selectedCards).forEach(card => {
-        totalFees += card.fee;
+    selectedCards.forEach(cardId => {
+        const card = allCardsData[cardId];
+        if (!card) return;
 
-        if (card.bonusCurrency.toLowerCase() === 'cash') {
-            creditValue += card.bonusValue;
-        } else {
-            // Assume points/miles are 1 cent per point
-            pointsValue += (card.bonusValue * 0.01);
+        // 1. Annual Fee
+        totalFees += (card.annual_fee || 0);
+
+        // 2. Credit Value: sum of numeric_values only if benefit_type is credit or bonus
+        if (card.benefits && Array.isArray(card.benefits)) {
+            card.benefits.forEach(benefit => {
+                const bType = (benefit.benefit_type || '').toLowerCase();
+                const numericVal = parseFloat(benefit.numeric_value) || 0;
+
+                if (bType === 'credit' || bType === 'bonus') {
+                    creditValue += numericVal;
+                }
+            });
         }
+
+        // 3. Points Value: Set to 0 for now as requested
+        pointsValue += 0;
     });
 
-    const netValue = creditValue + pointsValue - totalFees;
+    // Net Value excludes Points Value
+    const netValue = creditValue - totalFees;
 
     // Update DOM with animation
     animateValue('metric-annual-fees', -totalFees);

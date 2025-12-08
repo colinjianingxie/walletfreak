@@ -19,17 +19,23 @@ class Command(BaseCommand):
         csv_path = os.path.join(base_dir, 'default_cards_2025_11_27.csv')
         signup_csv_path = os.path.join(base_dir, 'default_signup_2025_11_30.csv')
         rates_csv_path = os.path.join(base_dir, 'default_rates_2025_11_30.csv')
+        points_csv_path = os.path.join(base_dir, 'default_points_conversions.csv')
         
         self.stdout.write(f'Parsing cards from: {csv_path}')
         self.stdout.write(f'Parsing signup bonuses from: {signup_csv_path}')
         self.stdout.write(f'Parsing earning rates from: {rates_csv_path}')
+        self.stdout.write(f'Parsing points conversions from: {points_csv_path}')
         
-        cards_data = generate_cards_from_csv(csv_path, signup_csv_path, rates_csv_path)
+        cards_data = generate_cards_from_csv(csv_path, signup_csv_path, rates_csv_path, points_csv_path)
         
         card_slug_map = {} # Name -> Slug
 
         for card in cards_data:
-            slug = slugify(card['name'])
+            if card.get('slug'):
+                slug = card['slug']
+            else:
+                slug = slugify(card['name'])
+            
             card_slug_map[card['name']] = slug
             
             db.create_document('credit_cards', card, doc_id=slug)

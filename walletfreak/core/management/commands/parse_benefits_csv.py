@@ -6,14 +6,16 @@ def parse_signup_bonuses_csv(csv_path):
     """
     Parse the signup bonuses CSV and return a dictionary of bonuses.
     
-    CSV Format: Vendor|CardName|EffectiveDate|Terms|SignUpBonusValue|Currency
+    CSV Format: Vendor|CardName|EffectiveDate|Terms|SignUpBonusValue|Currency|slug-id
     """
     bonuses = {}
     try:
         with open(csv_path, 'r', encoding='utf-8') as f:
             reader = csv.DictReader(f, delimiter='|')
             for row in reader:
-                card_name = row['CardName'].strip()
+                # robust key: prioritize slug-id
+                slug_id = row.get('slug-id')
+                key = (slug_id or '').strip() or row['CardName'].strip()
                 
                 # Parse value
                 value = 0
@@ -22,7 +24,7 @@ def parse_signup_bonuses_csv(csv_path):
                 except ValueError:
                     pass
                     
-                bonuses[card_name] = {
+                bonuses[key] = {
                     'terms': row['Terms'].strip(),
                     'value': value,
                     'currency': row['Currency'].strip(),
@@ -37,11 +39,11 @@ def parse_earning_rates_csv(csv_path):
     """
     Parse the earning rates CSV and return a dictionary of earning rates by card.
     
-    CSV Format: Vendor|CardName|EarningRate|Currency|BenefitCategory|AdditionalDetails
+    CSV Format: Vendor|CardName|EarningRate|Currency|BenefitCategory|AdditionalDetails|slug-id
     
-    Returns a dictionary mapping card names to their earning rates:
+    Returns a dictionary mapping card keys (slug or name) to their earning rates:
     {
-        'card_name': {
+        'card_key': {
             'earning_rates': [
                 {
                     'rate': float,
@@ -59,7 +61,9 @@ def parse_earning_rates_csv(csv_path):
         with open(csv_path, 'r', encoding='utf-8') as f:
             reader = csv.DictReader(f, delimiter='|')
             for row in reader:
-                card_name = row['CardName'].strip()
+                # robust key: prioritize slug-id
+                slug_id = row.get('slug-id')
+                key = (slug_id or '').strip() or row['CardName'].strip()
                 
                 # Parse earning rate
                 rate = 0.0
@@ -75,11 +79,41 @@ def parse_earning_rates_csv(csv_path):
                     'details': row.get('AdditionalDetails', '').strip()
                 }
                 
-                rates_dict[card_name]['earning_rates'].append(earning_rate)
+                rates_dict[key]['earning_rates'].append(earning_rate)
     except FileNotFoundError:
         print(f"Warning: Earning rates CSV not found at {csv_path}")
     
     return dict(rates_dict)
+
+def parse_points_conversions_csv(csv_path):
+    """
+    Parse the points conversions CSV and return a dictionary of CPP values.
+    
+    CSV Format: Vendor|CardName|PointsValueCpp|slug-id
+    """
+    cpp_values = {}
+    try:
+        with open(csv_path, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f, delimiter='|')
+            for row in reader:
+                # robust key: prioritize slug-id
+                slug_id = row.get('slug-id')
+                key = (slug_id or '').strip() or row['CardName'].strip()
+                
+                # Parse CPP
+                cpp = 0.0
+                val_str = row['PointsValueCpp'].strip()
+                if val_str and val_str.upper() != 'N/A':
+                    try:
+                        cpp = float(val_str)
+                    except ValueError:
+                        pass
+                        
+                cpp_values[key] = cpp
+    except FileNotFoundError:
+        print(f"Warning: Points conversions CSV not found at {csv_path}")
+        
+    return cpp_values
 
 def parse_benefits_csv(csv_path):
     """
@@ -109,6 +143,7 @@ def parse_benefits_csv(csv_path):
     """
     cards_dict = defaultdict(lambda: {
         'name': '',
+        'slug': '',
         'issuer': '',
         'annual_fee': 0,
         'benefits': []
@@ -120,6 +155,12 @@ def parse_benefits_csv(csv_path):
         for row in reader:
             vendor = row['Vendor'].strip()
             card_name = row['CardName'].strip()
+            slug_id_val = row.get('slug-id')
+            slug_id = (slug_id_val or '').strip()
+            
+            # robust key: prioritize slug-id
+            key = slug_id if slug_id else card_name
+            
             annual_fee_str = row['AnnualFee'].strip()
             benefit_desc = row['BenefitDescription'].strip()
             additional_details = row.get('AdditionalDetails', '').strip()
@@ -152,10 +193,11 @@ def parse_benefits_csv(csv_path):
             enrollment_required = enrollment_required_str.lower() == 'true'
             
             # Initialize card if first time seeing it
-            if not cards_dict[card_name]['name']:
-                cards_dict[card_name]['name'] = card_name
-                cards_dict[card_name]['issuer'] = vendor
-                cards_dict[card_name]['annual_fee'] = annual_fee
+            if not cards_dict[key]['name']:
+                cards_dict[key]['name'] = card_name
+                cards_dict[key]['slug'] = slug_id
+                cards_dict[key]['issuer'] = vendor
+                cards_dict[key]['annual_fee'] = annual_fee
             
             # Add benefit
             # Parse numeric value
@@ -204,10 +246,10 @@ def parse_benefits_csv(csv_path):
                 'numeric_value': numeric_value
             }
             benefit = {k: v for k, v in benefit.items()} # Ensure dict copy if needed, though not strictly necessary here
-            cards_dict[card_name]['benefits'].append(benefit)
+            cards_dict[key]['benefits'].append(benefit)
 
     # Post-process to generate rewards_summary
-    for card_name, card_data in cards_dict.items():
+    for key, card_data in cards_dict.items():
         benefits = card_data['benefits']
         
         # Filter for multipliers and cashback
@@ -256,6 +298,7 @@ def convert_to_firestore_format(cards_dict):
         # Create the card document
         card_doc = {
             'name': card_data['name'],
+            'slug': card_data.get('slug', ''),
             'issuer': card_data['issuer'],
             'annual_fee': card_data['annual_fee'],
             'benefits': card_data['benefits'],
@@ -264,7 +307,10 @@ def convert_to_firestore_format(cards_dict):
             'referral_links': [],
             'sign_up_bonus': card_data.get('sign_up_bonus', {}),
             'verdict': card_data.get('verdict', ''),
-            'rewards_summary': card_data.get('rewards_summary', '')
+            'sign_up_bonus': card_data.get('sign_up_bonus', {}),
+            'verdict': card_data.get('verdict', ''),
+            'rewards_summary': card_data.get('rewards_summary', ''),
+            'points_value_cpp': card_data.get('points_value_cpp', 0.0)
         }
         
         firestore_cards.append(card_doc)
@@ -272,7 +318,7 @@ def convert_to_firestore_format(cards_dict):
     return firestore_cards
 
 
-def generate_cards_from_csv(csv_path, signup_csv_path=None, rates_csv_path=None):
+def generate_cards_from_csv(csv_path, signup_csv_path=None, rates_csv_path=None, points_csv_path=None):
     """
     Main function to parse CSV and return Firestore-ready card data.
     """
@@ -289,6 +335,16 @@ def generate_cards_from_csv(csv_path, signup_csv_path=None, rates_csv_path=None)
         for card_name, card in cards_dict.items():
             if card_name in rates_data:
                 card['earning_rates'] = rates_data[card_name]['earning_rates']
+    
+    if points_csv_path:
+        points_data = parse_points_conversions_csv(points_csv_path)
+        for key, card in cards_dict.items():
+            # Try key (slug-id usually)
+            if key in points_data:
+                card['points_value_cpp'] = points_data[key]
+            # Fallback to name match if keys differ (though parse should handle it)
+            elif card['name'] in points_data:
+                card['points_value_cpp'] = points_data[card['name']]
                 
     return convert_to_firestore_format(cards_dict)
 

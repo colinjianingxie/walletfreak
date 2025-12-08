@@ -1,57 +1,57 @@
-Vendor|CardName|EffectiveDate|Terms|SignUpBonusValue|Currency
-Chase|Chase Sapphire Preferred Card|N/A|Spend $5000 in 3 months|75000|points
-Chase|Chase Sapphire Reserve|N/A|Spend $6000 in 3 months|125000|points
-Chase|Chase Freedom Unlimited|N/A|Spend $500 in 3 months|200|Cash
-Chase|Chase Freedom Flex|N/A|Spend $500 in 3 months|200|Cash
-Chase|Prime Visa|N/A|Approved with eligible Prime membership|200|Cash
-Chase|Chase Sapphire Reserve|N/A|Spend $6000 in 3 months|125000|points
-Chase|United Explorer Card|N/A|Spend $3000 in 3 months|70000|miles
-Chase|Marriott Bonvoy Boundless Credit Card|N/A|Spend $3000 in 3 months + additional spend for full|150000|points
-Chase|Southwest Rapid Rewards Priority Credit Card|N/A|Spend $3000 in 3 months|85000|points
-Chase|IHG One Rewards Premier Credit Card|N/A|Spend $3000 in 3 months|140000|points
-Chase|The World of Hyatt Credit Card|N/A|Spend $3000 in 3 months + additional spend|45000|points
-Chase|United Quest Card|N/A|Spend $4000 in 3 months|70000|miles
-Chase|United Club Card|N/A|Spend $5000 in 3 months|90000|miles
-Chase|Aeroplan Credit Card|2025-12-02|Spend $4000 in 3 months + additional|120000|points
-Chase|British Airways Visa Signature Card|N/A|Spend $7500 in 6 months|100000|miles
-American Express|American Express Gold Card|N/A|Spend $6000 in 6 months|100000|points
-American Express|American Express Platinum Card|N/A|Spend $8000 in 6 months|175000|points
-American Express|Blue Cash Preferred Card from American Express|N/A|Spend $3000 in 6 months|250|Cash
-American Express|Blue Cash Everyday Card from American Express|N/A|Spend $2000 in 6 months|200|Cash
-American Express|Delta SkyMiles Platinum American Express Card|N/A|Spend $3000 in 6 months|60000|miles
-American Express|Hilton Honors American Express Surpass Card|2026-01-14|Spend $3000 in 6 months|155000|points
-American Express|American Express Green Card|N/A|Spend $3000 in 6 months|40000|points
-American Express|Marriott Bonvoy Brilliant American Express Card|N/A|Spend $6000 in 6 months|100000|points
-American Express|Delta SkyMiles Reserve American Express Card|N/A|Spend $5000 in 6 months|70000|miles
-American Express|Hilton Honors Aspire Card from American Express|2026-01-14|Spend $6000 in 6 months|175000|points
-Capital One|Capital One Venture X Rewards Credit Card|N/A|Spend $10000 in 6 months|100000|miles
-Capital One|Capital One Venture Rewards Credit Card|N/A|Spend $4000 in 3 months|75000|miles
-Capital One|Capital One Savor Cash Rewards Credit Card|N/A|Spend $500 in 3 months|200|Cash
-Capital One|Capital One Quicksilver Cash Rewards Credit Card|N/A|Spend $500 in 3 months|200|Cash
-Capital One|Capital One VentureOne Rewards Credit Card|N/A|Spend $500 in 3 months|20000|miles
-Capital One|Capital One QuicksilverOne Cash Rewards Credit Card|N/A|Spend $500 in 3 months|200|Cash
-Citi|Citi Double Cash Card|N/A|No welcome bonus|0|Cash
-Citi|Citi Strata Premier Card|N/A|Spend $6000 in 3 months|100000|points
-Citi|Citi Custom Cash Card|N/A|Spend $1500 in 6 months|200|Cash
-Wells Fargo|Wells Fargo Active Cash Card|N/A|Spend $500 in 3 months|200|Cash
-Wells Fargo|Wells Fargo Autograph Card|N/A|Spend $1000 in 3 months|20000|points
-Discover|Discover it Cash Back|N/A|First year cashback match|0|Cash
-Discover|Discover it Miles|N/A|First year mile match|0|miles
-Discover|Discover it Chrome|N/A|First year cashback match|0|Cash
-Goldman Sachs|Apple Card|N/A|No welcome bonus|0|Cash
-U.S. Bank|U.S. Bank Altitude Reserve Visa Infinite Card|N/A|Spend $4500 in 90 days|50000|points
-U.S. Bank|U.S. Bank Altitude Connect Visa Signature Card|N/A|Spend $2000 in 120 days|50000|points
-Bank of America|Bank of America Premium Rewards Credit Card|N/A|Spend $4000 in 90 days|60000|points
-Bank of America|Bank of America Travel Rewards Credit Card|N/A|Spend $1000 in 90 days|25000|points
-Synchrony|Amazon Prime Store Card|N/A|Approved with Prime|100|Cash
-Synchrony|Best Buy Credit Card|N/A|No welcome bonus|0|Cash
-PenFed|PenFed Pathfinder Rewards Visa Signature Card|N/A|No welcome bonus|0|points
-Wells Fargo|Bilt Mastercard|N/A|No public sign up bonus or welcome offer|0|points
-Chase|Ink Business Preferred Credit Card|2025-12-07|Spend $8,000 in 3 months|100000|points
-Chase|Ink Business Premier Credit Card|2025-12-07|Spend $10,000 in 3 months|1000|Cash
-American Express|The Business Platinum Card from American Express|2025-12-07|Spend $20,000 in 3 months|200000|points
-American Express|American Express Business Gold Card|2025-12-07|Spend $15,000 in 3 months|100000|points
-American Express|Blue Business Plus Credit Card from American Express|2025-12-07|Spend $3,000 in 3 months|15000|points
-American Express|Blue Business Cash™ Card from American Express|2025-12-07|Spend $3,000 in 3 months|250|Cash
-Capital One|Capital One Spark Cash Plus|2025-12-07|Spend $30,000 in 3 months (+ additional $2,000 for every $500,000 spent in first year)|2000|Cash
-Capital One|Capital One Spark Miles for Business|2025-12-07|Spend $4,500 in 3 months|50000|miles
+Vendor|CardName|EffectiveDate|Terms|SignUpBonusValue|Currency|slug-id
+Chase|Chase Sapphire Preferred Card|N/A|Spend $5000 in 3 months|75000|points|chase-sapphire-preferred-card
+Chase|Chase Sapphire Reserve|N/A|Spend $6000 in 3 months|125000|points|chase-sapphire-reserve
+Chase|Chase Freedom Unlimited|N/A|Spend $500 in 3 months|200|Cash|chase-freedom-unlimited
+Chase|Chase Freedom Flex|N/A|Spend $500 in 3 months|200|Cash|chase-freedom-flex
+Chase|Prime Visa|N/A|Approved with eligible Prime membership|200|Cash|prime-visa
+Chase|Chase Sapphire Reserve|N/A|Spend $6000 in 3 months|125000|points|chase-sapphire-reserve
+Chase|United Explorer Card|N/A|Spend $3000 in 3 months|70000|miles|united-explorer-card
+Chase|Marriott Bonvoy Boundless Credit Card|N/A|Spend $3000 in 3 months + additional spend for full|150000|points|marriott-bonvoy-boundless-credit-card
+Chase|Southwest Rapid Rewards Priority Credit Card|N/A|Spend $3000 in 3 months|85000|points|southwest-rapid-rewards-priority-credit-card
+Chase|IHG One Rewards Premier Credit Card|N/A|Spend $3000 in 3 months|140000|points|ihg-one-rewards-premier-credit-card
+Chase|The World of Hyatt Credit Card|N/A|Spend $3000 in 3 months + additional spend|45000|points|the-world-of-hyatt-credit-card
+Chase|United Quest Card|N/A|Spend $4000 in 3 months|70000|miles|united-quest-card
+Chase|United Club Card|N/A|Spend $5000 in 3 months|90000|miles|united-club-card
+Chase|Aeroplan Credit Card|2025-12-02|Spend $4000 in 3 months + additional|120000|points|aeroplan-credit-card
+Chase|British Airways Visa Signature Card|N/A|Spend $7500 in 6 months|100000|miles|british-airways-visa-signature-card
+American Express|American Express Gold Card|N/A|Spend $6000 in 6 months|100000|points|american-express-gold-card
+American Express|American Express Platinum Card|N/A|Spend $8000 in 6 months|175000|points|american-express-platinum-card
+American Express|Blue Cash Preferred Card from American Express|N/A|Spend $3000 in 6 months|250|Cash|blue-cash-preferred-card-from-american-express
+American Express|Blue Cash Everyday Card from American Express|N/A|Spend $2000 in 6 months|200|Cash|blue-cash-everyday-card-from-american-express
+American Express|Delta SkyMiles Platinum American Express Card|N/A|Spend $3000 in 6 months|60000|miles|delta-skymiles-platinum-american-express-card
+American Express|Hilton Honors American Express Surpass Card|2026-01-14|Spend $3000 in 6 months|155000|points|hilton-honors-american-express-surpass-card
+American Express|American Express Green Card|N/A|Spend $3000 in 6 months|40000|points|american-express-green-card
+American Express|Marriott Bonvoy Brilliant American Express Card|N/A|Spend $6000 in 6 months|100000|points|marriott-bonvoy-brilliant-american-express-card
+American Express|Delta SkyMiles Reserve American Express Card|N/A|Spend $5000 in 6 months|70000|miles|delta-skymiles-reserve-american-express-card
+American Express|Hilton Honors Aspire Card from American Express|2026-01-14|Spend $6000 in 6 months|175000|points|hilton-honors-aspire-card-from-american-express
+Capital One|Capital One Venture X Rewards Credit Card|N/A|Spend $10000 in 6 months|100000|miles|capital-one-venture-x-rewards-credit-card
+Capital One|Capital One Venture Rewards Credit Card|N/A|Spend $4000 in 3 months|75000|miles|capital-one-venture-rewards-credit-card
+Capital One|Capital One Savor Cash Rewards Credit Card|N/A|Spend $500 in 3 months|200|Cash|capital-one-savor-cash-rewards-credit-card
+Capital One|Capital One Quicksilver Cash Rewards Credit Card|N/A|Spend $500 in 3 months|200|Cash|capital-one-quicksilver-cash-rewards-credit-card
+Capital One|Capital One VentureOne Rewards Credit Card|N/A|Spend $500 in 3 months|20000|miles|capital-one-ventureone-rewards-credit-card
+Capital One|Capital One QuicksilverOne Cash Rewards Credit Card|N/A|Spend $500 in 3 months|200|Cash|capital-one-quicksilverone-cash-rewards-credit-card
+Citi|Citi Double Cash Card|N/A|No welcome bonus|0|Cash|citi-double-cash-card
+Citi|Citi Strata Premier Card|N/A|Spend $6000 in 3 months|100000|points|citi-strata-premier-card
+Citi|Citi Custom Cash Card|N/A|Spend $1500 in 6 months|200|Cash|citi-custom-cash-card
+Wells Fargo|Wells Fargo Active Cash Card|N/A|Spend $500 in 3 months|200|Cash|wells-fargo-active-cash-card
+Wells Fargo|Wells Fargo Autograph Card|N/A|Spend $1000 in 3 months|20000|points|wells-fargo-autograph-card
+Discover|Discover it Cash Back|N/A|First year cashback match|0|Cash|discover-it-cash-back
+Discover|Discover it Miles|N/A|First year mile match|0|miles|discover-it-miles
+Discover|Discover it Chrome|N/A|First year cashback match|0|Cash|discover-it-chrome
+Goldman Sachs|Apple Card|N/A|No welcome bonus|0|Cash|apple-card
+U.S. Bank|U.S. Bank Altitude Reserve Visa Infinite Card|N/A|Spend $4500 in 90 days|50000|points|us-bank-altitude-reserve-visa-infinite-card
+U.S. Bank|U.S. Bank Altitude Connect Visa Signature Card|N/A|Spend $2000 in 120 days|50000|points|us-bank-altitude-connect-visa-signature-card
+Bank of America|Bank of America Premium Rewards Credit Card|N/A|Spend $4000 in 90 days|60000|points|bank-of-america-premium-rewards-credit-card
+Bank of America|Bank of America Travel Rewards Credit Card|N/A|Spend $1000 in 90 days|25000|points|bank-of-america-travel-rewards-credit-card
+Synchrony|Amazon Prime Store Card|N/A|Approved with Prime|100|Cash|amazon-prime-store-card
+Synchrony|Best Buy Credit Card|N/A|No welcome bonus|0|Cash|best-buy-credit-card
+PenFed|PenFed Pathfinder Rewards Visa Signature Card|N/A|No welcome bonus|0|points|penfed-pathfinder-rewards-visa-signature-card
+Wells Fargo|Bilt Mastercard|N/A|No public sign up bonus or welcome offer|0|points|bilt-mastercard
+Chase|Ink Business Preferred Credit Card|2025-12-07|Spend $8,000 in 3 months|100000|points|ink-business-preferred-credit-card
+Chase|Ink Business Premier Credit Card|2025-12-07|Spend $10,000 in 3 months|1000|Cash|ink-business-premier-credit-card
+American Express|The Business Platinum Card from American Express|2025-12-07|Spend $20,000 in 3 months|200000|points|the-business-platinum-card-from-american-express
+American Express|American Express Business Gold Card|2025-12-07|Spend $15,000 in 3 months|100000|points|american-express-business-gold-card
+American Express|Blue Business Plus Credit Card from American Express|2025-12-07|Spend $3,000 in 3 months|15000|points|blue-business-plus-credit-card-from-american-express
+American Express|Blue Business Cash™ Card from American Express|2025-12-07|Spend $3,000 in 3 months|250|Cash|blue-business-cash-card-from-american-express
+Capital One|Capital One Spark Cash Plus|2025-12-07|Spend $30,000 in 3 months (+ additional $2,000 for every $500,000 spent in first year)|2000|Cash|capital-one-spark-cash-plus
+Capital One|Capital One Spark Miles for Business|2025-12-07|Spend $4,500 in 3 months|50000|miles|capital-one-spark-miles-for-business
