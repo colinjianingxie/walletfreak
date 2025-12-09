@@ -19,7 +19,7 @@ class Command(BaseCommand):
         csv_path = os.path.join(base_dir, 'default_card_benefits.csv')
         signup_csv_path = os.path.join(base_dir, 'default_signup.csv')
         rates_csv_path = os.path.join(base_dir, 'default_rates.csv')
-        points_csv_path = os.path.join(base_dir, 'default_points_conversions.csv')
+        points_csv_path = os.path.join(base_dir, 'default_credit_cards.csv')
         
         self.stdout.write(f'Parsing cards from: {csv_path}')
         self.stdout.write(f'Parsing signup bonuses from: {signup_csv_path}')

@@ -24,11 +24,12 @@ def debug():
             
             key = slug if slug else name
             
-            if key == '0' or key == '75':
+            if not key or key == '0' or key == '75' or key.lower() == 'none':
                 print(f"\n[Line {i}] Found suspicious key '{key}'")
                 print(f"  CardName: {name}")
                 print(f"  slug-id: {slug}")
                 print(f"  Raw dictionary: {row}")
+                sys.exit(1)
 
 if __name__ == "__main__":
     debug()

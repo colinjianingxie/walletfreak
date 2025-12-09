@@ -83,7 +83,7 @@ input[type=range]::-moz-range-thumb {
    ---------------------------
 */
 
-/* Main Card Container - Horizontal on Desktop */
+/* Main Card Container - Vertical Stack (Big Images) */
 .explore-card {
     background: white;
     border-radius: 20px;
@@ -91,11 +91,11 @@ input[type=range]::-moz-range-thumb {
     cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
-    flex-direction: row;
-    /* Horizontal layout */
+    flex-direction: column;
+    /* Vertical layout */
     overflow: hidden;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
-    min-height: 220px;
+    min-height: auto;
 }
 
 .explore-card:hover {
@@ -104,33 +104,38 @@ input[type=range]::-moz-range-thumb {
     border-color: #E2E8F0;
 }
 
-/* Left/Top Visual Section */
+/* Top Visual Section */
 .card-visual-container {
-    width: 40%;
-    min-width: 180px;
-    max-width: 240px;
+    width: 100%;
+    height: auto;
+    min-width: auto;
     background: #F8FAFC;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1.5rem;
+    /* Spacious padding */
     position: relative;
-    border-right: 1px solid #F1F5F9;
+    border-right: none;
+    border-bottom: 1px solid #F1F5F9;
 }
 
 .card-visual-container img {
     width: 100%;
     height: auto;
+    aspect-ratio: 1.586;
+    /* Enforce standard credit card ratio */
     object-fit: contain;
-    /* Shows full image */
     filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
-    max-height: 160px;
+    /* Removed max-height constraint to allow filling width */
 }
 
 /* Gradient Card Fallback inside visual container */
 .card-visual-container .gradient-card {
     width: 100%;
-    height: 140px;
+    aspect-ratio: 1.586;
+    /* Match image ratio */
+    height: auto;
     border-radius: 12px;
     padding: 1rem;
     position: relative;

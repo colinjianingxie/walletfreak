@@ -66,42 +66,39 @@ def main():
     print("Starting Slug Audit...\n")
 
     # Files
+    FILE_MASTER_CARDS = 'default_credit_cards.csv'
     FILE_CARDS = 'default_card_benefits.csv'
     FILE_SIGNUP = 'default_signup.csv'
     FILE_RATES = 'default_rates.csv'
-    FILE_POINTS = 'default_points_conversions.csv'
-    FILE_TXT = 'default_credit_card_slugs.txt'
     FILE_PERSONALITIES = 'default_personalities.json'
 
     # Load all info
+    master_slugs, cols_master = get_csv_info(FILE_MASTER_CARDS)
     cards, cols_cards = get_csv_info(FILE_CARDS)
     signup, cols_signup = get_csv_info(FILE_SIGNUP)
     rates, cols_rates = get_csv_info(FILE_RATES)
-    points, cols_points = get_csv_info(FILE_POINTS)
-    txt_slugs, cols_txt = get_txt_info(FILE_TXT)
     personalities, cols_personalities = get_personality_info(FILE_PERSONALITIES)
     
     # 1. Print File Columns
     print(">>> CHECK 1: File Columns")
+    print(f"{FILE_MASTER_CARDS}: {', '.join(cols_master)}")
     print(f"{FILE_CARDS}: {', '.join(cols_cards)}")
     print(f"{FILE_SIGNUP}: {', '.join(cols_signup)}")
     print(f"{FILE_RATES}: {', '.join(cols_rates)}")
-    print(f"{FILE_POINTS}: {', '.join(cols_points)}")
     print("-" * 60)
 
-    # 2. Differences
-    print("\n>>> CHECK 2: Data Consistency (Vs Default Cards)")
+    # 2. Differences vs Master List
+    print("\n>>> CHECK 2: Data Consistency (Vs Default Credit Cards Master)")
     
-    print_diff("Signup CSV", signup, cards, FILE_SIGNUP, FILE_CARDS)
-    print_diff("Rates CSV", rates, cards, FILE_RATES, FILE_CARDS)
-    print_diff("Points CSV", points, cards, FILE_POINTS, FILE_CARDS)
-    print_diff("TXT List", txt_slugs, cards, FILE_TXT, FILE_CARDS)
+    print_diff("Benefits CSV", cards, master_slugs, FILE_CARDS, FILE_MASTER_CARDS)
+    print_diff("Signup CSV", signup, master_slugs, FILE_SIGNUP, FILE_MASTER_CARDS)
+    print_diff("Rates CSV", rates, master_slugs, FILE_RATES, FILE_MASTER_CARDS)
 
     # 3. Personality Integrity
     print("\n>>> CHECK 3: Personality References Integrity")
-    unknown_cards = personalities - cards
+    unknown_cards = personalities - master_slugs
     if unknown_cards:
-        print(f"\n[FAIL] The following cards are referenced in Personalities but DO NOT exist in Default Cards CSV:")
+        print(f"\n[FAIL] The following cards are referenced in Personalities but DO NOT exist in Master Cards CSV:")
         for s in sorted(unknown_cards):
             print(f"  - {s}")
     else:
@@ -110,21 +107,20 @@ def main():
     # 4. Global Missing Map
     print("\n>>> CHECK 4: Cross-Reference Map (Where are slugs missing?)")
     
-    all_slugs = cards | signup | rates | points | txt_slugs | personalities
-    non_existent_slugs = all_slugs - cards
+    all_slugs = cards | signup | rates | personalities
+    non_existent_slugs = all_slugs - master_slugs
     
     if non_existent_slugs:
-        print("\n[!] The following slugs appear in auxiliary files but are missing from the main Cards CSV:")
+        print("\n[!] The following slugs appear in auxiliary files but are missing from the Master Cards CSV:")
         for s in sorted(non_existent_slugs):
             found_in = []
+            if s in cards: found_in.append("Benefits")
             if s in signup: found_in.append("Signup")
             if s in rates: found_in.append("Rates")
-            if s in points: found_in.append("Points")
-            if s in txt_slugs: found_in.append("Txt")
             if s in personalities: found_in.append("Personalities")
             print(f"  - {s} (Found in: {', '.join(found_in)})")
     else:
-        print("\n[PASS] No slugs found outside of the main Cards CSV.")
+        print("\n[PASS] No slugs found outside of the Master Cards CSV.")
 
 if __name__ == "__main__":
     main()
