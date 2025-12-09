@@ -407,7 +407,8 @@
     font-size: 16px;
 }
 
-.action-count, .action-text {
+.action-count,
+.action-text {
     font-weight: 600;
 }
 
@@ -743,8 +744,13 @@
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .voting-loader-content p {
@@ -767,19 +773,19 @@
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
-    
+
     .posts-feed {
         order: 1;
     }
-    
+
     .blog-sidebar {
         order: 2;
     }
-    
+
     .sidebar-card {
         padding: 1rem;
     }
-    
+
     .community-stats {
         gap: 1rem;
     }
@@ -789,31 +795,31 @@
     .container {
         padding: 0 1rem;
     }
-    
+
     .blog-header {
         padding: 1rem 0;
     }
-    
+
     .header-content {
         flex-direction: column;
         gap: 1rem;
         align-items: stretch;
     }
-    
+
     .search-wrapper {
         max-width: none;
     }
-    
+
     .search-input {
         padding: 1rem 1rem 1rem 3rem;
         font-size: 1rem;
         border-radius: 25px;
     }
-    
+
     .category-tabs {
         display: none;
     }
-    
+
     .mobile-category-tabs {
         display: flex;
         justify-content: flex-start;
@@ -822,29 +828,29 @@
         margin: 0;
         background: transparent;
     }
-    
+
     .mobile-tab {
         padding: 0.75rem 1.5rem;
         border-radius: 25px;
         font-size: 0.875rem;
         font-weight: 600;
     }
-    
+
     .blog-layout {
         display: block;
         padding: 1rem 0;
     }
-    
+
     /* Hide sidebar completely on mobile */
     .blog-sidebar {
         display: none !important;
     }
-    
+
     .posts-feed {
         width: 100%;
         max-width: none;
     }
-    
+
     .post-card {
         padding: 1.5rem;
         border-radius: 16px;
@@ -853,34 +859,34 @@
         background: white;
         display: block;
     }
-    
+
     .post-vote {
         display: none;
     }
-    
+
     .post-main {
         width: 100%;
     }
-    
+
     .post-header {
         margin-bottom: 1rem;
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
     }
-    
+
     .post-author {
         display: flex;
         align-items: center;
         gap: 0.75rem;
     }
-    
+
     .author-avatar {
         width: 40px;
         height: 40px;
         font-size: 18px;
     }
-    
+
     .post-category {
         background: #EEF2FF;
         color: #6366F1;
@@ -890,19 +896,19 @@
         font-weight: 700;
         letter-spacing: 0.05em;
     }
-    
+
     .post-content {
         display: block;
         margin-bottom: 1rem;
     }
-    
+
     .post-image {
         width: 100%;
         height: 200px;
         border-radius: 12px;
         margin-top: 1rem;
     }
-    
+
     .post-title a {
         font-size: 1.25rem;
         font-weight: 700;
@@ -910,13 +916,13 @@
         margin-bottom: 0.75rem;
         display: block;
     }
-    
+
     .post-excerpt {
         margin-bottom: 1rem;
         font-size: 0.875rem;
         line-height: 1.5;
     }
-    
+
     .post-actions {
         display: flex;
         justify-content: space-between;
@@ -924,12 +930,12 @@
         padding-top: 1rem;
         border-top: 1px solid #F3F4F6;
     }
-    
+
     .action-group {
         display: flex;
         gap: 1.5rem;
     }
-    
+
     .action-btn {
         display: flex;
         align-items: center;
@@ -940,35 +946,35 @@
         background: none;
         border: none;
     }
-    
+
     .action-btn .material-icons {
         font-size: 18px;
     }
-    
+
     /* Mobile vote button styling to match mockup */
     .mobile-vote-btn {
         display: flex !important;
         color: #F59E0B !important;
         font-weight: 600;
     }
-    
+
     .mobile-vote-btn.active {
         color: #D97706 !important;
     }
-    
+
     .mobile-vote-btn .action-count {
         color: #F59E0B;
         font-weight: 700;
     }
-    
-    
+
+
     .fab {
         bottom: 1rem;
         right: 1rem;
         width: 48px;
         height: 48px;
     }
-    
+
     .fab .material-icons {
         font-size: 20px;
     }
@@ -978,29 +984,30 @@
     .container {
         padding: 0 0.5rem;
     }
-    
+
     .post-card {
         padding: 0.75rem;
     }
-    
+
     .post-actions {
         flex-direction: column;
         gap: 0.75rem;
         align-items: stretch;
     }
-    
+
     .action-group {
         justify-content: space-between;
+        gap: 0.5rem;
     }
-    
+
     .sidebar-card {
         padding: 0.75rem;
     }
-    
+
     .community-stats {
         gap: 0.5rem;
     }
-    
+
     .stat-number {
         font-size: 1.25rem;
     }
