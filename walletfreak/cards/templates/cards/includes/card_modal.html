@@ -204,29 +204,43 @@ function openCardModal(cardId) {
     
     // Visual
     const visual = document.getElementById('modal-card-visual');
-    // Reset classes
+    // Reset styles and classes
     visual.className = 'credit-card';
-    // Add specific class based on issuer/name logic
-    let imageClass = 'card-default';
-    const nameLower = card.name.toLowerCase();
-    const issuerLower = (card.issuer || '').toLowerCase();
+    visual.style.backgroundImage = '';
+    visual.style.backgroundSize = '';
+    visual.style.backgroundPosition = '';
     
-    if (issuerLower.includes('american express') || issuerLower.includes('amex')) {
-        if (nameLower.includes('platinum')) imageClass = 'card-amex-platinum';
-        else if (nameLower.includes('gold')) imageClass = 'card-gold';
-        else imageClass = 'card-amex-platinum'; // Fallback
-    } else if (issuerLower.includes('chase')) {
-        imageClass = 'card-chase';
-    } else if (issuerLower.includes('capital one')) {
-        imageClass = 'card-capital-one';
-    } else if (issuerLower.includes('citi')) {
-        imageClass = 'card-citi';
+    // Check for image_url
+    if (card.image_url) {
+        visual.style.backgroundImage = `url('${card.image_url}')`;
+        visual.style.backgroundSize = 'cover';
+        visual.style.backgroundPosition = 'center';
+        // Add a class to ensure text shadow or overlay if needed for readability, 
+        // though usually card images have text on them or we might want to hide the HTML text overlay
+        // For now, let's keep the HTML text overlay as it might be a blank card image
+    } else {
+        // Add specific class based on issuer/name logic
+        let imageClass = 'card-default';
+        const nameLower = card.name.toLowerCase();
+        const issuerLower = (card.issuer || '').toLowerCase();
+        
+        if (issuerLower.includes('american express') || issuerLower.includes('amex')) {
+            if (nameLower.includes('platinum')) imageClass = 'card-amex-platinum';
+            else if (nameLower.includes('gold')) imageClass = 'card-gold';
+            else imageClass = 'card-amex-platinum'; // Fallback
+        } else if (issuerLower.includes('chase')) {
+            imageClass = 'card-chase';
+        } else if (issuerLower.includes('capital one')) {
+            imageClass = 'card-capital-one';
+        } else if (issuerLower.includes('citi')) {
+            imageClass = 'card-citi';
+        }
+        
+        // If card object has imageClass property (from sampleCards), use it
+        if (card.imageClass) imageClass = card.imageClass;
+        
+        visual.classList.add(imageClass);
     }
-    
-    // If card object has imageClass property (from sampleCards), use it
-    if (card.imageClass) imageClass = card.imageClass;
-    
-    visual.classList.add(imageClass);
     
     // Stats
     document.getElementById('modal-match-score').textContent = (card.matchScore || '90') + (String(card.matchScore).includes('%') ? '' : '% Match');

@@ -28,7 +28,8 @@ def parse_signup_bonuses_csv(csv_path):
                     'terms': row['Terms'].strip(),
                     'value': value,
                     'currency': row['Currency'].strip(),
-                    'effective_date': row['EffectiveDate'].strip()
+                    'effective_date': row['EffectiveDate'].strip(),
+                    'image_url': row.get('ImageURL', '').strip()
                 }
     except FileNotFoundError:
         print(f"Warning: Signup bonus CSV not found at {csv_path}")
@@ -303,7 +304,7 @@ def convert_to_firestore_format(cards_dict):
             'annual_fee': card_data['annual_fee'],
             'benefits': card_data['benefits'],
             'earning_rates': card_data.get('earning_rates', []),
-            'image_url': '',
+            'image_url': card_data.get('image_url', ''),
             'referral_links': [],
             'sign_up_bonus': card_data.get('sign_up_bonus', {}),
             'verdict': card_data.get('verdict', ''),
@@ -328,7 +329,15 @@ def generate_cards_from_csv(csv_path, signup_csv_path=None, rates_csv_path=None,
         signup_data = parse_signup_bonuses_csv(signup_csv_path)
         for card_name, card in cards_dict.items():
             if card_name in signup_data:
-                card['sign_up_bonus'] = signup_data[card_name]
+                bonus_data = signup_data[card_name]
+                # Extract image_url for parent level
+                if bonus_data.get('image_url'):
+                    card['image_url'] = bonus_data['image_url']
+                
+                # Create a copy for sign_up_bonus without image_url
+                bonus_data_clean = bonus_data.copy()
+                bonus_data_clean.pop('image_url', None)
+                card['sign_up_bonus'] = bonus_data_clean
     
     if rates_csv_path:
         rates_data = parse_earning_rates_csv(rates_csv_path)
@@ -352,10 +361,11 @@ def generate_cards_from_csv(csv_path, signup_csv_path=None, rates_csv_path=None,
 if __name__ == '__main__':
     # For testing
     import os
-    csv_path = os.path.join(os.path.dirname(__file__), '../../../default_cards_2025_11_27.csv')
-    signup_csv_path = os.path.join(os.path.dirname(__file__), '../../../default_signup_2025_11_30.csv')
+    csv_path = os.path.join(os.path.dirname(__file__), '../../../default_card_benefits.csv')
+    signup_csv_path = os.path.join(os.path.dirname(__file__), '../../../default_signup.csv')
     cards = generate_cards_from_csv(csv_path, signup_csv_path)
     print(f"Parsed {len(cards)} cards")
     for card in cards[:2]:  # Print first 2 as sample
         print(f"\n{card['name']} ({card['issuer']}):")
+        print(f"  Image URL: {card.get('image_url', 'N/A')}")
         print(f"  Benefits: {len(card['benefits'])}")

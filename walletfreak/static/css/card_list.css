@@ -77,6 +77,252 @@ input[type=range]::-moz-range-thumb {
     background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
 }
 
+/* 
+   ---------------------------
+   NEW CARD LAYOUT STYLES 
+   ---------------------------
+*/
+
+/* Main Card Container - Horizontal on Desktop */
+.explore-card {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid #F1F5F9;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: row;
+    /* Horizontal layout */
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+    min-height: 220px;
+}
+
+.explore-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border-color: #E2E8F0;
+}
+
+/* Left/Top Visual Section */
+.card-visual-container {
+    width: 40%;
+    min-width: 180px;
+    max-width: 240px;
+    background: #F8FAFC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    position: relative;
+    border-right: 1px solid #F1F5F9;
+}
+
+.card-visual-container img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    /* Shows full image */
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+    max-height: 160px;
+}
+
+/* Gradient Card Fallback inside visual container */
+.card-visual-container .gradient-card {
+    width: 100%;
+    height: 140px;
+    border-radius: 12px;
+    padding: 1rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Right/Bottom Content Section */
+.card-content {
+    flex: 1;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header: Name + Match Score */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.card-header h3 {
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: #0F172A;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.issuer-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.25rem;
+}
+
+/* Match Badge */
+.match-badge {
+    background: #ECFDF5;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-left: 0.5rem;
+    flex-shrink: 0;
+}
+
+.match-score {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #16A34A;
+}
+
+.match-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #16A34A;
+    letter-spacing: 0.05em;
+}
+
+/* Annual Fee Row */
+.card-fee-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding: 1rem 0;
+    border-top: 1px solid #F1F5F9;
+    border-bottom: 1px solid #F1F5F9;
+    margin-bottom: 1rem;
+}
+
+.fee-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #94A3B8;
+    letter-spacing: 0.05em;
+}
+
+.fee-value {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #1F2937;
+}
+
+/* View Details Button */
+.view-details-btn {
+    width: 100%;
+    background: white;
+    color: #1F2937;
+    padding: 0.75rem;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: 'Outfit', sans-serif;
+}
+
+.view-details-btn .material-icons {
+    font-size: 16px;
+}
+
+/* Compare Select Button */
+.compare-select-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 50;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+.compare-select-btn .material-icons {
+    font-size: 18px;
+    color: #64748B;
+}
+
+/* Gradient Card Internal Text */
+.card-issuer-text {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+.card-chip-small {
+    width: 40px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    margin-bottom: 0.75rem;
+    backdrop-filter: blur(4px);
+}
+
+.card-number-text {
+    font-family: monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
+    opacity: 0.9;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.card-name-text {
+    font-size: 0.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.8;
+}
+
+.card-logo-placeholder {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    display: flex;
+}
+
+.logo-circle {
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+}
+
+.logo-circle.overlap {
+    margin-left: -8px;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .main-grid {
@@ -98,7 +344,6 @@ input[type=range]::-moz-range-thumb {
         left: -100%;
         width: 100%;
         max-width: 320px;
-        /* Or 100% for full screen, design usually full height side drawer */
         height: 100vh;
         background: white;
         z-index: 50;
@@ -121,7 +366,27 @@ input[type=range]::-moz-range-thumb {
     }
 
     #cards-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
+        grid-template-columns: 1fr !important;
+        /* Single column on mobile/tablet */
+    }
+
+    /* Stack card elements vertically on mobile/tablet */
+    .explore-card {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .card-visual-container {
+        width: 100%;
+        min-width: auto;
+        max-width: none;
+        border-right: none;
+        border-bottom: 1px solid #F1F5F9;
+        padding: 2rem;
+    }
+
+    .card-visual-container img {
+        max-height: 180px;
     }
 }
 

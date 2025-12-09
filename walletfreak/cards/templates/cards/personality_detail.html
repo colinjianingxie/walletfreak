@@ -132,7 +132,18 @@
                             <span class="material-icons" style="font-size: 24px; color: white;">info_outline</span>
                         </div>
 
+
                         <!-- Card Visual -->
+                        {% if card.image_url %}
+                        <div class="credit-card" style="position: relative; padding: 0 !important; background: none; border: none; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);">
+                            <img src="{{ card.image_url }}" alt="{{ card.name }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;">
+                            
+                            <!-- Selection Indicator (Overlay) -->
+                            <div class="selection-indicator" style="position: absolute; top: 1rem; right: 1rem; width: 28px; height: 28px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; border: 1px solid rgba(255,255,255,0.4); transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                <span class="material-icons status-icon" style="font-size: 18px; color: #3b82f6;">add</span>
+                            </div>
+                        </div>
+                        {% else %}
                         <div class="credit-card {% if 'american express' in card.name|lower or 'amex' in card.name|lower %}{% if 'platinum' in card.name|lower %}card-amex-platinum{% elif 'gold' in card.name|lower %}card-gold{% else %}card-chase{% endif %}{% elif 'chase' in card.name|lower %}card-chase{% elif 'capital one' in card.name|lower %}card-capital-one{% elif 'citi' in card.name|lower %}card-citi{% else %}card-chase{% endif %}" style="position: relative;">
                             
                             <!-- Selection Indicator (Moved Inside) -->
@@ -157,6 +168,7 @@
                                 <div style="width: 32px; height: 32px; background: rgba(255,255,255,0.3); border-radius: 50%;"></div>
                             </div>
                         </div>
+                        {% endif %}
 
                         <!-- Card Metadata (Below) -->
                         <div style="text-align: center; margin-top: 1rem; padding: 0 0.5rem;">

@@ -143,12 +143,20 @@ function openCompareModal() {
     cards.forEach(card => {
         const cardVisual = document.createElement('div');
         cardVisual.style.cssText = 'text-align: center;';
-        cardVisual.innerHTML = `
-            <div class="card-circle" style="background: ${card.cardMeta.color}; margin: 0 auto 0.75rem;">
-                <span class="material-icons" style="color: white; font-size: 28px; opacity: 0.9;">contactless</span>
-            </div>
-            <div style="font-size: 0.875rem; font-weight: 700; color: #0F172A;">${card.name}</div>
-        `;
+        if (card.image_url) {
+             cardVisual.innerHTML = `
+                <div class="card-circle" style="background-image: url('${card.image_url}'); background-size: cover; background-position: center; margin: 0 auto 0.75rem; border: 1px solid #E2E8F0;">
+                </div>
+                <div style="font-size: 0.875rem; font-weight: 700; color: #0F172A;">${card.name}</div>
+            `;
+        } else {
+            cardVisual.innerHTML = `
+                <div class="card-circle" style="background: ${card.cardMeta.color}; margin: 0 auto 0.75rem;">
+                    <span class="material-icons" style="color: white; font-size: 28px; opacity: 0.9;">contactless</span>
+                </div>
+                <div style="font-size: 0.875rem; font-weight: 700; color: #0F172A;">${card.name}</div>
+            `;
+        }
         cardsHeader.appendChild(cardVisual);
     });
     

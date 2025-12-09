@@ -66,9 +66,9 @@ def main():
     print("Starting Slug Audit...\n")
 
     # Files
-    FILE_CARDS = 'default_cards_2025_11_27.csv'
-    FILE_SIGNUP = 'default_signup_2025_11_30.csv'
-    FILE_RATES = 'default_rates_2025_11_30.csv'
+    FILE_CARDS = 'default_card_benefits.csv'
+    FILE_SIGNUP = 'default_signup.csv'
+    FILE_RATES = 'default_rates.csv'
     FILE_POINTS = 'default_points_conversions.csv'
     FILE_TXT = 'default_credit_card_slugs.txt'
     FILE_PERSONALITIES = 'default_personalities.json'
