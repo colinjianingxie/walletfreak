@@ -134,7 +134,16 @@
 
 
                         <!-- Card Visual -->
-                        {% if card.image_url %}
+                        {% if card.local_image %}
+                        <div class="credit-card" style="position: relative; padding: 0 !important; background: none; border: none; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);">
+                            <img src="{% static card.local_image %}" alt="{{ card.name }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;" onerror="this.onerror=null; this.src='{{ card.image_url }}';">
+                            
+                            <!-- Selection Indicator (Overlay) -->
+                            <div class="selection-indicator" style="position: absolute; top: 1rem; right: 1rem; width: 28px; height: 28px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; border: 1px solid rgba(255,255,255,0.4); transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                <span class="material-icons status-icon" style="font-size: 18px; color: #3b82f6;">add</span>
+                            </div>
+                        </div>
+                        {% elif card.image_url %}
                         <div class="credit-card" style="position: relative; padding: 0 !important; background: none; border: none; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);">
                             <img src="{{ card.image_url }}" alt="{{ card.name }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;">
                             

@@ -183,7 +183,9 @@
                 >
                     <!-- Visual Card -->
                     <div class="card-visual-container">
-                        {% if card.image_url %}
+                        {% if card.local_image %}
+                        <img src="{% static card.local_image %}" alt="{{ card.name }}" onerror="this.onerror=null; this.src='{{ card.image_url }}';">
+                        {% elif card.image_url %}
                         <img src="{{ card.image_url }}" alt="{{ card.name }}">
                              
                             <!-- Compare Selection Button (Overlay on Image) -->

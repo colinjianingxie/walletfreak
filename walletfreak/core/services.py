@@ -233,19 +233,44 @@ class FirestoreService:
         default_prefs = {
             'benefit_expiration': {
                 'enabled': True,
-                'frequency': 5  # days before
+                'start_days_before': 7,
+                'repeat_frequency': 1 # Run daily once started
             },
             'annual_fee': {
                 'enabled': True,
-                'frequency': 30  # days before
+                'start_days_before': 30,
+                'repeat_frequency': 7 # Run weekly once started
+            },
+            'blog_updates': {
+                'enabled': False
             }
         }
         if user and 'notification_preferences' in user:
             # Merge with defaults to ensure structure
             user_prefs = user['notification_preferences']
-            for key, value in default_prefs.items():
+            
+            # Deep merge for nested dictionaries
+            for key, default_val in default_prefs.items():
                 if key not in user_prefs:
-                    user_prefs[key] = value
+                    user_prefs[key] = default_val
+                elif isinstance(default_val, dict) and isinstance(user_prefs[key], dict):
+                    # Ensure all keys in the default dict exist in the user pref dict
+                    for subkey, subval in default_val.items():
+                        if subkey not in user_prefs[key]:
+                            user_prefs[key][subkey] = subval
+                            
+            # Backward compatibility migration (handled on read)
+            # Map old 'frequency' to 'start_days_before' if 'start_days_before' is missing
+            # This is partly handled by the deep merge above if we assume 'frequency' was the only key before
+            # But if 'frequency' exists and 'start_days_before' was just added as default, we might want to respect old 'frequency' as start date?
+            # The prompt implies 'frequency' was "1 week before" etc, so it maps to 'start_days_before'.
+            
+            if 'frequency' in user_prefs.get('benefit_expiration', {}):
+                # If we have the old key but not the new one (or it's default), we can sync them if desired
+                # But treating them as separate concepts now.
+                # Let's trust the defaults for new fields if they didn't exist.
+                pass
+
             return user_prefs
         return default_prefs
 

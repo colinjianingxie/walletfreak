@@ -29,7 +29,7 @@ def parse_signup_bonuses_csv(csv_path):
                     'value': value,
                     'currency': row['Currency'].strip(),
                     'effective_date': row['EffectiveDate'].strip(),
-                    'image_url': row.get('ImageURL', '').strip()
+                    'effective_date': row['EffectiveDate'].strip()
                 }
     except FileNotFoundError:
         print(f"Warning: Signup bonus CSV not found at {csv_path}")
@@ -86,13 +86,21 @@ def parse_earning_rates_csv(csv_path):
     
     return dict(rates_dict)
 
-def parse_points_conversions_csv(csv_path):
+def parse_master_cards_csv(csv_path):
     """
-    Parse the points conversions CSV and return a dictionary of CPP values.
+    Parse the master credit cards CSV (default_credit_cards.csv).
     
-    CSV Format: Vendor|CardName|PointsValueCpp|slug-id
+    CSV Format: Vendor|CardName|PointsValueCpp|slug-id|ImageURL
+    
+    Returns a dictionary:
+    {
+        'card_key': {
+            'points_value_cpp': float,
+            'image_url': str
+        }
+    }
     """
-    cpp_values = {}
+    master_data = {}
     try:
         with open(csv_path, 'r', encoding='utf-8') as f:
             reader = csv.DictReader(f, delimiter='|')
@@ -103,18 +111,23 @@ def parse_points_conversions_csv(csv_path):
                 
                 # Parse CPP
                 cpp = 0.0
-                val_str = row['PointsValueCpp'].strip()
+                val_str = row.get('PointsValueCpp', '').strip()
                 if val_str and val_str.upper() != 'N/A':
                     try:
                         cpp = float(val_str)
                     except ValueError:
                         pass
+                
+                image_url = row.get('ImageURL', '').strip()
                         
-                cpp_values[key] = cpp
+                master_data[key] = {
+                    'points_value_cpp': cpp,
+                    'image_url': image_url
+                }
     except FileNotFoundError:
-        print(f"Warning: Points conversions CSV not found at {csv_path}")
+        print(f"Warning: Master cards CSV not found at {csv_path}")
         
-    return cpp_values
+    return master_data
 
 def parse_benefits_csv(csv_path):
     """
@@ -287,6 +300,34 @@ def parse_benefits_csv(csv_path):
     return dict(cards_dict)
 
 
+import os
+
+def find_local_image(slug):
+    """
+    Find local image for a given slug by checking supported extensions.
+    Returns relative path (e.g., 'images/credit_cards/slug.png') or None.
+    """
+    if not slug:
+        return None
+        
+    # Relative path from STATIC_ROOT or commonly static/
+    # We need to find where the script is running vs where static files are.
+    # The script is in core/management/commands. static is in walletfreak/static.
+    # We can determine base dir relative to this file.
+    
+    # helper to find static root during management command execution
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+    static_images_dir = os.path.join(base_dir, 'static', 'images', 'credit_cards')
+    
+    extensions = ['.png', '.PNG', '.jpg', '.JPG', '.jpeg', '.JPEG', '.webp', '.WEBP', '.avif', '.AVIF']
+    
+    for ext in extensions:
+        filename = f"{slug}{ext}"
+        if os.path.exists(os.path.join(static_images_dir, filename)):
+            return f"images/credit_cards/{filename}"
+            
+    return None
+
 def convert_to_firestore_format(cards_dict):
     """
     Convert parsed cards dictionary to Firestore-ready format.
@@ -296,10 +337,14 @@ def convert_to_firestore_format(cards_dict):
     firestore_cards = []
     
     for card_name, card_data in cards_dict.items():
+        # Resolve local image dynamically
+        slug = card_data.get('slug', '')
+        local_image = find_local_image(slug)
+        
         # Create the card document
         card_doc = {
             'name': card_data['name'],
-            'slug': card_data.get('slug', ''),
+            'slug': slug,
             'issuer': card_data['issuer'],
             'annual_fee': card_data['annual_fee'],
             'benefits': card_data['benefits'],
@@ -308,8 +353,7 @@ def convert_to_firestore_format(cards_dict):
             'referral_links': [],
             'sign_up_bonus': card_data.get('sign_up_bonus', {}),
             'verdict': card_data.get('verdict', ''),
-            'sign_up_bonus': card_data.get('sign_up_bonus', {}),
-            'verdict': card_data.get('verdict', ''),
+            'local_image': local_image,
             'rewards_summary': card_data.get('rewards_summary', ''),
             'points_value_cpp': card_data.get('points_value_cpp', 0.0)
         }
@@ -319,7 +363,7 @@ def convert_to_firestore_format(cards_dict):
     return firestore_cards
 
 
-def generate_cards_from_csv(csv_path, signup_csv_path=None, rates_csv_path=None, points_csv_path=None):
+def generate_cards_from_csv(csv_path, signup_csv_path=None, rates_csv_path=None, master_csv_path=None):
     """
     Main function to parse CSV and return Firestore-ready card data.
     """
@@ -329,15 +373,7 @@ def generate_cards_from_csv(csv_path, signup_csv_path=None, rates_csv_path=None,
         signup_data = parse_signup_bonuses_csv(signup_csv_path)
         for card_name, card in cards_dict.items():
             if card_name in signup_data:
-                bonus_data = signup_data[card_name]
-                # Extract image_url for parent level
-                if bonus_data.get('image_url'):
-                    card['image_url'] = bonus_data['image_url']
-                
-                # Create a copy for sign_up_bonus without image_url
-                bonus_data_clean = bonus_data.copy()
-                bonus_data_clean.pop('image_url', None)
-                card['sign_up_bonus'] = bonus_data_clean
+                card['sign_up_bonus'] = signup_data[card_name]
     
     if rates_csv_path:
         rates_data = parse_earning_rates_csv(rates_csv_path)
@@ -345,15 +381,21 @@ def generate_cards_from_csv(csv_path, signup_csv_path=None, rates_csv_path=None,
             if card_name in rates_data:
                 card['earning_rates'] = rates_data[card_name]['earning_rates']
     
-    if points_csv_path:
-        points_data = parse_points_conversions_csv(points_csv_path)
+    if master_csv_path:
+        master_data = parse_master_cards_csv(master_csv_path)
         for key, card in cards_dict.items():
             # Try key (slug-id usually)
-            if key in points_data:
-                card['points_value_cpp'] = points_data[key]
-            # Fallback to name match if keys differ (though parse should handle it)
-            elif card['name'] in points_data:
-                card['points_value_cpp'] = points_data[card['name']]
+            data = None
+            if key in master_data:
+                data = master_data[key]
+            # Fallback to name match
+            elif card['name'] in master_data:
+                data = master_data[card['name']]
+            
+            if data:
+                card['points_value_cpp'] = data['points_value_cpp']
+                if data['image_url']:
+                    card['image_url'] = data['image_url']
                 
     return convert_to_firestore_format(cards_dict)
 
