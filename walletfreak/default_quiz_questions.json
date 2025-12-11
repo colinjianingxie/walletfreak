@@ -1,13 +1,13 @@
 [
     {
         "stage": 1,
-        "question": "What gets you most excited about credit cards?",
+        "question": "What interests you most about credit cards?",
         "subtitle": "Pick up to 3",
         "max_selections": 3,
         "options": [
             {
-                "id": "aspirational",
-                "text": "Lie-flat business class or 5-star hotels for almost nothing using points",
+                "id": "premium_travel",
+                "text": "Earning points for business class flights or luxury hotels",
                 "personalities": [
                     "luxury-jetsetter",
                     "points-strategist",
@@ -15,8 +15,8 @@
                 ]
             },
             {
-                "id": "hotel_status",
-                "text": "Hotel elite status — suite upgrades, free breakfast, annual free nights",
+                "id": "hotel_perks",
+                "text": "Getting hotel status for room upgrades and free nights",
                 "personalities": [
                     "hotel-status-chaser",
                     "luxury-jetsetter",
@@ -25,15 +25,15 @@
                 ]
             },
             {
-                "id": "airline_perks",
-                "text": "Companion passes, free checked bags, priority boarding, airline club access",
+                "id": "airline_benefits",
+                "text": "Airline perks like companion tickets and free checked bags",
                 "personalities": [
                     "airline-companion-chaser"
                 ]
             },
             {
-                "id": "lounges",
-                "text": "Unlimited airport lounge access everywhere (Centurion, Capital One, Priority Pass)",
+                "id": "airport_lounges",
+                "text": "Access to airport lounges and travel protections",
                 "personalities": [
                     "luxury-jetsetter",
                     "value-traveler",
@@ -42,60 +42,36 @@
                 ]
             },
             {
-                "id": "easy_credits",
-                "text": "Huge easy-to-use credits that wipe out (or profit) the annual fee",
-                "personalities": [
-                    "value-traveler",
-                    "wallet-freak",
-                    "business-powerhouse",
-                    "yuppie"
-                ]
-            },
-            {
-                "id": "pure_cash",
-                "text": "Straight cash back or fully cash-out-able rewards",
+                "id": "cash_rewards",
+                "text": "Getting cash back on my purchases",
                 "personalities": [
                     "cashback-pragmatist",
                     "simple-minimalist"
                 ]
             },
             {
-                "id": "big_bonus",
-                "text": "Massive limited-time welcome bonuses (100k+ points or $800+ cash)",
-                "personalities": [
-                    "wallet-freak",
-                    "points-strategist",
-                    "category-hunter"
-                ]
-            },
-            {
-                "id": "niche_5x",
-                "text": "Insane 5%+ in one killer category (gas, groceries, ads, office supplies, etc)",
+                "id": "high_category_rewards",
+                "text": "High rewards rates in specific categories like groceries or gas",
                 "personalities": [
                     "gas-freak",
                     "foodie-grocery-king",
                     "business-powerhouse",
-                    "category-hunter"
-                ]
-            },
-            {
-                "id": "family_max",
-                "text": "Turning huge family grocery, Costco, Amazon, kids bills into free trips",
-                "personalities": [
-                    "family-freak"
+                    "category-hunter",
+                    "family-freak",
+                    "online-shopping-freak"
                 ]
             }
         ]
     },
     {
         "stage": 2,
-        "question": "Where do you actually spend the most money every month?",
-        "subtitle": "Select all that apply – be honest",
+        "question": "Where do you spend the most money each month?",
+        "subtitle": "Select all that apply",
         "max_selections": null,
         "options": [
             {
-                "id": "dining",
-                "text": "Restaurants, delivery, bars, takeout",
+                "id": "dining_out",
+                "text": "Restaurants and food delivery",
                 "personalities": [
                     "foodie-grocery-king",
                     "yuppie",
@@ -105,15 +81,15 @@
             },
             {
                 "id": "groceries",
-                "text": "Groceries, supermarkets, Costco runs",
+                "text": "Groceries and supermarkets",
                 "personalities": [
                     "foodie-grocery-king",
                     "family-freak"
                 ]
             },
             {
-                "id": "travel",
-                "text": "Flights, hotels, Airbnb, vacations",
+                "id": "travel_expenses",
+                "text": "Flights, hotels, and vacations",
                 "personalities": [
                     "luxury-jetsetter",
                     "points-strategist",
@@ -124,8 +100,8 @@
                 ]
             },
             {
-                "id": "online",
-                "text": "Amazon, Target, Walmart, online shopping",
+                "id": "online_purchases",
+                "text": "Online shopping like Amazon or Walmart",
                 "personalities": [
                     "online-shopping-freak",
                     "family-freak",
@@ -133,53 +109,37 @@
                 ]
             },
             {
-                "id": "gas_ev",
-                "text": "Gas stations or EV charging",
+                "id": "fuel",
+                "text": "Gas or electric vehicle charging",
                 "personalities": [
                     "gas-freak"
                 ]
             },
             {
-                "id": "business",
-                "text": "Ads, software, shipping, office supplies, utilities",
-                "personalities": [
-                    "business-powerhouse"
-                ]
-            },
-            {
-                "id": "rent",
-                "text": "Rent (paid by card, no fees)",
+                "id": "large_expenses",
+                "text": "Rent, business costs, or high overall spending",
                 "personalities": [
                     "luxury-jetsetter",
                     "wallet-freak",
                     "points-strategist",
+                    "business-powerhouse",
+                    "family-freak",
                     "yuppie",
                     "value-traveler",
                     "student-starter"
-                ]
-            },
-            {
-                "id": "everything",
-                "text": "I spend $4,000+ per month across all categories",
-                "personalities": [
-                    "wallet-freak",
-                    "luxury-jetsetter",
-                    "business-powerhouse",
-                    "family-freak",
-                    "yuppie"
                 ]
             }
         ]
     },
     {
         "stage": 3,
-        "question": "Which of these are true for you?",
-        "subtitle": "Select all that apply",
-        "max_selections": null,
+        "question": "What is your tolerance for annual fees on credit cards?",
+        "subtitle": "Pick one",
+        "max_selections": 1,
         "options": [
             {
-                "id": "no_af",
-                "text": "I will never pay an annual fee",
+                "id": "no_fees",
+                "text": "No annual fees at all",
                 "personalities": [
                     "cashback-pragmatist",
                     "simple-minimalist",
@@ -187,8 +147,8 @@
                 ]
             },
             {
-                "id": "low_af",
-                "text": "$95–$150 max, and only if it pays for itself fast",
+                "id": "low_fees",
+                "text": "Annual fees up to $150 if the benefits cover the cost",
                 "personalities": [
                     "value-traveler",
                     "category-hunter",
@@ -196,8 +156,8 @@
                 ]
             },
             {
-                "id": "high_af_ok",
-                "text": "$550+ annual fees are fine if I get 2–3× the value",
+                "id": "high_fees_okay",
+                "text": "Higher annual fees ($550 or more) if the value is much greater",
                 "personalities": [
                     "luxury-jetsetter",
                     "wallet-freak",
@@ -205,10 +165,18 @@
                     "hotel-status-chaser",
                     "airline-companion-chaser"
                 ]
-            },
+            }
+        ]
+    },
+    {
+        "stage": 4,
+        "question": "What are your preferences for managing credit cards?",
+        "subtitle": "Select all that apply",
+        "max_selections": null,
+        "options": [
             {
-                "id": "spreadsheets",
-                "text": "I love spreadsheets and optimizing every single purchase",
+                "id": "detailed_tracking",
+                "text": "I enjoy tracking and optimizing rewards on every purchase",
                 "personalities": [
                     "wallet-freak",
                     "points-strategist",
@@ -216,8 +184,8 @@
                 ]
             },
             {
-                "id": "one_card",
-                "text": "I want 1–2 cards max and zero mental overhead",
+                "id": "few_cards",
+                "text": "I prefer just 1 or 2 cards with little effort",
                 "personalities": [
                     "simple-minimalist",
                     "cashback-pragmatist",
@@ -225,32 +193,47 @@
                 ]
             },
             {
-                "id": "churn",
-                "text": "I’ll open/close cards all year long for bonuses",
+                "id": "bonus_hunting",
+                "text": "I am willing to open multiple cards for welcome bonuses",
                 "personalities": [
                     "wallet-freak",
                     "category-hunter"
                 ]
-            },
+            }
+        ]
+    },
+    {
+        "stage": 5,
+        "question": "Which of these describe your situation?",
+        "subtitle": "Select all that apply",
+        "max_selections": null,
+        "options": [
             {
-                "id": "big_family",
-                "text": "Big family, Costco pallets, Disney+, feeding an army",
+                "id": "large_family",
+                "text": "I have a large family with high household expenses",
                 "personalities": [
                     "family-freak"
                 ]
             },
             {
                 "id": "student",
-                "text": "Student or early 20s – just building credit",
+                "text": "I am a student or just starting to build credit",
                 "personalities": [
                     "student-starter"
                 ]
             },
             {
-                "id": "city_flex",
-                "text": "City life, metal cards at dinner, Resy vibes",
+                "id": "urban_lifestyle",
+                "text": "I live in a city and enjoy dining out and premium experiences",
                 "personalities": [
                     "yuppie"
+                ]
+            },
+            {
+                "id": "business_owner",
+                "text": "I own or manage a business with regular expenses",
+                "personalities": [
+                    "business-powerhouse"
                 ]
             }
         ]

@@ -138,10 +138,6 @@
     #options-container {
         grid-template-columns: repeat(3, 1fr) !important;
     }
-
-    #personalities-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
-    }
 }
 
 @media (max-width: 768px) {
@@ -153,8 +149,64 @@
         min-height: 140px !important;
         padding: 1.5rem 1rem !important;
     }
+}
 
-    #personalities-grid {
-        grid-template-columns: 1fr !important;
+/* Carousel Styles */
+#personalities-carousel {
+    display: flex;
+    overflow-x: auto;
+    gap: 2rem;
+    padding: 2rem 1rem;
+    /* Padding for hover effect and scroll snapping */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+}
+
+#personalities-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.personality-slide {
+    flex: 0 0 360px;
+    scroll-snap-align: center;
+}
+
+@media (max-width: 768px) {
+    .personality-slide {
+        flex: 0 0 300px;
+        scroll-snap-align: start;
     }
+
+    #personalities-carousel {
+        padding: 2rem 1.5rem;
+        /* More horizontal padding for mobile peek */
+        gap: 1rem;
+    }
+}
+
+.carousel-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid #E2E8F0;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #64748B;
+}
+
+.carousel-btn:hover {
+    background: #F8FAFC;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    color: #0F172A;
+}
+
+.carousel-btn:active {
+    transform: translateY(0);
 }

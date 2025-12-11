@@ -262,3 +262,15 @@ function resetQuiz() {
 
 // Load first question on page load
 loadQuestion();
+
+// Carousel Navigation
+function scrollCarousel(direction) {
+    const container = document.getElementById('personalities-carousel');
+    const scrollAmount = 400; // Approximate width of card + gap
+
+    if (direction === -1) {
+        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    } else {
+        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+}
