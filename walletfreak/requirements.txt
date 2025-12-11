@@ -6,3 +6,4 @@ pillow
 python-dateutil
 markdown>=3.9
 whitenoise
+python-dotenv
