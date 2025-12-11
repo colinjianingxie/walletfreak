@@ -304,28 +304,35 @@ import os
 
 def find_local_image(slug):
     """
-    Find local image for a given slug by checking supported extensions.
-    Returns relative path (e.g., 'images/credit_cards/slug.png') or None.
+    Find local image for a given slug by searching the directory for an exact match.
+    This handles case-sensitivity differences between macOS (dev) and Linux (prod).
+    Returns relative path (e.g., 'images/credit_cards/slug.PNG') or None.
     """
     if not slug:
         return None
         
-    # Relative path from STATIC_ROOT or commonly static/
-    # We need to find where the script is running vs where static files are.
-    # The script is in core/management/commands. static is in walletfreak/static.
-    # We can determine base dir relative to this file.
-    
     # helper to find static root during management command execution
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
     static_images_dir = os.path.join(base_dir, 'static', 'images', 'credit_cards')
     
-    extensions = ['.png', '.PNG', '.jpg', '.JPG', '.jpeg', '.JPEG', '.webp', '.WEBP', '.avif', '.AVIF']
+    # Supported extensions (case-insensitive check)
+    extensions = ['.png', '.jpg', '.jpeg', '.webp', '.avif']
     
-    for ext in extensions:
-        filename = f"{slug}{ext}"
-        if os.path.exists(os.path.join(static_images_dir, filename)):
-            return f"images/credit_cards/{filename}"
-            
+    # Iterate through the directory to find the actual filename
+    # This ensures we get the correct casing (e.g. 'Card.PNG') instead of what we requested ('Card.png')
+    # which works on Mac but fails on Linux.
+    if not os.path.exists(static_images_dir):
+        return None
+
+    try:
+        for filename in os.listdir(static_images_dir):
+            name, ext = os.path.splitext(filename)
+            # Check if slug matches (case-insensitive) and extension is valid
+            if name.lower() == slug.lower() and ext.lower() in extensions:
+                return f"images/credit_cards/{filename}"
+    except OSError:
+        pass
+        
     return None
 
 def convert_to_firestore_format(cards_dict):
