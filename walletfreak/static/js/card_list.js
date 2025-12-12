@@ -22,17 +22,80 @@ const compareCountText = document.getElementById('compare-count-text');
 let selectedCards = new Map(); // id -> {name, issuer, color}
 
 // State
-let cardsPerPage = 100; // Show all cards by default as requested
+let cardsPerPage = 9; // Updated to 9 as requested
 let currentlyShowing = cardsPerPage;
 let activeCategory = '';
+let currentView = localStorage.getItem('exploreView') || 'grid';
 
 // Helper to normalize strings for comparison (remove spaces, special chars, lowercase)
 function normalize(str) {
     return str ? str.toLowerCase().replace(/[^a-z0-9]/g, '') : '';
 }
 
+// View Toggle
+function toggleView(view) {
+    currentView = view;
+    localStorage.setItem('exploreView', view);
+
+    // Update Grid Class
+    if (cardsGrid) {
+        if (view === 'list') {
+            cardsGrid.classList.add('list-view');
+        } else {
+            cardsGrid.classList.remove('list-view');
+        }
+    }
+
+    // Update Scroll Container Class
+    const scrollContainer = document.getElementById('cards-scroll-container');
+    if (scrollContainer) {
+        if (view === 'list') {
+            scrollContainer.classList.add('list-view-active');
+        } else {
+            scrollContainer.classList.remove('list-view-active');
+        }
+    }
+
+    // Update Header Visibility
+    const listHeader = document.getElementById('list-header');
+    if (listHeader) {
+        // Only show list header if in list view AND not on mobile (mobile check done via CSS usually, but here we can be explicit or rely on CSS)
+        // We rely on CSS media query to hide it on mobile, so just toggle display here based on view
+        listHeader.style.display = view === 'list' ? 'flex' : 'none';
+
+        // Extra check: if window is mobile width, force hide? CSS handles it with !important or media query
+    }
+
+    // Update Buttons
+    const gridBtn = document.getElementById('view-grid-btn');
+    const listBtn = document.getElementById('view-list-btn');
+
+    if (gridBtn && listBtn) {
+        if (view === 'grid') {
+            gridBtn.classList.add('active');
+            gridBtn.style.background = '#F1F5F9';
+            gridBtn.style.color = '#0F172A';
+
+            listBtn.classList.remove('active');
+            listBtn.style.background = 'transparent';
+            listBtn.style.color = '#94A3B8';
+        } else {
+            listBtn.classList.add('active');
+            listBtn.style.background = '#F1F5F9';
+            listBtn.style.color = '#0F172A';
+
+            gridBtn.classList.remove('active');
+            gridBtn.style.background = 'transparent';
+            gridBtn.style.color = '#94A3B8';
+        }
+    }
+}
+
+// Initialize Sliders
 // Initialize Sliders
 function updateSlider() {
+    if (!minFeeSlider || !maxFeeSlider) return;
+
     const min = parseInt(minFeeSlider.value);
     const max = parseInt(maxFeeSlider.value);
 
@@ -50,11 +113,6 @@ function updateSlider() {
     // Calculate track position using percentages for better responsiveness
     const percent1 = (minVal / 1000) * 100;
     const percent2 = (maxVal / 1000) * 100;
-
-    // Adjust for thumb width (approximate)
-    // We want the track to start at the center of the first thumb and end at the center of the second thumb
-    // Since we can't easily get pixel widths in percentage logic without resize listeners, 
-    // we'll use a hybrid approach or just stick to percentages which is usually fine for this UI.
 
     sliderTrack.style.left = percent1 + '%';
     sliderTrack.style.width = (percent2 - percent1) + '%';
@@ -281,6 +339,9 @@ window.addEventListener('DOMContentLoaded', () => {
     // Move sort to mobile container if needed
     handleResize();
     window.addEventListener('resize', handleResize);
+
+    // Initialize View
+    toggleView(currentView);
 });
 
 function openFilters() {

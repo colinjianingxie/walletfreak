@@ -269,6 +269,74 @@ def card_list(request):
         # Mark if card is in wallet
         card['in_wallet'] = card.get('id') in wallet_card_ids
 
+        # --- Earning Display Logic (for List View) ---
+        earning = card.get('earning_rates') or card.get('rewards_structure') or []
+        
+        # If no earning rates found, extract from benefits with benefit_type "Multiplier" or "Cashback"
+        if not earning:
+             benefits = card.get('benefits', [])
+             earning = [
+                 {
+                     'category': b.get('short_description') or b.get('name') or b.get('title') or b.get('description', 'Purchase'),
+                     'rate': b.get('numeric_value') or b.get('value') or b.get('multiplier', 0),
+                     'currency': 'cash' if b.get('benefit_type') == 'Cashback' else (b.get('currency', 'points'))
+                 }
+                 for b in benefits 
+                 if b.get('benefit_type') in ['Multiplier', 'Cashback']
+             ]
+
+        # Format for display (Top 3 rates)
+        # We prefer specific categories over generic ones for the summary
+        display_items = []
+        if earning:
+             # Sort by rate descending
+             try:
+                 sorted_earning = sorted(earning, key=lambda x: float(x.get('rate') or x.get('multiplier') or x.get('value') or 0), reverse=True)
+             except Exception:
+                 sorted_earning = earning
+
+             count = 0
+             for item in sorted_earning:
+                 if count >= 3: break
+                 
+                 cat = item.get('category') or item.get('cat') or item.get('description') or 'Purchase'
+                 rate = item.get('rate') or item.get('multiplier') or item.get('value') or 0
+                 currency = item.get('currency', 'points')
+                 
+                 # Skip if rate is 0 or 1 (usually base rate) unless it's unique
+                 if float(rate) <= 1 and len(sorted_earning) > 1:
+                     continue
+                     
+                 # Format rate
+                 try:
+                     val = float(rate)
+                     is_int = val.is_integer()
+                     
+                     if str(currency).lower() in ['cash', 'cashback'] or '%' in str(rate):
+                        if '%' in str(rate):
+                            # It's already a string like "3%", strip it to check value or just leave it
+                            # But if it came in as 3.0, we might want to clean it up.
+                            # Assuming rate might be "3.0" or 3.0
+                            clean_val = int(val) if is_int else val
+                            rate_str = f"{clean_val}%"
+                        else:
+                            clean_val = int(val) if is_int else val
+                            rate_str = f"{clean_val}%"
+                     else:
+                        clean_val = int(val) if is_int else val
+                        rate_str = f"{clean_val}x"
+                 except Exception:
+                     # Fallback for non-numeric rates
+                     rate_str = str(rate)
+                 
+                 # Simplified category name
+                 cat = cat.replace('Purchases', '').replace('Select', '').strip()
+                 
+                 display_items.append({'rate': rate_str, 'category': cat})
+                 count += 1
+        
+        card['earning_display'] = display_items
+
     # Calculate match percentages for authenticated users
     if request.user.is_authenticated and user_personality:
         # Get personality preferences
