@@ -234,44 +234,40 @@ class FirestoreService:
             'benefit_expiration': {
                 'enabled': True,
                 'start_days_before': 7,
-                'repeat_frequency': 1 # Run daily once started
+                'repeat_frequency': 1 
             },
             'annual_fee': {
                 'enabled': True,
                 'start_days_before': 30,
-                'repeat_frequency': 7 # Run weekly once started
+                'repeat_frequency': 7
             },
             'blog_updates': {
                 'enabled': False
             }
         }
+        
         if user and 'notification_preferences' in user:
-            # Merge with defaults to ensure structure
             user_prefs = user['notification_preferences']
-            
-            # Deep merge for nested dictionaries
-            for key, default_val in default_prefs.items():
-                if key not in user_prefs:
-                    user_prefs[key] = default_val
-                elif isinstance(default_val, dict) and isinstance(user_prefs[key], dict):
-                    # Ensure all keys in the default dict exist in the user pref dict
-                    for subkey, subval in default_val.items():
-                        if subkey not in user_prefs[key]:
-                            user_prefs[key][subkey] = subval
-                            
-            # Backward compatibility migration (handled on read)
-            # Map old 'frequency' to 'start_days_before' if 'start_days_before' is missing
-            # This is partly handled by the deep merge above if we assume 'frequency' was the only key before
-            # But if 'frequency' exists and 'start_days_before' was just added as default, we might want to respect old 'frequency' as start date?
-            # The prompt implies 'frequency' was "1 week before" etc, so it maps to 'start_days_before'.
-            
-            if 'frequency' in user_prefs.get('benefit_expiration', {}):
-                # If we have the old key but not the new one (or it's default), we can sync them if desired
-                # But treating them as separate concepts now.
-                # Let's trust the defaults for new fields if they didn't exist.
-                pass
+            # Handle case where user_prefs itself might be None or not a dict
+            if not isinstance(user_prefs, dict):
+                 return default_prefs
 
+            # Deep merge with defaults to ensure structure
+            for key, default_val in default_prefs.items():
+                if key not in user_prefs or user_prefs[key] is None:
+                    user_prefs[key] = default_val
+                elif isinstance(default_val, dict):
+                    # Ensure it is a dict
+                    if not isinstance(user_prefs[key], dict):
+                        user_prefs[key] = default_val
+                    else:
+                        # Ensure all subkeys exist
+                        for subkey, subval in default_val.items():
+                            if subkey not in user_prefs[key]:
+                                user_prefs[key][subkey] = subval
+            
             return user_prefs
+            
         return default_prefs
 
     def update_user_notification_preferences(self, uid, preferences):
@@ -280,20 +276,27 @@ class FirestoreService:
             'notification_preferences': preferences
         })
 
-    def send_email_notification(self, to, subject, html_content=None, text_content=None):
+    def send_email_notification(self, to, subject, html_content=None, text_content=None, bcc=None):
         """
         Send an email via the Firebase Trigger Email Extension by writing to the 'mail' collection.
+        Supports single 'to' address and optional list of 'bcc' addresses.
         """
-        if not to:
+        if not to and not bcc:
             return None
             
         email_data = {
-            'to': to,
-            'from': 'notifications@walletfreak.com', # Use generic "Name <email>" if needed, e.g. "WalletFreak <notifications@walletfreak.com>"
+            'to': to if to else [], # Extension might require 'to', often UIDs or emails. If using BCC only, 'to' can be admin or empty list if allowed.
+            'from': 'notifications@walletfreak.com', 
             'message': {
                 'subject': subject,
             }
         }
+        
+        # Ensure 'to' is a list if it's a single string, or handle as extension expects (usually supports string or list)
+        # For BCC, we pass it in the message object or top level depending on extension version.
+        # Standard Firebase Trigger Email extension usually looks at top level 'to', 'cc', 'bcc'.
+        if bcc:
+            email_data['bcc'] = bcc
         
         if html_content:
              email_data['message']['html'] = html_content
@@ -533,15 +536,127 @@ class FirestoreService:
 
     def create_blog(self, data):
         """Create a new blog post"""
-        return self.create_document('blogs', data)
+        # Ensure we have a doc ID (slug) if possible, but create_document handles it if passed as ID or data
+        # data usually contains 'slug'
+        doc_id = data.get('slug')
+        
+        # Trigger notification if published immediately
+        if data.get('status') == 'published':
+             # We need to ensure we don't block the request. 
+             # In production, use a task queue. 
+             # Here, we can use threading similar to the signal, or just let it be sync if acceptable (might slow down publish).
+             # Let's use threading to be safe.
+             import threading
+             threading.Thread(target=self._trigger_blog_notification, args=(data,)).start()
+
+        return self.create_document('blogs', data, doc_id=doc_id)
 
     def update_blog(self, blog_id, data):
         """Update an existing blog post"""
+        # Check if we are publishing
+        # We rely on the caller to set 'published_at' or we can check status transition if we fetched validation.
+        # But 'data' here is the *update* dict.
+        # If 'status' is 'published' in the update dict, we should check if we should notify.
+        # To avoid duplicate emails on every edit of a published post, we should check if 'published_at' is in data (meaning it just got set)
+        # OR if we want to be robust, fetch the current doc.
+        
+        should_notify = False
+        if data.get('status') == 'published':
+            # Option A: Check if 'published_at' is in update data (implies new publish logic from views)
+            if 'published_at' in data:
+                should_notify = True
+            else:
+                 # Option B: Fetch current to be sure? 
+                 # If user manually edits a published post but doesn't change published_at, we don't want to re-notify.
+                 pass
+        
+        if should_notify:
+             # We need full blog data for the email (title, excerpt, slug)
+             # 'data' might be partial. Merge with existing or fetch after update?
+             # Let's fetch the full updated doc *after* the update to be sure we have everything.
+             # Actually, we can just pass 'data' if it has title/slug, but safe to fetch.
+             import threading
+             def notify_after_update():
+                 # Small delay or just fetch (consistency might be eventually consistent but usually fine)
+                 full_blog = self.get_blog_by_id(blog_id)
+                 if full_blog:
+                     self._trigger_blog_notification(full_blog)
+             
+             threading.Thread(target=notify_after_update).start()
+
         self.update_document('blogs', blog_id, data)
 
     def delete_blog(self, blog_id):
         """Delete a blog post"""
         self.delete_document('blogs', blog_id)
+        
+    def _trigger_blog_notification(self, blog_data):
+        """
+        Internal helper to send blog notifications via BCC.
+        """
+        print(f"Starting blog notification for: {blog_data.get('title')}")
+        
+        try:
+            # 1. Fetch all users who have blog_updates enabled
+            users_ref = self.db.collection('users')
+            # Filter in memory for MVP
+            users = users_ref.stream()
+            
+            emails_to_send = []
+            
+            for user_doc in users:
+                user_data = user_doc.to_dict()
+                prefs = user_data.get('notification_preferences', {})
+                email = user_data.get('email')
+                
+                # Check preference (robustly)
+                blog_updates = prefs.get('blog_updates')
+                if blog_updates and isinstance(blog_updates, dict) and blog_updates.get('enabled'):
+                    if email:
+                        emails_to_send.append(email)
+            
+            if not emails_to_send:
+                print("No subscribers found.")
+                return
+
+            print(f"Found {len(emails_to_send)} subscribers.")
+            
+            title = blog_data.get('title', 'New Post')
+            slug = blog_data.get('slug', '')
+            excerpt = blog_data.get('excerpt', '')
+            
+            subject = f"New on WalletFreak: {title}"
+            message = f"""
+Hi there!
+
+We just published a new article on WalletFreak:
+
+{title}
+{excerpt}
+
+Read more here: https://walletfreak.com/blog/{slug}
+
+Cheers,
+The WalletFreak Team
+            """
+            
+            html_message = message.replace('\n', '<br>')
+            
+            # Send one email with BCC
+            try:
+                self.send_email_notification(
+                    to="notifications@walletfreak.com",
+                    bcc=emails_to_send,
+                    subject=subject,
+                    text_content=message,
+                    html_content=html_message
+                )
+                print(f"Sent blog notification to {len(emails_to_send)} subscribers via BCC.")
+            except Exception as e:
+                print(f"Failed to queue blog notification email: {e}")
+                
+        except Exception as e:
+            print(f"Error in blog notification thread: {e}")
 
     def increment_blog_view_count(self, blog_id):
         """Increment the view count for a blog post"""

@@ -325,17 +325,17 @@
     // Store initial state
     const preferences = {
         blog_updates: {
-             enabled: {{ notification_preferences.blog_updates.enabled|yesno:"true,false" }}
+             enabled: {{ notification_preferences.blog_updates.enabled|yesno:"true,false"|default:"false" }}
         },
         benefit_expiration: {
-            enabled: {{ notification_preferences.benefit_expiration.enabled|yesno:"true,false" }},
-            start_days_before: {{ notification_preferences.benefit_expiration.start_days_before }},
-            repeat_frequency: {{ notification_preferences.benefit_expiration.repeat_frequency }}
+            enabled: {{ notification_preferences.benefit_expiration.enabled|yesno:"true,false"|default:"false" }},
+            start_days_before: {{ notification_preferences.benefit_expiration.start_days_before|default:7 }},
+            repeat_frequency: {{ notification_preferences.benefit_expiration.repeat_frequency|default:1 }}
         },
         annual_fee: {
-            enabled: {{ notification_preferences.annual_fee.enabled|yesno:"true,false" }},
-            start_days_before: {{ notification_preferences.annual_fee.start_days_before }},
-            repeat_frequency: {{ notification_preferences.annual_fee.repeat_frequency|default:30 }}
+            enabled: {{ notification_preferences.annual_fee.enabled|yesno:"true,false"|default:"false" }},
+            start_days_before: {{ notification_preferences.annual_fee.start_days_before|default:30 }},
+            repeat_frequency: {{ notification_preferences.annual_fee.repeat_frequency|default:7 }}
         }
     };
 

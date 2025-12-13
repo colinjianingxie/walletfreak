@@ -12,6 +12,11 @@ def send_blog_notification(sender, instance, created, **kwargs):
     Send email notification when a blog post is published.
     """
     if instance.status == 'published':
+        # DEPRECATED: Notification logic moved to core/services.py to support Firestore direct writes.
+        # This signal might still fire for Django Admin writes, but we should avoid duplicate emails if logic is robust.
+        # For now, disabling to prevent duplicates if service is used.
+        pass
+        
         # Check if it was just published (either created as published, or updated to published)
         # For simplicity in this MVP, we'll just check if it's currently published.
         # Ideally we'd track state transition, but since we don't have a 'previous' state easily in post_save without dirty field tracking,
@@ -73,27 +78,20 @@ Cheers,
 The WalletFreak Team
         """
         
-        # Send mass mail (or individual if personalization needed)
-        # Using send_mail in loop for simplicity of error handling per user or send_mass_mail
-        # send_mail(subject, message, from_email, recipient_list) sends to all in list as TO or BCC?
-        # usually TO. We should send individually to hide other emails.
-        
         html_message = message.replace('\n', '<br>')
         
-        count = 0
-        for email in emails_to_send:
-            try:
-                db.send_email_notification(
-                    to=email,
-                    subject=subject,
-                    text_content=message,
-                    html_content=html_message
-                )
-                count += 1
-            except Exception as e:
-                print(f"Failed to queue email to {email}: {e}")
-                
-        print(f"Sent {count} blog notifications.")
-        
+        # Send one email with BCC
+        try:
+            db.send_email_notification(
+                to="notifications@walletfreak.com",
+                bcc=emails_to_send,
+                subject=subject,
+                text_content=message,
+                html_content=html_message
+            )
+            print(f"Sent blog notification to {len(emails_to_send)} subscribers via BCC.")
+        except Exception as e:
+            print(f"Failed to queue blog notification email: {e}")
+            
     except Exception as e:
         print(f"Error in blog notification thread: {e}")
