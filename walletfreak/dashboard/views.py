@@ -8,6 +8,8 @@ from calendar import monthrange
 import json
 
 
+from cards.templatetags.card_extras import resolve_card_image_url
+
 @login_required
 def dashboard(request):
     """Main dashboard view showing user's cards and personality"""
@@ -60,7 +62,10 @@ def dashboard(request):
         'welcome_offer': card.get('welcome_offer', ''),
         'signup_bonus': card.get('signup_bonus', ''),
         'welcome_requirement': card.get('welcome_requirement', ''),
-        'annual_fee': card.get('annual_fee', 0)
+        'annual_fee': card.get('annual_fee', 0),
+        'image_url': resolve_card_image_url(card['id']) if 'id' in card else '',
+        'earning_rates': card.get('earning_rates', []),
+        'earning': card.get('earning', []),
     } for card in available_cards], default=str)
     
     # Calculate benefits and values

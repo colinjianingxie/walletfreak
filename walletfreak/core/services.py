@@ -224,7 +224,42 @@ class FirestoreService:
         # 1. Update user profile
         self.db.collection('users').document(uid).set({'username': username}, merge=True)
         
-        # 2. No need to propagate to blogs anymore as we fetch dynamically
+
+    def update_user_avatar(self, uid, photo_url):
+        """Update user avatar in Firestore"""
+        self.db.collection('users').document(uid).update({'photo_url': photo_url})
+
+    def determine_best_fit_personality(self, user_cards):
+        """
+        Determines the best personality fit based on user's active cards.
+        user_cards: list of card objects (dicts containing at least 'card_id')
+        """
+        personalities = self.get_personalities()
+        if not personalities:
+            return None
+            
+        user_card_slugs = set(card.get('card_id') for card in user_cards)
+        
+        best_fit = None
+        max_overlap = -1
+        
+        for personality in personalities:
+            # Flatten all cards in all slots for this personality
+            personality_cards = set()
+            for slot in personality.get('slots', []):
+                personality_cards.update(slot.get('cards', []))
+            
+            # Calculate overlap
+            overlap = len(user_card_slugs.intersection(personality_cards))
+            
+            if overlap > max_overlap:
+                max_overlap = overlap
+                best_fit = personality
+            elif overlap == max_overlap and best_fit is None:
+                 # Default to first one if tie and no best fit yet
+                 best_fit = personality
+                 
+        return best_fit
 
 
     def get_user_notification_preferences(self, uid):

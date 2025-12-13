@@ -15,7 +15,7 @@
         <div class="nav-links desktop-only" id="nav-links">
             <div class="nav-items">
                 {% if user.is_authenticated %}
-                <a href="{% url 'dashboard' %}" data-nav="dashboard">Dashboard</a>
+                <a href="{% url 'dashboard' %}" data-nav="wallet">Wallet</a>
                 {% else %}
                 <a href="{% url 'features' %}" data-nav="features">Features</a>
                 {% endif %}
@@ -116,11 +116,11 @@
                 </button>
             </div>
 
-            <a href="{% url 'dashboard' %}" class="mobile-menu-item" data-nav="dashboard">
+            <a href="{% url 'dashboard' %}" class="mobile-menu-item" data-nav="wallet">
                 <div class="mobile-menu-icon">
-                    <span class="material-icons">dashboard</span>
+                    <span class="material-icons">account_balance_wallet</span>
                 </div>
-                <span class="mobile-menu-text">Dashboard</span>
+                <span class="mobile-menu-text">Wallet</span>
                 <span class="mobile-menu-indicator"></span>
             </a>
 
@@ -214,7 +214,7 @@
 
             // Determine which navigation item should be active based on current path
             if (currentPath === '/' || currentPath.startsWith('/dashboard')) {
-                activeNav = 'dashboard';
+                activeNav = 'wallet';
             } else if (currentPath.startsWith('/features')) {
                 activeNav = 'features';
             } else if (currentPath.startsWith('/cards') || currentPath.startsWith('/explore')) {
@@ -254,7 +254,7 @@
                     const icon = item.querySelector('.mobile-menu-icon');
                     if (icon) {
                         switch(activeNav) {
-                            case 'dashboard':
+                            case 'wallet':
                                 icon.style.background = '#2563EB';
                                 icon.style.color = 'white';
                                 break;

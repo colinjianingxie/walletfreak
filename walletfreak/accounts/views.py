@@ -151,12 +151,22 @@ def profile(request):
                 if benefit.get('dollar_value'):
                     total_value += benefit.get('dollar_value', 0)
     
+
+    utilization = 68  # Placeholder
+    
+    personalities = db.get_personalities()
+    
+    # Determine best fit personality
+    matched_personality = db.determine_best_fit_personality(active_cards)
+    
     context = {
         'user_profile': user_profile,
         'cards_count': cards_count,
         'total_value': total_value,
-        'score': 740,  # Placeholder - would calculate based on actual data
-        'utilization': 68,  # Placeholder - would calculate from actual usage
+        'score': 740,
+        'utilization': utilization,
+        'personalities': personalities,
+        'matched_personality': matched_personality,
     }
     return render(request, 'accounts/profile.html', context)
 
@@ -232,6 +242,17 @@ def ajax_sync_profile(request):
                 db.update_user_username(uid, username)
             except ValueError as e:
                 return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+                
+        # Handle Avatar Update
+        if 'avatar_slug' in data:
+            avatar_slug = data.get('avatar_slug')
+            if avatar_slug:
+                photo_url = f"/static/images/personalities/{avatar_slug}.png"
+                try:
+                    db.update_user_avatar(uid, photo_url)
+                except Exception as e:
+                     return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
         
         return JsonResponse({'status': 'success'})
     except Exception as e:

@@ -11,8 +11,20 @@
     style="background: white; border-radius: var(--radius-lg); padding: 3rem; border: 1px solid #E5E7EB; box-shadow: var(--elevation-1); margin-bottom: 2.5rem;">
     <div style="display: flex; align-items: center; gap: 2.5rem; margin-bottom: 3rem; flex-wrap: wrap;">
         <!-- Avatar -->
-        <div class="avatar avatar-large avatar-glow" style="flex-shrink: 0;">
-            ✈️
+        <div style="position: relative; cursor: pointer;" onclick="openAvatarModal()">
+            <div class="avatar avatar-large avatar-glow" style="flex-shrink: 0; width: 100px; height: 100px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--bg-subtle);">
+                {% if user_profile.photo_url %}
+                    <img src="{{ user_profile.photo_url }}" alt="Profile" style="width: 100%; height: 100%; object-fit: cover;" id="profile-avatar-display">
+                {% else %}
+                    <div style="font-size: 2.5rem;" id="profile-avatar-placeholder">
+                        {{ user.first_name|first|default:user.username|first|upper|default:"✈️" }}
+                    </div>
+                {% endif %}
+            </div>
+            <!-- Edit Overlay -->
+            <div style="position: absolute; bottom: 0; right: 0; background: var(--primary); color: white; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: var(--elevation-2); border: 2px solid white;">
+                <span class="material-icons" style="font-size: 18px;">edit</span>
+            </div>
         </div>
 
         <!-- User Info -->
@@ -20,21 +32,22 @@
             <h2 style="font-size: 2rem; font-weight: 700; margin: 0 0 0.5rem 0;">
                 {{ user.first_name|default:"User" }} {{ user.last_name|default:"" }}
             </h2>
-            <div class="badge badge-purple" style="font-size: 0.9rem; padding: 0.5rem 1rem; margin-bottom: 1.5rem;">
-                The Jetsetter
+            <div class="badge badge-purple" style="font-size: 0.9rem; padding: 0.5rem 1rem; margin-bottom: 1.5rem; display: inline-flex; align-items: center; gap: 0.5rem;">
+                <span class="material-icons" style="font-size: 16px;">psychology</span>
+                {{ matched_personality.name|default:"Wallet Freak"|upper }}
             </div>
 
             <div style="display: flex; flex-direction: column; gap: 0.75rem;">
                 <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-muted);">
-                    <span style="font-size: 1.25rem;">📧</span>
+                    <span class="material-icons" style="font-size: 1.25rem; color: var(--text-muted);">email</span>
                     <span>{{ user.email }}</span>
                 </div>
                 <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-muted);">
-                    <span style="font-size: 1.25rem;">📍</span>
+                    <span class="material-icons" style="font-size: 1.25rem; color: var(--text-muted);">place</span>
                     <span>{{ user_profile.location|default:"New York, NY" }}</span>
                 </div>
                 <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-muted);">
-                    <span style="font-size: 1.25rem;">📅</span>
+                    <span class="material-icons" style="font-size: 1.25rem; color: var(--text-muted);">calendar_today</span>
                     <span>Joined {{ user.date_joined|date:"M Y" }}</span>
                 </div>
             </div>
@@ -73,6 +86,37 @@
     </div>
 </div>
 
+    <!-- Avatar Selection Modal -->
+    <div id="avatar-modal" class="modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center;">
+        <div style="background: white; padding: 2rem; border-radius: var(--radius-lg); width: 100%; max-width: 800px; max-height: 90vh; overflow-y: auto; box-shadow: var(--elevation-3);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h3 style="margin: 0; font-size: 1.5rem; font-weight: 700;">Select Avatar</h3>
+                <button class="btn btn-ghost" onclick="closeAvatarModal()" style="padding: 0.5rem;">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                {% for p in personalities %}
+                <div class="avatar-option" onclick="selectAvatar('{{ p.slug }}')" style="cursor: pointer; border-radius: var(--radius-md); padding: 0.5rem; border: 2px solid transparent; transition: all 0.2s; position: relative;" id="avatar-option-{{ p.slug }}">
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 50%; overflow: hidden; margin-bottom: 0.5rem; background: #f3f4f6;">
+                        <img src="/static/images/personalities/{{ p.slug }}.png" alt="{{ p.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div style="text-align: center; font-size: 0.8rem; font-weight: 500; line-height: 1.2;">{{ p.name }}</div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 1rem; border-top: 1px solid #e5e7eb; padding-top: 1.5rem;">
+                <button class="btn btn-ghost" onclick="closeAvatarModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveAvatar()" id="btn-save-avatar" disabled>Save Selection</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" style="position: fixed; bottom: 2rem; right: 2rem; z-index: 1000; display: flex; flex-direction: column; gap: 1rem; pointer-events: none;"></div>
+
 <style>
     @media (max-width: 768px) {
         div[style*="display: flex"][style*="gap: 2.5rem"] {
@@ -80,5 +124,175 @@
             align-items: flex-start !important;
         }
     }
+    
+    /* Loader Spinner */
+    .loader {
+        border: 2px solid rgba(255,255,255,0.3);
+        border-radius: 50%;
+        border-top: 2px solid white;
+        width: 16px;
+        height: 16px;
+        animation: spin 1s linear infinite;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 0.5rem;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    /* Toast Styles */
+    .toast {
+        background: white;
+        border-radius: var(--radius-md);
+        box-shadow: var(--elevation-3);
+        padding: 1rem 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        pointer-events: auto;
+        min-width: 300px;
+        transform-origin: bottom right;
+        border-left: 4px solid var(--primary);
+    }
+    .toast.error { border-left-color: #EF4444; }
+    .toast.success { border-left-color: #10B981; }
+    .toast-icon {
+        display: flex; align-items: center; justify-content: center;
+        border-radius: 50%; width: 24px; height: 24px;
+        background: rgba(16, 185, 129, 0.1); color: #10B981;
+    }
+    .toast.error .toast-icon { background: rgba(239, 68, 68, 0.1); color: #EF4444; }
+    .toast-content { color: var(--dark); font-size: 0.95rem; font-weight: 500; }
+    
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateY(20px) scale(0.9); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes fadeOut {
+        from { opacity: 1; transform: scale(1); }
+        to { opacity: 0; transform: scale(0.9); }
+    }
 </style>
+
+<script>
+    // --- Toast Notification ---
+    function showToast(message, type = 'success') {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        
+        const icon = type === 'success' ? 'check' : 'error_outline';
+        
+        toast.innerHTML = `
+            <div class="toast-icon">
+                <span class="material-icons" style="font-size: 16px;">${icon}</span>
+            </div>
+            <div class="toast-content">${message}</div>
+        `;
+        
+        container.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.style.animation = 'fadeOut 0.3s forwards';
+            setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 300);
+        }, 3000);
+    }
+
+    // --- Avatar Selection ---
+    const avatarModal = document.getElementById('avatar-modal');
+    let selectedAvatarSlug = null;
+
+    function openAvatarModal() {
+        avatarModal.style.display = 'flex';
+        // Reset selection visual
+        document.querySelectorAll('.avatar-option').forEach(el => {
+            el.style.borderColor = 'transparent';
+            el.style.backgroundColor = 'transparent';
+        });
+        document.getElementById('btn-save-avatar').disabled = true;
+        selectedAvatarSlug = null;
+    }
+
+    function closeAvatarModal() {
+        avatarModal.style.display = 'none';
+    }
+
+    // Close on outside click
+    avatarModal.addEventListener('click', (e) => {
+        if (e.target === avatarModal) closeAvatarModal();
+    });
+
+    function selectAvatar(slug) {
+        selectedAvatarSlug = slug;
+        
+        // Update UI
+        document.querySelectorAll('.avatar-option').forEach(el => {
+            el.style.borderColor = 'transparent';
+            el.style.backgroundColor = 'transparent';
+        });
+        
+        // Highlight selection
+        const selectedEl = document.getElementById(`avatar-option-${slug}`);
+        if (selectedEl) {
+            selectedEl.style.borderColor = 'var(--primary)';
+            selectedEl.style.backgroundColor = 'rgba(16, 185, 129, 0.05)';
+        }
+        
+        document.getElementById('btn-save-avatar').disabled = false;
+    }
+
+    async function saveAvatar() {
+        if (!selectedAvatarSlug) return;
+
+        const btn = document.getElementById('btn-save-avatar');
+        const originalText = btn.innerText;
+        btn.innerHTML = '<span class="loader"></span> Saving...';
+        btn.disabled = true;
+
+        try {
+            const response = await fetch('{% url "sync_profile" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ avatar_slug: selectedAvatarSlug })
+            });
+            
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                showToast('Profile picture updated successfully!');
+                
+                // Update preview
+                const currentImg = document.getElementById('profile-avatar-display');
+                const placeholder = document.getElementById('profile-avatar-placeholder');
+                const newSrc = `/static/images/personalities/${selectedAvatarSlug}.png`;
+                
+                if (currentImg) {
+                    currentImg.src = newSrc;
+                } else if (placeholder) {
+                     // Replace placeholder with image
+                     const container = placeholder.parentElement;
+                     container.innerHTML = `<img src="${newSrc}" alt="Profile" style="width: 100%; height: 100%; object-fit: cover;" id="profile-avatar-display">`;
+                }
+                
+                closeAvatarModal();
+            } else {
+                throw new Error(data.message || 'Failed to update avatar');
+            }
+
+        } catch (error) {
+            console.error('Error updating avatar:', error);
+            showToast(error.message, 'error');
+        } finally {
+            btn.innerText = originalText;
+            btn.disabled = false;
+        }
+    }
+</script>
 {% endblock %}

@@ -1,9 +1,59 @@
 {% extends 'auth_base.html' %}
 {% load static %}
+{% load card_extras %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
 <link rel="stylesheet" href="{% static 'css/mobile_modal.css' %}">
+<style>
+/* Loader */
+#global-loader {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.spinner {
+    width: 50px; height: 50px;
+    border: 5px solid #E2E8F0;
+    border-top-color: #6366F1;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* Toast */
+#toast-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.toast {
+    background: #10B981;
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    display: flex; align-items: center; gap: 0.75rem;
+    animation: slideIn 0.3s ease-out;
+    min-width: 300px;
+    font-weight: 500;
+}
+.toast.error { background: #EF4444; }
+@keyframes slideIn {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+</style>
 {% endblock %}
 
 {% block extra_js %}
@@ -151,9 +201,7 @@
             <!-- Card Header -->
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
                 <div style="display: flex; gap: 1rem;">
-                    <div style="width: 48px; height: 32px; background: #94A3B8; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.7rem; font-weight: 700;">
-                        {% if 'platinum' in benefit.card_name|lower %}PLATINUM{% elif 'gold' in benefit.card_name|lower %}GOLD{% elif 'sapphire' in benefit.card_name|lower %}SAPPHIRE{% else %}CARD{% endif %}
-                    </div>
+                    <img src="{% get_card_image_url benefit.card_id %}" style="width: 48px; height: auto; object-fit: contain; border-radius: 4px;" alt="{{ benefit.card_name }}">
                     <div>
                         <h3 style="font-size: 1.125rem; font-weight: 700; margin: 0 0 0.25rem 0; color: #1F2937;">{{ benefit.benefit_name }}</h3>
                         <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em; text-transform: uppercase;">
@@ -257,9 +305,7 @@
             <!-- Card Header -->
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
                 <div style="display: flex; gap: 1rem;">
-                    <div style="width: 48px; height: 32px; background: #CBD5E1; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.7rem; font-weight: 700;">
-                        {% if 'platinum' in benefit.card_name|lower %}PLATINUM{% elif 'gold' in benefit.card_name|lower %}GOLD{% elif 'sapphire' in benefit.card_name|lower %}SAPPHIRE{% else %}CARD{% endif %}
-                    </div>
+                    <img src="{% get_card_image_url benefit.card_id %}" style="width: 48px; height: auto; object-fit: contain; border-radius: 4px;" alt="{{ benefit.card_name }}">
                     <div>
                         <h3 style="font-size: 1.125rem; font-weight: 700; margin: 0 0 0.25rem 0; color: #1F2937;">{{ benefit.benefit_name }}</h3>
                         <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em; text-transform: uppercase;">
@@ -398,21 +444,19 @@
                 <div style="padding: 1.5rem; background: white; flex: 1; overflow-y: auto;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                         <h2 style="font-size: 1.5rem; font-weight: 700; color: #1F2937; margin: 0;">Active Cards</h2>
-                        <button onclick="showMobileAddNewScreen()" style="background: none; border: none; color: #6366F1; font-weight: 600; font-size: 1rem; cursor: pointer;">
-                            + Add Another
-                        </button>
+
                     </div>
                     
                     <!-- Active Cards List -->
                     {% if active_cards %}
                         {% for card in active_cards %}
                         <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: white; border: 1px solid #E5E7EB; border-radius: 12px; margin-bottom: 0.75rem;">
-                            <div style="width: 60px; height: 40px; background: {% if 'chase' in card.name|lower %}#117ACA{% elif 'amex' in card.name|lower or 'american express' in card.name|lower %}#2563EB{% elif 'capital' in card.name|lower %}#0F172A{% else %}#CBD5E1{% endif %}; border-radius: 6px;"></div>
+<img src="{% get_card_image_url card.card_id %}" style="width: 60px; height: auto; object-fit: contain; border-radius: 4px;" alt="{{ card.name }}">
                             <div style="flex: 1;">
                                 <div style="font-weight: 700; color: #1F2937; font-size: 1rem; margin-bottom: 0.25rem;">{{ card.name }}</div>
                                 <div style="color: #64748B; font-size: 0.875rem;">•••• {{ card.last4|default:"****" }}</div>
                             </div>
-                            <form method="POST" action="{% url 'remove_card' card.id %}" style="margin: 0;" onsubmit="return confirm('Remove this card from your wallet?');">
+                            <form method="POST" action="{% url 'remove_card' card.id %}" style="margin: 0;" onsubmit="return openRemoveCardModal(event, this, '{{ card.name|escapejs }}');">
                                 {% csrf_token %}
                                 <button type="submit" style="background: none; border: none; color: #CBD5E1; cursor: pointer; padding: 0.5rem;">
                                     <span class="material-icons" style="font-size: 1.5rem;">delete_outline</span>
@@ -497,14 +541,14 @@
                 
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                     <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0; color: #1F2937;">Active Cards</h3>
-                    <button onclick="switchTab('add')" style="color: #6366F1; font-weight: 700; background: none; border: none; cursor: pointer; font-size: 0.9rem;">+ Add Another</button>
+
                 </div>
                 
                 <div style="flex: 1; overflow-y: auto;">
                     {% if active_cards %}
                         {% for card in active_cards %}
                         <div style="display: flex; align-items: center; padding: 1.25rem; border: 1px solid #F3F4F6; border-radius: 16px; margin-bottom: 1rem; background: white; transition: all 0.2s;">
-                            <div style="width: 60px; height: 40px; background: {% if 'chase' in card.name|lower %}#117ACA{% elif 'amex' in card.name|lower or 'american express' in card.name|lower %}#2563EB{% elif 'capital' in card.name|lower %}#0F172A{% else %}#CBD5E1{% endif %}; border-radius: 6px; margin-right: 1.25rem;"></div>
+                            <img src="{% get_card_image_url card.card_id %}" style="width: 60px; height: auto; object-fit: contain; border-radius: 4px; margin-right: 1.25rem;" alt="{{ card.name }}">
                             
                             <div>
                                 <div style="font-weight: 700; color: #1F2937; font-size: 1rem;">{{ card.name }}</div>
@@ -514,7 +558,7 @@
                             <div style="margin-left: auto; display: flex; align-items: center; gap: 1rem;">
                                 <span style="background: #DCFCE7; color: #16A34A; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 99px;">Active</span>
                                 
-                                <form method="POST" action="{% url 'remove_card' card.id %}" style="margin: 0;" onsubmit="return confirm('Remove this card from your wallet?');">
+                                <form method="POST" action="{% url 'remove_card' card.id %}" style="margin: 0;" onsubmit="return openRemoveCardModal(event, this, '{{ card.name|escapejs }}');">
                                     {% csrf_token %}
                                     <button type="submit" class="btn-delete-card" style="background: none; border: none; cursor: pointer; color: #E2E8F0; padding: 0.5rem; transition: color 0.2s;" onmouseover="this.style.color='#EF4444'" onmouseout="this.style.color='#E2E8F0'" title="Remove Card">
                                         <span class="material-icons" style="font-size: 20px;">delete_outline</span>
@@ -738,4 +782,25 @@
     const availableCards = {{ available_cards_json|safe }};
 
 </script>
+<!-- Remove Card Modal -->
+<div id="remove-card-modal" class="modal" style="display: none; align-items: center; justify-content: center; z-index: 10001; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5);">
+    <div class="modal-content" style="width: 90% !important; max-width: 400px !important; height: auto !important; background: white; padding: 1.5rem; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; margin: auto;">
+        <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin: 0; color: #EF4444;">Remove Card?</h3>
+            <button class="modal-close" onclick="closeRemoveCardModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #94A3B8;">×</button>
+        </div>
+        <p style="color: #475569; margin-bottom: 1.5rem; font-size: 1rem; line-height: 1.5;">Are you sure you want to remove <strong id="remove-card-name" style="color: #1F2937;">this card</strong> from your wallet?</p>
+        <div style="display: flex; gap: 0.75rem;">
+            <button onclick="closeRemoveCardModal()" style="flex: 1; background: #F3F4F6; color: #64748B; border: none; padding: 0.875rem; border-radius: 10px; font-weight: 600; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#E5E7EB'" onmouseout="this.style.background='#F3F4F6'">Cancel</button>
+            <button onclick="confirmRemoveCard()" style="flex: 1; background: #EF4444; color: white; border: none; padding: 0.875rem; border-radius: 10px; font-weight: 600; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#DC2626'" onmouseout="this.style.background='#EF4444'">Remove</button>
+        </div>
+    </div>
+</div>
+
+<!-- Loader & Toast -->
+<div id="global-loader">
+    <div class="spinner"></div>
+    <div style="margin-top: 1rem; font-weight: 600; color: #475569;">Processing...</div>
+</div>
+<div id="toast-container"></div>
 {% endblock %}

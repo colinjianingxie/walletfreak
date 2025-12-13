@@ -287,20 +287,8 @@ function showMobileCardDetail(card) {
 
             <!-- Card Visual -->
             <div style="padding: 0 1.5rem; margin-bottom: 2rem;">
-                <div style="width: 100%; max-width: 100%; margin: 0; border-radius: 16px; background: ${cardBackground}; padding: 1.25rem; color: white; box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25);">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
-                        <div style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.9;">${card.issuer.toUpperCase()}</div>
-                        <span class="material-icons" style="font-size: 28px; opacity: 0.8;">contactless</span>
-                    </div>
-                    <div style="width: 50px; height: 35px; background: linear-gradient(135deg, #F4D03F, #C9A02C); border-radius: 6px; margin-bottom: 1rem;"></div>
-                    <div style="font-size: 1.25rem; letter-spacing: 0.1em; margin-bottom: 1rem; font-weight: 500;">•••• •••• •••• 4242</div>
-                    <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-                        <div style="font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase;">YOUR NAME</div>
-                        <div style="display: flex; gap: 2px;">
-                            <div style="width: 20px; height: 20px; background: #EB001B; border-radius: 50%; opacity: 0.9;"></div>
-                            <div style="width: 20px; height: 20px; background: #F79E1B; border-radius: 50%; margin-left: -8px; opacity: 0.9;"></div>
-                        </div>
-                    </div>
+                <div style="width: 100%; max-width: 100%; margin: 0; padding: 1rem 0; text-align: center;">
+                   <img src="${card.image_url || '/static/images/card_placeholder.png'}" style="width: 100%; max-width: 320px; height: auto; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.15);" alt="${card.name}">
                 </div>
             </div>
 
@@ -654,7 +642,9 @@ function renderCardResults(cards) {
 function selectCardForPreview(card, element) {
     // Highlight selection
     document.querySelectorAll('.card-result-item').forEach(el => el.classList.remove('selected'));
-    element.classList.add('selected');
+    if (element) {
+        element.classList.add('selected');
+    }
 
     selectedAddCard = card;
 
@@ -663,132 +653,165 @@ function selectCardForPreview(card, element) {
     document.getElementById('card-preview-content').style.display = 'block';
 
     // Visual
+    // Visual
     const visual = document.getElementById('preview-card-visual');
-    if (card.name.toLowerCase().includes('chase')) {
-        visual.style.background = 'linear-gradient(135deg, #117ACA 0%, #005EB8 100%)';
-    } else if (card.name.toLowerCase().includes('amex') || card.name.toLowerCase().includes('american express')) {
-        visual.style.background = 'linear-gradient(135deg, #2563EB 0%, #1E40AF 100%)';
-    } else if (card.name.toLowerCase().includes('capital')) {
-        visual.style.background = 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)';
-    } else {
-        visual.style.background = 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)';
-    }
+    visual.innerHTML = ''; // Clear previous content
+    visual.style.background = 'transparent';
+    visual.style.padding = '0';
+    visual.style.boxShadow = 'none';
 
-    document.getElementById('preview-issuer').innerText = card.issuer.toUpperCase();
+    // Create image
+    const img = document.createElement('img');
+    img.src = card.image_url || '/static/images/card_placeholder.png'; // Fallback
+    img.style.width = '100%';
+    img.style.height = 'auto';
+    img.style.borderRadius = '12px';
+    img.style.boxShadow = '0 8px 24px rgba(0,0,0,0.15)';
+    img.alt = card.name;
+
+    visual.appendChild(img);
+
+    // document.getElementById('preview-issuer').innerText = card.issuer.toUpperCase();
 
     // Render Earning Rates
     const earningContainer = document.getElementById('preview-earning-rates');
-    earningContainer.innerHTML = '';
+    if (earningContainer) {
+        try {
+            earningContainer.innerHTML = '';
 
-    // Support multiple field names for earning rates (same as card modal)
-    // Also check benefits for Multiplier and Cashback type items
-    let earning = card.earning_rates || card.earning || card.rewards_structure || [];
+            let earning = card.earning_rates || card.earning || card.rewards_structure || [];
+            if (!Array.isArray(earning)) earning = [];
 
-    // If no earning rates found, extract from benefits with benefit_type "Multiplier" or "Cashback"
-    if (!earning || earning.length === 0) {
-        const benefits = card.benefits || [];
-        earning = benefits.filter(b => b.benefit_type === 'Multiplier' || b.benefit_type === 'Cashback').map(b => ({
-            category: b.short_description || b.name || b.title || b.description,
-            rate: b.numeric_value || b.value || b.multiplier,
-            currency: b.benefit_type === 'Cashback' ? 'cash' : (b.currency || 'points'),
-            details: b.description || b.long_description || b.additional_details
-        }));
-    }
-
-    if (Array.isArray(earning) && earning.length > 0) {
-        earning.forEach((item, index) => {
-            // Support different field structures (same as card modal)
-            const cat = item.category || item.cat || item.description || 'Category';
-            const rate = item.rate || item.mult || item.multiplier || item.value || 0;
-            const currency = item.currency || 'points';
-
-            // Format multiplier display (e.g., "10x", "5x", "2%")
-            let mult;
-            if (currency.toLowerCase().includes('cash') || currency.toLowerCase().includes('%')) {
-                mult = `${rate}%`;
-            } else {
-                mult = `${rate}x`;
-            }
-
-            // Build details text similar to card modal logic
-            let details = item.details || item.description_long || item.additional_details || '';
-            if (!details) {
-                if (currency.toLowerCase().includes('cash')) {
-                    details = `Earn ${rate}% cash back on ${cat.toLowerCase()}.`;
-                } else {
-                    details = `Earn ${rate}x ${currency} on ${cat.toLowerCase()}.`;
+            // Fallback to benefits
+            if (earning.length === 0) {
+                const benefits = card.benefits || [];
+                if (Array.isArray(benefits)) {
+                    earning = benefits.filter(b => b && (b.benefit_type === 'Multiplier' || b.benefit_type === 'Cashback')).map(b => ({
+                        category: b.short_description || b.name || b.title || b.description,
+                        rate: b.numeric_value || b.value || b.multiplier,
+                        currency: b.benefit_type === 'Cashback' ? 'cash' : (b.currency || 'points'),
+                        details: b.description || b.long_description || b.additional_details
+                    }));
                 }
             }
 
-            const uniqueId = `desktop-earning-${card.id}-${index}`;
+            // Filter invalid items
+            earning = earning.filter(item => item);
 
-            earningContainer.innerHTML += `
-                <div onclick="toggleMobileDetail('${uniqueId}')" style="cursor: pointer;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.875rem 0; border-bottom: 1px solid #F3F4F6;">
-                        <div style="font-weight: 500; color: #1F2937; font-size: 0.95rem;">${cat}</div>
-                        <div style="display: flex; align-items: center; gap: 0.75rem;">
-                            <div style="color: #6366F1; font-weight: 700; font-size: 0.95rem;">${mult}</div>
-                            <span id="icon-${uniqueId}" class="material-icons" style="font-size: 18px; color: #D1D5DB; transition: transform 0.2s;">chevron_right</span>
-                        </div>
-                    </div>
-                    <div id="${uniqueId}" style="display: none; padding: 0 0 1rem 0; color: #64748B; font-size: 0.9rem; line-height: 1.5; border-bottom: 1px solid #F3F4F6;">
-                        ${details}
-                    </div>
-                </div>
-            `;
-        });
-    } else {
-        earningContainer.innerHTML = '<div style="color: #9CA3AF; font-size: 0.9rem; text-align: center; padding: 1rem;">No earning rates available</div>';
+            if (earning.length > 0) {
+                earning.sort((a, b) => {
+                    const rateA = parseFloat(a.rate || a.value || 0);
+                    const rateB = parseFloat(b.rate || b.value || 0);
+                    return rateB - rateA;
+                });
+
+                earning.forEach(item => {
+                    const cat = item.category || item.cat || item.description || 'Category';
+                    const rate = parseFloat(item.rate || item.value || 0);
+                    const currency = item.currency || 'points';
+
+                    let displayRate;
+                    if ((currency && String(currency).toLowerCase().includes('cash')) || (item.benefit_type === 'Cashback')) {
+                        displayRate = `${rate}%`;
+                    } else {
+                        displayRate = `${rate}x`;
+                    }
+
+                    const row = document.createElement('div');
+                    row.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; font-size: 0.875rem;';
+                    row.innerHTML = `
+                        <div style="color: #475569; font-weight: 500;">${cat}</div>
+                        <div style="font-weight: 700; color: #0F172A; background: #E0E7FF; color: #4338CA; padding: 0.125rem 0.5rem; border-radius: 4px;">${displayRate}</div>
+                    `;
+                    earningContainer.appendChild(row);
+                });
+            } else {
+                earningContainer.innerHTML = '<div style="color: #94A3B8; font-size: 0.875rem; font-style: italic;">No earning rates details available.</div>';
+            }
+        } catch (e) {
+            console.error('Error rendering earning rates:', e);
+            earningContainer.innerHTML = '<div style="color: #EF4444; font-size: 0.875rem;">Error displaying rates</div>';
+        }
     }
 
     // Render Credits
     const creditsContainer = document.getElementById('preview-credits');
-    creditsContainer.innerHTML = '';
+    if (creditsContainer) {
+        try {
+            creditsContainer.innerHTML = '';
 
-    // Filter out benefits with benefit_type "Multiplier" or "Cashback" (same as card modal)
-    const benefits = card.benefits || [];
-    const filteredBenefits = benefits.filter(b => b.benefit_type !== 'Multiplier' && b.benefit_type !== 'Cashback');
-
-    if (Array.isArray(filteredBenefits) && filteredBenefits.length > 0) {
-        filteredBenefits.forEach((benefit, index) => {
-            // Use the correct field names from database (same as card modal)
-            const name = benefit.short_description || benefit.name || benefit.title || 'Unnamed Benefit';
-            const value = benefit.numeric_value || benefit.value || benefit.amount || benefit.dollar_value;
-            let description = benefit.long_description || benefit.description || '';
-            if (benefit.additional_details) {
-                description += (description ? '<br><br>' : '') + benefit.additional_details;
-            }
-            if (!description) description = 'No additional details available.';
-
-            // Format value with proper display
-            let valueDisplay = String(value);
-            if (value && (typeof value === 'number' || !isNaN(parseFloat(value)))) {
-                if (!valueDisplay.includes('$')) {
-                    valueDisplay = '$' + valueDisplay;
-                }
-            } else if (!value || valueDisplay.toLowerCase() === 'included') {
-                valueDisplay = 'Included';
+            const benefits = card.benefits || [];
+            let filteredBenefits = [];
+            if (Array.isArray(benefits)) {
+                filteredBenefits = benefits.filter(b => b && b.benefit_type !== 'Multiplier' && b.benefit_type !== 'Cashback');
             }
 
-            const uniqueId = `desktop-benefit-${card.id}-${index}`;
+            // Prioritize explicit credits list if available
+            let credits = card.credits;
+            if (Array.isArray(credits) && credits.length > 0) {
+                // Use credits if available
+                filteredBenefits = credits;
+            }
 
-            creditsContainer.innerHTML += `
-                <div onclick="toggleMobileDetail('${uniqueId}')" style="cursor: pointer;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.875rem 0; border-bottom: 1px solid #F3F4F6;">
-                        <div style="font-weight: 500; color: #1F2937; font-size: 0.95rem;">${name}</div>
-                        <div style="display: flex; align-items: center; gap: 0.75rem;">
-                            <div style="color: #6366F1; font-weight: 700; font-size: 0.95rem;">${valueDisplay}</div>
-                            <span id="icon-${uniqueId}" class="material-icons" style="font-size: 18px; color: #D1D5DB; transition: transform 0.2s;">chevron_right</span>
-                        </div>
-                    </div>
-                    <div id="${uniqueId}" style="display: none; padding: 0 0 1rem 0; color: #64748B; font-size: 0.9rem; line-height: 1.5; border-bottom: 1px solid #F3F4F6;">
-                        ${description}
-                    </div>
-                </div>
-            `;
-        });
-    } else {
-        creditsContainer.innerHTML = '<div style="color: #9CA3AF; font-size: 0.9rem; text-align: center; padding: 1rem;">No credits available</div>';
+            if (filteredBenefits.length > 0) {
+                filteredBenefits.forEach((benefit, index) => {
+                    if (!benefit) return;
+
+                    const name = benefit.short_description || benefit.name || benefit.title || 'Benefit';
+                    const value = benefit.numeric_value || benefit.value || benefit.amount || benefit.dollar_value;
+                    let description = benefit.long_description || benefit.description || '';
+                    if (benefit.additional_details) {
+                        description += (description ? '<br><br>' : '') + benefit.additional_details;
+                    }
+
+                    let valueDisplay = String(value);
+                    let shouldShow = false;
+
+                    if (value && (typeof value === 'number' || !isNaN(parseFloat(value)))) {
+                        if (!valueDisplay.includes('$')) valueDisplay = '$' + valueDisplay;
+                        shouldShow = true;
+                    } else if (String(value).toLowerCase() === 'included') {
+                        valueDisplay = 'Included';
+                        shouldShow = true;
+                    }
+
+                    // Always show if it's explicitly in 'credits' list, otherwise check value
+                    if (shouldShow) {
+                        const uniqueId = `preview-credit-${card.id}-${index}`;
+
+                        const row = document.createElement('div');
+                        row.onclick = () => {
+                            const descEl = document.getElementById(uniqueId);
+                            if (descEl) descEl.style.display = descEl.style.display === 'none' ? 'block' : 'none';
+                            const icon = document.getElementById(`icon-${uniqueId}`);
+                            if (icon) icon.style.transform = icon.style.transform === 'rotate(90deg)' ? 'rotate(0deg)' : 'rotate(90deg)';
+                        };
+                        row.style.cursor = 'pointer';
+
+                        row.innerHTML = `
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.875rem 0; border-bottom: 1px solid #F3F4F6;">
+                                <div style="font-weight: 500; color: #1F2937; font-size: 0.95rem; max-width: 65%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${name}</div>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <div style="color: #6366F1; font-weight: 700; font-size: 0.95rem;">${valueDisplay}</div>
+                                    <span id="icon-${uniqueId}" class="material-icons" style="font-size: 18px; color: #D1D5DB; transition: transform 0.2s;">chevron_right</span>
+                                </div>
+                            </div>
+                            <div id="${uniqueId}" style="display: none; padding: 0 0 1rem 0; color: #64748B; font-size: 0.9rem; line-height: 1.5; border-bottom: 1px solid #F3F4F6;">
+                                ${description || 'No description available'}
+                            </div>
+                        `;
+                        creditsContainer.appendChild(row);
+                    }
+                });
+            }
+
+            if (creditsContainer.children.length === 0) {
+                creditsContainer.innerHTML = '<div style="color: #94A3B8; font-size: 0.875rem; font-style: italic;">No credits available</div>';
+            }
+        } catch (e) {
+            console.error('Error rendering credits:', e);
+            creditsContainer.innerHTML = '<div style="color: #EF4444; font-size: 0.875rem;">Error displaying credits</div>';
+        }
     }
 }
 
@@ -851,12 +874,99 @@ function closeAnniversaryModal() {
     currentAnniversaryCardId = null;
 }
 
-function saveAnniversaryDate() {
-    if (!currentAnniversaryCardId) return;
+// --- UI Helpers ---
+function showLoader() {
+    const loader = document.getElementById('global-loader');
+    if (loader) loader.style.display = 'flex';
+}
 
+function hideLoader() {
+    const loader = document.getElementById('global-loader');
+    if (loader) loader.style.display = 'none';
+}
+
+function showToast(message, type = 'success') {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    const icon = type === 'error' ? 'error_outline' : 'check_circle';
+    toast.innerHTML = `<span class="material-icons">${icon}</span><span>${message}</span>`;
+
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(100%)';
+        toast.style.transition = 'all 0.3s ease-in';
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// --- Remove Card Modal Logic ---
+let cardToRemoveForm = null;
+
+function openRemoveCardModal(e, form, cardName) {
+    if (e) e.preventDefault();
+    cardToRemoveForm = form;
+
+    const nameSpan = document.getElementById('remove-card-name');
+    if (nameSpan) nameSpan.textContent = cardName;
+
+    const modal = document.getElementById('remove-card-modal');
+    if (modal) {
+        modal.style.display = 'flex';
+        // modal.classList.add('active'); 
+    }
+    return false;
+}
+
+function closeRemoveCardModal() {
+    const modal = document.getElementById('remove-card-modal');
+    if (modal) {
+        modal.style.display = 'none';
+        // modal.classList.remove('active');
+    }
+    cardToRemoveForm = null;
+}
+
+async function confirmRemoveCard() {
+    if (!cardToRemoveForm) return;
+    const form = cardToRemoveForm;
+    closeRemoveCardModal();
+    await executeRemoveCard(form);
+}
+
+async function executeRemoveCard(form) {
+    showLoader();
+    try {
+        const res = await fetch(form.action, { method: 'POST', body: new FormData(form) });
+        if (res.ok) {
+            showToast('Card removed successfully!');
+            setTimeout(() => location.reload(), 1000);
+        } else {
+            showToast('Error removing card', 'error');
+            hideLoader();
+        }
+    } catch (err) {
+        console.error(err);
+        showToast('Error removing card', 'error');
+        hideLoader();
+    }
+}
+// kept for backward compatibility if any button still calls it, but redirects to modal if possible or just executes
+async function handleRemoveCard(e, form) {
+    // This function shouldn't be called directly anymore by UI, but if so, just execute?
+    // Or warn user. Assuming HTML update covers all usages.
+    if (e) e.preventDefault();
+    return executeRemoveCard(form);
+}
+
+function saveAnniversaryDate() {
     const date = document.getElementById('anniversary-date-input').value;
     if (!date) {
-        alert('Please select a date');
+        showToast('Please select a date', 'error');
         return;
     }
 
@@ -864,38 +974,40 @@ function saveAnniversaryDate() {
     if (currentAnniversaryCardId === 'ADD_NEW_CARD') {
         if (!selectedAddCard) return;
 
-        // Submit form to add card with anniversary date
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = `/dashboard/add-card/${selectedAddCard.id}/`;
+        showLoader();
+        const formData = new FormData();
+        formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+        formData.append('anniversary_date', date);
 
-        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-        const csrfInput = document.createElement('input');
-        csrfInput.type = 'hidden';
-        csrfInput.name = 'csrfmiddlewaretoken';
-        csrfInput.value = csrfToken;
-        form.appendChild(csrfInput);
+        fetch(`/wallet/add-card/${selectedAddCard.id}/`, {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (response.ok) {
+                    closeAnniversaryModal();
+                    showToast('Card added to wallet!');
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    throw new Error('Failed to add card');
+                }
+            })
+            .catch(err => {
+                console.error('Error:', err);
+                showToast('Error adding card', 'error');
+                hideLoader();
+            });
 
-        // Add anniversary date
-        const dateInput = document.createElement('input');
-        dateInput.type = 'hidden';
-        dateInput.name = 'anniversary_date';
-        dateInput.value = date;
-        form.appendChild(dateInput);
-
-        document.body.appendChild(form);
-        form.submit();
-
-        closeAnniversaryModal();
         return;
     }
 
     // Otherwise, we are updating an existing card
+    showLoader();
     const formData = new FormData();
     formData.append('anniversary_date', date);
     formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
 
-    fetch(`/dashboard/update-anniversary/${currentAnniversaryCardId}/`, {
+    fetch(`/wallet/update-anniversary/${currentAnniversaryCardId}/`, {
         method: 'POST',
         body: formData,
         headers: {
@@ -910,14 +1022,17 @@ function saveAnniversaryDate() {
         })
         .then(data => {
             if (data.success) {
-                location.reload();
+                showToast('Anniversary updated!');
+                setTimeout(() => location.reload(), 1000);
             } else {
-                alert('Error saving date: ' + (data.error || 'Unknown error'));
+                showToast('Error saving date: ' + (data.error || 'Unknown error'), 'error');
+                hideLoader();
             }
         })
         .catch(err => {
             console.error('Error:', err);
-            alert('Error saving date: ' + err.message);
+            showToast('Error saving date: ' + err.message, 'error');
+            hideLoader();
         });
 }
 
@@ -1033,7 +1148,7 @@ function markAsFull() {
     formData.append('is_full', 'true');
     formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
 
-    fetch(`/dashboard/update-benefit/${currentBenefitData.cardId}/${currentBenefitData.benefitId}/`, {
+    fetch(`/wallet/update-benefit/${currentBenefitData.cardId}/${currentBenefitData.benefitId}/`, {
         method: 'POST',
         body: formData,
         headers: {
@@ -1079,7 +1194,7 @@ function saveBenefitUsage() {
     formData.append('period_key', period.key);
     formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
 
-    fetch(`/dashboard/update-benefit/${currentBenefitData.cardId}/${currentBenefitData.benefitId}/`, {
+    fetch(`/wallet/update-benefit/${currentBenefitData.cardId}/${currentBenefitData.benefitId}/`, {
         method: 'POST',
         body: formData,
         headers: {
@@ -1111,49 +1226,96 @@ function saveBenefitUsage() {
 }
 
 // Handle window resize to switch between mobile and desktop modal layouts
+// Handle window resize to switch between mobile and desktop modal layouts and persist state
+// Handle window resize to switch between mobile and desktop modal layouts and persist state
 function handleModalResize() {
     const modal = document.getElementById('manage-wallet-modal');
     if (modal && modal.style.display === 'flex') {
         const isMobile = window.innerWidth <= 768;
 
+        const modalSidebar = document.querySelector('.modal-sidebar');
+        // Check if sidebar is currently visible to determine if we are coming from Desktop
+        // We use offsetParent as a proxy for visibility (null if display:none)
+        const wasDesktop = modalSidebar && modalSidebar.offsetParent !== null;
+
         if (isMobile) {
-            // Switch to mobile layout
+            // SWITCH TO MOBILE
+
+            if (wasDesktop) {
+                // We just crossed from Desktop to Mobile -> SYNC STATE
+                const desktopStackTab = document.getElementById('tab-stack');
+                const isDesktopStackActive = desktopStackTab && desktopStackTab.classList.contains('active');
+
+                if (isDesktopStackActive) {
+                    showMobileMyStackScreen();
+                } else {
+                    // Add Tab was active
+                    if (typeof selectedAddCard !== 'undefined' && selectedAddCard) {
+                        showMobileCardDetail(selectedAddCard);
+                    } else {
+                        showMobileAddNewScreen();
+                    }
+                }
+            }
+
+            // Apply Mobile Layout (Hide Desktop)
             const contentStack = document.getElementById('content-stack');
             const contentAdd = document.getElementById('content-add');
-            const modalSidebar = document.querySelector('.modal-sidebar');
 
             if (contentStack) contentStack.style.display = 'none';
             if (contentAdd) contentAdd.style.display = 'none';
             if (modalSidebar) modalSidebar.style.display = 'none';
 
-            // Show appropriate mobile screen
-            const myStackScreen = document.getElementById('mobile-my-stack-screen');
-            const addNewScreen = document.getElementById('mobile-add-new-screen');
-            const cardDetailScreen = document.getElementById('mobile-card-detail-screen');
+            // Ensure a mobile screen is shown if none (fallback)
+            const mobileStack = document.getElementById('mobile-my-stack-screen');
+            const mobileAdd = document.getElementById('mobile-add-new-screen');
+            const mobileDetail = document.getElementById('mobile-card-detail-screen');
 
-            // Determine which screen should be active based on current state
-            if (addNewScreen && addNewScreen.classList.contains('active')) {
-                showMobileAddNewScreen();
-            } else if (cardDetailScreen && cardDetailScreen.classList.contains('active')) {
-                // Keep detail screen active
-            } else {
-                showMobileMyStackScreen();
+            const isAnyMobileVisible = (mobileStack && mobileStack.style.display !== 'none') ||
+                (mobileAdd && mobileAdd.style.display !== 'none') ||
+                (mobileDetail && mobileDetail.style.display !== 'none');
+
+            if (!isAnyMobileVisible) {
+                showMobileMyStackScreen(); // Default fallback
             }
-        } else {
-            // Switch to desktop layout
-            const contentStack = document.getElementById('content-stack');
-            const contentAdd = document.getElementById('content-add');
-            const modalSidebar = document.querySelector('.modal-sidebar');
 
+        } else {
+            // SWITCH TO DESKTOP
+
+            if (!wasDesktop) {
+                // We just crossed from Mobile to Desktop -> SYNC STATE
+                const mobileAdd = document.getElementById('mobile-add-new-screen');
+                const mobileDetail = document.getElementById('mobile-card-detail-screen');
+
+                // Check if we were on any Add-related screen
+                const isMobileAddActive = mobileAdd && mobileAdd.classList.contains('active');
+                const isMobileDetailVisible = mobileDetail && mobileDetail.style.display !== 'none';
+
+                if (isMobileAddActive || isMobileDetailVisible) {
+                    switchTab('add');
+                    if (typeof selectedAddCard !== 'undefined' && selectedAddCard) {
+                        if (typeof selectCardForPreview === 'function') {
+                            selectCardForPreview(selectedAddCard, null);
+                        }
+                    }
+                } else {
+                    // Default/Stack
+                    switchTab('stack');
+                }
+            }
+
+            // Apply Desktop Layout
             if (modalSidebar) modalSidebar.style.display = 'flex';
 
-            // Determine which tab should be active
-            const addNewScreen = document.getElementById('mobile-add-new-screen');
-            if (addNewScreen && addNewScreen.classList.contains('active')) {
-                switchTab('add');
-            } else {
-                switchTab('stack');
-            }
+            // Hide Mobile Screens
+            const mobileScreens = ['mobile-my-stack-screen', 'mobile-add-new-screen', 'mobile-card-detail-screen'];
+            mobileScreens.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.style.display = 'none';
+                    el.classList.remove('active');
+                }
+            });
         }
     }
 }
