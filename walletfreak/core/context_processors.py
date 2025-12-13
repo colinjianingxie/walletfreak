@@ -8,14 +8,27 @@ def firebase_config(request):
     }
 
 def wallet_status(request):
-    wallet_count = 0
+    user_profile = None
+    assigned_personality = None
     if request.user.is_authenticated:
         uid = request.session.get('uid')
         if uid:
             try:
+                # Get wallet count
                 user_cards = db.get_user_cards(uid)
                 wallet_count = len(user_cards)
+                
+                # Get user profile for avatar/name
+                user_profile = db.get_user_profile(uid)
+                
+                # Get assigned personality details if available
+                if user_profile and user_profile.get('assigned_personality'):
+                    assigned_personality = db.get_personality_by_slug(user_profile.get('assigned_personality'))
             except Exception:
                 pass
             
-    return {'wallet_count': wallet_count}
+    return {
+        'wallet_count': wallet_count,
+        'user_profile': user_profile,
+        'assigned_personality': assigned_personality
+    }

@@ -159,6 +159,24 @@ def profile(request):
     # Determine best fit personality
     matched_personality = db.determine_best_fit_personality(active_cards)
     
+    # Sync with DB if different (self-healing)
+    if matched_personality:
+        current_assigned = user_profile.get('assigned_personality')
+        matched_id = matched_personality.get('id')
+        
+        if current_assigned != matched_id:
+             # Calculate score for completeness
+             user_card_slugs = set(c.get('card_id') for c in active_cards)
+             personality_cards = set()
+             for slot in matched_personality.get('slots', []):
+                 personality_cards.update(slot.get('cards', []))
+             overlap = len(user_card_slugs.intersection(personality_cards))
+             
+             db.update_user_personality(uid, matched_id, score=overlap)
+             # Update local user_profile for context to be consistent immediately (though context uses 'user_profile' obj)
+             user_profile['assigned_personality'] = matched_id
+             user_profile['personality_score'] = overlap
+    
     context = {
         'user_profile': user_profile,
         'cards_count': cards_count,

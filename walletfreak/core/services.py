@@ -370,6 +370,33 @@ class FirestoreService:
         }
         
         user_ref.collection('user_cards').add(user_card_data)
+        
+        # Auto-evaluate personality
+        try:
+            # 1. Get updated cards
+            current_cards = self.get_user_cards(uid, status='active')
+            
+            # 2. Determine best fit
+            best_fit = self.determine_best_fit_personality(current_cards)
+            
+            # 3. Update profile if found
+            if best_fit:
+                # Calculate match score (overlap count) - simplified version of determine_best_fit_personality logic
+                # We should probably have determine_best_fit_personality return the score too
+                # For now, let's just recalculate locally or update determine_best_fit_personality
+                
+                # Re-calculate score to save it
+                user_card_slugs = set(c.get('card_id') for c in current_cards)
+                personality_cards = set()
+                for slot in best_fit.get('slots', []):
+                    personality_cards.update(slot.get('cards', []))
+                overlap = len(user_card_slugs.intersection(personality_cards))
+                
+                self.update_user_personality(uid, best_fit.get('id'), score=overlap)
+                print(f"Auto-assigned personality {best_fit.get('id')} to user {uid} with score {overlap}")
+        except Exception as e:
+            print(f"Error auto-evaluating personality: {e}")
+            
         return True
 
     def get_user_cards(self, uid, status=None):
@@ -386,6 +413,33 @@ class FirestoreService:
 
     def remove_card_from_user(self, uid, user_card_id):
         self.db.collection('users').document(uid).collection('user_cards').document(user_card_id).delete()
+        
+        # Auto-evaluate personality
+        try:
+            # 1. Get updated cards (active only)
+            current_cards = self.get_user_cards(uid, status='active')
+            
+            # 2. Determine best fit
+            if not current_cards:
+                 # No cards -> No personality or default?
+                 # For now, maybe just don't update or set to None/Default?
+                 # Let's leave it as is or maybe 'wallet-freak' default if we had one.
+                 pass
+            else:
+                best_fit = self.determine_best_fit_personality(current_cards)
+                
+                # 3. Update profile if found
+                if best_fit:
+                    user_card_slugs = set(c.get('card_id') for c in current_cards)
+                    personality_cards = set()
+                    for slot in best_fit.get('slots', []):
+                        personality_cards.update(slot.get('cards', []))
+                    overlap = len(user_card_slugs.intersection(personality_cards))
+                    
+                    self.update_user_personality(uid, best_fit.get('id'), score=overlap)
+                    print(f"Auto-assigned personality {best_fit.get('id')} to user {uid} with score {overlap}")
+        except Exception as e:
+            print(f"Error auto-evaluating personality on remove: {e}")
 
     def update_card_details(self, uid, user_card_id, data):
         # Generic update for user card (e.g. anniversary date)
