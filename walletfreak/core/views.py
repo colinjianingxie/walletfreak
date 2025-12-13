@@ -3,6 +3,10 @@ from django.conf import settings
 from .services import db
 
 def home(request):
+    # Redirect to dashboard if user is authenticated
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+
     # Fetch personalities for the landing page
     personalities = []
     try:
