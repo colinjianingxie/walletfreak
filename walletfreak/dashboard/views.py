@@ -456,36 +456,7 @@ def submit_personality_survey(request):
         return JsonResponse({'success': False, 'error': str(e)}, status=500)
 
 
-@login_required
-def personality_results(request):
-    """Display personality results"""
-    uid = request.session.get('uid')
-    if not uid:
-        return redirect('login')
-    
-    try:
-        assigned_personality = db.get_user_assigned_personality(uid)
-    except Exception as e:
-        print(f"Error fetching personality: {e}")
-        assigned_personality = None
-    
-    # Get recommended cards for this personality
-    recommended_cards = []
-    if assigned_personality:
-        try:
-            for card_id in assigned_personality.get('recommended_cards', []):
-                card = db.get_card_by_slug(card_id)
-                if card:
-                    recommended_cards.append(card)
-        except Exception as e:
-            print(f"Error fetching recommended cards: {e}")
-    
-    context = {
-        'personality': assigned_personality,
-        'recommended_cards': recommended_cards,
-    }
-    
-    return render(request, 'dashboard/personality_results.html', context)
+
 
 
 @login_required

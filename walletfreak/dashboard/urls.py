@@ -12,6 +12,6 @@ urlpatterns = [
     
     # Personality features
     path('personality/submit/', views.submit_personality_survey, name='submit_personality_survey'),
-    path('personality/results/', views.personality_results, name='personality_results'),
+
     path('personality/publish/', views.publish_personality, name='publish_personality'),
 ]

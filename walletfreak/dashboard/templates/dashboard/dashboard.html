@@ -84,7 +84,7 @@
             </h1>
             <div style="display: flex; align-items: center; gap: 0.75rem; margin-top: 0.5rem;">
                 {% if assigned_personality %}
-                <a href="{% url 'personality_results' %}" style="text-decoration: none;">
+                <a href="{% url 'personality_detail' assigned_personality.id %}" style="text-decoration: none;">
                     <span
                         style="background: #E0F2FE; color: #0284C7; font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 4px; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;"
                         onmouseover="this.style.background='#BAE6FD'"

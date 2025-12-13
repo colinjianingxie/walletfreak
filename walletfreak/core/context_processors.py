@@ -23,8 +23,16 @@ def wallet_status(request):
                 user_profile = db.get_user_profile(uid)
                 
                 # Get assigned personality details if available
-                if user_profile and user_profile.get('assigned_personality'):
-                    assigned_personality = db.get_personality_by_slug(user_profile.get('assigned_personality'))
+                personality_slug = None
+                if user_profile:
+                    personality_slug = user_profile.get('assigned_personality')
+                
+                # Default to 'student-starter' if not set
+                if not personality_slug:
+                    personality_slug = 'student-starter'
+                
+                if personality_slug:
+                    assigned_personality = db.get_personality_by_slug(personality_slug)
             except Exception:
                 pass
             
