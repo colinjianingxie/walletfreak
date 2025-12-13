@@ -131,12 +131,16 @@ class Command(BaseCommand):
     def send_email(self, to_email, subject, message):
          try:
             self.stdout.write(f"Sending email to {to_email}: {subject}")
-            send_mail(
-                subject,
-                message,
-                'notifications@walletfreak.com',
-                [to_email],
-                fail_silently=False,
+            # Use Firebase Extension via FirestoreService
+            # Convert plain text message to simple HTML for better formatting if needed, 
+            # but providing both text and html is best practice.
+            html_content = message.replace('\n', '<br>')
+            
+            db.send_email_notification(
+                to=to_email,
+                subject=subject,
+                text_content=message,
+                html_content=html_content
             )
          except Exception as e:
-            self.stdout.write(self.style.ERROR(f"Failed to send email to {to_email}: {e}"))
+            self.stdout.write(self.style.ERROR(f"Failed to queue email to {to_email}: {e}"))

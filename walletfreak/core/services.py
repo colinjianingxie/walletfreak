@@ -280,6 +280,35 @@ class FirestoreService:
             'notification_preferences': preferences
         })
 
+    def send_email_notification(self, to, subject, html_content=None, text_content=None):
+        """
+        Send an email via the Firebase Trigger Email Extension by writing to the 'mail' collection.
+        """
+        if not to:
+            return None
+            
+        email_data = {
+            'to': to,
+            'from': 'notifications@walletfreak.com', # Use generic "Name <email>" if needed, e.g. "WalletFreak <notifications@walletfreak.com>"
+            'message': {
+                'subject': subject,
+            }
+        }
+        
+        if html_content:
+             email_data['message']['html'] = html_content
+        
+        if text_content:
+             email_data['message']['text'] = text_content
+             
+        # Add to 'mail' collection
+        try:
+            _, doc_ref = self.db.collection('mail').add(email_data)
+            return doc_ref.id
+        except Exception as e:
+            print(f"Error queuing email to Firestore: {e}")
+            return None
+
     def add_card_to_user(self, uid, card_id, status='active', anniversary_date=None):
         # status: 'active', 'inactive', 'eyeing'
         user_ref = self.db.collection('users').document(uid)

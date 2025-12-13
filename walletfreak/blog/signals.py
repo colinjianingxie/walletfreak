@@ -78,19 +78,20 @@ The WalletFreak Team
         # send_mail(subject, message, from_email, recipient_list) sends to all in list as TO or BCC?
         # usually TO. We should send individually to hide other emails.
         
+        html_message = message.replace('\n', '<br>')
+        
         count = 0
         for email in emails_to_send:
             try:
-                send_mail(
-                    subject,
-                    message,
-                    'notifications@walletfreak.com',
-                    [email],
-                    fail_silently=False
+                db.send_email_notification(
+                    to=email,
+                    subject=subject,
+                    text_content=message,
+                    html_content=html_message
                 )
                 count += 1
             except Exception as e:
-                print(f"Failed to send to {email}: {e}")
+                print(f"Failed to queue email to {email}: {e}")
                 
         print(f"Sent {count} blog notifications.")
         
