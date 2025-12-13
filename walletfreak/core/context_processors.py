@@ -10,6 +10,7 @@ def firebase_config(request):
 def wallet_status(request):
     user_profile = None
     assigned_personality = None
+    wallet_count = 0
     if request.user.is_authenticated:
         uid = request.session.get('uid')
         if uid:
