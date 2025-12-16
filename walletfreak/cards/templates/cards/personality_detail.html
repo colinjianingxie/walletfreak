@@ -129,8 +129,8 @@
                         style="cursor: pointer; transition: transform 0.2s; {% if not forloop.first %}display: none;{% endif %}">
                         
                         <!-- Info Icon -->
-                        <div style="position: absolute; top: 1rem; left: 1rem; z-index: 10; opacity: 0.8; transition: opacity 0.2s;" onclick="event.stopPropagation(); openCardModal('{{ card.id }}')">
-                            <span class="material-icons" style="font-size: 24px; color: white;">info_outline</span>
+                        <div class="card-info-btn" onclick="event.stopPropagation(); openCardModal('{{ card.id }}')">
+                            <span class="material-icons">info_outline</span>
                         </div>
 
 
