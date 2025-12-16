@@ -95,26 +95,29 @@
         {% for slot in personality.slots %}
         <div class="personality-slot-container" style="background: white; border-radius: 24px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
             <!-- Slot Info -->
-            <div style="margin-bottom: 2rem;">
-                <div style="display: inline-block; background: #f1f5f9; color: #64748b; padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">
-                    SLOT {{ forloop.counter }}
-                </div>
-                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #0f172a;">{{ slot.name }}</h3>
-                <p style="color: #64748b; line-height: 1.6;">{{ slot.description }}</p>
-            </div>
-
-            <!-- Cards in Slot (Carousel) -->
-            <div class="slot-carousel" id="carousel-slot-{{ forloop.counter }}">
-                <!-- Navigation Buttons (only for JS) -->
+            <!-- Slot Info -->
+            <div style="margin-bottom: 2rem; position: relative;">
                 {% if slot.hydrated_cards|length > 1 %}
-                <div class="carousel-btn prev" onclick="changeCard({{ forloop.counter }}, -1)">
+                <!-- Navigation Buttons (Corners) -->
+                <div class="carousel-btn prev" onclick="changeCard({{ forloop.counter }}, -1)" style="position: absolute; top: 0; left: 0; z-index: 10;">
                     <span class="material-icons">chevron_left</span>
                 </div>
-                <div class="carousel-btn next" onclick="changeCard({{ forloop.counter }}, 1)">
+                <div class="carousel-btn next" onclick="changeCard({{ forloop.counter }}, 1)" style="position: absolute; top: 0; right: 0; z-index: 10;">
                     <span class="material-icons">chevron_right</span>
                 </div>
                 {% endif %}
 
+                <div style="text-align: center; padding: 0 3.5rem;">
+                    <div style="display: inline-block; background: #f1f5f9; color: #64748b; padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">
+                        SLOT {{ forloop.counter }}
+                    </div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #0f172a;">{{ slot.name }}</h3>
+                    <p style="color: #64748b; line-height: 1.6;">{{ slot.description }}</p>
+                </div>
+            </div>
+
+            <!-- Cards in Slot (Carousel) -->
+            <div class="slot-carousel" id="carousel-slot-{{ forloop.counter }}">
                 <div class="carousel-track">
                     {% for card in slot.hydrated_cards %}
                     <div class="card-option" 

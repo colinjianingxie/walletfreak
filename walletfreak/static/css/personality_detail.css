@@ -306,22 +306,21 @@
         justify-content: center;
         padding: 0;
         flex-direction: column;
+        overflow: visible;
+        /* Allow shadow overflow */
     }
+
 
     .carousel-btn {
         display: flex;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 48px;
-        height: 48px;
+        width: 40px;
+        height: 40px;
         background: white;
         border-radius: 50%;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        z-index: 20;
         color: #64748b;
         border: 1px solid #e2e8f0;
         transition: all 0.2s;
@@ -330,12 +329,18 @@
 
     .carousel-btn:hover {
         background: #f8fafc;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         color: #3b82f6;
     }
 
     .carousel-btn:active {
-        transform: translateY(-50%) scale(0.95);
+        transform: scale(0.95);
+    }
+
+    /* Hide desktop-only controls if any remain or ensure they show on mobile */
+    .slot-controls {
+        display: flex !important;
+        /* Force show on mobile */
     }
 
     /* Metadata below card */
@@ -357,13 +362,7 @@
         margin-bottom: 0.5rem !important;
     }
 
-    .carousel-btn.prev {
-        left: 0.5rem;
-    }
-
-    .carousel-btn.next {
-        right: 0.5rem;
-    }
+    /* Prev/Next positioning removed */
 
     /* Mobile Card Sizing - Add blue border container */
     .card-option {
@@ -371,7 +370,7 @@
         max-width: 440px;
         margin-left: auto !important;
         margin-right: auto !important;
-        padding: 2rem 1.5rem;
+        padding: 0.25rem;
         background: white;
         border: 3px solid #3b82f6;
         border-radius: 32px;
@@ -381,10 +380,10 @@
     }
 
     .card-info-btn {
-        top: 3rem !important;
-        /* 2rem padding + 1rem offset */
-        left: 2.5rem !important;
-        /* 1.5rem padding + 1rem offset */
+        top: 1rem !important;
+        /* 0.25rem padding + 0.75rem offset */
+        left: 1rem !important;
+        /* 0.25rem padding + 0.75rem offset */
     }
 
     .carousel-track {

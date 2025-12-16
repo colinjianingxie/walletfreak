@@ -5,6 +5,28 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/personality_list.css' %}">
+<style>
+    .assigned-personality-grid {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 2rem;
+        align-items: center;
+    }
+    @media (max-width: 768px) {
+        .assigned-personality-grid {
+            grid-template-columns: 1fr;
+            text-align: center;
+            gap: 1.5rem;
+        }
+        .assigned-personality-grid > div:first-child { /* Icon */
+            margin: 0 auto;
+        }
+        .assigned-personality-grid > a { /* Button */
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -107,7 +129,7 @@
 {% if assigned_personality %}
 <section class="container" style="padding: 2rem 0 1rem;">
     <div style="background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%); border-radius: 20px; padding: 2rem; border: 1px solid #E9D5FF; box-shadow: 0 4px 12px rgba(168, 85, 247, 0.15);">
-        <div style="display: grid; grid-template-columns: auto 1fr auto; gap: 2rem; align-items: center;">
+<div class="assigned-personality-grid">
             <!-- Left: Icon -->
             <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #A855F7 0%, #9333EA 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; box-shadow: 0 8px 16px rgba(168, 85, 247, 0.3);">
                 {{ assigned_personality.icon|default:"🎯" }}

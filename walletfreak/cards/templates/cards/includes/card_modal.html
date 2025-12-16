@@ -188,7 +188,7 @@
 
 <script>
 // Shared Modal Logic
-let currentModalCardId = null;
+let scrollPosition = 0;
 
 function openCardModal(cardId) {
     // Check if allCardsData exists
@@ -407,7 +407,7 @@ function openCardModal(cardId) {
         let highestCategory = '';
         
         earning.forEach((item, index) => {
-            // Support different field structures
+            // Support different field names
             const cat = item.category || item.cat || item.description || 'Category';
             const rate = item.rate || item.mult || item.multiplier || item.value || 0;
             const currency = item.currency || 'points';
@@ -454,7 +454,7 @@ function openCardModal(cardId) {
             earningContainer.appendChild(wrapper);
         });
         
-        // Pro Tip removed - no longer updating
+        // Pro Tip removed
     } else {
         earningContainer.innerHTML = '<div style="color: #64748B; text-align: center; padding: 2rem;">No earning information available.</div>';
     }
@@ -520,17 +520,28 @@ function openCardModal(cardId) {
 
 
     // Reset Tabs
-    // Reset Tabs
     switchCardTab('overview');
     
     modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden'; // Lock scroll
+    
+    // Better scroll lock for iOS
+    scrollPosition = window.pageYOffset;
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollPosition}px`;
+    document.body.style.width = '100%';
 }
 
 function closeCardDetailsModal() {
     document.getElementById('card-details-modal').style.display = 'none';
     currentModalCardId = null;
-    document.body.style.overflow = ''; // Unlock scroll
+    
+    // Unlock scroll and restore position
+    document.body.style.removeProperty('overflow');
+    document.body.style.removeProperty('position');
+    document.body.style.removeProperty('top');
+    document.body.style.removeProperty('width');
+    window.scrollTo(0, scrollPosition);
 }
 
 function switchCardTab(tabName) {
