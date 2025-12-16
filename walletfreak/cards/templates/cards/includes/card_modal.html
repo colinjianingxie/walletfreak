@@ -1,42 +1,54 @@
 <!-- Card Details Modal (Shared) -->
 <div id="card-details-modal" class="modal" style="display: none;">
     <div class="modal-content card-details-content">
-        <button class="modal-close-mobile" onclick="closeCardDetailsModal()">×</button>
+        <!-- Mobile Header -->
+        <div class="mobile-modal-header-text">Card Details</div>
+        <button class="modal-close-mobile" onclick="closeCardDetailsModal()">
+            <span class="material-icons" style="font-size: 18px;">arrow_back_ios</span> Back
+        </button>
         <!-- Left Column: Card Visual & Actions -->
         <div class="card-details-left">
             <!-- Card Visual -->
             <div class="card-visual-container">
                 <div id="modal-card-visual" class="credit-card">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
-                        <div id="modal-card-issuer-logo" style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.9;">ISSUER</div>
-                        <span class="material-icons" style="font-size: 28px; opacity: 0.8;">contactless</span>
-                    </div>
-                    <div class="credit-card-chip"></div>
-                    <div class="credit-card-number">•••• •••• •••• 4242</div>
-                    <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-                        <div class="credit-card-name">YOUR NAME</div>
-                        <div style="display: flex; gap: 2px;">
-                            <div style="width: 20px; height: 20px; background: #EB001B; border-radius: 50%; opacity: 0.9;"></div>
-                            <div style="width: 20px; height: 20px; background: #F79E1B; border-radius: 50%; margin-left: -8px; opacity: 0.9;"></div>
+                    <div class="card-generated-content" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                            <div id="modal-card-issuer-logo" style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.9;">ISSUER</div>
+                            <span class="material-icons" style="font-size: 28px; opacity: 0.8;">contactless</span>
+                        </div>
+                        <div class="credit-card-chip"></div>
+                        <div class="credit-card-number">•••• •••• •••• 4242</div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                            <div class="credit-card-name">YOUR NAME</div>
+                            <div style="display: flex; gap: 2px;">
+                                <div style="width: 20px; height: 20px; background: #EB001B; border-radius: 50%; opacity: 0.9;"></div>
+                                <div style="width: 20px; height: 20px; background: #F79E1B; border-radius: 50%; margin-left: -8px; opacity: 0.9;"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Desktop: Match Badge -->
-            <div class="match-badge">
-                <span class="material-icons" style="font-size: 16px;">star</span>
-                <span id="modal-match-score">90% Match</span>
+            <div class="card-identity-section">
+                <h2 id="modal-card-name" class="modal-card-title">Card Name</h2>
+                
+                <div class="modal-badges-row">
+                    <!-- Match Badge (Re-added per design) -->
+                    <div class="modal-badge match-badge-pill">
+                        <span class="material-icons" style="font-size: 14px; color: #F59E0B;">star</span>
+                        <span id="modal-match-score">98% Match</span>
+                    </div>
+
+                    <!-- Fee Badge -->
+                    <div class="modal-badge fee-badge-pill">
+                        <span class="badge-label">FEE</span>
+                        <span id="modal-annual-fee" class="badge-value">$550</span>
+                    </div>
+                </div>
             </div>
 
-            <!-- Desktop: Annual Fee -->
-            <div class="desktop-annual-fee" style="text-align: center; margin: 1.5rem 0;">
-                <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem;">ANNUAL FEE</div>
-                <div id="modal-annual-fee" style="font-size: 2rem; font-weight: 800; color: #1F2937;">$0</div>
-            </div>
-
-            <!-- Desktop: Action Buttons -->
-            <div class="card-actions">
+            <!-- Desktop: Action Buttons (Stacked) -->
+            <div class="card-actions-desktop">
                 <button id="modal-add-btn" class="btn-add-wallet" onclick="addToWalletFromModal()">
                     Add to Wallet <span class="material-icons" style="font-size: 18px;">check</span>
                 </button>
@@ -47,15 +59,8 @@
         </div>
 
         <!-- Right Column: Details & Tabs -->
-        <div class="card-details-right">
-            <!-- Header -->
-            <div class="card-details-header">
-                <div>
-                    <h2 id="modal-card-name" style="font-size: 1.75rem; font-weight: 800; color: #1F2937; margin: 0 0 0.25rem 0; line-height: 1.2;">Card Name</h2>
-                    <div id="modal-card-issuer" style="color: #64748B; font-size: 1rem; font-weight: 500;">Issuer</div>
-                </div>
-                <button class="modal-close-desktop" onclick="closeCardDetailsModal()">×</button>
-            </div>
+        <div class="card-details-right" style="position: relative;">
+            <button class="modal-close-desktop" onclick="closeCardDetailsModal()" style="position: absolute; top: 1.5rem; right: 1.5rem; z-index: 10;">×</button>
 
             <!-- Tabs -->
             <div class="card-tabs">
@@ -123,6 +128,16 @@
                         <!-- Populated by JS with expandable rows -->
                     </div>
                 </div>
+                </div>
+            </div>
+            <!-- Mobile Sticky Footer -->
+            <div class="card-actions-mobile">
+                <button id="modal-add-btn-mobile" class="btn-add-wallet" onclick="addToWalletFromModal()">
+                    Add to Wallet
+                </button>
+                <button class="btn-apply" id="modal-apply-btn-mobile" onclick="window.open('#', '_blank')">
+                    Apply Now
+                </button>
             </div>
         </div>
     </div>
@@ -199,22 +214,27 @@ function openCardModal(cardId) {
     
     // Populate Data
     document.getElementById('modal-card-name').textContent = card.name;
-    document.getElementById('modal-card-issuer').textContent = card.issuer;
     document.getElementById('modal-card-issuer-logo').textContent = (card.issuer || 'ISSUER').toUpperCase();
     
     // Visual
     const visual = document.getElementById('modal-card-visual');
+    const generatedContent = visual.querySelector('.card-generated-content');
+    
     // Reset styles and classes
     visual.className = 'credit-card';
     visual.style.backgroundImage = '';
+    if (generatedContent) generatedContent.style.display = 'flex';
     visual.style.backgroundSize = '';
     visual.style.backgroundPosition = '';
     
     // Helper to set background image
     const setBgImage = (url) => {
-        visual.style.backgroundImage = `url('${url}')`;
-        visual.style.backgroundSize = 'cover';
-        visual.style.backgroundPosition = 'center';
+        // Use 'important' to override the CSS background: linear-gradient(...) !important
+        visual.style.setProperty('background', `url('${url}') center / cover no-repeat`, 'important');
+        if (generatedContent) generatedContent.style.display = 'none';
+        
+        // Remove specific classes that might add conflicting backgrounds
+        visual.className = 'credit-card';
     };
 
     // Helper to set default visual based on issuer
@@ -242,32 +262,68 @@ function openCardModal(cardId) {
     };
 
     // Logic: Try local_image -> image_url -> default
-    if (card.local_image) {
-        // Construct local path (assuming /static/ prefix)
-        const localPath = `/static/${card.local_image}`;
-        
-        // Try loading local image
+    // Logic: Try local_image -> heuristic local (slug+ext) -> image_url -> default
+    
+    // Helper to try loading an image
+    const tryLoadImage = (url, onSuccess, onError) => {
         const img = new Image();
-        img.onload = () => {
-            setBgImage(localPath);
-        };
-        img.onerror = () => {
-            // Fallback to remote image_url
-            if (card.image_url) {
-                setBgImage(card.image_url);
-            } else {
-                setDefaultVisual();
-            }
-        };
-        img.src = localPath;
-    } else if (card.image_url) {
-        setBgImage(card.image_url);
+        img.onload = () => onSuccess(url);
+        img.onerror = onError;
+        // Add cache buster to prevent caching issues
+        img.src = `${url}?v=${new Date().getTime()}`;
+    };
+
+    // Chain step 3: Try remote URL
+    const tryRemote = () => {
+        if (card.image_url) {
+            tryLoadImage(card.image_url, setBgImage, setDefaultVisual);
+        } else {
+            setDefaultVisual();
+        }
+    };
+
+    // Chain step 2: Heuristic search for local image
+    const tryHeuristic = (index = 0) => {
+        const extensions = ['png', 'PNG', 'jpg', 'JPG', 'jpeg', 'webp', 'WEBP', 'avif', 'AVIF'];
+        if (index >= extensions.length) {
+            tryRemote();
+            return;
+        }
+        
+        // Use slug if available, else id (if it looks like a slug)
+        // If id is numeric (mock data) and no slug, skip heuristic
+        if ((typeof card.id === 'number' || !isNaN(card.id)) && !card.slug) {
+             tryRemote();
+             return;
+        }
+        
+        const slug = card.slug || card.id;
+        const path = `/static/images/credit_cards/${slug}.${extensions[index]}`;
+        
+        tryLoadImage(path, setBgImage, () => tryHeuristic(index + 1));
+    };
+
+    // Chain step 1: Check defined local_image
+    if (card.local_image) {
+        // Handle path with or without /static/ prefix
+        let localPath = card.local_image;
+        if (!localPath.startsWith('/static/') && !localPath.startsWith('http')) {
+             localPath = `/static/${localPath}`;
+        }
+        
+        tryLoadImage(localPath, setBgImage, () => tryHeuristic(0));
     } else {
-        setDefaultVisual();
+        tryHeuristic(0);
     }
     
     // Stats
-    document.getElementById('modal-match-score').textContent = (card.matchScore || '90') + (String(card.matchScore).includes('%') ? '' : '% Match');
+    const matchScore = (card.matchScore || '90');
+    // Ensure we don't duplicate '%'
+    const matchScoreText = String(matchScore).includes('%') ? matchScore : matchScore + '% Match';
+    
+    const matchEl = document.getElementById('modal-match-score');
+    if (matchEl) matchEl.textContent = matchScoreText;
+
     document.getElementById('modal-annual-fee').textContent = '$' + (card.annualFee || card.annual_fee || 0);
     document.getElementById('modal-verdict-text').textContent = card.verdict || card.description || 'No verdict available.';
     
@@ -295,25 +351,37 @@ function openCardModal(cardId) {
     
     // Check if card is already in wallet and update Add to Wallet button
     const addBtn = document.getElementById('modal-add-btn');
+    const addBtnMobile = document.getElementById('modal-add-btn-mobile'); // Mobile btn
     const isInWallet = typeof walletCardIds !== 'undefined' && walletCardIds.has(cardId);
     
-    if (isInWallet) {
-        addBtn.disabled = true;
-        addBtn.innerHTML = 'Already in Wallet <span class="material-icons" style="font-size: 18px;">check_circle</span>';
-        addBtn.style.background = '#94A3B8';
-        addBtn.style.cursor = 'not-allowed';
-        addBtn.onclick = null;
-    } else {
-        addBtn.disabled = false;
-        addBtn.innerHTML = 'Add to Wallet <span class="material-icons" style="font-size: 18px;">add</span>';
-        addBtn.style.background = '#0F172A';
-        addBtn.style.cursor = 'pointer';
-        addBtn.onclick = addToWalletFromModal;
-    }
+    // Helper to update button state
+    const updateAddBtn = (btn) => {
+        if (!btn) return;
+        if (isInWallet) {
+            btn.disabled = true;
+            btn.innerHTML = 'Already in Wallet <span class="material-icons" style="font-size: 18px;">check_circle</span>';
+            btn.style.background = '#94A3B8';
+            btn.style.cursor = 'not-allowed';
+            btn.onclick = null;
+        } else {
+            btn.disabled = false;
+            btn.innerHTML = 'Add to Wallet <span class="material-icons" style="font-size: 18px;">add</span>';
+            btn.style.background = '#0F172A';
+            btn.style.cursor = 'pointer';
+            btn.onclick = addToWalletFromModal;
+        }
+    };
+    
+    updateAddBtn(addBtn);
+    updateAddBtn(addBtnMobile);
     
     // Apply Link
     const applyBtn = document.getElementById('modal-apply-btn');
-    applyBtn.onclick = () => window.open(card.application_url || '#', '_blank');
+    const applyBtnMobile = document.getElementById('modal-apply-btn-mobile'); // Mobile btn
+    
+    const openApply = () => window.open(card.application_url || '#', '_blank');
+    if (applyBtn) applyBtn.onclick = openApply;
+    if (applyBtnMobile) applyBtnMobile.onclick = openApply;
 
     // Earning Tab Population with Expandable Rows
     const earningContainer = document.getElementById('modal-earning-rows');
@@ -374,7 +442,7 @@ function openCardModal(cardId) {
             wrapper.innerHTML = `
                 <div class="expandable-row" onclick="toggleExpandable(this)">
                     <div class="earning-cat">${cat}</div>
-                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <div class="earning-actions" style="display: flex; align-items: center; gap: 0.5rem;">
                         <div class="earning-mult">${mult}</div>
                         <span class="material-icons expand-arrow" style="font-size: 20px; color: #94A3B8;">expand_more</span>
                     </div>
