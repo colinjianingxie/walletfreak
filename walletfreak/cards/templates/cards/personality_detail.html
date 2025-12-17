@@ -171,12 +171,12 @@
                                 •••• •••• •••• 4242
                             </div>
                             
-                            <div class="card-visual-footer">
-                                <div>
-                                    <div class="strategy-label">STRATEGY</div>
+                                <div class="card-visual-footer">
+                                    <div>
+                                        <!-- Strategy label removed -->
+                                    </div>
+                                    <div class="logo-circle-placeholder"></div>
                                 </div>
-                                <div class="logo-circle-placeholder"></div>
-                            </div>
                         </div>
                         {% endif %}
 
@@ -186,7 +186,7 @@
                             <div class="card-details-meta">
                                 <span class="text-slate-400">${{ card.annual_fee|default:0 }}</span>
                                 <span class="meta-separator">•</span>
-                                <span class="text-blue-500">{{ card.categories.0|default:'CREDIT' }} STRATEGY</span>
+                                <span class="text-blue-500">{{ card.categories.0|default:'CREDIT' }}</span>
                             </div>
                         </div>
                     </div>

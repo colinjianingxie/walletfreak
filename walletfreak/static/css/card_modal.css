@@ -641,9 +641,13 @@
         font-size: 16px !important;
     }
 
-    /* Tab Content */
+    /* Tab Content - Allow full scroll */
     .card-tab-content {
         padding: 1.25rem 1.25rem 2rem 1.25rem !important;
+        overflow-y: visible !important;
+        height: auto !important;
+        max-height: none !important;
+        flex: none !important;
     }
 
     /* Freak Verdict */

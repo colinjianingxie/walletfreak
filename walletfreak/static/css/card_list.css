@@ -755,6 +755,7 @@ input[type=range]::-moz-range-thumb {
         padding: 1.5rem !important;
     }
 }
+
 /* REFACTORED INLINE STYLES */
 
 .main-content-wrapper {
@@ -800,6 +801,8 @@ input[type=range]::-moz-range-thumb {
 .search-wrapper {
     position: relative;
     width: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .search-icon {
@@ -809,33 +812,40 @@ input[type=range]::-moz-range-thumb {
     transform: translateY(-50%);
     color: #94A3B8;
     font-size: 24px;
+    pointer-events: none;
+    display: flex;
 }
 
 .search-input {
     width: 100%;
-    padding: 1.25rem 1.25rem 1.25rem 4rem;
+    height: 56px;
+    /* Explicit height for center consistency */
+    padding: 0 1.25rem 0 4rem;
+    /* Use padding for left/right, height handles top/bottom */
     border: 1px solid #E2E8F0;
     border-radius: 16px;
     font-size: 1rem;
     outline: none;
     font-family: 'Outfit', sans-serif;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .category-pills-container {
-    margin-bottom: 3.5rem;
+    margin-bottom: 2rem;
     display: flex;
-    gap: 1rem;
+    gap: 0.75rem;
     flex-wrap: wrap;
 }
 
 .category-pill-btn {
-    padding: 0.625rem 1.5rem;
+    padding: 0.625rem 1.25rem;
     border-radius: 24px;
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .category-pill-active {
@@ -852,7 +862,8 @@ input[type=range]::-moz-range-thumb {
     display: none;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    gap: 1rem;
 }
 
 .mobile-filter-btn {
@@ -861,11 +872,90 @@ input[type=range]::-moz-range-thumb {
     gap: 0.5rem;
     background: white;
     border: 1px solid #E2E8F0;
-    padding: 0.75rem 1.25rem;
+    padding: 0.625rem 1rem;
     border-radius: 12px;
     font-weight: 600;
+    font-size: 0.9375rem;
     color: #0F172A;
     font-family: 'Outfit', sans-serif;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .category-pills-container {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+        margin: 0 -1.25rem 2rem -1.25rem;
+        /* Negative margin to touch edges */
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+        -webkit-overflow-scrolling: touch;
+        gap: 0.5rem;
+    }
+
+    /* Hide scrollbar for clean look */
+    .category-pills-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    .category-pill-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8125rem;
+    }
+
+    /* Optimize Mobile controls layout */
+    .mobile-controls-bar {
+        margin-bottom: 1.5rem;
+        padding: 0 0.25rem;
+        /* Slight inset */
+        height: 48px;
+        /* Fixed height for alignment */
+    }
+
+    .mobile-filter-btn {
+        height: 48px;
+        box-sizing: border-box;
+    }
+
+    /* Wrap flex items to ensure proper alignment contexts */
+    .mobile-sort-container {
+        display: flex;
+        align-items: center;
+        height: 48px;
+    }
+
+    /* Force specific heights on children to match */
+    .mobile-sort-container .sort-select {
+        height: 48px;
+        box-sizing: border-box;
+        display: block;
+        /* Select elements shouldn't be flex */
+        padding: 0 2rem 0 0.75rem;
+        font-size: 0.875rem;
+        width: 100%;
+        line-height: 48px;
+        /* Vertically center text if padding fails */
+        margin: 0;
+    }
+
+    /* Fix toggle button alignment on mobile */
+    .mobile-sort-container .view-toggle-wrapper {
+        height: 48px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Hide 'Sort By' label on mobile */
+    .mobile-sort-container .sort-label {
+        display: none;
+    }
+
+    .mobile-sort-container .sort-select {
+        padding: 0.5rem 2rem 0.5rem 0.75rem;
+        font-size: 0.875rem;
+    }
 }
 
 .main-grid-layout {
@@ -1236,7 +1326,7 @@ input[type=range]::-moz-range-thumb {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     z-index: 40;
     backdrop-filter: blur(4px);
 }
