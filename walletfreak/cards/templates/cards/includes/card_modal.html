@@ -379,7 +379,34 @@ function openCardModal(cardId) {
     const applyBtn = document.getElementById('modal-apply-btn');
     const applyBtnMobile = document.getElementById('modal-apply-btn-mobile'); // Mobile btn
     
-    const openApply = () => window.open(card.application_url || '#', '_blank');
+    const openApply = () => {
+        let url = card.application_link || '#';
+        
+        // Check for referral links
+        if (card.referral_links && Array.isArray(card.referral_links) && card.referral_links.length > 0) {
+            // Determine structure (string or object)
+            // Assuming object based on views.py: {link: 'url', weight: 1}
+            // But handling both just in case
+            const links = card.referral_links;
+            let selectedLink = null;
+            
+            // Randomly choose one
+            const index = Math.floor(Math.random() * links.length);
+            const item = links[index];
+            
+            if (typeof item === 'string') {
+                selectedLink = item;
+            } else if (item && item.link) {
+                selectedLink = item.link;
+            }
+            
+            if (selectedLink) {
+                url = selectedLink;
+            }
+        }
+        
+        window.open(url, '_blank');
+    };
     if (applyBtn) applyBtn.onclick = openApply;
     if (applyBtnMobile) applyBtnMobile.onclick = openApply;
 

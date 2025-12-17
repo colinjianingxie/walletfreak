@@ -1433,3 +1433,70 @@ input[type=range]::-moz-range-thumb {
         margin-top: 0 !important;
     }
 }
+
+/* Fix for List View Action Button Filling Height (Properly applied at end of file) */
+.view-grid.list-view .list-action-col {
+    /* Escape the parent padding (1rem top/bottom, 1.5rem right) */
+    align-self: stretch !important;
+    /* Ensure the column stretches to fill grid row height */
+    margin: -1rem -1.5rem -1rem 0;
+    /* Negative margins to cover parent padding */
+    width: calc(100% + 1.5rem) !important;
+    height: auto !important;
+    min-height: 100% !important;
+    /* Ensure it stays tall */
+    /* Let it stretch */
+    padding: 0 !important;
+    display: flex !important;
+    align-items: stretch !important;
+    justify-content: stretch !important;
+}
+
+/* Wrapper for the button to ensure it fills */
+.view-grid.list-view .list-view-trigger-btn {
+    width: 100%;
+    height: auto;
+    /* Fill flex parent */
+    border-radius: 0;
+    margin: 0;
+    border: none;
+    background: transparent;
+    border-left: 1px solid #F1F5F9;
+    transition: background 0.2s;
+    justify-content: center;
+    /* Center content */
+}
+
+.view-grid.list-view .list-view-trigger-btn:hover {
+    background: #F8FAFC !important;
+}
+
+/* === LIST VIEW IMAGE FIXES (RECTANGLE) === */
+.view-grid.list-view .card-visual-container img,
+.view-grid.list-view .card-visual-container .gradient-card {
+    width: 64px !important;
+    /* Slightly distinct width */
+    height: auto !important;
+    aspect-ratio: 1.586 !important;
+    /* Standard card ratio */
+    border-radius: 4px !important;
+    /* Rectangle */
+    object-fit: cover !important;
+    /* Fix "padding" issues by filling the frame */
+    /* Ensure background is white for transparency */
+    box-shadow: none !important;
+    border: 1px solid #E2E8F0 !important;
+    /* Slightly darker border for contrast */
+    padding: 0 !important;
+    /* Force no padding */
+}
+
+/* Fix "Injogged Randomly" alignment issue - Enforce Left Alignment */
+.view-grid.list-view .card-visual-container {
+    justify-content: flex-start !important;
+    /* Force left alignment */
+    padding-left: 0 !important;
+    /* Remove padding if needed */
+    width: 100% !important;
+    /* Ensure it fills the cell */
+}

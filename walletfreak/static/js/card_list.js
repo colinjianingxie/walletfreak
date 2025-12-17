@@ -444,18 +444,32 @@ function toggleCardSelection(cardId, btn) {
 }
 
 function updateCompareUI(cardId, isSelected) {
-    // Find the button for this card (could be multiple if we had list/grid view, but here just one per card)
+    // 1. Update Compare Button (Grid View / General)
     const btn = document.querySelector(`.compare-select-btn[data-card-id="${cardId}"]`);
-    if (!btn) return;
+    if (btn) {
+        if (isSelected) {
+            btn.style.background = '#3B82F6';
+            btn.style.color = 'white';
+            btn.innerHTML = '<span class="material-icons" style="font-size: 18px; color: white;">check</span>';
+        } else {
+            btn.style.background = 'white';
+            btn.style.color = '#64748B';
+            btn.innerHTML = '<span class="material-icons" style="font-size: 18px; color: #64748B;">balance</span>';
+        }
+    }
 
-    if (isSelected) {
-        btn.style.background = '#3B82F6';
-        btn.style.color = 'white';
-        btn.innerHTML = '<span class="material-icons" style="font-size: 18px; color: white;">check</span>';
-    } else {
-        btn.style.background = 'white';
-        btn.style.color = '#64748B';
-        btn.innerHTML = '<span class="material-icons" style="font-size: 18px; color: #64748B;">balance</span>';
+    // 2. Update Checkbox (List View)
+    // Find the data source div for this card, then finding the sibling checkbox
+    const dataDiv = document.querySelector(`.compare-data-source[data-card-id="${cardId}"]`);
+    if (dataDiv) {
+        const checkbox = dataDiv.parentElement.querySelector('.list-checkbox');
+        if (checkbox) {
+            if (isSelected) {
+                checkbox.classList.add('checked');
+            } else {
+                checkbox.classList.remove('checked');
+            }
+        }
     }
 }
 
@@ -610,4 +624,20 @@ function updateWalletState(newWalletIds) {
     // There is a 'wallet_filter' in Python, but JS filterCards doesn't seem to implement it fully?
     // Let's check filterCards... no, it doesn't filter by wallet status in JS.
     // So just updating visual badges is enough for now.
+}
+
+// Handling Card Click based on view
+function handleCardClick(cardId) {
+    // If in LIST view, row click toggles selection (checkbox)
+    if (currentView === 'list') {
+        // Find the data source element to get card details
+        const dataDiv = document.querySelector(`.compare-data-source[data-card-id="${cardId}"]`);
+        if (dataDiv) {
+            toggleCardSelection(cardId, dataDiv);
+        }
+        return;
+    }
+
+    // In GRID view, the whole card is clickable.
+    openCardModal(cardId);
 }

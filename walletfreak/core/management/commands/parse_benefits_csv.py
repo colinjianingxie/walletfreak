@@ -90,13 +90,16 @@ def parse_master_cards_csv(csv_path):
     """
     Parse the master credit cards CSV (default_credit_cards.csv).
     
-    CSV Format: Vendor|CardName|PointsValueCpp|slug-id|ImageURL
+    CSV Format: Vendor|CardName|PointsValueCpp|slug-id|ImageURL|MinCreditScore|MaxCreditScore|ApplicationLink
     
     Returns a dictionary:
     {
         'card_key': {
             'points_value_cpp': float,
-            'image_url': str
+            'image_url': str,
+            'min_credit_score': int or None,
+            'max_credit_score': int or None,
+            'application_link': str
         }
     }
     """
@@ -119,10 +122,34 @@ def parse_master_cards_csv(csv_path):
                         pass
                 
                 image_url = row.get('ImageURL', '').strip()
+
+                # Parse MinCreditScore
+                min_score = None
+                min_score_str = row.get('MinCreditScore', '').strip()
+                if min_score_str and min_score_str.upper() != 'N/A':
+                    try:
+                        min_score = int(min_score_str)
+                    except ValueError:
+                        pass
+
+                # Parse MaxCreditScore
+                max_score = None
+                max_score_str = row.get('MaxCreditScore', '').strip()
+                if max_score_str and max_score_str.upper() != 'N/A':
+                    try:
+                        max_score = int(max_score_str)
+                    except ValueError:
+                        pass
+
+                # Parse ApplicationLink
+                app_link = (row.get('ApplicationLink') or '').strip()
                         
                 master_data[key] = {
                     'points_value_cpp': cpp,
-                    'image_url': image_url
+                    'image_url': image_url,
+                    'min_credit_score': min_score,
+                    'max_credit_score': max_score,
+                    'application_link': app_link
                 }
     except FileNotFoundError:
         print(f"Warning: Master cards CSV not found at {csv_path}")
@@ -362,7 +389,11 @@ def convert_to_firestore_format(cards_dict):
             'verdict': card_data.get('verdict', ''),
             'local_image': local_image,
             'rewards_summary': card_data.get('rewards_summary', ''),
-            'points_value_cpp': card_data.get('points_value_cpp', 0.0)
+            'rewards_summary': card_data.get('rewards_summary', ''),
+            'points_value_cpp': card_data.get('points_value_cpp', 0.0),
+            'min_credit_score': card_data.get('min_credit_score'),
+            'max_credit_score': card_data.get('max_credit_score'),
+            'application_link': card_data.get('application_link', '')
         }
         
         firestore_cards.append(card_doc)
@@ -403,6 +434,9 @@ def generate_cards_from_csv(csv_path, signup_csv_path=None, rates_csv_path=None,
                 card['points_value_cpp'] = data['points_value_cpp']
                 if data['image_url']:
                     card['image_url'] = data['image_url']
+                card['min_credit_score'] = data['min_credit_score']
+                card['max_credit_score'] = data['max_credit_score']
+                card['application_link'] = data['application_link']
                 
     return convert_to_firestore_format(cards_dict)
 
@@ -417,4 +451,7 @@ if __name__ == '__main__':
     for card in cards[:2]:  # Print first 2 as sample
         print(f"\n{card['name']} ({card['issuer']}):")
         print(f"  Image URL: {card.get('image_url', 'N/A')}")
+        print(f"  Min Score: {card.get('min_credit_score', 'N/A')}")
+        print(f"  Max Score: {card.get('max_credit_score', 'N/A')}")
+        print(f"  App Link: {card.get('application_link', 'N/A')}")
         print(f"  Benefits: {len(card['benefits'])}")

@@ -189,7 +189,7 @@
                         data-issuer="{{ card.issuer|default:''|strip|lower }}"
                         data-categories="{{ card.categories|join:','|lower }}"
                         data-fee="{{ card.annual_fee|default:0 }}"
-                        onclick="openCardModal('{{ card.id }}')"
+                        onclick="handleCardClick('{{ card.id }}')"
                     >
                         <!-- List View Checkbox -->
                         <div class="list-checkbox-col">
@@ -209,6 +209,18 @@
                         <div class="card-visual-container">
                             {% if card.local_image %}
                             <img src="{% static card.local_image %}" alt="{{ card.name }}" onerror="this.onerror=null; this.src='{{ card.image_url }}';">
+                                <!-- Compare Selection Button (Overlay on Image for Grid) -->
+                                <button 
+                                    class="compare-select-btn"
+                                    onclick="event.stopPropagation(); toggleCardSelection('{{ card.id }}', this); return false;"
+                                    data-card-id="{{ card.id }}"
+                                    data-card-name="{{ card.name }}"
+                                    data-card-issuer="{{ card.issuer }}"
+                                    data-card-color="url('{{ card.image_url }}')"
+                                    onmousedown="event.stopPropagation();"
+                                >
+                                    <span class="material-icons">balance</span>
+                                </button>
                             {% elif card.image_url %}
                             <img src="{{ card.image_url }}" alt="{{ card.name }}">
                                  
@@ -319,7 +331,7 @@
                         </div>
 
                         <div class="list-action-col" style="width: 80px;">
-                             <button 
+                            <button 
                                 onclick="event.stopPropagation(); openCardModal('{{ card.id }}');"
                                 class="list-view-trigger-btn"
                                 onmouseover="this.style.color='#3B82F6'; this.style.background='#EFF6FF'"
