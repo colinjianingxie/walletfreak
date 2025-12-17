@@ -168,13 +168,13 @@
 
             <!-- Scroll Wrapper for List View -->
             <div id="cards-scroll-container" class="list-view-container">
-                <!-- List Header (Hidden by default) -->
-                <div id="list-header" style="display: none; padding: 1rem 1.5rem; border-bottom: 1px solid #F1F5F9; color: #94A3B8; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">
-                    <div style="width: 40px;">COMPARE</div>
-                    <div style="flex: 2; padding-left: 1rem;">CARD</div>
-                    <div style="width: 100px; text-align: right;">FEE</div>
-                    <div style="flex: 2.5; padding-left: 2rem;">REWARDS SUMMARY</div>
-                    <div style="width: 80px; text-align: center;">ACTION</div>
+                <!-- List Header (Hidden by default, shown in ListView via CSS) -->
+                <div id="list-header" class="list-view-header">
+                    <div class="col-compare">COMPARE</div>
+                    <div class="col-card">CARD</div>
+                    <div class="col-fee">FEE</div>
+                    <div class="col-rewards">REWARDS SUMMARY</div>
+                    <div class="col-action">ACTION</div>
                 </div>
 
                 <!-- Grid -->
@@ -192,7 +192,7 @@
                         onclick="openCardModal('{{ card.id }}')"
                     >
                         <!-- List View Checkbox -->
-                        <div class="list-checkbox-col" style="display: none;">
+                        <div class="list-checkbox-col">
                             <div class="list-checkbox" onclick="event.stopPropagation(); toggleCardSelection('{{ card.id }}', this.parentElement.querySelector('.compare-data-source'));">
                                 <span class="material-icons" style="font-size: 16px; color: transparent;">check</span>
                             </div>
@@ -259,7 +259,7 @@
                             {% endif %}
 
                             <!-- List View Info (Hidden in Grid) -->
-                            <div class="list-card-info" style="display: none;">
+                            <div class="list-card-info">
                                 <h3 class="list-card-name">{{ card.name }}</h3>
                                 <div class="list-card-issuer">{{ card.issuer }}</div>
                             </div>
@@ -299,11 +299,11 @@
                         </div>
 
                         <!-- List View Columns (Hidden in Grid) -->
-                        <div class="list-fee-col" style="display: none;">
+                        <div class="list-fee-col">
                             <span class="fee-value">${{ card.annual_fee|default:0 }}</span>
                         </div>
 
-                        <div class="list-rewards-col" style="display: none; flex: 2.5;">
+                        <div class="list-rewards-col" style="flex: 2.5;">
                             {% for reward in card.earning_display|slice:":3" %}
                             <div class="reward-pill">
                                 <span class="reward-rate">{{ reward.rate }}</span>
@@ -318,7 +318,7 @@
                             {% endif %}
                         </div>
 
-                        <div class="list-action-col" style="display: none; width: 80px;">
+                        <div class="list-action-col" style="width: 80px;">
                              <button 
                                 onclick="event.stopPropagation(); openCardModal('{{ card.id }}');"
                                 class="list-view-trigger-btn"

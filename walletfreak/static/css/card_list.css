@@ -340,17 +340,43 @@ input[type=range]::-moz-range-thumb {
     padding-bottom: 0;
     margin-bottom: 2rem;
     width: 100%;
-    max-width: 100%;
-    /* Prevent overflow */
 }
+
 
 /* Grid Layout overrides for Header inside Container */
 #cards-scroll-container.list-view-active #list-header {
-    display: flex !important;
-    min-width: 900px;
+    display: grid !important;
+    grid-template-columns: 80px 2fr 100px 2.5fr 80px;
     padding: 1rem 1.5rem;
     border-bottom: 1px solid #F1F5F9;
     align-items: center;
+    gap: 1rem;
+    min-width: 900px;
+}
+
+.list-view-header {
+    color: #94A3B8;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+/* Header Column Alignments */
+.col-card {
+    padding-left: 0;
+}
+
+.col-fee {
+    text-align: right;
+}
+
+.col-rewards {
+    padding-left: 0;
+}
+
+.col-action {
+    text-align: center;
 }
 
 /* List Grid Layout */
@@ -362,10 +388,12 @@ input[type=range]::-moz-range-thumb {
 }
 
 /* List Item (Card Row) */
+/* List Item (Card Row) */
 .view-grid.list-view .explore-card {
-    display: flex !important;
-    flex-direction: row;
+    display: grid !important;
+    grid-template-columns: 80px 2fr 100px 2.5fr 80px;
     align-items: center;
+    gap: 1rem;
     padding: 1rem 1.5rem;
     border-bottom: 1px solid #F1F5F9;
     background: transparent;
@@ -376,7 +404,6 @@ input[type=range]::-moz-range-thumb {
     box-shadow: none;
     margin-bottom: 0;
     min-width: 900px;
-    /* Match header width */
     transition: background 0.2s;
 }
 
@@ -392,14 +419,15 @@ input[type=range]::-moz-range-thumb {
 /* List Visual (Icon) Logic */
 .view-grid.list-view .card-visual-container {
     width: auto;
-    flex: 2;
-    min-width: 200px;
-    /* Ensure enough space */
+    flex: auto;
+    min-width: 0;
     border: none;
     background: transparent;
     padding: 0;
     justify-content: flex-start;
     gap: 1rem;
+    display: flex;
+    align-items: center;
 }
 
 /* Ensure Logo / Gradient is small and circular */
@@ -413,6 +441,7 @@ input[type=range]::-moz-range-thumb {
     object-fit: cover;
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
     /* Subtle border for white cards */
+    flex-shrink: 0;
 }
 
 /* Hide extra gradient card elements in list view */
@@ -439,6 +468,15 @@ input[type=range]::-moz-range-thumb {
     font-weight: 500;
 }
 
+/* Default state: Hide list-only elements in Grid layout */
+.list-checkbox-col,
+.list-card-info,
+.list-fee-col,
+.list-rewards-col,
+.list-action-col {
+    display: none;
+}
+
 /* Hide Grid Only Elements */
 .view-grid.list-view .card-content,
 .view-grid.list-view .compare-select-btn {
@@ -456,25 +494,28 @@ input[type=range]::-moz-range-thumb {
 
 /* Column Widths (Must match Header) */
 .list-checkbox-col {
-    width: 40px;
+    width: auto;
     justify-content: flex-start;
+    padding-left: 0.5rem;
+    /* Center checkbox under 'COMPARE' start */
 }
 
 .list-fee-col {
-    width: 100px;
+    width: auto;
     justify-content: flex-end;
 }
 
 .list-rewards-col {
-    flex: 2.5;
-    padding-left: 2rem;
+    flex: auto;
+    padding-left: 0;
+    /* Reset padding, handled by grid gap */
     flex-wrap: wrap;
     gap: 0.5rem;
     justify-content: flex-start;
 }
 
 .list-action-col {
-    width: 80px;
+    width: auto;
     justify-content: center;
 }
 
@@ -621,6 +662,7 @@ input[type=range]::-moz-range-thumb {
 
     .view-grid.list-view .explore-card {
         margin-bottom: 1rem;
+        display: flex !important;
         flex-direction: row;
         /* Force row layout even on mobile */
     }
@@ -820,6 +862,10 @@ input[type=range]::-moz-range-thumb {
     line-height: 1;
     margin: 0 !important;
     padding: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    padding-bottom: 12px !important;
+    /* Increased to 12px "even more" */
 }
 
 .search-input {
@@ -938,11 +984,14 @@ input[type=range]::-moz-range-thumb {
         display: block;
         /* Select elements shouldn't be flex */
         padding: 0 2rem 0 0.75rem;
+        /* Clean horizontal padding, no vertical */
         font-size: 0.875rem;
         width: 100%;
         line-height: 48px;
-        /* Vertically center text if padding fails */
+        /* Vertically center text */
         margin: 0;
+        background-position: right 0.75rem center !important;
+        /* Ensure arrow is centered */
     }
 
     /* Fix toggle button alignment on mobile */
@@ -958,10 +1007,7 @@ input[type=range]::-moz-range-thumb {
         display: none;
     }
 
-    .mobile-sort-container .sort-select {
-        padding: 0.5rem 2rem 0.5rem 0.75rem;
-        font-size: 0.875rem;
-    }
+    /* consolidated above */
 }
 
 .main-grid-layout {
@@ -1197,7 +1243,8 @@ input[type=range]::-moz-range-thumb {
     background: white;
     border: 1px solid #E2E8F0;
     border-radius: 8px;
-    height: 46px !important;
+    height: 48px !important;
+    /* Increased to 48px to match toggle buttons */
     padding: 0 2.5rem 0 1rem;
     display: flex;
     align-items: center;
@@ -1206,9 +1253,15 @@ input[type=range]::-moz-range-thumb {
     color: #1F2937;
     cursor: pointer;
     font-family: 'Outfit', sans-serif;
-    line-height: 46px;
+    line-height: 48px;
     /* Fallback for text alignment */
     box-sizing: border-box !important;
+    display: block !important;
+    /* Ensure it is not flex */
+    margin-top: 0 !important;
+    position: relative !important;
+    top: 6px !important;
+    /* Force visual move down using relative positioning */
 }
 
 .sort-chevron {
