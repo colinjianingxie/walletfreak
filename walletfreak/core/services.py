@@ -311,6 +311,12 @@ class FirestoreService:
             'notification_preferences': preferences
         })
 
+    def update_last_benefit_notification_time(self, uid):
+        """Update user's last benefit email sent time"""
+        self.db.collection('users').document(uid).update({
+            'last_benefit_email_sent_at': firestore.SERVER_TIMESTAMP
+        })
+
     def send_email_notification(self, to, subject, html_content=None, text_content=None, bcc=None):
         """
         Send an email via the Firebase Trigger Email Extension by writing to the 'mail' collection.

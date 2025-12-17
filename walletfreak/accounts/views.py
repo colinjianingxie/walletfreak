@@ -217,7 +217,48 @@ def ajax_update_notifications(request):
         uid = request.session.get('uid')
         db.update_user_notification_preferences(uid, preferences)
         
-        return JsonResponse({'status': 'success'})
+        # Calculate Next Email Time
+        next_email_formatted = "Pending..."
+        try:
+            from datetime import timedelta
+            import datetime
+            
+            # Fetch fresh profile to get last sent time
+            user = db.get_user_profile(uid)
+            last_sent = user.get('last_benefit_email_sent_at')
+            
+            # Get freq from prefs
+            benefit_prefs = preferences.get('benefit_expiration', {})
+            freq_days = benefit_prefs.get('repeat_frequency', 7)
+            
+            # Convert to float for potentially small values (Test Mode)
+            freq_days = float(freq_days)
+            
+            now = datetime.datetime.now(datetime.timezone.utc)
+            
+            if not last_sent:
+                # Never sent, so it will send on next run (e.g. tomorrow morning or soon)
+                # For UX, we can say "Within 24 hours" or "Soon"
+                next_email_formatted = "Within 24 hours"
+            else:
+                # Calculate next run
+                # last_sent is likely a datetime (from Firestore)
+                next_run = last_sent + timedelta(days=freq_days)
+                
+                # Format
+                if next_run <= now:
+                     next_email_formatted = "Within 24 hours"
+                else:
+                    # Format as readable string
+                    # e.g. "Dec 18, 2025 at 10:00 AM"
+                    # Convert to local time if possible, but server time is easier
+                    next_email_formatted = next_run.strftime("%b %d, %Y at %I:%M %p")
+                    
+        except Exception as e:
+            print(f"Error calculating next email: {e}")
+            next_email_formatted = "Unknown"
+        
+        return JsonResponse({'status': 'success', 'next_email_formatted': next_email_formatted})
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 

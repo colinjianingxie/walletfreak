@@ -5,4 +5,7 @@ urlpatterns = [
     path('', views.home, name='home'),
 
     path('features/', views.features, name='features'),
+    
+    # Cron Jobs
+    path('cron/email-notifications/', views.run_notification_cron, name='cron_email'),
 ]

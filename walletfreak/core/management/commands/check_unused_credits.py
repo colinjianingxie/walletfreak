@@ -125,8 +125,39 @@ class Command(BaseCommand):
 
             # Send Email if requested and items found
             if should_send and user_unused_items and user_email:
-                self.stdout.write(f"  -> Sending email to {user_email}...")
-                self.send_unused_credits_email(user_email, username, user_unused_items)
+                # Frequency Check logic
+                try:
+                    prefs = db.get_user_notification_preferences(uid)
+                    benefit_prefs = prefs.get('benefit_expiration', {})
+                    if not benefit_prefs.get('enabled', True):
+                         self.stdout.write(f"  -> Skipping: Benefit notifications disabled.")
+                         continue
+
+                    last_sent = user.get('last_benefit_email_sent_at')
+                    freq_days = float(benefit_prefs.get('repeat_frequency', 7))
+                    
+                    should_notify = True
+                    if last_sent:
+                        import datetime
+                        # Ensure last_sent is timezone aware if using firestore
+                        # But simple comparison:
+                        now = datetime.datetime.now(datetime.timezone.utc)
+                        next_run = last_sent + datetime.timedelta(days=freq_days)
+                        
+                        if now < next_run:
+                            should_notify = False
+                            time_left = next_run - now
+                            self.stdout.write(f"  -> Skipping: Recently notified. Next email in {time_left}.")
+                    
+                    if should_notify:
+                        self.stdout.write(f"  -> Sending email to {user_email}...")
+                        result = self.send_unused_credits_email(user_email, username, user_unused_items)
+                        if result:
+                             db.update_last_benefit_notification_time(uid)
+                    
+                except Exception as e:
+                    self.stdout.write(f"  [ERROR] Processing notification logic: {e}")
+                    
             elif should_send and not user_unused_items:
                  self.stdout.write(f"  -> No unused credits to email.")
 
@@ -182,8 +213,10 @@ class Command(BaseCommand):
         try:
             db.send_email_notification(to=to_email, subject=subject, html_content=html_content, text_content=text_content)
             self.stdout.write(self.style.SUCCESS("     Email sent successfully."))
+            return True
         except Exception as e:
             self.stdout.write(self.style.ERROR(f"     Failed to send email: {e}"))
+            return False
 
 
     def _get_current_period_key(self, time_category):
