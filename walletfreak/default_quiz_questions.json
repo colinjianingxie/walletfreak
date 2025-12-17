@@ -11,7 +11,8 @@
                 "personalities": [
                     "luxury-jetsetter",
                     "points-strategist",
-                    "wallet-freak"
+                    "wallet-freak",
+                    "value-traveler"
                 ]
             },
             {
@@ -21,14 +22,17 @@
                     "hotel-status-chaser",
                     "luxury-jetsetter",
                     "yuppie",
-                    "wallet-freak"
+                    "wallet-freak",
+                    "airline-companion-chaser"
                 ]
             },
             {
                 "id": "airline_benefits",
                 "text": "Airline perks like companion tickets and free checked bags",
                 "personalities": [
-                    "airline-companion-chaser"
+                    "airline-companion-chaser",
+                    "value-traveler",
+                    "luxury-jetsetter"
                 ]
             },
             {
@@ -38,7 +42,8 @@
                     "luxury-jetsetter",
                     "value-traveler",
                     "wallet-freak",
-                    "yuppie"
+                    "yuppie",
+                    "points-strategist"
                 ]
             },
             {
@@ -46,7 +51,10 @@
                 "text": "Getting cash back on my purchases",
                 "personalities": [
                     "cashback-pragmatist",
-                    "simple-minimalist"
+                    "simple-minimalist",
+                    "category-hunter",
+                    "gas-freak",
+                    "online-shopping-freak"
                 ]
             },
             {
@@ -59,6 +67,15 @@
                     "category-hunter",
                     "family-freak",
                     "online-shopping-freak"
+                ]
+            },
+            {
+                "id": "business_perks",
+                "text": "Optimizing rewards for business expenses and large purchases",
+                "personalities": [
+                    "business-powerhouse",
+                    "wallet-freak",
+                    "points-strategist"
                 ]
             }
         ]
@@ -76,7 +93,8 @@
                     "foodie-grocery-king",
                     "yuppie",
                     "wallet-freak",
-                    "family-freak"
+                    "family-freak",
+                    "value-traveler"
                 ]
             },
             {
@@ -84,7 +102,8 @@
                 "text": "Groceries and supermarkets",
                 "personalities": [
                     "foodie-grocery-king",
-                    "family-freak"
+                    "family-freak",
+                    "cashback-pragmatist"
                 ]
             },
             {
@@ -105,14 +124,16 @@
                 "personalities": [
                     "online-shopping-freak",
                     "family-freak",
-                    "yuppie"
+                    "yuppie",
+                    "category-hunter"
                 ]
             },
             {
                 "id": "fuel",
                 "text": "Gas or electric vehicle charging",
                 "personalities": [
-                    "gas-freak"
+                    "gas-freak",
+                    "family-freak"
                 ]
             },
             {
@@ -126,6 +147,15 @@
                     "family-freak",
                     "yuppie",
                     "value-traveler",
+                    "student-starter"
+                ]
+            },
+            {
+                "id": "everyday_spending",
+                "text": "General everyday purchases without specific categories",
+                "personalities": [
+                    "simple-minimalist",
+                    "cashback-pragmatist",
                     "student-starter"
                 ]
             }
@@ -143,7 +173,9 @@
                 "personalities": [
                     "cashback-pragmatist",
                     "simple-minimalist",
-                    "student-starter"
+                    "student-starter",
+                    "gas-freak",
+                    "online-shopping-freak"
                 ]
             },
             {
@@ -152,7 +184,9 @@
                 "personalities": [
                     "value-traveler",
                     "category-hunter",
-                    "foodie-grocery-king"
+                    "foodie-grocery-king",
+                    "family-freak",
+                    "business-powerhouse"
                 ]
             },
             {
@@ -163,7 +197,8 @@
                     "wallet-freak",
                     "yuppie",
                     "hotel-status-chaser",
-                    "airline-companion-chaser"
+                    "airline-companion-chaser",
+                    "points-strategist"
                 ]
             }
         ]
@@ -180,7 +215,11 @@
                 "personalities": [
                     "wallet-freak",
                     "points-strategist",
-                    "category-hunter"
+                    "category-hunter",
+                    "business-powerhouse",
+                    "gas-freak",
+                    "online-shopping-freak",
+                    "foodie-grocery-king"
                 ]
             },
             {
@@ -189,7 +228,8 @@
                 "personalities": [
                     "simple-minimalist",
                     "cashback-pragmatist",
-                    "value-traveler"
+                    "value-traveler",
+                    "student-starter"
                 ]
             },
             {
@@ -197,7 +237,17 @@
                 "text": "I am willing to open multiple cards for welcome bonuses",
                 "personalities": [
                     "wallet-freak",
-                    "category-hunter"
+                    "category-hunter",
+                    "points-strategist",
+                    "luxury-jetsetter"
+                ]
+            },
+            {
+                "id": "loyalty_focus",
+                "text": "I prefer sticking to one airline or hotel chain for loyalty perks",
+                "personalities": [
+                    "airline-companion-chaser",
+                    "hotel-status-chaser"
                 ]
             }
         ]
@@ -212,28 +262,43 @@
                 "id": "large_family",
                 "text": "I have a large family with high household expenses",
                 "personalities": [
-                    "family-freak"
+                    "family-freak",
+                    "foodie-grocery-king"
                 ]
             },
             {
                 "id": "student",
                 "text": "I am a student or just starting to build credit",
                 "personalities": [
-                    "student-starter"
+                    "student-starter",
+                    "simple-minimalist"
                 ]
             },
             {
                 "id": "urban_lifestyle",
                 "text": "I live in a city and enjoy dining out and premium experiences",
                 "personalities": [
-                    "yuppie"
+                    "yuppie",
+                    "foodie-grocery-king",
+                    "value-traveler"
                 ]
             },
             {
                 "id": "business_owner",
                 "text": "I own or manage a business with regular expenses",
                 "personalities": [
-                    "business-powerhouse"
+                    "business-powerhouse",
+                    "wallet-freak"
+                ]
+            },
+            {
+                "id": "frequent_traveler",
+                "text": "I travel frequently for work or leisure",
+                "personalities": [
+                    "luxury-jetsetter",
+                    "value-traveler",
+                    "airline-companion-chaser",
+                    "hotel-status-chaser"
                 ]
             }
         ]

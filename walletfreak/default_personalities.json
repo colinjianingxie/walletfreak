@@ -29,6 +29,15 @@
                 ]
             },
             {
+                "name": "Everyday and Grocery Booster",
+                "description": "Reliable cash back or points on daily essentials like groceries and dining",
+                "cards": [
+                    "american-express-gold-card",
+                    "blue-cash-preferred-card-from-american-express",
+                    "wells-fargo-active-cash-card"
+                ]
+            },
+            {
                 "name": "Rent & Dining Booster",
                 "description": "Turn biggest fixed expense into transferable points + 3x dining / 2x travel",
                 "cards": [
@@ -88,6 +97,15 @@
                 ]
             },
             {
+                "name": "Everyday Catch-All",
+                "description": "Flat-rate rewards for non-category spend",
+                "cards": [
+                    "wells-fargo-active-cash-card",
+                    "citi-double-cash-card",
+                    "chase-freedom-unlimited"
+                ]
+            },
+            {
                 "name": "Pure Feeder Layer",
                 "description": "Uncapped 2x+ transferable everywhere else (including rent)",
                 "cards": [
@@ -140,6 +158,15 @@
                 ]
             },
             {
+                "name": "Everyday and Grocery Essentials",
+                "description": "Boosted rewards on daily purchases to feed into transfers",
+                "cards": [
+                    "blue-cash-preferred-card-from-american-express",
+                    "chase-freedom-flex",
+                    "wells-fargo-active-cash-card"
+                ]
+            },
+            {
                 "name": "2x+ Uncapped Feeder",
                 "description": "Everything non-bonus goes here → transfer for 4–10 cpp",
                 "cards": [
@@ -189,6 +216,15 @@
                 ]
             },
             {
+                "name": "Everyday Personal Booster",
+                "description": "For non-business spend like groceries and dining",
+                "cards": [
+                    "american-express-gold-card",
+                    "blue-cash-preferred-card-from-american-express",
+                    "chase-freedom-unlimited"
+                ]
+            },
+            {
                 "name": "Premium Travel & Credits Closer",
                 "description": "Lounge access, transfer partners, Dell/Indeed/wireless credits",
                 "cards": [
@@ -235,6 +271,15 @@
                     "discover-it-cash-back",
                     "us-bank-altitude-connect-visa-signature-card"
                 ]
+            },
+            {
+                "name": "Grocery and Dining Enhancer",
+                "description": "Boosted cash back on food-related spend",
+                "cards": [
+                    "blue-cash-preferred-card-from-american-express",
+                    "american-express-gold-card",
+                    "capital-one-savor-cash-rewards-credit-card"
+                ]
             }
         ],
         "rules": [
@@ -268,6 +313,15 @@
                     "american-express-gold-card",
                     "capital-one-savor-cash-rewards-credit-card",
                     "bilt-mastercard"
+                ]
+            },
+            {
+                "name": "Everyday Catch-All",
+                "description": "Flat rewards for non-food spend",
+                "cards": [
+                    "wells-fargo-active-cash-card",
+                    "chase-freedom-unlimited",
+                    "citi-double-cash-card"
                 ]
             },
             {
@@ -309,6 +363,15 @@
                 "cards": [
                     "american-express-gold-card",
                     "bilt-mastercard"
+                ]
+            },
+            {
+                "name": "Everyday and Travel Basics",
+                "description": "Rewards for general spend and family trips",
+                "cards": [
+                    "capital-one-venture-rewards-credit-card",
+                    "chase-freedom-unlimited",
+                    "wells-fargo-active-cash-card"
                 ]
             },
             {
@@ -359,6 +422,14 @@
                 ]
             },
             {
+                "name": "Grocery and Dining Add-On",
+                "description": "For food stops during commutes",
+                "cards": [
+                    "blue-cash-preferred-card-from-american-express",
+                    "american-express-gold-card"
+                ]
+            },
+            {
                 "name": "Reliable 3–4% Backup",
                 "description": "When custom/quarterly not available",
                 "cards": [
@@ -400,6 +471,15 @@
                     "chase-freedom-flex",
                     "discover-it-cash-back",
                     "bank-of-america-customized-cash-rewards-credit-card-for-students"
+                ]
+            },
+            {
+                "name": "Everyday Essentials",
+                "description": "Flat rewards for offline or non-online spend",
+                "cards": [
+                    "wells-fargo-active-cash-card",
+                    "citi-double-cash-card",
+                    "chase-freedom-unlimited"
                 ]
             },
             {
@@ -446,6 +526,14 @@
                     "bilt-mastercard",
                     "wells-fargo-active-cash-card"
                 ]
+            },
+            {
+                "name": "Optional Grocery Add-On",
+                "description": "For minimal effort boost on food spend",
+                "cards": [
+                    "blue-cash-preferred-card-from-american-express",
+                    "citi-custom-cash-card"
+                ]
             }
         ],
         "rules": [
@@ -475,6 +563,14 @@
                 "description": "Credits that fund your actual life",
                 "cards": [
                     "american-express-gold-card"
+                ]
+            },
+            {
+                "name": "Everyday Multiplier",
+                "description": "Reliable rewards for daily urban spend",
+                "cards": [
+                    "chase-freedom-unlimited",
+                    "wells-fargo-active-cash-card"
                 ]
             },
             {
@@ -521,6 +617,14 @@
                     "bilt-mastercard",
                     "wells-fargo-active-cash-card"
                 ]
+            },
+            {
+                "name": "Grocery and Dining Support",
+                "description": "Boost for home-based spend between trips",
+                "cards": [
+                    "blue-cash-preferred-card-from-american-express",
+                    "american-express-gold-card"
+                ]
             }
         ],
         "rules": [
@@ -559,6 +663,14 @@
                 ]
             },
             {
+                "name": "Everyday Flat Rate",
+                "description": "Backup for non-category months",
+                "cards": [
+                    "wells-fargo-active-cash-card",
+                    "citi-double-cash-card"
+                ]
+            },
+            {
                 "name": "Rent & Fixed Bonus",
                 "description": "Bilt fills the gaps with 3x dining / 2x travel / 1x rent",
                 "cards": [
@@ -590,6 +702,15 @@
                     "discover-it-student-cash-back",
                     "capital-one-savor-student-cash-rewards-credit-card",
                     "bilt-mastercard"
+                ]
+            },
+            {
+                "name": "Everyday and Secured Options",
+                "description": "Build credit with flat rewards or secured cards",
+                "cards": [
+                    "capital-one-quicksilver-student-cash-rewards-credit-card",
+                    "discover-it-student-chrome",
+                    "capital-one-platinum-secured-credit-card"
                 ]
             }
         ],
@@ -629,6 +750,15 @@
                 "description": "Instant Platinum + $300 dining credit + 85k free night",
                 "cards": [
                     "marriott-bonvoy-brilliant-american-express-card"
+                ]
+            },
+            {
+                "name": "Everyday Rewards Pairing",
+                "description": "General spend cards to complement hotel perks",
+                "cards": [
+                    "chase-freedom-unlimited",
+                    "wells-fargo-active-cash-card",
+                    "blue-cash-preferred-card-from-american-express"
                 ]
             },
             {
@@ -680,6 +810,15 @@
                     "united-explorer-card",
                     "united-quest-card",
                     "united-club-card"
+                ]
+            },
+            {
+                "name": "Everyday and Grocery Support",
+                "description": "Rewards for non-travel spend to build points",
+                "cards": [
+                    "blue-cash-preferred-card-from-american-express",
+                    "chase-freedom-unlimited",
+                    "wells-fargo-active-cash-card"
                 ]
             }
         ],
