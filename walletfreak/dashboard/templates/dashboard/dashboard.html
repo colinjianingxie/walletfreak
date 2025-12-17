@@ -106,7 +106,7 @@
 <!-- Top Grid: Annual Value + My Wallet + Add New Card -->
 <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem;">
     <!-- Annual Value Card (Purple) -->
-    <div
+    <div id="annual-value-card"
         style="background: linear-gradient(135deg, #6366F1 0%, #7C3AED 100%); border-radius: 24px; padding: 2rem; color: white; box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3); position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; min-height: 240px;">
         
         <!-- Top Row -->
@@ -168,7 +168,7 @@
 </div>
 
 <!-- Filter Pills Section -->
-<div style="margin-bottom: 2rem; overflow-x: auto; padding-bottom: 0.5rem;">
+<div id="card-filters-container" style="margin-bottom: 2rem; overflow-x: auto; padding-bottom: 0.5rem;">
     <div style="display: flex; gap: 0.75rem;" id="card-filters">
         <button class="filter-pill active" onclick="filterBenefits('all')">
             <span class="material-icons" style="font-size: 16px;">filter_list</span>
@@ -184,7 +184,7 @@
 </div>
 
 <!-- Action Needed Section -->
-<div style="margin-bottom: 3rem;">
+<div id="action-needed-section" style="margin-bottom: 3rem;">
     <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
         <div style="width: 32px; height: 32px; background: #FEF3C7; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #D97706;">
             <span class="material-icons" style="font-size: 18px;">priority_high</span>
@@ -295,7 +295,7 @@
 
 <!-- Maxed Out Section -->
 {% if maxed_out_benefits %}
-<div style="margin-bottom: 3rem;">
+<div id="maxed-out-section" style="margin-bottom: 3rem;">
     <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
         <div style="width: 32px; height: 32px; background: #DCFCE7; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #16A34A;">
             <span class="material-icons" style="font-size: 18px;">check_circle</span>
@@ -454,7 +454,7 @@
                     <!-- Active Cards List -->
                     {% if active_cards %}
                         {% for card in active_cards %}
-                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: white; border: 1px solid #E5E7EB; border-radius: 12px; margin-bottom: 0.75rem;">
+                        <div class="card-item-container" style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: white; border: 1px solid #E5E7EB; border-radius: 12px; margin-bottom: 0.75rem;">
 <img src="{% get_card_image_url card.card_id %}" style="width: 60px; height: auto; object-fit: contain; border-radius: 4px;" alt="{{ card.name }}">
                             <div style="flex: 1;">
                                 <div style="font-weight: 700; color: #1F2937; font-size: 1rem; margin-bottom: 0.25rem;">{{ card.name }}</div>
@@ -551,7 +551,7 @@
                 <div style="flex: 1; overflow-y: auto;">
                     {% if active_cards %}
                         {% for card in active_cards %}
-                        <div style="display: flex; align-items: center; padding: 1.25rem; border: 1px solid #F3F4F6; border-radius: 16px; margin-bottom: 1rem; background: white; transition: all 0.2s;">
+                        <div class="card-item-container" style="display: flex; align-items: center; padding: 1.25rem; border: 1px solid #F3F4F6; border-radius: 16px; margin-bottom: 1rem; background: white; transition: all 0.2s;">
                             <img src="{% get_card_image_url card.card_id %}" style="width: 60px; height: auto; object-fit: contain; border-radius: 4px; margin-right: 1.25rem;" alt="{{ card.name }}">
                             
                             <div>
@@ -783,7 +783,8 @@
 
 <script>
     // --- Manage Wallet Modal Logic ---
-    const availableCards = {{ available_cards_json|safe }};
+    const currentUserUid = "{{ request.session.uid }}";
+    let availableCards = {{ available_cards_json|safe }};
 
 </script>
 <!-- Remove Card Modal -->

@@ -452,6 +452,7 @@ def card_list(request):
         'current_max_fee': max_fee_filter or max_fee,
         'wallet_filter': wallet_filter,
         'user_match_scores': user_match_scores,
+        'user_personality_json': json.dumps(user_personality) if user_personality else 'null',
         'sort_by': sort_by
     }
     return render(request, 'cards/card_list.html', context)

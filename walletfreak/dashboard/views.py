@@ -65,8 +65,10 @@ def dashboard(request):
         'annual_fee': card.get('annual_fee', 0),
         'image_url': resolve_card_image_url(card['id']) if 'id' in card else '',
         'earning_rates': card.get('earning_rates', []),
+        'image_url': resolve_card_image_url(card['id']) if 'id' in card else '',
+        'earning_rates': card.get('earning_rates', []),
         'earning': card.get('earning', []),
-    } for card in available_cards], default=str)
+    } for card in all_cards], default=str)
     
     # Calculate benefits and values
     all_benefits = []
@@ -373,9 +375,38 @@ def remove_card(request, user_card_id):
         return JsonResponse({'success': False, 'error': 'Not authenticated'}, status=401)
     
     try:
-        db.remove_card_from_user(uid, user_card_id)
+        deleted_card_slug = db.remove_card_from_user(uid, user_card_id)
+        
+        # If AJAX, return the generic card details so frontend can add it back to 'available' list
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest' or request.POST.get('ajax'):
+            if deleted_card_slug:
+                generic_card = db.get_card_by_slug(deleted_card_slug)
+                if generic_card:
+                    # Construct standardized card object for JS
+                    card_data = {
+                        'id': generic_card.get('id', deleted_card_slug),
+                        'name': generic_card.get('name'),
+                        'issuer': generic_card.get('issuer'),
+                        'benefits': generic_card.get('benefits', []),
+                        'rewards_structure': generic_card.get('rewards_structure', []),
+                        'credits': generic_card.get('credits', []),
+                        'welcome_bonus': generic_card.get('welcome_bonus', ''),
+                        'welcome_offer': generic_card.get('welcome_offer', ''),
+                        'signup_bonus': generic_card.get('signup_bonus', ''),
+                        'welcome_requirement': generic_card.get('welcome_requirement', ''),
+                        'annual_fee': generic_card.get('annual_fee', 0),
+                        'image_url': resolve_card_image_url(deleted_card_slug),
+                        'earning_rates': generic_card.get('earning_rates', []),
+                        'earning': generic_card.get('earning', []),
+                    }
+                    return JsonResponse({'success': True, 'card': card_data})
+            
+            return JsonResponse({'success': True}) # Fallback if card not found or slug missing
+            
         return redirect('dashboard')  # Redirect to dashboard after removing card
     except Exception as e:
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest' or request.POST.get('ajax'):
+             return JsonResponse({'success': False, 'error': str(e)}, status=500)
         return JsonResponse({'success': False, 'error': str(e)}, status=500)
 
 

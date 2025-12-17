@@ -394,6 +394,8 @@ const walletCardIds = new Set({{ wallet_card_ids|safe|default:'[]' }});
 
 // Template filter for dictionary access
 const userMatchScores = {{ user_match_scores|safe|default:'{}' }};
+const userPersonality = {{ user_personality_json|safe|default:'null' }};
+const currentUserUid = "{{ request.session.uid }}";
 
 </script>
 <script src="{% static 'js/card_list.js' %}"></script>

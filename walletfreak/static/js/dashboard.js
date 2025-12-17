@@ -3,6 +3,326 @@
  * Handles card filtering and interactions
  */
 
+// Initialize Firestore
+const db = firebase.firestore();
+let walletCards = [];
+let walletListenerUnsubscribe = null;
+
+function setupWalletListener() {
+    if (!currentUserUid) return;
+
+    if (walletListenerUnsubscribe) {
+        walletListenerUnsubscribe();
+    }
+
+    walletListenerUnsubscribe = db.collection('users').doc(currentUserUid).collection('user_cards')
+        .where('status', '==', 'active') // Only listen for active cards for the stack
+        .onSnapshot((snapshot) => {
+            console.log("Wallet update received:", snapshot.size, "docs");
+            const cards = [];
+            snapshot.forEach((doc) => {
+                cards.push({ id: doc.id, ...doc.data() });
+            });
+
+            walletCards = cards;
+            updateWalletUI();
+        }, (error) => {
+            console.error("Error listening to wallet updates:", error);
+            console.log("Current User UID (Django):", currentUserUid);
+            console.log("Current User UID (Auth):", firebase.auth().currentUser ? firebase.auth().currentUser.uid : 'null');
+        });
+}
+
+function updateWalletUI() {
+    // 1. Render My Stack in Modal (Mobile & Desktop)
+    renderWalletStack();
+
+    // 2. Update Counts
+    const count = walletCards.length;
+    document.querySelectorAll('.modal-sidebar .modal-sidebar-item span[style*="background: #E2E8F0"]').forEach(el => el.textContent = count);
+    document.querySelectorAll('#mobile-my-stack-tab div div:last-child').forEach(el => el.textContent = count);
+
+    // 3. Update Available Cards (Global) for Search
+    // We need to filter out cards that are now in the wallet
+    if (typeof availableCards !== 'undefined') {
+        // We need a fresh copy of original all cards ideally, but availableCards is what we have.
+        // Issue: availableCards starts as "All Cards - In Wallet".
+        // If we add a card, we remove it from availableCards.
+        // If we remove a card, we add it back (fetch returns it).
+
+        // But with real-time sync, we should re-compute availableCards against 'allCards' if we had them.
+        // For now, we just rely on logic:
+        // Listener updates 'walletCards'. availableCards is static 'initial load' set? 
+        // No, we need to maintain consistency.
+
+        // Let's crudely filter availableCards based on current walletCards if we can match IDs.
+        // walletCards have 'card_id' which matches generic card 'id'.
+
+        const walletCardIds = new Set(walletCards.map(c => c.card_id));
+
+        // This is tricky without the full "master list" of cards.
+        // But for "Adding", we just need to ensure the added card disappears from "Search".
+        // The render logic handles this or we can just hiding them.
+    }
+
+    // 4. Update Main Dashboard (Partial DOM update)
+    // This is hard to do cleanly without duplicated templates.
+    // However, the user asked for "/wallet" to be updated.
+    // We can try to update the main dashboard list if it exists.
+    renderMainDashboardStack();
+}
+
+function renderWalletStack() {
+    // Mobile Container
+    const mobileContainer = document.querySelector('#mobile-my-stack-screen .card-item-container')?.parentElement;
+    // Actually the parent of the container. In HTML it's <div style="padding: 1.5rem... flex: 1; overflow-y: auto;">
+    // We need to target the container that holds the list.
+    // In HTML:
+    // <div style="padding: 1.5rem; background: white; flex: 1; overflow-y: auto;">
+    //    <h2 ...>Active Cards</h2>
+    //    {% for ... %} ... {% endfor %}
+    // </div>
+    // I should add an ID to that container in HTML to make it easier, but I can't edit HTML in this step.
+    // I will try to select it via structure.
+
+    // For Desktop: #content-stack .flex-1 (The scrolling container)
+    // It has {% for card in active_cards %}
+
+    // Let's try to find them by a known class or ID added during this step? No, I can't.
+    // I'll assume I can clear the "Active Cards" list and rebuild.
+
+    // Render HTML generator
+    // Helper to find image URL
+    const getCardImage = (c) => {
+        if (c.image_url && c.image_url.startsWith('http')) return c.image_url;
+        // Try to find in availableCards (all cards)
+        if (typeof availableCards !== 'undefined') {
+            const found = availableCards.find(ac => ac.id === c.id || ac.id === c.card_id);
+            if (found && found.image_url) return found.image_url;
+        }
+        return '/static/images/card_placeholder.png';
+    };
+
+    const generateMobileHtml = (card) => `
+        <div class="card-item-container" style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: white; border: 1px solid #E5E7EB; border-radius: 12px; margin-bottom: 0.75rem;">
+            <img src="${getCardImage(card)}" style="width: 60px; height: auto; object-fit: contain; border-radius: 4px;" alt="${card.name}">
+            <div style="flex: 1;">
+                <div style="font-weight: 700; color: #1F2937; font-size: 1rem; margin-bottom: 0.25rem;">${card.name}</div>
+                <div style="color: #64748B; font-size: 0.875rem;">•••• ****</div>
+            </div>
+            <form method="POST" action="/wallet/remove-card/${card.id}/" style="margin: 0;" onsubmit="return openRemoveCardModal(event, this, '${card.name.replace(/'/g, "\\'")}');">
+                <input type="hidden" name="csrfmiddlewaretoken" value="${document.querySelector('[name=csrfmiddlewaretoken]').value}">
+                <button type="submit" style="background: none; border: none; color: #CBD5E1; cursor: pointer; padding: 0.5rem;" title="Remove Card">
+                    <span class="material-icons" style="font-size: 1.5rem;">delete_outline</span>
+                </button>
+            </form>
+        </div>
+    `;
+
+    const generateDesktopHtml = (card) => `
+        <div class="card-item-container" style="display: flex; align-items: center; padding: 1.25rem; border: 1px solid #F3F4F6; border-radius: 16px; margin-bottom: 1rem; background: white; transition: all 0.2s;">
+            <img src="${getCardImage(card)}" style="width: 60px; height: auto; object-fit: contain; border-radius: 4px; margin-right: 1.25rem;" alt="${card.name}">
+            
+            <div>
+                <div style="font-weight: 700; color: #1F2937; font-size: 1rem;">${card.name}</div>
+                <div style="font-size: 0.85rem; color: #94A3B8; font-family: monospace;">•••• ****</div>
+            </div>
+            
+            <div style="margin-left: auto; display: flex; align-items: center; gap: 1rem;">
+                <span style="background: #DCFCE7; color: #16A34A; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 99px;">Active</span>
+                
+                <form method="POST" action="/wallet/remove-card/${card.id}/" style="margin: 0;" onsubmit="return openRemoveCardModal(event, this, '${card.name.replace(/'/g, "\\'")}');">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="${document.querySelector('[name=csrfmiddlewaretoken]').value}">
+                    <button type="submit" class="btn-delete-card" style="background: none; border: none; cursor: pointer; color: #E2E8F0; padding: 0.5rem; transition: color 0.2s;" onmouseover="this.style.color='#EF4444'" onmouseout="this.style.color='#E2E8F0'" title="Remove Card">
+                        <span class="material-icons" style="font-size: 20px;">delete_outline</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    `;
+
+    // Mobile
+    const mobileStackList = document.querySelector('#mobile-my-stack-screen div[style*="overflow-y: auto"]');
+    // Note: The one with "Active Cards" h2 is likely the second one with overflow-y.
+    // Better strategy: Use the ID added in previous steps if any? No.
+    // I'll select all containers with that style and pick?
+    // Actually, I can clear all `.card-item-container` inside `#mobile-my-stack-screen` and append new ones?
+    // But they need to be in the right parent.
+
+    // Let's just update the list if we can find it.
+    // In the HTML: 
+    // <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+    //     <h2 ...>Active Cards</h2>
+    // </div>
+    // {% for ... %}
+
+    if (mobileStackList) {
+        // Clear existing card items (keep the header)
+        const header = mobileStackList.querySelector('div[style*="margin-bottom: 1rem"]');
+        mobileStackList.innerHTML = '';
+        if (header) mobileStackList.appendChild(header);
+
+        if (walletCards.length === 0) {
+            mobileStackList.insertAdjacentHTML('beforeend', getEmptyStateHtml());
+        } else {
+            walletCards.forEach(card => {
+                mobileStackList.insertAdjacentHTML('beforeend', generateMobileHtml(card));
+            });
+        }
+    }
+
+    // Desktop
+    const desktopStackList = document.querySelector('#content-stack div[style*="overflow-y: auto"]');
+    if (desktopStackList) {
+        desktopStackList.innerHTML = '';
+        if (walletCards.length === 0) {
+            desktopStackList.innerHTML = getEmptyStateHtml();
+        } else {
+            walletCards.forEach(card => {
+                desktopStackList.insertAdjacentHTML('beforeend', generateDesktopHtml(card));
+            });
+        }
+    }
+
+    // Refresh Add Card list to update "In Wallet" status if visible
+    const searchInput = document.getElementById('card-search-input');
+    // Only re-render if we are in Add mode or if we want to keep it sync. 
+    // If search is active, we might disrupt it if we just dump availableCards.
+    // Better to re-trigger the current search or render if empty.
+
+    // Note: availableCards should contain ALL cards. `walletCards` are what we have.
+    // We don't filter `availableCards` anymore (undoing previous optimization which might be confusing).
+    // Instead we render them differently.
+
+    const contentAdd = document.getElementById('content-add');
+    if (contentAdd && contentAdd.style.display !== 'none') {
+        const query = searchInput ? searchInput.value : '';
+        if (query) {
+            searchInput.dispatchEvent(new Event('input'));
+        } else {
+            renderCardResults(availableCards);
+        }
+    }
+}
+
+function renderMainDashboardStack() {
+    // This is the "My Wallet Card" section on the main dashboard, which just shows a count and "Manage Wallet" button.
+    // And filter pills.
+    // Also trigger refresh of benefits section from server
+    refreshDashboardBenefits();
+}
+
+let isRefreshingBenefits = false;
+async function refreshDashboardBenefits() {
+    if (isRefreshingBenefits) return;
+    isRefreshingBenefits = true;
+
+    try {
+        // Fetch the updated dashboard HTML from server
+        // This is necessary because benefit calculations (dates, used amounts, eligiblity) are complex server-side logic
+        const response = await fetch(window.location.href);
+        if (!response.ok) throw new Error('Failed to fetch dashboard updates');
+        const text = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(text, 'text/html');
+
+        // 1. Update Annual Value Card
+        // We look for the gradient card structure or add a unique ID in the template in next step for robustness
+        // For now, let's try to match by structure since we can't edit HTML in this tool call
+        // Actually, I can edit HTML in next step to add IDs.
+        // Let's assume I will add IDs: #annual-value-card, #action-needed-section, #maxed-out-section, #card-filters-container
+
+        const newAnnualValue = doc.getElementById('annual-value-card');
+        const currentAnnualValue = document.getElementById('annual-value-card');
+        if (newAnnualValue && currentAnnualValue) {
+            currentAnnualValue.innerHTML = newAnnualValue.innerHTML;
+        }
+
+        const newFilters = doc.getElementById('card-filters-container');
+        const currentFilters = document.getElementById('card-filters-container');
+        if (newFilters && currentFilters) {
+            currentFilters.innerHTML = newFilters.innerHTML;
+        }
+
+        const newActionNeeded = doc.getElementById('action-needed-section');
+        const currentActionNeeded = document.getElementById('action-needed-section');
+        if (newActionNeeded && currentActionNeeded) {
+            currentActionNeeded.innerHTML = newActionNeeded.innerHTML;
+        }
+
+        const newMaxedOut = doc.getElementById('maxed-out-section');
+        const currentMaxedOut = document.getElementById('maxed-out-section');
+        if (newMaxedOut && currentMaxedOut) {
+            currentMaxedOut.innerHTML = newMaxedOut.innerHTML;
+        } else if (newMaxedOut && !currentMaxedOut) {
+            // If maxed out section appeared (wasn't there before), append it after action needed
+            if (currentActionNeeded) {
+                currentActionNeeded.parentNode.insertBefore(newMaxedOut, currentActionNeeded.nextSibling);
+            }
+        } else if (!newMaxedOut && currentMaxedOut) {
+            // If maxed out section disappeared
+            currentMaxedOut.remove();
+        }
+
+    } catch (e) {
+        console.error("Error refreshing dashboard benefits:", e);
+    } finally {
+        isRefreshingBenefits = false;
+    }    // The user said "as well as the /wallet", implying the whole page.
+    // Updating the benefit cards (the main feature of the dashboard) is complex because it depends on benefit calculations (server side).
+    // If the user adds a card, we need to calculate its benefits.
+    // Ideally, we should fetch the updated dashboard HTML or at least data.
+    // Given the complexity, reloading the page is the only way to get fresh benefit calculations without porting logic to JS.
+    // BUT, the user wants to "maintain the wallet modal to be opened".
+    // So we can reload the page in the background? No.
+
+    // We can update the "My Stack" COUNT on the main dashboard easily.
+    const stackCount = document.querySelector('.my-stack-count, div[style*="font-size: 3rem"]'); // Basic selector guess
+    if (stackCount) stackCount.textContent = walletCards.length;
+
+    // Creating new Filter Pills
+    const filterContainer = document.getElementById('card-filters');
+    if (filterContainer) {
+        // Keep "All Cards"
+        const allBtn = filterContainer.querySelector('button:first-child');
+        filterContainer.innerHTML = '';
+        if (allBtn) filterContainer.appendChild(allBtn);
+
+        walletCards.forEach(card => {
+            const btn = document.createElement('button');
+            btn.className = 'filter-pill';
+            btn.setAttribute('onclick', `filterBenefits('${card.card_id}')`);
+
+            // color dot logic
+            let dotColor = '#9CA3AF';
+            const name = card.name.toLowerCase();
+            if (name.includes('platinum')) dotColor = '#E5E7EB';
+            else if (name.includes('gold')) dotColor = '#FCD34D';
+            else if (name.includes('sapphire')) dotColor = '#3B82F6';
+
+            btn.innerHTML = `<span class="dot" style="background: ${dotColor};"></span> ${card.name}`;
+            filterContainer.appendChild(btn);
+        });
+    }
+
+    // Issues: The benefit cards themselves won't appear until refresh because they are server-rendered.
+    // For now, updating the list in the modal is the primary goal. 
+    // The main dashboard will be stale regarding the NEW card's benefits until refresh.
+    // We can show a toast "Refresh to see new benefits".
+}
+
+function getEmptyStateHtml() {
+    return `
+        <div style="text-align: center; padding: 4rem 2rem; color: #94A3B8;">
+            <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"><span class="material-icons" style="font-size: 48px;">wallet</span></div>
+            <p>Your wallet is empty.</p>
+            <button onclick="window.innerWidth <= 768 ? showMobileAddNewScreen() : switchTab('add')" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: #6366F1; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer;">
+                Add Your First Card
+            </button>
+        </div>
+    `;
+}
+
 function filterBenefits(cardId) {
     // Update active pill state
     const pills = document.querySelectorAll('.filter-pill');
@@ -507,7 +827,23 @@ function toggleMobileDetail(id) {
 
 // Initialize tooltips or other interactive elements if needed
 document.addEventListener('DOMContentLoaded', function () {
-    // Any initialization logic
+    // any initialization logic
+    // setupWalletListener() moved to auth state change
+});
+
+// Wait for Firebase Auth to be ready before setting up listener
+// This prevents "insufficient permissions" errors on page load
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        // user.uid matches currentUserUid ideally
+        setupWalletListener();
+    } else {
+        // Handle signed out state if needed
+        if (walletListenerUnsubscribe) {
+            walletListenerUnsubscribe();
+            walletListenerUnsubscribe = null;
+        }
+    }
 });
 
 // --- Extracted from dashboard.html ---
@@ -627,14 +963,36 @@ function renderCardResults(cards) {
     }
 
     cards.forEach(card => {
+        // Check if card is already in wallet
+        // walletCards is a global array maintained by listener
+        const inWallet = typeof walletCards !== 'undefined' && walletCards.some(wc => wc.id === card.id || wc.card_id === card.id);
+
         const div = document.createElement('div');
         div.className = 'card-result-item';
-        div.onclick = () => selectCardForPreview(card, div);
 
-        div.innerHTML = `
-            <div style="font-weight: 700; color: #1F2937; margin-bottom: 0.25rem;">${card.name}</div>
-            <div style="font-size: 0.85rem; color: #64748B;">${card.issuer}</div>
-        `;
+        if (inWallet) {
+            div.style.opacity = '0.6';
+            div.style.cursor = 'default';
+            div.style.background = '#F9FAFB';
+            div.onclick = null; // Disable clicking
+
+            div.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="font-weight: 700; color: #64748B; margin-bottom: 0.25rem;">${card.name}</div>
+                        <div style="font-size: 0.85rem; color: #94A3B8;">${card.issuer}</div>
+                    </div>
+                     <span style="font-size: 0.75rem; font-weight: 700; color: #64748B; background: #E2E8F0; padding: 0.25rem 0.5rem; border-radius: 4px;">In Wallet</span>
+                </div>
+            `;
+        } else {
+            div.onclick = () => selectCardForPreview(card, div);
+            div.innerHTML = `
+                <div style="font-weight: 700; color: #1F2937; margin-bottom: 0.25rem;">${card.name}</div>
+                <div style="font-size: 0.85rem; color: #64748B;">${card.issuer}</div>
+            `;
+        }
+
         container.appendChild(div);
     });
 }
@@ -941,10 +1299,59 @@ async function confirmRemoveCard() {
 async function executeRemoveCard(form) {
     showLoader();
     try {
-        const res = await fetch(form.action, { method: 'POST', body: new FormData(form) });
+        const formData = new FormData(form);
+        formData.append('ajax', 'true'); // Explicitly signal AJAX in case headers fail
+
+        const res = await fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        });
+
         if (res.ok) {
-            showToast('Card removed successfully!');
-            setTimeout(() => location.reload(), 1000);
+            const data = await res.json();
+
+            if (data.success) {
+                showToast('Card removed successfully!');
+                hideLoader();
+
+                // 1. Add card back to available list logic REMOVED.
+                // We now maintain a static availableCards list and rely on real-time walletCards state.
+
+                // 2. Find the container row to remove
+                const cardRow = form.closest('.card-item-container');
+                if (cardRow) {
+                    // Animate removal
+                    cardRow.style.transition = 'all 0.3s ease';
+                    cardRow.style.opacity = '0';
+                    cardRow.style.transform = 'translateX(20px)';
+
+                    // Optimistic UI: Update local state and re-render
+                    setTimeout(() => {
+                        // Extract ID from action "/wallet/remove-card/XYZ/"
+                        const actionParts = form.action.split('/');
+                        const cardId = actionParts[actionParts.length - 2] || actionParts[actionParts.length - 1];
+
+                        if (cardId) {
+                            walletCards = walletCards.filter(c => c.id !== cardId);
+                            updateWalletUI();
+                        } else {
+                            // Fallback if ID parse fails
+                            cardRow.remove();
+                            // update count manually if needed, or just let listener handle it
+                        }
+                    }, 300);
+
+                } else {
+                    // Fallback
+                    // The listener will catch up
+                }
+            } else {
+                showToast('Error removing card: ' + (data.error || 'Unknown'), 'error');
+                hideLoader();
+            }
         } else {
             showToast('Error removing card', 'error');
             hideLoader();
@@ -954,6 +1361,11 @@ async function executeRemoveCard(form) {
         showToast('Error removing card', 'error');
         hideLoader();
     }
+}
+
+function updateWalletCounts() {
+    // Deprecated in favor of updateWalletUI() which handles counts based on walletCards state
+    // Kept empty to prevent errors if called elsewhere
 }
 // kept for backward compatibility if any button still calls it, but redirects to modal if possible or just executes
 async function handleRemoveCard(e, form) {
@@ -981,13 +1393,36 @@ function saveAnniversaryDate() {
 
         fetch(`/wallet/add-card/${selectedAddCard.id}/`, {
             method: 'POST',
-            body: formData
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
         })
             .then(response => {
                 if (response.ok) {
                     closeAnniversaryModal();
                     showToast('Card added to wallet!');
-                    setTimeout(() => location.reload(), 1000);
+
+                    // Logic to remove from availableCards REMOVED.
+                    // We now keep it in the list but gray it out based on walletCards state.
+
+                    // Re-render search results if search is active or just refresh list
+                    const searchInput = document.getElementById('card-search-input');
+                    if (searchInput && searchInput.value) {
+                        searchInput.dispatchEvent(new Event('input'));
+                    } else if (typeof availableCards !== 'undefined') {
+                        renderCardResults(availableCards);
+                    }
+
+                    // Explicitly hide loader since we aren't reloading
+                    hideLoader();
+
+                    // switch back to stack view to show the new card
+                    if (window.innerWidth <= 768) {
+                        showMobileMyStackScreen();
+                    } else {
+                        switchTab('stack');
+                    }
                 } else {
                     throw new Error('Failed to add card');
                 }

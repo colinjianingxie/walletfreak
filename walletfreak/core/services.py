@@ -412,7 +412,17 @@ class FirestoreService:
         ref.update({'status': new_status})
 
     def remove_card_from_user(self, uid, user_card_id):
-        self.db.collection('users').document(uid).collection('user_cards').document(user_card_id).delete()
+        # 1. Fetch doc to get card_slug before deleting
+        doc_ref = self.db.collection('users').document(uid).collection('user_cards').document(user_card_id)
+        doc = doc_ref.get()
+        card_slug = None
+        
+        if doc.exists:
+            card_slug = doc.to_dict().get('card_id') # This is the generic card slug
+            doc_ref.delete()
+        else:
+            # Document might be gone or invalid ID
+            return None
         
         # Auto-evaluate personality
         try:
@@ -421,9 +431,7 @@ class FirestoreService:
             
             # 2. Determine best fit
             if not current_cards:
-                 # No cards -> No personality or default?
-                 # For now, maybe just don't update or set to None/Default?
-                 # Let's leave it as is or maybe 'wallet-freak' default if we had one.
+                 # No cards -> No personality
                  pass
             else:
                 best_fit = self.determine_best_fit_personality(current_cards)
@@ -440,6 +448,8 @@ class FirestoreService:
                     print(f"Auto-assigned personality {best_fit.get('id')} to user {uid} with score {overlap}")
         except Exception as e:
             print(f"Error auto-evaluating personality on remove: {e}")
+
+        return card_slug
 
     def update_card_details(self, uid, user_card_id, data):
         # Generic update for user card (e.g. anniversary date)

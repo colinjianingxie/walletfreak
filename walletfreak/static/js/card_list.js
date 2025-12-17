@@ -21,6 +21,20 @@ const compareCountText = document.getElementById('compare-count-text');
 // Compare State
 let selectedCards = new Map(); // id -> {name, issuer, color}
 
+// Auth & Realtime State
+let walletListenerUnsubscribe = null;
+if (typeof firebase !== 'undefined' && typeof firebase.auth === 'function') {
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            setupExploreWalletListener(user.uid);
+        } else {
+            if (walletListenerUnsubscribe) {
+                walletListenerUnsubscribe();
+            }
+        }
+    });
+}
+
 // State
 let cardsPerPage = 9; // Updated to 9 as requested
 let currentlyShowing = cardsPerPage;
@@ -481,9 +495,119 @@ function updateCompareBar() {
     }
 }
 
+// Deprecated goToCompare function body was here, removing orphan code block
 function goToCompare() {
-    // Deprecated in favor of modal
     if (typeof openCompareModal === 'function') {
         openCompareModal();
     }
+}
+
+
+// --- Realtime Wallet Updates (Explore Page) ---
+function setupExploreWalletListener(uid) {
+    if (typeof firebase === 'undefined' || !firebase.firestore) return;
+    const db = firebase.firestore();
+
+    if (walletListenerUnsubscribe) {
+        walletListenerUnsubscribe();
+    }
+
+    walletListenerUnsubscribe = db.collection('users').doc(uid).collection('user_cards')
+        .where('status', '==', 'active')
+        .onSnapshot((snapshot) => {
+            const currentWalletIds = new Set();
+            snapshot.forEach(doc => {
+                // We use document ID or card_id field? Ideally 'card_id' if that's what we store.
+                // Looking at other files, we normally map doc.data().card_id
+                const data = doc.data();
+                if (data.card_id) {
+                    currentWalletIds.add(data.card_id);
+                }
+            });
+
+            updateWalletState(currentWalletIds);
+        }, (error) => {
+            console.error("Explore: Error listening to wallet updates:", error);
+        });
+}
+
+function updateWalletState(newWalletIds) {
+    // 1. Update Global Set
+    walletCardIds.clear();
+    newWalletIds.forEach(id => walletCardIds.add(id));
+
+    // 2. Recalculate Scores & Update DOM
+    exploreCards.forEach(cardEl => {
+        const cardId = cardEl.getAttribute('onclick').match(/'([^']+)'/)[1];
+        if (!cardId) return;
+
+        const cardData = allCardsData[cardId]; // Use the global dictionary from template
+        if (!cardData) return; // Should exist
+
+        // Recalculate Match Score
+        // Python Logic:
+        // Base: 50
+        // + Category Overlap (up to 30)
+        // + No Fee (10) OR Fee > 500 (-10)
+        // - In Wallet (-30)
+
+        let score = 50;
+
+        // Categories
+        if (userPersonality && userPersonality.focus_categories) {
+            const userCats = new Set(userPersonality.focus_categories);
+            const cardCats = new Set(cardData.categories || []);
+            let overlap = 0;
+            cardCats.forEach(c => {
+                if (userCats.has(c)) overlap++;
+            });
+            score += Math.min(30, overlap * 10);
+        }
+
+        // Fee
+        const annualFee = cardData.annual_fee || 0;
+        if (annualFee === 0) score += 10;
+        else if (annualFee > 500) score -= 10;
+
+        // Wallet Penalty
+        const inWallet = walletCardIds.has(cardId);
+        if (inWallet) score -= 30;
+
+        // Clamp
+        score = Math.max(0, Math.min(100, score));
+
+        // Update DOM Elements
+        // Find match badge inside this card element
+        const matchBadge = cardEl.querySelector('.match-score');
+        if (matchBadge) {
+            matchBadge.textContent = score + '%';
+            // Optional: color coding could be updated here if needed
+        }
+
+        // Store score in userMatchScores map for sorting
+        userMatchScores[cardId] = score;
+
+        // Update data-attributes for filtering/sorting if we used them in JS sort logic
+        // Current JS sort logic uses userMatchScores map in `filterCards`?
+        // Wait, `filterCards` doesn't sort. `sortSelect` triggers reload.
+        // But `card_list.js` line 417 (Python) does sort.
+        // The JS `filterCards` only hides/shows. It does NOT re-sort DOM elements.
+        // So the order won't change until refresh, BUT the badges will update.
+        // The user said "benefits... need to update". This likely refers to the visual indicators.
+        // If sorting is critical, we'd need to re-sort the DOM in JS, which is a bigger change.
+        // For now, updating the values is the priority.
+
+        // Mark in-wallet status on card (if we have a visual style for it)
+        // Perhaps add a class?
+        if (inWallet) {
+            cardEl.classList.add('in-wallet');
+        } else {
+            cardEl.classList.remove('in-wallet');
+        }
+    });
+
+    // 3. Re-run filters to ensure consistency (though usually filters don't depend on wallet status unless we have that filter)
+    // There is a 'wallet_filter' in Python, but JS filterCards doesn't seem to implement it fully?
+    // Let's check filterCards... no, it doesn't filter by wallet status in JS.
+    // So just updating visual badges is enough for now.
 }
