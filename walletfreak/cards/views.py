@@ -27,32 +27,15 @@ def personality_list(request):
             except Exception as e:
                 print(f"Warning: Failed to fetch user personality: {e}")
     
-    # Fetch all cards for the modal
-    all_cards_dict = {}
-    try:
-        all_cards = db.get_cards()
-        for card in all_cards:
-            # Add some derived fields for the modal
-            if 'annual_fee' not in card:
-                card['annual_fee'] = 0
-            
-            # Ensure benefits is a list
-            if 'benefits' not in card:
-                card['benefits'] = []
-                
-            all_cards_dict[card['id']] = card
-    except Exception as e:
-        print(f"Warning: Failed to fetch cards for modal: {e}")
+
 
     # Convert personalities and cards to JSON for JavaScript
     personalities_json = json.dumps(personalities)
-    cards_json = json.dumps(all_cards_dict, default=str)
     questions_json = json.dumps(quiz_questions)
     
     return render(request, 'cards/personality_list.html', {
         'personalities': personalities,
         'personalities_json': personalities_json,
-        'cards_json': cards_json,
         'questions_json': questions_json,
         'assigned_personality': assigned_personality
     })
