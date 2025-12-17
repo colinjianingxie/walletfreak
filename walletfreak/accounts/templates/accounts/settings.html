@@ -234,10 +234,7 @@
         </h3>
         <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.9rem;">Your notification preferences have been updated.</p>
         
-        <div style="background: #f3f4f6; padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1.5rem;">
-            <div style="font-weight: 600; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem; text-transform: uppercase;">Next Unused Benefit Email</div>
-            <div style="font-size: 1rem; color: var(--dark); font-weight: 500;" id="next-email-time">Calculating...</div>
-        </div>
+
         
         <div style="display: flex; justify-content: flex-end;">
             <button class="btn btn-primary" onclick="closeSettingsSavedModal()">Got it</button>
@@ -491,7 +488,7 @@
                 // Update initial state to match current
                 Object.assign(initialPreferences, JSON.parse(JSON.stringify(preferences)));
                 
-                document.getElementById('next-email-time').innerText = data.next_email_formatted || 'Soon';
+
                 document.getElementById('settings-saved-modal').style.display = 'flex';
                 
                 // Re-evaluate dirty state (should be clean now)
