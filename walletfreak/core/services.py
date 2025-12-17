@@ -376,24 +376,24 @@ class FirestoreService:
             # 1. Get updated cards
             current_cards = self.get_user_cards(uid, status='active')
             
-            # 2. Determine best fit
-            best_fit = self.determine_best_fit_personality(current_cards)
-            
-            # 3. Update profile if found
-            if best_fit:
-                # Calculate match score (overlap count) - simplified version of determine_best_fit_personality logic
-                # We should probably have determine_best_fit_personality return the score too
-                # For now, let's just recalculate locally or update determine_best_fit_personality
+            # Check 2-card minimum rule
+            if len(current_cards) < 2:
+                self.remove_user_personality(uid)
+                print(f"Removed personality for user {uid} (only {len(current_cards)} cards)")
+            else:
+                # 2. Determine best fit
+                best_fit = self.determine_best_fit_personality(current_cards)
                 
-                # Re-calculate score to save it
-                user_card_slugs = set(c.get('card_id') for c in current_cards)
-                personality_cards = set()
-                for slot in best_fit.get('slots', []):
-                    personality_cards.update(slot.get('cards', []))
-                overlap = len(user_card_slugs.intersection(personality_cards))
-                
-                self.update_user_personality(uid, best_fit.get('id'), score=overlap)
-                print(f"Auto-assigned personality {best_fit.get('id')} to user {uid} with score {overlap}")
+                # 3. Update profile if found
+                if best_fit:
+                    user_card_slugs = set(c.get('card_id') for c in current_cards)
+                    personality_cards = set()
+                    for slot in best_fit.get('slots', []):
+                        personality_cards.update(slot.get('cards', []))
+                    overlap = len(user_card_slugs.intersection(personality_cards))
+                    
+                    self.update_user_personality(uid, best_fit.get('id'), score=overlap)
+                    print(f"Auto-assigned personality {best_fit.get('id')} to user {uid} with score {overlap}")
         except Exception as e:
             print(f"Error auto-evaluating personality: {e}")
             
@@ -430,9 +430,9 @@ class FirestoreService:
             current_cards = self.get_user_cards(uid, status='active')
             
             # 2. Determine best fit
-            if not current_cards:
-                 # No cards -> No personality
-                 pass
+            if not current_cards or len(current_cards) < 2:
+                 # < 2 cards -> No personality
+                 self.remove_user_personality(uid)
             else:
                 best_fit = self.determine_best_fit_personality(current_cards)
                 
@@ -450,6 +450,14 @@ class FirestoreService:
             print(f"Error auto-evaluating personality on remove: {e}")
 
         return card_slug
+    
+    def remove_user_personality(self, uid):
+        """Remove user's assigned personality"""
+        self.db.collection('users').document(uid).update({
+            'assigned_personality': None,
+            'personality_score': 0,
+            'personality_assigned_at': None
+        })
 
     def update_card_details(self, uid, user_card_id, data):
         # Generic update for user card (e.g. anniversary date)

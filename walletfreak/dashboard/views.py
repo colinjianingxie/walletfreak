@@ -304,6 +304,7 @@ def dashboard(request):
         'eyeing_cards': eyeing_cards,
         'assigned_personality': assigned_personality,
         'all_cards': all_cards,
+        'all_cards_json': available_cards_json, # Reusing the variable since it already contains all cards
         'available_cards_json': available_cards_json,
         'all_benefits': all_benefits,
         'action_needed_benefits': action_needed_benefits,

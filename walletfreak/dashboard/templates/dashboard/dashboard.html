@@ -82,7 +82,7 @@
             <h1 style="font-size: 2rem; font-weight: 800; margin: 0; line-height: 1.2;">
                 Hey, <span style="color: #7C3AED;">{% if user.first_name %}{{ user.first_name }}{% else %}Alex{% endif %}!</span>
             </h1>
-            <div style="display: flex; align-items: center; gap: 0.75rem; margin-top: 0.5rem;">
+            <div id="personality-badge-section" style="display: flex; align-items: center; gap: 0.75rem; margin-top: 0.5rem;">
                 {% if assigned_personality %}
                 <a href="{% url 'personality_detail' assigned_personality.id %}" style="text-decoration: none;">
                     <span
@@ -96,6 +96,11 @@
                 {% if assigned_personality.match_score %}
                 <span style="color: #64748B; font-size: 0.9rem;">{{ assigned_personality.match_score }} card{{ assigned_personality.match_score|pluralize }} match</span>
                 {% endif %}
+                {% else %}
+                <span style="color: #94A3B8; font-size: 0.875rem; font-style: italic;">
+                    <span class="material-icons" style="font-size: 14px; vertical-align: middle; margin-right: 4px;">info</span>
+                    Add at least 2 cards to discover your freak
+                </span>
                 {% endif %}
             </div>
         </div>
@@ -784,7 +789,10 @@
 <script>
     // --- Manage Wallet Modal Logic ---
     const currentUserUid = "{{ request.session.uid }}";
-    let availableCards = {{ available_cards_json|safe }};
+    // allCardsData contains ALL cards (database), used for client-side filtering
+    const allCardsData = {{ all_cards_json|safe }};
+    // Initialize availableCards with allCardsData for legacy compatibility, will be filtered by JS
+    let availableCards = allCardsData;
 
 </script>
 <!-- Remove Card Modal -->

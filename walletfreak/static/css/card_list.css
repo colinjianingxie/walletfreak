@@ -104,6 +104,11 @@ input[type=range]::-moz-range-thumb {
     border-color: #E2E8F0;
 }
 
+.explore-card.in-wallet {
+    opacity: 0.6;
+    filter: grayscale(100%);
+}
+
 /* Top Visual Section */
 .card-visual-container {
     width: 100%;
@@ -1420,6 +1425,7 @@ input[type=range]::-moz-range-thumb {
 .header-sort-row {
     flex-wrap: wrap;
 }
+
 /* Fix Mobile Sort Alignment (Reset Desktop Offset) */
 @media (max-width: 1024px) {
     .sort-select {

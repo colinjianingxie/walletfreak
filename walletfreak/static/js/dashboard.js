@@ -43,26 +43,14 @@ function updateWalletUI() {
     document.querySelectorAll('#mobile-my-stack-tab div div:last-child').forEach(el => el.textContent = count);
 
     // 3. Update Available Cards (Global) for Search
-    // We need to filter out cards that are now in the wallet
-    if (typeof availableCards !== 'undefined') {
-        // We need a fresh copy of original all cards ideally, but availableCards is what we have.
-        // Issue: availableCards starts as "All Cards - In Wallet".
-        // If we add a card, we remove it from availableCards.
-        // If we remove a card, we add it back (fetch returns it).
-
-        // But with real-time sync, we should re-compute availableCards against 'allCards' if we had them.
-        // For now, we just rely on logic:
-        // Listener updates 'walletCards'. availableCards is static 'initial load' set? 
-        // No, we need to maintain consistency.
-
-        // Let's crudely filter availableCards based on current walletCards if we can match IDs.
-        // walletCards have 'card_id' which matches generic card 'id'.
-
+    // Filter allCardsData to exclude cards currently in wallet
+    if (typeof allCardsData !== 'undefined') {
         const walletCardIds = new Set(walletCards.map(c => c.card_id));
+        availableCards = allCardsData.filter(card => !walletCardIds.has(card.id));
 
-        // This is tricky without the full "master list" of cards.
-        // But for "Adding", we just need to ensure the added card disappears from "Search".
-        // The render logic handles this or we can just hiding them.
+        // Refresh the search list if it's visible
+        // We use applyMobileFilters() as it handles the rendering and existing filters
+        applyMobileFilters();
     }
 
     // 4. Update Main Dashboard (Partial DOM update)
@@ -1402,9 +1390,6 @@ function saveAnniversaryDate() {
                 if (response.ok) {
                     closeAnniversaryModal();
                     showToast('Card added to wallet!');
-
-                    // Logic to remove from availableCards REMOVED.
-                    // We now keep it in the list but gray it out based on walletCards state.
 
                     // Re-render search results if search is active or just refresh list
                     const searchInput = document.getElementById('card-search-input');
