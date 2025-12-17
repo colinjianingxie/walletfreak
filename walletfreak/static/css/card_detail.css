@@ -1,0 +1,97 @@
+/* Card Detail Styles */
+
+.card-detail-container {
+    padding: 4rem 0;
+}
+
+.card-detail-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.card-title {
+    margin-bottom: 0.5rem;
+}
+
+.card-issuer {
+    color: var(--primary);
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.card-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.rewards-list {
+    margin-top: 1rem;
+    color: var(--text-muted);
+}
+
+.rewards-detail-text {
+    white-space: pre-line;
+}
+
+.rewards-list-item {
+    margin-bottom: 0.5rem;
+}
+
+.key-details-text {
+    margin-top: 1rem;
+}
+
+.benefits-title {
+    margin-bottom: 1rem;
+}
+
+.benefits-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.benefit-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.benefit-name {
+    color: var(--accent);
+}
+
+.benefit-description {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+.benefit-value {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.action-buttons-container {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.application-section {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.apply-btn {
+    font-size: 1.2rem;
+    padding: 1rem 3rem;
+}
+
+.disclaimer-text {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 1rem;
+}

@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block extra_css %}
-
 <link rel="stylesheet" href="{% static 'css/personality_detail.css' %}">
 <link rel="stylesheet" href="{% static 'css/card_modal.css' %}">
 {% endblock %}
@@ -14,18 +13,18 @@
 <section class="personality-hero">
     <div class="container">
         <a href="{% url 'personality_list' %}" class="personality-back-link">
-            <span class="material-icons" style="font-size: 16px;">arrow_back</span>
+            <span class="material-icons personality-back-icon">arrow_back</span>
             Back to Archetypes
         </a>
 
         <div class="personality-content-grid">
             <div class="personality-avatar-large">
-                <img src="{% static 'images/personalities/'|add:personality.slug|add:'.png' %}" alt="{{ personality.name }}" style="width: 60%; height: 60%; object-fit: contain; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));">
+                <img src="{% static 'images/personalities/'|add:personality.slug|add:'.png' %}" alt="{{ personality.name }}" class="personality-avatar-img">
             </div>
 
             <div>
                 <div class="personality-tagline-pill">
-                    CHASE ECOSYSTEM • HYATT TRANSFERS
+                    {{ personality.tagline|default:"FINANCIAL STRATEGY" }}
                 </div>
                 <h1 class="personality-title">{{ personality.name }}</h1>
                 <p class="personality-description">{{ personality.description }}</p>
@@ -40,79 +39,78 @@
         <!-- Annual Fees -->
         <div class="stats-card">
             <div class="stats-card-label">
-                <span class="material-icons" style="font-size: 16px; color: #ef4444;">warning</span>
+                <span class="material-icons stats-icon-base stats-icon-warning">warning</span>
                 ANNUAL FEES
             </div>
-            <div id="metric-annual-fees" class="stats-card-value" style="color: #1e293b;">
-                -$550
+            <div id="metric-annual-fees" class="stats-card-value stats-value-base">
+                -$0
             </div>
         </div>
 
         <!-- Credit Value -->
         <div class="stats-card">
             <div class="stats-card-label">
-                <span class="material-icons" style="font-size: 16px; color: #3b82f6;">verified_user</span>
+                <span class="material-icons stats-icon-base stats-icon-verified">verified_user</span>
                 CREDIT VALUE
             </div>
-            <div id="metric-credit-value" class="stats-card-value" style="color: #1e293b;">
-                +$300
+            <div id="metric-credit-value" class="stats-card-value stats-value-base">
+                +$0
             </div>
         </div>
 
         <!-- Points Value -->
         <div class="stats-card">
             <div class="stats-card-label">
-                <span class="material-icons" style="font-size: 16px; color: #8b5cf6;">trending_up</span>
+                <span class="material-icons stats-icon-base stats-icon-trending">trending_up</span>
                 POINTS VALUE
             </div>
-            <div id="metric-points-value" class="stats-card-value" style="color: #1e293b;">
-                +$1200
+            <div id="metric-points-value" class="stats-card-value stats-value-base">
+                +$0
             </div>
         </div>
 
         <!-- Net Value -->
         <div class="stats-card dark">
             <div class="stats-card-label">
-                <span class="material-icons" style="font-size: 16px; color: #10b981;">emoji_events</span>
+                <span class="material-icons stats-icon-base stats-icon-success">emoji_events</span>
                 NET VALUE
             </div>
-            <div id="metric-net-value" class="stats-card-value" style="color: #10b981;">
-                +$950
+            <div id="metric-net-value" class="stats-card-value stats-value-success">
+                +$0
             </div>
         </div>
     </div>
 </div>
 
 <!-- Build Your Loadout -->
-<div class="container" style="padding-bottom: 6rem;">
-    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem;">
-        <span class="material-icons" style="color: #2563eb; font-size: 28px;">bolt</span>
-        <h2 style="font-size: 1.75rem; font-weight: 700; margin: 0; color: #0f172a;">Build Your Loadout</h2>
+<div class="container loadout-section">
+    <div class="loadout-header">
+        <span class="material-icons loadout-icon">bolt</span>
+        <h2 class="loadout-title">Build Your Loadout</h2>
     </div>
 
     {% if personality.slots %}
-    <div style="display: grid; gap: 2rem; grid-template-columns: minmax(0, 1fr);">
+    <div class="loadout-grid">
         {% for slot in personality.slots %}
-        <div class="personality-slot-container" style="background: white; border-radius: 24px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+        <div class="personality-slot-container slot-container">
             <!-- Slot Info -->
-            <!-- Slot Info -->
-            <div style="margin-bottom: 2rem; position: relative;">
+            <div class="slot-info-wrapper">
                 {% if slot.hydrated_cards|length > 1 %}
                 <!-- Navigation Buttons (Corners) -->
-                <div class="carousel-btn prev" onclick="changeCard({{ forloop.counter }}, -1)" style="position: absolute; top: 0; left: 0; z-index: 10;">
+                <div class="carousel-btn prev slot-nav-btn slot-nav-prev" onclick="changeCard({{ forloop.counter }}, -1)">
                     <span class="material-icons">chevron_left</span>
                 </div>
-                <div class="carousel-btn next" onclick="changeCard({{ forloop.counter }}, 1)" style="position: absolute; top: 0; right: 0; z-index: 10;">
+                <div class="carousel-btn next slot-nav-btn slot-nav-next" onclick="changeCard({{ forloop.counter }}, 1)">
                     <span class="material-icons">chevron_right</span>
                 </div>
                 {% endif %}
 
-                <div style="text-align: center; padding: 0 3.5rem;">
-                    <div style="display: inline-block; background: #f1f5f9; color: #64748b; padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">
+                <div class="slot-text-content">
+                    <div class="slot-badge">
                         SLOT {{ forloop.counter }}
                     </div>
-                    <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #0f172a;">{{ slot.name }}</h3>
-                    <p style="color: #64748b; line-height: 1.6;">{{ slot.description }}</p>
+                    <h3 class="slot-title-text">{{ slot.name }}</h3>
+                    <p class="slot-description-text">{{ slot.description }}</p>
                 </div>
             </div>
 
@@ -120,7 +118,7 @@
             <div class="slot-carousel" id="carousel-slot-{{ forloop.counter }}">
                 <div class="carousel-track">
                     {% for card in slot.hydrated_cards %}
-                    <div class="card-option" 
+                    <div class="card-option slot-card-{{ forloop.parentloop.counter }} {% if not forloop.first %}slot-card-hidden{% endif %}" 
                         data-id="{{ card.id }}"
                         data-fee="{{ card.annual_fee|default:0 }}"
                         data-bonus-value="{{ card.sign_up_bonus.value|default:0 }}"
@@ -128,8 +126,7 @@
                         data-slot="{{ forloop.parentloop.counter }}"
                         data-index="{{ forloop.counter0 }}"
                         onclick="toggleCardSelection(this, {{ forloop.parentloop.counter }})"
-                        class="slot-card-{{ forloop.parentloop.counter }}"
-                        style="cursor: pointer; transition: transform 0.2s; {% if not forloop.first %}display: none;{% endif %}">
+                        style="cursor: pointer; transition: transform 0.2s;">
                         
                         <!-- Info Icon -->
                         <div class="card-info-btn" onclick="event.stopPropagation(); openCardModal('{{ card.id }}')">
@@ -139,32 +136,32 @@
 
                         <!-- Card Visual -->
                         {% if card.local_image %}
-                        <div class="credit-card" style="position: relative; padding: 0 !important; background: none; border: none; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);">
-                            <img src="{% static card.local_image %}" alt="{{ card.name }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;" onerror="this.onerror=null; this.src='{{ card.image_url }}';">
+                        <div class="credit-card card-visual-wrapper">
+                            <img src="{% static card.local_image %}" alt="{{ card.name }}" class="card-img-cover" onerror="this.onerror=null; this.src='{{ card.image_url }}';">
                             
                             <!-- Selection Indicator (Overlay) -->
-                            <div class="selection-indicator" style="position: absolute; top: 1rem; right: 1rem; width: 28px; height: 28px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; border: 1px solid rgba(255,255,255,0.4); transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                                <span class="material-icons status-icon" style="font-size: 18px; color: #3b82f6;">add</span>
+                            <div class="selection-indicator selection-indicator-overlay">
+                                <span class="material-icons status-icon status-icon-active">add</span>
                             </div>
                         </div>
                         {% elif card.image_url %}
-                        <div class="credit-card" style="position: relative; padding: 0 !important; background: none; border: none; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);">
-                            <img src="{{ card.image_url }}" alt="{{ card.name }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;">
+                        <div class="credit-card card-visual-wrapper">
+                            <img src="{{ card.image_url }}" alt="{{ card.name }}" class="card-img-cover">
                             
                             <!-- Selection Indicator (Overlay) -->
-                            <div class="selection-indicator" style="position: absolute; top: 1rem; right: 1rem; width: 28px; height: 28px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; border: 1px solid rgba(255,255,255,0.4); transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                                <span class="material-icons status-icon" style="font-size: 18px; color: #3b82f6;">add</span>
+                            <div class="selection-indicator selection-indicator-overlay">
+                                <span class="material-icons status-icon status-icon-active">add</span>
                             </div>
                         </div>
                         {% else %}
                         <div class="credit-card {% if 'american express' in card.name|lower or 'amex' in card.name|lower %}{% if 'platinum' in card.name|lower %}card-amex-platinum{% elif 'gold' in card.name|lower %}card-gold{% else %}card-chase{% endif %}{% elif 'chase' in card.name|lower %}card-chase{% elif 'capital one' in card.name|lower %}card-capital-one{% elif 'citi' in card.name|lower %}card-citi{% else %}card-chase{% endif %}" style="position: relative;">
                             
                             <!-- Selection Indicator (Moved Inside) -->
-                            <div class="selection-indicator" style="position: absolute; top: 1rem; right: 1rem; width: 28px; height: 28px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; border: 1px solid rgba(255,255,255,0.4); transition: all 0.2s;">
-                                <span class="material-icons status-icon" style="font-size: 18px; color: white;">add</span>
+                            <div class="selection-indicator selection-indicator-internal">
+                                <span class="material-icons status-icon status-icon-light">add</span>
                             </div>
 
-                            <div style="display: flex; justify-content: flex-end; align-items: flex-start; margin-bottom: 1rem; height: 24px;">
+                            <div class="card-visual-header">
                                 <!-- Icons are absolutely positioned -->
                             </div>
                             
@@ -174,22 +171,22 @@
                                 •••• •••• •••• 4242
                             </div>
                             
-                            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                            <div class="card-visual-footer">
                                 <div>
-                                    <div style="font-size: 0.65rem; font-weight: 700; opacity: 0.8; margin-bottom: 0.25rem; letter-spacing: 0.1em;">STRATEGY</div>
+                                    <div class="strategy-label">STRATEGY</div>
                                 </div>
-                                <div style="width: 32px; height: 32px; background: rgba(255,255,255,0.3); border-radius: 50%;"></div>
+                                <div class="logo-circle-placeholder"></div>
                             </div>
                         </div>
                         {% endif %}
 
                         <!-- Card Metadata (Below) -->
-                        <div style="text-align: center; margin-top: 1rem; padding: 0 0.5rem;">
-                            <div style="font-weight: 700; font-size: 1rem; color: #1e293b; margin-bottom: 0.25rem;">{{ card.name }}</div>
-                            <div style="font-size: 0.75rem; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
-                                <span style="color: #94a3b8;">${{ card.annual_fee|default:0 }}</span>
-                                <span style="margin: 0 0.5rem; color: #cbd5e1;">•</span>
-                                <span style="color: #3b82f6;">{{ card.categories.0|default:'CREDIT' }} STRATEGY</span>
+                        <div class="card-meta-container">
+                            <div class="card-name-meta">{{ card.name }}</div>
+                            <div class="card-details-meta">
+                                <span class="text-slate-400">${{ card.annual_fee|default:0 }}</span>
+                                <span class="meta-separator">•</span>
+                                <span class="text-blue-500">{{ card.categories.0|default:'CREDIT' }} STRATEGY</span>
                             </div>
                         </div>
                     </div>
@@ -210,31 +207,31 @@
     </div>
     {% else %}
     <!-- Empty State -->
-    <div style="text-align: center; padding: 4rem 2rem; background: white; border-radius: 16px; border: 2px dashed #e5e7eb;">
-        <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;">💳</div>
-        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">No loadout defined</h3>
-        <p style="color: #6b7280;">We're still building out card recommendations for this personality.</p>
+    <div class="empty-loadout-state">
+        <div class="empty-loadout-icon">💳</div>
+        <h3 class="empty-loadout-title">No loadout defined</h3>
+        <p class="empty-loadout-text">We're still building out card recommendations for this personality.</p>
     </div>
     {% endif %}
 </div>
 
 <!-- Rules of Engagement Section -->
 {% if personality.rules %}
-<section class="container" style="padding: 0 0 4rem 0;">
-    <div style="background: white; padding: 3rem; border-radius: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;">
-        <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 2rem; color: #111827;">
+<section class="container rules-section">
+    <div class="rules-container">
+        <h2 class="rules-title">
             Rules of Engagement
         </h2>
 
-        <div style="display: grid; gap: 1.5rem;">
+        <div class="rules-grid">
             {% for rule in personality.rules %}
-            <div style="display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: start;">
-                <div style="width: 32px; height: 32px; background: #111827; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0; margin-top: 0.25rem;">
+            <div class="rule-item">
+                <div class="rule-number">
                     {{ forloop.counter }}
                 </div>
-                <div>
-                    <h3 style="font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem; color: #111827;">{{ rule.title }}</h3>
-                    <p style="color: #6b7280; line-height: 1.6; margin: 0;">{{ rule.description }}</p>
+                <div class="rule-content">
+                    <h3>{{ rule.title }}</h3>
+                    <p>{{ rule.description }}</p>
                 </div>
             </div>
             {% endfor %}
@@ -244,19 +241,19 @@
 {% endif %}
 
 <!-- CTA Section -->
-<section style="background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); padding: 4rem 0; color: white; position: relative; overflow: hidden;">
+<section class="cta-section">
     <!-- Background decoration -->
-    <div style="position: absolute; top: -50%; left: -10%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); border-radius: 50%;"></div>
-    <div style="position: absolute; bottom: -30%; right: -5%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); border-radius: 50%;"></div>
+    <div class="cta-blob-1"></div>
+    <div class="cta-blob-2"></div>
     
-    <div class="container" style="position: relative; z-index: 1; text-align: center;">
-        <h2 style="font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 1rem;">
+    <div class="container cta-content">
+        <h2 class="cta-title">
             Ready to build this setup?
         </h2>
-        <p style="font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.95; max-width: 600px; margin-left: auto; margin-right: auto;">
+        <p class="cta-text">
             Track these cards, manage your fees, and calculate your net worth with WalletFreak.
         </p>
-        <a href="{% url 'dashboard' %}" class="btn" style="background: white; color: #8b5cf6; padding: 1rem 2.5rem; font-weight: 700; font-size: 1.05rem; border-radius: 12px; text-decoration: none; display: inline-block; box-shadow: 0 4px 16px rgba(0,0,0,0.2); transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='0 4px 16px rgba(0,0,0,0.2)';">
+        <a href="{% url 'dashboard' %}" class="cta-btn">
             Start My Wallet
         </a>
     </div>
@@ -267,89 +264,6 @@
     const allCardsData = {{ cards_json|safe }};
     const walletCardIds = new Set({{ wallet_card_ids|safe|default:'[]' }});
     const userMatchScores = {{ user_match_scores|safe|default:'{}' }};
-
-    // Track current index for each slot
-    const currentSlotIndices = {};
-
-    function changeCard(slotIndex, direction) {
-        // Try to find cards using the slot-card class first
-        const slotClass = `slot-card-${slotIndex}`;
-        let cards = document.querySelectorAll(`.${slotClass}`);
-        
-        // If no cards found with slot-card class, use data-slot attribute
-        if (cards.length === 0) {
-            cards = document.querySelectorAll(`.card-option[data-slot="${slotIndex}"]`);
-        }
-        
-        if (cards.length <= 1) {
-            return;
-        }
-
-        // Get current index
-        let currentIndex = currentSlotIndices[slotIndex] || 0;
-
-        // Hide current card
-        cards[currentIndex].style.display = 'none';
-
-        // Calculate new index
-        currentIndex += direction;
-        if (currentIndex < 0) currentIndex = cards.length - 1;
-        if (currentIndex >= cards.length) currentIndex = 0;
-
-        // Show new card and update tracker
-        cards[currentIndex].style.display = 'block';
-        currentSlotIndices[slotIndex] = currentIndex;
-
-        // Update pagination dots
-        const dotsContainer = document.getElementById(`dots-slot-${slotIndex}`);
-        if (dotsContainer) {
-            const dots = dotsContainer.querySelectorAll('.pagination-dot');
-            dots.forEach((dot, index) => {
-                if (index === currentIndex) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
-            });
-        }
-    }
-
-    // Initialize carousel after personality_detail.js has loaded
-    window.addEventListener('load', function() {
-        // Initialize current indices for all slots
-        const slots = document.querySelectorAll('.slot-carousel');
-        slots.forEach((slot, index) => {
-            const slotIndex = index + 1;
-            const cards = slot.querySelectorAll(`.slot-card-${slotIndex}`);
-            
-            if (cards.length > 1) {
-                // Initialize the current index
-                currentSlotIndices[slotIndex] = 0;
-                
-                // Hide all cards except the first one
-                cards.forEach((card, cardIndex) => {
-                    if (cardIndex === 0) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-                
-                // Set first dot as active
-                const dotsContainer = document.getElementById(`dots-slot-${slotIndex}`);
-                if (dotsContainer) {
-                    const dots = dotsContainer.querySelectorAll('.pagination-dot');
-                    dots.forEach((dot, dotIndex) => {
-                        if (dotIndex === 0) {
-                            dot.classList.add('active');
-                        } else {
-                            dot.classList.remove('active');
-                        }
-                    });
-                }
-            }
-        });
-    });
 </script>
 <script src="{% static 'js/personality_detail.js' %}"></script>
 

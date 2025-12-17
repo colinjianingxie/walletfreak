@@ -112,3 +112,97 @@ window.addEventListener('load', () => {
         });
     }, 100);
 });
+
+// --- CAROUSEL LOGIC ---
+
+// Track current index for each slot
+const currentSlotIndices = {};
+
+function changeCard(slotIndex, direction) {
+    // Try to find cards using the slot-card class first
+    const slotClass = `slot-card-${slotIndex}`;
+    let cards = document.querySelectorAll(`.${slotClass}`);
+    
+    // If no cards found with slot-card class, use data-slot attribute
+    if (cards.length === 0) {
+        cards = document.querySelectorAll(`.card-option[data-slot="${slotIndex}"]`);
+    }
+    
+    if (cards.length <= 1) {
+        return;
+    }
+
+    // Get current index
+    let currentIndex = currentSlotIndices[slotIndex] || 0;
+
+    // Hide current card
+    cards[currentIndex].classList.add('slot-card-hidden');
+    cards[currentIndex].style.display = 'none'; // Fallback
+
+    // Calculate new index
+    currentIndex += direction;
+    if (currentIndex < 0) currentIndex = cards.length - 1;
+    if (currentIndex >= cards.length) currentIndex = 0;
+
+    // Show new card and update tracker
+    cards[currentIndex].classList.remove('slot-card-hidden');
+    cards[currentIndex].style.display = 'block'; // Fallback
+    currentSlotIndices[slotIndex] = currentIndex;
+
+    // Update pagination dots
+    const dotsContainer = document.getElementById(`dots-slot-${slotIndex}`);
+    if (dotsContainer) {
+        const dots = dotsContainer.querySelectorAll('.pagination-dot');
+        dots.forEach((dot, index) => {
+            if (index === currentIndex) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+    }
+}
+
+// Initialize carousel logic
+window.addEventListener('load', function() {
+    // Initialize current indices for all slots
+    const slots = document.querySelectorAll('.slot-carousel');
+    slots.forEach((slot, index) => {
+        const slotIndex = index + 1;
+        // Use the same selector strategy as changeCard
+        const slotClass = `slot-card-${slotIndex}`;
+        let cards = document.querySelectorAll(`.${slotClass}`);
+        if (cards.length === 0) {
+             cards = slot.querySelectorAll(`.card-option[data-slot="${slotIndex}"]`);
+        }
+        
+        if (cards.length > 1) {
+            // Initialize the current index
+            currentSlotIndices[slotIndex] = 0;
+            
+            // Ensure only the first one is visible
+            cards.forEach((card, cardIndex) => {
+                if (cardIndex === 0) {
+                    card.classList.remove('slot-card-hidden');
+                    card.style.display = 'block';
+                } else {
+                    card.classList.add('slot-card-hidden');
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Set first dot as active
+            const dotsContainer = document.getElementById(`dots-slot-${slotIndex}`);
+            if (dotsContainer) {
+                const dots = dotsContainer.querySelectorAll('.pagination-dot');
+                dots.forEach((dot, dotIndex) => {
+                    if (dotIndex === 0) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+        }
+    });
+});

@@ -7,53 +7,51 @@
 <link rel="stylesheet" href="{% static 'css/card_modal.css' %}">
 {% endblock %}
 
-{%block main_style %}padding: 3rem 0; background: #F9FAFB; min-height: calc(100vh - 70px);{% endblock %}
+{% block main_style %}padding: 3rem 0; background: #F9FAFB; min-height: calc(100vh - 70px);{% endblock %}
 
 {% block content %}
-<div style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
+<div class="main-content-wrapper">
     <!-- Header Section -->
-    <div style="margin-bottom: 2.5rem;">
-        <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 0.75rem;">
-            <h1 style="font-size: 2.25rem; font-weight: 800; color: #0F172A; margin: 0;">
+    <div class="page-header">
+        <div class="header-title-row">
+            <h1 class="header-title">
                 Explore Cards
             </h1>
-            <span id="total-cards-count" style="font-size: 1rem; font-weight: 600; color: #94A3B8;">{{ total_cards }}</span>
+            <span id="total-cards-count" class="header-count">{{ total_cards }}</span>
         </div>
-        <p style="color: #64748B; font-size: 1.125rem; margin: 0;">
+        <p class="header-subtitle">
             Find the perfect addition to your wallet.
         </p>
     </div>
 
     <!-- Search Bar -->
-    <div style="margin-bottom: 2rem;">
-        <div style="position: relative; width: 100%;">
-            <span class="material-icons" style="position: absolute; left: 1.5rem; top: 50%; transform: translateY(-50%); color: #94A3B8; font-size: 24px;">search</span>
+    <div class="search-bar-container">
+        <div class="search-wrapper">
+            <span class="material-icons search-icon">search</span>
             <input 
                 type="text" 
                 id="search-input" 
                 placeholder="Search cards by name, issuer, perk, or category..."
                 value="{{ search_query }}"
-                style="width: 100%; padding: 1.25rem 1.25rem 1.25rem 4rem; border: 1px solid #E2E8F0; border-radius: 16px; font-size: 1rem; outline: none; font-family: 'Outfit', sans-serif; box-shadow: 0 1px 2px rgba(0,0,0,0.05);"
+                class="search-input"
             >
         </div>
     </div>
 
     <!-- Category Pills -->
-    <div style="margin-bottom: 3.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+    <div class="category-pills-container">
         <button 
-            class="category-pill active" 
+            class="category-pill category-pill-btn active category-pill-active" 
             data-category=""
             onclick="selectCategory(this)"
-            style="padding: 0.625rem 1.5rem; border-radius: 24px; font-size: 0.9375rem; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none;"
         >
             All Categories
         </button>
         {% for category in categories %}
         <button 
-            class="category-pill" 
+            class="category-pill category-pill-btn category-pill-inactive" 
             data-category="{{ category }}"
             onclick="selectCategory(this)"
-            style="padding: 0.625rem 1.5rem; border-radius: 24px; font-size: 0.9375rem; font-weight: 600; cursor: pointer; transition: all 0.2s; border: 1px solid #E2E8F0; background: white; color: #64748B;"
         >
             {{ category }}
         </button>
@@ -61,10 +59,10 @@
     </div>
 
     <!-- Mobile Filter & Sort Bar -->
-    <div class="mobile-controls" style="display: none; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+    <div class="mobile-controls mobile-controls-bar">
         <button 
             onclick="openFilters()"
-            style="display: flex; align-items: center; gap: 0.5rem; background: white; border: 1px solid #E2E8F0; padding: 0.75rem 1.25rem; border-radius: 12px; font-weight: 600; color: #0F172A; font-family: 'Outfit', sans-serif;"
+            class="mobile-filter-btn"
         >
             <span class="material-icons" style="font-size: 20px;">tune</span>
             Filters
@@ -75,50 +73,48 @@
     </div>
 
     <!-- Main Content: Sidebar + Cards Grid -->
-    <div class="main-grid" style="display: grid; grid-template-columns: 280px 1fr; gap: 4rem;">
+    <div class="main-grid main-grid-layout">
         <!-- Left Sidebar: Filters -->
-        <!-- Left Sidebar: Filters -->
-        <div id="filters-sidebar" class="filters-sidebar" style="display: flex; flex-direction: column; gap: 3rem;">
+        <div id="filters-sidebar" class="filters-sidebar filters-wrapper">
             <!-- Mobile Header -->
-            <div class="mobile-filter-header" style="display: none; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                <h2 style="font-size: 1.5rem; font-weight: 800; color: #0F172A; margin: 0;">Filters</h2>
-                <button onclick="closeFilters()" style="background: none; border: none; padding: 0.5rem; cursor: pointer; color: #64748B;">
+            <div class="mobile-filter-header mobile-sidebar-header">
+                <h2 class="sidebar-title">Filters</h2>
+                <button onclick="closeFilters()" class="close-filter-btn">
                     <span class="material-icons">close</span>
                 </button>
             </div>
             <!-- Annual Fee Filter -->
             <div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-                    <h3 style="font-size: 0.75rem; font-weight: 800; color: #0F172A; margin: 0; letter-spacing: 0.05em; text-transform: uppercase;">ANNUAL FEE</h3>
-                    <span id="fee-range-display" style="font-size: 0.875rem; font-weight: 700; color: #6366F1;">$0 - $1000</span>
+                <div class="filter-section-header">
+                    <h3 class="filter-title">ANNUAL FEE</h3>
+                    <span id="fee-range-display" class="filter-value">$0 - $1000</span>
                 </div>
 
-                <div class="slider-container" style="position: relative; height: 4px; background: #E2E8F0; border-radius: 2px; margin-bottom: 1rem;">
-                    <div id="slider-track" style="position: absolute; left: 0; width: 100%; height: 100%; background: #6366F1; border-radius: 2px;"></div>
-                    <input type="range" id="min-fee-slider" min="0" max="1000" value="0" step="10" style="position: absolute; width: calc(100% + 40px); height: 100%; -webkit-appearance: none; pointer-events: none; margin: 0; top: 0; left: -20px; background: transparent; border: none; outline: none; box-shadow: none;">
-                    <input type="range" id="max-fee-slider" min="0" max="1000" value="1000" step="10" style="position: absolute; width: calc(100% + 40px); height: 100%; -webkit-appearance: none; pointer-events: none; margin: 0; top: 0; left: -20px; background: transparent; border: none; outline: none; box-shadow: none;">
+                <div class="slider-container range-slider-container">
+                    <div id="slider-track" class="range-slider-track"></div>
+                    <input type="range" id="min-fee-slider" min="0" max="1000" value="0" step="10" class="range-input">
+                    <input type="range" id="max-fee-slider" min="0" max="1000" value="1000" step="10" class="range-input">
                 </div>
                 
-                <div style="display: flex; justify-content: space-between; margin: 0 -10px;">
-                    <span style="font-size: 0.75rem; color: #94A3B8; font-weight: 500;">$0</span>
-                    <span style="font-size: 0.75rem; color: #94A3B8; font-weight: 500;">$1000+</span>
+                <div class="range-labels">
+                    <span class="range-label-text">$0</span>
+                    <span class="range-label-text">$1000+</span>
                 </div>
             </div>
 
             <!-- Issuers Filter -->
             <div>
-                <h3 style="font-size: 0.75rem; font-weight: 800; color: #64748B; margin: 0 0 1.25rem 0; letter-spacing: 0.05em; text-transform: uppercase;">ISSUERS</h3>
-                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <h3 class="filter-subtitle">ISSUERS</h3>
+                <div class="checkbox-group">
                     {% for issuer in issuers %}
-                    <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer; group; min-height: 24px;">
+                    <label class="checkbox-label">
                         <input 
                             type="checkbox" 
-                            class="issuer-filter" 
+                            class="issuer-filter checkbox-input" 
                             value="{{ issuer }}"
                             {% if issuer in selected_issuers %}checked{% endif %}
-                            style="width: 20px; height: 20px; border: 2px solid #E2E8F0; border-radius: 4px; cursor: pointer; accent-color: #6366F1; margin: 0; flex-shrink: 0;"
                         >
-                        <span style="font-size: 0.9375rem; color: #475569; font-weight: 600; line-height: 1.2; padding-top: 2px;">{{ issuer }}</span>
+                        <span class="checkbox-text">{{ issuer }}</span>
                     </label>
                     {% endfor %}
                 </div>
@@ -127,7 +123,7 @@
             <!-- Reset Filters -->
             <button 
                 onclick="resetFilters()"
-                style="display: flex; align-items: center; gap: 0.5rem; color: #94A3B8; background: none; border: none; cursor: pointer; font-size: 0.875rem; padding: 0;"
+                class="reset-filters-btn"
             >
                 <span class="material-icons" style="font-size: 18px;">close</span>
                 Reset Filters
@@ -135,38 +131,37 @@
             
             <!-- Mobile Apply Button -->
             <button 
-                class="mobile-apply-btn"
+                class="mobile-apply-btn mobile-show-results-btn"
                 onclick="closeFilters()"
-                style="display: none; width: 100%; background: #0F172A; color: white; padding: 1rem; border-radius: 16px; font-weight: 600; margin-top: auto; border: none; font-family: 'Outfit', sans-serif;"
             >
                 Show Results
             </button>
         </div>
 
         <!-- Right Content: Cards Grid -->
-        <div style="min-width: 0;">
+        <div class="cards-content-column">
             <!-- Sort & View Toggle Header (Desktop) -->
-            <div class="desktop-sort" style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 2rem; gap: 1.5rem;">
+            <div class="desktop-sort desktop-controls-bar">
                 <!-- View Toggle -->
-                <div class="view-toggle" style="background: white; border: 1px solid #E2E8F0; border-radius: 12px; padding: 4px; display: flex; align-items: center;">
-                    <button id="view-grid-btn" onclick="toggleView('grid')" class="active" style="padding: 0.5rem; border: none; background: #F1F5F9; border-radius: 8px; cursor: pointer; display: flex; align-items: center; color: #0F172A; transition: all 0.2s;">
+                <div class="view-toggle view-toggle-wrapper">
+                    <button id="view-grid-btn" onclick="toggleView('grid')" class="view-toggle-btn active">
                         <span class="material-icons" style="font-size: 20px;">grid_view</span>
                     </button>
-                    <button id="view-list-btn" onclick="toggleView('list')" style="padding: 0.5rem; border: none; background: transparent; border-radius: 8px; cursor: pointer; display: flex; align-items: center; color: #94A3B8; transition: all 0.2s;">
+                    <button id="view-list-btn" onclick="toggleView('list')" class="view-toggle-btn">
                         <span class="material-icons" style="font-size: 20px;">format_list_bulleted</span>
                     </button>
                 </div>
 
-                <div style="display: flex; align-items: center; gap: 0.75rem;">
-                    <span style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em;">SORT BY</span>
-                    <div style="position: relative;">
-                        <select id="sort-select" style="appearance: none; background: white; border: 1px solid #E2E8F0; border-radius: 8px; padding: 0.5rem 2.5rem 0.5rem 1rem; font-size: 0.875rem; font-weight: 600; color: #1F2937; cursor: pointer; font-family: 'Outfit', sans-serif;">
+                <div class="sort-wrapper">
+                    <span class="sort-label">SORT BY</span>
+                    <div class="sort-select-container">
+                        <select id="sort-select" class="sort-select">
                             <option value="match" {% if sort_by == 'match' %}selected{% endif %}>Match Score</option>
                             <option value="name" {% if sort_by == 'name' %}selected{% endif %}>Alphabetical</option>
                             <option value="fee_low" {% if sort_by == 'fee_low' %}selected{% endif %}>Lowest Fee</option>
                             <option value="fee_high" {% if sort_by == 'fee_high' %}selected{% endif %}>Highest Fee</option>
                         </select>
-                        <span class="material-icons" style="position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); color: #94A3B8; font-size: 20px; pointer-events: none;">expand_more</span>
+                        <span class="material-icons sort-chevron">expand_more</span>
                     </div>
                 </div>
             </div>
@@ -185,8 +180,7 @@
                 <!-- Grid -->
                 <div
                     id="cards-grid"
-                    class="view-grid"
-                    style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem;"
+                    class="view-grid cards-grid-layout"
                 >
                     {% for card in cards %}
                     <div
@@ -327,7 +321,7 @@
                         <div class="list-action-col" style="display: none; width: 80px;">
                              <button 
                                 onclick="event.stopPropagation(); openCardModal('{{ card.id }}');"
-                                style="background: transparent; border: none; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; color: #64748B; padding: 0.5rem; border-radius: 8px; font-weight: 600; font-size: 0.875rem; font-family: 'Outfit', sans-serif;"
+                                class="list-view-trigger-btn"
                                 onmouseover="this.style.color='#3B82F6'; this.style.background='#EFF6FF'"
                                 onmouseout="this.style.color='#64748B'; this.style.background='transparent'"
                              >
@@ -338,29 +332,29 @@
 
                     </div>
                     {% empty %}
-                    <div style="grid-column: 1 / -1; text-align: center; padding: 6rem 2rem;">
-                        <span class="material-icons" style="font-size: 5rem; color: #E2E8F0; margin-bottom: 1.5rem;">credit_card</span>
-                        <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 1rem; color: #1F2937;">No cards found</h2>
-                        <p style="color: #64748B; font-size: 1.125rem;">Try adjusting your filters or search query.</p>
+                    <div class="empty-state-container">
+                        <span class="material-icons empty-icon">credit_card</span>
+                        <h2 class="empty-title">No cards found</h2>
+                        <p class="empty-text">Try adjusting your filters or search query.</p>
                     </div>
                     {% endfor %}
                 </div>
             </div>
 
             <!-- Show More Button -->
-            <div id="load-more-container" style="display: flex; justify-content: center; margin-top: 4rem; margin-bottom: 2rem;">
-                <button id="load-more-btn" onclick="loadMoreCards()" style="background: white; border: 1px solid #E2E8F0; padding: 0.875rem 2rem; border-radius: 30px; display: flex; align-items: center; gap: 0.75rem; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); transition: all 0.2s; font-family: 'Outfit', sans-serif;">
+            <div id="load-more-container" class="load-more-btn-container">
+                <button id="load-more-btn" onclick="loadMoreCards()" class="load-more-btn">
                     <span style="font-size: 1rem; font-weight: 600; color: #1F2937;">Show More Results</span>
-                    <span id="remaining-count" style="background: #F1F5F9; color: #64748B; font-size: 0.875rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 12px; margin-left: 0.5rem;">5 more</span>
+                    <span id="remaining-count" class="remaining-count-badge">5 more</span>
                     <span class="material-icons" style="font-size: 20px; color: #94A3B8; margin-left: 0.25rem;">expand_more</span>
                 </button>
             </div>
 
             <!-- No Results Message -->
-            <div id="no-results" style="display: none; text-align: center; padding: 6rem 2rem;">
-                <span class="material-icons" style="font-size: 5rem; color: #E2E8F0; margin-bottom: 1.5rem;">search_off</span>
-                <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 1rem; color: #1F2937;">No cards match your filters</h2>
-                <p style="color: #64748B; font-size: 1.125rem;">Try adjusting your search or filters.</p>
+            <div id="no-results" style="display: none;" class="empty-state-container">
+                <span class="material-icons empty-icon">search_off</span>
+                <h2 class="empty-title">No cards match your filters</h2>
+                <p class="empty-text">Try adjusting your search or filters.</p>
             </div>
         </div>
     </div>
@@ -368,19 +362,17 @@
 </div>
 
 <!-- Floating Compare Bar -->
-<div id="compare-bar" style="position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(150%); background: #0F172A; padding: 1rem 1.5rem; border-radius: 20px; display: flex; align-items: center; gap: 2rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); z-index: 100; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); min-width: 320px;">
-    <div style="display: flex; align-items: center; gap: 1rem;">
-        <div id="compare-preview-circles" style="display: flex; margin-left: 10px;">
+<div id="compare-bar" class="compare-bar-container">
+    <div class="compare-preview-wrapper">
+        <div id="compare-preview-circles" class="compare-circles">
             <!-- Circles injected by JS -->
         </div>
-        <span id="compare-count-text" style="color: white; font-weight: 600; font-family: 'Outfit', sans-serif; font-size: 0.9375rem;">0 selected</span>
+        <span id="compare-count-text" class="compare-text">0 selected</span>
     </div>
     
     <button 
         onclick="openCompareModal()"
-        style="background: #3B82F6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; font-family: 'Outfit', sans-serif; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: background 0.2s;"
-        onmouseover="this.style.background='#2563EB'"
-        onmouseout="this.style.background='#3B82F6'"
+        class="compare-action-btn"
     >
         Compare Now
         <span class="material-icons" style="font-size: 18px;">arrow_forward</span>
@@ -388,7 +380,7 @@
 </div>
 
 <!-- Mobile Filter Overlay -->
-<div id="filter-overlay" onclick="closeFilters()" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 40; backdrop-filter: blur(4px);"></div>
+<div id="filter-overlay" onclick="closeFilters()" class="filter-overlay-bg"></div>
 
 {% include 'cards/includes/card_modal.html' %}
 {% include 'cards/includes/compare_modal.html' %}
