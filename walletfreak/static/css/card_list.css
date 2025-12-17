@@ -1420,3 +1420,10 @@ input[type=range]::-moz-range-thumb {
 .header-sort-row {
     flex-wrap: wrap;
 }
+/* Fix Mobile Sort Alignment (Reset Desktop Offset) */
+@media (max-width: 1024px) {
+    .sort-select {
+        top: 0 !important;
+        margin-top: 0 !important;
+    }
+}
