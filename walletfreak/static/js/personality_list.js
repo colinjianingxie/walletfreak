@@ -39,8 +39,10 @@ function loadQuestion() {
         container.appendChild(div);
     });
 
-    // Hide Continue button initially
-    document.getElementById('continue-btn').style.display = 'none';
+    // Disable Continue button initially, but ensure it's visible (CSS will handle display: block if needed, but let's just ensure it's not hidden by inline style)
+    const continueBtn = document.getElementById('continue-btn');
+    continueBtn.disabled = true;
+    continueBtn.style.display = 'block';
 
     // Update button text for last question
     const btn = document.getElementById('continue-btn');
@@ -74,14 +76,10 @@ function selectOption(element, multiSelect, maxSelect) {
         element.classList.add('selected');
     }
 
-    // Show/hide continue button based on selection
+    // Enable/disable continue button based on selection
     const hasSelection = container.querySelectorAll('.quiz-option.selected').length > 0;
     const continueBtn = document.getElementById('continue-btn');
-    if (hasSelection) {
-        continueBtn.style.display = 'block';
-    } else {
-        continueBtn.style.display = 'none';
-    }
+    continueBtn.disabled = !hasSelection;
 }
 
 function nextQuestion() {

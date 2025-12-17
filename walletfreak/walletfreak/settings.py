@@ -197,7 +197,7 @@ FIREBASE_CLIENT_CONFIG = {
 
 # Authentication settings
 LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/dashboard/'
+LOGIN_REDIRECT_URL = '/wallet/'
 
 # Email Backend (SMTP for Production/Real Testing)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

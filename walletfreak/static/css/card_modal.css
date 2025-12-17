@@ -549,20 +549,27 @@
 
     .modal-close-mobile {
         display: flex !important;
-        align-items: center !important;
-        gap: 0.1rem !important;
-        position: fixed !important;
-        top: 1rem !important;
-        left: 1rem !important;
-        background: none !important;
+        align-items: center;
+        justify-content: flex-start;
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        /* Move back to left as standard back button */
+        right: auto;
+        background: transparent !important;
         border: none !important;
+        width: auto !important;
+        height: auto !important;
+        border-radius: 0 !important;
         font-size: 1rem !important;
-        font-weight: 600 !important;
+        font-weight: 600;
         color: #0F172A !important;
-        z-index: 101 !important;
-        cursor: pointer !important;
+        box-shadow: none !important;
+        z-index: 99999;
+        cursor: pointer;
+        padding: 0;
+        gap: 0.25rem;
         font-family: inherit !important;
-        padding: 0 !important;
     }
 
     .modal-close-mobile .material-icons {
@@ -643,7 +650,7 @@
 
     /* Tab Content - Allow full scroll */
     .card-tab-content {
-        padding: 1.25rem 1.25rem 2rem 1.25rem !important;
+        padding: 1.5rem 2rem 10rem 2rem !important;
         overflow-y: visible !important;
         height: auto !important;
         max-height: none !important;
