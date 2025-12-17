@@ -4,6 +4,29 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/blog_community.css' %}">
+<style>
+    /* Small screen optimization (iPhone SE, etc.) */
+    @media (max-width: 375px) {
+        .action-text {
+            display: none !important;
+        }
+        
+        .action-group {
+            justify-content: space-between;
+            width: 100%;
+            gap: 0.25rem;
+        }
+        
+        .action-btn {
+            padding: 0.5rem;
+            gap: 0.25rem;
+        }
+        
+        .action-btn .material-icons {
+            font-size: 22px;
+        }
+    }
+</style>
 {% endblock %}
 
 {% block main_style %}background: #F8F9FA; min-height: 100vh; padding: 0;{% endblock %}
