@@ -8,38 +8,60 @@ class Command(BaseCommand):
         self.stdout.write("Checking for sent emails to clean up...")
         
         try:
-            # Query for emails with delivery.state == 'SUCCESS'
-            # Note: We need to use FieldPath for nested fields or just filter manually if index missing
-            # But standard filtering works for maps if indexed.
-            # However, to avoid index requirements for now, we can stream and check? 
-            # Or assume 'delivery' exists.
-            
-            # Let's try basic query first.
             mails_ref = db.db.collection('mail')
             
-            # Since 'delivery.state' might require a composite index if mixed with other filters,
-            # but usually fine on its own.
-            # Using basic where clause on nested field
-            query = mails_ref.where('delivery.state', '==', 'SUCCESS')
+        
+            # Query for emails. 
+            # To be robust against missing 'state' field (as seen in some extension versions),
+            # we will fetch and filter in Python.
+            # We filter for docs that have 'delivery' field.
+            # Using limit to prevent memory issues, we can run this command multiple times or in a loop.
+            # But for a daily cron, a loop until done or max count is good.
             
-            # Also clean up older ones where 'delivery.state' might not exist but it's old? 
-            # No, safer to only delete confirmed success.
-            
-            # Batch delete
-            batch_size = 50
+            MAX_DELETE = 500
+            batch = db.db.batch()
+            count = 0
             deleted_count = 0
             
-            docs = list(query.stream())
+            # Get docs that have delivery info (implies attempt made)
+            # We can't easily query for "has delivery" without index, but we can query order by delivery.endTime?
+            # Or just stream the collection (assuming 'mail' is mostly ephemeral).
             
-            for i in range(0, len(docs), batch_size):
-                batch = db.db.batch()
-                chunk = docs[i:i + batch_size]
+            docs = list(mails_ref.limit(500).stream())
+            self.stdout.write(f"Scanned {len(docs)} documents.")
+            
+            for doc in docs:
+                data = doc.to_dict()
+                delivery = data.get('delivery')
                 
-                for doc in chunk:
-                    batch.delete(doc.reference)
+                should_delete = False
+                
+                if delivery:
+                    state = delivery.get('state')
+                    error = delivery.get('error')
+                    end_time = delivery.get('endTime')
                     
+                    # Criteria 1: Explicit SUCCESS state
+                    if state == 'SUCCESS':
+                        should_delete = True
+                        
+                    # Criteria 2: Finished with no error (implicit success)
+                    elif end_time and error is None:
+                         should_delete = True
+                         
+                if should_delete:
+                    batch.delete(doc.reference)
+                    count += 1
+                    
+                    if count >= 400: # Commit batches of 400
+                        batch.commit()
+                        deleted_count += count
+                        count = 0
+                        batch = db.db.batch()
+            
+            if count > 0:
                 batch.commit()
-                deleted_count += len(chunk)
+                deleted_count += count
                 
             self.stdout.write(self.style.SUCCESS(f"Successfully deleted {deleted_count} sent emails."))
             
