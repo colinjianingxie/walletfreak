@@ -119,12 +119,12 @@
                     {% if is_authenticated %}
                     <button class="action-btn upvote-btn {% if user_vote == 'upvote' %}active{% endif %}" data-vote-type="upvote">
                         <span class="material-icons">local_fire_department</span>
-                        <span class="action-count">{{ upvote_count|default:0 }}</span>
+                        <span class="action-count" style="{% if user_vote != 'upvote' %}color: #ccc;{% endif %}">{{ upvote_count|default:0 }}</span>
                     </button>
                     {% else %}
-                    <button class="action-btn upvote-btn" onclick="alert('Please log in to vote')">
+                    <button class="action-btn upvote-btn" onclick="showLoginModal()">
                         <span class="material-icons">local_fire_department</span>
-                        <span class="action-count">{{ upvote_count|default:0 }}</span>
+                        <span class="action-count" style="color: #ccc;">{{ upvote_count|default:0 }}</span>
                     </button>
                     {% endif %}
                     <button class="action-btn comment-btn">
@@ -136,7 +136,7 @@
                         <span class="action-text">Share</span>
                     </button>
                 </div>
-                <button class="action-btn save-btn">
+                <button class="action-btn save-btn" data-slug="{{ blog.slug }}" data-id="{{ blog.id }}">
                     <span class="material-icons">bookmark_border</span>
                     <span class="action-text">Save</span>
                 </button>
@@ -202,13 +202,6 @@
     </div>
 </div>
 
-<!-- Loading Modal for Voting -->
-<div id="voting-loader" class="voting-loader-modal">
-    <div class="voting-loader-content">
-        <div class="voting-loader-spinner"></div>
-        <p>Updating vote...</p>
-    </div>
-</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -247,54 +240,107 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Real-time Voting Listener
+    const blogId = '{{ blog.id }}';
+    const currentUid = '{{ request.session.uid|default:"" }}';
+    const upvoteBtn = document.querySelector('.upvote-btn');
+    const upvoteCount = upvoteBtn ? upvoteBtn.querySelector('.action-count') : null;
+
+    if (blogId && upvoteBtn) {
+        db.collection('blogs').doc(blogId).onSnapshot((doc) => {
+            if (doc.exists) {
+                const data = doc.data();
+                const upvoters = data.upvoters || [];
+                const count = upvoters.length;
+                
+                // Update count
+                if (upvoteCount) {
+                    upvoteCount.textContent = count;
+                }
+                
+                // Update active state if logged in
+                if (currentUid) {
+                    if (upvoters.includes(currentUid)) {
+                        upvoteBtn.classList.add('active');
+                    } else {
+                        upvoteBtn.classList.remove('active');
+                    }
+                    
+                    // Update dataset locally to minimize flicker on potential conflict (optional)
+                    if (upvoters.includes(currentUid)) {
+                         upvoteBtn.dataset.userVoted = 'true';
+                         if (upvoteCount) upvoteCount.style.color = ''; // Reset to default/active color
+                    } else {
+                         upvoteBtn.dataset.userVoted = 'false';
+                         if (upvoteCount) upvoteCount.style.color = '#ccc';
+                    }
+                } else {
+                    // Not logged in -> always gray
+                    if (upvoteCount) upvoteCount.style.color = '#ccc';
+                }
+            }
+        });
+    }
+
+    // Real-time Saved Status Listener
+    if (currentUid && blogId) {
+        db.collection('users').doc(currentUid).collection('saved_posts').doc(blogId)
+            .onSnapshot((doc) => {
+                const saveBtn = document.querySelector('.save-btn');
+                if (saveBtn) {
+                    const icon = saveBtn.querySelector('.material-icons');
+                    const text = saveBtn.querySelector('.action-text');
+                    
+                    if (doc.exists) {
+                        saveBtn.classList.add('active');
+                        if (icon) icon.textContent = 'bookmark';
+                        if (text) text.textContent = 'Saved';
+                    } else {
+                        saveBtn.classList.remove('active');
+                        if (icon) icon.textContent = 'bookmark_border';
+                        if (text) text.textContent = 'Save';
+                    }
+                }
+            });
+    }
+
     // Voting functionality
-    document.querySelectorAll('.upvote-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
+    if (upvoteBtn) {
+        upvoteBtn.addEventListener('click', function() {
             {% if is_authenticated %}
+            // Optimistic UI update is handled by listener mostly, but we can do immediate feedback if needed.
+            // But with listener it feels instant enough usually.
+            
             const voteType = this.dataset.voteType;
             const slug = '{{ blog.slug }}';
             
-            // Show loading modal
-            const loader = document.getElementById('voting-loader');
-            loader.classList.add('show');
+            // Send AJAX request just to toggle backend
+            // Pure toggle logic now
             
-            // Send AJAX request
             fetch(`/blog/${slug}/vote/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                     'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
                 },
-                body: `vote_type=${voteType}`
+                body: `vote_type=upvote`
             })
             .then(response => response.json())
             .then(data => {
-                // Hide loading modal
-                loader.classList.remove('show');
-                
-                if (data.success) {
-                    // Update vote count
-                    document.querySelector('.upvote-btn .action-count').textContent = data.upvote_count;
-                    
-                    // Update active state
-                    document.querySelector('.upvote-btn').classList.remove('active');
-                    
-                    if (data.user_vote === 'upvote') {
-                        document.querySelector('.upvote-btn').classList.add('active');
-                    }
-                } else {
+                if (!data.success) {
                     alert('Error: ' + data.error);
                 }
+                // Success means backend toggled it. Listener will catch the result.
             })
             .catch(error => {
-                // Hide loading modal on error
-                loader.classList.remove('show');
                 console.error('Error:', error);
                 alert('An error occurred while voting');
             });
+            {% else %}
+            alert('Please log in to vote');
             {% endif %}
         });
-    });
+    }
 });
 
 

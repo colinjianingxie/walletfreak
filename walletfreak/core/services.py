@@ -1063,9 +1063,11 @@ The WalletFreak Team
     def get_blog_vote_count(self, blog_id, vote_type):
         """Get the count of votes for a blog post by type"""
         try:
-            votes_ref = self.db.collection('blog_votes')
-            votes = votes_ref.where('blog_id', '==', blog_id).where('vote_type', '==', vote_type).stream()
-            return len(list(votes))
+            if vote_type == 'upvote':
+                blog = self.get_blog_by_id(blog_id)
+                upvoters = blog.get('upvoters', [])
+                return len(upvoters)
+            return 0
         except Exception as e:
             print(f"Error getting blog vote count: {e}")
             return 0
@@ -1073,11 +1075,11 @@ The WalletFreak Team
     def get_user_vote_on_blog(self, uid, blog_id):
         """Get the user's vote on a specific blog post"""
         try:
-            votes_ref = self.db.collection('blog_votes')
-            votes = votes_ref.where('user_uid', '==', uid).where('blog_id', '==', blog_id).limit(1).stream()
-            for vote in votes:
-                return vote.to_dict().get('vote_type')
-            return None
+            blog = self.get_blog_by_id(blog_id)
+            if not blog:
+                return None
+            upvoters = blog.get('upvoters', [])
+            return 'upvote' if uid in upvoters else None
         except Exception as e:
             print(f"Error getting user vote on blog: {e}")
             return None
@@ -1085,25 +1087,13 @@ The WalletFreak Team
     def add_user_vote_on_blog(self, uid, blog_id, vote_type):
         """Add a user's vote on a blog post"""
         try:
-            vote_data = {
-                'user_uid': uid,
-                'blog_id': blog_id,
-                'vote_type': vote_type,
-                'created_at': firestore.SERVER_TIMESTAMP,
-                'updated_at': firestore.SERVER_TIMESTAMP
-            }
-            self.db.collection('blog_votes').add(vote_data)
-        
-            # Increment updated count on blog
-            if vote_type == 'upvote':
-                self.db.collection('blogs').document(blog_id).update({
-                    'upvote_count': firestore.Increment(1)
-                })
-            elif vote_type == 'downvote':
-                 self.db.collection('blogs').document(blog_id).update({
-                    'downvote_count': firestore.Increment(1)
-                })
+            if vote_type != 'upvote':
+                return False
                 
+            self.db.collection('blogs').document(blog_id).update({
+                'upvoters': firestore.ArrayUnion([uid]),
+                'upvote_count': firestore.Increment(1)
+            })
             return True
         except Exception as e:
             print(f"Error adding user vote on blog: {e}")
@@ -1111,46 +1101,18 @@ The WalletFreak Team
 
     def update_user_vote_on_blog(self, uid, blog_id, vote_type):
         """Update a user's existing vote on a blog post"""
-        try:
-            votes_ref = self.db.collection('blog_votes')
-            votes = votes_ref.where('user_uid', '==', uid).where('blog_id', '==', blog_id).limit(1).stream()
-            
-            for vote in votes:
-                vote.reference.update({
-                    'vote_type': vote_type,
-                    'updated_at': firestore.SERVER_TIMESTAMP
-                })
-                return True
-            return False
-        except Exception as e:
-            print(f"Error updating user vote on blog: {e}")
-            return False
+        # With simple upvotes, update is just adding if not present, but usually this isn't called for clear toggles
+        # logic handled in view mostly.
+        return self.add_user_vote_on_blog(uid, blog_id, vote_type)
 
     def remove_user_vote_on_blog(self, uid, blog_id):
         """Remove a user's vote on a blog post"""
         try:
-            votes_ref = self.db.collection('blog_votes')
-            votes = votes_ref.where('user_uid', '==', uid).where('blog_id', '==', blog_id).limit(1).stream()
-            
-            for vote in votes:
-                # Check type before deleting to decrement correct counter
-                data = vote.to_dict()
-                vote_type = data.get('vote_type')
-                
-                vote.reference.delete()
-                
-                # Decrement counter
-                if vote_type == 'upvote':
-                    self.db.collection('blogs').document(blog_id).update({
-                        'upvote_count': firestore.Increment(-1)
-                    })
-                elif vote_type == 'downvote':
-                    self.db.collection('blogs').document(blog_id).update({
-                        'downvote_count': firestore.Increment(-1)
-                    })
-                    
-                return True
-            return False
+            self.db.collection('blogs').document(blog_id).update({
+                'upvoters': firestore.ArrayRemove([uid]),
+                'upvote_count': firestore.Increment(-1)
+            })
+            return True
         except Exception as e:
             print(f"Error removing user vote on blog: {e}")
             return False

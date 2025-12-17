@@ -53,7 +53,7 @@
             <!-- Posts Feed -->
             <div class="posts-feed">
                 {% for post in blogs %}
-                <article class="post-card" data-href="{% url 'blog_detail' post.slug %}" data-slug="{{ post.slug }}">
+                <article class="post-card" data-href="{% url 'blog_detail' post.slug %}" data-slug="{{ post.slug }}" data-id="{{ post.id }}">
                     <!-- Post Vote Section -->
                     <div class="post-vote" onclick="event.stopPropagation();">
                         {% if is_authenticated %}
@@ -61,12 +61,12 @@
                                 data-slug="{{ post.slug }}" data-vote-type="upvote">
                             <span class="material-icons">local_fire_department</span>
                         </button>
-                        <span class="vote-count">{{ post.upvote_count|default:0 }}</span>
+                        <span class="vote-count" style="{% if post.user_vote != 'upvote' %}color: #ccc;{% endif %}">{{ post.upvote_count|default:0 }}</span>
                         {% else %}
-                        <button class="vote-btn upvote" onclick="alert('Please log in to vote')">
+                        <button class="vote-btn upvote" onclick="showLoginModal()">
                             <span class="material-icons">local_fire_department</span>
                         </button>
-                        <span class="vote-count">{{ post.upvote_count|default:0 }}</span>
+                        <span class="vote-count" style="{% if post.user_vote != 'upvote' %}color: #ccc;{% endif %}">{{ post.upvote_count|default:0 }}</span>
                         {% endif %}
                     </div>
 
@@ -122,13 +122,13 @@
                                 {% if is_authenticated %}
                                 <button class="action-btn mobile-vote-btn {% if post.user_vote == 'upvote' %}active{% endif %}"
                                         data-slug="{{ post.slug }}" data-vote-type="upvote">
-                                    <span class="material-icons">local_fire_department</span>
-                                    <span class="action-count">{{ post.upvote_count|default:0 }}</span>
+                                    <span class="material-icons" style="{% if not post.upvote_count or post.upvote_count == 0 %}color: #ccc;{% endif %}">local_fire_department</span>
+                                    <span class="action-count" style="{% if post.user_vote != 'upvote' %}color: #ccc;{% endif %}">{{ post.upvote_count|default:0 }}</span>
                                 </button>
                                 {% else %}
-                                <button class="action-btn mobile-vote-btn" onclick="alert('Please log in to vote')">
-                                    <span class="material-icons">local_fire_department</span>
-                                    <span class="action-count">{{ post.upvote_count|default:0 }}</span>
+                                <button class="action-btn mobile-vote-btn" onclick="showLoginModal()">
+                                    <span class="material-icons" style="{% if not post.upvote_count or post.upvote_count == 0 %}color: #ccc;{% endif %}">local_fire_department</span>
+                                    <span class="action-count" style="color: #ccc;">{{ post.upvote_count|default:0 }}</span>
                                 </button>
                                 {% endif %}
                                 
@@ -141,7 +141,7 @@
                                     <span class="material-icons">share</span>
                                     <span class="action-text">Share</span>
                                 </button>
-                                <button class="action-btn save-btn" data-slug="{{ post.slug }}">
+                                <button class="action-btn save-btn" data-slug="{{ post.slug }}" data-id="{{ post.id }}">
                                     <span class="material-icons">bookmark_border</span>
                                     <span class="action-text">Save</span>
                                 </button>
@@ -250,12 +250,6 @@
 </div>
 
 <!-- Loading Modal for Voting -->
-<div id="voting-loader" class="voting-loader-modal">
-    <div class="voting-loader-content">
-        <div class="voting-loader-spinner"></div>
-        <p>Updating vote...</p>
-    </div>
-</div>
 
 {% if is_editor %}
 <!-- Floating Action Button for Editors -->
@@ -275,7 +269,101 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.location.href = href;
             }
         });
+
+        // Real-time vote listener
+        const blogId = card.getAttribute('data-id');
+        const currentUid = '{{ request.session.uid|default:"" }}';
+        
+        if (blogId) {
+            db.collection('blogs').doc(blogId).onSnapshot((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    const upvoters = data.upvoters || [];
+                    const count = upvoters.length;
+                    
+                    // Update counts (desktop and mobile)
+                    const voteCount = card.querySelector('.vote-count');
+                    const mobileVoteCount = card.querySelector('.mobile-vote-btn .action-count');
+                    
+                    const mobileVoteBtn = card.querySelector('.mobile-vote-btn');
+                    const mobileIcon = mobileVoteBtn ? mobileVoteBtn.querySelector('.material-icons') : null;
+                    
+                    if (voteCount) voteCount.textContent = count;
+                    if (mobileVoteCount) mobileVoteCount.textContent = count;
+                    
+                    // Update mobile icon color (gray if 0)
+                    if (mobileIcon) {
+                        if (count === 0) {
+                            mobileIcon.style.color = '#ccc';
+                        } else {
+                            mobileIcon.style.color = ''; // Reset to default (active/hover handled by CSS)
+                        }
+                    }
+                    
+                    // Update active state if logged in
+                    if (currentUid) {
+                        const upvoteBtn = card.querySelector('.vote-btn.upvote');
+                        const mobileUpvoteBtn = card.querySelector('.mobile-vote-btn');
+                        
+                        const isActive = upvoters.includes(currentUid);
+                        
+                        if (upvoteBtn) {
+                            if (isActive) upvoteBtn.classList.add('active');
+                            else upvoteBtn.classList.remove('active');
+                        }
+                        
+                        // Update desktop vote count color
+                        if (voteCount) {
+                            voteCount.style.color = isActive ? '' : '#ccc';
+                        }
+                        
+                        if (mobileUpvoteBtn) {
+                            if (isActive) mobileUpvoteBtn.classList.add('active');
+                            else mobileUpvoteBtn.classList.remove('active');
+                            
+                            // Update mobile count color
+                             const mobileCount = mobileUpvoteBtn.querySelector('.action-count');
+                             if (mobileCount) {
+                                 mobileCount.style.color = isActive ? '' : '#ccc';
+                             }
+                        }
+                    } else {
+                         // Not logged in -> always gray
+                         if (voteCount) voteCount.style.color = '#ccc';
+                         const mobileCount = card.querySelector('.mobile-vote-btn .action-count');
+                         if (mobileCount) mobileCount.style.color = '#ccc';
+                    }
+                }
+            });
+        }
     });
+
+    // Real-time Saved Posts Listener
+    const currentUid = '{{ request.session.uid|default:"" }}';
+    if (currentUid) {
+        db.collection('users').doc(currentUid).collection('saved_posts').onSnapshot((snapshot) => {
+            const savedPostIds = new Set();
+            snapshot.forEach(doc => {
+                savedPostIds.add(doc.id);
+            });
+            
+            document.querySelectorAll('.save-btn').forEach(btn => {
+                const postId = btn.getAttribute('data-id');
+                const icon = btn.querySelector('.material-icons');
+                const text = btn.querySelector('.action-text');
+                
+                if (savedPostIds.has(postId)) {
+                    btn.classList.add('active');
+                    if (icon) icon.textContent = 'bookmark';
+                    if (text) text.textContent = 'Saved';
+                } else {
+                    btn.classList.remove('active');
+                    if (icon) icon.textContent = 'bookmark_border';
+                    if (text) text.textContent = 'Save';
+                }
+            });
+        });
+    }
 
     // Vote buttons (both desktop and mobile)
     document.querySelectorAll('.vote-btn, .mobile-vote-btn').forEach(btn => {
@@ -310,9 +398,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const csrftoken = getCookie('csrftoken') || document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
             
             // Show loading modal
-            const loader = document.getElementById('voting-loader');
-            loader.classList.add('show');
-            
             // Make AJAX request
             fetch(`/blog/${slug}/vote/`, {
                 method: 'POST',
@@ -325,33 +410,10 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => response.json())
             .then(data => {
-                // Hide loading modal
-                loader.classList.remove('show');
                 
                 if (data.success) {
-                    const postCard = this.closest('.post-card');
-                    
-                    // Update both desktop and mobile vote counts
-                    const voteCount = postCard.querySelector('.vote-count');
-                    const mobileVoteCount = postCard.querySelector('.mobile-vote-btn .action-count');
-                    
-                    // Update vote counts (upvote count only)
-                    if (voteCount) voteCount.textContent = data.upvote_count;
-                    if (mobileVoteCount) mobileVoteCount.textContent = data.upvote_count;
-                    
-                    // Update desktop vote button states
-                    const upvoteBtn = postCard.querySelector('.vote-btn.upvote');
-                    if (upvoteBtn) upvoteBtn.classList.remove('active');
-                    
-                    // Update mobile vote button states
-                    const mobileUpvoteBtn = postCard.querySelector('.mobile-vote-btn');
-                    if (mobileUpvoteBtn) mobileUpvoteBtn.classList.remove('active');
-                    
-                    // Set active states based on user vote (only upvote)
-                    if (data.user_vote === 'upvote') {
-                        if (upvoteBtn) upvoteBtn.classList.add('active');
-                        if (mobileUpvoteBtn) mobileUpvoteBtn.classList.add('active');
-                    }
+                    // Success! Listener will handle the UI update.
+                    console.log('Vote recorded successfully');
                 } else {
                     alert('Error: ' + data.error);
                 }

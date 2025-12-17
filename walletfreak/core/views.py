@@ -2,7 +2,34 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 from .services import db
+import firebase_admin
+from firebase_admin import auth
+
+@login_required
+def get_firebase_token(request):
+    """
+    Generate a Firebase Custom Token for the logged-in user.
+    This allows the frontend to authenticate with Firebase using the Django session.
+    """
+    try:
+        uid = request.session.get('uid')
+        if not uid:
+            return JsonResponse({'error': 'No Firebase UID in session'}, status=400)
+            
+        # Create a custom token for this UID
+        # note: auth.create_custom_token returns bytes in some versions, string in others.
+        # Ensure it's decoded if bytes.
+        custom_token = auth.create_custom_token(uid)
+        
+        if isinstance(custom_token, bytes):
+            custom_token = custom_token.decode('utf-8')
+            
+        return JsonResponse({'token': custom_token})
+    except Exception as e:
+        print(f"Error generating custom token: {e}")
+        return JsonResponse({'error': str(e)}, status=500)
 
 def home(request):
     # Redirect to dashboard if user is authenticated

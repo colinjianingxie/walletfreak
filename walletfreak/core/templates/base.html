@@ -14,6 +14,7 @@
     {% block extra_css %}{% endblock %}
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
 
@@ -24,19 +25,22 @@
         const firebaseConfig = JSON.parse(document.getElementById('firebase-config').textContent);
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
+        const db = firebase.firestore();
 
-        // Auth State Observer
+        // Auth State Observer & Sync
         auth.onAuthStateChanged(async (user) => {
-            if (user) {
-                if (user.emailVerified || user.providerData[0].providerId === 'phone') {
-                    const idToken = await user.getIdToken();
-                    // Check if Django session exists using template variable
-                    // We can't check document.cookie for sessionid because it's HttpOnly
-                    const isDjangoAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}" === "true";
+            const isDjangoAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}" === "true";
 
-                    if (!isDjangoAuthenticated) {
+            if (user) {
+                // User is signed in to Firebase
+                if (!isDjangoAuthenticated) {
+                    // Firebase has user, but Django doesn't. 
+                    // This creates a mismatch. Usually we might force logout or try to login to Django.
+                    // For now, let's just ensure we don't end up in weird state.
+                    // existing logic: login to django (if provider was phone/google directly on client)
+                    if (user.emailVerified || user.providerData[0].providerId === 'phone') {
                         const idToken = await user.getIdToken();
-                        fetch('/accounts/api/login/', {
+                         fetch('/accounts/api/login/', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -46,13 +50,26 @@
                             if (res.ok) window.location.reload();
                         });
                     }
-                } else {
-                    // Email not verified
-                    if (!window.location.pathname.includes('verify-email')) {
-                        // Optional: Allow them to stay logged in Firebase but not Django? 
-                        // Or force sign out. For now, let's alert.
-                        // alert('Please verify your email address.');
-                        // auth.signOut();
+                }
+            } else {
+                // User is NOT signed in to Firebase
+                if (isDjangoAuthenticated) {
+                    // Django is signed in, but Firebase is not.
+                    // We need to fetch a custom token and sign in.
+                    console.log('Django authenticated, syncing Firebase auth...');
+                    try {
+                        const response = await fetch('/api/get-firebase-token/');
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.token) {
+                                await auth.signInWithCustomToken(data.token);
+                                console.log('Firebase auth synced successfully');
+                            }
+                        } else {
+                            console.error('Failed to get firebase token');
+                        }
+                    } catch (e) {
+                        console.error('Error syncing firebase auth', e);
                     }
                 }
             }
@@ -124,6 +141,41 @@
             </div>
         </div>
     </footer>
+    <!-- Login Required Modal -->
+    <div id="login-required-modal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 9999; justify-content: center; align-items: center;">
+        <div class="modal-content" style="background: white; padding: 2rem; border-radius: 12px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+            <div style="margin-bottom: 1.5rem;">
+                <span class="material-icons" style="font-size: 3rem; color: var(--primary);">account_circle</span>
+            </div>
+            <h3 style="margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">Please Log In</h3>
+            <p style="margin-bottom: 2rem; color: #666; line-height: 1.5;">You need to be logged in to perform this action. Join the community to vote, save posts, and more!</p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <button onclick="closeLoginModal()" style="padding: 0.75rem 1.5rem; border: 1px solid #ddd; background: white; border-radius: 8px; font-weight: 500; cursor: pointer; transition: all 0.2s;">
+                    Cancel
+                </button>
+                <a href="{% url 'login' %}?next={{ request.path }}" style="padding: 0.75rem 1.5rem; background: var(--primary); color: white; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    Log In
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showLoginModal() {
+            document.getElementById('login-required-modal').style.display = 'flex';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('login-required-modal').style.display = 'none';
+        }
+        
+        // Close on outside click
+        document.getElementById('login-required-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLoginModal();
+            }
+        });
+    </script>
 </body>
 
 </html>
