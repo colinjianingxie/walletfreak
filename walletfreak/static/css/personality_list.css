@@ -260,11 +260,11 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
     padding: 0.5rem 1rem;
     border-radius: 999px;
     margin-bottom: 1.5rem;
-    backdrop-filter: blur(10px);
+    /* backdrop-filter removed for performance */
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -303,8 +303,8 @@
 .quiz-container-box {
     max-width: 950px;
     margin: 0 auto;
-    background: rgba(30, 41, 59, 0.6);
-    backdrop-filter: blur(20px);
+    background: rgba(30, 41, 59, 0.95);
+    /* backdrop-filter removed for performance */
     border-radius: 20px;
     padding: 2.5rem 3rem;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -413,8 +413,8 @@
     display: none;
     max-width: 950px;
     margin: 0 auto;
-    background: rgba(30, 41, 59, 0.6);
-    backdrop-filter: blur(20px);
+    background: rgba(30, 41, 59, 0.95);
+    /* backdrop-filter removed for performance */
     border-radius: 20px;
     padding: 4rem 3rem;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -448,8 +448,8 @@
     display: none;
     max-width: 950px;
     margin: 0 auto;
-    background: rgba(30, 41, 59, 0.6);
-    backdrop-filter: blur(20px);
+    background: rgba(30, 41, 59, 0.95);
+    /* backdrop-filter removed for performance */
     border-radius: 20px;
     padding: 3.5rem 3rem;
     border: 1px solid rgba(255, 255, 255, 0.1);

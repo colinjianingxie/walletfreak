@@ -394,6 +394,10 @@ function handleResize() {
         if (mobileSortContainer && wrapper && !mobileSortContainer.contains(wrapper)) {
             mobileSortContainer.appendChild(wrapper);
         }
+        // Force Grid View on Mobile
+        if (currentView === 'list') {
+            toggleView('grid');
+        }
     } else {
         if (sortContainer && wrapper && !sortContainer.contains(wrapper)) {
             sortContainer.appendChild(wrapper);
