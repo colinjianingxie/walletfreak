@@ -75,3 +75,27 @@ def run_notification_cron(request):
         })
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+
+@csrf_exempt
+def run_cleanup_cron(request):
+    """
+    Cron endpoint to clean up sent emails.
+    Protected by secret.
+    """
+    import os
+    from django.core.management import call_command
+    from io import StringIO
+    from django.http import JsonResponse
+    
+    cron_secret = os.environ.get('CRON_SECRET', 'temp_insecure_secret_change_me')
+    request_secret = request.GET.get('secret')
+    
+    if request_secret != cron_secret:
+        return JsonResponse({'status': 'error', 'message': 'Unauthorized'}, status=401)
+        
+    try:
+        out = StringIO()
+        call_command('cleanup_sent_emails', stdout=out)
+        return JsonResponse({'status': 'success', 'output': out.getvalue()})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
