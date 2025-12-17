@@ -206,15 +206,79 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Bookmark functionality
-    document.querySelectorAll('.bookmark-btn, .save-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
+    // Save/Bookmark functionality
+    document.querySelectorAll('.save-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            
+            {% if not is_authenticated %}
+            showLoginModal();
+            return;
+            {% endif %}
+            
+            const slug = this.getAttribute('data-slug');
+            const isCurrentlySaved = this.classList.contains('active');
+            
+            // Optimistic update
+            // Listener will confirm this, but we toggle immediately for responsiveness
+            /* 
+               Actually, since we have a listener, we can just rely on the backend response + listener?
+               But for strict responsiveness, let's toggle.
+               However, if we toggle here AND the listener updates, it might flicker if there's lag.
+               The user said "does not bookmark", implies nothing happened.
+               Let's trigger the backend call. The listener (lines 286+) will handle the UI state.
+               We can add a temporary loading state if we want, or just fire and forget.
+               To be safe and "premium", let's toggle optimistically.
+            */
+            
+            // Toggle local state
             this.classList.toggle('active');
             const icon = this.querySelector('.material-icons');
-            if (icon.textContent === 'bookmark_border') {
-                icon.textContent = 'bookmark';
-            } else if (icon.textContent === 'bookmark') {
-                icon.textContent = 'bookmark_border';
+            const text = this.querySelector('.action-text');
+            
+            if (this.classList.contains('active')) {
+                if(icon) icon.textContent = 'bookmark';
+                if(text) text.textContent = 'Saved';
+            } else {
+                if(icon) icon.textContent = 'bookmark_border';
+                if(text) text.textContent = 'Save';
             }
+            
+            // Logic for URL
+            const url = isCurrentlySaved ? `/blog/${slug}/unsave/` : `/blog/${slug}/save/`;
+            
+            // CSRF
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrftoken,
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                credentials: 'same-origin'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success) {
+                    // Revert if failed
+                    this.classList.toggle('active');
+                    if (this.classList.contains('active')) {
+                        if(icon) icon.textContent = 'bookmark';
+                        if(text) text.textContent = 'Saved';
+                    } else {
+                        if(icon) icon.textContent = 'bookmark_border';
+                        if(text) text.textContent = 'Save';
+                    }
+                    console.error('Save failed:', data.error);
+                }
+            })
+            .catch(err => {
+                console.error('Error:', err);
+                // Revert
+                this.classList.toggle('active');
+                // ... revert logic
+            });
         });
     });
 
