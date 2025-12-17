@@ -30,8 +30,8 @@ def personality_list(request):
 
 
     # Convert personalities and cards to JSON for JavaScript
-    personalities_json = json.dumps(personalities)
-    questions_json = json.dumps(quiz_questions)
+    personalities_json = json.dumps(personalities, default=str)
+    questions_json = json.dumps(quiz_questions, default=str)
     
     return render(request, 'cards/personality_list.html', {
         'personalities': personalities,
@@ -452,7 +452,7 @@ def card_list(request):
         'current_max_fee': max_fee_filter or max_fee,
         'wallet_filter': wallet_filter,
         'user_match_scores': user_match_scores,
-        'user_personality_json': json.dumps(user_personality) if user_personality else 'null',
+        'user_personality_json': json.dumps(user_personality, default=str) if user_personality else 'null',
         'sort_by': sort_by
     }
     return render(request, 'cards/card_list.html', context)
