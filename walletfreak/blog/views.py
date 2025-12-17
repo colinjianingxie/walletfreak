@@ -152,6 +152,15 @@ def blog_list(request):
             reverse=True
         )[:3]
     
+    # Get total registered users count for the Ledger card
+    total_users = db.get_total_user_count()
+    
+    # Check subscription status
+    is_subscribed = False
+    if uid:
+        prefs = db.get_user_notification_preferences(uid)
+        is_subscribed = prefs.get('blog_updates', {}).get('enabled', False)
+
     return render(request, 'blog/blog_list.html', {
         'blogs': blogs,
         'is_editor': is_editor,
@@ -161,7 +170,9 @@ def blog_list(request):
         'is_authenticated': bool(uid),
         'trending_posts': trending_posts,
         'top_contributors': top_contributors,
-        'now': datetime.now()  # Useful for calculating time since
+        'now': datetime.now(),
+        'total_users': total_users,
+        'is_subscribed': is_subscribed
     })
 
 @login_required
@@ -620,6 +631,31 @@ def vote_blog(request, slug):
     except Exception as e:
         print(f"Error in vote_blog: {e}")
         return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
+@require_POST
+def subscribe_to_blog(request):
+    """Subscribe current user to blog updates"""
+    try:
+        uid = request.session.get('uid')
+        if not uid:
+            return JsonResponse({'success': False, 'error': 'Not authenticated'}, status=401)
+            
+        # Get current preferences or defaults
+        prefs = db.get_user_notification_preferences(uid)
+        
+        # Update blog_updates setting
+        if 'blog_updates' not in prefs:
+            prefs['blog_updates'] = {}
+            
+        prefs['blog_updates']['enabled'] = True
+        
+        db.update_user_notification_preferences(uid, prefs)
+        
+        return JsonResponse({'success': True})
+    except Exception as e:
+        print(f"Error subscribing to blog: {e}")
+        return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
 
 
 

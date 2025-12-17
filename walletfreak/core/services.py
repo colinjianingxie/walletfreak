@@ -135,10 +135,31 @@ class FirestoreService:
     def get_personality_by_slug(self, slug):
         return self.get_document('personalities', slug)
 
+
     def get_quiz_questions(self):
         """Get all quiz questions sorted by stage"""
         query = self.db.collection('quiz_questions').order_by('stage')
         return [doc.to_dict() | {'id': doc.id} for doc in query.stream()]
+
+    def get_total_user_count(self):
+        """Get total number of registered users"""
+        try:
+            # Using aggregation query for efficiency if available
+            # Note: count() aggregation is available in newer google-cloud-firestore
+            # Fallback to streaming stream() if count() not available in installed version
+            try:
+                from google.cloud.firestore import AggregateQuery
+                users_ref = self.db.collection('users')
+                count_query = users_ref.count()
+                return count_query.get()[0][0].value
+            except Exception:
+                # Fallback slightly less efficient but works
+                users_ref = self.db.collection('users')
+                return len(list(users_ref.stream()))
+        except Exception as e:
+            print(f"Error getting total user count: {e}")
+            return 0
+
 
 
     # User Methods

@@ -194,24 +194,23 @@
                             <h3>The Ledger</h3>
                             <span class="community-status">
                                 <span class="status-dot"></span>
-                                120 Online
+                                {{ total_users|default:0 }} Subscribers
                             </span>
                         </div>
                     </div>
                     <p class="community-description">
                         The unofficial official headquarters for credit card optimizers, point hoarders, and spreadsheet enthusiasts.
                     </p>
-                    <div class="community-stats">
-                        <div class="stat">
-                            <span class="stat-number">14.2k</span>
-                            <span class="stat-label">MEMBERS</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-number">Top 1%</span>
-                            <span class="stat-label">RANK</span>
-                        </div>
-                    </div>
-                    <button class="join-btn">Join Community</button>
+                    
+                    {% if is_authenticated %}
+                        {% if is_subscribed %}
+                        <button class="join-btn subscribed" disabled style="background: #ccc; cursor: default;">Subscribed</button>
+                        {% else %}
+                        <button class="join-btn" onclick="showSubscribeModal()">Join Community</button>
+                        {% endif %}
+                    {% else %}
+                        <button class="join-btn" onclick="showLoginModal()">Join Community</button>
+                    {% endif %}
                 </div>
 
                 <!-- Trending Topics -->
@@ -579,6 +578,92 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+});
+</script>
+
+<!-- Subscribe Confirmation Modal -->
+<div id="subscribeModal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; justify-content: center; align-items: center;">
+    <div class="modal-content" style="background: white; padding: 2rem; border-radius: 12px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+        <h3 style="margin-top: 0; margin-bottom: 1rem; color: #1a1a1a;">Join The Ledger?</h3>
+        <p style="color: #666; margin-bottom: 2rem; line-height: 1.5;">Subscribe to blog updates and newsletters using your registered email.</p>
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+            <button onclick="closeSubscribeModal()" style="padding: 0.75rem 1.5rem; border: 1px solid #ddd; background: white; border-radius: 8px; cursor: pointer; font-weight: 500; color: #666;">Cancel</button>
+            <button onclick="confirmSubscribe()" style="padding: 0.75rem 1.5rem; border: none; background: #6366F1; color: white; border-radius: 8px; cursor: pointer; font-weight: 500;">Confirm</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function showSubscribeModal() {
+    document.getElementById('subscribeModal').style.display = 'flex';
+}
+
+function closeSubscribeModal() {
+    document.getElementById('subscribeModal').style.display = 'none';
+}
+
+function confirmSubscribe() {
+    // Find the button inside .community-card to update it
+    const btn = document.querySelector('.community-card .join-btn');
+    const originalText = btn ? btn.innerText : 'Join Community';
+    if (btn) btn.innerText = 'Joining...';
+    
+    // Get CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken') || document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
+
+    fetch('{% url "subscribe_to_blog" %}', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrftoken,
+            'Content-Type': 'application/json'
+        },
+        mode: 'same-origin'
+    })
+    .then(response => response.json())
+    .then(data => {
+        closeSubscribeModal();
+        if (data.success) {
+            // Update button
+            if (btn) {
+                btn.innerText = 'Subscribed';
+                btn.style.background = '#ccc';
+                btn.style.cursor = 'default';
+                btn.disabled = true;
+                btn.classList.add('subscribed');
+                btn.onclick = null;
+            }
+        } else {
+            alert('Error subscribing: ' + (data.error || 'Unknown error'));
+            if (btn) btn.innerText = originalText;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while connecting to the server.');
+        if (btn) btn.innerText = originalText;
+        closeSubscribeModal();
+    });
+}
+
+// Close modal when clicking outside
+document.getElementById('subscribeModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeSubscribeModal();
+    }
 });
 </script>
 {% endblock %}

@@ -20,5 +20,6 @@ urlpatterns = [
     path('<str:slug>/comment/add/', views.add_comment, name='add_comment'),
     path('<str:slug>/comment/<str:comment_id>/vote/', views.vote_comment, name='vote_comment'),
     path('<str:slug>/comment/<str:comment_id>/delete/', views.delete_comment, name='delete_comment'),
+    path('subscribe/updates/', views.subscribe_to_blog, name='subscribe_to_blog'),
 ]
 
