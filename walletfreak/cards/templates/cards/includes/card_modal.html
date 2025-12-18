@@ -318,7 +318,13 @@ function openCardModal(cardId) {
     
     // Stats
     // Fix: Backend sends snake_case match_score, frontend mock might use matchScore
-    const matchScore = (card.match_score !== undefined ? card.match_score : (card.matchScore || '90'));
+    // Check global userMatchScores first (calculated on Explore page)
+    let dynamicScore = null;
+    if (typeof userMatchScores !== 'undefined' && userMatchScores[cardId] !== undefined) {
+        dynamicScore = userMatchScores[cardId];
+    }
+
+    const matchScore = (dynamicScore !== null) ? dynamicScore : (card.match_score !== undefined ? card.match_score : (card.matchScore || '90'));
     // Ensure we don't duplicate '%'
     const matchScoreText = String(matchScore).includes('%') ? matchScore : matchScore + '% Match';
     

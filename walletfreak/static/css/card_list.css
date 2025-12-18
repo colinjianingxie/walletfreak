@@ -395,7 +395,7 @@ input[type=range]::-moz-range-thumb {
 /* List Item (Card Row) */
 /* List Item (Card Row) */
 .view-grid.list-view .explore-card {
-    display: grid !important;
+    display: grid;
     grid-template-columns: 80px 2fr 100px 2.5fr 80px;
     align-items: center;
     gap: 1rem;
@@ -667,7 +667,7 @@ input[type=range]::-moz-range-thumb {
 
     .view-grid.list-view .explore-card {
         margin-bottom: 1rem;
-        display: flex !important;
+        display: flex;
         flex-direction: row;
         /* Force row layout even on mobile */
     }

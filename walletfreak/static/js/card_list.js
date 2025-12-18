@@ -259,7 +259,7 @@ function filterCards() {
 
     matchingCards.forEach((card, index) => {
         if (index < currentlyShowing) {
-            card.style.display = 'flex';
+            card.style.display = '';
         }
     });
 
@@ -319,7 +319,7 @@ function loadMoreCards() {
 
     matchingCards.forEach((card, index) => {
         if (index < currentlyShowing) {
-            card.style.display = 'flex';
+            card.style.display = '';
         }
     });
 
