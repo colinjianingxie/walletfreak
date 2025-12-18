@@ -12,159 +12,26 @@
 {% block content %}
 <div class="main-content-wrapper">
     <!-- Header Section -->
-    <div class="page-header">
-        <div class="header-title-row">
-            <h1 class="header-title">
-                Explore Cards
-            </h1>
-            <span id="total-cards-count" class="header-count">{{ total_cards }}</span>
-        </div>
-        <p class="header-subtitle">
-            Find the perfect addition to your wallet.
-        </p>
-    </div>
+    {% include 'cards/includes/card_list/header.html' %}
 
     <!-- Search Bar -->
-    <div class="search-bar-container">
-        <div class="search-wrapper">
-            <span class="material-icons search-icon">search</span>
-            <input 
-                type="text" 
-                id="search-input" 
-                placeholder="Search cards by name, issuer, perk, or category..."
-                value="{{ search_query }}"
-                class="search-input"
-            >
-        </div>
-    </div>
+    {% include 'cards/includes/card_list/search_bar.html' %}
 
     <!-- Category Pills -->
-    <div class="category-pills-container">
-        <button 
-            class="category-pill category-pill-btn active category-pill-active" 
-            data-category=""
-            onclick="selectCategory(this)"
-        >
-            All Categories
-        </button>
-        {% for category in categories %}
-        <button 
-            class="category-pill category-pill-btn category-pill-inactive" 
-            data-category="{{ category }}"
-            onclick="selectCategory(this)"
-        >
-            {{ category }}
-        </button>
-        {% endfor %}
-    </div>
+    {% include 'cards/includes/card_list/categories.html' %}
 
     <!-- Mobile Filter & Sort Bar -->
-    <div class="mobile-controls mobile-controls-bar">
-        <button 
-            onclick="openFilters()"
-            class="mobile-filter-btn"
-        >
-            <span class="material-icons" style="font-size: 20px;">tune</span>
-            Filters
-        </button>
-        
-        <!-- Mobile Sort (Moved here for mobile layout) -->
-        <div class="mobile-sort-container"></div>
-    </div>
+    {% include 'cards/includes/card_list/mobile_controls.html' %}
 
     <!-- Main Content: Sidebar + Cards Grid -->
     <div class="main-grid main-grid-layout">
         <!-- Left Sidebar: Filters -->
-        <div id="filters-sidebar" class="filters-sidebar filters-wrapper">
-            <!-- Mobile Header -->
-            <div class="mobile-filter-header mobile-sidebar-header">
-                <h2 class="sidebar-title">Filters</h2>
-                <button onclick="closeFilters()" class="close-filter-btn">
-                    <span class="material-icons">close</span>
-                </button>
-            </div>
-            <!-- Annual Fee Filter -->
-            <div>
-                <div class="filter-section-header">
-                    <h3 class="filter-title">ANNUAL FEE</h3>
-                    <span id="fee-range-display" class="filter-value">$0 - $1000</span>
-                </div>
-
-                <div class="slider-container range-slider-container">
-                    <div id="slider-track" class="range-slider-track"></div>
-                    <input type="range" id="min-fee-slider" min="0" max="1000" value="0" step="10" class="range-input">
-                    <input type="range" id="max-fee-slider" min="0" max="1000" value="1000" step="10" class="range-input">
-                </div>
-                
-                <div class="range-labels">
-                    <span class="range-label-text">$0</span>
-                    <span class="range-label-text">$1000+</span>
-                </div>
-            </div>
-
-            <!-- Issuers Filter -->
-            <div>
-                <h3 class="filter-subtitle">ISSUERS</h3>
-                <div class="checkbox-group">
-                    {% for issuer in issuers %}
-                    <label class="checkbox-label">
-                        <input 
-                            type="checkbox" 
-                            class="issuer-filter checkbox-input" 
-                            value="{{ issuer }}"
-                            {% if issuer in selected_issuers %}checked{% endif %}
-                        >
-                        <span class="checkbox-text">{{ issuer }}</span>
-                    </label>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <!-- Reset Filters -->
-            <button 
-                onclick="resetFilters()"
-                class="reset-filters-btn"
-            >
-                <span class="material-icons" style="font-size: 18px;">close</span>
-                Reset Filters
-            </button>
-            
-            <!-- Mobile Apply Button -->
-            <button 
-                class="mobile-apply-btn mobile-show-results-btn"
-                onclick="closeFilters()"
-            >
-                Show Results
-            </button>
-        </div>
+        {% include 'cards/includes/card_list/filters_sidebar.html' %}
 
         <!-- Right Content: Cards Grid -->
         <div class="cards-content-column">
             <!-- Sort & View Toggle Header (Desktop) -->
-            <div class="desktop-sort desktop-controls-bar">
-                <!-- View Toggle -->
-                <div class="view-toggle view-toggle-wrapper">
-                    <button id="view-grid-btn" onclick="toggleView('grid')" class="view-toggle-btn active">
-                        <span class="material-icons" style="font-size: 20px;">grid_view</span>
-                    </button>
-                    <button id="view-list-btn" onclick="toggleView('list')" class="view-toggle-btn">
-                        <span class="material-icons" style="font-size: 20px;">format_list_bulleted</span>
-                    </button>
-                </div>
-
-                <div class="sort-wrapper">
-                    <span class="sort-label">SORT BY</span>
-                    <div class="sort-select-container">
-                        <select id="sort-select" class="sort-select">
-                            <option value="match" {% if sort_by == 'match' %}selected{% endif %}>Match Score</option>
-                            <option value="name" {% if sort_by == 'name' %}selected{% endif %}>Alphabetical</option>
-                            <option value="fee_low" {% if sort_by == 'fee_low' %}selected{% endif %}>Lowest Fee</option>
-                            <option value="fee_high" {% if sort_by == 'fee_high' %}selected{% endif %}>Highest Fee</option>
-                        </select>
-                        <span class="material-icons sort-chevron">expand_more</span>
-                    </div>
-                </div>
-            </div>
+            {% include 'cards/includes/card_list/toolbar.html' %}
 
             <!-- Scroll Wrapper for List View -->
             <div id="cards-scroll-container" class="list-view-container">
@@ -183,166 +50,7 @@
                     class="view-grid cards-grid-layout"
                 >
                     {% for card in cards %}
-                    <div
-                        class="explore-card"
-                        data-name="{{ card.name|lower }}"
-                        data-issuer="{{ card.issuer|default:''|strip|lower }}"
-                        data-categories="{{ card.categories|join:','|lower }}"
-                        data-fee="{{ card.annual_fee|default:0 }}"
-                        onclick="handleCardClick('{{ card.id }}')"
-                    >
-                        <!-- List View Checkbox -->
-                        <div class="list-checkbox-col">
-                            <div class="list-checkbox" onclick="event.stopPropagation(); toggleCardSelection('{{ card.id }}', this.parentElement.querySelector('.compare-data-source'));">
-                                <span class="material-icons" style="font-size: 16px; color: transparent;">check</span>
-                            </div>
-                            <!-- Hidden data source for compare logic -->
-                            <div class="compare-data-source"
-                                data-card-id="{{ card.id }}"
-                                data-card-name="{{ card.name }}"
-                                data-card-issuer="{{ card.issuer }}"
-                                data-card-color="url('{{ card.image_url }}')"
-                            ></div>
-                        </div>
-
-                        <!-- Visual Card / Info -->
-                        <div class="card-visual-container">
-                            {% if card.local_image %}
-                            <img src="{% static card.local_image %}" alt="{{ card.name }}" onerror="this.onerror=null; this.src='{{ card.image_url }}';">
-                                <!-- Compare Selection Button (Overlay on Image for Grid) -->
-                                <button 
-                                    class="compare-select-btn"
-                                    onclick="event.stopPropagation(); toggleCardSelection('{{ card.id }}', this); return false;"
-                                    data-card-id="{{ card.id }}"
-                                    data-card-name="{{ card.name }}"
-                                    data-card-issuer="{{ card.issuer }}"
-                                    data-card-color="url('{{ card.image_url }}')"
-                                    onmousedown="event.stopPropagation();"
-                                >
-                                    <span class="material-icons">balance</span>
-                                </button>
-                            {% elif card.image_url %}
-                            <img src="{{ card.image_url }}" alt="{{ card.name }}">
-                                 
-                                <!-- Compare Selection Button (Overlay on Image for Grid) -->
-                                <button 
-                                    class="compare-select-btn"
-                                    onclick="event.stopPropagation(); toggleCardSelection('{{ card.id }}', this); return false;"
-                                    data-card-id="{{ card.id }}"
-                                    data-card-name="{{ card.name }}"
-                                    data-card-issuer="{{ card.issuer }}"
-                                    data-card-color="url('{{ card.image_url }}')"
-                                    onmousedown="event.stopPropagation();"
-                                >
-                                    <span class="material-icons">balance</span>
-                                </button>
-                            {% else %}
-                            <div class="gradient-card {% if 'Chase' in card.issuer %}card-chase{% elif 'American Express' in card.issuer or 'Amex' in card.issuer %}{% if 'Gold' in card.name %}card-gold{% elif 'Platinum' in card.name %}card-platinum{% else %}card-amex{% endif %}{% elif 'Capital One' in card.issuer %}card-capital-one{% elif 'Citi' in card.issuer %}card-citi{% else %}card-default{% endif %}">
-                                
-                                <div class="card-issuer-text">
-                                    {{ card.issuer|default:"CREDIT CARD" }}
-                                </div>
-                                
-                                <!-- Compare Selection Button -->
-                                <button 
-                                    class="compare-select-btn"
-                                    onclick="event.stopPropagation(); toggleCardSelection('{{ card.id }}', this); return false;"
-                                    data-card-id="{{ card.id }}"
-                                    data-card-name="{{ card.name }}"
-                                    data-card-issuer="{{ card.issuer }}"
-                                    data-card-color="{% if 'Chase' in card.issuer %}linear-gradient(135deg, #1040C1 0%, #002685 100%){% elif 'American Express' in card.issuer or 'Amex' in card.issuer %}{% if 'Gold' in card.name %}linear-gradient(135deg, #FCD34D 0%, #F59E0B 100%){% elif 'Platinum' in card.name %}linear-gradient(135deg, #E2E8F0 0%, #94A3B8 100%){% else %}linear-gradient(135deg, #94A3B8 0%, #64748B 100%){% endif %}{% elif 'Capital One' in card.issuer %}linear-gradient(135deg, #002D5C 0%, #001529 100%){% elif 'Citi' in card.issuer %}linear-gradient(135deg, #004C97 0%, #002C5F 100%){% else %}linear-gradient(135deg, #6366F1 0%, #4F46E5 100%){% endif %}"
-                                    onmousedown="event.stopPropagation();"
-                                >
-                                    <span class="material-icons">balance</span>
-                                </button>
-                                
-                                <div>
-                                    <div class="card-chip-small"></div>
-                                    <div class="card-number-text">•••• •••• •••• {{ forloop.counter0|stringformat:"04d" }}</div>
-                                    <div class="card-name-text">YOUR NAME</div>
-                                </div>
-
-                                <!-- Mastercard/Visa Logo Placeholder -->
-                                <div class="card-logo-placeholder">
-                                    <div class="logo-circle"></div>
-                                    <div class="logo-circle overlap"></div>
-                                </div>
-                            </div>
-                            {% endif %}
-
-                            <!-- List View Info (Hidden in Grid) -->
-                            <div class="list-card-info">
-                                <h3 class="list-card-name">{{ card.name }}</h3>
-                                <div class="list-card-issuer">{{ card.issuer }}</div>
-                            </div>
-                        </div>
-
-                        <!-- Card Details (Grid) -->
-                        <div class="card-content">
-                            <div class="card-header">
-                                <div>
-                                    <h3>{{ card.name }}</h3>
-                                    <div class="issuer-label">
-                                        {{ card.issuer }}
-                                    </div>
-                                </div>
-                                {% if user.is_authenticated and user_match_scores %}
-                                    <div class="match-badge">
-                                        <span class="match-score">{{ user_match_scores|get_item:card.id|default:0 }}%</span>
-                                        <span class="match-label">MATCH</span>
-                                    </div>
-                                {% endif %}
-                            </div>
-
-                            <div class="card-fee-row">
-                                <span class="fee-label">ANNUAL FEE</span>
-                                <span class="fee-value">${{ card.annual_fee|default:0 }}</span>
-                            </div>
-
-                            <button 
-                                onclick="event.stopPropagation(); openCardModal('{{ card.id }}');"
-                                class="view-details-btn"
-                                onmouseover="this.style.borderColor='#CBD5E1'; this.style.background='#F8FAFC'"
-                                onmouseout="this.style.borderColor='#E2E8F0'; this.style.background='white'"
-                            >
-                                View Details
-                                <span class="material-icons">arrow_forward</span>
-                            </button>
-                        </div>
-
-                        <!-- List View Columns (Hidden in Grid) -->
-                        <div class="list-fee-col">
-                            <span class="fee-value">${{ card.annual_fee|default:0 }}</span>
-                        </div>
-
-                        <div class="list-rewards-col" style="flex: 2.5;">
-                            {% for reward in card.earning_display|slice:":3" %}
-                            <div class="reward-pill">
-                                <span class="reward-rate">{{ reward.rate }}</span>
-                                <span class="reward-cat">{{ reward.category }}</span>
-                            </div>
-                            {% endfor %}
-                            {% if not card.earning_display %}
-                            <span style="color: #94A3B8; font-size: 0.8rem;">See details</span>
-                            {% endif %}
-                            {% if card.earning_display|length > 3 %}
-                            <span style="font-size: 0.75rem; color: #94A3B8;">+{{ card.earning_display|length|add:"-3" }}</span>
-                            {% endif %}
-                        </div>
-
-                        <div class="list-action-col" style="width: 80px;">
-                            <button 
-                                onclick="event.stopPropagation(); openCardModal('{{ card.id }}');"
-                                class="list-view-trigger-btn"
-                                onmouseover="this.style.color='#3B82F6'; this.style.background='#EFF6FF'"
-                                onmouseout="this.style.color='#64748B'; this.style.background='transparent'"
-                             >
-                                View
-                                <span class="material-icons" style="font-size: 18px;">visibility</span>
-                             </button>
-                        </div>
-
-                    </div>
+                    {% include 'cards/includes/card_list/card_item.html' %}
                     {% empty %}
                     <div class="empty-state-container">
                         <span class="material-icons empty-icon">credit_card</span>
@@ -363,33 +71,13 @@
             </div>
 
             <!-- No Results Message -->
-            <div id="no-results" style="display: none;" class="empty-state-container">
-                <span class="material-icons empty-icon">search_off</span>
-                <h2 class="empty-title">No cards match your filters</h2>
-                <p class="empty-text">Try adjusting your search or filters.</p>
-            </div>
+            {% include 'cards/includes/card_list/empty_states.html' %}
         </div>
-    </div>
     </div>
 </div>
 
 <!-- Floating Compare Bar -->
-<div id="compare-bar" class="compare-bar-container">
-    <div class="compare-preview-wrapper">
-        <div id="compare-preview-circles" class="compare-circles">
-            <!-- Circles injected by JS -->
-        </div>
-        <span id="compare-count-text" class="compare-text">0 selected</span>
-    </div>
-    
-    <button 
-        onclick="openCompareModal()"
-        class="compare-action-btn"
-    >
-        Compare Now
-        <span class="material-icons" style="font-size: 18px;">arrow_forward</span>
-    </button>
-</div>
+{% include 'cards/includes/card_list/compare_bar.html' %}
 
 <!-- Mobile Filter Overlay -->
 <div id="filter-overlay" onclick="closeFilters()" class="filter-overlay-bg"></div>

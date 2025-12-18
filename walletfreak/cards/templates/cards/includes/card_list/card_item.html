@@ -1,0 +1,162 @@
+{% load static %}
+{% load card_extras %}
+                    <div
+                        class="explore-card"
+                        data-name="{{ card.name|lower }}"
+                        data-issuer="{{ card.issuer|default:''|strip|lower }}"
+                        data-categories="{{ card.categories|join:','|lower }}"
+                        data-fee="{{ card.annual_fee|default:0 }}"
+                        onclick="handleCardClick('{{ card.id }}')"
+                    >
+                        <!-- List View Checkbox -->
+                        <div class="list-checkbox-col">
+                            <div class="list-checkbox" onclick="event.stopPropagation(); toggleCardSelection('{{ card.id }}', this.parentElement.querySelector('.compare-data-source'));">
+                                <span class="material-icons" style="font-size: 16px; color: transparent;">check</span>
+                            </div>
+                            <!-- Hidden data source for compare logic -->
+                            <div class="compare-data-source"
+                                data-card-id="{{ card.id }}"
+                                data-card-name="{{ card.name }}"
+                                data-card-issuer="{{ card.issuer }}"
+                                data-card-color="url('{{ card.image_url }}')"
+                            ></div>
+                        </div>
+
+                        <!-- Visual Card / Info -->
+                        <div class="card-visual-container">
+                            {% if card.local_image %}
+                            <img src="{% static card.local_image %}" alt="{{ card.name }}" onerror="this.onerror=null; this.src='{{ card.image_url }}';">
+                                <!-- Compare Selection Button (Overlay on Image for Grid) -->
+                                <button 
+                                    class="compare-select-btn"
+                                    onclick="event.stopPropagation(); toggleCardSelection('{{ card.id }}', this); return false;"
+                                    data-card-id="{{ card.id }}"
+                                    data-card-name="{{ card.name }}"
+                                    data-card-issuer="{{ card.issuer }}"
+                                    data-card-color="url('{{ card.image_url }}')"
+                                    onmousedown="event.stopPropagation();"
+                                >
+                                    <span class="material-icons">balance</span>
+                                </button>
+                            {% elif card.image_url %}
+                            <img src="{{ card.image_url }}" alt="{{ card.name }}">
+                                 
+                                <!-- Compare Selection Button (Overlay on Image for Grid) -->
+                                <button 
+                                    class="compare-select-btn"
+                                    onclick="event.stopPropagation(); toggleCardSelection('{{ card.id }}', this); return false;"
+                                    data-card-id="{{ card.id }}"
+                                    data-card-name="{{ card.name }}"
+                                    data-card-issuer="{{ card.issuer }}"
+                                    data-card-color="url('{{ card.image_url }}')"
+                                    onmousedown="event.stopPropagation();"
+                                >
+                                    <span class="material-icons">balance</span>
+                                </button>
+                            {% else %}
+                            <div class="gradient-card {% if 'Chase' in card.issuer %}card-chase{% elif 'American Express' in card.issuer or 'Amex' in card.issuer %}{% if 'Gold' in card.name %}card-gold{% elif 'Platinum' in card.name %}card-platinum{% else %}card-amex{% endif %}{% elif 'Capital One' in card.issuer %}card-capital-one{% elif 'Citi' in card.issuer %}card-citi{% else %}card-default{% endif %}">
+                                
+                                <div class="card-issuer-text">
+                                    {{ card.issuer|default:"CREDIT CARD" }}
+                                </div>
+                                
+                                <!-- Compare Selection Button -->
+                                <button 
+                                    class="compare-select-btn"
+                                    onclick="event.stopPropagation(); toggleCardSelection('{{ card.id }}', this); return false;"
+                                    data-card-id="{{ card.id }}"
+                                    data-card-name="{{ card.name }}"
+                                    data-card-issuer="{{ card.issuer }}"
+                                    data-card-color="{% if 'Chase' in card.issuer %}linear-gradient(135deg, #1040C1 0%, #002685 100%){% elif 'American Express' in card.issuer or 'Amex' in card.issuer %}{% if 'Gold' in card.name %}linear-gradient(135deg, #FCD34D 0%, #F59E0B 100%){% elif 'Platinum' in card.name %}linear-gradient(135deg, #E2E8F0 0%, #94A3B8 100%){% else %}linear-gradient(135deg, #94A3B8 0%, #64748B 100%){% endif %}{% elif 'Capital One' in card.issuer %}linear-gradient(135deg, #002D5C 0%, #001529 100%){% elif 'Citi' in card.issuer %}linear-gradient(135deg, #004C97 0%, #002C5F 100%){% else %}linear-gradient(135deg, #6366F1 0%, #4F46E5 100%){% endif %}"
+                                    onmousedown="event.stopPropagation();"
+                                >
+                                    <span class="material-icons">balance</span>
+                                </button>
+                                
+                                <div>
+                                    <div class="card-chip-small"></div>
+                                    <div class="card-number-text">•••• •••• •••• {{ forloop.counter0|stringformat:"04d" }}</div>
+                                    <div class="card-name-text">YOUR NAME</div>
+                                </div>
+
+                                <!-- Mastercard/Visa Logo Placeholder -->
+                                <div class="card-logo-placeholder">
+                                    <div class="logo-circle"></div>
+                                    <div class="logo-circle overlap"></div>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            <!-- List View Info (Hidden in Grid) -->
+                            <div class="list-card-info">
+                                <h3 class="list-card-name">{{ card.name }}</h3>
+                                <div class="list-card-issuer">{{ card.issuer }}</div>
+                            </div>
+                        </div>
+
+                        <!-- Card Details (Grid) -->
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div>
+                                    <h3>{{ card.name }}</h3>
+                                    <div class="issuer-label">
+                                        {{ card.issuer }}
+                                    </div>
+                                </div>
+                                {% if user.is_authenticated and user_match_scores %}
+                                    <div class="match-badge">
+                                        <span class="match-score">{{ user_match_scores|get_item:card.id|default:0 }}%</span>
+                                        <span class="match-label">MATCH</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="card-fee-row">
+                                <span class="fee-label">ANNUAL FEE</span>
+                                <span class="fee-value">${{ card.annual_fee|default:0 }}</span>
+                            </div>
+
+                            <button 
+                                onclick="event.stopPropagation(); openCardModal('{{ card.id }}');"
+                                class="view-details-btn"
+                                onmouseover="this.style.borderColor='#CBD5E1'; this.style.background='#F8FAFC'"
+                                onmouseout="this.style.borderColor='#E2E8F0'; this.style.background='white'"
+                            >
+                                View Details
+                                <span class="material-icons">arrow_forward</span>
+                            </button>
+                        </div>
+
+                        <!-- List View Columns (Hidden in Grid) -->
+                        <div class="list-fee-col">
+                            <span class="fee-value">${{ card.annual_fee|default:0 }}</span>
+                        </div>
+
+                        <div class="list-rewards-col" style="flex: 2.5;">
+                            {% for reward in card.earning_display|slice:":3" %}
+                            <div class="reward-pill">
+                                <span class="reward-rate">{{ reward.rate }}</span>
+                                <span class="reward-cat">{{ reward.category }}</span>
+                            </div>
+                            {% endfor %}
+                            {% if not card.earning_display %}
+                            <span style="color: #94A3B8; font-size: 0.8rem;">See details</span>
+                            {% endif %}
+                            {% if card.earning_display|length > 3 %}
+                            <span style="font-size: 0.75rem; color: #94A3B8;">+{{ card.earning_display|length|add:"-3" }}</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="list-action-col" style="width: 80px;">
+                            <button 
+                                onclick="event.stopPropagation(); openCardModal('{{ card.id }}');"
+                                class="list-view-trigger-btn"
+                                onmouseover="this.style.color='#3B82F6'; this.style.background='#EFF6FF'"
+                                onmouseout="this.style.color='#64748B'; this.style.background='transparent'"
+                             >
+                                View
+                                <span class="material-icons" style="font-size: 18px;">visibility</span>
+                             </button>
+                        </div>
+
+                    </div>

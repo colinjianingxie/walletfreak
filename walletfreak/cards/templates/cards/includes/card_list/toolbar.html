@@ -1,0 +1,25 @@
+            <!-- Sort & View Toggle Header (Desktop) -->
+            <div class="desktop-sort desktop-controls-bar">
+                <!-- View Toggle -->
+                <div class="view-toggle view-toggle-wrapper">
+                    <button id="view-grid-btn" onclick="toggleView('grid')" class="view-toggle-btn active">
+                        <span class="material-icons" style="font-size: 20px;">grid_view</span>
+                    </button>
+                    <button id="view-list-btn" onclick="toggleView('list')" class="view-toggle-btn">
+                        <span class="material-icons" style="font-size: 20px;">format_list_bulleted</span>
+                    </button>
+                </div>
+
+                <div class="sort-wrapper">
+                    <span class="sort-label">SORT BY</span>
+                    <div class="sort-select-container">
+                        <select id="sort-select" class="sort-select">
+                            <option value="match" {% if sort_by == 'match' %}selected{% endif %}>Match Score</option>
+                            <option value="name" {% if sort_by == 'name' %}selected{% endif %}>Alphabetical</option>
+                            <option value="fee_low" {% if sort_by == 'fee_low' %}selected{% endif %}>Lowest Fee</option>
+                            <option value="fee_high" {% if sort_by == 'fee_high' %}selected{% endif %}>Highest Fee</option>
+                        </select>
+                        <span class="material-icons sort-chevron">expand_more</span>
+                    </div>
+                </div>
+            </div>

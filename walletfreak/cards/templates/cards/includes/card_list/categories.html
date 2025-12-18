@@ -1,0 +1,18 @@
+    <div class="category-pills-container">
+        <button 
+            class="category-pill category-pill-btn active category-pill-active" 
+            data-category=""
+            onclick="selectCategory(this)"
+        >
+            All Categories
+        </button>
+        {% for category in categories %}
+        <button 
+            class="category-pill category-pill-btn category-pill-inactive" 
+            data-category="{{ category }}"
+            onclick="selectCategory(this)"
+        >
+            {{ category }}
+        </button>
+        {% endfor %}
+    </div>
