@@ -65,15 +65,15 @@
                 <div class="stat-label">CARDS</div>
             </div>
 
-            <!-- Score (Placeholder) -->
+            <!-- Credits Used -->
             <div class="stat-card">
-                <div class="stat-value">{{ score }}</div>
-                <div class="stat-label">SCORE</div>
+                <div class="stat-value">${{ total_used_value|floatformat:0 }}</div>
+                <div class="stat-label">CREDITS USED</div>
             </div>
 
             <!-- Total Value -->
             <div class="stat-card">
-                <div class="stat-value">${{ total_value|floatformat:1|default:"0" }}k</div>
+                <div class="stat-value">${{ total_value|floatformat:0 }}</div>
                 <div class="stat-label">VALUE</div>
             </div>
 
