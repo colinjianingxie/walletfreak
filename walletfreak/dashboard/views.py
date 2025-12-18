@@ -52,9 +52,9 @@ def dashboard(request):
     
     # Prepare available cards JSON for JavaScript with full details
     available_cards_json = json.dumps([{
-        'id': card['id'],
-        'name': card['name'],
-        'issuer': card['issuer'],
+        'id': card.get('id', ''),
+        'name': card.get('name', 'Unknown Card'),
+        'issuer': card.get('issuer', 'Unknown Issuer'),
         'benefits': card.get('benefits', []),
         'rewards_structure': card.get('rewards_structure', []),
         'credits': card.get('credits', []),
@@ -63,7 +63,7 @@ def dashboard(request):
         'signup_bonus': card.get('signup_bonus', ''),
         'welcome_requirement': card.get('welcome_requirement', ''),
         'annual_fee': card.get('annual_fee', 0),
-        'image_url': resolve_card_image_url(card['id']) if 'id' in card else '',
+        'image_url': resolve_card_image_url(card.get('id')) if card.get('id') else '',
         'earning_rates': card.get('earning_rates', []),
 
         'earning': card.get('earning', []),
@@ -333,9 +333,19 @@ def add_card(request, card_id):
         success = db.add_card_to_user(uid, card_id, status=status, anniversary_date=anniversary_date)
         
         if success:
+            # Get updated personality
+            personality = db.get_user_assigned_personality(uid)
+            personality_data = None
+            if personality:
+                personality_data = {
+                    'id': personality.get('id'),
+                    'name': personality.get('name'),
+                    'match_score': personality.get('match_score', 0)
+                }
+
             # Check if this is an AJAX request
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest' or request.POST.get('ajax'):
-                return JsonResponse({'success': True})
+                return JsonResponse({'success': True, 'personality': personality_data})
             return redirect('dashboard')
         else:
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest' or request.POST.get('ajax'):
@@ -379,6 +389,18 @@ def remove_card(request, user_card_id):
         
         # If AJAX, return the generic card details so frontend can add it back to 'available' list
         if request.headers.get('X-Requested-With') == 'XMLHttpRequest' or request.POST.get('ajax'):
+            # Get updated personality
+            personality = db.get_user_assigned_personality(uid)
+            personality_data = None
+            if personality:
+                personality_data = {
+                    'id': personality.get('id'),
+                    'name': personality.get('name'),
+                    'match_score': personality.get('match_score', 0)
+                }
+            
+            response_data = {'success': True, 'personality': personality_data}
+
             if deleted_card_slug:
                 generic_card = db.get_card_by_slug(deleted_card_slug)
                 if generic_card:
@@ -399,7 +421,9 @@ def remove_card(request, user_card_id):
                         'earning_rates': generic_card.get('earning_rates', []),
                         'earning': generic_card.get('earning', []),
                     }
-                    return JsonResponse({'success': True, 'card': card_data})
+                    response_data['card'] = card_data
+            
+            return JsonResponse(response_data)
             
             return JsonResponse({'success': True}) # Fallback if card not found or slug missing
             

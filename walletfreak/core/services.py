@@ -255,6 +255,10 @@ class FirestoreService:
         Determines the best personality fit based on user's active cards.
         user_cards: list of card objects (dicts containing at least 'card_id')
         """
+        # RULE: <= 1 active card -> Always 'student-starter'
+        if not user_cards or len(user_cards) <= 1:
+            return self.get_personality_by_slug('student-starter')
+
         personalities = self.get_personalities()
         if not personalities:
             return None
@@ -396,31 +400,41 @@ class FirestoreService:
             'benefit_usage': {} # Map of benefit_id -> usage
         }
         
-        user_ref.collection('user_cards').add(user_card_data)
+        # Add returns a tuple (update_time, doc_ref)
+        _, new_doc_ref = user_ref.collection('user_cards').add(user_card_data)
         
         # Auto-evaluate personality
         try:
             # 1. Get updated cards
             current_cards = self.get_user_cards(uid, status='active')
             
-            # Check 2-card minimum rule
-            if len(current_cards) < 2:
-                self.remove_user_personality(uid)
-                print(f"Removed personality for user {uid} (only {len(current_cards)} cards)")
-            else:
-                # 2. Determine best fit
-                best_fit = self.determine_best_fit_personality(current_cards)
+            # CONSISTENCY FIX: Ensure the new card is in the list (if active)
+            # Firestore queries might be eventually consistent
+            if status == 'active':
+                # Check if card is already in list (by id check using new_doc_ref.id)
+                if not any(c.get('id') == new_doc_ref.id for c in current_cards):
+                    # Append it manually
+                    new_card_entry = user_card_data.copy()
+                    new_card_entry['id'] = new_doc_ref.id
+                    current_cards.append(new_card_entry)
+            
+            # 2. Determine best fit (handles <= 1 logic internally)
+            best_fit = self.determine_best_fit_personality(current_cards)
+            
+            # 3. Update profile if found
+            if best_fit:
+                user_card_slugs = set(c.get('card_id') for c in current_cards)
+                personality_cards = set()
+                for slot in best_fit.get('slots', []):
+                    personality_cards.update(slot.get('cards', []))
+                overlap = len(user_card_slugs.intersection(personality_cards))
                 
-                # 3. Update profile if found
-                if best_fit:
-                    user_card_slugs = set(c.get('card_id') for c in current_cards)
-                    personality_cards = set()
-                    for slot in best_fit.get('slots', []):
-                        personality_cards.update(slot.get('cards', []))
-                    overlap = len(user_card_slugs.intersection(personality_cards))
-                    
-                    self.update_user_personality(uid, best_fit.get('id'), score=overlap)
-                    print(f"Auto-assigned personality {best_fit.get('id')} to user {uid} with score {overlap}")
+                # If student-starter (implicit match), score might be irrelevant or we can set strict defaults
+                # The logic above calculates overlap, but for student-starter it might be 0 overlap if it has no defined cards
+                # Let's ensure we update regardless.
+                
+                self.update_user_personality(uid, best_fit.get('id'), score=overlap)
+                print(f"Auto-assigned personality {best_fit.get('id')} to user {uid} with score {overlap}")
         except Exception as e:
             print(f"Error auto-evaluating personality: {e}")
             
@@ -456,23 +470,23 @@ class FirestoreService:
             # 1. Get updated cards (active only)
             current_cards = self.get_user_cards(uid, status='active')
             
-            # 2. Determine best fit
-            if not current_cards or len(current_cards) < 2:
-                 # < 2 cards -> No personality
-                 self.remove_user_personality(uid)
-            else:
-                best_fit = self.determine_best_fit_personality(current_cards)
+            # CONSISTENCY FIX: Explicitly remove the deleted card from the list if present
+            # Firestore queries might return the deleted document if eventually consistent
+            current_cards = [c for c in current_cards if c.get('id') != user_card_id]
+            
+            # 2. Determine best fit (handles <= 1 logic internally)
+            best_fit = self.determine_best_fit_personality(current_cards)
+            
+            # 3. Update profile if found
+            if best_fit:
+                user_card_slugs = set(c.get('card_id') for c in current_cards)
+                personality_cards = set()
+                for slot in best_fit.get('slots', []):
+                    personality_cards.update(slot.get('cards', []))
+                overlap = len(user_card_slugs.intersection(personality_cards))
                 
-                # 3. Update profile if found
-                if best_fit:
-                    user_card_slugs = set(c.get('card_id') for c in current_cards)
-                    personality_cards = set()
-                    for slot in best_fit.get('slots', []):
-                        personality_cards.update(slot.get('cards', []))
-                    overlap = len(user_card_slugs.intersection(personality_cards))
-                    
-                    self.update_user_personality(uid, best_fit.get('id'), score=overlap)
-                    print(f"Auto-assigned personality {best_fit.get('id')} to user {uid} with score {overlap}")
+                self.update_user_personality(uid, best_fit.get('id'), score=overlap)
+                print(f"Auto-assigned personality {best_fit.get('id')} to user {uid} with score {overlap}")
         except Exception as e:
             print(f"Error auto-evaluating personality on remove: {e}")
 
@@ -567,19 +581,29 @@ class FirestoreService:
         Get user's assigned personality with full details.
         Returns personality object with additional 'match_score' field, or None.
         """
+        active_cards = self.get_user_cards(uid, status='active')
+        if not active_cards:
+            personality = self.get_personality_by_slug('student-starter')
+            if personality:
+                 personality['match_score'] = 99 # Default high score for starter
+                 personality['is_default_assignment'] = True
+                 return personality
+                 
         user = self.get_user_profile(uid)
-        if not user or not user.get('assigned_personality'):
-            return None
-        
-        personality_id = user.get('assigned_personality')
-        personality = self.get_personality_by_slug(personality_id)
-        
-        if personality:
-            # Add match score to personality object
-            personality['match_score'] = user.get('personality_score', 0)
-            personality['assigned_at'] = user.get('personality_assigned_at')
-        
-        return personality
+        if user and user.get('assigned_personality'):
+            personality_id = user.get('assigned_personality')
+            personality = self.get_personality_by_slug(personality_id)
+            
+            if personality:
+                # Add match score to personality object
+                personality['match_score'] = user.get('personality_score', 0)
+                personality['assigned_at'] = user.get('personality_assigned_at')
+            
+                return personality
+
+
+
+        return None
     
     
     # Personality Survey Methods

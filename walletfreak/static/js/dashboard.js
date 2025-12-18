@@ -8,6 +8,9 @@ const db = firebase.firestore();
 let walletCards = [];
 let walletListenerUnsubscribe = null;
 
+
+let userListenerUnsubscribe = null;
+
 function setupWalletListener() {
     if (!currentUserUid) return;
 
@@ -31,7 +34,93 @@ function setupWalletListener() {
             console.log("Current User UID (Django):", currentUserUid);
             console.log("Current User UID (Auth):", firebase.auth().currentUser ? firebase.auth().currentUser.uid : 'null');
         });
+
+    // Also setup user listener for personality
+    setupUserListener();
 }
+
+function setupUserListener() {
+    if (!currentUserUid) return;
+
+    if (userListenerUnsubscribe) {
+        userListenerUnsubscribe();
+    }
+
+    userListenerUnsubscribe = db.collection('users').doc(currentUserUid)
+        .onSnapshot(async (doc) => {
+            if (!doc.exists) return;
+            console.log("User listener updated:", doc.data()); // Debug log
+
+            const data = doc.data();
+            const personalitySlug = data.assigned_personality;
+            const score = data.personality_score || 0;
+
+            updatePersonalityUI(personalitySlug, score);
+        }, (error) => {
+            console.error("Error listening to user profile:", error);
+        });
+}
+
+async function updatePersonalityUI(slug, score) {
+    const badgeSection = document.getElementById('personality-badge-section');
+    if (!badgeSection) return;
+
+    if (!slug) {
+        // Fallback or "Add more cards" state
+        badgeSection.innerHTML = `
+            <span style="color: #94A3B8; font-size: 0.875rem; font-style: italic;">
+                <span class="material-icons" style="font-size: 14px; vertical-align: middle; margin-right: 4px;">info</span>
+                Add at least 2 cards to discover your freak
+            </span>
+        `;
+        return;
+    }
+
+    try {
+        // Fetch personality details for the name
+        // We could cache this, but it changes rarely
+        const pDoc = await db.collection('personalities').doc(slug).get();
+        let name = slug;
+        if (pDoc.exists) {
+            name = pDoc.data().name;
+        } else if (slug === 'student-starter') {
+            name = "Student Starter"; // Fallback if doc missing
+        }
+
+        const html = `
+            <a href="/personalities/${slug}/" style="text-decoration: none;">
+                <span
+                    style="background: #E0F2FE; color: #0284C7; font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 4px; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;"
+                    onmouseover="this.style.background='#BAE6FD'"
+                    onmouseout="this.style.background='#E0F2FE'">
+                    <span class="material-icons" style="font-size: 10px; vertical-align: middle;">psychology</span>
+                    ${name}
+                </span>
+            </a>
+            ${score ? `<span style="color: #64748B; font-size: 0.9rem;">${score} card${score !== 1 ? 's' : ''} match</span>` : ''}
+        `;
+
+        badgeSection.innerHTML = html;
+
+        // Also update dropdown if present
+        const dropdownTagline = document.querySelector('.user-dropdown-tagline');
+        if (dropdownTagline) {
+            let icon = 'auto_awesome'; // default
+            if (pDoc.exists && pDoc.data().icon) {
+                icon = pDoc.data().icon;
+            }
+
+            dropdownTagline.innerHTML = `
+                <span class="material-icons" style="font-size: 14px;">${icon}</span>
+                ${name}
+            `;
+        }
+
+    } catch (e) {
+        console.error("Error updating personality UI:", e);
+    }
+}
+
 
 function updateWalletUI() {
     // 1. Render My Stack in Modal (Mobile & Desktop)
@@ -41,6 +130,9 @@ function updateWalletUI() {
     const count = walletCards.length;
     document.querySelectorAll('.modal-sidebar .modal-sidebar-item span[style*="background: #E2E8F0"]').forEach(el => el.textContent = count);
     document.querySelectorAll('#mobile-my-stack-tab div div:last-child').forEach(el => el.textContent = count);
+
+    // Update Dropdown Count
+    document.querySelectorAll('.user-dropdown-badge').forEach(el => el.textContent = count);
 
     // 3. Update Available Cards (Global) for Search
     // Filter allCardsData to exclude cards currently in wallet
@@ -1306,8 +1398,10 @@ async function executeRemoveCard(form) {
                 showToast('Card removed successfully!');
                 hideLoader();
 
-                // 1. Add card back to available list logic REMOVED.
-                // We now maintain a static availableCards list and rely on real-time walletCards state.
+                // Update Personality if returned
+                if (data.personality) {
+                    updatePersonalityUI(data.personality.id, data.personality.match_score);
+                }
 
                 // 2. Find the container row to remove
                 const cardRow = form.closest('.card-item-container');
@@ -1389,8 +1483,20 @@ function saveAnniversaryDate() {
         })
             .then(response => {
                 if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to add card');
+                }
+            })
+            .then(data => {
+                if (data.success) {
                     closeAnniversaryModal();
                     showToast('Card added to wallet!');
+
+                    // Update Personality if returned
+                    if (data.personality) {
+                        updatePersonalityUI(data.personality.id, data.personality.match_score);
+                    }
 
                     // Re-render search results if search is active or just refresh list
                     const searchInput = document.getElementById('card-search-input');
