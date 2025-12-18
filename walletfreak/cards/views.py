@@ -163,12 +163,27 @@ def personality_detail(request, personality_id):
 
         # 3. Match Score
         if request.user.is_authenticated and user_personality:
+            # Get cards explicitly in this personality
+            personality_card_ids = set()
+            if 'slots' in user_personality:
+                for slot in user_personality['slots']:
+                    cards_in_slot = slot.get('cards', [])
+                    for c_id in cards_in_slot:
+                        personality_card_ids.add(c_id)
+
             personality_categories = set(user_personality.get('focus_categories', []))
-            score = 50
-            card_categories = set(card.get('categories', []))
-            if personality_categories:
-                category_overlap = len(card_categories & personality_categories)
-                score += min(30, category_overlap * 10)
+            
+            is_personality_card = card['id'] in personality_card_ids
+            
+            if is_personality_card:
+                score = 85  # High base score which is the same as the card_list view
+            else:
+                score = 35  # Lower base score which is the same as the card_list view
+                
+                card_categories = set(card.get('categories', []))
+                if personality_categories:
+                    category_overlap = len(card_categories & personality_categories)
+                    score += min(30, category_overlap * 10)
             
             annual_fee = card.get('annual_fee', 0)
             if annual_fee == 0: score += 10
@@ -322,28 +337,41 @@ def card_list(request):
 
     # Calculate match percentages for authenticated users
     if request.user.is_authenticated and user_personality:
+        # Get cards explicitly in this personality
+        personality_card_ids = set()
+        if 'slots' in user_personality:
+            for slot in user_personality['slots']:
+                cards_in_slot = slot.get('cards', [])
+                for c_id in cards_in_slot:
+                    personality_card_ids.add(c_id)
+
         # Get personality preferences
         personality_categories = set()
         if 'focus_categories' in user_personality:
             personality_categories = set(user_personality['focus_categories'])
         
         for card in all_cards:
-            score = 50  # Base score
+            is_personality_card = card['id'] in personality_card_ids
             
-            # Category alignment (up to +30 points)
-            card_categories = set(card.get('categories', []))
-            if personality_categories:
-                category_overlap = len(card_categories & personality_categories)
-                score += min(30, category_overlap * 10)
+            if is_personality_card:
+                score = 85  # High base score for personality cards
+            else:
+                score = 35  # Lower base score for others
+                
+                # Category alignment (up to +30 points) - mainly determines rank of non-personality cards
+                card_categories = set(card.get('categories', []))
+                if personality_categories:
+                    category_overlap = len(card_categories & personality_categories)
+                    score += min(30, category_overlap * 10)
             
-            # Annual fee consideration (up to +20 or -20 points)
+            # Annual fee consideration
             annual_fee = card.get('annual_fee', 0)
             if annual_fee == 0:
                 score += 10  # Bonus for no fee
             elif annual_fee > 500:
                 score -= 10  # Penalty for high fee
             
-            # Already in wallet penalty (-30 points)
+            # Already in wallet penalty
             if card.get('in_wallet', False):
                 score -= 30
             

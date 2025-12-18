@@ -65,8 +65,7 @@ def dashboard(request):
         'annual_fee': card.get('annual_fee', 0),
         'image_url': resolve_card_image_url(card['id']) if 'id' in card else '',
         'earning_rates': card.get('earning_rates', []),
-        'image_url': resolve_card_image_url(card['id']) if 'id' in card else '',
-        'earning_rates': card.get('earning_rates', []),
+
         'earning': card.get('earning', []),
     } for card in all_cards], default=str)
     
