@@ -317,7 +317,8 @@ function openCardModal(cardId) {
     }
     
     // Stats
-    const matchScore = (card.matchScore || '90');
+    // Fix: Backend sends snake_case match_score, frontend mock might use matchScore
+    const matchScore = (card.match_score !== undefined ? card.match_score : (card.matchScore || '90'));
     // Ensure we don't duplicate '%'
     const matchScoreText = String(matchScore).includes('%') ? matchScore : matchScore + '% Match';
     

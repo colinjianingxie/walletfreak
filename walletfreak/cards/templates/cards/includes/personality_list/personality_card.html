@@ -1,0 +1,112 @@
+{% load static %}
+<div class="personality-slide">
+    <div class="personality-card-link personality-card-inner" data-name="{{ personality.name|lower }}"
+        data-desc="{{ personality.description|lower }}" data-tag="{{ personality.tagline|default:''|lower }}">
+        
+        <!-- Avatar Icon -->
+        <div class="personality-avatar-box">
+            <img src="{% static 'images/personalities/'|add:personality.slug|add:'.png' %}" alt="{{ personality.name }}" class="personality-img">
+        </div>
+
+        <!-- Personality Name -->
+        <h3 class="personality-name">
+            {{ personality.name }}
+        </h3>
+
+        <!-- Description -->
+        <p class="personality-desc">
+            {{ personality.description|truncatewords:20 }}
+        </p>
+
+        <!-- Tags -->
+        <div class="tags-container">
+            {% if 'jetsetter' in personality.id|lower %}
+            <span class="tag-badge tag-travel">#TRAVEL</span>
+            <span class="tag-badge tag-travel">#FLY</span>
+            <span class="tag-badge tag-travel">#PLANE</span>
+            {% elif 'freak' in personality.id|lower or 'wallet-freak' in personality.id|lower %}
+            <span class="tag-badge tag-freak">#POSSESSED</span>
+            <span class="tag-badge tag-freak">#CHURNING</span>
+            <span class="tag-badge tag-freak">#MAXIMUM</span>
+            {% elif 'hunter' in personality.id|lower or 'value' in personality.id|lower %}
+            <span class="tag-badge tag-save">#SAVE</span>
+            <span class="tag-badge tag-save">#CASH</span>
+            <span class="tag-badge tag-save">#BUDGET</span>
+            {% elif 'seeker' in personality.id|lower or 'experience' in personality.id|lower %}
+            <span class="tag-badge tag-luxury">#LUXURY</span>
+            <span class="tag-badge tag-luxury">#EXPERIENCE</span>
+            {% elif 'optimizer' in personality.id|lower %}
+            <span class="tag-badge tag-efficient">#EFFICIENT</span>
+            <span class="tag-badge tag-efficient">#OPTIMIZE</span>
+            {% else %}
+            <span class="tag-badge tag-rewards">#REWARDS</span>
+            {% endif %}
+        </div>
+
+        <!-- Card Stack Preview -->
+        <div class="card-stack-preview">
+            <!-- Card 1 (Back Left) -->
+            <div class="stack-card-base stack-card-1
+                {% if 'freak' in personality.id|lower or 'wallet-freak' in personality.id|lower %}
+                    bg-grad-freak
+                {% elif 'jetsetter' in personality.id|lower %}
+                    bg-grad-jetsetter-blue
+                {% elif 'hunter' in personality.id|lower or 'value' in personality.id|lower %}
+                    bg-grad-hunter
+                {% else %}
+                    bg-grad-indigo
+                {% endif %}">
+                <div class="stack-card-content">
+                    <div class="stack-card-issuer">
+                        {% if 'freak' in personality.id|lower %}CAPITAL ONE{% elif 'jetsetter' in personality.id|lower %}CAPITAL ONE{% else %}CARD{% endif %}
+                    </div>
+                    <div class="stack-card-number">•••• 4242</div>
+                </div>
+            </div>
+            
+            <!-- Card 2 (Middle) -->
+            <div class="stack-card-base stack-card-2
+                {% if 'freak' in personality.id|lower or 'wallet-freak' in personality.id|lower %}
+                    bg-grad-jetsetter-blue
+                {% elif 'jetsetter' in personality.id|lower %}
+                    bg-grad-jetsetter-dark
+                {% elif 'hunter' in personality.id|lower or 'value' in personality.id|lower %}
+                    bg-grad-hunter-teal
+                {% else %}
+                    bg-grad-purple
+                {% endif %}">
+                <div class="stack-card-content">
+                    <div class="stack-card-issuer">
+                        {% if 'jetsetter' in personality.id|lower %}CAPITAL ONE{% else %}CHASE{% endif %}
+                    </div>
+                    <div class="stack-card-number">•••• 1323</div>
+                </div>
+            </div>
+            
+            <!-- Card 3 (Front Right) -->
+            <div class="stack-card-base stack-card-3
+                {% if 'freak' in personality.id|lower or 'wallet-freak' in personality.id|lower %}
+                    bg-grad-jetsetter-dark
+                {% elif 'jetsetter' in personality.id|lower %}
+                    bg-grad-jetsetter-grey
+                {% elif 'hunter' in personality.id|lower or 'value' in personality.id|lower %}
+                    bg-grad-hunter-cyan
+                {% else %}
+                    bg-grad-pink
+                {% endif %}">
+                <div class="stack-card-content">
+                    <div class="stack-card-issuer">
+                        {% if 'freak' in personality.id|lower %}CAPITAL ONE{% elif 'hunter' in personality.id|lower %}CITI{% else %}AMEX{% endif %}
+                    </div>
+                    <div class="stack-card-number">•••• 8888</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Strategy Button -->
+        <a href="{% url 'personality_detail' personality.id %}" class="view-strategy-btn">
+            View Strategy
+            <span class="material-icons" style="font-size: 18px;">arrow_forward</span>
+        </a>
+    </div>
+</div>

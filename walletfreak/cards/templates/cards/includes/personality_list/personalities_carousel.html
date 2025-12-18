@@ -1,0 +1,33 @@
+<section class="explore-personalities-section">
+    <div class="container">
+        <!-- Header with Controls -->
+        <div class="explore-header">
+            <h2 class="explore-title">Explore All Personalities</h2>
+            
+            <div class="carousel-controls">
+                <button class="carousel-btn" onclick="scrollCarousel(-1)">
+                    <span class="material-icons" style="font-size: 20px;">chevron_left</span>
+                </button>
+                <button class="carousel-btn" onclick="scrollCarousel(1)">
+                    <span class="material-icons" style="font-size: 20px;">chevron_right</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="carousel-container-wrapper">
+            <!-- Carousel Track -->
+            <div id="personalities-carousel">
+                {% for personality in personalities %}
+                {% include 'cards/includes/personality_list/personality_card.html' %}
+                {% empty %}
+                <!-- Empty State -->
+                <div class="empty-personalities-state">
+                    <div class="empty-personalities-icon"><span class="material-icons" style="font-size: 64px;">credit_card</span></div>
+                    <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;">No personalities yet</h2>
+                    <p style="color: #64748B;">Check back soon!</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,33 @@
+{% if assigned_personality %}
+<section class="container assigned-personality-section">
+    <div class="assigned-personality-card">
+<div class="assigned-personality-grid">
+            <!-- Left: Icon -->
+            <div class="assigned-icon-box">
+                {{ assigned_personality.icon|default:"🎯" }}
+            </div>
+
+            <!-- Middle: Info -->
+            <div>
+                <div class="assigned-label">
+                    YOUR PERSONALITY
+                </div>
+                
+                <h3 class="assigned-name">
+                    {{ assigned_personality.name }}
+                </h3>
+
+                <p class="assigned-description">
+                    {{ assigned_personality.tagline }}
+                </p>
+            </div>
+
+            <!-- Right: Action -->
+            <a href="{% url 'personality_detail' assigned_personality.id %}" class="assigned-view-btn">
+                View Details
+                <span class="material-icons" style="font-size: 18px;">arrow_forward</span>
+            </a>
+        </div>
+    </div>
+</section>
+{% endif %}

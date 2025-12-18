@@ -1,0 +1,93 @@
+{% load static %}
+<section class="personality-hero-section">
+    <!-- Background decoration -->
+    <div class="hero-blob-top"></div>
+    <div class="hero-blob-bottom"></div>
+    
+    <div class="hero-content-wrapper">
+        <!-- Badge -->
+        <div class="hero-badge">
+            <span class="hero-badge-icon"><span class="material-icons" style="font-size: 16px; vertical-align: middle;">auto_awesome</span></span>
+            <span class="hero-badge-text">Discover Your Financial DNA</span>
+        </div>
+        
+        <!-- Title -->
+        <h1 class="hero-title">
+            What's your <span class="hero-title-highlight">Wallet Vibe?</span>
+        </h1>
+        
+        <!-- Subtitle (hidden during quiz, shown on initial load) -->
+        <p id="quiz-subtitle-text" class="quiz-subtitle">
+            Answer a few quick questions to discover your perfect credit card personality.
+        </p>
+
+        <!-- Quiz Container -->
+        <div id="quiz-container" class="quiz-container-box">
+            <!-- Progress Header -->
+            <div class="progress-header">
+                <div class="progress-labels">
+                    <span id="question-counter" class="progress-text">QUESTION 1 OF 4</span>
+                    <span id="progress-percent" class="progress-text">0% COMPLETE</span>
+                </div>
+                <!-- Progress Bar -->
+                <div class="progress-bar-bg">
+                    <div id="progress-bar" class="progress-bar-fill"></div>
+                </div>
+            </div>
+
+            <!-- Question Text -->
+            <h2 id="question-text" class="quiz-question-text"></h2>
+            <p id="question-subtitle" class="quiz-question-subtitle"></p>
+
+            <!-- Options Container -->
+            <div id="options-container" class="quiz-options-grid">
+                <!-- Options will be dynamically inserted here -->
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="quiz-nav-actions">
+                <button id="back-btn" class="quiz-back-btn" onclick="previousQuestion()">
+                    ← Back
+                </button>
+                <button id="continue-btn" class="quiz-continue-btn" onclick="nextQuestion()">
+                    Continue →
+                </button>
+            </div>
+        </div>
+
+        <!-- Loading Container (hidden initially) -->
+        <div id="loading-container" class="loading-container-box">
+            <!-- Spinner -->
+            <div class="loading-spinner"></div>
+            
+            <h2 id="loading-title" class="loading-title">Analyzing your preferences...</h2>
+            <p id="loading-subtitle" class="loading-subtitle">Crunching the multipliers</p>
+        </div>
+
+        <!-- Results Container (hidden initially) -->
+        <div id="results-container" class="results-container-box">
+            <p class="result-label">YOUR VIBE IS</p>
+            
+            <!-- Personality Avatar -->
+            <div class="result-avatar-wrapper">
+                <img id="result-image" src="" alt="Personality" class="result-avatar-img">
+                <!-- Glow effect -->
+                <div class="result-avatar-glow"></div>
+            </div>
+
+            <h2 id="result-name" class="result-title-name"></h2>
+            <p id="result-description" class="result-description-text"></p>
+
+            <!-- Action Buttons -->
+            <div class="result-actions">
+                <a id="view-stack-btn" href="#" class="view-stack-btn">
+                    View Your Stack
+                </a>
+                <button onclick="resetQuiz()" class="restart-quiz-btn">
+                    <span class="material-icons" style="font-size: 18px;">refresh</span>
+                    Start Over
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
