@@ -94,7 +94,7 @@ def run_notification_cron(request):
         # We catch output to return it
         from io import StringIO
         out = StringIO()
-        call_command('check_unused_credits', send_email=True, stdout=out)
+        call_command('check_unused_benefits', send_email=True, stdout=out)
         
         return JsonResponse({
             'status': 'success', 
