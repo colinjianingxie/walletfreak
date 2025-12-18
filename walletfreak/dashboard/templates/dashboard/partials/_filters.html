@@ -1,0 +1,15 @@
+<!-- Filter Pills Section -->
+<div id="card-filters-container" style="margin-bottom: 2rem; overflow-x: auto; padding-bottom: 0.5rem;">
+    <div style="display: flex; gap: 0.75rem;" id="card-filters">
+        <button class="filter-pill active" onclick="filterBenefits('all')">
+            <span class="material-icons" style="font-size: 16px;">filter_list</span>
+            All Cards
+        </button>
+        {% for card in active_cards %}
+        <button class="filter-pill" onclick="filterBenefits('{{ card.card_id }}')">
+            <span class="dot" style="background: {% if 'platinum' in card.name|lower %}#E5E7EB{% elif 'gold' in card.name|lower %}#FCD34D{% elif 'sapphire' in card.name|lower %}#3B82F6{% else %}#9CA3AF{% endif %};"></span>
+            {{ card.name }}
+        </button>
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,42 @@
+<!-- Anniversary Date Modal -->
+<div id="anniversary-modal" class="modal" style="display: none; align-items: center; justify-content: center;">
+    <div class="modal-content" style="max-width: 450px;">
+        <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <div>
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 0.5rem 0;">Set Card Anniversary</h3>
+                <p style="color: #64748B; margin: 0; font-size: 0.875rem;">When did you get this card?</p>
+            </div>
+            <button class="modal-close" onclick="closeAnniversaryModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #94A3B8;">×</button>
+        </div>
+
+        <!-- Card Info -->
+        <div style="background: #F9FAFB; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
+            <div style="font-size: 0.75rem; font-weight: 700; color: #64748B; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.5rem;">CARD</div>
+            <div id="anniversary-card-name" style="font-weight: 700; font-size: 1.125rem; color: #1F2937;">Loading...</div>
+        </div>
+
+        <!-- Date Input -->
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1F2937;">Anniversary Date</label>
+            <input type="date" id="anniversary-date-input" 
+                   style="width: 100%; padding: 0.875rem 1rem; border: 2px solid #E5E7EB; border-radius: 10px; font-size: 1rem; font-weight: 600;">
+            <p style="color: #64748B; font-size: 0.875rem; margin-top: 0.5rem;">This helps track which months/quarters are available for benefit tracking.</p>
+        </div>
+
+        <!-- Example -->
+        <div style="background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+            <div style="font-weight: 600; color: #92400E; margin-bottom: 0.25rem; font-size: 0.875rem;">💡 Example</div>
+            <div style="color: #78350F; font-size: 0.875rem;">If you got your card in October 2025, months before October will be grayed out.</div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="display: flex; gap: 0.75rem;">
+            <button onclick="closeAnniversaryModal()" style="flex: 1; background: #F3F4F6; color: #64748B; border: none; padding: 0.875rem; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                Cancel
+            </button>
+            <button onclick="saveAnniversaryDate()" style="flex: 1; background: #7C3AED; color: white; border: none; padding: 0.875rem; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                Save Anniversary
+            </button>
+        </div>
+    </div>
+</div>

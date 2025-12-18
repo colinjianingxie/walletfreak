@@ -1,0 +1,284 @@
+{% load card_extras %}
+<!-- Manage Wallet Modal (Redesigned with Sidebar) -->
+<div id="manage-wallet-modal" class="modal" style="display: none; align-items: center; justify-content: center; padding: 2rem;">
+    <div class="modal-content" style="width: 1000px; max-width: 95vw; height: 600px; max-height: 90vh; padding: 0; display: flex; overflow: hidden; border-radius: 24px; background: white; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+        
+        <!-- Sidebar -->
+        <div class="modal-sidebar">
+            <div style="padding: 0 0.5rem; margin-bottom: 1.5rem;">
+                <h3 style="font-size: 1.25rem; font-weight: 800; margin: 0; color: #1F2937;">Manage Wallet</h3>
+            </div>
+            
+            <div class="modal-sidebar-item active" onclick="switchTab('stack')" id="tab-stack">
+                <span class="material-icons" style="font-size: 20px;">wallet</span>
+                <span>My Stack</span>
+                <span style="background: #E2E8F0; color: #64748B; font-size: 0.75rem; padding: 0.125rem 0.5rem; border-radius: 99px; margin-left: auto;">{{ active_cards|length }}</span>
+            </div>
+            
+            <div class="modal-sidebar-item" onclick="switchTab('add')" id="tab-add">
+                <span class="material-icons" style="font-size: 20px;">add_circle_outline</span>
+                <span>Add New Card</span>
+            </div>
+
+        </div>
+        
+        <!-- Content Area -->
+        <div style="flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative;">
+            <button class="modal-close-btn" onclick="closeManageWalletModal()" style="position: absolute; top: 1rem; right: 1rem; z-index: 10;">×</button>
+
+            <!-- Mobile Screen 1: My Stack -->
+            <div id="mobile-my-stack-screen" style="display: none; flex: 1; flex-direction: column; overflow-y: auto; height: 100vh; background: white;">
+                <!-- Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background: white; position: relative;">
+                    <h1 style="font-size: 1.5rem; font-weight: 700; color: #1F2937; margin: 0;">Manage Wallet</h1>
+                    <button class="modal-close-btn" onclick="closeManageWalletModal()" style="background: none; border: none; color: #64748B; font-size: 1.5rem; cursor: pointer; padding: 0.5rem; position: absolute; top: 1rem; right: 1rem;">×</button>
+                </div>
+                
+                <!-- Tab Navigation -->
+                <div style="padding: 1.5rem; background: white;">
+                    <div style="display: flex; gap: 1rem;">
+                        <button id="mobile-my-stack-tab" style="flex: 1; background: #6366F1; border: 1px solid #6366F1; border-radius: 12px; padding: 1rem; display: flex; align-items: center; gap: 0.75rem; cursor: pointer; color: white; font-weight: 600;">
+                            <span class="material-icons" style="font-size: 24px;">account_balance_wallet</span>
+                            <div>
+                                <div style="font-size: 0.875rem; font-weight: 500;">My Stack</div>
+                                <div style="font-size: 1.25rem; font-weight: 700;">{{ active_cards|length }}</div>
+                            </div>
+                        </button>
+                        
+                        <button onclick="showMobileAddNewScreen()" style="flex: 1; background: white; border: 1px solid #E5E7EB; border-radius: 12px; padding: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; color: #6366F1; font-weight: 600; cursor: pointer;">
+                            <span class="material-icons">add</span>
+                            Add New
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Active Cards Content -->
+                <div style="padding: 1.5rem; background: white; flex: 1; overflow-y: auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h2 style="font-size: 1.5rem; font-weight: 700; color: #1F2937; margin: 0;">Active Cards</h2>
+
+                    </div>
+                    
+                    <!-- Active Cards List -->
+                    {% if active_cards %}
+                        {% for card in active_cards %}
+                        <div class="card-item-container" style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: white; border: 1px solid #E5E7EB; border-radius: 12px; margin-bottom: 0.75rem;">
+<img src="{% get_card_image_url card.card_id %}" style="width: 60px; height: auto; object-fit: contain; border-radius: 4px;" alt="{{ card.name }}">
+                            <div style="flex: 1;">
+                                <div style="font-weight: 700; color: #1F2937; font-size: 1rem; margin-bottom: 0.25rem;">{{ card.name }}</div>
+                                <div style="color: #64748B; font-size: 0.875rem;">•••• {{ card.last4|default:"****" }}</div>
+                            </div>
+                            <form method="POST" action="{% url 'remove_card' card.id %}" style="margin: 0;" onsubmit="return openRemoveCardModal(event, this, '{{ card.name|escapejs }}');">
+                                {% csrf_token %}
+                                <button type="submit" style="background: none; border: none; color: #CBD5E1; cursor: pointer; padding: 0.5rem;">
+                                    <span class="material-icons" style="font-size: 1.5rem;">delete_outline</span>
+                                </button>
+                            </form>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div style="text-align: center; padding: 4rem 2rem; color: #94A3B8;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"><span class="material-icons" style="font-size: 48px;">wallet</span></div>
+                            <p>Your wallet is empty.</p>
+                            <button onclick="showMobileAddNewScreen()" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: #6366F1; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer;">
+                                Add Your First Card
+                            </button>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Mobile Screen 2: Add New -->
+            <div id="mobile-add-new-screen" style="display: none; flex: 1; flex-direction: column; overflow-y: auto; height: 100vh; background: white;">
+                <!-- Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background: white; position: relative;">
+                    <h1 style="font-size: 1.5rem; font-weight: 700; color: #1F2937; margin: 0;">Manage Wallet</h1>
+                    <button class="modal-close-btn" onclick="closeManageWalletModal()" style="background: none; border: none; color: #64748B; font-size: 1.5rem; cursor: pointer; padding: 0.5rem; position: absolute; top: 1rem; right: 1rem;">×</button>
+                </div>
+                
+                <!-- Tab Navigation -->
+                <div style="padding: 1.5rem; background: white;">
+                    <div style="display: flex; gap: 1rem;">
+                        <button onclick="showMobileMyStackScreen()" class="mobile-tab-button">
+                            <span class="material-icons" style="font-size: 24px;">account_balance_wallet</span>
+                            <div>
+                                <div style="font-size: 0.875rem; font-weight: 500;">My Stack</div>
+                                <div style="font-size: 1.25rem; font-weight: 700;">{{ active_cards|length }}</div>
+                            </div>
+                        </button>
+                        
+                        <button class="mobile-tab-button active">
+                            <span class="material-icons">add</span>
+                            Add New
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Find a Card Content -->
+                <div style="padding: 1.5rem; background: white; flex: 1; overflow-y: auto;">
+                    <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #1F2937;">Find a Card</h2>
+                    <p style="color: #64748B; margin-bottom: 1.5rem; font-size: 0.95rem;">Search by name or issuer.</p>
+                    
+                    <!-- Search -->
+                    <div style="position: relative; margin-bottom: 1.5rem;">
+                        <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #94A3B8;"><span class="material-icons" style="font-size: 20px;">search</span></span>
+                        <input type="text" id="mobile-card-search" placeholder="Search e.g. 'Sapphire' or 'Amex'" style="width: 100%; padding: 0.875rem 1rem 0.875rem 3rem; border: 1px solid #E5E7EB; border-radius: 12px; font-size: 1rem; outline: none; background: white;" oninput="handleMobileSearch(this.value)">
+                    </div>
+                    
+                    <!-- Quick Add Filters -->
+                    <div style="margin-bottom: 1.5rem; background: #FFFFFF; padding-top: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #F3F4F6;">
+                        <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; margin-bottom: 0.75rem; letter-spacing: 0.1em;">QUICK ADD</div>
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <button onclick="toggleMobileFilter('Chase')" id="filter-Chase" class="mobile-quick-add-btn">Chase</button>
+                            <button onclick="toggleMobileFilter('American Express')" id="filter-American Express" class="mobile-quick-add-btn">Amex</button>
+                            <button onclick="toggleMobileFilter('Capital One')" id="filter-Capital One" class="mobile-quick-add-btn">Capital One</button>
+                            <button onclick="toggleMobileFilter('Citi')" id="filter-Citi" class="mobile-quick-add-btn">Citi</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Card List -->
+                    <div id="mobile-card-results-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Screen 3: Card Detail -->
+            <div id="mobile-card-detail-screen" style="display: none; flex: 1; flex-direction: column; overflow-y: auto; height: 100vh; background: white;">
+                <!-- Content populated by JS -->
+            </div>
+
+            <!-- Desktop View 1: My Stack -->
+            <div id="content-stack" style="flex: 1; padding: 2rem; display: flex; flex-direction: column; overflow-y: auto;">
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0; color: #1F2937;">Active Cards</h3>
+
+                </div>
+                
+                <div style="flex: 1; overflow-y: auto;">
+                    {% if active_cards %}
+                        {% for card in active_cards %}
+                        <div class="card-item-container" style="display: flex; align-items: center; padding: 1.25rem; border: 1px solid #F3F4F6; border-radius: 16px; margin-bottom: 1rem; background: white; transition: all 0.2s;">
+                            <img src="{% get_card_image_url card.card_id %}" style="width: 60px; height: auto; object-fit: contain; border-radius: 4px; margin-right: 1.25rem;" alt="{{ card.name }}">
+                            
+                            <div>
+                                <div style="font-weight: 700; color: #1F2937; font-size: 1rem;">{{ card.name }}</div>
+                                <div style="font-size: 0.85rem; color: #94A3B8; font-family: monospace;">•••• {{ card.last4|default:"****" }}</div>
+                            </div>
+                            
+                            <div style="margin-left: auto; display: flex; align-items: center; gap: 1rem;">
+                                <span style="background: #DCFCE7; color: #16A34A; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 99px;">Active</span>
+                                
+                                <form method="POST" action="{% url 'remove_card' card.id %}" style="margin: 0;" onsubmit="return openRemoveCardModal(event, this, '{{ card.name|escapejs }}');">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn-delete-card" style="background: none; border: none; cursor: pointer; color: #E2E8F0; padding: 0.5rem; transition: color 0.2s;" onmouseover="this.style.color='#EF4444'" onmouseout="this.style.color='#E2E8F0'" title="Remove Card">
+                                        <span class="material-icons" style="font-size: 20px;">delete_outline</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div style="text-align: center; padding: 4rem 2rem; color: #94A3B8;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"><span class="material-icons" style="font-size: 48px;">wallet</span></div>
+                            <p>Your wallet is empty.</p>
+                            <button onclick="switchTab('add')" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: #6366F1; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer;">
+                                Add Your First Card
+                            </button>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- View 2: Find a Card -->
+            <div id="content-add" style="flex: 1; display: none; overflow: hidden; height: 100%;">
+                <div style="display: flex; height: 100%;">
+                    <!-- Left Column: Search & List -->
+                    <div style="flex: 1; padding: 2rem; border-right: 1px solid #F3F4F6; display: flex; flex-direction: column; overflow: hidden;">
+                        <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 0.5rem 0; color: #1F2937;">Find a Card</h3>
+                        <p style="color: #64748B; font-size: 0.9rem; margin-bottom: 1.5rem;">Search by name or issuer to add it to your wallet.</p>
+                        
+                        <div style="position: relative; margin-bottom: 1.5rem;">
+                            <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #6366F1;"><span class="material-icons" style="font-size: 20px;">search</span></span>
+                            <input type="text" id="card-search-input" placeholder="Search e.g. 'Sapphire' or 'Amex'" 
+                                   style="width: 100%; padding: 1rem 1rem 1rem 3rem; border: 1px solid #6366F1; border-radius: 12px; font-size: 1rem; outline: none; box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);">
+                        </div>
+                        
+                        <div style="margin-bottom: 1.5rem;">
+                            <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em; margin-bottom: 0.75rem; text-transform: uppercase;">Quick Add</div>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                <button class="quick-add-btn" onclick="filterCards('Chase')">Chase</button>
+                                <button class="quick-add-btn" onclick="filterCards('Amex')">Amex</button>
+                                <button class="quick-add-btn" onclick="filterCards('Capital One')">Capital One</button>
+                                <button class="quick-add-btn" onclick="filterCards('Citi')">Citi</button>
+                            </div>
+                        </div>
+                        
+                        <div id="card-results-list" style="overflow-y: auto; flex: 1; padding-right: 0.5rem;">
+                            <!-- Results populated via JS -->
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column: Card Preview -->
+                    <div style="width: 380px; padding: 2rem; background: #F8FAFC; display: flex; flex-direction: column; align-items: center; overflow-y: auto;">
+                        <div id="card-preview-empty" style="color: #94A3B8; text-align: center; margin-top: 8rem;">
+                            <div style="width: 80px; height: 80px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                                <span class="material-icons" style="font-size: 32px; color: #CBD5E1;">credit_card</span>
+                            </div>
+                        </div>
+                        
+                        <div id="card-preview-content" style="display: none; width: 100%; padding: 0 1rem;">
+                            <!-- Card Visual -->
+                            <div id="preview-card-visual" style="width: 100%; height: 180px; background: linear-gradient(135deg, #6366F1, #8B5CF6); border-radius: 16px; margin: 0 0 1.5rem 0; box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25); padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; color: white; position: relative; overflow: hidden;">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                    <div id="preview-issuer" style="font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; opacity: 0.9;">AMERICAN EXPRESS</div>
+                                    <span class="material-icons" style="font-size: 24px; opacity: 0.7;">contactless</span>
+                                </div>
+                                <div style="width: 40px; height: 28px; background: linear-gradient(135deg, #FFD700, #FFA500); border-radius: 4px; opacity: 0.9;"></div>
+                                <div>
+                                    <div style="font-size: 1rem; letter-spacing: 0.15em; font-family: 'Courier New', monospace; opacity: 0.85; margin-bottom: 0.75rem;">•••• •••• •••• 4242</div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div style="font-size: 0.7rem; opacity: 0.85; letter-spacing: 0.05em;">YOUR NAME</div>
+                                        <div style="display: flex; gap: 2px;">
+                                            <div style="width: 18px; height: 18px; background: #EB001B; border-radius: 50%; opacity: 0.9;"></div>
+                                            <div style="width: 18px; height: 18px; background: #F79E1B; border-radius: 50%; margin-left: -6px; opacity: 0.9;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Add to Wallet Button -->
+                            <button id="add-card-btn" onclick="addSelectedCard()" style="width: 100%; padding: 1rem; background: #6366F1; color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.2s; margin-bottom: 2rem;">
+                                <span class="material-icons" style="font-size: 20px;">add</span>
+                                Add to Wallet
+                            </button>
+
+                            <!-- Earning Rates -->
+                            <div style="width: 100%; margin-bottom: 2rem;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                    <span class="material-icons" style="font-size: 14px; color: #9CA3AF;">trending_up</span>
+                                    <div style="font-size: 0.7rem; font-weight: 700; color: #9CA3AF; letter-spacing: 0.1em; text-transform: uppercase;">EARNING RATES</div>
+                                </div>
+                                <div id="preview-earning-rates" style="display: flex; flex-direction: column;">
+                                    <!-- Populated via JS -->
+                                </div>
+                            </div>
+
+                            <!-- Credits -->
+                            <div style="width: 100%;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                    <span class="material-icons" style="font-size: 14px; color: #9CA3AF;">bolt</span>
+                                    <div style="font-size: 0.7rem; font-weight: 700; color: #9CA3AF; letter-spacing: 0.1em; text-transform: uppercase;">CREDITS</div>
+                                </div>
+                                <div id="preview-credits" style="display: flex; flex-direction: column;">
+                                    <!-- Populated via JS -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

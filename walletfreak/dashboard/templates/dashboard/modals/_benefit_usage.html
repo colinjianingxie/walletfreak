@@ -1,0 +1,59 @@
+<!-- Benefit Usage Modal (Redesigned) -->
+<div id="benefit-modal" class="modal" style="display: none; align-items: center; justify-content: center; padding: 1rem;">
+    <div class="modal-content" style="width: 400px; max-width: 95vw; padding: 0; border-radius: 24px; overflow: hidden; background: white; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+        
+        <!-- Header (Dark) -->
+        <div style="background: #111827; padding: 1.5rem; color: white; position: relative;">
+            <button class="modal-close-btn" onclick="closeBenefitModal()" style="position: absolute; top: 1rem; right: 1rem; color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.1);">×</button>
+            
+            <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 0.5rem 0; color: white;" id="benefit-modal-title">Dining Credit</h3>
+            <div style="display: inline-block; background: rgba(255,255,255,0.15); padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.9);" id="benefit-modal-subtitle">
+                Gold Card
+            </div>
+        </div>
+
+        <div style="padding: 2rem;">
+            <!-- Month Navigator -->
+            <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 2rem; background: #F9FAFB; padding: 0.75rem; border-radius: 12px;">
+                <button onclick="navigatePeriod(-1)" style="background: none; border: none; color: #64748B; cursor: pointer; padding: 0.25rem;"><span class="material-icons" style="font-size: 18px;">chevron_left</span></button>
+                <div style="font-weight: 700; color: #1F2937; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="material-icons" style="font-size: 18px; color: #6366F1;">calendar_today</span>
+                    <span id="benefit-period-label">Sep</span>
+                </div>
+                <button onclick="navigatePeriod(1)" style="background: none; border: none; color: #64748B; cursor: pointer; padding: 0.25rem;"><span class="material-icons" style="font-size: 18px;">chevron_right</span></button>
+            </div>
+
+            <!-- Circular Progress -->
+            <div style="margin-bottom: 2.5rem;">
+                <div class="circular-progress" id="benefit-circular-progress">
+                    <div class="circular-progress-content">
+                        <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.1em; margin-bottom: 0.25rem;">USAGE</div>
+                        <div style="font-size: 2.5rem; font-weight: 800; color: #1F2937; line-height: 1; margin-bottom: 0.25rem;" id="benefit-current-used-display">$10</div>
+                        <div style="font-size: 0.875rem; font-weight: 600; color: #64748B;">of <span id="benefit-total-value-display">$10</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Usage Input -->
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; border-top: 1px solid #F3F4F6; padding-top: 2rem; position: relative;">
+                <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: white; padding: 0 1rem; color: #94A3B8; font-size: 0.75rem; font-weight: 600;">Add Usage</div>
+                
+                <div style="flex: 1; position: relative;">
+                    <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #94A3B8; font-weight: 600;">$</span>
+                    <input type="number" id="benefit-amount-input" min="0" step="0.01" 
+                           style="width: 100%; padding: 0.875rem 1rem 0.875rem 2rem; border: 1px solid #E5E7EB; border-radius: 12px; font-size: 1rem; font-weight: 600; color: #1F2937; margin-bottom: 0;"
+                           placeholder="Remaining: $0">
+                </div>
+                <button id="btn-log-usage" onclick="saveBenefitUsage()" style="background: #111827; color: white; border: none; padding: 0.875rem 1.5rem; border-radius: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; min-width: 80px;">
+                    Log
+                </button>
+            </div>
+
+            <!-- Mark as Full -->
+            <button id="mark-full-btn" onclick="markAsFull()" style="width: 100%; background: white; color: #1F2937; border: 1px solid #E5E7EB; padding: 1rem; border-radius: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                <span class="material-icons" style="font-size: 20px; margin-right: 0.5rem; color: #10B981; opacity: 0;">check</span>
+                Mark <span id="benefit-period-label-btn" style="margin: 0 0.25rem;">Sep</span> as Full
+            </button>
+        </div>
+    </div>
+</div>

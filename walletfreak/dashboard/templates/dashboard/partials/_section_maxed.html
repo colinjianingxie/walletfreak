@@ -1,0 +1,98 @@
+{% load card_extras %}
+<!-- Maxed Out Section -->
+{% if maxed_out_benefits %}
+<div id="maxed-out-section" style="margin-bottom: 3rem;">
+    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+        <div style="width: 32px; height: 32px; background: #DCFCE7; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #16A34A;">
+            <span class="material-icons" style="font-size: 18px;">check_circle</span>
+        </div>
+        <h2 style="font-size: 1.25rem; font-weight: 800; margin: 0; color: #1F2937;">Maxed Out <span style="color: #94A3B8; font-weight: 600; font-size: 1rem; margin-left: 0.25rem;">({{ maxed_out_benefits|length }})</span></h2>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); gap: 1.5rem;">
+        {% for benefit in maxed_out_benefits %}
+        <div class="benefit-card" data-card-id="{{ benefit.card_id }}" style="background: white; border-radius: 24px; padding: 1.5rem; border: 1px solid #F3F4F6; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); transition: all 0.2s;">
+            <!-- Card Header -->
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                <div style="display: flex; gap: 1rem;">
+                    <img src="{% get_card_image_url benefit.card_id %}" style="width: 48px; height: auto; object-fit: contain; border-radius: 4px;" alt="{{ benefit.card_name }}">
+                    <div>
+                        <h3 style="font-size: 1.125rem; font-weight: 700; margin: 0 0 0.25rem 0; color: #1F2937;">{{ benefit.benefit_name }}</h3>
+                        <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em; text-transform: uppercase;">
+                            {{ benefit.card_name }} • 
+                            {% if 'anniversary year' in benefit.frequency|lower %}
+                                ANNUALLY ({{ benefit.periods.0.label }})
+                            {% elif 'calendar year' in benefit.frequency|lower %}
+                                {% if 'semi' in benefit.frequency|lower %}SEMI-ANNUALLY{% else %}ANNUALLY{% endif %}
+                            {% elif 'every four years' in benefit.frequency|lower %}
+                                EVERY FOUR YEARS ({{ benefit.periods.0.label }})
+                            {% else %}
+                                {{ benefit.frequency }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-size: 1.25rem; font-weight: 800; color: #1F2937;">${{ benefit.amount|floatformat:0 }}</div>
+                    <div style="font-size: 0.7rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em; text-transform: uppercase;">PER PERIOD</div>
+                </div>
+            </div>
+
+            <!-- Tracker -->
+            {% if 'Monthly' in benefit.frequency %}
+            {{ benefit.periods|json_script:benefit.script_id }}
+            <div class="monthly-pills-grid">
+                {% for period in benefit.periods %}
+                <div class="period-pill {% if period.status == 'full' %}full{% elif period.status == 'partial' %}partial{% endif %} {% if period.is_current %}current{% endif %} {% if not period.is_available %}unavailable{% endif %}"
+                     {% if period.is_available %}onclick="openBenefitModal('{{ benefit.user_card_id }}', '{{ benefit.benefit_id }}', '{{ benefit.benefit_name|escapejs }}', {{ benefit.amount }}, {{ benefit.used }}, '{{ benefit.frequency|escapejs }}', '{{ period.key }}', '{{ benefit.script_id }}')"{% endif %}
+                     style="{% if not period.is_available %}cursor: not-allowed;{% endif %}">
+                    <div class="pill-label">{{ period.label }}</div>
+                    <div style="font-size: 0.65rem; font-weight: 600; color: #64748B;">${{ period.max_value|floatformat:0 }}</div>
+                    <div class="pill-status">
+                        {% if period.status == 'full' %}
+                        <span class="material-icons" style="font-size: 12px;">check</span>
+                        {% elif period.status == 'partial' %}
+                        <div style="width: 6px; height: 2px; background: #3B82F6; border-radius: 1px;"></div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% elif 'Quarterly' in benefit.frequency or 'Semi-annually' in benefit.frequency %}
+            {{ benefit.periods|json_script:benefit.script_id }}
+            <div style="display: flex; gap: 1.5rem;">
+                {% for period in benefit.periods %}
+                <div class="period-pill large {% if period.status == 'full' %}full{% elif period.status == 'partial' %}partial{% endif %} {% if period.is_current %}current{% endif %} {% if not period.is_available %}unavailable{% endif %}"
+                     {% if period.is_available %}onclick="openBenefitModal('{{ benefit.user_card_id }}', '{{ benefit.benefit_id }}', '{{ benefit.benefit_name|escapejs }}', {{ benefit.amount }}, {{ benefit.used }}, '{{ benefit.frequency|escapejs }}', '{{ period.key }}', '{{ benefit.script_id }}')"{% endif %}
+                     style="flex: 1; {% if not period.is_available %}opacity: 0.3; cursor: not-allowed;{% else %}cursor: pointer;{% endif %}">
+                    <div class="pill-label">
+                        {% if period.label == 'H1' %}Jan - Jun{% elif period.label == 'H2' %}Jul - Dec{% else %}{{ period.label }}{% endif %}
+                    </div>
+                    <div style="font-size: 0.875rem; font-weight: 700; color: #1F2937;">${{ period.max_value|floatformat:0 }}</div>
+                    <div class="pill-status">
+                        {% if period.status == 'full' %}
+                        <span class="material-icons" style="font-size: 16px;">check</span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <!-- Annual Progress Bar -->
+            {{ benefit.periods|json_script:benefit.script_id }}
+            <div style="background: #F8FAFC; border-radius: 12px; padding: 1rem; border: 1px solid #E2E8F0; cursor: pointer;"
+                 onclick="openBenefitModal('{{ benefit.user_card_id }}', '{{ benefit.benefit_id }}', '{{ benefit.benefit_name|escapejs }}', {{ benefit.amount }}, {{ benefit.used }}, '{{ benefit.frequency|escapejs }}', '{{ benefit.periods.0.key }}', '{{ benefit.script_id }}')">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.875rem; font-weight: 600; color: #64748B;">
+                    <span>{{ benefit.periods.0.label }}</span>
+                    {% if benefit.used > 0 %}<span style="color: #6366F1;">${{ benefit.used|floatformat:0 }} used</span>{% endif %}
+                </div>
+                <div style="height: 8px; background: #E2E8F0; border-radius: 4px; overflow: hidden;">
+                    <div style="width: 100%; height: 100%; background: #16A34A; border-radius: 4px;"></div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
