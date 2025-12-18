@@ -1,3 +1,7 @@
+/* ==========================================================================
+   1. BASE Styles & Utils
+   ========================================================================== */
+
 /* Custom Range Slider Styles */
 input[type=range] {
     -webkit-appearance: none;
@@ -77,13 +81,489 @@ input[type=range]::-moz-range-thumb {
     background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
 }
 
-/* 
-   ---------------------------
-   NEW CARD LAYOUT STYLES 
-   ---------------------------
-*/
+/* ==========================================================================
+   2. PAGE LAYOUT
+   ========================================================================== */
 
-/* Main Card Container - Vertical Stack (Big Images) */
+.main-content-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.page-header {
+    margin-bottom: 2.5rem;
+}
+
+.header-title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.header-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #0F172A;
+    margin: 0;
+}
+
+.header-count {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #94A3B8;
+}
+
+.header-subtitle {
+    color: #64748B;
+    font-size: 1.125rem;
+    margin: 0;
+}
+
+/* Main Grid Structure */
+.main-grid-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 4rem;
+}
+
+.cards-content-column {
+    min-width: 0;
+}
+
+.cards-grid-layout {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+/* Search Bar */
+.search-bar-container {
+    margin-bottom: 2rem;
+}
+
+.search-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1.5rem;
+    top: 0 !important;
+    height: 100% !important;
+    color: #94A3B8;
+    font-size: 24px;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    line-height: 1;
+    margin: 0 !important;
+    padding: 0 !important;
+    padding-bottom: 12px !important;
+}
+
+.search-input {
+    width: 100%;
+    height: 56px;
+    padding: 0 1.25rem 0 4rem;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    font-size: 1rem;
+    outline: none;
+    font-family: 'Outfit', sans-serif;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Category Pills */
+.category-pills-container {
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.category-pill-btn {
+    padding: 0.625rem 1.25rem;
+    border-radius: 24px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.category-pill-active {
+    border: none;
+}
+
+.category-pill-inactive {
+    border: 1px solid #E2E8F0;
+    background: white;
+    color: #64748B;
+}
+
+/* ==========================================================================
+   3. SIDEBAR & FILTERS
+   ========================================================================== */
+
+.filters-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.mobile-sidebar-header {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.sidebar-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0F172A;
+    margin: 0;
+}
+
+.close-filter-btn {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: #64748B;
+}
+
+.filter-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.filter-title {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #0F172A;
+    margin: 0;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.filter-value {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #6366F1;
+}
+
+.filter-subtitle {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #64748B;
+    margin: 0 0 1.25rem 0;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+/* Range Slider */
+.range-slider-container {
+    position: relative;
+    height: 4px;
+    background: #E2E8F0;
+    border-radius: 2px;
+    margin-bottom: 1rem;
+}
+
+.range-slider-track {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #6366F1;
+    border-radius: 2px;
+}
+
+.range-input {
+    position: absolute;
+    width: calc(100% + 40px);
+    height: 100%;
+    -webkit-appearance: none;
+    pointer-events: none;
+    margin: 0;
+    top: 0;
+    left: -20px;
+    background: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+.range-labels {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 -10px;
+}
+
+.range-label-text {
+    font-size: 0.75rem;
+    color: #94A3B8;
+    font-weight: 500;
+}
+
+/* Checkbox Group */
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    min-height: 24px;
+}
+
+.checkbox-input {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #E2E8F0;
+    border-radius: 4px;
+    cursor: pointer;
+    accent-color: #6366F1;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.checkbox-text {
+    font-size: 0.9375rem;
+    color: #475569;
+    font-weight: 600;
+    line-height: 1.2;
+    padding-top: 2px;
+}
+
+.reset-filters-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #94A3B8;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.875rem;
+    padding: 0;
+}
+
+.mobile-show-results-btn {
+    display: none;
+    width: 100%;
+    background: #0F172A;
+    color: white;
+    padding: 1rem;
+    border-radius: 16px;
+    font-weight: 600;
+    margin-top: auto;
+    border: none;
+    font-family: 'Outfit', sans-serif;
+}
+
+.filter-overlay-bg {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+    backdrop-filter: blur(4px);
+}
+
+/* ==========================================================================
+   4. CONTROLS (Sort, View Toggle, Compare)
+   ========================================================================== */
+
+.desktop-controls-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 1.5rem;
+}
+
+.mobile-controls-bar {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 1rem;
+}
+
+.mobile-filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: white;
+    border: 1px solid #E2E8F0;
+    padding: 0.625rem 1rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: #0F172A;
+    font-family: 'Outfit', sans-serif;
+    white-space: nowrap;
+}
+
+/* View Toggle */
+.view-toggle-wrapper {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.view-toggle-btn {
+    padding: 0.5rem;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: #94A3B8;
+    transition: all 0.2s;
+}
+
+.view-toggle-btn.active {
+    background: #F1F5F9;
+    color: #0F172A;
+}
+
+/* Sort Dropdown */
+.sort-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.sort-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #94A3B8;
+    letter-spacing: 0.05em;
+}
+
+.sort-select-container {
+    position: relative;
+}
+
+.sort-select {
+    appearance: none;
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    height: 48px !important;
+    padding: 0 2.5rem 0 1rem;
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1F2937;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    line-height: 48px;
+    box-sizing: border-box !important;
+    display: block !important;
+    margin-top: 0 !important;
+    position: relative !important;
+    top: 6px !important;
+}
+
+.sort-chevron {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94A3B8;
+    font-size: 20px;
+    pointer-events: none;
+}
+
+.header-sort-row {
+    flex-wrap: wrap;
+}
+
+/* Compare Bar */
+.compare-bar-container {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(150%);
+    background: #0F172A;
+    padding: 1rem 1.5rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    z-index: 100;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 320px;
+}
+
+.compare-preview-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.compare-circles {
+    display: flex;
+    margin-left: 10px;
+}
+
+.compare-text {
+    color: white;
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9375rem;
+}
+
+.compare-action-btn {
+    background: #3B82F6;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background 0.2s;
+}
+
+.compare-action-btn:hover {
+    background: #2563EB;
+}
+
+/* ==========================================================================
+   5. CARD COMPONENT (Grid View / Default)
+   ========================================================================== */
+
+/* Main Card Container */
 .explore-card {
     background: white;
     border-radius: 20px;
@@ -92,7 +572,6 @@ input[type=range]::-moz-range-thumb {
     transition: all 0.2s ease;
     display: flex;
     flex-direction: column;
-    /* Vertical layout */
     overflow: hidden;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
     min-height: auto;
@@ -119,7 +598,6 @@ input[type=range]::-moz-range-thumb {
     align-items: center;
     justify-content: center;
     padding: 1.5rem;
-    /* Spacious padding */
     position: relative;
     border-right: none;
     border-bottom: 1px solid #F1F5F9;
@@ -129,17 +607,14 @@ input[type=range]::-moz-range-thumb {
     width: 100%;
     height: auto;
     aspect-ratio: 1.586;
-    /* Enforce standard credit card ratio */
     object-fit: contain;
     filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
-    /* Removed max-height constraint to allow filling width */
 }
 
 /* Gradient Card Fallback inside visual container */
 .card-visual-container .gradient-card {
     width: 100%;
     aspect-ratio: 1.586;
-    /* Match image ratio */
     height: auto;
     border-radius: 12px;
     padding: 1rem;
@@ -148,6 +623,59 @@ input[type=range]::-moz-range-thumb {
     flex-direction: column;
     justify-content: space-between;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Gradient Card Internal Text */
+.card-issuer-text {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+.card-chip-small {
+    width: 40px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    margin-bottom: 0.75rem;
+    backdrop-filter: blur(4px);
+}
+
+.card-number-text {
+    font-family: monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
+    opacity: 0.9;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.card-name-text {
+    font-size: 0.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.8;
+}
+
+.card-logo-placeholder {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    display: flex;
+}
+
+.logo-circle {
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+}
+
+.logo-circle.overlap {
+    margin-left: -8px;
 }
 
 /* Right/Bottom Content Section */
@@ -280,1011 +808,7 @@ input[type=range]::-moz-range-thumb {
     color: #64748B;
 }
 
-/* Gradient Card Internal Text */
-.card-issuer-text {
-    font-size: 0.65rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    opacity: 0.9;
-}
-
-.card-chip-small {
-    width: 40px;
-    height: 30px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 5px;
-    margin-bottom: 0.75rem;
-    backdrop-filter: blur(4px);
-}
-
-.card-number-text {
-    font-family: monospace;
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-    margin-bottom: 0.25rem;
-    opacity: 0.9;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.card-name-text {
-    font-size: 0.5rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    opacity: 0.8;
-}
-
-.card-logo-placeholder {
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-    display: flex;
-}
-
-.logo-circle {
-    width: 20px;
-    height: 20px;
-    background: rgba(255, 255, 255, 0.4);
-    border-radius: 50%;
-}
-
-.logo-circle.overlap {
-    margin-left: -8px;
-}
-
-/* === List View Styles === */
-
-/* Container becomes the "Card" in list view */
-#cards-scroll-container.list-view-active {
-    background: white;
-    border: 1px solid #E2E8F0;
-    border-radius: 20px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    overflow-x: auto;
-    padding-bottom: 0;
-    margin-bottom: 2rem;
-    width: 100%;
-}
-
-
-/* Grid Layout overrides for Header inside Container */
-#cards-scroll-container.list-view-active #list-header {
-    display: grid !important;
-    grid-template-columns: 80px 2fr 100px 2.5fr 80px;
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid #F1F5F9;
-    align-items: center;
-    gap: 1rem;
-    min-width: 900px;
-}
-
-.list-view-header {
-    color: #94A3B8;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-}
-
-/* Header Column Alignments */
-.col-card {
-    padding-left: 0;
-}
-
-.col-fee {
-    text-align: right;
-}
-
-.col-rewards {
-    padding-left: 0;
-}
-
-.col-action {
-    text-align: center;
-}
-
-/* List Grid Layout */
-.view-grid.list-view {
-    display: block !important;
-    /* Stack rows */
-    gap: 0 !important;
-    padding: 0;
-}
-
-/* List Item (Card Row) */
-/* List Item (Card Row) */
-.view-grid.list-view .explore-card {
-    display: grid;
-    grid-template-columns: 80px 2fr 100px 2.5fr 80px;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid #F1F5F9;
-    background: transparent;
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
-    border-top: none;
-    box-shadow: none;
-    margin-bottom: 0;
-    min-width: 900px;
-    transition: background 0.2s;
-}
-
-.view-grid.list-view .explore-card:last-child {
-    border-bottom: none;
-}
-
-.view-grid.list-view .explore-card:hover {
-    background: #F8FAFC;
-    transform: none;
-}
-
-/* List Visual (Icon) Logic */
-.view-grid.list-view .card-visual-container {
-    width: auto;
-    flex: auto;
-    min-width: 0;
-    border: none;
-    background: transparent;
-    padding: 0;
-    justify-content: flex-start;
-    gap: 1rem;
-    display: flex;
-    align-items: center;
-}
-
-/* Ensure Logo / Gradient is small and circular */
-.view-grid.list-view .card-visual-container img,
-.view-grid.list-view .card-visual-container .gradient-card {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    /* Circle */
-    aspect-ratio: 1;
-    object-fit: cover;
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
-    /* Subtle border for white cards */
-    flex-shrink: 0;
-}
-
-/* Hide extra gradient card elements in list view */
-.view-grid.list-view .gradient-card>div {
-    display: none;
-}
-
-/* List Card Info Text */
-.view-grid.list-view .list-card-info {
-    display: block !important;
-}
-
-.list-card-name {
-    font-size: 0.9375rem;
-    font-weight: 700;
-    color: #0F172A;
-    margin: 0;
-    line-height: 1.25;
-}
-
-.list-card-issuer {
-    font-size: 0.75rem;
-    color: #64748B;
-    font-weight: 500;
-}
-
-/* Default state: Hide list-only elements in Grid layout */
-.list-checkbox-col,
-.list-card-info,
-.list-fee-col,
-.list-rewards-col,
-.list-action-col {
-    display: none;
-}
-
-/* Hide Grid Only Elements */
-.view-grid.list-view .card-content,
-.view-grid.list-view .compare-select-btn {
-    display: none !important;
-}
-
-/* List Columns Display */
-.view-grid.list-view .list-checkbox-col,
-.view-grid.list-view .list-fee-col,
-.view-grid.list-view .list-rewards-col,
-.view-grid.list-view .list-action-col {
-    display: flex !important;
-    align-items: center;
-}
-
-/* Column Widths (Must match Header) */
-.list-checkbox-col {
-    width: auto;
-    justify-content: flex-start;
-    padding-left: 0.5rem;
-    /* Center checkbox under 'COMPARE' start */
-}
-
-.list-fee-col {
-    width: auto;
-    justify-content: flex-end;
-}
-
-.list-rewards-col {
-    flex: auto;
-    padding-left: 0;
-    /* Reset padding, handled by grid gap */
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: flex-start;
-}
-
-.list-action-col {
-    width: auto;
-    justify-content: center;
-}
-
-/* Match Column is GONE */
-.view-grid.list-view .list-match-col {
-    display: none !important;
-}
-
-/* Checkbox Style */
-.list-checkbox {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #E2E8F0;
-    border-radius: 6px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-}
-
-.list-checkbox.checked {
-    background: #3B82F6;
-    border-color: #3B82F6;
-}
-
-.list-checkbox.checked span {
-    color: white !important;
-}
-
-/* Reward Pills */
-.reward-pill {
-    background: #F8FAFC;
-    border: 1px solid #E2E8F0;
-    padding: 0.25rem 0.625rem;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    gap: 0.375rem;
-}
-
-.reward-rate {
-    font-weight: 700;
-    color: #0F172A;
-    font-size: 0.75rem;
-}
-
-.reward-cat {
-    color: #64748B;
-    font-size: 0.75rem;
-    font-weight: 500;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-    .main-grid {
-        grid-template-columns: 1fr !important;
-        gap: 2rem !important;
-    }
-
-    .desktop-sort {
-        display: none !important;
-    }
-
-    .mobile-controls {
-        display: flex !important;
-    }
-
-    .filters-sidebar {
-        position: fixed;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        max-width: 320px;
-        height: 100vh;
-        background: white;
-        z-index: 50;
-        padding: 2rem;
-        transition: left 0.3s ease;
-        overflow-y: auto;
-        box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .filters-sidebar.active {
-        left: 0;
-    }
-
-    .mobile-filter-header {
-        display: flex !important;
-    }
-
-    .mobile-apply-btn {
-        display: block !important;
-    }
-
-    /* === LIST VIEW MOBILE: FORCE TABLE LAYOUT WITH SCROLL === */
-    /* To make the whole table scroll, we need a wrapper. */
-    /* But we can't easily add a wrapper safely via CSS only without changing HTML structure significantly. */
-    /* Alternative: allow each card to be a flex row that overflows? No, headers won't align. */
-
-    /* Valid strategy: On mobile list view, we just ensure the elements inside are wide enough. */
-    /* The user wants it "exactly" like desktop list. */
-
-    /* Let's try to minimal overrides: just DON'T override the list view styles. */
-    /* The existing desktop list view styles set min-widths. */
-    /* If we just remove the "Force Grid on Mobile" block, the desktop styles apply. */
-    /* We just need to ensure the container allows expanding. */
-
-    /* WE DO NOT APPLY THE "Force Grid" styles here for list view. */
-    /* Instead, we ensure the grid container or parent handles scroll. */
-    /* Since we can't touch parent HTML easily, let's check if we can make #cards-grid overlap. */
-
-    /* Actually, the best way for a "matched" design on mobile is to let the page scroll horizontally 
-       OR make the grid container overflow-x: auto. */
-
-    /* === LIST VIEW MOBILE: FORCE TABLE LAYOUT WITH SCROLL === */
-
-    /* Apply scroll to the wrapper */
-    #cards-scroll-container.list-view-active {
-        display: block;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        padding-bottom: 1rem;
-        width: 100%;
-        margin-right: -2rem;
-        /* Optional: compensate for padding if needed, but risky */
-    }
-
-    /* Ensure items inside are wide enough to trigger scroll */
-    #cards-scroll-container.list-view-active #list-header,
-    #cards-scroll-container.list-view-active .explore-card {
-        min-width: 900px !important;
-        /* Force desktop table width */
-        width: 100%;
-        /* Ensure they take at least full width if container is wider */
-    }
-
-    /* List View specific overrides for mobile */
-    .view-grid.list-view {
-        display: block !important;
-        grid-template-columns: none !important;
-        gap: 1rem !important;
-    }
-
-    .view-grid.list-view .explore-card {
-        margin-bottom: 1rem;
-        display: flex;
-        flex-direction: row;
-        /* Force row layout even on mobile */
-    }
-
-    /* Ensure list header is visible on mobile list view */
-    #cards-scroll-container.list-view-active #list-header {
-        display: flex !important;
-    }
-
-    /* So plan: Just enable the desktop styles and force min-width. */
-
-    /* Resetting the previous "Force Grid" styles by NOT including them. */
-
-    /* However, we still need the GRID view (default) to look good on mobile (stacked). */
-    /* So we ONLY apply the stacked styles when NOT .list-view */
-
-    .view-grid:not(.list-view) {
-        grid-template-columns: 1fr !important;
-    }
-
-    .view-grid:not(.list-view) .explore-card {
-        flex-direction: column;
-        padding: 0 0 0 0 !important;
-        height: auto;
-        min-height: auto;
-        align-items: stretch;
-        border-radius: 20px;
-        border: 1px solid #F1F5F9;
-        overflow: hidden;
-    }
-
-    .view-grid:not(.list-view) .card-visual-container {
-        width: 100%;
-        min-width: auto;
-        flex: none;
-        border-bottom: 1px solid #F1F5F9;
-        background: white;
-        padding: 2rem;
-        justify-content: center;
-        gap: 0;
-    }
-
-    .view-grid:not(.list-view) .card-visual-container img {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 1.586;
-        box-shadow: none;
-        filter: none;
-    }
-
-    /* Re-show gradient card internals */
-    .view-grid:not(.list-view) .gradient-card>div {
-        display: block;
-    }
-
-    .view-grid:not(.list-view) .gradient-card {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 1.586;
-        padding: 1rem;
-    }
-
-    .view-grid:not(.list-view) .compare-select-btn {
-        display: flex;
-    }
-
-    .view-grid:not(.list-view) .list-card-info,
-    .view-grid:not(.list-view) .list-checkbox-col,
-    .view-grid:not(.list-view) .list-fee-col,
-    .view-grid:not(.list-view) .list-rewards-col,
-    .view-grid:not(.list-view) .list-match-col,
-    .view-grid:not(.list-view) .list-action-col {
-        display: none !important;
-    }
-
-    .view-grid:not(.list-view) .card-content {
-        display: flex;
-        /* Show normal content again on mobile */
-        padding: 1.5rem;
-    }
-
-    #cards-grid {
-        grid-template-columns: 1fr !important;
-    }
-
-    /* Reset explore-card styling for normal grid view on mobile */
-    .explore-card {
-        flex-direction: column;
-        min-height: auto;
-        /* background: white;  Already handled */
-    }
-
-    .card-visual-container {
-        width: 100%;
-        min-width: auto;
-        max-width: none;
-        border-right: none;
-        border-bottom: 1px solid #F1F5F9;
-        padding: 2rem;
-    }
-
-    .card-visual-container img {
-        max-height: 180px;
-    }
-
-    /* Hide List Header on Mobile */
-    /* #list-header {
-        display: none !important;
-    } */
-}
-
-@media (max-width: 768px) {
-
-    /* Same logic */
-    .view-grid:not(.list-view) {
-        grid-template-columns: 1fr !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .filters-sidebar {
-        max-width: 100%;
-        border-radius: 0;
-    }
-
-    /* Ensure padding is consistent for GRID view */
-    .view-grid:not(.list-view) .explore-card {
-        padding: 0 !important;
-    }
-
-    .view-grid:not(.list-view) .card-content {
-        padding: 1.5rem !important;
-    }
-}
-
-/* REFACTORED INLINE STYLES */
-
-.main-content-wrapper {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 2rem;
-}
-
-.page-header {
-    margin-bottom: 2.5rem;
-}
-
-.header-title-row {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    margin-bottom: 0.75rem;
-}
-
-.header-title {
-    font-size: 2.25rem;
-    font-weight: 800;
-    color: #0F172A;
-    margin: 0;
-}
-
-.header-count {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #94A3B8;
-}
-
-.header-subtitle {
-    color: #64748B;
-    font-size: 1.125rem;
-    margin: 0;
-}
-
-.search-bar-container {
-    margin-bottom: 2rem;
-}
-
-.search-wrapper {
-    position: relative;
-    width: 100%;
-    display: flex;
-    align-items: center;
-}
-
-.search-icon {
-    position: absolute;
-    left: 1.5rem;
-    top: 0 !important;
-    height: 100% !important;
-    color: #94A3B8;
-    font-size: 24px;
-    pointer-events: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    line-height: 1;
-    margin: 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    padding-bottom: 12px !important;
-    /* Increased to 12px "even more" */
-}
-
-.search-input {
-    width: 100%;
-    height: 56px;
-    /* Explicit height for center consistency */
-    padding: 0 1.25rem 0 4rem;
-    /* Use padding for left/right, height handles top/bottom */
-    border: 1px solid #E2E8F0;
-    border-radius: 16px;
-    font-size: 1rem;
-    outline: none;
-    font-family: 'Outfit', sans-serif;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-.category-pills-container {
-    margin-bottom: 2rem;
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-}
-
-.category-pill-btn {
-    padding: 0.625rem 1.25rem;
-    border-radius: 24px;
-    font-size: 0.875rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-
-.category-pill-active {
-    border: none;
-}
-
-.category-pill-inactive {
-    border: 1px solid #E2E8F0;
-    background: white;
-    color: #64748B;
-}
-
-.mobile-controls-bar {
-    display: none;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    gap: 1rem;
-}
-
-.mobile-filter-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: white;
-    border: 1px solid #E2E8F0;
-    padding: 0.625rem 1rem;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 0.9375rem;
-    color: #0F172A;
-    font-family: 'Outfit', sans-serif;
-    white-space: nowrap;
-}
-
-@media (max-width: 768px) {
-    .category-pills-container {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        padding-bottom: 0.5rem;
-        margin: 0 -1.25rem 2rem -1.25rem;
-        /* Negative margin to touch edges */
-        padding-left: 1.25rem;
-        padding-right: 1.25rem;
-        -webkit-overflow-scrolling: touch;
-        gap: 0.5rem;
-    }
-
-    /* Hide scrollbar for clean look */
-    .category-pills-container::-webkit-scrollbar {
-        display: none;
-    }
-
-    .category-pill-btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.8125rem;
-    }
-
-    /* Optimize Mobile controls layout */
-    .mobile-controls-bar {
-        margin-bottom: 1.5rem;
-        padding: 0 0.25rem;
-        /* Slight inset */
-        height: 48px;
-        /* Fixed height for alignment */
-    }
-
-    .mobile-filter-btn {
-        height: 48px;
-        box-sizing: border-box;
-    }
-
-    /* Wrap flex items to ensure proper alignment contexts */
-    .mobile-sort-container {
-        display: flex;
-        align-items: center;
-        height: 48px;
-    }
-
-    /* Force specific heights on children to match */
-    .mobile-sort-container .sort-select {
-        height: 48px;
-        box-sizing: border-box;
-        display: block;
-        /* Select elements shouldn't be flex */
-        padding: 0 2rem 0 0.75rem;
-        /* Clean horizontal padding, no vertical */
-        font-size: 0.875rem;
-        width: 100%;
-        line-height: 48px;
-        /* Vertically center text */
-        margin: 0;
-        background-position: right 0.75rem center !important;
-        /* Ensure arrow is centered */
-    }
-
-    /* Fix toggle button alignment on mobile */
-    .mobile-sort-container .view-toggle-wrapper {
-        height: 48px;
-        box-sizing: border-box;
-        display: flex;
-        align-items: center;
-    }
-
-    /* Hide 'Sort By' label on mobile */
-    .mobile-sort-container .sort-label {
-        display: none;
-    }
-
-    /* consolidated above */
-}
-
-.main-grid-layout {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 4rem;
-}
-
-.filters-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-}
-
-.mobile-sidebar-header {
-    display: none;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-}
-
-.sidebar-title {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: #0F172A;
-    margin: 0;
-}
-
-.close-filter-btn {
-    background: none;
-    border: none;
-    padding: 0.5rem;
-    cursor: pointer;
-    color: #64748B;
-}
-
-.filter-section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.75rem;
-}
-
-.filter-title {
-    font-size: 0.75rem;
-    font-weight: 800;
-    color: #0F172A;
-    margin: 0;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-}
-
-.filter-value {
-    font-size: 0.875rem;
-    font-weight: 700;
-    color: #6366F1;
-}
-
-.range-slider-container {
-    position: relative;
-    height: 4px;
-    background: #E2E8F0;
-    border-radius: 2px;
-    margin-bottom: 1rem;
-}
-
-.range-slider-track {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #6366F1;
-    border-radius: 2px;
-}
-
-.range-input {
-    position: absolute;
-    width: calc(100% + 40px);
-    height: 100%;
-    -webkit-appearance: none;
-    pointer-events: none;
-    margin: 0;
-    top: 0;
-    left: -20px;
-    background: transparent;
-    border: none;
-    outline: none;
-    box-shadow: none;
-}
-
-.range-labels {
-    display: flex;
-    justify-content: space-between;
-    margin: 0 -10px;
-}
-
-.range-label-text {
-    font-size: 0.75rem;
-    color: #94A3B8;
-    font-weight: 500;
-}
-
-.filter-subtitle {
-    font-size: 0.75rem;
-    font-weight: 800;
-    color: #64748B;
-    margin: 0 0 1.25rem 0;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-}
-
-.checkbox-group {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    cursor: pointer;
-    min-height: 24px;
-}
-
-.checkbox-input {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #E2E8F0;
-    border-radius: 4px;
-    cursor: pointer;
-    accent-color: #6366F1;
-    margin: 0;
-    flex-shrink: 0;
-}
-
-.checkbox-text {
-    font-size: 0.9375rem;
-    color: #475569;
-    font-weight: 600;
-    line-height: 1.2;
-    padding-top: 2px;
-}
-
-.reset-filters-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: #94A3B8;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 0.875rem;
-    padding: 0;
-}
-
-.mobile-show-results-btn {
-    display: none;
-    width: 100%;
-    background: #0F172A;
-    color: white;
-    padding: 1rem;
-    border-radius: 16px;
-    font-weight: 600;
-    margin-top: auto;
-    border: none;
-    font-family: 'Outfit', sans-serif;
-}
-
-.cards-content-column {
-    min-width: 0;
-}
-
-.desktop-controls-bar {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-bottom: 2rem;
-    gap: 1.5rem;
-}
-
-.view-toggle-wrapper {
-    background: white;
-    border: 1px solid #E2E8F0;
-    border-radius: 12px;
-    padding: 4px;
-    display: flex;
-    align-items: center;
-}
-
-.view-toggle-btn {
-    padding: 0.5rem;
-    border: none;
-    background: transparent;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    color: #94A3B8;
-    transition: all 0.2s;
-}
-
-.view-toggle-btn.active {
-    background: #F1F5F9;
-    color: #0F172A;
-}
-
-@media (max-width: 1024px) {
-    .view-toggle-wrapper {
-        display: none !important;
-    }
-}
-
-.sort-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.sort-label {
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #94A3B8;
-    letter-spacing: 0.05em;
-}
-
-.sort-select-container {
-    position: relative;
-}
-
-.sort-select {
-    appearance: none;
-    background: white;
-    border: 1px solid #E2E8F0;
-    border-radius: 8px;
-    height: 48px !important;
-    /* Increased to 48px to match toggle buttons */
-    padding: 0 2.5rem 0 1rem;
-    display: flex;
-    align-items: center;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #1F2937;
-    cursor: pointer;
-    font-family: 'Outfit', sans-serif;
-    line-height: 48px;
-    /* Fallback for text alignment */
-    box-sizing: border-box !important;
-    display: block !important;
-    /* Ensure it is not flex */
-    margin-top: 0 !important;
-    position: relative !important;
-    top: 6px !important;
-    /* Force visual move down using relative positioning */
-}
-
-.sort-chevron {
-    position: absolute;
-    right: 0.75rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #94A3B8;
-    font-size: 20px;
-    pointer-events: none;
-}
-
-.cards-grid-layout {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-}
-
+/* Empty State */
 .empty-state-container {
     grid-column: 1 / -1;
     text-align: center;
@@ -1340,73 +864,261 @@ input[type=range]::-moz-range-thumb {
     margin-left: 0.5rem;
 }
 
-/* Compare Bar */
-.compare-bar-container {
-    position: fixed;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%) translateY(150%);
-    background: #0F172A;
-    padding: 1rem 1.5rem;
+/* ==========================================================================
+   6. LIST VIEW MODE
+   ========================================================================== */
+
+/* Container becomes the "Card" in list view */
+#cards-scroll-container.list-view-active {
+    background: white;
+    border: 1px solid #E2E8F0;
     border-radius: 20px;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    z-index: 100;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    min-width: 320px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    overflow-x: auto;
+    padding-bottom: 0;
+    margin-bottom: 2rem;
+    width: 100%;
 }
 
-.compare-preview-wrapper {
-    display: flex;
+/* Grid Layout overrides for Header inside Container */
+#cards-scroll-container.list-view-active #list-header {
+    display: grid !important;
+    grid-template-columns: 80px 2fr 100px 2.5fr 80px;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #F1F5F9;
     align-items: center;
     gap: 1rem;
+    min-width: 900px;
 }
 
-.compare-circles {
-    display: flex;
-    margin-left: 10px;
+.list-view-header {
+    color: #94A3B8;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
 }
 
-.compare-text {
-    color: white;
-    font-weight: 600;
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.9375rem;
+/* Header Column Alignments */
+.col-card {
+    padding-left: 0;
 }
 
-.compare-action-btn {
-    background: #3B82F6;
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 12px;
-    font-weight: 600;
-    font-family: 'Outfit', sans-serif;
-    cursor: pointer;
-    display: flex;
+.col-fee {
+    text-align: right;
+}
+
+.col-rewards {
+    padding-left: 0;
+}
+
+.col-action {
+    text-align: center;
+}
+
+/* List Grid Layout */
+.view-grid.list-view {
+    display: block !important;
+    gap: 0 !important;
+    padding: 0;
+}
+
+/* List Item (Card Row) */
+.view-grid.list-view .explore-card {
+    display: grid;
+    grid-template-columns: 80px 2fr 100px 2.5fr 80px;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #F1F5F9;
+    background: transparent;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    box-shadow: none;
+    margin-bottom: 0;
+    min-width: 900px;
     transition: background 0.2s;
 }
 
-.compare-action-btn:hover {
-    background: #2563EB;
+.view-grid.list-view .explore-card:last-child {
+    border-bottom: none;
 }
 
-.filter-overlay-bg {
+.view-grid.list-view .explore-card:hover {
+    background: #F8FAFC;
+    transform: none;
+}
+
+/* List Visual (Icon) Logic */
+.view-grid.list-view .card-visual-container {
+    width: auto;
+    flex: auto;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    padding: 0;
+    justify-content: flex-start;
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+/* Fix "Injogged Randomly" alignment issue - Enforce Left Alignment */
+.view-grid.list-view .card-visual-container {
+    justify-content: flex-start !important;
+    padding-left: 0 !important;
+    width: 100% !important;
+}
+
+/* Ensure Logo / Gradient is small and circular/rectangular */
+.view-grid.list-view .card-visual-container img,
+.view-grid.list-view .card-visual-container .gradient-card {
+    width: 64px !important;
+    height: auto !important;
+    aspect-ratio: 1.586 !important;
+    border-radius: 4px !important;
+    object-fit: cover !important;
+    box-shadow: none !important;
+    border: 1px solid #E2E8F0 !important;
+    padding: 0 !important;
+    flex-shrink: 0;
+}
+
+/* Hide extra gradient card elements in list view */
+.view-grid.list-view .gradient-card>div {
     display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 40;
-    backdrop-filter: blur(4px);
 }
 
+/* List Card Info Text */
+.view-grid.list-view .list-card-info {
+    display: block !important;
+}
+
+.list-card-name {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #0F172A;
+    margin: 0;
+    line-height: 1.25;
+}
+
+.list-card-issuer {
+    font-size: 0.75rem;
+    color: #64748B;
+    font-weight: 500;
+}
+
+/* Default state: Hide list-only elements in Grid layout */
+.list-checkbox-col,
+.list-card-info,
+.list-fee-col,
+.list-rewards-col,
+.list-action-col {
+    display: none;
+}
+
+/* Hide Grid Only Elements */
+.view-grid.list-view .card-content,
+.view-grid.list-view .compare-select-btn {
+    display: none !important;
+}
+
+/* List Columns Display */
+.view-grid.list-view .list-checkbox-col,
+.view-grid.list-view .list-fee-col,
+.view-grid.list-view .list-rewards-col,
+.view-grid.list-view .list-action-col {
+    display: flex !important;
+    align-items: center;
+}
+
+.list-checkbox-col {
+    width: auto;
+    justify-content: flex-start;
+    padding-left: 0.5rem;
+}
+
+.list-fee-col {
+    width: auto;
+    justify-content: flex-end;
+}
+
+.list-rewards-col {
+    flex: auto;
+    padding-left: 0;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: flex-start;
+}
+
+/* Action Col with Full Height Fill */
+.view-grid.list-view .list-action-col {
+    width: auto;
+    justify-content: center;
+    align-self: stretch !important;
+    margin: -1rem -1.5rem -1rem 0;
+    width: calc(100% + 1.5rem) !important;
+    height: auto !important;
+    min-height: 100% !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: stretch !important;
+    justify-content: stretch !important;
+}
+
+/* Match Column is GONE */
+.view-grid.list-view .list-match-col {
+    display: none !important;
+}
+
+/* Checkbox Style */
+.list-checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #E2E8F0;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.list-checkbox.checked {
+    background: #3B82F6;
+    border-color: #3B82F6;
+}
+
+.list-checkbox.checked span {
+    color: white !important;
+}
+
+/* Reward Pills */
+.reward-pill {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    padding: 0.25rem 0.625rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.reward-rate {
+    font-weight: 700;
+    color: #0F172A;
+    font-size: 0.75rem;
+}
+
+.reward-cat {
+    color: #64748B;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+/* List View Trigger Button */
 .list-view-trigger-btn {
     background: transparent;
     border: none;
@@ -1422,41 +1134,9 @@ input[type=range]::-moz-range-thumb {
     font-family: 'Outfit', sans-serif;
 }
 
-.header-sort-row {
-    flex-wrap: wrap;
-}
-
-/* Fix Mobile Sort Alignment (Reset Desktop Offset) */
-@media (max-width: 1024px) {
-    .sort-select {
-        top: 0 !important;
-        margin-top: 0 !important;
-    }
-}
-
-/* Fix for List View Action Button Filling Height (Properly applied at end of file) */
-.view-grid.list-view .list-action-col {
-    /* Escape the parent padding (1rem top/bottom, 1.5rem right) */
-    align-self: stretch !important;
-    /* Ensure the column stretches to fill grid row height */
-    margin: -1rem -1.5rem -1rem 0;
-    /* Negative margins to cover parent padding */
-    width: calc(100% + 1.5rem) !important;
-    height: auto !important;
-    min-height: 100% !important;
-    /* Ensure it stays tall */
-    /* Let it stretch */
-    padding: 0 !important;
-    display: flex !important;
-    align-items: stretch !important;
-    justify-content: stretch !important;
-}
-
-/* Wrapper for the button to ensure it fills */
 .view-grid.list-view .list-view-trigger-btn {
     width: 100%;
     height: auto;
-    /* Fill flex parent */
     border-radius: 0;
     margin: 0;
     border: none;
@@ -1464,39 +1144,262 @@ input[type=range]::-moz-range-thumb {
     border-left: 1px solid #F1F5F9;
     transition: background 0.2s;
     justify-content: center;
-    /* Center content */
 }
 
 .view-grid.list-view .list-view-trigger-btn:hover {
     background: #F8FAFC !important;
 }
 
-/* === LIST VIEW IMAGE FIXES (RECTANGLE) === */
-.view-grid.list-view .card-visual-container img,
-.view-grid.list-view .card-visual-container .gradient-card {
-    width: 64px !important;
-    /* Slightly distinct width */
-    height: auto !important;
-    aspect-ratio: 1.586 !important;
-    /* Standard card ratio */
-    border-radius: 4px !important;
-    /* Rectangle */
-    object-fit: cover !important;
-    /* Fix "padding" issues by filling the frame */
-    /* Ensure background is white for transparency */
-    box-shadow: none !important;
-    border: 1px solid #E2E8F0 !important;
-    /* Slightly darker border for contrast */
-    padding: 0 !important;
-    /* Force no padding */
+/* ==========================================================================
+   7. RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+    .main-grid {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+    }
+
+    .desktop-sort {
+        display: none !important;
+    }
+
+    .mobile-controls {
+        display: flex !important;
+    }
+
+    .filters-sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        max-width: 320px;
+        height: 100vh;
+        background: white;
+        z-index: 50;
+        padding: 2rem;
+        transition: left 0.3s ease;
+        overflow-y: auto;
+        box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .filters-sidebar.active {
+        left: 0;
+    }
+
+    .mobile-filter-header {
+        display: flex !important;
+    }
+
+    .mobile-apply-btn {
+        display: block !important;
+    }
+
+    /* LIST VIEW MOBILE SCROLL */
+    #cards-scroll-container.list-view-active {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 1rem;
+        width: 100%;
+        margin-right: -2rem;
+    }
+
+    #cards-scroll-container.list-view-active #list-header,
+    #cards-scroll-container.list-view-active .explore-card {
+        min-width: 900px !important;
+        width: 100%;
+    }
+
+    .view-grid.list-view {
+        display: block !important;
+        grid-template-columns: none !important;
+        gap: 1rem !important;
+    }
+
+    .view-grid.list-view .explore-card {
+        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: row;
+    }
+
+    #cards-scroll-container.list-view-active #list-header {
+        display: flex !important;
+    }
+
+    /* GRID VIEW MOBILE STACK */
+    .view-grid:not(.list-view) {
+        grid-template-columns: 1fr !important;
+    }
+
+    .view-grid:not(.list-view) .explore-card {
+        flex-direction: column;
+        padding: 0 0 0 0 !important;
+        height: auto;
+        min-height: auto;
+        align-items: stretch;
+        border-radius: 20px;
+        border: 1px solid #F1F5F9;
+        overflow: hidden;
+    }
+
+    .view-grid:not(.list-view) .card-visual-container {
+        width: 100%;
+        min-width: auto;
+        flex: none;
+        border-bottom: 1px solid #F1F5F9;
+        background: white;
+        padding: 2rem;
+        justify-content: center;
+        gap: 0;
+    }
+
+    .view-grid:not(.list-view) .card-visual-container img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1.586;
+        box-shadow: none;
+        filter: none;
+    }
+
+    .view-grid:not(.list-view) .gradient-card>div {
+        display: block;
+    }
+
+    .view-grid:not(.list-view) .gradient-card {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1.586;
+        padding: 1rem;
+    }
+
+    .view-grid:not(.list-view) .compare-select-btn {
+        display: flex;
+    }
+
+    .view-grid:not(.list-view) .list-card-info,
+    .view-grid:not(.list-view) .list-checkbox-col,
+    .view-grid:not(.list-view) .list-fee-col,
+    .view-grid:not(.list-view) .list-rewards-col,
+    .view-grid:not(.list-view) .list-match-col,
+    .view-grid:not(.list-view) .list-action-col {
+        display: none !important;
+    }
+
+    .view-grid:not(.list-view) .card-content {
+        display: flex;
+        padding: 1.5rem;
+    }
+
+    #cards-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .explore-card {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .card-visual-container {
+        width: 100%;
+        min-width: auto;
+        max-width: none;
+        border-right: none;
+        border-bottom: 1px solid #F1F5F9;
+        padding: 2rem;
+    }
+
+    .card-visual-container img {
+        max-height: 180px;
+    }
+
+    .view-grid:not(.list-view) .card-content {
+        padding: 1.5rem !important;
+    }
+
+    .view-toggle-wrapper {
+        display: none !important;
+    }
+
+    .sort-select {
+        top: 0 !important;
+        margin-top: 0 !important;
+    }
 }
 
-/* Fix "Injogged Randomly" alignment issue - Enforce Left Alignment */
-.view-grid.list-view .card-visual-container {
-    justify-content: flex-start !important;
-    /* Force left alignment */
-    padding-left: 0 !important;
-    /* Remove padding if needed */
-    width: 100% !important;
-    /* Ensure it fills the cell */
+@media (max-width: 768px) {
+    .view-grid:not(.list-view) {
+        grid-template-columns: 1fr !important;
+    }
+
+    .category-pills-container {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+        margin: 0 -1.25rem 2rem -1.25rem;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+        -webkit-overflow-scrolling: touch;
+        gap: 0.5rem;
+    }
+
+    .category-pills-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    .category-pill-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8125rem;
+    }
+
+    .mobile-controls-bar {
+        margin-bottom: 1.5rem;
+        padding: 0 0.25rem;
+        height: 48px;
+    }
+
+    .mobile-filter-btn {
+        height: 48px;
+        box-sizing: border-box;
+    }
+
+    .mobile-sort-container {
+        display: flex;
+        align-items: center;
+        height: 48px;
+    }
+
+    .mobile-sort-container .sort-select {
+        height: 48px;
+        box-sizing: border-box;
+        display: block;
+        padding: 0 2rem 0 0.75rem;
+        font-size: 0.875rem;
+        width: 100%;
+        line-height: 48px;
+        margin: 0;
+        background-position: right 0.75rem center !important;
+    }
+
+    .mobile-sort-container .view-toggle-wrapper {
+        height: 48px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+    }
+
+    .mobile-sort-container .sort-label {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .filters-sidebar {
+        max-width: 100%;
+        border-radius: 0;
+    }
+
+    .view-grid:not(.list-view) .explore-card {
+        padding: 0 !important;
+    }
 }
