@@ -39,20 +39,21 @@ function calculateMetrics() {
         // 1. Annual Fee
         totalFees += (card.annual_fee || 0);
 
-        // 2. Credit Value: sum of numeric_values only if benefit_type is credit or bonus
+        // 2. Credit Value & Points Value
         if (card.benefits && Array.isArray(card.benefits)) {
             card.benefits.forEach(benefit => {
-                const bType = (benefit.benefit_type || '').toLowerCase();
                 const numericVal = parseFloat(benefit.numeric_value) || 0;
+                const numericType = (benefit.numeric_type || '').toLowerCase();
 
-                if (bType === 'credit' || bType === 'bonus') {
+                if (numericType === 'cash') {
                     creditValue += numericVal;
+                } else if (numericType === 'points' || numericType === 'miles') {
+                    pointsValue += numericVal;
                 }
             });
         }
 
-        // 3. Points Value: Set to 0 for now as requested
-        pointsValue += 0;
+        // 3. Points Value: Calculated above
     });
 
     // Net Value excludes Points Value
@@ -79,7 +80,11 @@ function animateValue(id, end) {
         const formatted = Math.abs(current).toLocaleString();
         const sign = current < 0 ? '-' : (current > 0 ? '+' : '');
 
-        obj.textContent = `${sign}$${formatted}`;
+        if (id === 'metric-points-value') {
+            obj.textContent = `${sign}${formatted}`;
+        } else {
+            obj.textContent = `${sign}$${formatted}`;
+        }
 
         // Color logic for Net Value
         if (id === 'metric-net-value') {
@@ -122,12 +127,12 @@ function changeCard(slotIndex, direction) {
     // Try to find cards using the slot-card class first
     const slotClass = `slot-card-${slotIndex}`;
     let cards = document.querySelectorAll(`.${slotClass}`);
-    
+
     // If no cards found with slot-card class, use data-slot attribute
     if (cards.length === 0) {
         cards = document.querySelectorAll(`.card-option[data-slot="${slotIndex}"]`);
     }
-    
+
     if (cards.length <= 1) {
         return;
     }
@@ -164,7 +169,7 @@ function changeCard(slotIndex, direction) {
 }
 
 // Initialize carousel logic
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     // Initialize current indices for all slots
     const slots = document.querySelectorAll('.slot-carousel');
     slots.forEach((slot, index) => {
@@ -173,13 +178,13 @@ window.addEventListener('load', function() {
         const slotClass = `slot-card-${slotIndex}`;
         let cards = document.querySelectorAll(`.${slotClass}`);
         if (cards.length === 0) {
-             cards = slot.querySelectorAll(`.card-option[data-slot="${slotIndex}"]`);
+            cards = slot.querySelectorAll(`.card-option[data-slot="${slotIndex}"]`);
         }
-        
+
         if (cards.length > 1) {
             // Initialize the current index
             currentSlotIndices[slotIndex] = 0;
-            
+
             // Ensure only the first one is visible
             cards.forEach((card, cardIndex) => {
                 if (cardIndex === 0) {
@@ -190,7 +195,7 @@ window.addEventListener('load', function() {
                     card.style.display = 'none';
                 }
             });
-            
+
             // Set first dot as active
             const dotsContainer = document.getElementById(`dots-slot-${slotIndex}`);
             if (dotsContainer) {

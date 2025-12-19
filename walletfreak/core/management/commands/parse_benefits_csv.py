@@ -213,6 +213,7 @@ def parse_benefits_csv(csv_path):
             short_desc = row.get('BenefitDescriptionShort', '').strip()
             benefit_type = row.get('BenefitType', '').strip()
             numeric_value_str = row.get('NumericValue', '').strip()
+            numeric_type_str = row.get('NumericType', '').strip()
             
             # Parse annual fee
             annual_fee = 0
@@ -284,7 +285,8 @@ def parse_benefits_csv(csv_path):
                 'effective_date': effective_date,
                 'short_description': short_desc or benefit_desc,  # Fallback to full desc if short is missing
                 'benefit_type': benefit_type,
-                'numeric_value': numeric_value
+                'numeric_value': numeric_value,
+                'numeric_type': numeric_type_str
             }
             benefit = {k: v for k, v in benefit.items()} # Ensure dict copy if needed, though not strictly necessary here
             cards_dict[key]['benefits'].append(benefit)
@@ -510,3 +512,5 @@ if __name__ == '__main__':
         print(f"  Max Score: {card.get('max_credit_score', 'N/A')}")
         print(f"  App Link: {card.get('application_link', 'N/A')}")
         print(f"  Benefits: {len(card['benefits'])}")
+        for benefit in card['benefits'][:3]:
+            print(f"    - {benefit['description'][:30]}... (Type: {benefit.get('numeric_type')}, Value: {benefit.get('numeric_value')})")

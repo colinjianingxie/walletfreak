@@ -520,16 +520,34 @@ function openCardModal(cardId) {
             }
             
             // Format value with proper styling
+            // Rules:
+            // - Cash: $Value
+            // - Percent: Value%
+            // - Points/Miles/Upgrade/Other: Value (raw)
+            
             let valueDisplay = String(value);
             let valueClass = 'benefit-value';
-            if (valueDisplay.includes('$') || !isNaN(parseFloat(value))) {
-                // If numeric or contains $, show as money
+            const numericType = benefit.numeric_type ? benefit.numeric_type.toLowerCase() : '';
+
+            if (numericType === 'cash') {
                 if (!valueDisplay.includes('$')) {
                     valueDisplay = '$' + valueDisplay;
                 }
                 valueClass += ' benefit-value-money';
-            } else if (valueDisplay.toLowerCase() === 'included') {
-                valueClass += ' benefit-value-included';
+            } else if (numericType === 'percent') {
+                if (!valueDisplay.includes('%')) {
+                    valueDisplay += '%';
+                }
+                valueClass += ' benefit-value-money';
+            } else {
+                // Points, Miles, Upgrade, or any other type -> Just the number
+                // Also fallback for missing type -> Just the number
+                valueClass += ' benefit-value-money'; // Keep money style for bold/color if desired, or remove if "money" implies green/$
+            }
+
+            // Special case for "Included" text which shouldn't look like a number
+            if (String(value).toLowerCase() === 'included') {
+                 valueClass = 'benefit-value benefit-value-included';
             }
             
             const wrapper = document.createElement('div');
