@@ -352,12 +352,60 @@ function openCardModal(cardId) {
     document.getElementById('modal-verdict-text').textContent = card.verdict || card.description || 'No verdict available.';
     
     // Welcome Offer
-    const bonusValue = card.welcomeOffer ? card.welcomeOffer.value : (card.sign_up_bonus ? card.sign_up_bonus.value : 0);
-    const bonusTerms = card.welcomeOffer ? card.welcomeOffer.terms : (card.sign_up_bonus ? card.sign_up_bonus.terms : '');
+    // Welcome Offer
+    // Prioritize structure from seed_db
+    let bonusValue = null;
+    let bonusTerms = null;
+    let bonusCurrency = null;
+
+    if (card.sign_up_bonus && card.sign_up_bonus.value) {
+        bonusValue = card.sign_up_bonus.value;
+        bonusTerms = card.sign_up_bonus.terms;
+        bonusCurrency = card.sign_up_bonus.currency;
+    } else if (card.welcomeOffer && card.welcomeOffer.value) {
+        bonusValue = card.welcomeOffer.value;
+        bonusTerms = card.welcomeOffer.terms;
+    } else if (card.bonus_value) {
+        bonusValue = card.bonus_value; // Assuming string or number
+        bonusTerms = card.bonus_text || card.sign_up_bonus_terms;
+    } else {
+        // Fallback or "0"
+        bonusValue = 0;
+    }
     
-    if (bonusValue) {
-        document.getElementById('modal-bonus-value').textContent = bonusValue;
-        document.getElementById('modal-bonus-terms').textContent = bonusTerms;
+    if (bonusValue && bonusValue !== 0 && bonusValue !== "0") {
+        let displayValue = bonusValue.toLocaleString ? bonusValue.toLocaleString() : bonusValue;
+        
+        // Determine type/currency
+        let displayType = 'Points'; // Default
+        
+        if (bonusCurrency) {
+            if (String(bonusCurrency).toLowerCase() === 'cash') {
+                if (!String(displayValue).startsWith('$')) {
+                    displayValue = `$${displayValue}`;
+                }
+                displayType = ''; 
+            } else {
+                displayType = bonusCurrency; // Miles, Points
+            }
+        } else {
+            // Infer
+             const termsLower = String(bonusTerms || '').toLowerCase();
+             if (termsLower.includes('miles')) displayType = 'Miles';
+             else if (termsLower.includes('cash')) {
+                 if (!String(displayValue).startsWith('$')) displayValue = `$${displayValue}`;
+                 displayType = '';
+             }
+        }
+        
+        // Final string assembly
+        let finalBonusString = `${displayValue}`;
+        if (displayType) {
+            finalBonusString += ` ${displayType}`;
+        }
+        
+        document.getElementById('modal-bonus-value').textContent = finalBonusString;
+        document.getElementById('modal-bonus-terms').textContent = bonusTerms || "";
         document.getElementById('modal-welcome-container').style.display = 'block';
     } else {
         document.getElementById('modal-welcome-container').style.display = 'none';

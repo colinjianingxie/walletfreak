@@ -212,20 +212,77 @@ function openCompareModal() {
     `;
     
     cards.forEach(card => {
-        // Match card modal's logic for bonus extraction
-        const bonusValue = card.welcomeOffer ? card.welcomeOffer.value : (card.sign_up_bonus ? card.sign_up_bonus.value : (card.bonus_value ? card.bonus_value.toLocaleString() : '0'));
-        const bonusTerms = card.welcomeOffer ? card.welcomeOffer.terms : (card.sign_up_bonus ? card.sign_up_bonus.terms : (card.bonus_text || 'Terms apply.'));
-        const bonusType = String(bonusTerms).toLowerCase().includes('miles') ? 'Miles' : 'Points';
+        // Match card modal's logic for bonus extraction, but be safer about falsy values
+        // Check for various possible bonus fields
+        let bonusValue = null;
+        let bonusTerms = null;
+        let bonusCurrency = null; // Store the type from DB if available
         
+        if (card.sign_up_bonus && card.sign_up_bonus.value) {
+            // Prioritize the structured object from seed_db which now has the correct type in 'currency' field
+            bonusValue = card.sign_up_bonus.value;
+            bonusTerms = card.sign_up_bonus.terms;
+            bonusCurrency = card.sign_up_bonus.currency; 
+        } else if (card.welcomeOffer && card.welcomeOffer.value) {
+            bonusValue = card.welcomeOffer.value;
+            bonusTerms = card.welcomeOffer.terms;
+        } else if (card.bonus_value) {
+            bonusValue = card.bonus_value.toLocaleString();
+            bonusTerms = card.bonus_text;
+        }
+        
+        // Sanitize 'undefined' strings if they somehow got in
+        if (String(bonusValue).toLowerCase().includes('undefined')) bonusValue = null;
+        if (String(bonusTerms).toLowerCase().includes('undefined')) bonusTerms = null;
+
         const row = document.createElement('div');
         row.className = 'card-data-row';
-        row.innerHTML = `
-            <div style="font-weight: 600; font-size: 0.9375rem; color: #475569;">${card.name}</div>
-            <div style="text-align: right;">
-                <div style="font-weight: 700; font-size: 1.125rem; color: #6366F1;">${bonusValue} ${bonusType}</div>
-                <div style="font-size: 0.75rem; color: #94A3B8; margin-top: 0.25rem;">${bonusTerms}</div>
-            </div>
-        `;
+
+        if (bonusValue && bonusValue !== '0' && bonusValue !== 0) {
+            // We have a bonus
+            let displayValue = bonusValue;
+            let displayType = 'Points';
+
+            // Determine type
+            // 1. Explicit type from DB (SignUpBonusType mapped to 'currency' in python)
+            if (bonusCurrency) {
+                 if (String(bonusCurrency).toLowerCase() === 'cash') {
+                     displayType = ''; 
+                     displayValue = `$${bonusValue}`;
+                 } else {
+                     displayType = bonusCurrency; // 'Miles', 'Points'
+                 }
+            } else {
+                // 2. Infer from terms
+                displayType = String(bonusTerms || '').toLowerCase().includes('miles') ? 'Miles' : 'Points';
+            }
+            
+            // Refine display
+            if (String(displayType).toLowerCase() === 'cash' || String(displayType).toLowerCase() === 'cash back') {
+                 if (!String(displayValue).startsWith('$')) {
+                     displayValue = `$${displayValue}`;
+                 }
+                 displayType = '';
+            }
+            
+            row.innerHTML = `
+                <div style="font-weight: 600; font-size: 0.9375rem; color: #475569;">${card.name}</div>
+                <div style="text-align: right;">
+                    <div style="font-weight: 700; font-size: 1.125rem; color: #6366F1;">${displayValue} ${displayType === 'Cash Back' || displayType === 'Cash' ? '' : displayType}</div>
+                    <div style="font-size: 0.75rem; color: #94A3B8; margin-top: 0.25rem;">${bonusTerms || 'Terms apply.'}</div>
+                </div>
+            `;
+        } else {
+            // No valid bonus found
+            row.innerHTML = `
+                <div style="font-weight: 600; font-size: 0.9375rem; color: #475569;">${card.name}</div>
+                <div style="text-align: right;">
+                    <div style="font-weight: 700; font-size: 1.125rem; color: #6366F1;">0 Points</div>
+                    <div style="font-size: 0.75rem; color: #94A3B8; margin-top: 0.25rem;">No public sign up bonus or welcome offer</div>
+                </div>
+            `;
+        }
+        
         welcomeSection.appendChild(row);
     });
     

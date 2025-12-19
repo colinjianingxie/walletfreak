@@ -27,8 +27,7 @@ def parse_signup_bonuses_csv(csv_path):
                 bonuses[key] = {
                     'terms': row['Terms'].strip(),
                     'value': value,
-                    'currency': row['Currency'].strip(),
-                    'effective_date': row['EffectiveDate'].strip(),
+                    'currency': row['SignUpBonusType'].strip(),
                     'effective_date': row['EffectiveDate'].strip()
                 }
     except FileNotFoundError:
