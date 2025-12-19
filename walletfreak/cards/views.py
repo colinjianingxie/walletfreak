@@ -475,3 +475,48 @@ def card_detail(request, card_id):
             pass
             
     return render(request, 'cards/card_detail.html', {'card': card, 'active_link': active_link})
+
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse
+from django.core.mail import send_mail
+from django.conf import settings
+
+@require_POST
+def report_card_issue(request):
+    try:
+        card_id = request.POST.get('card_id')
+        card_name = request.POST.get('card_name')
+        issue_details = request.POST.get('issue_details', 'No details provided.')
+        
+        if not card_id:
+            return JsonResponse({'success': False, 'error': 'Card ID is required'}, status=400)
+
+        subject = f"Card Issue Reported: {card_name} ({card_id})"
+        # HTML content for the email
+        html_content = f"""
+        <h2>Card Issue Report</h2>
+        <p><strong>Card Name:</strong> {card_name}</p>
+        <p><strong>Card ID:</strong> {card_id}</p>
+        <p><strong>Issue Details:</strong></p>
+        <blockquote style="background: #f9f9f9; border-left: 10px solid #ccc; margin: 1.5em 10px; padding: 0.5em 10px;">
+            {issue_details}
+        </blockquote>
+        <p><strong>Reported By User ID:</strong> {request.session.get('uid', 'Anonymous')}</p>
+        """
+        
+        try:
+            # Use the existing helper method from NotificationMixin
+            # This handles writing to the 'mail' collection correctly
+            db.send_email_notification(
+                to='colinjianingxie@gmail.com',
+                subject=subject,
+                html_content=html_content
+            )
+            return JsonResponse({'success': True})
+        except Exception as e:
+            print(f"Error queuing email to Firestore: {e}")
+            return JsonResponse({'success': False, 'error': 'Failed to queue email report'}, status=500)
+            
+    except Exception as e:
+        print(f"Error processing report: {e}")
+        return JsonResponse({'success': False, 'error': str(e)}, status=500)

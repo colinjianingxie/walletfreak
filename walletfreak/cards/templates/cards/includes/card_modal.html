@@ -45,9 +45,17 @@
                         <span id="modal-annual-fee" class="badge-value">$550</span>
                     </div>
                 </div>
+
+                <!-- Report Issue Link (Mobile Only - beneath badges) -->
+                {% if request.user.is_authenticated %}
+                <div class="mobile-report-container">
+                    <button onclick="reportIssue()">
+                        Report Outdated Benefits
+                    </button>
+                </div>
+                {% endif %}
             </div>
 
-            <!-- Desktop: Action Buttons (Stacked) -->
             <div class="card-actions-desktop">
                 <button id="modal-add-btn" class="btn-add-wallet" onclick="addToWalletFromModal()">
                     Add to Wallet <span class="material-icons" style="font-size: 18px;">check</span>
@@ -55,6 +63,15 @@
                 <button class="btn-apply" id="modal-apply-btn" onclick="window.open('#', '_blank')">
                     Apply Now <span class="material-icons" style="font-size: 16px;">open_in_new</span>
                 </button>
+                
+                <!-- Report Issue Link (Desktop) -->
+                {% if request.user.is_authenticated %}
+                <div style="text-align: center; margin-top: 0.75rem;">
+                    <button onclick="reportIssue()" style="background: none; border: none; color: #94A3B8; font-size: 0.75rem; text-decoration: underline; cursor: pointer;">
+                        Report Outdated Benefits
+                    </button>
+                </div>
+                {% endif %}
             </div>
         </div>
 
@@ -760,6 +777,45 @@ function addToWalletFromModal() {
     openAnniversaryModal(currentModalCardId, cardName);
 }
 
+function reportIssue() {
+    if (!currentModalCardId) return;
+    
+    const card = allCardsData[currentModalCardId];
+    const cardName = card ? card.name : 'Card';
+    
+    // One-click reporting, no prompt
+    const issueDetails = "Benefits appear out of date (Reported via Quick Action)";
+    
+    // Send report
+    const formData = new FormData();
+    formData.append('card_id', currentModalCardId);
+    formData.append('card_name', cardName);
+    formData.append('issue_details', issueDetails);
+    formData.append('csrfmiddlewaretoken', getCookie('csrftoken'));
+    
+    // Optional: Visual feedback on button?
+    // user likely will see the toast
+    
+    fetch('/report-issue/', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            showReportSuccessModal();
+        } else {
+            alert("Failed to send report: " + (data.error || 'Unknown error'));
+        }
+    })
+    .catch(err => {
+        alert("Error sending report: " + err.message);
+    });
+}
+
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -781,6 +837,35 @@ style.innerHTML = `
 @keyframes spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+/* Mobile Report Link Styles */
+.mobile-report-container {
+    display: none;
+}
+@media (max-width: 768px) {
+    .mobile-report-container {
+        display: block;
+        text-align: center;
+        margin-top: 0.75rem;
+    }
+    .mobile-report-container button {
+        background: none;
+        border: none;
+        color: #94A3B8;
+        font-size: 0.75rem;
+        text-decoration: underline;
+        cursor: pointer;
+    }
 }
 
 @media (max-width: 768px) {
@@ -856,5 +941,31 @@ window.onclick = function(event) {
     if (event.target == detailsModal) {
         closeCardDetailsModal();
     }
+}
+</script>
+
+<!-- Report Success Modal -->
+<!-- Note: We use inline styles with !important to override the global .modal mobile styles in card_modal.css which force full screen -->
+<div id="report-success-modal" class="modal" style="display: none; align-items: center !important; justify-content: center !important; background: rgba(0,0,0,0.5) !important; z-index: 10001; padding: 1rem !important;">
+    <div style="background: white !important; padding: 2rem; border-radius: 16px !important; text-align: center; max-width: 90% !important; width: 320px !important; box-shadow: 0 10px 25px rgba(0,0,0,0.2) !important; margin: auto !important; height: auto !important; position: relative !important;">
+        <div style="width: 50px; height: 50px; background: #DEF7EC; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto;">
+            <span class="material-icons" style="font-size: 30px; color: #10B981;">check</span>
+        </div>
+        <h3 style="margin: 0 0 0.5rem 0; font-size: 1.25rem; font-weight: 700; color: #1F2937;">Report Sent</h3>
+        <p style="color: #6B7280; font-size: 0.875rem; margin: 0 0 1.5rem 0; line-height: 1.5;">
+            Thank you for helping us keep our data accurate. We've received your report.
+        </p>
+        <button onclick="closeReportSuccessModal()" style="background: #1F2937; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; width: 100%; cursor: pointer;">
+            Got it
+        </button>
+    </div>
+</div>
+
+<script>
+function showReportSuccessModal() {
+    document.getElementById('report-success-modal').style.display = 'flex';
+}
+function closeReportSuccessModal() {
+    document.getElementById('report-success-modal').style.display = 'none';
 }
 </script>
