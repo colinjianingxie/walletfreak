@@ -536,17 +536,84 @@ function updateWalletState(newWalletIds) {
         const cardId = cardEl.getAttribute('onclick').match(/'([^']+)'/)[1];
         if (!cardId) return;
 
+        // Find match badge inside this card element
+        const matchBadge = cardEl.querySelector('.match-score');
+        if (!matchBadge) return;
+
+        // CHECK 0: Empty Wallet Rule
+        // If the wallet is empty (size 0), all scores should be 0%.
+        if (walletCardIds.size === 0) {
+            matchBadge.textContent = '0%';
+            userMatchScores[cardId] = 0;
+            return;
+        }
+
         const cardData = allCardsData[cardId]; // Use the global dictionary from template
         if (!cardData) return; // Should exist
 
         // Recalculate Match Score
-        // Python Logic:
-        // Base: 50
-        // + Category Overlap (up to 30)
-        // + No Fee (10) OR Fee > 500 (-10)
-        // - In Wallet (-30)
+        // Logic attempts to mirror Python logic (approximate)
 
-        let score = 50;
+        // Variance: Deterministic based on ID
+        let variance = 0;
+        if (cardId) {
+            let sum = 0;
+            for (let i = 0; i < cardId.length; i++) {
+                sum += cardId.charCodeAt(i);
+            }
+            variance = (sum % 7) - 3;
+        }
+
+        let score = 0;
+        let inPersonality = false;
+        let targetSlotIndex = -1;
+
+        // Check Personality Matches (Tier 1 & 2)
+        if (userPersonality && userPersonality.slots) {
+            // 1. Determine Slot Status (is filled?)
+            const slotStatus = {}; // index -> bool
+            userPersonality.slots.forEach((slot, idx) => {
+                let isFilled = false;
+                if (slot.cards) {
+                    slot.cards.forEach(cSlug => {
+                        // Check against wallet
+                        if (walletCardIds.has(cSlug)) isFilled = true;
+                        else {
+                            for (const wId of walletCardIds) {
+                                const wCard = allCardsData[wId];
+                                if (wCard && (wCard.slug === cSlug || wCard.id === cSlug)) {
+                                    isFilled = true;
+                                    break;
+                                }
+                            }
+                        }
+                    });
+                }
+                slotStatus[idx] = isFilled;
+            });
+
+            // 2. Check if current card is in personality
+            userPersonality.slots.forEach((slot, idx) => {
+                if (slot.cards && (slot.cards.includes(cardId) || (cardData.slug && slot.cards.includes(cardData.slug)))) {
+                    inPersonality = true;
+                    targetSlotIndex = idx;
+                }
+            });
+
+            if (inPersonality) {
+                if (!slotStatus[targetSlotIndex]) {
+                    // Tier 1: Empty Slot -> ~97%
+                    score = 97 + variance;
+                } else {
+                    // Tier 2: Filled Slot -> ~87%
+                    score = 87 + variance;
+                }
+            }
+        }
+
+        if (!inPersonality) {
+            score = 43 + variance;
+        }
 
         // Categories
         if (userPersonality && userPersonality.focus_categories) {
@@ -556,44 +623,29 @@ function updateWalletState(newWalletIds) {
             cardCats.forEach(c => {
                 if (userCats.has(c)) overlap++;
             });
-            score += Math.min(30, overlap * 10);
+            // +12 per matching category, up to +36 max
+            score += Math.min(36, overlap * 12);
         }
 
         // Fee
         const annualFee = cardData.annual_fee || 0;
-        if (annualFee === 0) score += 10;
-        else if (annualFee > 500) score -= 10;
+        if (annualFee === 0) score += 3;
+        else if (annualFee > 500) score -= 4;
 
-        // Wallet Penalty
+        // Wallet Penalty (Owned check)
         const inWallet = walletCardIds.has(cardId);
-        if (inWallet) score -= 30;
+        if (inWallet) score = 0;
 
         // Clamp
         score = Math.max(0, Math.min(100, score));
 
         // Update DOM Elements
-        // Find match badge inside this card element
-        const matchBadge = cardEl.querySelector('.match-score');
-        if (matchBadge) {
-            matchBadge.textContent = score + '%';
-            // Optional: color coding could be updated here if needed
-        }
+        matchBadge.textContent = score + '%';
 
         // Store score in userMatchScores map for sorting
         userMatchScores[cardId] = score;
 
-        // Update data-attributes for filtering/sorting if we used them in JS sort logic
-        // Current JS sort logic uses userMatchScores map in `filterCards`?
-        // Wait, `filterCards` doesn't sort. `sortSelect` triggers reload.
-        // But `card_list.js` line 417 (Python) does sort.
-        // The JS `filterCards` only hides/shows. It does NOT re-sort DOM elements.
-        // So the order won't change until refresh, BUT the badges will update.
-        // The user said "benefits... need to update". This likely refers to the visual indicators.
-        // If sorting is critical, we'd need to re-sort the DOM in JS, which is a bigger change.
-        // For now, updating the values is the priority.
-
-        // Mark in-wallet status on card (if we have a visual style for it)
-        // Perhaps add a class?
+        // Mark in-wallet status
         if (inWallet) {
             cardEl.classList.add('in-wallet');
         } else {

@@ -4,7 +4,11 @@
 <div class="assigned-personality-grid">
             <!-- Left: Icon -->
             <div class="assigned-icon-box">
-                {{ assigned_personality.icon|default:"🎯" }}
+                {% if assigned_personality.avatar_url %}
+                    <img src="{{ assigned_personality.avatar_url }}" alt="{{ assigned_personality.name }} Icon" class="assigned-icon-img">
+                {% else %}
+                    {{ assigned_personality.icon|default:"🎯" }}
+                {% endif %}
             </div>
 
             <!-- Middle: Info -->

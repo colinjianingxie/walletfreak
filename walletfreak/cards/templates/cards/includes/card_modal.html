@@ -721,13 +721,14 @@ function saveAnniversaryDate() {
         return;
     }
     
-    // Close anniversary modal
-    closeAnniversaryModal();
-    
-    // Proceed with adding the card
+    // Check if we should proceed with adding the card BEFORE closing the modal
+    // because closing the modal clears the pendingCardForAdd flag
     if (pendingCardForAdd) {
         proceedWithAddCard(date);
     }
+    
+    // Close anniversary modal
+    closeAnniversaryModal();
 }
 
 function proceedWithAddCard(anniversaryDate) {
@@ -740,7 +741,7 @@ function proceedWithAddCard(anniversaryDate) {
     
     const form = document.createElement('form');
     form.method = 'POST';
-    form.action = `/dashboard/add-card/${currentModalCardId}/`;
+    form.action = `/wallet/add-card/${currentModalCardId}/`;
     
     const csrfInput = document.createElement('input');
     csrfInput.type = 'hidden';

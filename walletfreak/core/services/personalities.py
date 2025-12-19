@@ -86,6 +86,10 @@ class PersonalityMixin:
                 # Add match score to personality object
                 personality['match_score'] = user.get('personality_score', 0)
                 personality['assigned_at'] = user.get('personality_assigned_at')
+                
+                # Add avatar URL
+                # Assumes icon exists at static/images/personalities/{slug}.png
+                personality['avatar_url'] = f"/static/images/personalities/{personality['slug']}.png"
             
                 return personality
 
@@ -165,6 +169,14 @@ class PersonalityMixin:
         Returns a dictionary {card_id: score}.
         """
         scores = {}
+        
+        # 0. Check for Empty Wallet
+        # If user has no cards, they match 0% with everything by default
+        if not user_cards:
+            for card in all_cards:
+                scores[card['id']] = 0
+            return scores
+
         if not user_personality:
             return scores
 
@@ -193,6 +205,10 @@ class PersonalityMixin:
             c_id = card['id']
             c_slug = card.get('slug', '')
             
+            # Deterministic variance for "minute" matches (-3 to +3)
+            # Use ASCII sum of ID
+            variance = (sum(ord(c) for c in str(c_id)) % 7) - 3
+            
             # Check if card is part of the personality
             in_personality = False
             target_slot_index = -1
@@ -206,34 +222,38 @@ class PersonalityMixin:
             if in_personality:
                 # TIER 1 & 2
                 if not slot_status.get(target_slot_index, True):
-                    # Tier 1: Empty Slot (Gap Filler) -> 95-99
-                    score = 95
+                    # Tier 1: Empty Slot (Gap Filler) -> ~97%
+                    score = 97 + variance
                 else:
-                    # Tier 2: Already Filled Slot (Alternative) -> 85-94
-                    score = 85
+                    # Tier 2: Already Filled Slot (Alternative) -> ~87%
+                    score = 87 + variance
             else:
                 # TIER 3: Category Match
-                # Base score for non-personality cards
-                score = 40 
+                # Base score for non-personality cards -> ~43%
+                score = 43 + variance
                 
                 # Check category overlap
                 card_categories = set(card.get('categories', []))
                 if focus_categories:
                     overlap = len(card_categories.intersection(focus_categories))
-                    # +10 per matching category, up to +30 max
-                    score += min(30, overlap * 10)
+                    # +12 per matching category, up to +36 max
+                    score += min(36, overlap * 12)
             
             # 4. Adjustments
             annual_fee = card.get('annual_fee', 0)
             
             # Bonus for No Annual Fee
             if annual_fee == 0:
-                score += 5
+                score += 3
             # Penalty for High Annual Fee (unless it's a Tier 1 perfect match)
             elif annual_fee > 500 and score < 90:
-                score -= 5
+                score -= 4
                 
             # Clamp
             scores[c_id] = max(0, min(100, score))
+            
+            # Final Override: If card is already in wallet, match score is 0
+            if c_id in user_card_ids or (c_slug and c_slug in user_card_ids):
+                scores[c_id] = 0
             
         return scores
