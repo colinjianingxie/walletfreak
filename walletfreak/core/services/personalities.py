@@ -158,3 +158,82 @@ class PersonalityMixin:
             })
             return True
         return False
+    
+    def calculate_match_scores(self, user_personality, user_cards, all_cards):
+        """
+        Calculate match scores for all cards based on user's personality and wallet.
+        Returns a dictionary {card_id: score}.
+        """
+        scores = {}
+        if not user_personality:
+            return scores
+
+        # 1. Analyze User Wallet Gaps
+        user_card_ids = set(c['card_id'] for c in user_cards) if user_cards else set()
+        
+        # Identify slots and their fill status
+        personality_slots = user_personality.get('slots', [])
+        # slots is a list of slot dicts
+        
+        slot_status = {} # slot_index: is_filled (bool)
+
+        for i, slot in enumerate(personality_slots):
+            cards_in_slot = set(slot.get('cards', []))
+            
+            # Check if ANY card from this slot is in user's wallet
+            is_filled = not cards_in_slot.isdisjoint(user_card_ids)
+            slot_status[i] = is_filled
+
+        # 2. Derive Focus Categories
+        focus_categories = set(user_personality.get('focus_categories', []))
+        
+        # 3. Grading Loop
+        for card in all_cards:
+            score = 0
+            c_id = card['id']
+            c_slug = card.get('slug', '')
+            
+            # Check if card is part of the personality
+            in_personality = False
+            target_slot_index = -1
+            
+            for i, slot in enumerate(personality_slots):
+                if c_id in slot.get('cards', []) or c_slug in slot.get('cards', []):
+                    in_personality = True
+                    target_slot_index = i
+                    break
+            
+            if in_personality:
+                # TIER 1 & 2
+                if not slot_status.get(target_slot_index, True):
+                    # Tier 1: Empty Slot (Gap Filler) -> 95-99
+                    score = 95
+                else:
+                    # Tier 2: Already Filled Slot (Alternative) -> 85-94
+                    score = 85
+            else:
+                # TIER 3: Category Match
+                # Base score for non-personality cards
+                score = 40 
+                
+                # Check category overlap
+                card_categories = set(card.get('categories', []))
+                if focus_categories:
+                    overlap = len(card_categories.intersection(focus_categories))
+                    # +10 per matching category, up to +30 max
+                    score += min(30, overlap * 10)
+            
+            # 4. Adjustments
+            annual_fee = card.get('annual_fee', 0)
+            
+            # Bonus for No Annual Fee
+            if annual_fee == 0:
+                score += 5
+            # Penalty for High Annual Fee (unless it's a Tier 1 perfect match)
+            elif annual_fee > 500 and score < 90:
+                score -= 5
+                
+            # Clamp
+            scores[c_id] = max(0, min(100, score))
+            
+        return scores

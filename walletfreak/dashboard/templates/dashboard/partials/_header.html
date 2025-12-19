@@ -25,9 +25,7 @@
                         {{ assigned_personality.name }}
                     </span>
                 </a>
-                {% if assigned_personality.match_score %}
-                <span style="color: #64748B; font-size: 0.9rem;">{{ assigned_personality.match_score }} card{{ assigned_personality.match_score|pluralize }} match</span>
-                {% endif %}
+
                 {% else %}
                 <span style="color: #94A3B8; font-size: 0.875rem; font-style: italic;">
                     <span class="material-icons" style="font-size: 14px; vertical-align: middle; margin-right: 4px;">info</span>

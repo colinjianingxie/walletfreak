@@ -162,38 +162,31 @@ def personality_detail(request, personality_id):
         card['in_wallet'] = card.get('id') in wallet_card_ids
 
         # 3. Match Score
-        if request.user.is_authenticated and user_personality:
-            # Get cards explicitly in this personality
-            personality_card_ids = set()
-            if 'slots' in user_personality:
-                for slot in user_personality['slots']:
-                    cards_in_slot = slot.get('cards', [])
-                    for c_id in cards_in_slot:
-                        personality_card_ids.add(c_id)
+        # 3. Match Score
+        # We will calculate logic in bulk after the loop or we can just skip this inline logic
+        # But wait, this is inside a loop over cards. We should probably calculate scores ONCE outside the loop.
+        # However, to minimize refactoring risk of the loop structure, let's just leave the 'in_wallet' logic here 
+        # (Wallet Status is step 2) and do the scoring match separately.
+        # Actually, let's effectively remove this inline block and do it in bulk after.
+        pass
 
-            personality_categories = set(user_personality.get('focus_categories', []))
-            
-            is_personality_card = card['id'] in personality_card_ids
-            
-            if is_personality_card:
-                score = 85  # High base score which is the same as the card_list view
-            else:
-                score = 35  # Lower base score which is the same as the card_list view
-                
-                card_categories = set(card.get('categories', []))
-                if personality_categories:
-                    category_overlap = len(card_categories & personality_categories)
-                    score += min(30, category_overlap * 10)
-            
-            annual_fee = card.get('annual_fee', 0)
-            if annual_fee == 0: score += 10
-            elif annual_fee > 500: score -= 10
-            
-            if card.get('in_wallet', False): score -= 30
-            
-            score = max(0, min(100, score))
-            card['match_score'] = score
-            user_match_scores[card['id']] = score
+    # BULK SCORING (New Service Call)
+    if request.user.is_authenticated and user_personality:
+        user_cards_list = []
+        try:
+             # Fetch user cards
+             if uid:
+                user_cards_list = db.get_user_cards(uid)
+        except Exception:
+             user_cards_list = []
+
+        all_cards_list = list(all_cards_map.values())
+        user_match_scores = db.calculate_match_scores(user_personality, user_cards_list, all_cards_list)
+        
+        # Apply scores
+        for c_id, score in user_match_scores.items():
+            if c_id in all_cards_map:
+                all_cards_map[c_id]['match_score'] = score
 
     # Store match scores in session or context if needed, but mainly we updated the card objects themselves 
     # which will be serialized into cards_json.
@@ -337,48 +330,21 @@ def card_list(request):
 
     # Calculate match percentages for authenticated users
     if request.user.is_authenticated and user_personality:
-        # Get cards explicitly in this personality
-        personality_card_ids = set()
-        if 'slots' in user_personality:
-            for slot in user_personality['slots']:
-                cards_in_slot = slot.get('cards', [])
-                for c_id in cards_in_slot:
-                    personality_card_ids.add(c_id)
+        user_cards_list = []
+        try:
+             # Try to get user cards from local scope if available, otherwise fetch
+             if 'user_cards' in locals():
+                 user_cards_list = user_cards
+             else:
+                 user_cards_list = db.get_user_cards(uid)
+        except Exception:
+             user_cards_list = []
 
-        # Get personality preferences
-        personality_categories = set()
-        if 'focus_categories' in user_personality:
-            personality_categories = set(user_personality['focus_categories'])
+        user_match_scores = db.calculate_match_scores(user_personality, user_cards_list, all_cards)
         
+        # Apply scores to card objects for template display
         for card in all_cards:
-            is_personality_card = card['id'] in personality_card_ids
-            
-            if is_personality_card:
-                score = 85  # High base score for personality cards
-            else:
-                score = 35  # Lower base score for others
-                
-                # Category alignment (up to +30 points) - mainly determines rank of non-personality cards
-                card_categories = set(card.get('categories', []))
-                if personality_categories:
-                    category_overlap = len(card_categories & personality_categories)
-                    score += min(30, category_overlap * 10)
-            
-            # Annual fee consideration
-            annual_fee = card.get('annual_fee', 0)
-            if annual_fee == 0:
-                score += 10  # Bonus for no fee
-            elif annual_fee > 500:
-                score -= 10  # Penalty for high fee
-            
-            # Already in wallet penalty
-            if card.get('in_wallet', False):
-                score -= 30
-            
-            # Ensure score is between 0 and 100
-            score = max(0, min(100, score))
-            
-            user_match_scores[card['id']] = score
+            card['match_score'] = user_match_scores.get(card['id'], 0)
     
     # Get filter options - ensure we only get valid, non-empty issuers
     issuers = sorted(list(set(

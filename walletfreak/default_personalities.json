@@ -24,7 +24,6 @@
                     "chase-freedom-flex",
                     "ink-business-unlimited-credit-card",
                     "blue-business-plus-credit-card-from-american-express",
-                    "ink-business-preferred-credit-card",
                     "american-express-business-gold-card"
                 ]
             },
@@ -200,8 +199,7 @@
                 "cards": [
                     "american-express-business-gold-card",
                     "ink-business-preferred-credit-card",
-                    "ink-business-cash-credit-card",
-                    "the-business-platinum-card-from-american-express"
+                    "ink-business-cash-credit-card"
                 ]
             },
             {
@@ -230,8 +228,7 @@
                 "cards": [
                     "the-business-platinum-card-from-american-express",
                     "chase-sapphire-reserve",
-                    "capital-one-venture-x-rewards-credit-card",
-                    "ink-business-preferred-credit-card"
+                    "capital-one-venture-x-rewards-credit-card"
                 ]
             }
         ],
@@ -433,7 +430,6 @@
                 "name": "Reliable 3–4% Backup",
                 "description": "When custom/quarterly not available",
                 "cards": [
-                    "blue-cash-preferred-card-from-american-express",
                     "pnc-cash-rewards-visa-credit-card",
                     "costco-anywhere-visa-card-by-citi",
                     "wells-fargo-autograph-card"
@@ -523,8 +519,7 @@
                 "name": "Two-Card Max Peace Combo",
                 "description": "If you want slightly higher return for almost no work",
                 "cards": [
-                    "bilt-mastercard",
-                    "wells-fargo-active-cash-card"
+                    "bilt-mastercard"
                 ]
             },
             {

@@ -112,7 +112,9 @@ class Command(BaseCommand):
                         
                         unused = limit - used_amount
                         
-                        if unused > 0:
+                        # Only consider unused if it's materially significant (> 1 cent)
+                        # Fixes floating point issues where maxed out benefits show tiny remainder
+                        if unused > 0.01:
                             item = {
                                 'card_name': card_name,
                                 'benefit': desc,

@@ -104,10 +104,34 @@ def main():
     else:
         print("\n[PASS] All card references in Personalities are valid.")
 
+    # 3.5 Personality Duplicates Check
+    print("\n>>> CHECK 3.5: Personality Duplicates Check")
+    try:
+        path = os.path.join(BASE_DIR, FILE_PERSONALITIES)
+        with open(path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            has_duplicates = False
+            for p in data:
+                seen_cards = set()
+                p_name = p.get('name', 'Unknown')
+                slots = p.get('slots', [])
+                for slot in slots:
+                    cards = slot.get('cards', [])
+                    for c in cards:
+                        if c in seen_cards:
+                            print(f"  [FAIL] Duplicate card '{c}' found in personality '{p_name}'")
+                            has_duplicates = True
+                        seen_cards.add(c)
+            
+            if not has_duplicates:
+                print("\n[PASS] No duplicate cards found within any personality.")
+    except Exception as e:
+        print(f"Error checking duplicates: {e}")
+
     # 4. Global Missing Map
     print("\n>>> CHECK 4: Cross-Reference Map (Where are slugs missing?)")
     
-    all_slugs = cards | signup | rates | personalities
+    all_slugs = set(cards) | set(signup) | set(rates) | set(personalities)
     non_existent_slugs = all_slugs - master_slugs
     
     if non_existent_slugs:
