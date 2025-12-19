@@ -34,7 +34,8 @@
     position: absolute;
     left: 1rem;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-75%);
+    /* Moved higher up to align visually */
     color: #9CA3AF;
     font-size: 20px;
 }

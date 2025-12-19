@@ -208,6 +208,15 @@ def blog_detail(request, slug):
     if blog.get('status') != 'published' and not is_editor:
         raise Http404("Post not found")
     
+    # Fetch author profile for avatar
+    if blog.get('author_uid'):
+        try:
+            author_profile = db.get_user_profile(blog['author_uid'])
+            if author_profile:
+                blog['author_profile'] = author_profile
+        except Exception as e:
+            print(f"Error fetching author profile: {e}")
+
     # Convert markdown to HTML
     md = markdown.Markdown(extensions=['extra', 'codehilite', 'fenced_code', 'tables'])
     html_content = mark_safe(md.convert(blog.get('content', '')))

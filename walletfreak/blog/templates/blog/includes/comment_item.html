@@ -12,8 +12,7 @@
     
     <div class="comment-content">
         <div class="comment-header">
-            <span class="comment-author">{{ comment.author_real_name|default:comment.author_name }}</span>
-            <span class="comment-username" style="color: #6c757d; font-size: 0.9em; margin-left: 4px;">@{{ comment.author_username|default:"unknown" }}</span>
+            <span class="comment-author">@{{ comment.author_username|default:"unknown" }}</span>
             <span class="comment-date">&bull; {{ comment.created_at|timesince }} ago</span>
         </div>
         

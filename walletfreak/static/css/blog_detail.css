@@ -1046,3 +1046,187 @@
 .comment-replies .comment-item {
     margin-bottom: 1rem;
 }
+
+/* Markdown Table Styles */
+.post-content table {
+    width: 100%;
+    margin: 1.5rem 0;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.post-content th,
+.post-content td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #E5E7EB;
+    text-align: left;
+    vertical-align: top;
+}
+
+.post-content th {
+    font-weight: 700;
+    color: #1F2937;
+    background: #F9FAFB;
+    border-bottom: 2px solid #E5E7EB;
+}
+
+.post-content tr:hover {
+    background: #F9FAFB;
+}
+
+.post-content tr:last-child td {
+    border-bottom: none;
+}
+
+/* Author Stats Card Redesign */
+
+.author-stats-card {
+    background: white;
+    border-radius: 20px;
+    /* Highly rounded as per Image 1 */
+    padding: 1.5rem 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    /* Soft shadow */
+    border: 1px solid #F3F4F6;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.author-section-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    /* Removed min-width to save space */
+}
+
+.author-avatar-wrapper {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    padding: 3px;
+    /* Gradient Ring - Purple/Pink like Image 1 */
+    background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+    flex-shrink: 0;
+}
+
+.author-avatar {
+    width: 100%;
+    height: 100%;
+    background: white;
+    border-radius: 50%;
+    border: 3px solid white;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.author-avatar img {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Author Text */
+.author-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.125rem;
+    /* Tight spacing between name and handle */
+}
+
+.author-real-name {
+    font-size: 1.125rem;
+    /* 18px */
+    font-weight: 800;
+    /* Extra bold */
+    color: #111827;
+    /* Dark text */
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+}
+
+.author-username-small {
+    font-size: 0.8rem;
+    /* ~13px */
+    font-weight: 700;
+    color: #9CA3AF;
+    /* Light gray */
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+/* Divider Line */
+.stats-divider {
+    width: 1px;
+    height: 40px;
+    /* Slightly shorter */
+    background: #E5E7EB;
+}
+
+/* Stats Grid Right */
+.stats-grid-right {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    /* 4 columns for row 1 */
+    row-gap: 0.5rem;
+    column-gap: 1rem;
+    flex-grow: 1;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #6B7280;
+    /* Gray text specific to stats */
+    font-size: 0.85rem;
+    /* Smaller stats text */
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.stat-item .material-icons {
+    font-size: 18px;
+    color: #9CA3AF;
+    /* Light gray icons */
+}
+
+/* Force read-time to next row if we want exact Image 1 layout */
+.break-row-on-desktop {
+    grid-column: 1 / -1;
+    /* Start new row */
+    margin-top: 0.25rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .author-stats-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    .stats-divider {
+        display: none;
+    }
+
+    .stats-grid-right {
+        width: 100%;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .break-row-on-desktop {
+        grid-column: auto;
+        /* Reset */
+    }
+}

@@ -105,26 +105,29 @@
                 
                 <!-- Author & Stats Card -->
                 <div class="author-stats-card">
-                    <div class="author-section">
+                    <div class="author-section-left">
                         <div class="author-avatar-wrapper">
-                             <div class="author-avatar">
-                                {% if blog.author.profile.photo_url %}
-                                <img src="{{ blog.author.profile.photo_url }}" alt="{{ blog.author_real_name }}" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
+                            <div class="author-avatar">
+                                {% if blog.author_profile.photo_url %}
+                                <img src="{{ blog.author_profile.photo_url }}" alt="{{ blog.author_username }}" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
                                 {% else %}
                                 <span class="material-icons">person</span>
                                 {% endif %}
                              </div>
                              {% if blog.author_username == "WALLETFREAK" or blog.author.is_superuser %}
-                             <!-- Gradient ring or special styling hook -->
+                             <!-- Gradient ring could go here if needed -->
                              {% endif %}
                         </div>
                         <div class="author-details">
-                            <span class="author-name">{{ blog.author_real_name|default:"Alex Smith"|title }}</span>
-                            <span class="author-handle">@{{ blog.author_username|default:"WALLETFREAK"|upper }}</span>
+                            <span class="author-real-name">{{ blog.author_real_name|default:"Alex Smith"|title }}</span>
+                            <span class="author-username-small">@{{ blog.author_username|default:"WALLETFREAK"|upper }}</span>
                         </div>
                     </div>
 
-                    <div class="stats-grid">
+                    <div class="stats-divider"></div>
+
+                    <div class="stats-grid-right">
+                        <!-- Row 1 -->
                         <div class="stat-item">
                             <span class="material-icons">calendar_today</span>
                             <span>{{ blog.published_at|timesince }} ago</span>
@@ -141,9 +144,11 @@
                             <span class="material-icons">chat_bubble_outline</span>
                             <span>{{ total_comments|default:"89" }} Discuss</span>
                         </div>
-                        <div class="stat-item">
-                            <span class="material-icons">schedule</span>
-                            <span>5 min read</span>
+                        
+                        <!-- Row 2 (Break to next line effectively, or grid auto-placement) -->
+                        <div class="stat-item break-row-on-desktop">
+                             <span class="material-icons">schedule</span>
+                             <span>5 min read</span>
                         </div>
                     </div>
                 </div>
