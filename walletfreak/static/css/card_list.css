@@ -796,7 +796,7 @@ input[type=range]::-moz-range-thumb {
     justify-content: center;
     cursor: pointer;
     transition: all 0.2s;
-    z-index: 50;
+    z-index: 10;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: absolute;
     top: 1rem;
@@ -1174,13 +1174,14 @@ input[type=range]::-moz-range-thumb {
         left: -100%;
         width: 100%;
         max-width: 320px;
-        height: 100vh;
+        height: 100dvh;
         background: white;
         z-index: 50;
-        padding: 2rem;
+        padding: 1.5rem;
         transition: left 0.3s ease;
-        overflow-y: auto;
         box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
     }
 
     .filters-sidebar.active {
@@ -1402,4 +1403,18 @@ input[type=range]::-moz-range-thumb {
     .view-grid:not(.list-view) .explore-card {
         padding: 0 !important;
     }
+
+    .filters-sidebar {
+        padding: 1rem;
+    }
+}
+
+.filters-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    margin: 1rem -1rem;
+    /* Negative margin to allow full width scroll bars if needed, or just visual spacing */
+    padding: 0 1rem;
+    /* Hide scrollbar for cleaner look but keep functionality */
+    scrollbar-width: thin;
 }

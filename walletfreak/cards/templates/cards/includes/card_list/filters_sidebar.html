@@ -6,51 +6,55 @@
                     <span class="material-icons">close</span>
                 </button>
             </div>
-            <!-- Annual Fee Filter -->
-            <div>
-                <div class="filter-section-header">
-                    <h3 class="filter-title">ANNUAL FEE</h3>
-                    <span id="fee-range-display" class="filter-value">$0 - $1000</span>
+            <!-- Scrollable Content -->
+            <div class="filters-scroll-content">
+                <!-- Annual Fee Filter -->
+                <div>
+                    <div class="filter-section-header">
+                        <h3 class="filter-title">ANNUAL FEE</h3>
+                        <span id="fee-range-display" class="filter-value">$0 - $1000</span>
+                    </div>
+
+                    <div class="slider-container range-slider-container">
+                        <div id="slider-track" class="range-slider-track"></div>
+                        <input type="range" id="min-fee-slider" min="0" max="1000" value="0" step="10" class="range-input">
+                        <input type="range" id="max-fee-slider" min="0" max="1000" value="1000" step="10" class="range-input">
+                    </div>
+                    
+                    <div class="range-labels">
+                        <span class="range-label-text">$0</span>
+                        <span class="range-label-text">$1000+</span>
+                    </div>
                 </div>
 
-                <div class="slider-container range-slider-container">
-                    <div id="slider-track" class="range-slider-track"></div>
-                    <input type="range" id="min-fee-slider" min="0" max="1000" value="0" step="10" class="range-input">
-                    <input type="range" id="max-fee-slider" min="0" max="1000" value="1000" step="10" class="range-input">
+                <!-- Issuers Filter -->
+                <div style="margin-top: 2rem;">
+                    <h3 class="filter-subtitle">ISSUERS</h3>
+                    <div class="checkbox-group">
+                        {% for issuer in issuers %}
+                        <label class="checkbox-label">
+                            <input 
+                                type="checkbox" 
+                                class="issuer-filter checkbox-input" 
+                                value="{{ issuer }}"
+                                {% if issuer in selected_issuers %}checked{% endif %}
+                            >
+                            <span class="checkbox-text">{{ issuer }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
                 </div>
-                
-                <div class="range-labels">
-                    <span class="range-label-text">$0</span>
-                    <span class="range-label-text">$1000+</span>
-                </div>
+
+                <!-- Reset Filters -->
+                <button 
+                    onclick="resetFilters()"
+                    class="reset-filters-btn"
+                    style="margin-top: 2rem; margin-bottom: 2rem;"
+                >
+                    <span class="material-icons" style="font-size: 18px;">close</span>
+                    Reset Filters
+                </button>
             </div>
-
-            <!-- Issuers Filter -->
-            <div>
-                <h3 class="filter-subtitle">ISSUERS</h3>
-                <div class="checkbox-group">
-                    {% for issuer in issuers %}
-                    <label class="checkbox-label">
-                        <input 
-                            type="checkbox" 
-                            class="issuer-filter checkbox-input" 
-                            value="{{ issuer }}"
-                            {% if issuer in selected_issuers %}checked{% endif %}
-                        >
-                        <span class="checkbox-text">{{ issuer }}</span>
-                    </label>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <!-- Reset Filters -->
-            <button 
-                onclick="resetFilters()"
-                class="reset-filters-btn"
-            >
-                <span class="material-icons" style="font-size: 18px;">close</span>
-                Reset Filters
-            </button>
             
             <!-- Mobile Apply Button -->
             <button 

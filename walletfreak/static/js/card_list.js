@@ -40,6 +40,7 @@ let cardsPerPage = 9; // Updated to 9 as requested
 let currentlyShowing = cardsPerPage;
 let activeCategory = '';
 let currentView = localStorage.getItem('exploreView') || 'grid';
+let currentMatchingCards = []; // Store filtered results for pagination
 
 // Helper to normalize strings for comparison (remove spaces, special chars, lowercase)
 function normalize(str) {
@@ -246,6 +247,9 @@ function filterCards() {
         }
     });
 
+    // Store for pagination
+    currentMatchingCards = matchingCards;
+
     // Update Count
     if (totalCardsCount) {
         totalCardsCount.textContent = matchingCards.length;
@@ -257,7 +261,7 @@ function filterCards() {
     // Show cards
     exploreCards.forEach(card => card.style.display = 'none'); // Hide all first
 
-    matchingCards.forEach((card, index) => {
+    currentMatchingCards.forEach((card, index) => {
         if (index < currentlyShowing) {
             card.style.display = '';
         }
@@ -287,47 +291,20 @@ function filterCards() {
 }
 
 function loadMoreCards() {
-    // Re-run filter logic to get matching cards list (inefficient but safe)
-    // In a real app we'd cache the matching list
-    const query = searchInput ? searchInput.value.toLowerCase() : '';
-    const minFee = minFeeSlider ? parseInt(minFeeSlider.value) : 0;
-    const maxFee = maxFeeSlider ? parseInt(maxFeeSlider.value) : 1000;
-
-    const selectedIssuers = Array.from(issuerFilters)
-        .filter(f => f.checked)
-        .map(f => normalize(f.value));
-
-    let matchingCards = [];
-    exploreCards.forEach(card => {
-        const name = card.dataset.name;
-        const issuerRaw = card.dataset.issuer || '';
-        const issuerNorm = normalize(issuerRaw);
-        const categories = card.dataset.categories;
-        const fee = parseInt(card.dataset.fee);
-
-        const matchesSearch = query === '' || name.includes(query) || issuerRaw.toLowerCase().includes(query) || categories.includes(query);
-        const matchesFee = fee >= minFee && fee <= maxFee;
-        const matchesIssuer = selectedIssuers.length === 0 || selectedIssuers.some(si => issuerNorm.includes(si) || si.includes(issuerNorm));
-        const matchesCategory = activeCategory === '' || categories.includes(activeCategory);
-
-        if (matchesSearch && matchesFee && matchesIssuer && matchesCategory) {
-            matchingCards.push(card);
-        }
-    });
-
+    // Use stored results
     currentlyShowing += cardsPerPage;
 
-    matchingCards.forEach((card, index) => {
+    currentMatchingCards.forEach((card, index) => {
         if (index < currentlyShowing) {
             card.style.display = '';
         }
     });
 
     if (loadMoreContainer) {
-        if (currentlyShowing >= matchingCards.length) {
+        if (currentlyShowing >= currentMatchingCards.length) {
             loadMoreContainer.style.display = 'none';
         } else {
-            const remaining = matchingCards.length - currentlyShowing;
+            const remaining = currentMatchingCards.length - currentlyShowing;
             if (remainingCount) remainingCount.textContent = `${remaining} more`;
         }
     }
