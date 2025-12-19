@@ -18,10 +18,15 @@
         </div>
         
         <div class="comment-body">
-            {{ comment.content|linebreaksbr }}
+            {% if comment.is_deleted %}
+                <span style="color: #999; font-style: italic;">&lt;deleted&gt;</span>
+            {% else %}
+                {{ comment.content|linebreaksbr }}
+            {% endif %}
         </div>
         
         <div class="comment-footer">
+            {% if not comment.is_deleted %}
             <div class="vote-actions">
                 <button class="comment-action-btn vote-btn upvote" onclick="voteComment('{{ comment.id }}', 'upvote')">
                     <span class="material-icons">local_fire_department</span>
@@ -43,6 +48,7 @@
             <button class="comment-action-btn delete-btn" onclick="deleteComment('{{ comment.id }}')" style="color: #EF4444;">
                 Delete
             </button>
+            {% endif %}
             {% endif %}
         </div>
         

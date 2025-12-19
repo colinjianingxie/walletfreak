@@ -294,7 +294,6 @@ def add_comment(request, slug):
             'comment': {
                 'id': comment['id'],
                 'content': comment['content'],
-                'author_name': comment['author_name'],
                 'created_at_formatted': 'Just now'
             }
         })
@@ -593,28 +592,21 @@ def vote_blog(request, slug):
         if not blog:
             return JsonResponse({'success': False, 'error': 'Post not found'}, status=404)
         
-        # Get vote type from request (only upvote allowed)
-        vote_type = request.POST.get('vote_type')
-        if vote_type != 'upvote':
-            return JsonResponse({'success': False, 'error': 'Only upvotes are allowed'}, status=400)
-        
         blog_id = blog['id']
         
-        # Check if user already voted
-        existing_vote = db.get_user_vote_on_blog(uid, blog_id)
+        # Get action (add/remove) - Default to 'add' if not specified for backward compat (though risks double count)
+        action = request.POST.get('action', 'add')
+        vote_type = request.POST.get('vote_type', 'upvote')
         
-        if existing_vote == vote_type:
-            # User is trying to vote the same way again - remove the vote
+        if vote_type != 'upvote':
+             return JsonResponse({'success': False, 'error': 'Only upvotes are allowed'}, status=400)
+
+        if action == 'remove':
             success = db.remove_user_vote_on_blog(uid, blog_id)
             new_vote = None
-        elif existing_vote:
-            # User is changing their vote
-            success = db.update_user_vote_on_blog(uid, blog_id, vote_type)
-            new_vote = vote_type
         else:
-            # User is voting for the first time
             success = db.add_user_vote_on_blog(uid, blog_id, vote_type)
-            new_vote = vote_type
+            new_vote = 'upvote'
         
         if success:
             # Get updated vote count (upvotes only)

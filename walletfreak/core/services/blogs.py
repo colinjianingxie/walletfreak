@@ -257,18 +257,19 @@ The WalletFreak Team
             return None
 
     def delete_blog_comment(self, blog_id, comment_id):
-        """Delete a comment"""
+        """Soft delete a comment"""
         try:
-            self.db.collection('blogs').document(blog_id).collection('comments').document(comment_id).delete()
-            
-            # Decrement comment count on blog
-            self.db.collection('blogs').document(blog_id).update({
-                'comment_count': firestore.Increment(-1)
+            self.db.collection('blogs').document(blog_id).collection('comments').document(comment_id).update({
+                'is_deleted': True,
+                'content': '<deleted>',
+                'updated_at': firestore.SERVER_TIMESTAMP
             })
+            
+            # NOTE: We do NOT decrement the comment count, as the comment placeholder remains.
             
             return True
         except Exception as e:
-            print(f"Error deleting blog comment: {e}")
+            print(f"Error soft-deleting blog comment: {e}")
             return False
 
     def vote_comment(self, blog_id, comment_id, user_uid, vote_type):
@@ -472,8 +473,8 @@ The WalletFreak Team
         try:
             if vote_type == 'upvote':
                 blog = self.get_blog_by_id(blog_id)
-                upvoters = blog.get('upvoters', [])
-                return len(upvoters)
+                # Just return the count
+                return blog.get('upvote_count', 0)
             return 0
         except Exception as e:
             print(f"Error getting blog vote count: {e}")
@@ -485,8 +486,8 @@ The WalletFreak Team
             blog = self.get_blog_by_id(blog_id)
             if not blog:
                 return None
-            upvoters = blog.get('upvoters', [])
-            return 'upvote' if uid in upvoters else None
+            # We no longer track individual user votes in the backend
+            return None
         except Exception as e:
             print(f"Error getting user vote on blog: {e}")
             return None
@@ -498,7 +499,6 @@ The WalletFreak Team
                 return False
                 
             self.db.collection('blogs').document(blog_id).update({
-                'upvoters': firestore.ArrayUnion([uid]),
                 'upvote_count': firestore.Increment(1)
             })
             return True
@@ -516,7 +516,6 @@ The WalletFreak Team
         """Remove a user's vote on a blog post"""
         try:
             self.db.collection('blogs').document(blog_id).update({
-                'upvoters': firestore.ArrayRemove([uid]),
                 'upvote_count': firestore.Increment(-1)
             })
             return True

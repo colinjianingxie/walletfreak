@@ -128,9 +128,9 @@
                     <div class="mobile-user-name">{{ user.first_name|default:"Alex" }} {{ user.last_name|default:"Smith" }}</div>
                     <div class="mobile-user-tagline">The Wallet Freak</div>
                 </div>
-                <button class="mobile-user-edit">
+                <a href="{% url 'profile' %}" class="mobile-user-edit">
                     <span class="material-icons">edit</span>
-                </button>
+                </a>
             </div>
 
             <a href="{% url 'dashboard' %}" class="mobile-menu-item" data-nav="wallet">

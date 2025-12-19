@@ -26,6 +26,46 @@
             font-size: 22px;
         }
     }
+    
+    /* Toast Notifications */
+    .toast-container {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10000;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        pointer-events: none;
+    }
+    
+    .toast {
+        background: #333;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 50px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+        pointer-events: auto;
+    }
+    
+    .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .toast.success { background: #10B981; }
+    .toast.error { background: #EF4444; }
+    .toast.info { background: #3B82F6; }
+    
+    .toast-icon { font-size: 20px; }
 </style>
 {% endblock %}
 
@@ -280,9 +320,66 @@
 </a>
 {% endif %}
 
+<!-- Toast Container -->
+<div class="toast-container" id="toast-container"></div>
+
 <script>
+// Toast System
+function showToast(message, type = 'info') {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+    
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    
+    let icon = 'info';
+    if (type === 'success') icon = 'check_circle';
+    if (type === 'error') icon = 'error';
+    
+    toast.innerHTML = `
+        <span class="material-icons toast-icon">${icon}</span>
+        <span>${message}</span>
+    `;
+    
+    container.appendChild(toast);
+    
+    requestAnimationFrame(() => {
+        toast.classList.add('show');
+    });
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            toast.remove();
+        }, 300);
+    }, 3000);
+}
+
 // Add interactivity for post actions
 document.addEventListener('DOMContentLoaded', function() {
+    const currentUid = '{{ request.session.uid|default:"" }}';
+
+    // Initial pass: Set vote states from LocalStorage
+    document.querySelectorAll('.post-card').forEach(card => {
+        const blogId = card.getAttribute('data-id');
+        if (blogId) {
+            const hasVoted = localStorage.getItem(`vote_blog_${blogId}`) === 'true';
+            if (hasVoted) {
+                const upvoteBtn = card.querySelector('.vote-btn.upvote');
+                const mobileUpvoteBtn = card.querySelector('.mobile-vote-btn');
+                const voteCount = card.querySelector('.vote-count');
+                const mobileCount = card.querySelector('.mobile-vote-btn .action-count');
+                const mobileIcon = mobileUpvoteBtn ? mobileUpvoteBtn.querySelector('.material-icons') : null;
+
+                if (upvoteBtn) upvoteBtn.classList.add('active');
+                if (mobileUpvoteBtn) mobileUpvoteBtn.classList.add('active');
+                if (voteCount) voteCount.style.color = '';
+                if (mobileCount) mobileCount.style.color = '';
+                if (mobileIcon) mobileIcon.style.color = '';
+            }
+        }
+    });
+
     // Make post cards clickable
     document.querySelectorAll('.post-card').forEach(card => {
         card.addEventListener('click', function() {
@@ -294,14 +391,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Real-time vote listener
         const blogId = card.getAttribute('data-id');
-        const currentUid = '{{ request.session.uid|default:"" }}';
         
         if (blogId) {
             db.collection('blogs').doc(blogId).onSnapshot((doc) => {
                 if (doc.exists) {
                     const data = doc.data();
-                    const upvoters = data.upvoters || [];
-                    const count = upvoters.length;
+                    const count = data.upvote_count || 0;
                     
                     // Update counts (desktop and mobile)
                     const voteCount = card.querySelector('.vote-count');
@@ -313,47 +408,23 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (voteCount) voteCount.textContent = count;
                     if (mobileVoteCount) mobileVoteCount.textContent = count;
                     
-                    // Update mobile icon color (gray if 0)
+                    // Check local state again to ensure style consistency
+                    const hasVoted = localStorage.getItem(`vote_blog_${blogId}`) === 'true';
+                    
+                    // Update mobile icon color
                     if (mobileIcon) {
-                        if (count === 0) {
+                        if (count === 0 && !hasVoted) {
                             mobileIcon.style.color = '#ccc';
                         } else {
-                            mobileIcon.style.color = ''; // Reset to default (active/hover handled by CSS)
+                            mobileIcon.style.color = ''; 
                         }
                     }
                     
-                    // Update active state if logged in
-                    if (currentUid) {
-                        const upvoteBtn = card.querySelector('.vote-btn.upvote');
-                        const mobileUpvoteBtn = card.querySelector('.mobile-vote-btn');
-                        
-                        const isActive = upvoters.includes(currentUid);
-                        
-                        if (upvoteBtn) {
-                            if (isActive) upvoteBtn.classList.add('active');
-                            else upvoteBtn.classList.remove('active');
-                        }
-                        
-                        // Update desktop vote count color
-                        if (voteCount) {
-                            voteCount.style.color = isActive ? '' : '#ccc';
-                        }
-                        
-                        if (mobileUpvoteBtn) {
-                            if (isActive) mobileUpvoteBtn.classList.add('active');
-                            else mobileUpvoteBtn.classList.remove('active');
-                            
-                            // Update mobile count color
-                             const mobileCount = mobileUpvoteBtn.querySelector('.action-count');
-                             if (mobileCount) {
-                                 mobileCount.style.color = isActive ? '' : '#ccc';
-                             }
-                        }
-                    } else {
-                         // Not logged in -> always gray
-                         if (voteCount) voteCount.style.color = '#ccc';
-                         const mobileCount = card.querySelector('.mobile-vote-btn .action-count');
-                         if (mobileCount) mobileCount.style.color = '#ccc';
+                    if (voteCount) {
+                         voteCount.style.color = hasVoted || count > 0 ? '' : '#ccc';
+                    }
+                    if (mobileVoteCount) {
+                         mobileVoteCount.style.color = hasVoted || count > 0 ? '' : '#ccc';
                     }
                 }
             });
@@ -361,7 +432,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Real-time Saved Posts Listener
-    const currentUid = '{{ request.session.uid|default:"" }}';
     if (currentUid) {
         db.collection('users').doc(currentUid).collection('saved_posts').onSnapshot((snapshot) => {
             const savedPostIds = new Set();
@@ -369,19 +439,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 savedPostIds.add(doc.id);
             });
             
-            document.querySelectorAll('.save-btn').forEach(btn => {
-                const postId = btn.getAttribute('data-id');
-                const icon = btn.querySelector('.material-icons');
-                const text = btn.querySelector('.action-text');
+            document.querySelectorAll('.post-card').forEach(card => {
+                const postId = card.getAttribute('data-id');
+                const btn = card.querySelector('.save-btn');
                 
-                if (savedPostIds.has(postId)) {
-                    btn.classList.add('active');
-                    if (icon) icon.textContent = 'bookmark';
-                    if (text) text.textContent = 'Saved';
-                } else {
-                    btn.classList.remove('active');
-                    if (icon) icon.textContent = 'bookmark_border';
-                    if (text) text.textContent = 'Save';
+                if (btn && postId) {
+                    const icon = btn.querySelector('.material-icons');
+                    const text = btn.querySelector('.action-text');
+                    
+                    if (savedPostIds.has(postId)) {
+                        btn.classList.add('active');
+                        if (icon) icon.textContent = 'bookmark';
+                        if (text) text.textContent = 'Saved';
+                    } else {
+                        btn.classList.remove('active');
+                        if (icon) icon.textContent = 'bookmark_border';
+                        if (text) text.textContent = 'Save';
+                    }
                 }
             });
         });
@@ -393,15 +467,32 @@ document.addEventListener('DOMContentLoaded', function() {
             e.stopPropagation(); // Prevent card click
             
             {% if is_authenticated %}
+            const card = this.closest('.post-card');
+            const blogId = card.getAttribute('data-id');
             const slug = this.getAttribute('data-slug');
             const voteType = this.getAttribute('data-vote-type');
             
-            if (!slug || !voteType) {
-                console.error('Missing slug or vote type');
-                return;
-            }
+            if (!slug || !voteType) return;
             
-            // Get CSRF token
+            const storageKey = `vote_blog_${blogId}`;
+            let hasVoted = localStorage.getItem(storageKey) === 'true';
+            
+            // Determine action
+            const action = hasVoted ? 'remove' : 'add';
+            
+            // Optimistic Toggle
+            hasVoted = !hasVoted;
+            localStorage.setItem(storageKey, hasVoted);
+            
+            // Create a set of buttons for this card to update all of them
+            const cardButtons = card.querySelectorAll('.vote-btn, .mobile-vote-btn');
+            
+            cardButtons.forEach(b => {
+                if (hasVoted) b.classList.add('active');
+                else b.classList.remove('active');
+            });
+            
+            // Fetch logic
             function getCookie(name) {
                 let cookieValue = null;
                 if (document.cookie && document.cookie !== '') {
@@ -419,33 +510,41 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const csrftoken = getCookie('csrftoken') || document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
             
-            // Show loading modal
-            // Make AJAX request
             fetch(`/blog/${slug}/vote/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                     'X-CSRFToken': csrftoken
                 },
-                body: `vote_type=${voteType}`,
+                body: `vote_type=${voteType}&action=${action}`,
                 credentials: 'same-origin'
             })
             .then(response => response.json())
             .then(data => {
-                
-                if (data.success) {
-                    // Success! Listener will handle the UI update.
-                    console.log('Vote recorded successfully');
-                } else {
-                    alert('Error: ' + data.error);
+                if (!data.success) {
+                    showToast(data.error || 'Vote failed', 'error');
+                    // Revert
+                    hasVoted = !hasVoted;
+                    localStorage.setItem(storageKey, hasVoted);
+                    cardButtons.forEach(b => {
+                        if (hasVoted) b.classList.add('active');
+                        else b.classList.remove('active');
+                    });
                 }
             })
             .catch(error => {
-                // Hide loading modal on error
-                loader.classList.remove('show');
                 console.error('Error:', error);
-                alert('An error occurred while voting');
+                showToast('An error occurred while voting', 'error');
+                // Revert
+                hasVoted = !hasVoted;
+                localStorage.setItem(storageKey, hasVoted);
+                cardButtons.forEach(b => {
+                    if (hasVoted) b.classList.add('active');
+                    else b.classList.remove('active');
+                });
             });
+            {% else %}
+            showLoginModal();
             {% endif %}
         });
     });
@@ -456,26 +555,33 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.addEventListener('click', function(e) {
             e.stopPropagation(); // Prevent card click
             
+            {% if not is_authenticated %}
+            showLoginModal();
+            return;
+            {% endif %}
+            
             const slug = this.getAttribute('data-slug');
             const isCurrentlySaved = this.classList.contains('active');
+            
+            // Optimistically update UI
+            // The snapshot listener will also fire, but let's toggle now for instant feedback
+            this.classList.toggle('active');
             const icon = this.querySelector('.material-icons');
             const text = this.querySelector('.action-text');
             
-            // Optimistically update UI
-            if (isCurrentlySaved) {
-                this.classList.remove('active');
-                icon.textContent = 'bookmark_border';
-                text.textContent = 'Save';
+            if (this.classList.contains('active')) {
+                if(icon) icon.textContent = 'bookmark';
+                if(text) text.textContent = 'Saved';
+                showToast('Article saved to your library', 'success');
             } else {
-                this.classList.add('active');
-                icon.textContent = 'bookmark';
-                text.textContent = 'Saved';
+                if(icon) icon.textContent = 'bookmark_border';
+                if(text) text.textContent = 'Save';
+                showToast('Article removed from library', 'info');
             }
             
             // Make API call
             const url = isCurrentlySaved ? `/blog/${slug}/unsave/` : `/blog/${slug}/save/`;
             
-            // Get CSRF token from cookie or meta tag
             function getCookie(name) {
                 let cookieValue = null;
                 if (document.cookie && document.cookie !== '') {
@@ -505,30 +611,14 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 if (!data.success) {
                     // Revert UI changes if API call failed
-                    if (isCurrentlySaved) {
-                        this.classList.add('active');
-                        icon.textContent = 'bookmark';
-                        text.textContent = 'Saved';
-                    } else {
-                        this.classList.remove('active');
-                        icon.textContent = 'bookmark_border';
-                        text.textContent = 'Save';
-                    }
-                    console.error('Failed to save/unsave post:', data.error);
+                    this.classList.toggle('active');
+                    showToast(data.error || 'Failed to save', 'error');
                 }
             })
             .catch(error => {
                 // Revert UI changes if request failed
-                if (isCurrentlySaved) {
-                    this.classList.add('active');
-                    icon.textContent = 'bookmark';
-                    text.textContent = 'Saved';
-                } else {
-                    this.classList.remove('active');
-                    icon.textContent = 'bookmark_border';
-                    text.textContent = 'Save';
-                }
-                console.error('Error saving/unsaving post:', error);
+                this.classList.toggle('active');
+                showToast('Connection error', 'error');
             });
         });
     });
@@ -548,19 +638,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     url: postUrl
                 });
             } else {
-                // Fallback: copy to clipboard for browsers that don't support Web Share API
+                // Fallback: copy to clipboard
                 navigator.clipboard.writeText(postUrl).then(() => {
-                    // Simple feedback without modal
-                    const originalText = this.querySelector('.action-text');
-                    if (originalText) {
-                        const original = originalText.textContent;
-                        originalText.textContent = 'Copied!';
-                        setTimeout(() => {
-                            originalText.textContent = original;
-                        }, 2000);
-                    }
+                    showToast('Link copied to clipboard', 'success');
                 }).catch(err => {
                     console.error('Failed to copy: ', err);
+                    showToast('Failed to copy link', 'error');
                 });
             }
         });
@@ -608,7 +691,6 @@ function confirmSubscribe() {
     const originalText = btn ? btn.innerText : 'Join Community';
     if (btn) btn.innerText = 'Joining...';
     
-    // Get CSRF token
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -646,14 +728,15 @@ function confirmSubscribe() {
                 btn.classList.add('subscribed');
                 btn.onclick = null;
             }
+            showToast('Successfully subscribed!', 'success');
         } else {
-            alert('Error subscribing: ' + (data.error || 'Unknown error'));
+            showToast('Error subscribing: ' + (data.error || 'Unknown error'), 'error');
             if (btn) btn.innerText = originalText;
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('An error occurred while connecting to the server.');
+        showToast('Connection error', 'error');
         if (btn) btn.innerText = originalText;
         closeSubscribeModal();
     });
