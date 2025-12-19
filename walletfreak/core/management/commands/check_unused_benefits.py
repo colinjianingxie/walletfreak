@@ -42,6 +42,8 @@ class Command(BaseCommand):
         for user in users:
             uid = user['id']
             username = user.get('username', 'Unknown')
+            first_name = user.get('first_name', '').strip()
+            last_name = user.get('last_name', '').strip()
             user_email = user.get('email')
             
             # Fetch active cards
@@ -151,7 +153,7 @@ class Command(BaseCommand):
                     
                     if should_notify:
                         self.stdout.write(f"  -> Sending email to {user_email}...")
-                        result = self.send_unused_credits_email(user_email, username, user_unused_items)
+                        result = self.send_unused_credits_email(user_email, username, first_name, last_name, user_unused_items)
                         if result:
                              db.update_last_benefit_notification_time(uid)
                     
@@ -161,8 +163,15 @@ class Command(BaseCommand):
             elif should_send and not user_unused_items:
                  self.stdout.write(f"  -> No unused credits to email.")
 
-    def send_unused_credits_email(self, to_email, username, items):
+    def send_unused_credits_email(self, to_email, username, first_name, last_name, items):
         subject = "You have unused credit card benefits!"
+        
+        # Determine Greeting
+        greeting_name = username
+        if first_name or last_name:
+            greeting_name = f"{first_name} {last_name}".strip()
+        
+        greeting = f"Hi {greeting_name},"
         
         # Build HTML Table
         rows = ""
@@ -178,7 +187,7 @@ class Command(BaseCommand):
         
         html_content = f"""
         <div style="font-family: Arial, sans-serif; color: #333;">
-            <h2>Hi {username},</h2>
+            <h2>{greeting}</h2>
             <p>You have unused benefits on your credit cards. Don't leave money on the table!</p>
             
             <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
@@ -204,7 +213,7 @@ class Command(BaseCommand):
         """
         
         # Text fallback
-        text_content = f"Hi {username},\n\nYou have unused benefits:\n\n"
+        text_content = f"{greeting}\n\nYou have unused benefits:\n\n"
         for item in items:
             text_content += f"- {item['card_name']}: {item['benefit']} - ${item['unused']:.2f} remaining ({item['time_cat']})\n"
         

@@ -144,6 +144,33 @@ class UserMixin:
         """Update user avatar in Firestore"""
         self.db.collection('users').document(uid).update({'photo_url': photo_url})
 
+    def generate_unique_username(self, first_name, last_name, uid):
+        """
+        Generate a unique username based on first and last name.
+        Format: <firstname><lastname><4 digit number>
+        """
+        import random
+        # Sanitize inputs
+        first = ''.join(e for e in first_name if e.isalnum()).lower()
+        last = ''.join(e for e in last_name if e.isalnum()).lower()
+        
+        base_name = f"{first}{last}"
+        if not base_name:
+            base_name = "user"
+            
+        # Try up to 20 times to find a unique random suffix
+        for _ in range(20):
+            suffix = random.randint(1000, 9999)
+            proposal = f"{base_name}{suffix}"
+            
+            if not self.is_username_taken(proposal, exclude_uid=uid):
+                return proposal
+                
+        # Fallback: use base_name + part of uid if random fail
+        # This is extremely unlikely but good safe guard
+        proposal = f"{base_name}_{uid[:6]}"
+        return proposal
+
     # Super Staff Methods
     def is_super_staff(self, uid):
         user = self.get_user_profile(uid)

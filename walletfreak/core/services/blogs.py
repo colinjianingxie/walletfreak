@@ -149,12 +149,16 @@ class BlogMixin:
             excerpt = blog_data.get('excerpt', '')
             
             subject = f"New on WalletFreak: {title}"
+            
+            # Text Version
             message = f"""
 Hi there!
 
 We just published a new article on WalletFreak:
 
 {title}
+
+Summary:
 {excerpt}
 
 Read more here: https://walletfreak.com/blog/{slug}
@@ -162,7 +166,30 @@ Read more here: https://walletfreak.com/blog/{slug}
 Cheers,
 The WalletFreak Team
             """
-            html_message = message.replace('\n', '<br>')
+            
+            # HTML Version
+            html_message = f"""
+            <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto;">
+                <p>Hi there!</p>
+                <p>We just published a new article on WalletFreak:</p>
+                
+                <h2 style="color: #2d3748; margin-top: 20px;">{title}</h2>
+                
+                <div style="background-color: #f7fafc; border-left: 4px solid #3182ce; padding: 16px; margin: 20px 0;">
+                    <strong style="color: #2d3748; display: block; margin-bottom: 8px;">Summary:</strong>
+                    <div style="color: #4a5568; line-height: 1.6;">{excerpt}</div>
+                </div>
+                
+                <p style="margin-top: 24px;">
+                    <a href="https://walletfreak.com/blog/{slug}" style="background-color: #3182ce; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block; font-weight: bold;">Read Full Article</a>
+                </p>
+                
+                <p style="margin-top: 32px; color: #718096; font-size: 0.9em;">
+                    Cheers,<br>
+                    The WalletFreak Team
+                </p>
+            </div>
+            """
             
             # Send one email with BCC
             try:

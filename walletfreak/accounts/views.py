@@ -58,10 +58,14 @@ def firebase_login(request):
         
         if not existing_profile:
             # New user - set defaults
+            # Generate unique username
+            username = db.generate_unique_username(first_name, last_name, uid)
+            
             user_data = {
                 'email': email,
                 'first_name': first_name,
                 'last_name': last_name,
+                'username': username,
                 'is_super_staff': False,  # Default for new users
                 'created_at': firestore.SERVER_TIMESTAMP
             }

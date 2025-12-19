@@ -27,3 +27,46 @@ class HomeViewTest(TestCase):
         response = self.client.get(self.home_url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'landing.html')
+
+class UsernameGenerationTest(TestCase):
+    def test_username_generation(self):
+        from core.services import db
+        from unittest.mock import patch
+        
+        # Test basic generation
+        # Mock is_username_taken to always return False (available)
+        with patch.object(db, 'is_username_taken', return_value=False):
+            username = db.generate_unique_username('John', 'Doe', 'uid123')
+            # Should be johndoe + 4 digits
+            self.assertTrue(username.startswith('johndoe'))
+            self.assertEqual(len(username), 7 + 4)
+            self.assertTrue(username[7:].isdigit())
+
+    def test_username_generation_sanitization(self):
+        from core.services import db
+        from unittest.mock import patch
+        
+        with patch.object(db, 'is_username_taken', return_value=False):
+            username = db.generate_unique_username('Jo hn', 'D-oe', 'uid123')
+            # Should be johndoe + 4 digits (spaces/hyphens removed)
+            self.assertTrue(username.startswith('johndoe'))
+            
+    def test_username_generation_collision(self):
+        from core.services import db
+        from unittest.mock import patch
+        
+        # Test collision retry
+        # First call returns True (taken), subsequent return False (available)
+        with patch.object(db, 'is_username_taken', side_effect=[True, False]):
+            username = db.generate_unique_username('Jane', 'Doe', 'uid123')
+            self.assertTrue(username.startswith('janedoe'))
+            
+    def test_username_generation_fallback(self):
+        from core.services import db
+        from unittest.mock import patch
+        
+        # Test exhausting retries
+        with patch.object(db, 'is_username_taken', return_value=True):
+            username = db.generate_unique_username('Bob', 'Smith', 'uid123456')
+            # Fallback format: bobsmith_uid123 (6 chars of uid)
+            self.assertEqual(username, 'bobsmith_uid123')
