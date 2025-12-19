@@ -401,7 +401,43 @@ def convert_to_firestore_format(cards_dict):
     return firestore_cards
 
 
-def generate_cards_from_csv(csv_path, signup_csv_path=None, rates_csv_path=None, master_csv_path=None):
+
+def parse_benefit_overrides_csv(csv_path):
+    """
+    Parse the benefit overrides CSV.
+    
+    CSV Format: slug-id|benefit_index|period_key|numeric_value
+    
+    Returns a dictionary:
+    {
+        'slug-id': {
+            benefit_index (int): {
+                'period_key': numeric_value (float)
+            }
+        }
+    }
+    """
+    overrides = defaultdict(lambda: defaultdict(dict))
+    
+    try:
+        with open(csv_path, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f, delimiter='|')
+            for row in reader:
+                slug = row['slug-id'].strip()
+                try:
+                    benefit_idx = int(row['benefit_index'].strip())
+                    period_key = row['period_key'].strip()
+                    val = float(row['numeric_value'].strip())
+                    
+                    overrides[slug][benefit_idx][period_key] = val
+                except ValueError:
+                    continue
+    except FileNotFoundError:
+        print(f"Warning: Benefit overrides CSV not found at {csv_path}")
+        
+    return overrides
+
+def generate_cards_from_csv(csv_path, signup_csv_path=None, rates_csv_path=None, master_csv_path=None, overrides_csv_path=None):
     """
     Main function to parse CSV and return Firestore-ready card data.
     """
@@ -437,6 +473,25 @@ def generate_cards_from_csv(csv_path, signup_csv_path=None, rates_csv_path=None,
                 card['min_credit_score'] = data['min_credit_score']
                 card['max_credit_score'] = data['max_credit_score']
                 card['application_link'] = data['application_link']
+
+    if overrides_csv_path:
+        overrides_data = parse_benefit_overrides_csv(overrides_csv_path)
+        for slug, card_overrides in overrides_data.items():
+            # Find the card by slug
+            target_card = None
+            if slug in cards_dict:
+                target_card = cards_dict[slug]
+            
+            if target_card:
+                benefits = target_card['benefits']
+                for idx, period_updates in card_overrides.items():
+                    if 0 <= idx < len(benefits):
+                        # Apply updates to period_values
+                        if 'period_values' not in benefits[idx]:
+                            benefits[idx]['period_values'] = {}
+                        
+                        for p_key, p_val in period_updates.items():
+                            benefits[idx]['period_values'][p_key] = p_val
                 
     return convert_to_firestore_format(cards_dict)
 
