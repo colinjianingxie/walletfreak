@@ -219,6 +219,8 @@
     <script>
         function handleLogout(e) {
             e.preventDefault();
+            // Set flag to prevent base.html from auto-syncing logic re-logging us in
+            sessionStorage.setItem('logging_out', 'true');
             firebase.auth().signOut().then(() => {
                 window.location.href = "/logout/";
             });

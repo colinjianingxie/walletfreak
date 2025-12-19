@@ -53,6 +53,13 @@
                 }
             } else {
                 // User is NOT signed in to Firebase
+
+                // Check if we are in the process of logging out
+                if (sessionStorage.getItem('logging_out') === 'true') {
+                    sessionStorage.removeItem('logging_out');
+                    return;
+                }
+
                 if (isDjangoAuthenticated) {
                     // Django is signed in, but Firebase is not.
                     // We need to fetch a custom token and sign in.
