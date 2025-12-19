@@ -486,7 +486,10 @@ The WalletFreak Team
             blog = self.get_blog_by_id(blog_id)
             if not blog:
                 return None
-            # We no longer track individual user votes in the backend
+            
+            users_upvoted = blog.get('users_upvoted', [])
+            if uid in users_upvoted:
+                return 'upvote'
             return None
         except Exception as e:
             print(f"Error getting user vote on blog: {e}")
@@ -499,7 +502,8 @@ The WalletFreak Team
                 return False
                 
             self.db.collection('blogs').document(blog_id).update({
-                'upvote_count': firestore.Increment(1)
+                'upvote_count': firestore.Increment(1),
+                'users_upvoted': firestore.ArrayUnion([uid])
             })
             return True
         except Exception as e:
@@ -516,7 +520,8 @@ The WalletFreak Team
         """Remove a user's vote on a blog post"""
         try:
             self.db.collection('blogs').document(blog_id).update({
-                'upvote_count': firestore.Increment(-1)
+                'upvote_count': firestore.Increment(-1),
+                'users_upvoted': firestore.ArrayRemove([uid])
             })
             return True
         except Exception as e:
