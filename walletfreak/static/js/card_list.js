@@ -138,15 +138,18 @@ function updateSlider() {
     } else {
         minFeeSlider.style.zIndex = 3;
     }
+}
 
+function handleSliderInput(e) {
+    updateSlider.call(this, e);
     filterCards();
 }
 
 if (minFeeSlider && maxFeeSlider) {
-    minFeeSlider.addEventListener('input', updateSlider);
-    maxFeeSlider.addEventListener('input', updateSlider);
-    minFeeSlider.addEventListener('change', updateSlider);
-    maxFeeSlider.addEventListener('change', updateSlider);
+    minFeeSlider.addEventListener('input', handleSliderInput);
+    maxFeeSlider.addEventListener('input', handleSliderInput);
+    minFeeSlider.addEventListener('change', handleSliderInput);
+    maxFeeSlider.addEventListener('change', handleSliderInput);
     // Ensure slider updates on resize
     window.addEventListener('resize', updateSlider);
 }
@@ -333,6 +336,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Initialize View
     toggleView(currentView);
+    filterCards();
 });
 
 function openFilters() {
