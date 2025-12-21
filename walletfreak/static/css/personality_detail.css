@@ -530,6 +530,10 @@
         justify-content: center !important;
     }
 
+    .carousel-track.align-start {
+        justify-content: flex-start !important;
+    }
+
     .personality-slot-container {
         padding: 2rem !important;
     }

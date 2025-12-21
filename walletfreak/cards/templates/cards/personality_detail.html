@@ -115,7 +115,7 @@
 
             <!-- Cards in Slot (Carousel) -->
             <div class="slot-carousel" id="carousel-slot-{{ forloop.counter }}">
-                <div class="carousel-track">
+                <div class="carousel-track {% if slot.hydrated_cards|length > 3 %}align-start{% endif %}">
                     {% for card in slot.hydrated_cards %}
                     <div class="card-option slot-card-{{ forloop.parentloop.counter }} {% if not forloop.first %}slot-card-hidden{% endif %}" 
                         data-id="{{ card.id }}"
