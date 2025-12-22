@@ -37,7 +37,8 @@ def blog_list(request):
                 'reviews': 'review',
                 'guides': 'guide',
                 'tips': 'tips',
-                'news': 'news'
+                'news': 'news',
+                'strategy': 'strategy'
             }
             
             target_tag = tag_mapping.get(category.lower(), category.lower())
@@ -107,6 +108,35 @@ def blog_list(request):
                 blog['user_vote'] = db.get_user_vote_on_blog(uid, blog_id)
             else:
                 blog['user_vote'] = None
+                
+            # Normalize tags to list for template
+            tags = blog.get('tags')
+            if tags:
+                if isinstance(tags, str):
+                    # Check if it's a string representation of a list
+                    if tags.startswith('[') and tags.endswith(']'):
+                        try:
+                            import ast
+                            tags_list = ast.literal_eval(tags)
+                            if isinstance(tags_list, list):
+                                blog['tags'] = tags_list
+                            else:
+                                blog['tags'] = [t.strip() for t in tags.split(',') if t.strip()]
+                        except:
+                             blog['tags'] = [t.strip() for t in tags.split(',') if t.strip()]
+                    else:
+                        blog['tags'] = [t.strip() for t in tags.split(',') if t.strip()]
+                elif isinstance(tags, list):
+                    # Check if it's a list containing a single string representation
+                    if len(tags) == 1 and isinstance(tags[0], str) and tags[0].startswith('[') and tags[0].endswith(']'):
+                         try:
+                            import ast
+                            inner_list = ast.literal_eval(tags[0])
+                            if isinstance(inner_list, list):
+                                blog['tags'] = inner_list
+                         except:
+                            pass
+
     
     # Get trending posts (top 3 most upvoted published posts)
     trending_posts = []

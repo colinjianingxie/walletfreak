@@ -66,7 +66,24 @@
     .toast.error { background: #EF4444; }
     .toast.info { background: #3B82F6; }
     
-    .toast-icon { font-size: 20px; }
+    /* Category Badges */
+    .post-category {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        background: transparent !important;
+        padding: 0 !important;
+    }
+    
+    .category-badge {
+        background: #eef2ff;
+        color: #4f46e5;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 8px;
+        border-radius: 4px;
+        letter-spacing: 0.5px;
+    }
 </style>
 {% endblock %}
 
@@ -95,6 +112,7 @@
                     <a href="?category=Guides" class="category-tab {% if current_category == 'Guides' %}active{% endif %}">Guides</a>
                     <a href="?category=Tips" class="category-tab {% if current_category == 'Tips' %}active{% endif %}">Tips</a>
                     <a href="?category=News" class="category-tab {% if current_category == 'News' %}active{% endif %}">News</a>
+                    <a href="?category=Strategy" class="category-tab {% if current_category == 'Strategy' %}active{% endif %}">Strategy</a>
                     <a href="?category=Saved" class="category-tab {% if current_category == 'Saved' %}active{% endif %}">Saved</a>
                 </div>
             </div>
@@ -106,6 +124,7 @@
                 <a href="?category=Guides" class="mobile-tab {% if current_category == 'Guides' %}active{% endif %}">Guides</a>
                 <a href="?category=Tips" class="mobile-tab {% if current_category == 'Tips' %}active{% endif %}">Tips</a>
                 <a href="?category=News" class="mobile-tab {% if current_category == 'News' %}active{% endif %}">News</a>
+                <a href="?category=Strategy" class="mobile-tab {% if current_category == 'Strategy' %}active{% endif %}">Strategy</a>
                 <a href="?category=Saved" class="mobile-tab {% if current_category == 'Saved' %}active{% endif %}">Saved</a>
             </div>
         </div>
@@ -148,11 +167,11 @@
                                 </div>
                             </div>
                             <div class="post-category">
-                                {% if 'review' in post.tags|lower %}REVIEWS
-                                {% elif 'guide' in post.tags|lower %}GUIDES
-                                {% elif 'tips' in post.tags|lower %}TIPS
-                                {% elif 'news' in post.tags|lower %}NEWS
-                                {% else %}REVIEWS{% endif %}
+                                {% for tag in post.tags %}
+                                    <span class="category-badge">{{ tag|upper }}</span>
+                                {% empty %}
+                                    <span class="category-badge">UNCATEGORIZED</span>
+                                {% endfor %}
                             </div>
                         </div>
 
