@@ -74,7 +74,7 @@ class Command(BaseCommand):
                 benefits = card_def.get('benefits', [])
                 credits_found = False
                 
-                for benefit in benefits:
+                for idx, benefit in enumerate(benefits):
                     # We are looking for monetary credits
                     # Usually indicated by 'dollar_value' > 0 and benefit_type='Credit' or just checking dollar_value
                     dollar_val = benefit.get('dollar_value')
@@ -90,27 +90,45 @@ class Command(BaseCommand):
                         
                         # Check usage
                         usage_data = u_card.get('benefit_usage', {})
-                        usage_key = benefit.get('description') 
+                        # KEY FIX: Use benefit_{idx} to match dashboard/views.py
+                        usage_key = f"benefit_{idx}"
                         
                         b_usage = usage_data.get(usage_key, {})
                         
                         used_amount = 0
+                        is_full = False
+                        
+                        # Calculate Limit (Per-Period)
+                        limit = dollar_val
+                        period_values = benefit.get('period_values', {})
+                        
                         if period_key:
+                            # Use period specific limit if defined, else fallback
+                            # e.g. Monthly -> /12, but period_values might have exact overrides
+                            if period_key in period_values:
+                                limit = period_values[period_key]
+                            elif 'Monthly' in time_cat:
+                                limit = dollar_val / 12
+                            elif 'Quarterly' in time_cat:
+                                limit = dollar_val / 4
+                            elif 'Semi-annually' in time_cat:
+                                limit = dollar_val / 2
+                                
                             # If structured with periods
                             if 'periods' in b_usage:
-                                used_amount = b_usage['periods'].get(period_key, {}).get('used', 0)
+                                p_data = b_usage['periods'].get(period_key, {})
+                                used_amount = p_data.get('used', 0)
+                                is_full = p_data.get('is_full', False)
                             else:
-                                # Fallback or flat usage
+                                # Fallback or flat usage (unlikely if period_key is set correctly but safety net)
                                 used_amount = b_usage.get('used', 0)
+                                is_full = b_usage.get('is_full', False)
                         else:
                             used_amount = b_usage.get('used', 0)
+                            is_full = b_usage.get('is_full', False)
                             
-                        # Calculate Per-Period limit if applicable
-                        limit = dollar_val
-                        if 'Monthly' in time_cat:
-                             limit = dollar_val / 12
-                        
-                        unused = limit - used_amount
+                        # If marked as full, assume fully used regardless of amount
+                        unused = 0 if is_full else (limit - used_amount)
                         
                         # Only consider unused if it's materially significant (> 1 cent)
                         # Fixes floating point issues where maxed out benefits show tiny remainder
@@ -126,6 +144,9 @@ class Command(BaseCommand):
                             user_unused_items.append(item)
                             self.stdout.write(f"  - {card_name}: {desc}")
                             self.stdout.write(f"    Limit: ${limit:.2f} ({time_cat}) | Used: ${used_amount:.2f} | Unused: ${unused:.2f}")
+                            if is_full:
+                                self.stdout.write(f"    (Marked as FULL)")
+
 
             # Send Email if requested and items found
             if should_send and user_unused_items and user_email:
