@@ -130,23 +130,23 @@ class Command(BaseCommand):
                         # If marked as full, assume fully used regardless of amount
                         unused = 0 if is_full else (limit - used_amount)
                         
-                        # Only consider unused if it's materially significant (> 1 cent)
-                        # Fixes floating point issues where maxed out benefits show tiny remainder
-                        if unused > 0.01:
+                        # Fix: Include ALL benefits for the current period, regardless of usage
+                        # But ensure we only show if there is a valid limit (i.e., it's a credit benefit)
+                        if limit > 0:
                             item = {
                                 'card_name': card_name,
                                 'benefit': desc,
                                 'limit': limit,
                                 'time_cat': time_cat,
                                 'used': used_amount,
-                                'unused': unused
+                                'unused': unused,
+                                'is_full': is_full
                             }
                             user_unused_items.append(item)
                             self.stdout.write(f"  - {card_name}: {desc}")
                             self.stdout.write(f"    Limit: ${limit:.2f} ({time_cat}) | Used: ${used_amount:.2f} | Unused: ${unused:.2f}")
                             if is_full:
                                 self.stdout.write(f"    (Marked as FULL)")
-
 
             # Send Email if requested and items found
             if should_send and user_unused_items and user_email:
@@ -184,10 +184,10 @@ class Command(BaseCommand):
                     self.stdout.write(f"  [ERROR] Processing notification logic: {e}")
                     
             elif should_send and not user_unused_items:
-                 self.stdout.write(f"  -> No unused credits to email.")
+                 self.stdout.write(f"  -> No credits found to email.")
 
     def send_unused_credits_email(self, to_email, username, first_name, last_name, items):
-        subject = "You have unused credit card benefits!"
+        subject = "Your Credit Card Benefit Status Update"
         
         # Determine Greeting
         greeting_name = username
@@ -199,27 +199,47 @@ class Command(BaseCommand):
         # Build HTML Table
         rows = ""
         for item in items:
+            # Color coding for unused
+            unused_color = "#333"
+            if item['unused'] > 0:
+                unused_color = "#2e7d32" # Green for available money
+            
+            # Status badge
+            status_text = ""
+            if item['is_full'] or item['unused'] <= 0.01:
+                status_text = '<span style="background-color: #eee; color: #666; padding: 2px 6px; border-radius: 4px; font-size: 0.85em;">Used</span>'
+            else:
+                status_text = '<span style="background-color: #e8f5e9; color: #2e7d32; padding: 2px 6px; border-radius: 4px; font-size: 0.85em;">Available</span>'
+
             rows += f"""
             <tr>
-                <td style="padding: 8px; border-bottom: 1px solid #ddd;">{item['card_name']}</td>
-                <td style="padding: 8px; border-bottom: 1px solid #ddd;">{item['benefit']}</td>
-                <td style="padding: 8px; border-bottom: 1px solid #ddd;">{item['time_cat']}</td>
-                 <td style="padding: 8px; border-bottom: 1px solid #ddd; font-weight: bold; color: #d32f2f;">${item['unused']:.2f}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee;">{item['card_name']}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee;">
+                    <div style="font-weight: 500;">{item['benefit']}</div>
+                    <div style="font-size: 0.85em; color: #777;">{item['time_cat']}</div>
+                </td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee;">${item['limit']:.2f}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee;">${item['used']:.2f}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold; color: {unused_color};">
+                    ${item['unused']:.2f}
+                    <div style="margin-top: 4px;">{status_text}</div>
+                </td>
             </tr>
             """
         
         html_content = f"""
-        <div style="font-family: Arial, sans-serif; color: #333;">
-            <h2>{greeting}</h2>
-            <p>You have unused benefits on your credit cards. Don't leave money on the table!</p>
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #333; line-height: 1.6; max-width: 600px; margin: 0 auto;">
+            <h2 style="color: #1a1a1a;">{greeting}</h2>
+            <p>Here is your latest credit card benefit usage for this period:</p>
             
-            <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <table style="width: 100%; border-collapse: collapse; margin-top: 25px; font-size: 14px; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
                 <thead>
-                    <tr style="background-color: #f5f5f5;">
-                        <th style="padding: 10px; text-align: left; border-bottom: 2px solid #ddd;">Card</th>
-                        <th style="padding: 10px; text-align: left; border-bottom: 2px solid #ddd;">Benefit</th>
-                        <th style="padding: 10px; text-align: left; border-bottom: 2px solid #ddd;">Period</th>
-                        <th style="padding: 10px; text-align: left; border-bottom: 2px solid #ddd;">Unused Value</th>
+                    <tr style="background-color: #f8f9fa; border-bottom: 2px solid #eaeaea;">
+                        <th style="padding: 12px 10px; text-align: left; font-weight: 600; color: #444;">Card</th>
+                        <th style="padding: 12px 10px; text-align: left; font-weight: 600; color: #444;">Benefit</th>
+                        <th style="padding: 12px 10px; text-align: left; font-weight: 600; color: #444;">Limit</th>
+                        <th style="padding: 12px 10px; text-align: left; font-weight: 600; color: #444;">Used</th>
+                        <th style="padding: 12px 10px; text-align: left; font-weight: 600; color: #444;">Left</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -227,18 +247,24 @@ class Command(BaseCommand):
                 </tbody>
             </table>
             
-            <p style="margin-top: 20px;">
-                <a href="https://walletfreak.com/dashboard" style="background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Go to Dashboard</a>
-            </p>
+            <div style="margin-top: 30px; text-align: center;">
+                <a href="https://walletfreak.com/dashboard" style="background-color: #000; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 500; display: inline-block;">Go to Dashboard</a>
+            </div>
             
-            <p>Cheers,<br>The WalletFreak Team</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: #666;">
+                Cheers,<br>The WalletFreak Team
+            </p>
         </div>
         """
         
         # Text fallback
-        text_content = f"{greeting}\n\nYou have unused benefits:\n\n"
+        text_content = f"{greeting}\n\nHere is your credit card benefit status:\n\n"
         for item in items:
-            text_content += f"- {item['card_name']}: {item['benefit']} - ${item['unused']:.2f} remaining ({item['time_cat']})\n"
+            status = "USED" if (item['is_full'] or item['unused'] <= 0.01) else "AVAILABLE"
+            text_content += f"{item['card_name']} - {item['benefit']} ({item['time_cat']})\n"
+            text_content += f"Status: {status}\n"
+            text_content += f"Limit: ${item['limit']:.2f} | Used: ${item['used']:.2f} | Left: ${item['unused']:.2f}\n"
+            text_content += "-" * 30 + "\n"
         
         text_content += "\nCheck your dashboard: https://walletfreak.com/dashboard\n\nCheers,\nThe WalletFreak Team"
         
