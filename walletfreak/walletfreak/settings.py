@@ -200,6 +200,7 @@ LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/wallet/'
 
 # Email Backend (SMTP for Production/Real Testing)
+# Note: Primary email sending is handled via Firestore Trigger Extension
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587

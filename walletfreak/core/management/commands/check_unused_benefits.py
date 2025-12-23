@@ -248,7 +248,7 @@ class Command(BaseCommand):
             </table>
             
             <div style="margin-top: 30px; text-align: center;">
-                <a href="https://walletfreak.com/dashboard" style="background-color: #000; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 500; display: inline-block;">Go to Dashboard</a>
+                <a href="https://walletfreak.com/wallet" style="background-color: #000; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 500; display: inline-block;">Go to Wallet</a>
             </div>
             
             <p style="margin-top: 30px; font-size: 0.9em; color: #666;">
@@ -266,21 +266,11 @@ class Command(BaseCommand):
             text_content += f"Limit: ${item['limit']:.2f} | Used: ${item['used']:.2f} | Left: ${item['unused']:.2f}\n"
             text_content += "-" * 30 + "\n"
         
-        text_content += "\nCheck your dashboard: https://walletfreak.com/dashboard\n\nCheers,\nThe WalletFreak Team"
+        text_content += "\nCheck your wallet: https://walletfreak.com/wallet\n\nCheers,\nThe WalletFreak Team"
         
         try:
-            # Special handling for yahoo.com emails to avoid spam folder/rejection
-            # Send to walletfreak@gmail.com and BCC the user
-            final_to = to_email
-            final_bcc = None
-            
-            if to_email.lower().endswith('@yahoo.com'):
-                final_to = "walletfreak@gmail.com"
-                final_bcc = [to_email]
-                self.stdout.write(f"     [INFO] Yahoo email detected. Sending to {final_to} with BCC to {to_email}")
-
-            db.send_email_notification(to=final_to, subject=subject, html_content=html_content, text_content=text_content, bcc=final_bcc)
-            self.stdout.write(self.style.SUCCESS("     Email sent successfully."))
+            db.send_email_notification(to=to_email, subject=subject, html_content=html_content, text_content=text_content)
+            self.stdout.write(self.style.SUCCESS("     Email sent successfully (queued)."))
             return True
         except Exception as e:
             self.stdout.write(self.style.ERROR(f"     Failed to send email: {e}"))
