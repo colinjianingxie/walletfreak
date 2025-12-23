@@ -171,13 +171,15 @@
 
     /* Benefit & Anniversary Modal Mobile Fullscreen */
     #benefit-modal,
-    #anniversary-modal {
+    #anniversary-modal,
+    #chase-524-modal {
         padding: 0 !important;
         align-items: flex-start !important;
     }
 
     #benefit-modal .modal-content,
-    #anniversary-modal .modal-content {
+    #anniversary-modal .modal-content,
+    #chase-524-modal .modal-content {
         width: 100% !important;
         height: 100% !important;
         max-width: 100% !important;
@@ -185,10 +187,13 @@
         border-radius: 0 !important;
         display: flex;
         flex-direction: column;
+        overflow: hidden !important;
+        /* Fix for scrolling behind header */
     }
 
     #benefit-modal .modal-content>div:last-child,
-    #anniversary-modal .modal-content>div:last-child {
+    #anniversary-modal .modal-content>div:last-child,
+    #chase-524-modal .modal-content>div:last-child {
         flex: 1;
         overflow-y: auto;
     }
@@ -201,6 +206,13 @@
     #anniversary-modal .modal-content>div:last-child button {
         width: 100% !important;
         flex: none !important;
+    }
+
+    /* Chase 5/24 Modal Header Fix */
+    #chase-524-modal .modal-content>div:first-child {
+        padding: 1rem !important;
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
     }
 
     /* Fix Maxed Out Grid Overflow */
