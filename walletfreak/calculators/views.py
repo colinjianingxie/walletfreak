@@ -77,10 +77,16 @@ def worth_it_audit(request, card_slug):
                 input_type = 'slider'
                 max_val = 2
                 
+            if 'Monthly' in time_cat or 'Quarterly' in time_cat:
+                label = f"How often do you use the ${b.get('dollar_value')} {b.get('short_description', 'credit')}?"
+            else:
+                # Annual or Semi-Annual (Toggles)
+                label = f"Would you use the ${b.get('dollar_value')} {b.get('short_description', 'credit')}?"
+
             b['audit_config'] = {
                 'input_type': input_type,
                 'max_val': max_val,
-                'label': f"How often do you use the ${b.get('dollar_value')} {b.get('short_description', 'credit')}?"
+                'label': label
             }
             audit_benefits.append(b)
 
@@ -136,12 +142,33 @@ def worth_it_calculate(request, card_slug):
         
         score = total_value - annual_fee
         
+        # Calculate percentage for circular progress (arbitrary max scale, e.g. 2x annual fee or fixed max)
+        # Let's say max score is 100 for visual purposes, or relative to fees.
+        # User design shows "84 SCORE". Let's map it:
+        # If score > 0, maybe percentage is (score / (annual_fee * 2)) * 100?
+        # Or simply, let's treat "Score" as a proprietary 0-100 metric for now, 
+        # or just visualize the profitability ratio.
+        # Simple approach: If profitable, 100%. If breakeven 50%. 
+        # Better: (Total Value / Annual Fee) * 50. scale.
+        
+        # Implementation for "Score" based on Value vs Fee ratio.
+        # 1.0 (Break even) = 50 score.
+        # 2.0 (2x value) = 100 score.
+        if annual_fee > 0:
+            ratio = total_value / annual_fee
+            optimization_score = min(max(int(ratio * 50), 0), 100)
+        else:
+            optimization_score = 100 # No fee, infinite value ratio essentially
+
         # Return context for result template
         return render(request, 'calculators/worth_it_result.html', {
             'card': card,
             'annual_fee': annual_fee,
             'total_value': total_value,
-            'score': score,
+            'net_profit': score, # This is the dollar amount
+            'net_profit_abs': abs(score),
+            'score_display': optimization_score, # 0-100
+            'score_percentage': optimization_score, # For CSS circle
             'is_worth_it': score >= 0
         })
     

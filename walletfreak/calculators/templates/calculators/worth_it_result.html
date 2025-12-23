@@ -2,56 +2,311 @@
 {% load static %}
 
 {% block content %}
-<div class="container py-5" style="max-width: 800px;">
-    <div class="text-center mb-5">
-        <h1 class="fw-bold mb-3">{{ card.name }}</h1>
-        <p class="lead text-muted">Here's your optimization breakdown.</p>
+<div class="result-page-wrapper">
+    <!-- Top Navigation - Left Aligned -->
+    <div class="nav-header">
+        <a href="{% url 'worth_it_list' %}" class="back-link">
+            <span class="material-icons">arrow_back</span>
+            Back to Lab
+        </a>
     </div>
 
-    <div class="card border-0 shadow-lg mb-5 overflow-hidden">
-        <div class="card-body p-0">
-            <div class="p-5 text-center text-white {% if is_worth_it %}bg-success{% else %}bg-danger{% endif %} bg-gradient">
-                <h2 class="display-1 fw-bold mb-0">
-                    {% if score > 0 %}+{% endif %}${{ score|floatformat:0 }}
-                </h2>
-                <p class="fs-4 opacity-75 mb-0">Optimization Score</p>
-                {% if is_worth_it %}
-                <div class="mt-3 badge bg-white text-success px-3 py-2 rounded-pill fw-bold">WORTH IT</div>
-                {% else %}
-                <div class="mt-3 badge bg-white text-danger px-3 py-2 rounded-pill fw-bold">NOT OPTIMAL</div>
-                {% endif %}
-            </div>
+    <div class="result-content-container">
+        <!-- Dark Result Card -->
+        <div class="result-card">
             
-            <div class="p-4 p-md-5">
-                <div class="row align-items-center mb-4">
-                    <div class="col-6 text-center border-end">
-                        <div class="text-muted small text-uppercase fw-bold mb-1">Total Value</div>
-                        <div class="fs-2 fw-bold text-success">${{ total_value|floatformat:0 }}</div>
-                    </div>
-                    <div class="col-6 text-center">
-                        <div class="text-muted small text-uppercase fw-bold mb-1">Annual Cost</div>
-                        <div class="fs-2 fw-bold text-danger">-${{ annual_fee|floatformat:0 }}</div>
-                    </div>
-                </div>
+            <div class="text-center mb-5">
+                <h6 class="text-uppercase tracking-widest mb-4 audit-label">Audit Complete</h6>
                 
-                {% if card.application_link %}
-                <div class="text-center mt-4">
-                    <a href="{{ card.application_link }}" target="_blank" class="btn btn-primary btn-lg px-5 rounded-pill shadow-sm">
-                        Apply Now <i class="bi bi-box-arrow-up-right ms-2"></i>
-                    </a>
+                <!-- Circular Score Indicator -->
+                <div class="score-circle-container mb-4">
+                    <div class="score-circle" style="--score-pct: {{ score_percentage }};">
+                        <svg viewBox="0 0 160 160">
+                            <defs>
+                                <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" /> <!-- Blue-500 -->
+                                    <stop offset="100%" style="stop-color:#6366f1;stop-opacity:1" /> <!-- Indigo-500 -->
+                                </linearGradient>
+                            </defs>
+                            <circle class="circle-bg" cx="80" cy="80" r="70"></circle>
+                            <circle class="circle-progress" cx="80" cy="80" r="70"></circle>
+                        </svg>
+                        <div class="score-content">
+                            <div class="score-value">{{ score_display }}</div>
+                            <div class="score-label">SCORE</div>
+                        </div>
+                    </div>
                 </div>
-                {% endif %}
+
+                <!-- Dynamic Headline -->
+                <h1 class="result-headline mb-3 text-white">
+                    {% if is_worth_it %}
+                        You're Profitably Freakish!
+                    {% else %}
+                        Not Quite Essential.
+                    {% endif %}
+                </h1>
+
+                <!-- Net Profit Text -->
+                <p class="result-description">
+                    Based on your inputs, you are extracting <span class="fw-bold text-white">${{ net_profit_abs|floatformat:0 }} in <br class="d-md-none">
+                    {% if net_profit >= 0 %}net profit{% else %}net loss{% endif %}</span> from the {{ card.name }} every year.
+                </p>
             </div>
+
+            <!-- Action Buttons -->
+            <!-- Using explicit CSS class for layout to guarantee centering -->
+            <div class="action-buttons">
+                <!-- Apply Strategy (Application Link) -->
+                {% if card.application_link %}
+                <a href="{{ card.application_link }}" target="_blank" class="btn btn-primary-white">
+                    Apply Now
+                </a>
+                {% else %}
+                <button class="btn btn-primary-white" disabled>No Application Link</button>
+                {% endif %}
+
+                <!-- Start Over -->
+                <a href="{% url 'worth_it_audit' card.slug %}" class="btn btn-secondary-dark">
+                    Start Over
+                </a>
+            </div>
+
         </div>
     </div>
-    
-    <div class="text-center">
-        <a href="{% url 'worth_it_list' %}" class="text-muted text-decoration-none me-3">
-            <i class="bi bi-arrow-left me-1"></i> Analyze Another Card
-        </a>
-        <a href="{% url 'worth_it_audit' card.slug %}" class="text-muted text-decoration-none ms-3">
-            <i class="bi bi-arrow-counterclockwise me-1"></i> Modify Inputs
-        </a>
-    </div>
 </div>
+
+<style>
+    /* Page Background - Subtle Blue/White Gradient */
+    body {
+        background: radial-gradient(100% 100% at 50% 0%, #FFFFFF 0%, #F1F5F9 100%);
+        min-height: 100vh;
+    }
+
+    .result-page-wrapper {
+        min-height: 100vh;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Keep content centered but padded bottom to move visual center up */
+    .result-content-container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 0;
+        padding-bottom: 120px; /* Moves the center visual UP by adding space below */
+    }
+
+    /* Back Link - Top Left Corner container */
+    .nav-header {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #94A3B8; /* Slate 400 */
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.2s;
+    }
+    .back-link:hover {
+        color: #64748B;
+    }
+    .back-link .material-icons { font-size: 16px; }
+
+    /* Result Card */
+    .result-card {
+        background: #0F172A; /* Slate 900 / Dark Blue */
+        border-radius: 32px;
+        padding: 60px 40px;
+        color: white;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); /* Deep shadow */
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        max-width: 800px; /* Card itself limited width */
+        margin: 0 auto;
+    }
+    
+    /* Subtle Top Right Gradient Glow */
+    .result-card::before {
+        content: '';
+        position: absolute;
+        top: -150px;
+        right: -150px;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+        pointer-events: none;
+        border-radius: 50%;
+    }
+
+    .audit-label {
+        letter-spacing: 0.15em; 
+        font-weight: 700; 
+        font-size: 0.75rem; 
+        color: #818CF8; /* Indigo 400 */
+        font-family: 'Outfit', sans-serif;
+    }
+
+    /* Circular Score */
+    .score-circle-container {
+        position: relative;
+        width: 180px; 
+        height: 180px;
+        margin: 0 auto;
+    }
+    
+    .score-circle svg {
+        width: 100%;
+        height: 100%;
+        transform: rotate(-90deg);
+    }
+    
+    .circle-bg {
+        fill: none;
+        stroke: #1e293b; /* Dark Slate for empty track */
+        stroke-width: 12;
+    }
+    
+    .circle-progress {
+        fill: none;
+        stroke: url(#scoreGradient); 
+        stroke-width: 12;
+        stroke-linecap: round;
+        stroke-dasharray: 440; 
+        stroke-dashoffset: calc(440 - (440 * var(--score-pct)) / 100);
+        transition: stroke-dashoffset 1s ease-out;
+    }
+    
+    .score-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .score-value {
+        font-family: 'Outfit', sans-serif;
+        font-weight: 800; 
+        font-size: 3.5rem;
+        line-height: 1;
+        color: white;
+        margin-bottom: 2px;
+    }
+    
+    .score-label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        color: #64748B; 
+        text-transform: uppercase;
+    }
+
+    /* Typography */
+    .result-headline {
+        font-family: 'Outfit', sans-serif;
+        font-weight: 700;
+        font-size: 2.25rem;
+        margin-bottom: 0.75rem;
+        color: white !important;
+    }
+    
+    .result-description {
+        color: #94A3B8; 
+        font-size: 1.1rem;
+        line-height: 1.5;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    /* Buttons */
+    .action-buttons {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        max-width: 600px;
+        margin: 64px auto 0; /* Updated top margin for spacing */
+        width: 100%;
+    }
+
+    .btn-primary-white {
+        background: white;
+        color: #0F172A;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 700;
+        padding: 14px 28px;
+        border-radius: 14px;
+        border: none;
+        font-size: 1rem;
+        min-width: 180px;
+        text-decoration: none;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.2s;
+        height: 56px;
+        flex: 1;
+    }
+    .btn-primary-white:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(255,255,255,0.15);
+        color: #0F172A;
+    }
+
+    .btn-secondary-dark {
+        background: #1e293b; /* Slate 800 */
+        color: white;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 700;
+        padding: 14px 28px;
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,0.05); /* Very subtle border */
+        font-size: 1rem;
+        min-width: 180px;
+        text-decoration: none;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        transition: background 0.2s;
+        height: 56px;
+        flex: 1;
+    }
+    .btn-secondary-dark:hover {
+        background: #334155; /* Slate 700 */
+        color: white;
+    }
+    
+    @media (max-width: 576px) {
+        .result-card {
+            padding: 40px 24px;
+            border-radius: 24px;
+        }
+        .action-buttons {
+            flex-direction: column;
+            gap: 12px !important;
+        }
+        .btn-primary-white, .btn-secondary-dark {
+            width: 100%;
+        }
+        .result-headline {
+            font-size: 1.75rem;
+        }
+        .nav-header {
+            margin-bottom: 0;
+            padding-bottom: 20px;
+        }
+    }
+</style>
 {% endblock %}

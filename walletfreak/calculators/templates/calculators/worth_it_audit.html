@@ -2,91 +2,290 @@
 {% load static %}
 
 {% block content %}
-<div class="container py-5" style="max-width: 800px;">
-    <div class="row mb-4">
-        <div class="col-12 text-center">
-            <h1 class="fw-bold mb-3">{{ card.name }}</h1>
-            <p class="lead text-muted">Let's see if this card is worth it for you.</p>
+<div class="audit-container">
+    <!-- Top Navigation -->
+    <div class="container mb-4">
+        <a href="{% url 'worth_it_list' %}" class="back-link">
+            <span class="material-icons">arrow_back</span>
+            Back to Lab
+        </a>
+    </div>
+
+    <!-- Header Section -->
+    <div class="container mb-5">
+        <div class="header-card d-flex align-items-center gap-4">
+            <div class="card-image-lg">
+                {% if card.image_url %}
+                    <img src="{{ card.image_url }}" alt="{{ card.name }}">
+                {% else %}
+                    <div class="placeholder-image">
+                        <span class="material-icons">credit_card</span>
+                    </div>
+                {% endif %}
+            </div>
+            <div>
+                <h1 class="audit-title">{{ card.name }} Audit</h1>
+                <p class="audit-subtitle">Answer these quick questions about your usage.</p>
+            </div>
         </div>
     </div>
 
-    <form method="post" action="{% url 'worth_it_calculate' card.slug %}" id="auditForm">
-        {% csrf_token %}
-        
-        <div class="card border-0 shadow-sm mb-4">
-            <div class="card-body p-4">
-                <h5 class="fw-bold border-bottom pb-3 mb-4">Benefit Utilization</h5>
-                
-                {% for benefit in benefits %}
-                <div class="mb-5 last-mb-0">
-                    <div class="d-flex justify-content-between align-items-start mb-2">
-                        <div>
-                            <label class="form-label fw-bold mb-0">{{ benefit.description }}</label>
-                            <div class="text-muted small">${{ benefit.dollar_value|floatformat:0 }} value • {{ benefit.time_category }}</div>
-                        </div>
+    <!-- Questionnaire Form -->
+    <div class="container" style="max-width: 800px;">
+        <form method="post" action="{% url 'worth_it_calculate' card.slug %}" id="auditForm">
+            {% csrf_token %}
+            
+            {% for benefit in benefits %}
+            <div class="question-card">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                    <div class="question-text">
+                        <h3 class="question-label">{{ benefit.audit_config.label }}</h3>
+                        <p class="question-hint">
+                            {% if benefit.audit_config.input_type == 'slider' %}
+                                We value each visit at ~${{ benefit.dollar_value|floatformat:0 }}.
+                            {% else %}
+                                ${{ benefit.dollar_value|floatformat:0 }} value.
+                            {% endif %}
+                        </p>
                     </div>
                     
-                    <div class="p-3 bg-light rounded mt-2">
-                        <label class="form-label small text-muted text-uppercase fw-bold mb-3">{{ benefit.audit_config.label }}</label>
-                        
+                    <div class="question-input">
                         {% if benefit.audit_config.input_type == 'slider' %}
-                            <div class="range-container">
-                                <input type="range" class="form-range" 
+                            <!-- Stepper Input -->
+                            <div class="stepper-control">
+                                <button type="button" class="stepper-btn minus" onclick="updateStepper(this, -1, {{ benefit.audit_config.max_val }})">-</button>
+                                <input type="number" 
                                        name="benefit_{{ forloop.counter0 }}" 
-                                       min="0" max="{{ benefit.audit_config.max_val }}" step="1" value="0"
-                                       oninput="this.nextElementSibling.value = this.value">
-                                <output class="fw-bold ms-2">0</output>
-                                <span class="text-muted small ms-1">times/months</span>
+                                       class="stepper-value" 
+                                       value="0" 
+                                       min="0" 
+                                       max="{{ benefit.audit_config.max_val }}" 
+                                       readonly>
+                                <button type="button" class="stepper-btn plus" onclick="updateStepper(this, 1, {{ benefit.audit_config.max_val }})">+</button>
                             </div>
                         {% else %}
-                            <!-- Toggle / Checkbox implementation -->
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" 
-                                       name="benefit_{{ forloop.counter0 }}_toggle" 
-                                       value="1"
-                                       onchange="document.getElementById('hidden_benefit_{{ forloop.counter0 }}').value = this.checked ? 1 : 0">
-                                <input type="hidden" name="benefit_{{ forloop.counter0 }}" id="hidden_benefit_{{ forloop.counter0 }}" value="0">
-                                <label class="form-check-label">I use this benefit</label>
+                            <!-- Yes/No Toggle -->
+                            <div class="toggle-control">
+                                <input type="radio" name="benefit_{{ forloop.counter0 }}" id="b{{ forloop.counter0 }}_yes" value="1" class="btn-check">
+                                <label class="btn btn-toggle" for="b{{ forloop.counter0 }}_yes">Yes</label>
+                                
+                                <input type="radio" name="benefit_{{ forloop.counter0 }}" id="b{{ forloop.counter0 }}_no" value="0" class="btn-check" checked>
+                                <label class="btn btn-toggle" for="b{{ forloop.counter0 }}_no">No</label>
                             </div>
                         {% endif %}
                     </div>
                 </div>
-                {% empty %}
-                <div class="text-center py-4">
-                    <p class="text-muted">No monetary benefits found to analyze for this card.</p>
-                </div>
-                {% endfor %}
             </div>
-        </div>
+            {% empty %}
+            <div class="text-center py-5">
+                <p class="text-muted">No monetary benefits found to analyze for this card.</p>
+            </div>
+            {% endfor %}
 
-        <div class="sticky-bottom bg-white py-3 border-top shadow-lg" style="margin: 0 -15px;">
-            <div class="container text-center">
-                <button type="submit" class="btn btn-dark btn-lg px-5 rounded-pill w-100 w-md-auto" id="calcBtn" onclick="this.classList.add('disabled'); this.innerHTML = '<span class=\'spinner-border spinner-border-sm me-2\'></span>Calculating...';">
-                    Calculate Optimization
+            <!-- Action Button (Bottom of form, not fixed) -->
+            <div class="mt-5 mb-5 pb-5 text-center">
+                <button type="submit" class="btn-calculate" id="calcBtn" onclick="this.classList.add('loading');">
+                    <span class="btn-text">Calculate Optimization Score</span>
+                    <span class="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true" style="display: none;"></span>
                 </button>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 
 <style>
-    /* Mobile safe area for sticky bottom */
+    /* Page Background */
     body {
-        padding-bottom: 80px;
+        background: radial-gradient(circle at 0% 0%, #FFFFFF 0%, #F8FAFC 100%);
+        min-height: 100vh;
+        /* Removed padding-bottom since footer is no longer fixed */
     }
-    .sticky-bottom {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 1030;
+
+    .audit-container {
+        padding: 40px 0;
     }
-    .range-container {
+
+    /* Back Link */
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #94A3B8;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 0.95rem;
+    }
+    .back-link .material-icons { font-size: 18px; }
+
+    /* Header */
+    .card-image-lg {
+        width: 120px;
+        height: 76px; /* Aspect ratio */
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        flex-shrink: 0;
+    }
+    .card-image-lg img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* Contain to ensure full card visible */
+    }
+    
+    .audit-title {
+        font-family: 'Outfit', sans-serif;
+        font-weight: 700;
+        font-size: 2rem;
+        color: #0F172A;
+        margin-bottom: 0.25rem;
+    }
+    .audit-subtitle {
+        color: #64748B;
+        font-size: 1.1rem;
+    }
+
+    /* Question Cards */
+    .question-card {
+        background: white;
+        border-radius: 20px;
+        padding: 32px;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.01), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
+        border: 1px solid rgba(255,255,255,0.5);
+    }
+
+    .question-label {
+        font-family: 'Outfit', sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #0F172A;
+        margin-bottom: 0.5rem;
+    }
+    .question-hint {
+        color: #94A3B8;
+        font-size: 0.9rem;
+        margin-bottom: 0;
+    }
+    
+    .question-text {
+        flex: 1;
+        min-width: 250px; /* Ensure text creates new line if cramped */
+    }
+
+    /* Stepper Input */
+    .stepper-control {
         display: flex;
         align-items: center;
+        background: #F8FAFC;
+        border-radius: 12px;
+        padding: 4px;
     }
-    .last-mb-0:last-child {
-        margin-bottom: 0 !important;
+    .stepper-btn {
+        width: 40px;
+        height: 40px;
+        border: none;
+        background: white;
+        border-radius: 8px;
+        color: #0F172A;
+        font-weight: 600;
+        font-size: 1.25rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        transition: transform 0.1s;
+    }
+    .stepper-btn:active { transform: scale(0.95); }
+    .stepper-value {
+        width: 50px;
+        text-align: center;
+        border: none;
+        background: transparent;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #0F172A;
+    }
+    /* Remove input spinners */
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+        -webkit-appearance: none; 
+        margin: 0; 
+    }
+
+    /* Toggle Control */
+    .toggle-control {
+        background: #F8FAFC;
+        padding: 4px;
+        border-radius: 12px;
+        display: inline-flex;
+    }
+    .btn-toggle {
+        border-radius: 8px;
+        padding: 8px 24px;
+        font-weight: 600;
+        color: #64748B;
+        border: none;
+        transition: all 0.2s;
+    }
+    .btn-check:checked + .btn-toggle {
+        background: white;
+        color: #0F172A;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    
+    /* Calculate Button */
+    .btn-calculate {
+        background: #5555ff;
+        color: white;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        padding: 16px 48px;
+        border-radius: 16px;
+        border: none;
+        width: 100%;
+        max-width: 400px; /* Limited width when inline */
+        box-shadow: 0 10px 20px rgba(85, 85, 255, 0.2);
+        transition: transform 0.2s, background 0.2s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .btn-calculate:hover {
+        background: #4444dd;
+        transform: translateY(-2px);
+    }
+    .btn-calculate.loading {
+        background: #4444dd;
+        opacity: 0.9;
+        pointer-events: none;
+    }
+    .btn-calculate.loading .btn-text {
+        display: none;
+    }
+    .btn-calculate.loading .spinner-border {
+        display: inline-block !important; /* Force visibility */
+        margin: 0 !important;
+        width: 1.5rem;
+        height: 1.5rem;
+        border: 3px solid rgba(255,255,255,0.3); /* Track color */
+        border-top-color: white; /* Spinner color */
+        border-radius: 50%;
+        animation: spinner-border .75s linear infinite;
     }
 </style>
+
+<script>
+    function updateStepper(btn, change, max) {
+        const input = btn.parentElement.querySelector('input');
+        let val = parseInt(input.value) || 0;
+        val += change;
+        
+        if (val < 0) val = 0;
+        if (max && val > max) val = max;
+        
+        input.value = val;
+    }
+</script>
 {% endblock %}
