@@ -45,6 +45,23 @@
             </div>
         </div>
 
+        <!-- Reset Password Form -->
+        <div id="reset-password-form" style="display: none;">
+            <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Reset Password</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Enter your email to receive a password reset link.</p>
+            <form id="resetPasswordForm">
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Email</label>
+                <input type="email" id="resetEmail" required style="margin-bottom: 1.5rem;">
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;">Send Reset Link</button>
+                <div id="reset-message" style="margin-top: 1rem; display: none;"></div>
+            </form>
+
+             <div style="text-align: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0;">
+                <button id="cancelReset" class="btn btn-outline" style="width: 100%;">Back to Sign In</button>
+            </div>
+        </div>
+
         <!-- Sign In Form -->
         <div id="login-form" style="display: block;">
             <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Sign In</h2>
@@ -53,7 +70,10 @@
                 <input type="email" id="loginEmail" required style="margin-bottom: 1rem;">
 
                 <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Password</label>
-                <input type="password" id="loginPassword" required style="margin-bottom: 1.5rem;">
+                <input type="password" id="loginPassword" required style="margin-bottom: 0.5rem;">
+                <div style="text-align: right; margin-bottom: 1.5rem;">
+                    <a href="#" id="showForgotPassword" style="font-size: 0.9rem; color: var(--primary);">Forgot Password?</a>
+                </div>
 
                 <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;">Sign In</button>
                 <div id="login-error" style="color: var(--danger); margin-top: 1rem; display: none;"></div>
@@ -84,19 +104,72 @@
 <script>
     const signupForm = document.getElementById('signup-form');
     const loginForm = document.getElementById('login-form');
+    const resetPasswordForm = document.getElementById('reset-password-form');
     const showLogin = document.getElementById('showLogin');
     const showSignup = document.getElementById('showSignup');
+    const showForgotPassword = document.getElementById('showForgotPassword');
+    const cancelReset = document.getElementById('cancelReset');
 
     showLogin.addEventListener('click', (e) => {
         e.preventDefault();
         signupForm.style.display = 'none';
+        resetPasswordForm.style.display = 'none';
         loginForm.style.display = 'block';
     });
 
     showSignup.addEventListener('click', (e) => {
         e.preventDefault();
         loginForm.style.display = 'none';
+        resetPasswordForm.style.display = 'none';
         signupForm.style.display = 'block';
+    });
+
+    showForgotPassword.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginForm.style.display = 'none';
+        signupForm.style.display = 'none';
+        resetPasswordForm.style.display = 'block';
+    });
+
+    cancelReset.addEventListener('click', (e) => {
+        e.preventDefault();
+        resetPasswordForm.style.display = 'none';
+        loginForm.style.display = 'block';
+    });
+
+    // Reset Password
+    document.getElementById('resetPasswordForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('resetEmail').value;
+        const messageDiv = document.getElementById('reset-message');
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+
+        try {
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            
+            await firebase.auth().sendPasswordResetEmail(email);
+            
+            messageDiv.style.color = 'var(--success)';
+            messageDiv.textContent = 'Password reset email sent! Check your inbox.';
+            messageDiv.style.display = 'block';
+            
+            // Optional: return to login after delay
+            setTimeout(() => {
+                resetPasswordForm.style.display = 'none';
+                loginForm.style.display = 'block';
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Reset Link';
+                messageDiv.style.display = 'none';
+            }, 3000);
+
+        } catch (error) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Send Reset Link';
+            messageDiv.style.color = 'var(--danger)';
+            messageDiv.textContent = error.message;
+            messageDiv.style.display = 'block';
+        }
     });
 
     // Sign Up with Email
