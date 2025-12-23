@@ -2669,12 +2669,13 @@ footer {
 .user-dropdown-toggle-avatar {
     width: 36px;
     height: 36px;
-    background: #2563EB;
+    /* background: #2563EB; */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: #2563EB;
+    /* Colored icon for fallback */
 }
 
 .user-dropdown-toggle-avatar .material-icons {

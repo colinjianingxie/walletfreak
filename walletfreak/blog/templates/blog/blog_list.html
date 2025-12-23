@@ -159,14 +159,18 @@
                         <div class="post-header">
                             <div class="post-author">
                                 <div class="author-avatar">
+                                    {% if post.author_avatar %}
+                                    <img src="{{ post.author_avatar }}" alt="{{ post.author_username }}">
+                                    {% else %}
                                     <span class="material-icons">person</span>
+                                    {% endif %}
                                 </div>
                                 <div class="author-info">
                                     <span class="author-name">@{{ post.author_username|default:"Unknown" }}</span>
                                     <span class="post-time">{{ post.published_at|timesince }} ago &bull; {{ post.view_count|default:0 }} views</span>
                                 </div>
                             </div>
-                            <div class="post-category">
+                            <div class="post-category desktop-tags">
                                 {% for tag in post.tags %}
                                     <span class="category-badge">{{ tag|upper }}</span>
                                 {% empty %}
@@ -196,6 +200,15 @@
                                 <img src="{{ post.featured_image }}" alt="{{ post.title }}">
                             </div>
                             {% endif %}
+                        </div>
+
+                        <!-- Mobile Tags (Only shown on mobile) -->
+                        <div class="post-category mobile-tags">
+                            {% for tag in post.tags %}
+                                <span class="category-badge">{{ tag|upper }}</span>
+                            {% empty %}
+                                <span class="category-badge">UNCATEGORIZED</span>
+                            {% endfor %}
                         </div>
 
                         <!-- Post Actions -->
