@@ -14,24 +14,37 @@
             <h1 style="font-size: 2rem; font-weight: 800; margin: 0; line-height: 1.2;">
                 Hey, <span style="color: #7C3AED;">{% if user.first_name %}{{ user.first_name }}{% else %}Alex{% endif %}!</span>
             </h1>
-            <div id="personality-badge-section" style="display: flex; align-items: center; gap: 0.75rem; margin-top: 0.5rem;">
-                {% if assigned_personality %}
-                <a href="{% url 'personality_detail' assigned_personality.id %}" style="text-decoration: none;">
-                    <span
-                        style="background: #E0F2FE; color: #0284C7; font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 4px; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;"
-                        onmouseover="this.style.background='#BAE6FD'"
-                        onmouseout="this.style.background='#E0F2FE'">
-                        <span class="material-icons" style="font-size: 10px; vertical-align: middle;">psychology</span>
-                        {{ assigned_personality.name }}
+            <!-- Wrapper for Badges -->
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-top: 0.5rem;">
+                <!-- Dynamic Personality Badge Section -->
+                <div id="personality-badge-section">
+                    {% if assigned_personality %}
+                    <a href="{% url 'personality_detail' assigned_personality.id %}" style="text-decoration: none;">
+                        <span
+                            style="background: #E0F2FE; color: #0284C7; font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 4px; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;"
+                            onmouseover="this.style.background='#BAE6FD'"
+                            onmouseout="this.style.background='#E0F2FE'">
+                            <span class="material-icons" style="font-size: 10px; vertical-align: middle;">psychology</span>
+                            {{ assigned_personality.name }}
+                        </span>
+                    </a>
+                    {% else %}
+                    <span style="color: #94A3B8; font-size: 0.875rem; font-style: italic;">
+                        <span class="material-icons" style="font-size: 14px; vertical-align: middle; margin-right: 4px;">info</span>
+                        Add at least 2 cards to discover your freak
                     </span>
-                </a>
+                    {% endif %}
+                </div>
 
-                {% else %}
-                <span style="color: #94A3B8; font-size: 0.875rem; font-style: italic;">
-                    <span class="material-icons" style="font-size: 14px; vertical-align: middle; margin-right: 4px;">info</span>
-                    Add at least 2 cards to discover your freak
+                <!-- Chase 5/24 Badge -->
+                <span 
+                    id="chase-524-badge"
+                    onclick="document.getElementById('chase-524-modal').style.display='flex'"
+                    style="cursor: pointer; font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 4px; letter-spacing: 0.05em; text-transform: uppercase; transition: all 0.2s; {% if chase_eligible %}background: #DCFCE7; color: #16A34A;{% else %}background: #FEE2E2; color: #DC2626;{% endif %}"
+                    title="Chase 5/24 Status: {{ chase_524_count }} cards in 24 months">
+                    <span class="material-icons" style="font-size: 10px; vertical-align: middle;">{% if chase_eligible %}check_circle{% else %}error{% endif %}</span>
+                    CHASE {% if chase_eligible %}ELIGIBLE{% else %}INELIGIBLE{% endif %} ({{ chase_524_count }}/24)
                 </span>
-                {% endif %}
             </div>
         </div>
     </div>

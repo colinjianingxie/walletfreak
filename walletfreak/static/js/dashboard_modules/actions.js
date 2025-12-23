@@ -88,6 +88,11 @@ function saveAnniversaryDate() {
                     // Explicitly hide loader since we aren't reloading
                     hideLoader();
 
+                    // Reset the preview state so it doesn't persist if user adds another card
+                    if (typeof resetCardPreview === 'function') {
+                        resetCardPreview();
+                    }
+
                     // switch back to stack view to show the new card
                     if (window.innerWidth <= 768) {
                         showMobileMyStackScreen();

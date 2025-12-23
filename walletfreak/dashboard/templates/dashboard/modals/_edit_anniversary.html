@@ -1,0 +1,45 @@
+<!-- Edit Anniversary Date Modal -->
+<div id="edit-anniversary-modal" class="modal" style="display: none; align-items: center; justify-content: center; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1000;">
+    <div class="modal-content" style="background: white; width: 100%; max-width: 450px; border-radius: 16px; padding: 2rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);">
+        <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <div>
+                <h3 style="font-size: 1.25rem; font-weight: 700; color: #1F2937; margin: 0 0 0.5rem 0;">Edit Anniversary Date</h3>
+                <p style="color: #64748B; margin: 0; font-size: 0.875rem;">Update when your card membership year starts.</p>
+            </div>
+            <button class="modal-close" onclick="closeEditAnniversaryModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #94A3B8; padding: 0.5rem; display: flex; align-items: center; justify-content: center; transition: color 0.2s;">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+
+        <!-- Warning Message -->
+        <div style="background: #FEF2F2; border-left: 4px solid #EF4444; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+                <span class="material-icons" style="font-size: 18px; color: #B91C1C;">warning</span>
+                <div style="font-weight: 700; color: #B91C1C; font-size: 0.875rem;">Warning</div>
+            </div>
+            <div style="color: #7F1D1D; font-size: 0.875rem; line-height: 1.4;">
+                Changing the anniversary date will <strong>reset the benefits</strong> for this card as everything will be re-calculated.
+            </div>
+        </div>
+
+        <!-- Date Input -->
+        <div style="margin-bottom: 2rem;">
+            <label for="edit-anniversary-date-input" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #374151; font-size: 0.9rem;">New Anniversary Date</label>
+            <input type="date" id="edit-anniversary-date-input" 
+                   style="width: 100%; padding: 0.75rem 1rem; border: 1px solid #D1D5DB; border-radius: 8px; font-size: 1rem; color: #1F2937; outline: none; transition: border-color 0.2s; background: #F9FAFB;">
+        </div>
+
+        <!-- Hidden ID -->
+        <input type="hidden" id="edit-anniversary-card-id">
+
+        <!-- Action Buttons -->
+        <div style="display: flex; gap: 1rem;">
+            <button onclick="closeEditAnniversaryModal()" style="flex: 1; background: white; color: #4B5563; border: 1px solid #D1D5DB; padding: 0.75rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s;">
+                Cancel
+            </button>
+            <button onclick="confirmAnniversaryUpdate()" style="flex: 1; background: #6366F1; color: white; border: none; padding: 0.75rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+                Update Date
+            </button>
+        </div>
+    </div>
+</div>

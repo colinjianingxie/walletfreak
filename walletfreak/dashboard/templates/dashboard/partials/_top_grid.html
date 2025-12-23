@@ -1,25 +1,59 @@
 <!-- Top Grid: Annual Value + My Wallet + Add New Card -->
 <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem;">
-    <!-- Annual Value Card (Purple) -->
+    <!-- Annual Value Card (Dark Redesign) -->
     <div id="annual-value-card"
-        style="background: linear-gradient(135deg, #6366F1 0%, #7C3AED 100%); border-radius: 24px; padding: 2rem; color: white; box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3); position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; min-height: 240px;">
+        style="background: #111827; border-radius: 24px; padding: 2rem; color: white; display: flex; flex-direction: column; justify-content: space-between; min-height: 240px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);">
         
         <!-- Top Row -->
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; position: relative; z-index: 1;">
-            <div style="width: 48px; height: 48px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
-                <span class="material-icons" style="font-size: 24px;">trending_up</span>
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
+            <!-- YTD Rewards -->
+            <div style="flex: 1;">
+                <div style="font-size: 0.75rem; font-weight: 700; color: #60A5FA; letter-spacing: 0.05em; margin-bottom: 0.5rem; text-transform: uppercase; display: flex; align-items: center;">
+                    <span class="material-icons" style="font-size: 14px; vertical-align: middle; margin-right: 6px;">north_east</span>
+                    YTD Rewards
+                </div>
+                <div id="total-value-display" style="font-size: 2.5rem; font-weight: 800; line-height: 1;">
+                    ${{ total_extracted_value|floatformat:0 }}<span style="font-size: 1.25rem; font-weight: 500; opacity: 0.5;">.{{ total_extracted_value|floatformat:2|slice:"-2:" }}</span>
+                </div>
             </div>
-            <div style="font-size: 0.875rem; font-weight: 500; opacity: 0.9;">Annual Value</div>
+
+            <!-- Vertical Divider -->
+            <div style="width: 1px; background: rgba(255,255,255,0.1); margin: 0 2rem; align-self: stretch;"></div>
+
+            <!-- Annual Fees -->
+            <div style="flex: 1;">
+                <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em; margin-bottom: 0.5rem; text-transform: uppercase; display: flex; align-items: center;">
+                    <span class="material-icons" style="font-size: 14px; vertical-align: middle; margin-right: 6px;">remove_circle_outline</span>
+                    Annual Fees
+                </div>
+                <div id="total-annual-fee-display" style="font-size: 2.5rem; font-weight: 800; line-height: 1; color: #E5E7EB;">
+                    ${{ total_annual_fee|default:0|floatformat:0 }}<span style="font-size: 1.25rem; font-weight: 500; opacity: 0.5;">.00</span>
+                </div>
+            </div>
         </div>
 
-        <!-- Bottom Row -->
-        <div style="position: relative; z-index: 1;">
-            <div style="font-size: 0.9rem; margin-bottom: 0.25rem; opacity: 0.9;">Total Value Extracted</div>
-            <div style="font-size: 3.5rem; font-weight: 800; line-height: 1; margin-bottom: 0.5rem; letter-spacing: -0.02em;">
-                ${{ total_used_value|floatformat:0 }}<span style="font-size: 1.75rem; font-weight: 500; opacity: 0.7;">.00</span>
+        <!-- Horizontal Divider -->
+        <div style="height: 1px; background: rgba(255,255,255,0.1); margin-bottom: 1.5rem;"></div>
+
+        <!-- Bottom Row: Net Performance -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+            <div>
+                <div style="font-size: 0.75rem; font-weight: 700; color: #64748B; letter-spacing: 0.1em; margin-bottom: 0.5rem; text-transform: uppercase;">
+                    Net Performance
+                </div>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div id="net-performance-display" style="font-size: 2rem; font-weight: 800; line-height: 1; {% if net_performance < 0 %}color: #F97316;{% else %}color: #10B981;{% endif %}">
+                        ${{ net_performance|floatformat:2 }}
+                    </div>
+                    <div id="net-performance-pill" style="padding: 0.35rem 0.85rem; border-radius: 8px; font-size: 0.75rem; font-weight: 700; {% if net_performance < 0 %}background: rgba(249, 115, 22, 0.2); color: #F97316;{% else %}background: rgba(16, 185, 129, 0.2); color: #10B981;{% endif %}">
+                        {% if net_performance < 0 %}Underutilizing{% else %}Profit Mode{% endif %}
+                    </div>
+                </div>
             </div>
-            <div style="font-size: 0.875rem; opacity: 0.8;">
-                Out of ${{ total_potential_value|floatformat:0 }} available credits
+            
+            <!-- Graph Icon -->
+            <div style="width: 48px; height: 48px; background: #1F2937; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #60A5FA;">
+                <span class="material-icons" style="font-size: 24px;">show_chart</span>
             </div>
         </div>
     </div>

@@ -73,8 +73,10 @@ def dashboard(request):
     all_benefits = []
     action_needed_benefits = []
     maxed_out_benefits = []
+    maxed_out_benefits = []
     total_used_value = 0
     total_potential_value = 0
+    total_annual_fee = 0
     
     current_year = datetime.now().year
     current_month = datetime.now().month
@@ -86,6 +88,8 @@ def dashboard(request):
             card_details = db.get_card_by_slug(card['card_id'])
             if not card_details:
                 continue
+            
+            total_annual_fee += card_details.get('annual_fee', 0)
             
             # Get card anniversary date (when user added the card)
             anniversary_date_str = card.get('anniversary_date', '')
@@ -105,6 +109,10 @@ def dashboard(request):
             
             # Process each benefit
             for idx, benefit in enumerate(card_details.get('benefits', [])):
+                # Filter out Protection and Bonus benefits
+                if benefit.get('benefit_type') in ['Protection', 'Bonus']:
+                    continue
+
                 dollar_value = benefit.get('dollar_value')
                 if dollar_value and dollar_value > 0:
                     benefit_id = f"benefit_{idx}"
@@ -148,7 +156,8 @@ def dashboard(request):
                                 'status': status,
                                 'is_current': (m_idx + 1) == current_month,
                                 'max_value': period_max,
-                                'is_available': is_available
+                                'is_available': is_available,
+                                'used': p_used
                             })
                             
                             if (m_idx + 1) == current_month:
@@ -170,7 +179,7 @@ def dashboard(request):
                             h1_available = current_month >= 1
                         else:
                             h1_available = anniversary_month <= 6 and current_month >= 1
-                        periods.append({'label': 'H1', 'key': h1_key, 'status': h1_status, 'is_current': current_month <= 6, 'max_value': h1_max, 'is_available': h1_available})
+                        periods.append({'label': 'H1', 'key': h1_key, 'status': h1_status, 'is_current': current_month <= 6, 'max_value': h1_max, 'is_available': h1_available, 'used': h1_data.get('used', 0)})
                         
                         # H2
                         h2_data = benefit_usage_data.get('periods', {}).get(h2_key, {})
@@ -180,7 +189,7 @@ def dashboard(request):
                             h2_available = current_month >= 7
                         else:
                             h2_available = (anniversary_month <= 6 and current_month >= 7) or (anniversary_month >= 7 and current_month >= anniversary_month)
-                        periods.append({'label': 'H2', 'key': h2_key, 'status': h2_status, 'is_current': current_month > 6, 'max_value': h2_max, 'is_available': h2_available})
+                        periods.append({'label': 'H2', 'key': h2_key, 'status': h2_status, 'is_current': current_month > 6, 'max_value': h2_max, 'is_available': h2_available, 'used': h2_data.get('used', 0)})
                         
                         if current_month <= 6:
                             current_period_status = h1_status
@@ -203,7 +212,7 @@ def dashboard(request):
                                 q_available = q >= anniversary_q and q <= curr_q
                             q_data = benefit_usage_data.get('periods', {}).get(q_key, {})
                             q_status = 'full' if (q_data.get('is_full') or q_data.get('used', 0) >= q_max) else ('partial' if q_data.get('used', 0) > 0 else 'empty')
-                            periods.append({'label': f'Q{q}', 'key': q_key, 'status': q_status, 'is_current': q == curr_q, 'max_value': q_max, 'is_available': q_available})
+                            periods.append({'label': f'Q{q}', 'key': q_key, 'status': q_status, 'is_current': q == curr_q, 'max_value': q_max, 'is_available': q_available, 'used': q_data.get('used', 0)})
                             
                             if q == curr_q:
                                 current_period_status = q_status
@@ -219,7 +228,7 @@ def dashboard(request):
                         p_full = p_data.get('is_full', False)
                         
                         status = 'full' if (p_full or p_used >= dollar_value) else ('partial' if p_used > 0 else 'empty')
-                        periods.append({'label': str(current_year), 'key': period_key, 'status': status, 'is_current': True, 'max_value': dollar_value})
+                        periods.append({'label': str(current_year), 'key': period_key, 'status': status, 'is_current': True, 'max_value': dollar_value, 'used': p_used})
                         
                         current_period_status = status
                         current_period_used = p_used
@@ -297,20 +306,54 @@ def dashboard(request):
             print(f"Error processing card benefits: {e}")
             continue
     
+    # Calculate Chase 5/24 Status
+    # Rule: Ineligible if 5 or more personal cards opened in last 24 months
+    cutoff_date = datetime.now() - timedelta(days=365*2)
+    chase_524_count = 0
+    
+    # Check both active and inactive cards (history matters)
+    for card in active_cards + inactive_cards:
+        ann_date_str = card.get('anniversary_date')
+        if ann_date_str:
+            try:
+                ann_date = datetime.strptime(ann_date_str, '%Y-%m-%d')
+                if ann_date >= cutoff_date:
+                    chase_524_count += 1
+            except ValueError:
+                pass
+                
+    chase_eligible = chase_524_count < 5
+    
+    # Fetch user profile data to ensure photo_url is available
+    try:
+        user_data = db.get_user_profile(uid) or {}
+    except Exception as e:
+        print(f"Error fetching user profile: {e}")
+        user_data = {}
+
     context = {
+        'user_profile': {
+            'photo_url': user_data.get('photo_url') or request.session.get('user_photo'),
+            'email': user_data.get('email') or request.session.get('user_email')
+        },
+        'user': request.user, # Standard Django user
         'active_cards': active_cards,
         'inactive_cards': inactive_cards,
         'eyeing_cards': eyeing_cards,
         'assigned_personality': assigned_personality,
-        'all_cards': all_cards,
-        'all_cards_json': available_cards_json, # Reusing the variable since it already contains all cards
-        'available_cards_json': available_cards_json,
-        'all_benefits': all_benefits,
+        'all_cards_json': available_cards_json,
+        
+        # Benefits
+        'total_extracted_value': round(total_used_value, 2),
+        'total_potential_value': round(total_potential_value, 2),
+        'total_annual_fee': total_annual_fee,
+        'net_performance': round(total_used_value - total_annual_fee, 2),
         'action_needed_benefits': action_needed_benefits,
         'maxed_out_benefits': maxed_out_benefits,
-        'total_used_value': total_used_value,
-        'total_potential_value': total_potential_value,
-        'current_month_idx': current_month - 1,
+        
+        # 5/24 Status
+        'chase_524_count': chase_524_count,
+        'chase_eligible': chase_eligible,
     }
     
     return render(request, 'dashboard/dashboard.html', context)
@@ -444,7 +487,15 @@ def update_anniversary(request, user_card_id):
     
     try:
         anniversary_date = request.POST.get('anniversary_date')
-        db.update_card_details(uid, user_card_id, {'anniversary_date': anniversary_date})
+        
+        # LOGIC CHANGE: Update in-place to preserve ID, but reset benefits
+        update_data = {
+            'anniversary_date': anniversary_date,
+            'benefit_usage': {} # Reset benefits
+        }
+        
+        # Use the existing update_card_details method
+        db.update_card_details(uid, user_card_id, update_data)
         return JsonResponse({'success': True})
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)}, status=500)

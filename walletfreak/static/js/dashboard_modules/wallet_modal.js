@@ -79,6 +79,17 @@ function closeManageWalletModal() {
     if (modalSidebar) modalSidebar.style.display = '';
 }
 
+function resetCardPreview() {
+    selectedAddCard = null;
+    if (document.getElementById('card-preview-empty')) {
+        document.getElementById('card-preview-empty').style.display = 'block';
+    }
+    if (document.getElementById('card-preview-content')) {
+        document.getElementById('card-preview-content').style.display = 'none';
+    }
+    document.querySelectorAll('.card-result-item').forEach(el => el.classList.remove('selected'));
+}
+
 function switchTab(view) {
     // Check if mobile
     if (window.innerWidth <= 768) {
@@ -126,6 +137,13 @@ function renderWalletStack() {
             <div style="flex: 1;">
                 <div style="font-weight: 700; color: #1F2937; font-size: 1rem; margin-bottom: 0.25rem;">${card.name}</div>
                 <div style="color: #64748B; font-size: 0.875rem;">•••• ****</div>
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.25rem; font-size: 0.8rem; color: #64748B;">
+                    <span class="material-icons" style="font-size: 14px; opacity: 0.7;">event</span>
+                    <span>Anniversary: <strong>${card.anniversary_date || "Not set"}</strong></span>
+                    <button type="button" class="btn-edit-date" onclick="openEditAnniversaryModal(event, '${card.id}', '${card.anniversary_date || ''}')" style="background: none; border: none; cursor: pointer; color: #6366F1; padding: 0.125rem; display: flex; align-items: center;" title="Edit Anniversary Date">
+                        <span class="material-icons" style="font-size: 14px;">edit</span>
+                    </button>
+                </div>
             </div>
             <form method="POST" action="/wallet/remove-card/${card.id}/" style="margin: 0;" onsubmit="return openRemoveCardModal(event, this, '${card.name.replace(/'/g, "\\'")}');">
                 <input type="hidden" name="csrfmiddlewaretoken" value="${document.querySelector('[name=csrfmiddlewaretoken]').value}">
@@ -143,6 +161,13 @@ function renderWalletStack() {
             <div>
                 <div style="font-weight: 700; color: #1F2937; font-size: 1rem;">${card.name}</div>
                 <div style="font-size: 0.85rem; color: #94A3B8; font-family: monospace;">•••• ****</div>
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.25rem; font-size: 0.8rem; color: #64748B;">
+                    <span class="material-icons" style="font-size: 14px; opacity: 0.7;">event</span>
+                    <span>Anniversary: <strong>${card.anniversary_date || "Not set"}</strong></span>
+                    <button type="button" class="btn-edit-date" onclick="openEditAnniversaryModal(event, '${card.id}', '${card.anniversary_date || ''}')" style="background: none; border: none; cursor: pointer; color: #6366F1; padding: 0.125rem; display: flex; align-items: center;" title="Edit Anniversary Date">
+                        <span class="material-icons" style="font-size: 14px;">edit</span>
+                    </button>
+                </div>
             </div>
             
             <div style="margin-left: auto; display: flex; align-items: center; gap: 1rem;">
@@ -367,6 +392,9 @@ function selectCardForPreview(card, element) {
                 // Use credits if available
                 filteredBenefits = credits;
             }
+
+            // Filter out Protection and Bonus benefits
+            filteredBenefits = filteredBenefits.filter(b => b && b.benefit_type !== 'Protection' && b.benefit_type !== 'Bonus');
 
             if (filteredBenefits.length > 0) {
                 filteredBenefits.forEach((benefit, index) => {

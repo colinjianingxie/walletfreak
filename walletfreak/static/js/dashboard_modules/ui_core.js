@@ -33,6 +33,182 @@ function updateWalletUI() {
     if (typeof renderMainDashboardStack === 'function') {
         renderMainDashboardStack();
     }
+
+    // 5. Update Chase 5/24 Status
+    updateChase524UI();
+
+    // 6. Update Total Value Extracted
+    updateTotalValueExtractedUI();
+
+    // 7. Update Total Annual Fees
+    updateTotalAnnualFeeUI();
+
+    // 8. Update Net Performance
+    updateNetPerformanceUI();
+}
+
+function updateNetPerformanceUI() {
+    const display = document.getElementById('net-performance-display');
+    const pill = document.getElementById('net-performance-pill');
+    if (!display || !pill) return;
+
+    // 1. Calculate Total Value
+    const currentYear = new Date().getFullYear().toString();
+    let totalUsed = 0;
+    if (typeof walletCards !== 'undefined' && Array.isArray(walletCards)) {
+        walletCards.forEach(card => {
+            if (card.benefit_usage) {
+                Object.values(card.benefit_usage).forEach(benefit => {
+                    if (benefit.periods) {
+                        Object.entries(benefit.periods).forEach(([key, data]) => {
+                            if (key.startsWith(currentYear)) {
+                                totalUsed += (data.used || 0);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    // 2. Calculate Total Fees
+    let totalFees = 0;
+    if (typeof walletCards !== 'undefined' && Array.isArray(walletCards)) {
+        walletCards.forEach(userCard => {
+            if (typeof allCardsData !== 'undefined') {
+                const staticCard = allCardsData.find(c => c.id === userCard.card_id);
+                if (staticCard && staticCard.annual_fee) {
+                    totalFees += parseFloat(staticCard.annual_fee);
+                }
+            }
+        });
+    }
+
+    const net = totalUsed - totalFees;
+
+    // Update Display
+    display.textContent = `$${net.toFixed(2)}`;
+    display.style.color = net < 0 ? '#F97316' : '#10B981';
+
+    // Update Pill
+    if (net < 0) {
+        pill.textContent = "Underutilizing";
+        pill.style.background = "rgba(249, 115, 22, 0.2)";
+        pill.style.color = "#F97316";
+    } else {
+        pill.textContent = "Profit Mode";
+        pill.style.background = "rgba(16, 185, 129, 0.2)";
+        pill.style.color = "#10B981";
+    }
+}
+
+function updateTotalAnnualFeeUI() {
+    const displayElement = document.getElementById('total-annual-fee-display');
+    if (!displayElement) return;
+
+    let totalFees = 0;
+
+    if (typeof walletCards !== 'undefined' && Array.isArray(walletCards)) {
+        walletCards.forEach(userCard => {
+            // Find static card data to get the fee
+            if (typeof allCardsData !== 'undefined') {
+                const staticCard = allCardsData.find(c => c.id === userCard.card_id);
+                if (staticCard && staticCard.annual_fee) {
+                    totalFees += parseFloat(staticCard.annual_fee);
+                }
+            }
+        });
+    }
+
+    // Format like Total Value: $<Int><span class="decimals">.00</span>
+    const intPart = Math.floor(totalFees).toLocaleString();
+    const decimalPart = (totalFees % 1).toFixed(2).substring(1); // .XX
+
+    displayElement.innerHTML = `$${intPart}<span style="font-size: 1.25rem; font-weight: 500; opacity: 0.5;">${decimalPart}</span>`;
+}
+
+function updateTotalValueExtractedUI() {
+    const displayElement = document.getElementById('total-value-display');
+    if (!displayElement) return;
+
+    // Calculate total extracted value for the current year
+    const currentYear = new Date().getFullYear().toString();
+    let totalUsed = 0;
+
+    if (typeof walletCards !== 'undefined' && Array.isArray(walletCards)) {
+        walletCards.forEach(card => {
+            if (card.benefit_usage) {
+                Object.values(card.benefit_usage).forEach(benefit => {
+                    if (benefit.periods) {
+                        Object.entries(benefit.periods).forEach(([key, data]) => {
+                            // key format is typically YEAR_MONTH or YEAR_QX or YEAR_HX
+                            if (key.startsWith(currentYear)) {
+                                totalUsed += (data.used || 0);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    // Format with commas and decimals
+    // Format: $<Int><span class="decimals">.00</span>
+    const intPart = Math.floor(totalUsed).toLocaleString();
+    const decimalPart = (totalUsed % 1).toFixed(2).substring(1); // .XX
+
+    displayElement.innerHTML = `$${intPart}<span style="font-size: 1.25rem; font-weight: 500; opacity: 0.5;">${decimalPart}</span>`;
+}
+
+function updateChase524UI() {
+    const badge = document.getElementById('chase-524-badge');
+    if (!badge) return;
+
+    // Calculate count based on walletCards
+    // Rule: Count cards opened in last 24 months
+    const now = new Date();
+    const cutoffDate = new Date();
+    cutoffDate.setFullYear(now.getFullYear() - 2);
+
+    let count = 0;
+
+    if (typeof walletCards !== 'undefined' && Array.isArray(walletCards)) {
+        walletCards.forEach(card => {
+            if (card.anniversary_date) {
+                const annDate = new Date(card.anniversary_date);
+                if (!isNaN(annDate) && annDate >= cutoffDate) {
+                    count++;
+                }
+            }
+        });
+    }
+
+    const eligible = count < 5;
+
+    // Update Badge
+    badge.title = `Chase 5/24 Status: ${count} cards in 24 months`;
+    if (eligible) {
+        badge.style.background = '#DCFCE7';
+        badge.style.color = '#16A34A';
+        badge.innerHTML = '<span class="material-icons" style="font-size: 10px; vertical-align: middle;">check_circle</span> CHASE ELIGIBLE (' + count + '/24)';
+    } else {
+        badge.style.background = '#FEE2E2';
+        badge.style.color = '#DC2626';
+        badge.innerHTML = '<span class="material-icons" style="font-size: 10px; vertical-align: middle;">error</span> CHASE INELIGIBLE (' + count + '/24)';
+    }
+
+    // Update Modal Content (if open or for next open)
+    const modalCount = document.getElementById('chase-524-modal-count');
+    const modalStatus = document.getElementById('chase-524-modal-status');
+
+    if (modalCount) {
+        modalCount.textContent = `${count}/24`;
+        modalCount.style.color = eligible ? '#16A34A' : '#DC2626';
+    }
+
+    if (modalStatus) {
+        modalStatus.textContent = eligible ? 'You are eligible for Chase cards!' : 'You are likely ineligible for new Chase cards.';
+    }
 }
 
 async function updatePersonalityUI(slug, score) {
@@ -71,7 +247,6 @@ async function updatePersonalityUI(slug, score) {
                     ${name}
                 </span>
             </a>
-            ${score ? `<span style="color: #64748B; font-size: 0.9rem;">${score} card${score !== 1 ? 's' : ''} match</span>` : ''}
         `;
 
         badgeSection.innerHTML = html;
