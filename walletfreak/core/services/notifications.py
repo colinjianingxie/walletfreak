@@ -1,4 +1,5 @@
 from firebase_admin import firestore
+from django.conf import settings
 
 class NotificationMixin:
     def get_user_notification_preferences(self, uid):
@@ -66,7 +67,7 @@ class NotificationMixin:
             
         email_data = {
             'to': to if to else [], 
-            'from': 'Wallet Freak <walletfreak@gmail.com>', 
+            'from': f'Wallet Freak <{settings.DEFAULT_FROM_EMAIL}>', 
             'message': {
                 'subject': subject,
             }
