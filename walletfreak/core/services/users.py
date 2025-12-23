@@ -67,6 +67,13 @@ class UserMixin:
         """Update user email in Firestore"""
         self.db.collection('users').document(uid).update({'email': email})
 
+    def update_user_name(self, uid, first_name, last_name):
+        """Update user first and last name in Firestore"""
+        self.db.collection('users').document(uid).update({
+            'first_name': first_name,
+            'last_name': last_name,
+        })
+
     def get_users_by_ids(self, uids):
         """Get multiple user profiles by IDs"""
         if not uids:

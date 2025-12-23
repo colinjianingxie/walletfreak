@@ -35,7 +35,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
             <div>
                 <div style="font-weight: 600; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">Username</div>
-                <div style="font-size: 1.1rem; color: var(--dark);" id="user-username-display">{{ user_profile.username|default:user_profile.first_name|default:"Not set" }}</div>
+                <div style="font-size: 1.1rem; color: var(--dark);" id="user-username-display">@{{ user_profile.username|default:user_profile.first_name|default:"Not set" }}</div>
             </div>
             <button class="btn btn-outline" style="padding: 0.5rem 1.25rem; font-size: 0.9rem;" onclick="openChangeUsernameModal()">
                 Change

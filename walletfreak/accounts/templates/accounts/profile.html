@@ -29,9 +29,18 @@
 
         <!-- User Info -->
         <div style="flex: 1; min-width: 250px;">
-            <h2 style="font-size: 2rem; font-weight: 700; margin: 0 0 0.5rem 0;">
-                {{ user.first_name|default:"User" }} {{ user.last_name|default:"" }}
+            <h2 style="font-size: 2rem; font-weight: 700; margin: 0 0 0.5rem 0; display: flex; align-items: center; gap: 0.75rem;">
+                <span id="profile-name-display">{{ user.first_name|default:"User" }} {{ user.last_name|default:"" }}</span>
+                <button class="btn btn-icon btn-ghost" onclick="openChangeNameModal()" style="padding: 0.25rem; color: var(--text-muted);">
+                    <span class="material-icons" style="font-size: 1.25rem;">edit</span>
+                </button>
             </h2>
+            <div style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span id="profile-username-display">@{{ user_profile.username|default:"username" }}</span>
+                <button class="btn btn-icon btn-ghost" onclick="openChangeUsernameModal()" style="padding: 0.25rem; color: var(--text-muted);">
+                    <span class="material-icons" style="font-size: 1rem;">edit</span>
+                </button>
+            </div>
             <div class="badge badge-purple" style="font-size: 0.9rem; padding: 0.5rem 1rem; margin-bottom: 1.5rem; display: inline-flex; align-items: center; gap: 0.5rem;">
                 <span class="material-icons" style="font-size: 16px;">psychology</span>
                 {{ matched_personality.name|default:"Wallet Freak"|upper }}
@@ -85,6 +94,47 @@
         </div>
     </div>
 </div>
+
+    <!-- Change Name Modal -->
+    <div id="name-modal" class="modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center;">
+        <div style="background: white; padding: 2rem; border-radius: var(--radius-lg); width: 100%; max-width: 400px; box-shadow: var(--elevation-3);">
+            <h3 style="margin-top: 0; font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Change Name</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">Update your personal information.</p>
+            
+            <div style="margin-bottom: 1rem;">
+                <label style="display: block; font-weight: 500; font-size: 0.9rem; margin-bottom: 0.5rem;">First Name</label>
+                <input type="text" id="new-first-name-input" class="form-control" placeholder="First Name" style="width: 100%;">
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-weight: 500; font-size: 0.9rem; margin-bottom: 0.5rem;">Last Name</label>
+                <input type="text" id="new-last-name-input" class="form-control" placeholder="Last Name" style="width: 100%;">
+            </div>
+            
+            <div style="display: flex; justify-content: flex-end; gap: 1rem;">
+                <button class="btn btn-ghost" onclick="closeChangeNameModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="submitChangeName()" id="btn-save-name">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Change Username Modal -->
+    <div id="username-modal" class="modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center;">
+        <div style="background: white; padding: 2rem; border-radius: var(--radius-lg); width: 100%; max-width: 400px; box-shadow: var(--elevation-3);">
+            <h3 style="margin-top: 0; font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Change Username</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">Enter your new display name.</p>
+            
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-weight: 500; font-size: 0.9rem; margin-bottom: 0.5rem;">New Username</label>
+                <input type="text" id="new-username-input" class="form-control" placeholder="Enter new username" style="width: 100%;">
+                <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Only letters, numbers, and underscores.</div>
+            </div>
+            
+            <div style="display: flex; justify-content: flex-end; gap: 1rem;">
+                <button class="btn btn-ghost" onclick="closeChangeUsernameModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="submitChangeUsername()" id="btn-save-username">Save Changes</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Avatar Selection Modal -->
     <div id="avatar-modal" class="modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center;">
@@ -291,6 +341,122 @@
             showToast(error.message, 'error');
         } finally {
             btn.innerText = originalText;
+            btn.disabled = false;
+        }
+    }
+
+
+    // --- Name Editing ---
+    const nameModal = document.getElementById('name-modal');
+    
+    function openChangeNameModal() {
+        nameModal.style.display = 'flex';
+        const fullName = document.getElementById('profile-name-display').innerText;
+        const parts = fullName.split(' ');
+        const first = parts[0] || '';
+        const last = parts.slice(1).join(' ') || '';
+        
+        document.getElementById('new-first-name-input').value = first;
+        document.getElementById('new-last-name-input').value = last;
+        document.getElementById('new-first-name-input').focus();
+    }
+    
+    function closeChangeNameModal() {
+        nameModal.style.display = 'none';
+    }
+    
+    nameModal.addEventListener('click', (e) => {
+        if (e.target === nameModal) closeChangeNameModal();
+    });
+
+    async function submitChangeName() {
+        const firstName = document.getElementById('new-first-name-input').value.trim();
+        const lastName = document.getElementById('new-last-name-input').value.trim();
+        
+        if (!firstName) {
+            showToast('First name is required.', 'error');
+            return;
+        }
+
+        const btn = document.getElementById('btn-save-name');
+        const originalText = btn.innerText;
+        btn.innerHTML = '<span class="loader"></span> Saving...';
+        btn.disabled = true;
+
+        try {
+            const response = await fetch('{% url "sync_profile" %}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}' },
+                body: JSON.stringify({ first_name: firstName, last_name: lastName })
+            });
+            const data = await response.json();
+            if (data.status === 'success') {
+                showToast('Name updated successfully!');
+                document.getElementById('profile-name-display').innerText = `${firstName} ${lastName}`;
+                closeChangeNameModal();
+            } else {
+                throw new Error(data.message || 'Failed to update name');
+            }
+        } catch (error) {
+            showToast(error.message.replace('Error: ', ''), 'error');
+        } finally {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+    }
+
+    // --- Username Editing ---
+    const usernameModal = document.getElementById('username-modal');
+    
+    function openChangeUsernameModal() {
+        usernameModal.style.display = 'flex';
+        // Remove the @ if present
+        let current = document.getElementById('profile-username-display').innerText.trim();
+        if (current.startsWith('@')) current = current.substring(1);
+        
+        document.getElementById('new-username-input').value = current;
+        document.getElementById('new-username-input').focus();
+    }
+    
+    function closeChangeUsernameModal() {
+        usernameModal.style.display = 'none';
+    }
+    
+    usernameModal.addEventListener('click', (e) => {
+        if (e.target === usernameModal) closeChangeUsernameModal();
+    });
+
+    async function submitChangeUsername() {
+        const username = document.getElementById('new-username-input').value.trim();
+        
+        if (!username || username.length < 3) {
+            showToast('Username must be at least 3 characters.', 'error');
+            return;
+        }
+
+        const btn = document.getElementById('btn-save-username');
+        const originalText = btn.innerText;
+        btn.innerHTML = '<span class="loader"></span> Saving...';
+        btn.disabled = true;
+
+        try {
+            const response = await fetch('{% url "sync_profile" %}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}' },
+                body: JSON.stringify({ username: username })
+            });
+            const data = await response.json();
+            if (data.status === 'success') {
+                showToast('Username updated successfully!');
+                document.getElementById('profile-username-display').innerText = `@${username}`;
+                closeChangeUsernameModal();
+            } else {
+                throw new Error(data.message || 'Failed to update username');
+            }
+        } catch (error) {
+            showToast(error.message.replace('Error: ', ''), 'error');
+        } finally {
+            btn.innerHTML = originalText;
             btn.disabled = false;
         }
     }

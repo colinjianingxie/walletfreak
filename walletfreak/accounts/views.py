@@ -364,6 +364,20 @@ def ajax_sync_profile(request):
             request.user.save()
             db.update_user_email(uid, email)
             
+        # Handle Name Update
+        if 'first_name' in data and 'last_name' in data:
+            first_name = data.get('first_name').strip()
+            last_name = data.get('last_name').strip()
+            
+            if not first_name:
+                 return JsonResponse({'status': 'error', 'message': 'First name is required'}, status=400)
+                 
+            request.user.first_name = first_name
+            request.user.last_name = last_name
+            request.user.save()
+            
+            db.update_user_name(uid, first_name, last_name)
+            
         # Handle Username Update
         if 'username' in data:
             username = data.get('username').strip()
