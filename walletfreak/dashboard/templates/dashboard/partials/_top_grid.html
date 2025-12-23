@@ -1,11 +1,12 @@
 <!-- Top Grid: Annual Value + My Wallet + Add New Card -->
-<div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem;">
+<!-- Top Grid: Annual Value + My Wallet + Add New Card -->
+<div class="dashboard-top-grid" style="display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem;">
     <!-- Annual Value Card (Dark Redesign) -->
     <div id="annual-value-card"
         style="background: #111827; border-radius: 24px; padding: 2rem; color: white; display: flex; flex-direction: column; justify-content: space-between; min-height: 240px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);">
         
         <!-- Top Row -->
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
+        <div class="value-row" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
             <!-- YTD Rewards -->
             <div style="flex: 1;">
                 <div style="font-size: 0.75rem; font-weight: 700; color: #60A5FA; letter-spacing: 0.05em; margin-bottom: 0.5rem; text-transform: uppercase; display: flex; align-items: center;">
@@ -18,7 +19,7 @@
             </div>
 
             <!-- Vertical Divider -->
-            <div style="width: 1px; background: rgba(255,255,255,0.1); margin: 0 2rem; align-self: stretch;"></div>
+            <div class="vertical-divider" style="width: 1px; background: rgba(255,255,255,0.1); margin: 0 2rem; align-self: stretch;"></div>
 
             <!-- Annual Fees -->
             <div style="flex: 1;">
@@ -52,7 +53,7 @@
             </div>
             
             <!-- Graph Icon -->
-            <div style="width: 48px; height: 48px; background: #1F2937; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #60A5FA;">
+            <div class="graph-icon-container" style="width: 48px; height: 48px; background: #1F2937; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #60A5FA;">
                 <span class="material-icons" style="font-size: 24px;">show_chart</span>
             </div>
         </div>

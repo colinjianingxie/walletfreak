@@ -9,11 +9,11 @@
         <h2 style="font-size: 1.25rem; font-weight: 800; margin: 0; color: #1F2937;">Maxed Out <span style="color: #94A3B8; font-weight: 600; font-size: 1rem; margin-left: 0.25rem;">({{ maxed_out_benefits|length }})</span></h2>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); gap: 1.5rem;">
+    <div class="maxed-out-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); gap: 1.5rem;">
         {% for benefit in maxed_out_benefits %}
         <div class="benefit-card" data-card-id="{{ benefit.card_id }}" style="background: white; border-radius: 24px; padding: 1.5rem; border: 1px solid #F3F4F6; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); transition: all 0.2s;">
             <!-- Card Header -->
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+            <div class="benefit-card-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
                 <div style="display: flex; gap: 1rem;">
                     <img src="{% get_card_image_url benefit.card_id %}" style="width: 48px; height: auto; object-fit: contain; border-radius: 4px;" alt="{{ benefit.card_name }}">
                     <div>

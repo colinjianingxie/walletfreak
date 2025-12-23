@@ -1,6 +1,64 @@
 /* Dashboard Specific Styles */
 
 /* Filter Pills */
+.dashboard-top-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+@media (max-width: 1024px) {
+    .dashboard-top-grid {
+        grid-template-columns: 1fr 1fr !important;
+    }
+
+    .dashboard-top-grid>div:first-child {
+        grid-column: span 2 !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-top-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+
+    .dashboard-top-grid>div:first-child {
+        grid-column: span 1 !important;
+    }
+
+    /* Fix Annual Value Card Overflow */
+    #annual-value-card {
+        padding: 1.5rem !important;
+        min-height: auto !important;
+    }
+
+    #annual-value-card .value-row {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    #annual-value-card .vertical-divider {
+        width: 100% !important;
+        height: 1px !important;
+        margin: 0 !important;
+    }
+
+    #total-value-display,
+    #total-annual-fee-display {
+        font-size: 2rem !important;
+    }
+}
+
+@media (max-width: 360px) {
+
+    #net-performance-pill,
+    .graph-icon-container {
+        display: none !important;
+    }
+}
+
 .filter-pill {
     display: flex;
     align-items: center;
@@ -143,6 +201,35 @@
     #anniversary-modal .modal-content>div:last-child button {
         width: 100% !important;
         flex: none !important;
+    }
+
+    /* Fix Maxed Out Grid Overflow */
+    .maxed-out-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .benefit-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 1rem !important;
+        min-width: 0 !important;
+    }
+
+    .benefit-card-header {
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+
+    .benefit-card-header>div:last-child {
+        width: 100%;
+        text-align: left !important;
+        margin-top: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 }
 

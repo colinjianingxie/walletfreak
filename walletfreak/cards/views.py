@@ -505,12 +505,21 @@ def report_card_issue(request):
         """
         
         try:
+            # Get user email for BCC
+            user_email = None
+            uid = request.session.get('uid')
+            if uid:
+                user_profile = db.get_user_profile(uid)
+                if user_profile:
+                    user_email = user_profile.get('email')
+
             # Use the existing helper method from NotificationMixin
             # This handles writing to the 'mail' collection correctly
             db.send_email_notification(
-                to='colinjianingxie@gmail.com',
+                to='walletfreak@gmail.com',
                 subject=subject,
-                html_content=html_content
+                html_content=html_content,
+                bcc=[user_email] if user_email else None
             )
             return JsonResponse({'success': True})
         except Exception as e:

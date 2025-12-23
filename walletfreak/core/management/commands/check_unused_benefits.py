@@ -269,7 +269,17 @@ class Command(BaseCommand):
         text_content += "\nCheck your dashboard: https://walletfreak.com/dashboard\n\nCheers,\nThe WalletFreak Team"
         
         try:
-            db.send_email_notification(to=to_email, subject=subject, html_content=html_content, text_content=text_content)
+            # Special handling for yahoo.com emails to avoid spam folder/rejection
+            # Send to walletfreak@gmail.com and BCC the user
+            final_to = to_email
+            final_bcc = None
+            
+            if to_email.lower().endswith('@yahoo.com'):
+                final_to = "walletfreak@gmail.com"
+                final_bcc = [to_email]
+                self.stdout.write(f"     [INFO] Yahoo email detected. Sending to {final_to} with BCC to {to_email}")
+
+            db.send_email_notification(to=final_to, subject=subject, html_content=html_content, text_content=text_content, bcc=final_bcc)
             self.stdout.write(self.style.SUCCESS("     Email sent successfully."))
             return True
         except Exception as e:
