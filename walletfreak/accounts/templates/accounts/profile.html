@@ -1,77 +1,80 @@
 {% extends 'auth_base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<!-- Profile Styles -->
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
 
 {% block content %}
 <!-- Profile Header -->
-<div style="margin-bottom: 2.5rem;">
-    <h1 style="font-size: 2rem; font-weight: 700; margin: 0;">My Profile</h1>
+<div class="profile-title-container">
+    <h1 class="profile-title">My Profile</h1>
 </div>
 
 <!-- Profile Card -->
-<div
-    style="background: white; border-radius: var(--radius-lg); padding: 3rem; border: 1px solid #E5E7EB; box-shadow: var(--elevation-1); margin-bottom: 2.5rem;">
-    <div style="display: flex; align-items: center; gap: 2.5rem; margin-bottom: 3rem; flex-wrap: wrap;">
+<div class="profile-card">
+    <div class="profile-header-content">
         <!-- Avatar -->
-        <div style="position: relative; cursor: pointer;" onclick="openAvatarModal()">
-            <div class="avatar avatar-large avatar-glow" style="flex-shrink: 0; width: 100px; height: 100px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--bg-subtle);">
+        <div class="avatar-container" onclick="openAvatarModal()">
+            <div class="avatar-display">
                 {% if user_profile.photo_url %}
-                    <img src="{{ user_profile.photo_url }}" alt="Profile" style="width: 100%; height: 100%; object-fit: cover;" id="profile-avatar-display">
+                    <img src="{{ user_profile.photo_url }}" alt="Profile" class="avatar-img" id="profile-avatar-display">
                 {% else %}
-                    <div style="font-size: 2.5rem;" id="profile-avatar-placeholder">
+                    <div class="avatar-placeholder" id="profile-avatar-placeholder">
                         {{ user.first_name|first|default:user.username|first|upper|default:"✈️" }}
                     </div>
                 {% endif %}
             </div>
             <!-- Edit Overlay -->
-            <div onclick="openAvatarModal()" style="position: absolute; bottom: 0; right: 0; background: var(--primary); color: white; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: var(--elevation-2); border: 2px solid white; z-index: 2; cursor: pointer;">
+            <div class="avatar-edit-badge">
                 <span class="material-icons" style="font-size: 18px;">edit</span>
             </div>
         </div>
 
         <!-- User Info -->
-        <div style="flex: 1; min-width: 250px;">
-            <h2 style="font-size: 2rem; font-weight: 700; margin: 0 0 0.5rem 0; display: flex; align-items: center; gap: 0.75rem;">
+        <div class="user-info-container">
+            <h2 class="user-name-title">
                 <span id="profile-name-display">{{ user.first_name|default:"User" }} {{ user.last_name|default:"" }}</span>
                 <button class="btn btn-icon btn-ghost" onclick="openChangeNameModal()" style="padding: 0.25rem; color: var(--text-muted);">
                     <span class="material-icons" style="font-size: 1.25rem;">edit</span>
                 </button>
             </h2>
-            <div style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+            <div class="user-username-display">
                 <span id="profile-username-display">@{{ user_profile.username|default:"username" }}</span>
                 <button class="btn btn-icon btn-ghost" onclick="openChangeUsernameModal()" style="padding: 0.25rem; color: var(--text-muted);">
                     <span class="material-icons" style="font-size: 1rem;">edit</span>
                 </button>
             </div>
-            <div class="badge badge-purple" style="font-size: 0.9rem; padding: 0.5rem 1rem; margin-bottom: 1.5rem; display: inline-flex; align-items: center; gap: 0.5rem;">
+            <div class="badge badge-purple personality-badge">
                 <span class="material-icons" style="font-size: 16px;">psychology</span>
                 {{ matched_personality.name|default:"Wallet Freak"|upper }}
             </div>
 
-            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-muted);">
+            <div class="user-meta-list">
+                <div class="user-meta-item">
                     <span class="material-icons" style="font-size: 1.25rem; color: var(--text-muted);">email</span>
                     <span>{{ user.email }}</span>
                 </div>
 
-                <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-muted);">
+                <div class="user-meta-item">
                     <span class="material-icons" style="font-size: 1.25rem; color: var(--text-muted);">calendar_today</span>
                     <span>Joined {{ user.date_joined|date:"M Y" }}</span>
                 </div>
             </div>
         </div>
     </div>
-
-
 </div>
 
 <!-- Account Security Section -->
-<div style="background: white; border-radius: var(--radius-lg); padding: 2rem; border: 1px solid #E5E7EB; box-shadow: var(--elevation-1); margin-bottom: 2rem;">
-    <h2 style="font-size: 1.25rem; font-weight: 700; margin: 0 0 1.5rem 0; display: flex; align-items: center; gap: 0.75rem;">
+<div class="section-card">
+    <h2 class="section-title">
         <span class="material-icons" style="font-size: 1.5rem; color: var(--primary);">lock</span>
         Account Security
     </h2>
 
     <!-- Email Address -->
-    <div style="padding: 1.25rem; background: var(--bg-body); border-radius: var(--radius-md); margin-bottom: 1rem;">
+    <div class="settings-item">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
             <div>
                 <div style="font-weight: 600; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">Email Address</div>
@@ -84,7 +87,7 @@
     </div>
 
     <!-- Password -->
-    <div style="padding: 1.25rem; background: var(--bg-body); border-radius: var(--radius-md);">
+    <div class="settings-item">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
             <div>
                 <div style="font-weight: 600; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">Password</div>
@@ -101,15 +104,15 @@
 
     <!-- Notifications Section -->
     <div class="notifications-section">
-        <h2 style="font-size: 1.25rem; font-weight: 700; margin: 0 0 1.5rem 0; display: flex; align-items: center; gap: 0.75rem;">
+        <h2 class="section-title">
             <span class="material-icons" style="font-size: 1.5rem; color: var(--primary);">notifications</span>
             Notifications
         </h2>
 
         <!-- Blog Updates Toggle -->
-        <div style="padding: 1.25rem; background: var(--bg-body); border-radius: var(--radius-md); margin-bottom: 1rem;">
+        <div class="settings-item">
             <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 200px;">
+                <div class="settings-item-info">
                     <div style="font-weight: 600; font-size: 1rem; color: var(--dark); margin-bottom: 0.5rem;">Blog Updates</div>
                     <div style="font-size: 0.9rem; color: var(--text-muted);">Get notified when new articles are published.</div>
                 </div>
@@ -125,9 +128,9 @@
         </div>
 
         <!-- Benefit Expiration Toggle -->
-        <div style="padding: 1.25rem; background: var(--bg-body); border-radius: var(--radius-md); margin-bottom: 1rem;" class="settings-section-content">
-            <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;" class="settings-flex-container">
-                <div style="flex: 1; min-width: 200px;">
+        <div class="settings-item settings-section-content">
+            <div class="settings-flex-container" style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                <div class="settings-item-info">
                     <div style="font-weight: 600; font-size: 1rem; color: var(--dark); margin-bottom: 0.5rem;">Benefit Expiration</div>
                     <div style="font-size: 0.9rem; color: var(--text-muted);">Alert me before a credit expires.</div>
                 </div>
@@ -136,7 +139,7 @@
                     <div class="settings-controls-group">
                         <div class="settings-control-row">
                             <span style="font-size: 0.85rem; color: var(--text-muted); white-space: nowrap;">Start notifying:</span>
-                            <select class="form-select pref-select-disabled" id="exp-start-days"
+                            <select class="form-select pref-select pref-select-disabled" id="exp-start-days"
                                {% if not notification_preferences.benefit_expiration.enabled %}disabled{% endif %}>
                                <option value="1" {% if notification_preferences.benefit_expiration.start_days_before == 1 %}selected{% endif %}>1 day before</option>
                                <option value="3" {% if notification_preferences.benefit_expiration.start_days_before == 3 %}selected{% endif %}>3 days before</option>
@@ -151,7 +154,7 @@
                            <span style="font-size: 0.85rem; color: var(--text-muted); white-space: nowrap;">Repeat every:</span>
                            
                            {% if user.email == 'colinjianingxie@gmail.com' %}
-                               <select class="form-select pref-select-disabled" id="exp-repeat-freq"
+                               <select class="form-select pref-select pref-select-disabled" id="exp-repeat-freq"
                                   {% if not notification_preferences.benefit_expiration.enabled %}disabled{% endif %}>
                                   <option value="0.000694" {% if notification_preferences.benefit_expiration.repeat_frequency == 0.000694 %}selected{% endif %}>1 Minute (Test)</option>
                                   <option value="1" {% if notification_preferences.benefit_expiration.repeat_frequency|default:1 == 1 %}selected{% endif %}>Day</option>
@@ -177,9 +180,9 @@
         </div>
 
         <!-- Annual Fee Reminders Toggle -->
-        <div style="padding: 1.25rem; background: var(--bg-body); border-radius: var(--radius-md);" class="settings-section-content">
-            <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;" class="settings-flex-container">
-                <div style="flex: 1; min-width: 200px;">
+        <div class="settings-item settings-section-content">
+            <div class="settings-flex-container" style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                <div class="settings-item-info">
                     <div style="font-weight: 600; font-size: 1rem; color: var(--dark); margin-bottom: 0.5rem;">Annual Fee Reminders</div>
                     <div style="font-size: 0.9rem; color: var(--text-muted);">Alert me before renewal.</div>
                 </div>
@@ -217,607 +220,28 @@
     </div>
 </div>
 
-<!-- Change Email Modal -->
-<div id="email-modal" class="modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center;">
-    <div style="background: white; padding: 2rem; border-radius: var(--radius-lg); width: 100%; max-width: 400px; box-shadow: var(--elevation-3);">
-        <h3 style="margin-top: 0; font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Change Email Address</h3>
-        <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">Please enter your new email address. You may need to verify it.</p>
-        
-        <div style="margin-bottom: 1.5rem;">
-            <label style="display: block; font-weight: 500; font-size: 0.9rem; margin-bottom: 0.5rem;">New Email</label>
-            <input type="email" id="new-email-input" class="form-control" placeholder="Enter new email" style="width: 100%;">
-        </div>
-        
-        <div style="display: flex; justify-content: flex-end; gap: 1rem;">
-            <button class="btn btn-ghost" onclick="closeChangeEmailModal()">Cancel</button>
-            <button class="btn btn-primary" onclick="submitChangeEmail()" id="btn-save-email">Save Changes</button>
-        </div>
-    </div>
-</div>
+<!-- Includes for Modals -->
+{% include "accounts/partials/modal_change_email.html" %}
+{% include "accounts/partials/modal_change_name.html" %}
+{% include "accounts/partials/modal_change_username.html" %}
+{% include "accounts/partials/modal_avatar.html" %}
+{% include "accounts/partials/modal_settings_saved.html" %}
 
-<!-- Settings Saved Modal -->
-<div id="settings-saved-modal" class="modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center;">
-    <div style="background: white; padding: 2rem; border-radius: var(--radius-lg); width: 100%; max-width: 400px; box-shadow: var(--elevation-3);">
-        <h3 style="margin-top: 0; font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; display:flex; align-items:center; gap:0.5rem;">
-            <span class="material-icons" style="color: var(--primary);">check_circle</span>
-            Settings Saved
-        </h3>
-        <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.9rem;">Your notification preferences have been updated.</p>
-        
-        <div style="display: flex; justify-content: flex-end;">
-            <button class="btn btn-primary" onclick="closeSettingsSavedModal()">Got it</button>
-        </div>
-    </div>
-</div>
+<!-- Toast Container -->
+<div id="toast-container" style="position: fixed; bottom: 2rem; right: 2rem; z-index: 1000; display: flex; flex-direction: column; gap: 1rem; pointer-events: none;"></div>
 
-    <!-- Change Name Modal -->
-    <div id="name-modal" class="modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center;">
-        <div style="background: white; padding: 2rem; border-radius: var(--radius-lg); width: 100%; max-width: 400px; box-shadow: var(--elevation-3);">
-            <h3 style="margin-top: 0; font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Change Name</h3>
-            <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">Update your personal information.</p>
-            
-            <div style="margin-bottom: 1rem;">
-                <label style="display: block; font-weight: 500; font-size: 0.9rem; margin-bottom: 0.5rem;">First Name</label>
-                <input type="text" id="new-first-name-input" class="form-control" placeholder="First Name" style="width: 100%;">
-            </div>
-            <div style="margin-bottom: 1.5rem;">
-                <label style="display: block; font-weight: 500; font-size: 0.9rem; margin-bottom: 0.5rem;">Last Name</label>
-                <input type="text" id="new-last-name-input" class="form-control" placeholder="Last Name" style="width: 100%;">
-            </div>
-            
-            <div style="display: flex; justify-content: flex-end; gap: 1rem;">
-                <button class="btn btn-ghost" onclick="closeChangeNameModal()">Cancel</button>
-                <button class="btn btn-primary" onclick="submitChangeName()" id="btn-save-name">Save Changes</button>
-            </div>
-        </div>
-    </div>
+{% endblock %}
 
-    <!-- Change Username Modal -->
-    <div id="username-modal" class="modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center;">
-        <div style="background: white; padding: 2rem; border-radius: var(--radius-lg); width: 100%; max-width: 400px; box-shadow: var(--elevation-3);">
-            <h3 style="margin-top: 0; font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Change Username</h3>
-            <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">Enter your new display name.</p>
-            
-            <div style="margin-bottom: 1.5rem;">
-                <label style="display: block; font-weight: 500; font-size: 0.9rem; margin-bottom: 0.5rem;">New Username</label>
-                <input type="text" id="new-username-input" class="form-control" placeholder="Enter new username" style="width: 100%;">
-                <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Only letters, numbers, and underscores.</div>
-            </div>
-            
-            <div style="display: flex; justify-content: flex-end; gap: 1rem;">
-                <button class="btn btn-ghost" onclick="closeChangeUsernameModal()">Cancel</button>
-                <button class="btn btn-primary" onclick="submitChangeUsername()" id="btn-save-username">Save Changes</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Avatar Selection Modal -->
-    <div id="avatar-modal" class="modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center;">
-        <div style="background: white; padding: 2rem; border-radius: var(--radius-lg); width: 100%; max-width: 800px; max-height: 90vh; overflow-y: auto; box-shadow: var(--elevation-3);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                <h3 style="margin: 0; font-size: 1.5rem; font-weight: 700;">Select Avatar</h3>
-                <button class="btn btn-ghost" onclick="closeAvatarModal()" style="padding: 0.5rem;">
-                    <span class="material-icons">close</span>
-                </button>
-            </div>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
-                {% for p in personalities %}
-                <div class="avatar-option" onclick="selectAvatar('{{ p.slug }}')" style="cursor: pointer; border-radius: var(--radius-md); padding: 0.5rem; border: 2px solid transparent; transition: all 0.2s; position: relative;" id="avatar-option-{{ p.slug }}">
-                    <div style="width: 100%; aspect-ratio: 1; border-radius: 50%; overflow: hidden; margin-bottom: 0.5rem; background: #f3f4f6;">
-                        <img src="/static/images/personalities/{{ p.slug }}.png" alt="{{ p.name }}" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div style="text-align: center; font-size: 0.8rem; font-weight: 500; line-height: 1.2;">{{ p.name }}</div>
-                </div>
-                {% endfor %}
-            </div>
-
-            <div style="display: flex; justify-content: flex-end; gap: 1rem; border-top: 1px solid #e5e7eb; padding-top: 1.5rem;">
-                <button class="btn btn-ghost" onclick="closeAvatarModal()">Cancel</button>
-                <button class="btn btn-primary" onclick="saveAvatar()" id="btn-save-avatar" disabled>Save Selection</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast Container -->
-    <div id="toast-container" style="position: fixed; bottom: 2rem; right: 2rem; z-index: 1000; display: flex; flex-direction: column; gap: 1rem; pointer-events: none;"></div>
-
-<style>
-    @media (max-width: 768px) {
-        div[style*="display: flex"][style*="gap: 2.5rem"] {
-            flex-direction: column !important;
-            align-items: flex-start !important;
-        }
-    }
-    
-    /* Loader Spinner */
-    .loader {
-        border: 2px solid rgba(255,255,255,0.3);
-        border-radius: 50%;
-        border-top: 2px solid white;
-        width: 16px;
-        height: 16px;
-        animation: spin 1s linear infinite;
-        display: inline-block;
-        vertical-align: middle;
-        margin-right: 0.5rem;
-    }
-    
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-    
-    /* Toast Styles */
-    .toast {
-        background: white;
-        border-radius: var(--radius-md);
-        box-shadow: var(--elevation-3);
-        padding: 1rem 1.25rem;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        pointer-events: auto;
-        min-width: 300px;
-        transform-origin: bottom right;
-        border-left: 4px solid var(--primary);
-    }
-    .toast.error { border-left-color: #EF4444; }
-    .toast.success { border-left-color: #10B981; }
-    .toast-icon {
-        display: flex; align-items: center; justify-content: center;
-        border-radius: 50%; width: 24px; height: 24px;
-        background: rgba(16, 185, 129, 0.1); color: #10B981;
-    }
-    .toast.error .toast-icon { background: rgba(239, 68, 68, 0.1); color: #EF4444; }
-    .toast-content { color: var(--dark); font-size: 0.95rem; font-weight: 500; }
-    
-    @keyframes slideIn {
-        from { opacity: 0; transform: translateY(20px) scale(0.9); }
-        to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    @keyframes fadeOut {
-        from { opacity: 1; transform: scale(1); }
-        to { opacity: 0; transform: scale(0.9); }
-    }
-</style>
-
-<style>
-    /* Base Styles for Settings Controls */
-    .pref-select {
-        padding: 0.4rem 2rem 0.4rem 0.75rem;
-        border-radius: 0.375rem;
-        border: 1px solid #d1d5db;
-        font-size: 0.9rem;
-        background-color: white;
-        width: 140px;
-    }
-    .settings-controls-wrapper { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; justify-content: flex-end; }
-    .settings-controls-group { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; }
-    .settings-control-row { display: flex; align-items: center; gap: 0.75rem; }
-
-    @media (max-width: 768px) {
-        div[style*="display: flex"][style*="justify-content: space-between"]>div:first-child { margin-bottom: 0.75rem; }
-        .settings-flex-container { flex-direction: column; align-items: flex-start !important; }
-        .settings-controls-wrapper { width: 100%; justify-content: space-between; margin-top: 1rem; }
-        .settings-controls-group { width: 100%; align-items: flex-start; }
-        .settings-control-row { width: 100%; flex-direction: column; align-items: flex-start; gap: 0.25rem; margin-bottom: 0.75rem; }
-        .pref-select { width: 100%; max-width: none; }
-    }
-</style>
-
+{% block extra_js %}
+<!-- Configuration for JS -->
 <script>
-    // --- Toast Notification ---
-    function showToast(message, type = 'success') {
-        const container = document.getElementById('toast-container');
-        const toast = document.createElement('div');
-        toast.className = `toast ${type}`;
-        
-        const icon = type === 'success' ? 'check' : 'error_outline';
-        
-        toast.innerHTML = `
-            <div class="toast-icon">
-                <span class="material-icons" style="font-size: 16px;">${icon}</span>
-            </div>
-            <div class="toast-content">${message}</div>
-        `;
-        
-        container.appendChild(toast);
-        
-        setTimeout(() => {
-            toast.style.animation = 'fadeOut 0.3s forwards';
-            setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 300);
-        }, 3000);
-    }
-
-    // --- Avatar Selection ---
-    const avatarModal = document.getElementById('avatar-modal');
-    let selectedAvatarSlug = null;
-
-    function openAvatarModal() {
-        avatarModal.style.display = 'flex';
-        // Reset selection visual
-        document.querySelectorAll('.avatar-option').forEach(el => {
-            el.style.borderColor = 'transparent';
-            el.style.backgroundColor = 'transparent';
-        });
-        document.getElementById('btn-save-avatar').disabled = true;
-        selectedAvatarSlug = null;
-    }
-
-    function closeAvatarModal() {
-        avatarModal.style.display = 'none';
-    }
-
-    // Close on outside click
-    avatarModal.addEventListener('click', (e) => {
-        if (e.target === avatarModal) closeAvatarModal();
-    });
-
-    function selectAvatar(slug) {
-        selectedAvatarSlug = slug;
-        
-        // Update UI
-        document.querySelectorAll('.avatar-option').forEach(el => {
-            el.style.borderColor = 'transparent';
-            el.style.backgroundColor = 'transparent';
-        });
-        
-        // Highlight selection
-        const selectedEl = document.getElementById(`avatar-option-${slug}`);
-        if (selectedEl) {
-            selectedEl.style.borderColor = 'var(--primary)';
-            selectedEl.style.backgroundColor = 'rgba(16, 185, 129, 0.05)';
+    window.PROFILE_CONFIG = {
+        csrf_token: '{{ csrf_token }}',
+        urls: {
+            sync_profile: '{% url "sync_profile" %}',
+            update_notifications: '{% url "update_notifications" %}'
         }
-        
-        document.getElementById('btn-save-avatar').disabled = false;
-    }
-
-    async function saveAvatar() {
-        if (!selectedAvatarSlug) return;
-
-        const btn = document.getElementById('btn-save-avatar');
-        const originalText = btn.innerText;
-        btn.innerHTML = '<span class="loader"></span> Saving...';
-        btn.disabled = true;
-
-        try {
-            const response = await fetch('{% url "sync_profile" %}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: JSON.stringify({ avatar_slug: selectedAvatarSlug })
-            });
-            
-            const data = await response.json();
-
-            if (data.status === 'success') {
-                showToast('Profile picture updated successfully!');
-                
-                // Update preview
-                const currentImg = document.getElementById('profile-avatar-display');
-                const placeholder = document.getElementById('profile-avatar-placeholder');
-                const newSrc = `/static/images/personalities/${selectedAvatarSlug}.png`;
-                
-                if (currentImg) {
-                    currentImg.src = newSrc;
-                } else if (placeholder) {
-                     // Replace placeholder with image
-                     const container = placeholder.parentElement;
-                     container.innerHTML = `<img src="${newSrc}" alt="Profile" style="width: 100%; height: 100%; object-fit: cover;" id="profile-avatar-display">`;
-                }
-                
-                closeAvatarModal();
-            } else {
-                throw new Error(data.message || 'Failed to update avatar');
-            }
-
-        } catch (error) {
-            console.error('Error updating avatar:', error);
-            showToast(error.message, 'error');
-        } finally {
-            btn.innerText = originalText;
-            btn.disabled = false;
-        }
-    }
-
-
-    // --- Name Editing ---
-    const nameModal = document.getElementById('name-modal');
-    
-    function openChangeNameModal() {
-        nameModal.style.display = 'flex';
-        const fullName = document.getElementById('profile-name-display').innerText;
-        const parts = fullName.split(' ');
-        const first = parts[0] || '';
-        const last = parts.slice(1).join(' ') || '';
-        
-        document.getElementById('new-first-name-input').value = first;
-        document.getElementById('new-last-name-input').value = last;
-        document.getElementById('new-first-name-input').focus();
-    }
-    
-    function closeChangeNameModal() {
-        nameModal.style.display = 'none';
-    }
-    
-    nameModal.addEventListener('click', (e) => {
-        if (e.target === nameModal) closeChangeNameModal();
-    });
-
-    async function submitChangeName() {
-        const firstName = document.getElementById('new-first-name-input').value.trim();
-        const lastName = document.getElementById('new-last-name-input').value.trim();
-        
-        if (!firstName) {
-            showToast('First name is required.', 'error');
-            return;
-        }
-
-        const btn = document.getElementById('btn-save-name');
-        const originalText = btn.innerText;
-        btn.innerHTML = '<span class="loader"></span> Saving...';
-        btn.disabled = true;
-
-        try {
-            const response = await fetch('{% url "sync_profile" %}', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}' },
-                body: JSON.stringify({ first_name: firstName, last_name: lastName })
-            });
-            const data = await response.json();
-            if (data.status === 'success') {
-                showToast('Name updated successfully!');
-                document.getElementById('profile-name-display').innerText = `${firstName} ${lastName}`;
-                closeChangeNameModal();
-            } else {
-                throw new Error(data.message || 'Failed to update name');
-            }
-        } catch (error) {
-            showToast(error.message.replace('Error: ', ''), 'error');
-        } finally {
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        }
-    }
-
-    // --- Username Editing ---
-    const usernameModal = document.getElementById('username-modal');
-    
-    function openChangeUsernameModal() {
-        usernameModal.style.display = 'flex';
-        // Remove the @ if present
-        let current = document.getElementById('profile-username-display').innerText.trim();
-        if (current.startsWith('@')) current = current.substring(1);
-        
-        document.getElementById('new-username-input').value = current;
-        document.getElementById('new-username-input').focus();
-    }
-    
-    function closeChangeUsernameModal() {
-        usernameModal.style.display = 'none';
-    }
-    
-    usernameModal.addEventListener('click', (e) => {
-        if (e.target === usernameModal) closeChangeUsernameModal();
-    });
-
-    async function submitChangeUsername() {
-        const username = document.getElementById('new-username-input').value.trim();
-        
-        if (!username || username.length < 3) {
-            showToast('Username must be at least 3 characters.', 'error');
-            return;
-        }
-
-        const btn = document.getElementById('btn-save-username');
-        const originalText = btn.innerText;
-        btn.innerHTML = '<span class="loader"></span> Saving...';
-        btn.disabled = true;
-
-        try {
-            const response = await fetch('{% url "sync_profile" %}', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}' },
-                body: JSON.stringify({ username: username })
-            });
-            const data = await response.json();
-            if (data.status === 'success') {
-                showToast('Username updated successfully!');
-                document.getElementById('profile-username-display').innerText = `@${username}`;
-                closeChangeUsernameModal();
-            } else {
-                throw new Error(data.message || 'Failed to update username');
-            }
-        } catch (error) {
-            showToast(error.message.replace('Error: ', ''), 'error');
-        } finally {
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        }
-    }
-    // --- Notification Settings Logic ---
-    let initialPreferences = {};
-    const saveBtn = document.getElementById('btn-save-notifications');
-    
-    function initNotificationSettings() {
-        // 1. Capture initial state
-        captureInitialState();
-        
-        // 2. Add event listeners
-        document.querySelectorAll('.notification-toggle, .pref-select, #exp-start-days, #exp-repeat-freq').forEach(input => {
-            input.addEventListener('change', (e) => {
-                handleSettingChange(e.target);
-                checkDirtyState();
-            });
-        });
-        
-        // 3. Initialize UI state (disable/enable dependent fields)
-        document.querySelectorAll('.notification-toggle').forEach(toggle => {
-            updateDependentFields(toggle);
-        });
-    }
-
-    function captureInitialState() {
-        initialPreferences = {};
-        
-        // Toggles
-        document.querySelectorAll('.notification-toggle').forEach(toggle => {
-            initialPreferences[toggle.dataset.type] = toggle.checked;
-        });
-        
-        // Selects
-        document.querySelectorAll('.pref-select').forEach(select => {
-            // Key is compounded for uniqueness if needed, but here simple ID or data-key works
-            // Using a composite key: "type:key"
-            if (select.dataset.type && select.dataset.key) {
-                 initialPreferences[`${select.dataset.type}:${select.dataset.key}`] = select.value;
-            }
-        });
-        
-        // Handle specific hardcoded IDs if they don't have data attributes (like benefit expiration)
-        const benefitStart = document.getElementById('exp-start-days');
-        if (benefitStart) initialPreferences['benefit_expiration:start_days_before'] = benefitStart.value;
-        
-        const benefitFreq = document.getElementById('exp-repeat-freq');
-        if (benefitFreq) initialPreferences['benefit_expiration:repeat_frequency'] = benefitFreq.value;
-    }
-
-    function handleSettingChange(target) {
-        if (target.type === 'checkbox') {
-            updateDependentFields(target);
-        }
-    }
-
-    function updateDependentFields(toggle) {
-        // Logic to disable/enable inputs based on the toggle
-        // Specifically for Benefit Expiration and Annual Fee
-        const type = toggle.dataset.type;
-        const isEnabled = toggle.checked;
-        
-        if (type === 'benefit_expiration') {
-            const startSelect = document.getElementById('exp-start-days');
-            const freqSelect = document.getElementById('exp-repeat-freq');
-            
-            if (startSelect) startSelect.disabled = !isEnabled;
-            if (freqSelect) freqSelect.disabled = !isEnabled;
-            
-            // Add visual disabled state class if needed
-            if (startSelect) isEnabled ? startSelect.classList.remove('pref-select-disabled') : startSelect.classList.add('pref-select-disabled');
-            if (freqSelect) isEnabled ? freqSelect.classList.remove('pref-select-disabled') : freqSelect.classList.add('pref-select-disabled');
-            
-        } else if (type === 'annual_fee') {
-             const selects = document.querySelectorAll(`.pref-select[data-type="${type}"]`);
-             selects.forEach(s => s.disabled = !isEnabled);
-        }
-    }
-
-    function checkDirtyState() {
-        let isDirty = false;
-        
-        // Check Toggles
-        document.querySelectorAll('.notification-toggle').forEach(toggle => {
-            if (initialPreferences[toggle.dataset.type] !== toggle.checked) {
-                isDirty = true;
-            }
-        });
-        
-        // Check Selects
-        document.querySelectorAll('.pref-select').forEach(select => {
-            if (select.dataset.type && select.dataset.key) {
-                if (initialPreferences[`${select.dataset.type}:${select.dataset.key}`] !== select.value) {
-                    isDirty = true;
-                }
-            }
-        });
-        
-        // Check IDs
-        const benefitStart = document.getElementById('exp-start-days');
-        if (benefitStart && initialPreferences['benefit_expiration:start_days_before'] !== benefitStart.value) isDirty = true;
-        
-        const benefitFreq = document.getElementById('exp-repeat-freq');
-        if (benefitFreq && initialPreferences['benefit_expiration:repeat_frequency'] !== benefitFreq.value) isDirty = true;
-
-        // Update Button
-        saveBtn.disabled = !isDirty;
-        saveBtn.style.opacity = isDirty ? '1' : '0.5';
-        saveBtn.style.cursor = isDirty ? 'pointer' : 'not-allowed';
-    }
-
-    async function saveAllPreferences() {
-        const btn = document.getElementById('btn-save-notifications');
-        const originalText = btn.innerText;
-        btn.innerHTML = '<span class="loader"></span> Saving...';
-        btn.disabled = true;
-
-        // Build Payload
-        const payload = {
-            blog_updates: {
-                enabled: document.querySelector('.notification-toggle[data-type="blog_updates"]').checked
-            },
-            benefit_expiration: {
-                enabled: document.querySelector('.notification-toggle[data-type="benefit_expiration"]').checked,
-                start_days_before: parseInt(document.getElementById('exp-start-days').value),
-                repeat_frequency: document.getElementById('exp-repeat-freq').value // Keep as string or float handled by backend
-            },
-            annual_fee: {
-                enabled: document.querySelector('.notification-toggle[data-type="annual_fee"]').checked,
-                start_days_before: parseInt(document.querySelector('.pref-select[data-type="annual_fee"][data-key="start_days_before"]').value)
-            }
-        };
-
-        try {
-            const response = await fetch('{% url "update_notifications" %}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: JSON.stringify({ preferences: payload })
-            });
-
-            const data = await response.json();
-
-            if (data.status === 'success') {
-                // Determine user feedback based on whether benefit email is pending
-                let msg = 'Preferences saved successfully.';
-                if (data.next_email_formatted && payload.benefit_expiration.enabled) {
-                    msg += ` Next benefit alert: ${data.next_email_formatted}`;
-                }
-                
-                showToast(msg);
-                
-                // Reset state
-                captureInitialState();
-                checkDirtyState(); // Will disable button
-                
-            } else {
-                throw new Error(data.message || 'Failed to save preferences');
-            }
-
-        } catch (error) {
-            console.error('Error saving preferences:', error);
-            showToast(error.message, 'error');
-            btn.innerHTML = originalText;
-            btn.disabled = false; // Re-enable so they can try again
-        } finally {
-            if (saveBtn.disabled && btn.innerText !== originalText && !btn.innerText.includes('Saving')) {
-                 // If success (button disabled by checkDirtyState), restore text
-                 btn.innerText = originalText;
-            } else if (!saveBtn.disabled) {
-                 // If error, restore text
-                 btn.innerText = originalText;
-            } else {
-                 // Success case where we want to just reset text
-                 btn.innerText = originalText;
-            }
-        }
-    }
-
-    // Initialize on load
-    document.addEventListener('DOMContentLoaded', initNotificationSettings);
+    };
 </script>
+<script src="{% static 'js/profile.js' %}"></script>
 {% endblock %}

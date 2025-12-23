@@ -1,0 +1,26 @@
+<div id="avatar-modal" class="modal-overlay">
+    <div class="modal-content-lg">
+        <div class="modal-header">
+            <h3 style="margin: 0; font-size: 1.5rem; font-weight: 700;">Select Avatar</h3>
+            <button class="btn btn-ghost" onclick="closeAvatarModal()" style="padding: 0.5rem;">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+        
+        <div class="avatar-grid">
+            {% for p in personalities %}
+            <div class="avatar-option" onclick="selectAvatar('{{ p.slug }}')" id="avatar-option-{{ p.slug }}">
+                <div class="avatar-option-img-container">
+                    <img src="/static/images/personalities/{{ p.slug }}.png" alt="{{ p.name }}" class="avatar-option-img">
+                </div>
+                <div class="avatar-option-name">{{ p.name }}</div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeAvatarModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="saveAvatar()" id="btn-save-avatar" disabled>Save Selection</button>
+        </div>
+    </div>
+</div>
