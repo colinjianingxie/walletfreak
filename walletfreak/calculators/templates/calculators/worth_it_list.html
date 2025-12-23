@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="worth-it-container">
+    <!-- Top Navigation -->
+    <div class="container mb-5">
+        <a href="{% url 'calculators_index' %}" class="back-link">
+            <span class="material-icons">arrow_back</span>
+            Back to Lab
+        </a>
+    </div>
+
+    <!-- Header -->
+    <div class="container text-center mb-5">
+        <h1 class="page-title">Select a Card to Analyze</h1>
+        <p class="page-subtitle">Which annual fee are we auditing today?</p>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="container" style="max-width: 800px; margin: 0 auto; padding: 0 20px;">
+        <div class="cards-grid">
+            {% for card in cards %}
+            <a href="{% url 'worth_it_audit' card.slug %}" class="card-item">
+                <div class="card-content">
+                    <!-- Left: Image -->
+                    <div class="card-image-wrapper">
+                        {% if card.image_url %}
+                            <img src="{{ card.image_url }}" alt="{{ card.name }}">
+                        {% else %}
+                            <div class="placeholder-image">
+                                <span class="material-icons">credit_card</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Middle: Info -->
+                    <div class="card-info">
+                        <h3 class="card-name">{{ card.name }}</h3>
+                        <div class="card-fee">${{ card.annual_fee }} / YEAR</div>
+                    </div>
+
+                    <!-- Right: Arrow -->
+                    <div class="card-action">
+                        <span class="material-icons">chevron_right</span>
+                    </div>
+                </div>
+            </a>
+            {% empty %}
+            <div class="text-center col-12">
+                <p class="text-muted">No cards with annual fees found.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Page Background */
+    body {
+        background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%);
+        min-height: 100vh;
+        overflow-x: hidden; /* Prevent horizontal scroll */
+    }
+
+    .worth-it-container {
+        padding: 40px 0;
+        width: 100%;
+    }
+
+    /* Back Link */
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #94A3B8;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: color 0.2s;
+    }
+    .back-link:hover {
+        color: #64748B;
+    }
+    .back-link .material-icons {
+        font-size: 18px;
+    }
+
+    /* Header Typography */
+    .page-title {
+        font-family: 'Outfit', sans-serif;
+        font-weight: 700;
+        font-size: 2.5rem;
+        color: #0F172A;
+        margin-bottom: 0.5rem;
+    }
+
+    .page-subtitle {
+        color: #64748B;
+        font-size: 1.1rem;
+        font-weight: 400;
+    }
+
+    /* Grid Layout */
+    .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px; /* Reduced gap */
+    }
+    
+    @media (max-width: 768px) {
+        .cards-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Card Item Styling */
+    .card-item {
+        display: block;
+        background: white;
+        border-radius: 16px;
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.01), 0 1px 2px -1px rgba(0, 0, 0, 0.01);
+        width: 100%; /* Ensure it doesn't exceed grid cell */
+        box-sizing: border-box; /* Handle padding */
+        overflow: hidden; /* Contain children */
+    }
+
+    .card-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 12px -3px rgba(0, 0, 0, 0.05), 0 3px 4px -2px rgba(0, 0, 0, 0.025);
+        border-color: rgba(226, 232, 240, 0.8);
+    }
+
+    .card-content {
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Image */
+    .card-image-wrapper {
+        width: 60px;
+        height: 38px;
+        flex-shrink: 0;
+        border-radius: 6px;
+        overflow: hidden;
+        background: #F1F5F9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card-image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    /* Text Info */
+    .card-info {
+        flex: 1; /* Shorthand for grow, shrink, basis */
+        min-width: 0; /* Critical for truncation in flex */
+        overflow: hidden;
+    }
+
+    .card-name {
+        font-family: 'Outfit', sans-serif;
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: #0F172A;
+        margin: 0 0 2px 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block; /* Ensure block behavior for ellipsis */
+        max-width: 100%;
+    }
+
+    .card-fee {
+        color: #94A3B8;
+        font-size: 0.75rem; /* Smaller font */
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+
+    /* Action Icon */
+    .card-action {
+        color: #CBD5E1;
+        display: flex;
+        align-items: center;
+        transition: transform 0.2s;
+    }
+
+    .card-item:hover .card-action {
+        color: #94A3B8;
+        transform: translateX(4px);
+    }
+</style>
+{% endblock %}

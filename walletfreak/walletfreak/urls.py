@@ -30,6 +30,7 @@ urlpatterns = [
 
     path('wallet/', include('dashboard.urls')),
     path('blog/', include('blog.urls')),
+    path('calculators/', include('calculators.urls')),
     path('custom-admin/', include('custom_admin.urls')),
 ]
 

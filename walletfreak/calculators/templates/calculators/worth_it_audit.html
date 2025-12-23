@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5" style="max-width: 800px;">
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h1 class="fw-bold mb-3">{{ card.name }}</h1>
+            <p class="lead text-muted">Let's see if this card is worth it for you.</p>
+        </div>
+    </div>
+
+    <form method="post" action="{% url 'worth_it_calculate' card.slug %}" id="auditForm">
+        {% csrf_token %}
+        
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body p-4">
+                <h5 class="fw-bold border-bottom pb-3 mb-4">Benefit Utilization</h5>
+                
+                {% for benefit in benefits %}
+                <div class="mb-5 last-mb-0">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <label class="form-label fw-bold mb-0">{{ benefit.description }}</label>
+                            <div class="text-muted small">${{ benefit.dollar_value|floatformat:0 }} value • {{ benefit.time_category }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-3 bg-light rounded mt-2">
+                        <label class="form-label small text-muted text-uppercase fw-bold mb-3">{{ benefit.audit_config.label }}</label>
+                        
+                        {% if benefit.audit_config.input_type == 'slider' %}
+                            <div class="range-container">
+                                <input type="range" class="form-range" 
+                                       name="benefit_{{ forloop.counter0 }}" 
+                                       min="0" max="{{ benefit.audit_config.max_val }}" step="1" value="0"
+                                       oninput="this.nextElementSibling.value = this.value">
+                                <output class="fw-bold ms-2">0</output>
+                                <span class="text-muted small ms-1">times/months</span>
+                            </div>
+                        {% else %}
+                            <!-- Toggle / Checkbox implementation -->
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" 
+                                       name="benefit_{{ forloop.counter0 }}_toggle" 
+                                       value="1"
+                                       onchange="document.getElementById('hidden_benefit_{{ forloop.counter0 }}').value = this.checked ? 1 : 0">
+                                <input type="hidden" name="benefit_{{ forloop.counter0 }}" id="hidden_benefit_{{ forloop.counter0 }}" value="0">
+                                <label class="form-check-label">I use this benefit</label>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% empty %}
+                <div class="text-center py-4">
+                    <p class="text-muted">No monetary benefits found to analyze for this card.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="sticky-bottom bg-white py-3 border-top shadow-lg" style="margin: 0 -15px;">
+            <div class="container text-center">
+                <button type="submit" class="btn btn-dark btn-lg px-5 rounded-pill w-100 w-md-auto" id="calcBtn" onclick="this.classList.add('disabled'); this.innerHTML = '<span class=\'spinner-border spinner-border-sm me-2\'></span>Calculating...';">
+                    Calculate Optimization
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<style>
+    /* Mobile safe area for sticky bottom */
+    body {
+        padding-bottom: 80px;
+    }
+    .sticky-bottom {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1030;
+    }
+    .range-container {
+        display: flex;
+        align-items: center;
+    }
+    .last-mb-0:last-child {
+        margin-bottom: 0 !important;
+    }
+</style>
+{% endblock %}

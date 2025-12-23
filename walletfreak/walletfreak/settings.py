@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'blog',
     'custom_admin',
     'firestore',
+    'calculators',
 ]
 
 MIDDLEWARE = [

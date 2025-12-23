@@ -20,6 +20,7 @@
                 <a href="{% url 'features' %}" data-nav="features">Features</a>
                 {% endif %}
                 <a href="{% url 'card_list' %}" data-nav="explore">Explore</a>
+                <a href="{% url 'calculators_index' %}" data-nav="calculators">Calculators</a>
                 <a href="{% url 'personality_list' %}" data-nav="personalities">Personalities</a>
                 <a href="{% url 'blog_list' %}" data-nav="blog">Blog</a>
             </div>
@@ -143,6 +144,13 @@
                 <span class="mobile-menu-text">Explore Cards</span>
             </a>
 
+            <a href="{% url 'calculators_index' %}" class="mobile-menu-item" data-nav="calculators">
+                <div class="mobile-menu-icon">
+                    <span class="material-icons">calculate</span>
+                </div>
+                <span class="mobile-menu-text">Calculators</span>
+            </a>
+
             <a href="{% url 'personality_list' %}" class="mobile-menu-item" data-nav="personalities">
                 <div class="mobile-menu-icon">
                     <span class="material-icons">auto_awesome</span>
@@ -173,6 +181,13 @@
                     <span class="material-icons">explore</span>
                 </div>
                 <span class="mobile-menu-text">Explore Cards</span>
+            </a>
+
+            <a href="{% url 'calculators_index' %}" class="mobile-menu-item" data-nav="calculators">
+                <div class="mobile-menu-icon">
+                    <span class="material-icons">calculate</span>
+                </div>
+                <span class="mobile-menu-text">Calculators</span>
             </a>
 
             <a href="{% url 'personality_list' %}" class="mobile-menu-item" data-nav="personalities">
@@ -228,6 +243,8 @@
                 activeNav = 'features';
             } else if (currentPath.startsWith('/cards') || currentPath.startsWith('/explore')) {
                 activeNav = 'explore';
+            } else if (currentPath.startsWith('/calculators')) {
+                activeNav = 'calculators';
             } else if (currentPath.startsWith('/personalities')) {
                 activeNav = 'personalities';
             } else if (currentPath.startsWith('/blog')) {
@@ -274,6 +291,10 @@
                             case 'explore':
                                 icon.style.background = '#EFF6FF';
                                 icon.style.color = '#2563EB';
+                                break;
+                            case 'calculators':
+                                icon.style.background = '#EEF2FF';
+                                icon.style.color = '#4F46E5';
                                 break;
                             case 'personalities':
                                 icon.style.background = '#FAF5FF';
