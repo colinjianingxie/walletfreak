@@ -194,7 +194,7 @@ The WalletFreak Team
             # Send one email with BCC
             try:
                 self.send_email_notification(
-                    to="notifications@walletfreak.com",
+                    to="walletfreak@gmail.com",
                     bcc=emails_to_send,
                     subject=subject,
                     text_content=message,

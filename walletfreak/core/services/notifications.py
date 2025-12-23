@@ -66,7 +66,7 @@ class NotificationMixin:
             
         email_data = {
             'to': to if to else [], # Extension might require 'to', often UIDs or emails. If using BCC only, 'to' can be admin or empty list if allowed.
-            'from': 'notifications@walletfreak.com', 
+            'from': 'walletfreak@gmail.com', 
             'message': {
                 'subject': subject,
             }
