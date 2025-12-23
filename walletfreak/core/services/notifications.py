@@ -73,31 +73,11 @@ class NotificationMixin:
             }
         }
         
-        # Centralized Yahoo Routing Logic
-        # If any recipient is a Yahoo address, send to self and BCC the user to avoid DMARC/Spam issues
-        # Standardize 'to' as list for checking
-        to_list = [to] if isinstance(to, str) else (to or [])
-        
-        has_yahoo = any('yahoo.com' in str(t).lower() for t in to_list)
-        
-        if has_yahoo:
-            print(f"     [INFO] Yahoo email detected in {to_list}. Rerouting to walletfreak@gmail.com with BCC.")
-            # Set TO to system address
-            email_data['to'] = ['walletfreak@gmail.com']
-            
-            # Add original TO recipients to BCC
-            current_bcc = []
-            if bcc:
-                current_bcc = [bcc] if isinstance(bcc, str) else (bcc or [])
-            
-            # Combine existing BCC with original TOs
-            final_bcc = list(set(current_bcc + to_list))
-            email_data['bcc'] = final_bcc
-        elif bcc:
+        # Standard BCC handling
+        final_bcc = []
+        if bcc:
              final_bcc = [bcc] if isinstance(bcc, str) else (bcc or [])
-             email_data['bcc'] = final_bcc
-        else:
-             final_bcc = []
+        email_data['bcc'] = final_bcc
 
         # Assign content before batching so it is copied to all batches
         if html_content:
