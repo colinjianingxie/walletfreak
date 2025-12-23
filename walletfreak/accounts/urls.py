@@ -9,5 +9,4 @@ urlpatterns = [
     path('auth/action/', views.auth_action, name='auth_action'),
     path('login/', views.login_view, name='login'),
     path('profile/', views.profile, name='profile'),
-    path('settings/', views.settings, name='settings'),
 ]

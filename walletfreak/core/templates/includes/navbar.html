@@ -77,12 +77,7 @@
                             <span class="user-dropdown-badge" style="background: #F1F5F9; color: #64748B; font-size: 0.75rem; font-weight: 700; padding: 0.125rem 0.5rem; border-radius: 99px;">{{ wallet_count|default:0 }}</span>
                         </a>
                         
-                        <a href="{% url 'settings' %}" class="user-dropdown-menu-item" style="display: flex; align-items: center; gap: 1rem; padding: 0.875rem 1rem; color: #475569; text-decoration: none; font-weight: 600; border-radius: 12px; transition: all 0.2s;">
-                            <div class="user-dropdown-icon" style="width: 36px; height: 36px; background: #F1F5F9; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #64748B;">
-                                <span class="material-icons" style="font-size: 20px;">settings</span>
-                            </div>
-                            <span>Settings</span>
-                        </a>
+
                         
                         <div class="user-dropdown-divider" style="height: 1px; background: #F1F5F9; margin: 0.5rem 0;"></div>
                         
@@ -162,12 +157,7 @@
                 <span class="mobile-menu-text">Blog</span>
             </a>
 
-            <a href="{% url 'settings' %}" class="mobile-menu-item">
-                <div class="mobile-menu-icon" style="background: #F8FAFC; color: #64748B;">
-                    <span class="material-icons">settings</span>
-                </div>
-                <span class="mobile-menu-text">Settings</span>
-            </a>
+
 
             {% else %}
             <!-- Logged Out State -->

@@ -144,97 +144,7 @@ def profile(request):
     
     # Get user's active cards count
     active_cards = db.get_user_cards(uid, status='active')
-    cards_count = len(active_cards)
-    
-    # Calculate total value and utilization
-    total_used_value = 0
-    total_potential_value = 0
-    
-    from datetime import datetime
-    from calendar import monthrange
-    
-    current_year = datetime.now().year
-    current_month = datetime.now().month
-    
-    for card in active_cards:
-        try:
-            # Get full card details
-            card_details = db.get_card_by_slug(card['card_id'])
-            if not card_details:
-                continue
-            
-            # Get card anniversary date (when user added the card)
-            anniversary_date_str = card.get('anniversary_date', '')
-            if anniversary_date_str:
-                try:
-                    anniversary_date = datetime.strptime(anniversary_date_str, '%Y-%m-%d')
-                    anniversary_month = anniversary_date.month
-                    anniversary_year = anniversary_date.year
-                except:
-                    anniversary_month = 1
-                    anniversary_year = current_year
-            else:
-                anniversary_month = 1
-                anniversary_year = current_year
-            
-            # Process each benefit
-            for idx, benefit in enumerate(card_details.get('benefits', [])):
-                dollar_value = benefit.get('dollar_value')
-                if dollar_value and dollar_value > 0:
-                    benefit_id = f"benefit_{idx}"
-                    frequency = benefit.get('time_category', 'Annually (calendar year)')
-                    
-                    # Get usage from user's card data
-                    benefit_usage_data = card.get('benefit_usage', {}).get(benefit_id, {})
-                    
-                    current_period_used = 0
-                    
-                    # Get period values mapping from benefit
-                    period_values = benefit.get('period_values', {})
-                    
-                    if 'monthly' in frequency.lower():
-                        # Monthly
-                        period_key = f"{current_year}_{current_month:02d}"
-                        p_data = benefit_usage_data.get('periods', {}).get(period_key, {})
-                        current_period_used = p_data.get('used', 0)
 
-                    elif 'semi-annually' in frequency.lower():
-                        # Semi-annually
-                        h1_key = f"{current_year}_H1"
-                        h2_key = f"{current_year}_H2"
-                        
-                        if current_month <= 6:
-                           p_data = benefit_usage_data.get('periods', {}).get(h1_key, {})
-                           current_period_used = p_data.get('used', 0)
-                        else:
-                           p_data = benefit_usage_data.get('periods', {}).get(h2_key, {})
-                           current_period_used = p_data.get('used', 0)
-
-                    elif 'quarterly' in frequency.lower():
-                        # Quarterly
-                        curr_q = (current_month - 1) // 3 + 1
-                        q_key = f"{current_year}_Q{curr_q}"
-                        p_data = benefit_usage_data.get('periods', {}).get(q_key, {})
-                        current_period_used = p_data.get('used', 0)
-
-                    else:
-                        # Annual / Permanent
-                        period_key = f"{current_year}"
-                        p_data = benefit_usage_data.get('periods', {}).get(period_key, {})
-                        # Fallback to legacy 'used' if period data missing
-                        legacy_used = benefit_usage_data.get('used', 0)
-                        current_period_used = p_data.get('used', legacy_used)
-
-                    total_used_value += current_period_used
-                    total_potential_value += dollar_value
-        except Exception as e:
-            print(f"Error processing card benefits in profile: {e}")
-            continue
-    
-    # Calculate Utilization: 100 * (dollars used / dollars available credit)
-    utilization = 0
-    if total_potential_value > 0:
-        utilization = int(100 * (total_used_value / total_potential_value))
 
     
     personalities = db.get_personalities()
@@ -260,29 +170,17 @@ def profile(request):
              user_profile['assigned_personality'] = matched_id
              user_profile['personality_score'] = overlap
     
+    notification_preferences = db.get_user_notification_preferences(uid)
+
     context = {
         'user_profile': user_profile,
-        'cards_count': cards_count,
-        'total_value': total_potential_value, # Showing potential value as "Value"
-        'total_used_value': total_used_value, # Passing used value for "Credits Used"
-        'score': 740, # Keeping if still needed elsewhere, but UI will replace it
-        'utilization': utilization,
         'personalities': personalities,
         'matched_personality': matched_personality,
+        'notification_preferences': notification_preferences,
     }
     return render(request, 'accounts/profile.html', context)
 
-@login_required
-def settings(request):
-    uid = request.session.get('uid')
-    user_profile = db.get_user_profile(uid)
-    notification_preferences = db.get_user_notification_preferences(uid)
-    
-    context = {
-        'user_profile': user_profile,
-        'notification_preferences': notification_preferences,
-    }
-    return render(request, 'accounts/settings.html', context)
+
 
 @csrf_exempt
 @login_required

@@ -51,10 +51,7 @@
                     <span class="material-icons" style="font-size: 1.25rem; color: var(--text-muted);">email</span>
                     <span>{{ user.email }}</span>
                 </div>
-                <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-muted);">
-                    <span class="material-icons" style="font-size: 1.25rem; color: var(--text-muted);">place</span>
-                    <span>{{ user_profile.location|default:"New York, NY" }}</span>
-                </div>
+
                 <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-muted);">
                     <span class="material-icons" style="font-size: 1.25rem; color: var(--text-muted);">calendar_today</span>
                     <span>Joined {{ user.date_joined|date:"M Y" }}</span>
@@ -63,34 +60,192 @@
         </div>
     </div>
 
-    <!-- My Stats Section -->
-    <div>
-        <h3 style="font-size: 1.25rem; font-weight: 700; margin: 0 0 1.5rem 0; color: var(--dark);">My Stats</h3>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem;">
-            <!-- Cards Count -->
-            <div class="stat-card">
-                <div class="stat-value">{{ cards_count }}</div>
-                <div class="stat-label">CARDS</div>
-            </div>
+</div>
 
-            <!-- Credits Used -->
-            <div class="stat-card">
-                <div class="stat-value">${{ total_used_value|floatformat:0 }}</div>
-                <div class="stat-label">CREDITS USED</div>
-            </div>
+<!-- Account Security Section -->
+<div style="background: white; border-radius: var(--radius-lg); padding: 2rem; border: 1px solid #E5E7EB; box-shadow: var(--elevation-1); margin-bottom: 2rem;">
+    <h2 style="font-size: 1.25rem; font-weight: 700; margin: 0 0 1.5rem 0; display: flex; align-items: center; gap: 0.75rem;">
+        <span class="material-icons" style="font-size: 1.5rem; color: var(--primary);">lock</span>
+        Account Security
+    </h2>
 
-            <!-- Total Value -->
-            <div class="stat-card">
-                <div class="stat-value">${{ total_value|floatformat:0 }}</div>
-                <div class="stat-label">VALUE</div>
+    <!-- Email Address -->
+    <div style="padding: 1.25rem; background: var(--bg-body); border-radius: var(--radius-md); margin-bottom: 1rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <div style="font-weight: 600; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">Email Address</div>
+                <div style="font-size: 1.1rem; color: var(--dark);" id="user-email-display">{{ user.email }}</div>
             </div>
+            <button class="btn btn-outline" style="padding: 0.5rem 1.25rem; font-size: 0.9rem;" onclick="openChangeEmailModal()">
+                Change
+            </button>
+        </div>
+    </div>
 
-            <!-- Utilization -->
-            <div class="stat-card">
-                <div class="stat-value">{{ utilization }}%</div>
-                <div class="stat-label">UTIL</div>
+    <!-- Password -->
+    <div style="padding: 1.25rem; background: var(--bg-body); border-radius: var(--radius-md);">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <div style="font-weight: 600; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">Password</div>
+                <div style="font-size: 1.1rem; color: var(--dark); letter-spacing: 2px;">••••••••</div>
             </div>
+            <button class="btn btn-outline" style="padding: 0.5rem 1.25rem; font-size: 0.9rem;" onclick="sendPasswordReset()" id="btn-password-reset">
+                Update
+            </button>
+        </div>
+    </div>
+
+    <!-- Separator -->
+    <div style="margin-top: 2rem; margin-bottom: 2rem; border-top: 1px solid #E5E7EB;"></div>
+
+    <!-- Notifications Section -->
+    <div class="notifications-section">
+        <h2 style="font-size: 1.25rem; font-weight: 700; margin: 0 0 1.5rem 0; display: flex; align-items: center; gap: 0.75rem;">
+            <span class="material-icons" style="font-size: 1.5rem; color: var(--primary);">notifications</span>
+            Notifications
+        </h2>
+
+        <!-- Blog Updates Toggle -->
+        <div style="padding: 1.25rem; background: var(--bg-body); border-radius: var(--radius-md); margin-bottom: 1rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 200px;">
+                    <div style="font-weight: 600; font-size: 1rem; color: var(--dark); margin-bottom: 0.5rem;">Blog Updates</div>
+                    <div style="font-size: 0.9rem; color: var(--text-muted);">Get notified when new articles are published.</div>
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <label class="toggle-switch">
+                        <input type="checkbox" class="notification-toggle" data-type="blog_updates"
+                            {% if notification_preferences.blog_updates.enabled %}checked{% endif %}>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Benefit Expiration Toggle -->
+        <div style="padding: 1.25rem; background: var(--bg-body); border-radius: var(--radius-md); margin-bottom: 1rem;" class="settings-section-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;" class="settings-flex-container">
+                <div style="flex: 1; min-width: 200px;">
+                    <div style="font-weight: 600; font-size: 1rem; color: var(--dark); margin-bottom: 0.5rem;">Benefit Expiration</div>
+                    <div style="font-size: 0.9rem; color: var(--text-muted);">Alert me before a credit expires.</div>
+                </div>
+                
+                <div class="settings-controls-wrapper">
+                    <div class="settings-controls-group">
+                        <div class="settings-control-row">
+                            <span style="font-size: 0.85rem; color: var(--text-muted); white-space: nowrap;">Start notifying:</span>
+                            <select class="form-select pref-select-disabled" id="exp-start-days"
+                               {% if not notification_preferences.benefit_expiration.enabled %}disabled{% endif %}>
+                               <option value="1" {% if notification_preferences.benefit_expiration.start_days_before == 1 %}selected{% endif %}>1 day before</option>
+                               <option value="3" {% if notification_preferences.benefit_expiration.start_days_before == 3 %}selected{% endif %}>3 days before</option>
+                               <option value="5" {% if notification_preferences.benefit_expiration.start_days_before == 5 %}selected{% endif %}>5 days before</option>
+                               <option value="7" {% if notification_preferences.benefit_expiration.start_days_before|default:7 == 7 %}selected{% endif %}>1 week before</option>
+                               <option value="14" {% if notification_preferences.benefit_expiration.start_days_before == 14 %}selected{% endif %}>2 weeks before</option>
+                               <option value="30" {% if notification_preferences.benefit_expiration.start_days_before == 30 %}selected{% endif %}>1 month before</option>
+                           </select>
+                       </div>
+
+                       <div class="settings-control-row">
+                           <span style="font-size: 0.85rem; color: var(--text-muted); white-space: nowrap;">Repeat every:</span>
+                           
+                           {% if user.email == 'colinjianingxie@gmail.com' %}
+                               <select class="form-select pref-select-disabled" id="exp-repeat-freq"
+                                  {% if not notification_preferences.benefit_expiration.enabled %}disabled{% endif %}>
+                                  <option value="0.000694" {% if notification_preferences.benefit_expiration.repeat_frequency == 0.000694 %}selected{% endif %}>1 Minute (Test)</option>
+                                  <option value="1" {% if notification_preferences.benefit_expiration.repeat_frequency|default:1 == 1 %}selected{% endif %}>Day</option>
+                                  <option value="2" {% if notification_preferences.benefit_expiration.repeat_frequency == 2 %}selected{% endif %}>2 Days</option>
+                                  <option value="3" {% if notification_preferences.benefit_expiration.repeat_frequency == 3 %}selected{% endif %}>3 Days</option>
+                                  <option value="5" {% if notification_preferences.benefit_expiration.repeat_frequency == 5 %}selected{% endif %}>5 Days</option>
+                                  <option value="7" {% if notification_preferences.benefit_expiration.repeat_frequency == 7 %}selected{% endif %}>Week</option>
+                               </select>
+                           {% else %}
+                               <span style="font-size: 0.9rem; font-weight: 500; color: var(--dark); padding: 0.375rem 0.75rem; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 6px;">Daily</span>
+                               <input type="hidden" id="exp-repeat-freq" value="1">
+                           {% endif %}
+                       </div>
+                    </div>
+
+                    <label class="toggle-switch" style="margin-left: 0.5rem;">
+                        <input type="checkbox" class="notification-toggle" data-type="benefit_expiration"
+                            {% if notification_preferences.benefit_expiration.enabled %}checked{% endif %}>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Annual Fee Reminders Toggle -->
+        <div style="padding: 1.25rem; background: var(--bg-body); border-radius: var(--radius-md);" class="settings-section-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;" class="settings-flex-container">
+                <div style="flex: 1; min-width: 200px;">
+                    <div style="font-weight: 600; font-size: 1rem; color: var(--dark); margin-bottom: 0.5rem;">Annual Fee Reminders</div>
+                    <div style="font-size: 0.9rem; color: var(--text-muted);">Alert me before renewal.</div>
+                </div>
+
+                <div class="settings-controls-wrapper">
+                    <div class="settings-controls-group">
+                        <div class="settings-control-row">
+                            <span style="font-size: 0.85rem; color: var(--text-muted); white-space: nowrap;">Start notifying:</span>
+                            <select class="form-select pref-select" data-type="annual_fee" data-key="start_days_before"
+                                 {% if not notification_preferences.annual_fee.enabled %}disabled{% endif %}>
+                                <option value="7" {% if notification_preferences.annual_fee.start_days_before == 7 %}selected{% endif %}>1 week before</option>
+                                <option value="14" {% if notification_preferences.annual_fee.start_days_before == 14 %}selected{% endif %}>2 weeks before</option>
+                                <option value="30" {% if notification_preferences.annual_fee.start_days_before|default:30 == 30 %}selected{% endif %}>30 days before</option>
+                                <option value="45" {% if notification_preferences.annual_fee.start_days_before == 45 %}selected{% endif %}>45 days before</option>
+                                <option value="60" {% if notification_preferences.annual_fee.start_days_before == 60 %}selected{% endif %}>60 days before</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <label class="toggle-switch" style="margin-left: 0.5rem;">
+                        <input type="checkbox" class="notification-toggle" data-type="annual_fee"
+                            {% if notification_preferences.annual_fee.enabled %}checked{% endif %}>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Global Save Button -->
+        <div style="padding-top: 1.5rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: flex-end; margin-top: 1rem;">
+            <button id="btn-save-notifications" class="btn btn-primary" onclick="saveAllPreferences()" disabled style="opacity: 0.5; cursor: not-allowed;">
+                Save Changes
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Change Email Modal -->
+<div id="email-modal" class="modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center;">
+    <div style="background: white; padding: 2rem; border-radius: var(--radius-lg); width: 100%; max-width: 400px; box-shadow: var(--elevation-3);">
+        <h3 style="margin-top: 0; font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Change Email Address</h3>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">Please enter your new email address. You may need to verify it.</p>
+        
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; font-weight: 500; font-size: 0.9rem; margin-bottom: 0.5rem;">New Email</label>
+            <input type="email" id="new-email-input" class="form-control" placeholder="Enter new email" style="width: 100%;">
+        </div>
+        
+        <div style="display: flex; justify-content: flex-end; gap: 1rem;">
+            <button class="btn btn-ghost" onclick="closeChangeEmailModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="submitChangeEmail()" id="btn-save-email">Save Changes</button>
+        </div>
+    </div>
+</div>
+
+<!-- Settings Saved Modal -->
+<div id="settings-saved-modal" class="modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center;">
+    <div style="background: white; padding: 2rem; border-radius: var(--radius-lg); width: 100%; max-width: 400px; box-shadow: var(--elevation-3);">
+        <h3 style="margin-top: 0; font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; display:flex; align-items:center; gap:0.5rem;">
+            <span class="material-icons" style="color: var(--primary);">check_circle</span>
+            Settings Saved
+        </h3>
+        <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.9rem;">Your notification preferences have been updated.</p>
+        
+        <div style="display: flex; justify-content: flex-end;">
+            <button class="btn btn-primary" onclick="closeSettingsSavedModal()">Got it</button>
         </div>
     </div>
 </div>
@@ -225,6 +380,30 @@
     @keyframes fadeOut {
         from { opacity: 1; transform: scale(1); }
         to { opacity: 0; transform: scale(0.9); }
+    }
+</style>
+
+<style>
+    /* Base Styles for Settings Controls */
+    .pref-select {
+        padding: 0.4rem 2rem 0.4rem 0.75rem;
+        border-radius: 0.375rem;
+        border: 1px solid #d1d5db;
+        font-size: 0.9rem;
+        background-color: white;
+        width: 140px;
+    }
+    .settings-controls-wrapper { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; justify-content: flex-end; }
+    .settings-controls-group { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; }
+    .settings-control-row { display: flex; align-items: center; gap: 0.75rem; }
+
+    @media (max-width: 768px) {
+        div[style*="display: flex"][style*="justify-content: space-between"]>div:first-child { margin-bottom: 0.75rem; }
+        .settings-flex-container { flex-direction: column; align-items: flex-start !important; }
+        .settings-controls-wrapper { width: 100%; justify-content: space-between; margin-top: 1rem; }
+        .settings-controls-group { width: 100%; align-items: flex-start; }
+        .settings-control-row { width: 100%; flex-direction: column; align-items: flex-start; gap: 0.25rem; margin-bottom: 0.75rem; }
+        .pref-select { width: 100%; max-width: none; }
     }
 </style>
 
@@ -460,5 +639,185 @@
             btn.disabled = false;
         }
     }
+    // --- Notification Settings Logic ---
+    let initialPreferences = {};
+    const saveBtn = document.getElementById('btn-save-notifications');
+    
+    function initNotificationSettings() {
+        // 1. Capture initial state
+        captureInitialState();
+        
+        // 2. Add event listeners
+        document.querySelectorAll('.notification-toggle, .pref-select, #exp-start-days, #exp-repeat-freq').forEach(input => {
+            input.addEventListener('change', (e) => {
+                handleSettingChange(e.target);
+                checkDirtyState();
+            });
+        });
+        
+        // 3. Initialize UI state (disable/enable dependent fields)
+        document.querySelectorAll('.notification-toggle').forEach(toggle => {
+            updateDependentFields(toggle);
+        });
+    }
+
+    function captureInitialState() {
+        initialPreferences = {};
+        
+        // Toggles
+        document.querySelectorAll('.notification-toggle').forEach(toggle => {
+            initialPreferences[toggle.dataset.type] = toggle.checked;
+        });
+        
+        // Selects
+        document.querySelectorAll('.pref-select').forEach(select => {
+            // Key is compounded for uniqueness if needed, but here simple ID or data-key works
+            // Using a composite key: "type:key"
+            if (select.dataset.type && select.dataset.key) {
+                 initialPreferences[`${select.dataset.type}:${select.dataset.key}`] = select.value;
+            }
+        });
+        
+        // Handle specific hardcoded IDs if they don't have data attributes (like benefit expiration)
+        const benefitStart = document.getElementById('exp-start-days');
+        if (benefitStart) initialPreferences['benefit_expiration:start_days_before'] = benefitStart.value;
+        
+        const benefitFreq = document.getElementById('exp-repeat-freq');
+        if (benefitFreq) initialPreferences['benefit_expiration:repeat_frequency'] = benefitFreq.value;
+    }
+
+    function handleSettingChange(target) {
+        if (target.type === 'checkbox') {
+            updateDependentFields(target);
+        }
+    }
+
+    function updateDependentFields(toggle) {
+        // Logic to disable/enable inputs based on the toggle
+        // Specifically for Benefit Expiration and Annual Fee
+        const type = toggle.dataset.type;
+        const isEnabled = toggle.checked;
+        
+        if (type === 'benefit_expiration') {
+            const startSelect = document.getElementById('exp-start-days');
+            const freqSelect = document.getElementById('exp-repeat-freq');
+            
+            if (startSelect) startSelect.disabled = !isEnabled;
+            if (freqSelect) freqSelect.disabled = !isEnabled;
+            
+            // Add visual disabled state class if needed
+            if (startSelect) isEnabled ? startSelect.classList.remove('pref-select-disabled') : startSelect.classList.add('pref-select-disabled');
+            if (freqSelect) isEnabled ? freqSelect.classList.remove('pref-select-disabled') : freqSelect.classList.add('pref-select-disabled');
+            
+        } else if (type === 'annual_fee') {
+             const selects = document.querySelectorAll(`.pref-select[data-type="${type}"]`);
+             selects.forEach(s => s.disabled = !isEnabled);
+        }
+    }
+
+    function checkDirtyState() {
+        let isDirty = false;
+        
+        // Check Toggles
+        document.querySelectorAll('.notification-toggle').forEach(toggle => {
+            if (initialPreferences[toggle.dataset.type] !== toggle.checked) {
+                isDirty = true;
+            }
+        });
+        
+        // Check Selects
+        document.querySelectorAll('.pref-select').forEach(select => {
+            if (select.dataset.type && select.dataset.key) {
+                if (initialPreferences[`${select.dataset.type}:${select.dataset.key}`] !== select.value) {
+                    isDirty = true;
+                }
+            }
+        });
+        
+        // Check IDs
+        const benefitStart = document.getElementById('exp-start-days');
+        if (benefitStart && initialPreferences['benefit_expiration:start_days_before'] !== benefitStart.value) isDirty = true;
+        
+        const benefitFreq = document.getElementById('exp-repeat-freq');
+        if (benefitFreq && initialPreferences['benefit_expiration:repeat_frequency'] !== benefitFreq.value) isDirty = true;
+
+        // Update Button
+        saveBtn.disabled = !isDirty;
+        saveBtn.style.opacity = isDirty ? '1' : '0.5';
+        saveBtn.style.cursor = isDirty ? 'pointer' : 'not-allowed';
+    }
+
+    async function saveAllPreferences() {
+        const btn = document.getElementById('btn-save-notifications');
+        const originalText = btn.innerText;
+        btn.innerHTML = '<span class="loader"></span> Saving...';
+        btn.disabled = true;
+
+        // Build Payload
+        const payload = {
+            blog_updates: {
+                enabled: document.querySelector('.notification-toggle[data-type="blog_updates"]').checked
+            },
+            benefit_expiration: {
+                enabled: document.querySelector('.notification-toggle[data-type="benefit_expiration"]').checked,
+                start_days_before: parseInt(document.getElementById('exp-start-days').value),
+                repeat_frequency: document.getElementById('exp-repeat-freq').value // Keep as string or float handled by backend
+            },
+            annual_fee: {
+                enabled: document.querySelector('.notification-toggle[data-type="annual_fee"]').checked,
+                start_days_before: parseInt(document.querySelector('.pref-select[data-type="annual_fee"][data-key="start_days_before"]').value)
+            }
+        };
+
+        try {
+            const response = await fetch('{% url "update_notifications" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ preferences: payload })
+            });
+
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                // Determine user feedback based on whether benefit email is pending
+                let msg = 'Preferences saved successfully.';
+                if (data.next_email_formatted && payload.benefit_expiration.enabled) {
+                    msg += ` Next benefit alert: ${data.next_email_formatted}`;
+                }
+                
+                showToast(msg);
+                
+                // Reset state
+                captureInitialState();
+                checkDirtyState(); // Will disable button
+                
+            } else {
+                throw new Error(data.message || 'Failed to save preferences');
+            }
+
+        } catch (error) {
+            console.error('Error saving preferences:', error);
+            showToast(error.message, 'error');
+            btn.innerHTML = originalText;
+            btn.disabled = false; // Re-enable so they can try again
+        } finally {
+            if (saveBtn.disabled && btn.innerText !== originalText && !btn.innerText.includes('Saving')) {
+                 // If success (button disabled by checkDirtyState), restore text
+                 btn.innerText = originalText;
+            } else if (!saveBtn.disabled) {
+                 // If error, restore text
+                 btn.innerText = originalText;
+            } else {
+                 // Success case where we want to just reset text
+                 btn.innerText = originalText;
+            }
+        }
+    }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', initNotificationSettings);
 </script>
 {% endblock %}

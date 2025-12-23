@@ -27,7 +27,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('logout/', accounts_views.logout_redirect, name='logout'),
     path('profile/', accounts_views.profile, name='profile'),
-    path('settings/', accounts_views.settings, name='settings'),
+
     path('wallet/', include('dashboard.urls')),
     path('blog/', include('blog.urls')),
     path('custom-admin/', include('custom_admin.urls')),
