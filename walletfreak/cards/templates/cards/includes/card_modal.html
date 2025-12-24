@@ -429,6 +429,18 @@ function openCardModal(cardId) {
     // Helper to update button state
     const updateAddBtn = (btn) => {
         if (!btn) return;
+        
+        const isAuthenticated = {{ request.user.is_authenticated|yesno:"true,false" }};
+        
+        if (!isAuthenticated) {
+            btn.disabled = true;
+            btn.innerHTML = 'Login to Add to Wallet <span class="material-icons" style="font-size: 18px;">lock</span>';
+            btn.style.background = '#94A3B8';
+            btn.style.setProperty('cursor', 'default', 'important');
+            btn.onclick = null;
+            return;
+        }
+
         if (isInWallet) {
             btn.disabled = true;
             btn.innerHTML = 'Already in Wallet <span class="material-icons" style="font-size: 18px;">check_circle</span>';
