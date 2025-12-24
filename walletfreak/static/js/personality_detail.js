@@ -103,18 +103,49 @@ function animateValue(id, end) {
     window.requestAnimationFrame(step);
 }
 
-// Auto-select first card in each slot on load - delay to allow carousel initialization
+// Auto-select cards that are in the user's wallet
 window.addEventListener('load', () => {
     setTimeout(() => {
-        const slots = new Set();
-        document.querySelectorAll('.card-option').forEach(el => slots.add(el.dataset.slot));
+        // Clear any previous selection just in case, though it should be empty
+        selectedCards.clear();
 
-        slots.forEach(slot => {
-            const firstCard = document.querySelector(`.card-option[data-slot="${slot}"][style*="display: block"], .card-option[data-slot="${slot}"]:not([style*="display: none"])`);
-            if (firstCard) {
-                toggleCardSelection(firstCard, slot);
+        // Iterate through all card options
+        document.querySelectorAll('.card-option').forEach(cardEl => {
+            const cardId = cardEl.dataset.id;
+
+            // Check if this card is in the user's wallet
+            // walletCardIds is a Set defined in the template
+            if (walletCardIds.has(parseInt(cardId)) || walletCardIds.has(cardId)) {
+                // If the card is not already selected (visual check), select it
+                if (!cardEl.classList.contains('selected')) {
+                    toggleCardSelection(cardEl, cardEl.dataset.slot);
+                }
+
+                // If the card is hidden in the carousel, we should probably rotate to it?
+                // For now, let's just ensure it's selected. The metrics will update.
+                // Optionally, we could find the slot and rotate the carousel to show this card.
+                // Let's do a simple check: if it's hidden, try to show it.
+                if (cardEl.classList.contains('slot-card-hidden')) {
+                    // Find the slot index
+                    const slotIndex = cardEl.dataset.slot;
+                    const cardIndex = parseInt(cardEl.dataset.index);
+
+                    // We need to set the current index for this slot to this card's index
+                    // But changeCard functions relatively. 
+                    // We can manually manipulate the DOM to show this card for a better UX.
+
+                    // Use the helper if available or manual override
+                    // Actually, simply selecting it is the core requirement. 
+                    // Enhancing visibility is a "nice to have". 
+                    // Let's stick to the core requirement first to avoid carousel sync bugs.
+                }
             }
         });
+
+        // If no cards were selected (e.g. anonymous user or no matches), 
+        // calculateMetrics will run with empty selection, resulting in 0s, which is correct.
+        calculateMetrics();
+
     }, 100);
 });
 
