@@ -24,11 +24,26 @@ class FirebaseAdminMiddleware:
         # Check if user is authenticated via Firebase session
         firebase_uid = request.session.get('uid')
         
-        if firebase_uid and request.user.is_authenticated:
-            # Sync Django user permissions with Firestore on every request
-            user_profile = db.get_user_profile(firebase_uid)
+        # Attach empty profile by default
+        request.user_profile = None
+
+        if firebase_uid:
+            # Try to get from cache first
+            from django.core.cache import cache
+            cache_key = f'user_profile_{firebase_uid}'
+            user_profile = cache.get(cache_key)
             
-            if user_profile:
+            if user_profile is None:
+                user_profile = db.get_user_profile(firebase_uid)
+                if user_profile:
+                    # Cache for 5 minutes
+                    cache.set(cache_key, user_profile, 300)
+            
+            # Attach to request for downstream use (context processors, views)
+            request.user_profile = user_profile
+            
+            if request.user.is_authenticated and user_profile:
+                # Sync Django user permissions with Firestore on every request
                 # Handle both Python True/False and JavaScript true/false
                 is_super_staff = user_profile.get('is_super_staff', False)
                 should_be_admin = (is_super_staff is True or is_super_staff == 'true' or is_super_staff == True)
@@ -55,33 +70,32 @@ class FirebaseAdminMiddleware:
                 return self.get_response(request)
             
             # Check for Firebase session and try to log in
-            if firebase_uid:
-                user_profile = db.get_user_profile(firebase_uid)
+            if firebase_uid and request.user_profile:
+                user_profile = request.user_profile
                 
-                if user_profile:
-                    is_super_staff = user_profile.get('is_super_staff', False)
-                    if is_super_staff is True or is_super_staff == 'true' or is_super_staff == True:
-                        # Try to get or create Django user for admin
-                        from django.contrib.auth.models import User
-                        try:
-                            user = User.objects.get(username=firebase_uid)
-                        except User.DoesNotExist:
-                            # Create user
-                            user = User.objects.create_user(
-                                username=firebase_uid,
-                                email=user_profile.get('email', ''),
-                                password=None
-                            )
-                        
-                        # Set admin permissions
-                        user.is_staff = True
-                        user.is_superuser = True
-                        user.is_active = True
-                        user.save()
-                        
-                        # Log user in for Django admin
-                        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-                        return self.get_response(request)
+                is_super_staff = user_profile.get('is_super_staff', False)
+                if is_super_staff is True or is_super_staff == 'true' or is_super_staff == True:
+                    # Try to get or create Django user for admin
+                    from django.contrib.auth.models import User
+                    try:
+                        user = User.objects.get(username=firebase_uid)
+                    except User.DoesNotExist:
+                        # Create user
+                        user = User.objects.create_user(
+                            username=firebase_uid,
+                            email=user_profile.get('email', ''),
+                            password=None
+                        )
+                    
+                    # Set admin permissions
+                    user.is_staff = True
+                    user.is_superuser = True
+                    user.is_active = True
+                    user.save()
+                    
+                    # Log user in for Django admin
+                    login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+                    return self.get_response(request)
             
             # No valid authentication - redirect to home
             return redirect('/')
