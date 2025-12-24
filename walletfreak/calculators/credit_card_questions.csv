@@ -1,153 +1,192 @@
-slug-id|BenefitShortDescription|QuestionType|ChoiceList|Question|BenefitCategory
-chase-sapphire-preferred-card|Hotel Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many hotel stays do you book per year?|Hotel
-chase-sapphire-preferred-card|Anniversary Bonus|multiple_choice|['$0-10,000', '$10,001-25,000', '$25,001-50,000', '$50,001+']|What is your annual credit card spending?|Anniversary Bonus
-chase-sapphire-preferred-card|DashPass|multiple_choice|['Never', '1-2 times/month', '3-5 times/month', '6+ times/month']|How often do you use DoorDash or similar delivery services?|Delivery
-american-express-gold-card|Uber Cash|multiple_choice|['Never', 'Rarely', 'Sometimes', 'Often']|How often do you use Uber for rides or Uber Eats?|Rideshare,Food Delivery
-american-express-gold-card|Dining Credit|multiple_choice|['$0-50', '$51-100', '$101-200', '$201+']|How much do you spend on dining out per month?|Dining
-american-express-gold-card|Resy Credit|multiple_choice|['$0-50', '$51-100', '$101-200', '$201+']|How much do you spend on dining out per month?|Dining
-american-express-gold-card|Dunkin Credit|multiple_choice|['$0-50', '$51-100', '$101-200', '$201+']|How much do you spend on dining out per month?|Dining
-american-express-gold-card|Hotel Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many hotel stays do you book per year?|Hotel
-capital-one-venture-x-rewards-credit-card|Travel Credit|multiple_choice|['$0-500', '$501-1000', '$1001-2000', '$2001+']|How much do you spend on travel per year?|Travel
-capital-one-venture-x-rewards-credit-card|Anniversary Miles|multiple_choice|['$0-10,000', '$10,001-25,000', '$25,001-50,000', '$50,001+']|What is your annual credit card spending?|Anniversary Bonus
-capital-one-venture-x-rewards-credit-card|Lounge Access|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times per year do you spend time in airports with layovers or delays?|Lounge Access
-capital-one-venture-x-rewards-credit-card|TSA Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times do you pass through airport security per year?|Travel Security
-capital-one-venture-x-rewards-credit-card|Hertz Status|yes_no|['Yes', 'No']|Do you rent cars from Hertz often?|Rental Cars
-chase-freedom-unlimited|DashPass|multiple_choice|['Never', '1-2 times/month', '3-5 times/month', '6+ times/month']|How often do you use DoorDash or similar delivery services?|Delivery
-wells-fargo-active-cash-card|Phone Protection|yes_no|['Yes', 'No']|Do you pay your cell phone bill with your credit card?|Cell Phone Protection
-blue-cash-preferred-card-from-american-express|Disney Credit|yes_no|['Yes', 'No']|Do you subscribe to the Disney Bundle (Disney+, Hulu, ESPN+)?|Streaming
-capital-one-venture-rewards-credit-card|TSA Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times do you pass through airport security per year?|Travel Security
-chase-sapphire-reserve|Travel Credit|multiple_choice|['$0-500', '$501-1000', '$1001-2000', '$2001+']|How much do you spend on travel per year?|Travel
-chase-sapphire-reserve|Edit Hotel Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many hotel stays do you book per year?|Hotel
-chase-sapphire-reserve|Tables Credit|multiple_choice|['$0-50', '$51-100', '$101-200', '$201+']|How much do you spend on dining out per month?|Dining
-chase-sapphire-reserve|Lounge Access|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times per year do you spend time in airports with layovers or delays?|Lounge Access
-chase-sapphire-reserve|TSA Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times do you pass through airport security per year?|Travel Security
-american-express-platinum-card|Airline Credit|yes_no|['Yes', 'No']|Do you have incidental airline fees like checked bags or seat upgrades?|Airline
-american-express-platinum-card|Hotel Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many hotel stays do you book per year?|Hotel
-american-express-platinum-card|CLEAR Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times do you pass through airport security per year?|Travel Security
-american-express-platinum-card|Uber Cash|multiple_choice|['Never', 'Rarely', 'Sometimes', 'Often']|How often do you use Uber for rides or Uber Eats?|Rideshare,Food Delivery
-american-express-platinum-card|Entertainment Credit|yes_no|['Yes', 'No']|Do you subscribe to digital entertainment services?|Streaming,Entertainment
-american-express-platinum-card|Resy Credit|multiple_choice|['$0-50', '$51-100', '$101-200', '$201+']|How much do you spend on dining out per month?|Dining
-american-express-platinum-card|lululemon Credit|yes_no|['Yes', 'No']|Do you shop at lululemon for athletic wear?|Shopping,Fitness
-american-express-platinum-card|Walmart+ Credit|yes_no|['Yes', 'No']|Do you have or want a Walmart+ membership?|Shopping
-american-express-platinum-card|Saks Credit|yes_no|['Yes', 'No']|Do you shop at Saks Fifth Avenue?|Shopping
-american-express-platinum-card|Equinox Credit|yes_no|['Yes', 'No']|Do you go to Equinox gyms?|Fitness
-american-express-platinum-card|Oura Credit|yes_no|['Yes', 'No']|Are you interested in wearable health tracking devices like Oura Ring?|Fitness,Wellness
-wells-fargo-reflect-card|Phone Protection|yes_no|['Yes', 'No']|Do you pay your cell phone bill with your credit card?|Cell Phone Protection
-chase-freedom-flex|DashPass|multiple_choice|['Never', '1-2 times/month', '3-5 times/month', '6+ times/month']|How often do you use DoorDash or similar delivery services?|Delivery
-citi-strata-premier-card|Hotel Savings|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many hotel stays do you book per year?|Hotel
-blue-cash-everyday-card-from-american-express|Disney Credit|yes_no|['Yes', 'No']|Do you subscribe to the Disney Bundle (Disney+, Hulu, ESPN+)?|Streaming
-united-explorer-card|Free Bag|yes_no|['Yes', 'No']|Do you typically check luggage when flying?|Airline
-united-explorer-card|Priority Boarding|yes_no|['Yes', 'No']|Is priority boarding important to you when flying?|Airline
-united-explorer-card|Club Passes|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times per year do you spend time in airports with layovers or delays?|Lounge Access
-united-explorer-card|TSA Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times do you pass through airport security per year?|Travel Security
-united-explorer-card|Inflight Savings|yes_no|['Yes', 'No']|Do you purchase drinks or food on flights?|Airline
-marriott-bonvoy-boundless-credit-card|Free Night|yes_no|['Yes', 'No']|Do you stay at hotels that participate in the card's loyalty program?|Hotel
-marriott-bonvoy-boundless-credit-card|Elite Credits|multiple_choice|['0-5', '6-15', '16-30', '31+']|How many nights do you stay at this hotel chain per year?|Hotel Status
-delta-skymiles-platinum-american-express-card|Companion Certificate|yes_no|['Yes', 'No']|Do you travel with a companion on flights?|Airline
-delta-skymiles-platinum-american-express-card|TSA Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times do you pass through airport security per year?|Travel Security
-delta-skymiles-platinum-american-express-card|Resy Credit|multiple_choice|['$0-50', '$51-100', '$101-200', '$201+']|How much do you spend on dining out per month?|Dining
-delta-skymiles-platinum-american-express-card|Rideshare Credit|multiple_choice|['Never', 'Rarely', 'Sometimes', 'Often']|How often do you use rideshare services?|Rideshare
-delta-skymiles-platinum-american-express-card|Delta Stays Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many hotel stays do you book per year?|Hotel
-hilton-honors-american-express-surpass-card|Gold Status|multiple_choice|['0-5', '6-15', '16-30', '31+']|How many nights do you stay at this hotel chain per year?|Hotel Status
-hilton-honors-american-express-surpass-card|Hilton Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many hotel stays do you book per year?|Hotel
-hilton-honors-american-express-surpass-card|Free Night|yes_no|['Yes', 'No']|Do you stay at hotels that participate in the card's loyalty program?|Hotel
-southwest-rapid-rewards-priority-credit-card|Anniversary Points|multiple_choice|['$0-10,000', '$10,001-25,000', '$25,001-50,000', '$50,001+']|What is your annual credit card spending?|Anniversary Bonus
-southwest-rapid-rewards-priority-credit-card|Southwest Credit|yes_no|['Yes', 'No']|Do you have incidental airline fees like checked bags or seat upgrades?|Airline
-southwest-rapid-rewards-priority-credit-card|Upgraded Boardings|yes_no|['Yes', 'No']|Is priority boarding important to you when flying?|Airline
-southwest-rapid-rewards-priority-credit-card|Inflight Savings|yes_no|['Yes', 'No']|Do you purchase drinks or food on flights?|Airline
-ihg-one-rewards-premier-credit-card|Free Night|yes_no|['Yes', 'No']|Do you stay at hotels that participate in the card's loyalty program?|Hotel
-ihg-one-rewards-premier-credit-card|Spend Bonus|yes_no|['Yes', 'No']|Do you spend over $20,000 annually on hotel purchases?|Hotel
-ihg-one-rewards-premier-credit-card|TSA Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times do you pass through airport security per year?|Travel Security
-ihg-one-rewards-premier-credit-card|Platinum Status|multiple_choice|['0-5', '6-15', '16-30', '31+']|How many nights do you stay at this hotel chain per year?|Hotel Status
-american-express-green-card|CLEAR Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times do you pass through airport security per year?|Travel Security
-american-express-green-card|LoungeBuddy Credit|yes_no|['Yes', 'No']|Do you purchase lounge access when traveling?|Lounge Access
-united-quest-card|Free Bags|yes_no|['Yes', 'No']|Do you typically check luggage when flying?|Airline
-united-quest-card|United Credit|yes_no|['Yes', 'No']|Do you have incidental airline fees like checked bags or seat upgrades?|Airline
-united-quest-card|Award Discount|yes_no|['Yes', 'No']|Do you redeem miles for award flights?|Airline
-citi-simplicity-card|No Fees|yes_no|['Yes', 'No']|Do you travel internationally or make foreign purchases?|Card Protection
-the-world-of-hyatt-credit-card|Free Night|yes_no|['Yes', 'No']|Do you stay at hotels that participate in the card's loyalty program?|Hotel
-the-world-of-hyatt-credit-card|Spend Free Night|yes_no|['Yes', 'No']|Do you stay at hotels that participate in the card's loyalty program?|Hotel
-the-world-of-hyatt-credit-card|Discoverist Status|multiple_choice|['0-5', '6-15', '16-30', '31+']|How many nights do you stay at this hotel chain per year?|Hotel Status
-marriott-bonvoy-brilliant-american-express-card|Platinum Status|multiple_choice|['0-5', '6-15', '16-30', '31+']|How many nights do you stay at this hotel chain per year?|Hotel Status
-marriott-bonvoy-brilliant-american-express-card|Marriott Dining|multiple_choice|['$0-50', '$51-100', '$101-200', '$201+']|How much do you spend on dining out per month?|Dining,Hotel
-marriott-bonvoy-brilliant-american-express-card|Free Night|yes_no|['Yes', 'No']|Do you stay at hotels that participate in the card's loyalty program?|Hotel
-delta-skymiles-reserve-american-express-card|Companion Certificate|yes_no|['Yes', 'No']|Do you travel with a companion on flights?|Airline
-delta-skymiles-reserve-american-express-card|Sky Club Access|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times per year do you spend time in airports with layovers or delays?|Lounge Access
-hilton-honors-aspire-card-from-american-express|Diamond Status|multiple_choice|['0-5', '6-15', '16-30', '31+']|How many nights do you stay at this hotel chain per year?|Hotel Status
-hilton-honors-aspire-card-from-american-express|Resort Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many hotel stays do you book per year?|Hotel
-hilton-honors-aspire-card-from-american-express|Airline Credit|yes_no|['Yes', 'No']|Do you have incidental airline fees like checked bags or seat upgrades?|Airline
-hilton-honors-aspire-card-from-american-express|Free Night|yes_no|['Yes', 'No']|Do you stay at hotels that participate in the card's loyalty program?|Hotel
-aeroplan-credit-card|Free Bag|yes_no|['Yes', 'No']|Do you typically check luggage when flying?|Airline
-aeroplan-credit-card|TSA Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times do you pass through airport security per year?|Travel Security
-british-airways-visa-signature-card|Travel Together|yes_no|['Yes', 'No']|Do you spend $30,000+ annually and travel with British Airways?|Airline
-capital-one-platinum-secured-credit-card|Credit Building|yes_no|['Yes', 'No']|Are you looking to build or rebuild your credit score?|Credit Building
-chase-slate-edge|APR Reduction|yes_no|['Yes', 'No']|Do you carry a balance on your credit card?|Credit Building
-ihg-one-rewards-traveler-credit-card|Silver Status|multiple_choice|['0-5', '6-15', '16-30', '31+']|How many nights do you stay at this hotel chain per year?|Hotel Status
-ihg-one-rewards-traveler-credit-card|Fourth Night Free|yes_no|['Yes', 'No']|Do you stay at hotels that participate in the card's loyalty program?|Hotel
-united-club-card|Club Membership|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times per year do you spend time in airports with layovers or delays?|Lounge Access
-united-club-card|Free Bags|yes_no|['Yes', 'No']|Do you typically check luggage when flying?|Airline
-us-bank-shield-visa-card|Phone Protection|yes_no|['Yes', 'No']|Do you pay your cell phone bill with your credit card?|Cell Phone Protection
-apple-card|Daily Cash|yes_no|['Yes', 'No']|Do you want daily cash back deposits?|Savings Interest
-costco-anywhere-visa-card-by-citi|Reward Certificate|yes_no|['Yes', 'No']|Do you shop at Costco?|Shopping
-bank-of-america-premium-rewards-credit-card|Rewards Boost|yes_no|['Yes', 'No']|Do you have Bank of America or Merrill accounts?|
-bank-of-america-premium-rewards-credit-card|Airline Credit|yes_no|['Yes', 'No']|Do you have incidental airline fees like checked bags or seat upgrades?|Airline
-bank-of-america-premium-rewards-credit-card|TSA Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times do you pass through airport security per year?|Travel Security
-citi-secured-mastercard|Credit Building|yes_no|['Yes', 'No']|Are you looking to build or rebuild your credit score?|Credit Building
-amazon-store-card|Special Financing|yes_no|['Yes', 'No']|Do you make large purchases on Amazon and want financing options?|Shopping,Amazon
-wells-fargo-reflect-secured-credit-card|Phone Protection|yes_no|['Yes', 'No']|Do you pay your cell phone bill with your credit card?|Cell Phone Protection
-penfed-pathfinder-rewards-visa-signature-card|Airline Credit|yes_no|['Yes', 'No']|Do you have incidental airline fees like checked bags or seat upgrades?|Airline
-us-bank-altitude-connect-visa-signature-card|TSA Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times do you pass through airport security per year?|Travel Security
-us-bank-altitude-connect-visa-signature-card|Priority Pass|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times per year do you spend time in airports with layovers or delays?|Lounge Access
-us-bank-altitude-reserve-visa-infinite-card|Travel & Dining Credit|multiple_choice|['$0-50', '$51-100', '$101-200', '$201+']|How much do you spend on dining out per month?|Travel,Dining
-us-bank-altitude-reserve-visa-infinite-card|Priority Pass|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times per year do you spend time in airports with layovers or delays?|Lounge Access
-us-bank-altitude-reserve-visa-infinite-card|TSA Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times do you pass through airport security per year?|Travel Security
-paypal-credit|Promotional Financing|yes_no|['Yes', 'No']|Do you make large purchases on Amazon and want financing options?|Online Shopping
-bilt-mastercard|Rent Day Bonus|yes_no|['Yes', 'No']|Do you pay rent with your credit card?|Dining,Travel,All Purchases
-bilt-mastercard|Phone Protection|yes_no|['Yes', 'No']|Do you pay your cell phone bill with your credit card?|Cell Phone Protection
-bilt-mastercard|No FTF|yes_no|['Yes', 'No']|Do you travel internationally or make foreign purchases?|Travel
-ink-business-preferred-credit-card|DashPass|multiple_choice|['Never', '1-2 times/month', '3-5 times/month', '6+ times/month']|How often do you use DoorDash or similar delivery services?|Delivery
-ink-business-preferred-credit-card|DoorDash Non-Restaurant Credit|yes_no|['Yes', 'No']|Do you order non-restaurant items from DoorDash?|Delivery
-ink-business-preferred-credit-card|Cell Phone Protection|yes_no|['Yes', 'No']|Do you pay your cell phone bill with your credit card?|Cell Phone Protection
-ink-business-preferred-credit-card|Primary Rental Coverage|yes_no|['Yes', 'No']|Do you rent cars and need primary insurance coverage?|Rental Cars
-ink-business-preferred-credit-card|No FTF|yes_no|['Yes', 'No']|Do you travel internationally or make foreign purchases?|Travel
-ink-business-premier-credit-card|Cell Phone Protection|yes_no|['Yes', 'No']|Do you pay your cell phone bill with your credit card?|Cell Phone Protection
-the-business-platinum-card-from-american-express|Airline Fee Credit|yes_no|['Yes', 'No']|Do you have incidental airline fees like checked bags or seat upgrades?|Airline
-the-business-platinum-card-from-american-express|Dell Credit|yes_no|['Yes', 'No']|Do you purchase from Dell Technologies?|Tech
-the-business-platinum-card-from-american-express|Indeed Credit|yes_no|['Yes', 'No']|Do you use Indeed for hiring?|Hiring
-the-business-platinum-card-from-american-express|Adobe Credit|yes_no|['Yes', 'No']|Do you use Adobe software?|Software
-the-business-platinum-card-from-american-express|Wireless Credit|yes_no|['Yes', 'No']|Do you have U.S. wireless telephone services?|Telecom
-the-business-platinum-card-from-american-express|CLEAR Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times do you pass through airport security per year?|Travel Security
-the-business-platinum-card-from-american-express|Walmart+ Credit|yes_no|['Yes', 'No']|Do you have or want a Walmart+ membership?|Shopping
-the-business-platinum-card-from-american-express|Global Lounge Access|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times per year do you spend time in airports with layovers or delays?|Lounge Access
-american-express-business-gold-card|Flexible Business Credit|yes_no|['Yes', 'No']|Do you spend on business expenses like shipping, food delivery, office supplies?|Business Expenses
-american-express-business-gold-card|Walmart+ Credit|yes_no|['Yes', 'No']|Do you have or want a Walmart+ membership?|Shopping
-capital-one-spark-cash-plus|Annual Fee Refund|yes_no|['Yes', 'No']|Is your annual business spending over $150,000?|Annual Fee Refund
-capital-one-spark-miles-for-business|TSA/Global Entry Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times do you pass through airport security per year?|Travel Security
-capital-one-spark-miles-for-business|Hertz Status|yes_no|['Yes', 'No']|Do you rent cars from Hertz often?|Rental Cars
-bank-of-america-travel-rewards-credit-card|No Foreign Transaction Fees|yes_no|['Yes', 'No']|Do you travel internationally or make foreign purchases?|Travel
-bank-of-america-travel-rewards-credit-card|Preferred Rewards Bonus|yes_no|['Yes', 'No']|Do you have Bank of America or Merrill accounts?|Rewards Bonus
-blue-business-plus-credit-card-from-american-express|No Foreign Transaction Fees|yes_no|['Yes', 'No']|Do you travel internationally or make foreign purchases?|Travel
-blue-business-plus-credit-card-from-american-express|Free Employee Cards|yes_no|['Yes', 'No']|Do you need employee cards for your business?|Business Management
-capital-one-ventureone-rewards-credit-card|No Foreign Transaction Fees|yes_no|['Yes', 'No']|Do you travel internationally or make foreign purchases?|Travel
-capital-one-ventureone-rewards-credit-card|Miles Transfer Partners|yes_no|['Yes', 'No']|Do you like transferring miles to airline partners?|Redemption Flexibility
-capital-one-ventureone-rewards-credit-card|Hertz Five Star Status|yes_no|['Yes', 'No']|Do you rent cars from Hertz often?|Car Rental
-discover-it-miles|No Foreign Transaction Fees|yes_no|['Yes', 'No']|Do you travel internationally or make foreign purchases?|Travel
-discover-it-miles|Free FICO Score|yes_no|['Yes', 'No']|Are you interested in monitoring your credit score?|Credit Monitoring
-wells-fargo-autograph-card|No Foreign Transaction Fees|yes_no|['Yes', 'No']|Do you travel internationally or make foreign purchases?|Travel
-wells-fargo-autograph-card|Cell Phone Protection|yes_no|['Yes', 'No']|Do you pay your cell phone bill with your credit card?|Protection
-huntington-voice-visa-card|No Penalty APR|yes_no|['Yes', 'No']|Do you worry about penalty rates for late payments?|Financial Protection
-huntington-voice-visa-card|Roadside Dispatch|yes_no|['Yes', 'No']|Do you drive and might need roadside assistance?|Roadside Assistance
-navy-federal-nrewards-secured-credit-card|No Foreign Transaction Fees|yes_no|['Yes', 'No']|Do you travel internationally or make foreign purchases?|Travel
-navy-federal-nrewards-secured-credit-card|No Cash Advance Fees|yes_no|['Yes', 'No']|Do you travel internationally or make foreign purchases?|Financial
-pnc-premier-traveler-visa-signature-credit-card|No Foreign Transaction Fees|yes_no|['Yes', 'No']|Do you travel internationally or make foreign purchases?|Travel
-pnc-premier-traveler-visa-signature-credit-card|Luxury Hotel Collection Benefits|yes_no|['Yes', 'No']|Do you book luxury hotels?|Hotel
-citi-strata-elite-card|Hotel Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many hotel stays do you book per year?|Hotel
-citi-strata-elite-card|Splurge Credit|yes_no|['Yes', 'No']|Are you interested in credits for luxury shopping, airlines, fitness, or entertainment?|Lifestyle
-citi-strata-elite-card|Blacklane Credit|yes_no|['Yes', 'No']|Do you use chauffeured car services?|Transportation
-citi-strata-elite-card|Priority Pass Membership|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times per year do you spend time in airports with layovers or delays?|Airport Lounge
-citi-strata-elite-card|Admirals Club Passes|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times per year do you spend time in airports with layovers or delays?|Airport Lounge
-citi-strata-elite-card|Application Fee Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many times do you pass through airport security per year?|Travel Security
-citi-strata-elite-card|Citigold Credit|yes_no|['Yes', 'No']|Do you have a Citigold or Citigold Private Client account?|Banking
-citi-strata-elite-card|Private Client Credit|yes_no|['Yes', 'No']|Do you have a Citigold or Citigold Private Client account?|Banking
-citi-strata-elite-card|Travel Protections|yes_no|['Yes', 'No']|Do you value travel insurance benefits?|Travel Protection
-citi-strata-elite-card|No Foreign Fees|yes_no|['Yes', 'No']|Do you travel internationally or make foreign purchases?|Fee Waiver
+slug-id|BenefitShortDescription|QuestionType|ChoiceList|Question|BenefitCategory|ChoiceWeight
+chase-sapphire-preferred-card|Hotel Credit|multiple_choice|['0-2', '3-5', '6-10', '11+']|How many hotel nights do you typically book in a year through a travel portal?|Hotel|[0.0, 0.4, 0.8, 1.0]
+chase-sapphire-preferred-card|Anniversary Bonus|multiple_choice|['No', 'Sometimes', 'Yes']|Do you value an annual anniversary bonus to boost your travel rewards balance?|Anniversary Bonus|[0.0, 0.5, 1.0]
+chase-sapphire-preferred-card|DashPass|multiple_choice|['No', 'Sometimes', 'Yes']|Do you use food delivery services at least twice a month?|Delivery|[0.0, 0.5, 1.0]
+american-express-gold-card|Uber Cash|multiple_choice|['No', 'Sometimes', 'Yes']|Do you use Uber for transportation or order from local restaurants via Uber Eats monthly?|Rideshare,Food Delivery|[0.0, 0.5, 1.0]
+american-express-gold-card|Dining Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you regularly order takeout from Grubhub or visit dining chains like The Cheesecake Factory?|Dining|[0.0, 0.5, 1.0]
+american-express-gold-card|Resy Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you enjoy discovering and booking tables at popular local restaurants through Resy?|Dining|[0.0, 0.5, 1.0]
+american-express-gold-card|Dunkin Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Is a morning coffee or donut from Dunkin' a staple of your routine?|Dining|[0.0, 0.5, 1.0]
+american-express-gold-card|Hotel Credit|multiple_choice|['No', 'Sometimes', 'Yes']|How likely are you to book hotel stays through a bank portal to earn extra value on trip perks?|Hotel|[0.0, 0.5, 1.0]
+capital-one-venture-x-rewards-credit-card|Travel Credit|multiple_choice|['No', 'Maybe', 'Yes']|Do you spend at least $300 annually on travel and feel comfortable booking through a bank's travel portal?|Travel|[0.0, 0.5, 1.0]
+capital-one-venture-x-rewards-credit-card|Anniversary Miles|multiple_choice|['No', 'Sometimes', 'Yes']|Do you value receiving 10,000 bonus miles every year to offset the cost of your future trips?|Anniversary Bonus|[0.0, 0.5, 1.0]
+capital-one-venture-x-rewards-credit-card|Lounge Access|multiple_choice|['Never', '1-2 times', '3+ times']|How many times a year do you wish you had a quiet place with free food and drinks at the airport?|Lounge Access|[0.0, 0.6, 1.0]
+capital-one-venture-x-rewards-credit-card|TSA Credit|multiple_choice|['No', 'Already Have It', 'Yes']|Do you want a credit for Global Entry or TSA PreCheck to expedite your airport experience?|Travel Security|[0.0, 0.2, 1.0]
+capital-one-venture-x-rewards-credit-card|Hertz Status|multiple_choice|['No', 'Sometimes', 'Yes']|Do you rent cars frequently enough to benefit from skipping the counter and getting free upgrades?|Rental Cars|[0.0, 0.5, 1.0]
+chase-freedom-unlimited|DashPass|multiple_choice|['No', 'Sometimes', 'Yes']|Do you value a free delivery membership for your favorite local restaurants?|Delivery|[0.0, 0.5, 1.0]
+wells-fargo-active-cash-card|Phone Protection|multiple_choice|['No', 'Somewhat', 'Highly']|Do you value having insurance to protect your phone against damage or theft just by paying your bill?|Cell Phone Protection|[0.0, 0.5, 1.0]
+blue-cash-preferred-card-from-american-express|Disney Credit|multiple_choice|['No', 'Yes']|Do you currently pay for Disney+, Hulu, or ESPN+ and want $10 back every month?|Streaming|[0.0, 1.0]
+capital-one-venture-rewards-credit-card|TSA Credit|multiple_choice|['No', 'Yes']|Do you travel enough to justify a $120 credit to skip the long security lines at the airport?|Travel Security|[0.0, 1.0]
+chase-sapphire-reserve|Travel Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you spend at least $300 annually on travel, including flights, tolls, and parking?|Travel|[0.0, 0.5, 1.0]
+chase-sapphire-reserve|The Edit Hotel Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you enjoy staying at curated luxury hotels and receiving on-property experience credits?|Hotel|[0.0, 0.5, 1.0]
+chase-sapphire-reserve|Trusted Traveler Credit|multiple_choice|['No', 'Yes']|Do you value having a credit for Global Entry, TSA PreCheck, or NEXUS for smoother travel?|Travel|[0.0, 1.0]
+chase-sapphire-reserve|Priority Pass|multiple_choice|['No', 'Sometimes', 'Yes']|Do you value having unlimited access to airport lounges for food and quiet workspace?|Lounge|[0.0, 0.5, 1.0]
+chase-sapphire-reserve|DoorDash Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you regularly use food delivery and value up to $300 in annual credits?|Delivery|[0.0, 0.5, 1.0]
+chase-sapphire-reserve|Entertainment Credit|multiple_choice|['No', 'Sometimes', 'Yes']|How often do you buy tickets for live concerts, professional sports, or theater events via StubHub?|Entertainment|[0.0, 0.5, 1.0]
+chase-sapphire-reserve|Lyft Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you use Lyft for commuting or travel and want to earn bonus points and statement credits?|Rideshare|[0.0, 0.5, 1.0]
+chase-sapphire-reserve|Peloton Credit|multiple_choice|['No', 'Yes']|Is a premium fitness subscription like Peloton a priority for your health routine?|Fitness|[0.0, 1.0]
+chase-sapphire-reserve|IHG Platinum Status|multiple_choice|['No', 'Sometimes', 'Yes']|Do you stay at IHG hotels and value perks like room upgrades and late checkout?|Hotel Status|[0.0, 0.5, 1.0]
+chase-sapphire-reserve|Exclusive Tables|multiple_choice|['No', 'Sometimes', 'Yes']|Do you enjoy having special access to sought-after restaurant reservations?|Dining|[0.0, 0.5, 1.0]
+american-express-platinum-card|Airline Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you fly enough to utilize credits for incidental fees like checked bags or on-board refreshments?|Airline|[0.0, 0.5, 1.0]
+american-express-platinum-card|Hotel Credit|multiple_choice|['No', 'Sometimes', 'Yes']|How likely are you to book a 2-night luxury stay through a premium hotel collection to get on-property credits?|Hotel|[0.0, 0.5, 1.0]
+american-express-platinum-card|CLEAR Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you want to skip the identity check line at major airport security checkpoints with biometric verification?|Travel Security|[0.0, 0.5, 1.0]
+american-express-platinum-card|Uber Cash|multiple_choice|['No', 'Sometimes', 'Yes']|Do you use ride-sharing for transit or order restaurant delivery at least once a month?|Rideshare,Food Delivery|[0.0, 0.5, 1.0]
+american-express-platinum-card|Entertainment Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you currently pay for subscriptions like The New York Times, Peacock, or The Wall Street Journal?|Streaming,Entertainment|[0.0, 0.5, 1.0]
+american-express-platinum-card|Resy Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you dine at sought-after restaurants and value having special access to reservations?|Dining|[0.0, 0.5, 1.0]
+american-express-platinum-card|lululemon Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you frequently buy high-quality athletic wear or yoga gear for your fitness routine?|Shopping,Fitness|[0.0, 0.5, 1.0]
+american-express-platinum-card|Walmart+ Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you value free grocery shipping and the Paramount+ streaming service through a single membership?|Shopping|[0.0, 0.5, 1.0]
+american-express-platinum-card|Saks Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you shop for designer fashion, luxury skincare, or high-end home decor at premium department stores?|Shopping|[0.0, 0.5, 1.0]
+american-express-platinum-card|Equinox Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Is a premium high-end gym membership like Equinox a priority for your health routine?|Fitness|[0.0, 0.5, 1.0]
+american-express-platinum-card|Oura Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you value advanced sleep and health tracking with a premium smart ring?|Fitness,Wellness|[0.0, 0.5, 1.0]
+wells-fargo-reflect-card|Phone Protection|multiple_choice|['No', 'Yes']|Would you like up to $600 in coverage for your cell phone just for paying your monthly bill?|Cell Phone Protection|[0.0, 1.0]
+chase-freedom-flex|DashPass|multiple_choice|['No', 'Yes']|Do you want to save on delivery fees for your food orders?|Delivery|[0.0, 1.0]
+citi-strata-premier-card|Hotel Savings|multiple_choice|['No', 'Once a year', 'Twice+']|Do you book single hotel stays over $500 that could benefit from a $100 annual discount?|Hotel|[0.0, 0.7, 1.0]
+blue-cash-everyday-card-from-american-express|Disney Credit|multiple_choice|['No', 'Yes']|Do you want $7 back every month on your Disney Bundle subscription?|Streaming|[0.0, 1.0]
+united-explorer-card|Free Bag|multiple_choice|['No', 'Sometimes', 'Yes']|Do you typically fly with checked luggage that incurs a fee?|Airline|[0.0, 0.5, 1.0]
+united-explorer-card|Priority Boarding|multiple_choice|['No', 'Sometimes', 'Yes']|Is being among the first to board and securing overhead bin space important to you?|Airline|[0.0, 0.5, 1.0]
+united-explorer-card|Club Passes|multiple_choice|['No', 'Sometimes', 'Yes']|How much do you value having a quiet workspace or refreshments during your United layovers?|Lounge Access|[0.0, 0.5, 1.0]
+united-explorer-card|TSA Credit|multiple_choice|['No', 'Yes']|Do you want the government to reimburse your Global Entry or TSA PreCheck application fee?|Travel Security|[0.0, 1.0]
+united-explorer-card|Inflight Savings|multiple_choice|['No', 'Sometimes', 'Yes']|Do you buy snacks or drinks on United flights and want 25% back?|Airline|[0.0, 0.5, 1.0]
+marriott-bonvoy-boundless-credit-card|Free Night|multiple_choice|['No', 'Yes']|Would you use a "Free Night Award" at a Marriott property worth up to 35,000 points annually?|Hotel|[0.0, 1.0]
+marriott-bonvoy-boundless-credit-card|Elite Credits|multiple_choice|['No', 'Yes']|Are you trying to reach a higher level of Marriott status and need a 15-night head start each year?|Hotel Status|[0.0, 1.0]
+delta-skymiles-platinum-american-express-card|Companion Certificate|multiple_choice|['No', 'Yes']|Do you travel with a companion and want a "buy one, get one" certificate for a domestic flight once a year?|Airline|[0.0, 1.0]
+delta-skymiles-platinum-american-express-card|TSA Credit|multiple_choice|['No', 'Yes']|Do you want an easy way to cover the cost of Global Entry or TSA PreCheck?|Travel Security|[0.0, 1.0]
+delta-skymiles-platinum-american-express-card|Resy Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you dine at Resy restaurants and want $120 in annual statement credits?|Dining|[0.0, 0.5, 1.0]
+delta-skymiles-platinum-american-express-card|Rideshare Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you use rideshares enough to utilize $120 in annual credits?|Rideshare|[0.0, 0.5, 1.0]
+delta-skymiles-platinum-american-express-card|Delta Stays Credit|multiple_choice|['No', 'Sometimes', 'Yes']|How likely are you to book a hotel through Delta's portal to use a $150 statement credit?|Hotel|[0.0, 0.5, 1.0]
+hilton-honors-american-express-surpass-card|Gold Status|multiple_choice|['No', 'Sometimes', 'Yes']|Do you value having Hilton Gold status for perks like space-available room upgrades and food/beverage credits?|Hotel Status|[0.0, 0.5, 1.0]
+hilton-honors-american-express-surpass-card|Hilton Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you stay at Hilton properties and want $200 in annual credits?|Hotel|[0.0, 0.5, 1.0]
+hilton-honors-american-express-surpass-card|Free Night|multiple_choice|['No', 'Yes']|Can you spend $15,000 a year on one card to earn a free night at a Hilton hotel?|Hotel|[0.0, 1.0]
+southwest-rapid-rewards-priority-credit-card|Anniversary Points|multiple_choice|['No', 'Yes']|Do you value receiving 7,500 bonus points every year to use toward Southwest flights?|Anniversary Bonus|[0.0, 1.0]
+southwest-rapid-rewards-priority-credit-card|Southwest Credit|multiple_choice|['No', 'Yes']|Do you spend at least $75 annually on Southwest flights to use this credit?|Airline|[0.0, 1.0]
+southwest-rapid-rewards-priority-credit-card|Upgraded Boardings|multiple_choice|['No', 'Sometimes', 'Yes']|How important is it for you to be in the A1-A15 boarding group to pick your favorite seat?|Airline|[0.0, 0.5, 1.0]
+southwest-rapid-rewards-priority-credit-card|Inflight Savings|multiple_choice|['No', 'Sometimes', 'Yes']|Do you buy drinks or Wi-Fi on Southwest flights and want 25% back?|Airline|[0.0, 0.5, 1.0]
+ihg-one-rewards-premier-credit-card|Free Night|multiple_choice|['No', 'Yes']|Would you use an annual free night at an IHG hotel worth up to 40,000 points?|Hotel|[0.0, 1.0]
+ihg-one-rewards-premier-credit-card|Spend Bonus|multiple_choice|['No', 'Maybe', 'Yes']|Is your annual spending high enough ($20k+) that you would value an extra $100 credit and 10k points?|Hotel|[0.0, 0.5, 1.0]
+ihg-one-rewards-premier-credit-card|TSA Credit|multiple_choice|['No', 'Yes']|Do you want a credit to cover your Global Entry or TSA PreCheck application?|Travel Security|[0.0, 1.0]
+ihg-one-rewards-premier-credit-card|Platinum Status|multiple_choice|['No', 'Sometimes', 'Yes']|Do you stay at IHG hotels often enough to value room upgrades and early check-in?|Hotel Status|[0.0, 0.5, 1.0]
+american-express-green-card|CLEAR Credit|multiple_choice|['No', 'Yes']|Do you want to breeze through airport security with a $189 CLEAR Plus credit?|Travel Security|[0.0, 1.0]
+american-express-green-card|LoungeBuddy Credit|multiple_choice|['No', 'Yes']|Do you like the flexibility of choosing different airport lounges and paying with a $100 credit?|Lounge Access|[0.0, 1.0]
+united-quest-card|Free Bags|multiple_choice|['No', 'Sometimes', 'Yes']|Do you frequently check two bags and want to avoid the fees on United?|Airline|[0.0, 0.5, 1.0]
+united-quest-card|United Credit|multiple_choice|['No', 'Yes']|Do you spend at least $125 a year on United tickets to fully utilize this credit?|Airline|[0.0, 1.0]
+united-quest-card|Award Discount|multiple_choice|['No', 'Sometimes', 'Yes']|Do you book United flights with miles and want to save 10,000 miles on your bookings twice a year?|Airline|[0.0, 0.5, 1.0]
+citi-simplicity-card|No Fees|multiple_choice|['No', 'Yes']|Is having no late fees or penalty rates a priority for your financial peace of mind?|Card Protection|[0.0, 1.0]
+the-world-of-hyatt-credit-card|Free Night|multiple_choice|['No', 'Yes']|Would you use a "Free Night Award" at a Hyatt Category 1-4 property annually?|Hotel|[0.0, 1.0]
+the-world-of-hyatt-credit-card|Spend Free Night|multiple_choice|['No', 'Yes']|Can you spend $15,000 a year on one card to earn an extra free night at a Hyatt?|Hotel|[0.0, 1.0]
+the-world-of-hyatt-credit-card|Discoverist Status|multiple_choice|['No', 'Sometimes', 'Yes']|Do you value Hyatt Discoverist status for perks like late checkout and bottled water?|Hotel Status|[0.0, 0.5, 1.0]
+marriott-bonvoy-brilliant-american-express-card|Platinum Status|multiple_choice|['No', 'Sometimes', 'Always']|Do you stay at Marriott hotels often enough to value free breakfast and 4 p.m. late checkout?|Hotel Status|[0.0, 0.5, 1.0]
+marriott-bonvoy-brilliant-american-express-card|Marriott Dining|multiple_choice|['No', 'Monthly', 'Weekly']|How often do you dine at restaurants where a $25 monthly credit would be easy to use?|Dining,Hotel|[0.0, 0.8, 1.0]
+marriott-bonvoy-brilliant-american-express-card|Free Night|multiple_choice|['No', 'Yes']|Would you use an annual 85,000-point free night at premium hotels like Ritz-Carlton or St. Regis?|Hotel|[0.0, 1.0]
+delta-skymiles-reserve-american-express-card|Companion Certificate|multiple_choice|['No', 'Yes']|Do you want a "buy one, get one" certificate for First Class or Comfort+ seats once a year?|Airline|[0.0, 1.0]
+delta-skymiles-reserve-american-express-card|Sky Club Access|multiple_choice|['Rarely', 'Occasionally', 'Often']|Are you a loyal Delta flyer who values having a dedicated quiet workspace at their airport hubs?|Lounge Access|[0.0, 0.5, 1.0]
+hilton-honors-aspire-card-from-american-express|Diamond Status|multiple_choice|['Rarely', 'Occasionally', 'Always']|How often do you stay at Hilton properties and value perks like executive lounge access and suite upgrades?|Hotel Status|[0.0, 0.5, 1.0]
+hilton-honors-aspire-card-from-american-express|Resort Credit|multiple_choice|['No', 'Once a year', 'Twice+ a year']|Do you typically visit Hilton Resorts where you can use a $250 credit for dining, spa, or activities?|Hotel|[0.0, 0.5, 1.0]
+hilton-honors-aspire-card-from-american-express|Airline Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you fly enough to utilize $250 in credits for incidental fees like checked bags or on-board refreshments?|Airline|[0.0, 0.5, 1.0]
+hilton-honors-aspire-card-from-american-express|Free Night|multiple_choice|['No', 'Yes']|Would you use a "Free Night Reward" at a high-end Hilton property that would otherwise cost hundreds of dollars?|Hotel|[0.0, 1.0]
+aeroplan-credit-card|Free Bag|multiple_choice|['No', 'Sometimes', 'Yes']|Do you fly Air Canada and check bags for yourself or your travel companions?|Airline|[0.0, 0.5, 1.0]
+aeroplan-credit-card|TSA Credit|multiple_choice|['No', 'Yes']|Do you want a credit to cover the application fee for Global Entry or TSA PreCheck?|Travel Security|[0.0, 1.0]
+british-airways-visa-signature-card|Travel Together|multiple_choice|['No', 'Yes']|Can you spend $30,000 a year to earn a companion ticket for a British Airways flight?|Airline|[0.0, 1.0]
+capital-one-platinum-secured-credit-card|Credit Building|multiple_choice|['No', 'Somewhat', 'Highly']|Is building or repairing your credit history your primary goal for a new card?|Credit Building|[0.0, 0.5, 1.0]
+chase-slate-edge|APR Reduction|multiple_choice|['No', 'Somewhat', 'Highly']|Do you value a potential reduction in your interest rate for making on-time payments?|Credit Building|[0.0, 0.5, 1.0]
+ihg-one-rewards-traveler-credit-card|Silver Status|multiple_choice|['No', 'Sometimes', 'Yes']|Do you value having IHG Silver status for perks like points that don't expire?|Hotel Status|[0.0, 0.5, 1.0]
+ihg-one-rewards-traveler-credit-card|Fourth Night Free|multiple_choice|['No', 'Sometimes', 'Yes']|Do you book IHG stays with points and want every 4th night to be free?|Hotel|[0.0, 0.5, 1.0]
+united-club-card|Club Membership|multiple_choice|['Never', 'Occasionally', 'Often']|Do you fly United enough to justify unlimited access to United Club lounges?|Lounge Access|[0.0, 0.5, 1.0]
+united-club-card|Free Bags|multiple_choice|['No', 'Sometimes', 'Yes']|Do you want to avoid baggage fees for both your first and second checked bags?|Airline|[0.0, 0.5, 1.0]
+us-bank-shield-visa-card|Phone Protection|multiple_choice|['No', 'Yes']|Do you want up to $600 in phone protection with just a $25 deductible?|Cell Phone Protection|[0.0, 1.0]
+apple-card|Daily Cash|multiple_choice|['No', 'Sometimes', 'Yes']|Do you want your cash back rewards deposited daily into a savings account?|Savings Interest|[0.0, 0.5, 1.0]
+apple-card|HYSA Access|multiple_choice|['No', 'Sometimes', 'Yes']|Do you want a high-yield savings account that automatically grows your earned rewards?|Savings Interest|[0.0, 0.5, 1.0]
+apple-card|0% Financing|multiple_choice|['No', 'Sometimes', 'Yes']|Do you like the flexibility of paying for major Apple hardware purchases over time interest-free?|Financial Protection|[0.0, 0.5, 1.0]
+costco-anywhere-visa-card-by-citi|Reward Certificate|multiple_choice|['No', 'Occasionally', 'Regularly']|Do you shop at Costco enough to value an annual reward certificate?|Shopping|[0.0, 0.5, 1.0]
+bank-of-america-premium-rewards-credit-card|Rewards Boost|multiple_choice|['None', 'Some', 'High']|Do you have significant balances with Bank of America or Merrill to unlock a 25%-75% points bonus?|Bonus|[0.0, 0.5, 1.0]
+bank-of-america-premium-rewards-credit-card|Airline Credit|multiple_choice|['No', 'Yes']|Do you spend at least $100 on airline incidental fees (bags, seats) annually?|Airline|[0.0, 1.0]
+bank-of-america-premium-rewards-credit-card|TSA Credit|multiple_choice|['No', 'Yes']|Do you want a credit to cover the application fee for Global Entry or TSA PreCheck?|Travel Security|[0.0, 1.0]
+citi-secured-mastercard|Credit Building|multiple_choice|['No', 'Somewhat', 'Highly']|Is establishing a credit history your main priority right now?|Credit Building|[0.0, 0.5, 1.0]
+amazon-store-card|Special Financing|multiple_choice|['No', 'Sometimes', 'Yes']|Do you value interest-free financing on large Amazon purchases?|Shopping,Amazon|[0.0, 0.5, 1.0]
+wells-fargo-reflect-secured-credit-card|Phone Protection|multiple_choice|['No', 'Yes']|Do you want phone protection coverage while building your credit history?|Cell Phone Protection|[0.0, 1.0]
+penfed-pathfinder-rewards-visa-signature-card|Airline Credit|multiple_choice|['No', 'Yes']|Do you spend $100 annually on airline fees and want a statement credit?|Airline|[0.0, 1.0]
+us-bank-altitude-connect-visa-signature-card|TSA Credit|multiple_choice|['No', 'Yes']|Do you want a credit to cover the application fee for Global Entry or TSA PreCheck?|Travel Security|[0.0, 1.0]
+us-bank-altitude-connect-visa-signature-card|Priority Pass|multiple_choice|['No', 'Sometimes', 'Yes']|Would you value having 4 one-time passes to airport lounges annually?|Lounge Access|[0.0, 0.5, 1.0]
+us-bank-altitude-connect-visa-signature-card|GigSky Global Data|multiple_choice|['No', 'Yes']|Do you travel internationally and need mobile data without swapping physical SIM cards?|Travel|[0.0, 1.0]
+us-bank-altitude-connect-visa-signature-card|SmartDelay|multiple_choice|['No', 'Yes']|Would you value free lounge access for you and guests if your flight is delayed?|Lounge Access|[0.0, 1.0]
+us-bank-altitude-reserve-visa-infinite-card|Travel & Dining Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Is your annual spending on travel and dining at least $325, making this credit easy to use?|Travel,Dining|[0.0, 0.5, 1.0]
+us-bank-altitude-reserve-visa-infinite-card|Priority Pass|multiple_choice|['No', 'Sometimes', 'Yes']|Would you value having 12 one-time passes to airport lounges annually?|Lounge Access|[0.0, 0.5, 1.0]
+us-bank-altitude-reserve-visa-infinite-card|TSA Credit|multiple_choice|['No', 'Yes']|Do you want a credit to cover the application fee for Global Entry or TSA PreCheck?|Travel Security|[0.0, 1.0]
+paypal-credit|Promotional Financing|multiple_choice|['No', 'Sometimes', 'Yes']|Do you often use PayPal and value interest-free financing on larger purchases?|Online Shopping|[0.0, 0.5, 1.0]
+bilt-mastercard|Rent Day Bonus|multiple_choice|['No', 'Sometimes', 'Yes']|Do you enjoy participating in monthly challenges or bonus rewards events on the 1st of the month?|Dining,Travel,All Purchases|[0.0, 0.5, 1.0]
+bilt-mastercard|Phone Protection|multiple_choice|['No', 'Somewhat', 'Highly']|Do you value up to $800 in phone protection with a low $25 deductible?|Cell Phone Protection|[0.0, 0.5, 1.0]
+bilt-mastercard|No FTF|multiple_choice|['No', 'Yes']|Do you travel outside the U.S. and want to avoid the typical 3% fee on every purchase?|Travel|[0.0, 1.0]
+bilt-mastercard|Lyft Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you use the Lyft platform for your commuting or travel transportation needs?|Rideshare|[0.0, 0.5, 1.0]
+ink-business-preferred-credit-card|DashPass|multiple_choice|['No', 'Sometimes', 'Yes']|Does your business value a free delivery membership for office food orders?|Delivery|[0.0, 0.5, 1.0]
+ink-business-preferred-credit-card|DoorDash Non-Restaurant Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you order office supplies or convenience items via DoorDash?|Delivery|[0.0, 0.5, 1.0]
+ink-business-preferred-credit-card|Cell Phone Protection|multiple_choice|['No', 'Somewhat', 'Highly']|Does your business value up to $1,000 in coverage for employee cell phones?|Cell Phone Protection|[0.0, 0.5, 1.0]
+ink-business-preferred-credit-card|Primary Rental Coverage|multiple_choice|['No', 'Sometimes', 'Yes']|Do you rent cars for business and want the peace of mind of primary insurance coverage?|Rental Cars|[0.0, 0.5, 1.0]
+ink-business-preferred-credit-card|No FTF|multiple_choice|['No', 'Yes']|Do you make international business purchases and want to avoid transaction fees?|Travel|[0.0, 1.0]
+ink-business-premier-credit-card|Cell Phone Protection|multiple_choice|['No', 'Somewhat', 'Highly']|Does your business value up to $1,000 in coverage for employee cell phones?|Cell Phone Protection|[0.0, 0.5, 1.0]
+the-business-platinum-card-from-american-express|Airline Fee Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you fly enough for business to utilize $200 in credits for incidental fees?|Airline|[0.0, 0.5, 1.0]
+the-business-platinum-card-from-american-express|Dell Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you need to purchase professional tech hardware or accessories for your business?|Tech|[0.0, 0.5, 1.0]
+the-business-platinum-card-from-american-express|Indeed Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you need to post job listings or use recruitment tools to hire for your business?|Hiring|[0.0, 0.5, 1.0]
+the-business-platinum-card-from-american-express|Adobe Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you use professional creative software for photography, design, or video editing?|Software|[0.0, 0.5, 1.0]
+the-business-platinum-card-from-american-express|Wireless Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you have recurring monthly cell phone service expenses for your business operations?|Telecom|[0.0, 0.5, 1.0]
+the-business-platinum-card-from-american-express|CLEAR Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you want a credit for Global Entry or TSA PreCheck to expedite your business travel?|Travel Security|[0.0, 0.5, 1.0]
+the-business-platinum-card-from-american-express|Walmart+ Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you value free grocery shipping and the Paramount+ streaming service?|Shopping|[0.0, 0.5, 1.0]
+the-business-platinum-card-from-american-express|Global Lounge Access|multiple_choice|['Never', 'Occasionally', 'Often']|How often do you travel for business and value high-end airport lounge access?|Lounge Access|[0.0, 0.5, 1.0]
+american-express-business-gold-card|Flexible Business Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you regularly spend $20/month at FedEx, Grubhub, or office supply stores?|Business Expenses|[0.0, 0.5, 1.0]
+american-express-business-gold-card|Walmart+ Credit|multiple_choice|['No', 'Yes']|Would you utilize a free Walmart+ membership for business or personal use?|Shopping|[0.0, 1.0]
+capital-one-spark-cash-plus|Annual Fee Refund|multiple_choice|['No', 'Maybe', 'Yes']|Does your business spend over $150,000 annually to earn back your annual fee?|Annual Fee Refund|[0.0, 0.5, 1.0]
+capital-one-spark-miles-for-business|TSA/Global Entry Credit|multiple_choice|['No', 'Yes']|Do you want a credit to cover the application fee for Global Entry or TSA PreCheck?|Travel Security|[0.0, 1.0]
+capital-one-spark-miles-for-business|Hertz Status|multiple_choice|['No', 'Sometimes', 'Yes']|Does your business benefit from elite status and upgrades on car rentals?|Rental Cars|[0.0, 0.5, 1.0]
+bank-of-america-travel-rewards-credit-card|No Foreign Transaction Fees|multiple_choice|['No', 'Yes']|Do you travel abroad and want to avoid the typical 3% fee on every purchase?|Travel|[0.0, 1.0]
+bank-of-america-travel-rewards-credit-card|Preferred Rewards Bonus|multiple_choice|['None', 'Some', 'High']|Do you have significant balances with Bank of America to unlock a 25%-75% points bonus?|Rewards Bonus|[0.0, 0.5, 1.0]
+blue-business-plus-credit-card-from-american-express|No Foreign Transaction Fees|multiple_choice|['No', 'Yes']|Do you make international business purchases and want to avoid transaction fees?|Travel|[0.0, 1.0]
+blue-business-plus-credit-card-from-american-express|Free Employee Cards|multiple_choice|['No', 'Yes']|Do you need to issue additional cards to employees at no extra cost?|Business Management|[0.0, 1.0]
+blue-business-plus-credit-card-from-american-express|Buying Power|multiple_choice|['No', 'Somewhat', 'Highly']|Do you value the flexibility to spend above your credit limit for large business purchases?|Financial Protection|[0.0, 0.5, 1.0]
+capital-one-ventureone-rewards-credit-card|No Foreign Transaction Fees|multiple_choice|['No', 'Yes']|Do you travel abroad and want to avoid the typical 3% fee on every purchase?|Travel|[0.0, 1.0]
+capital-one-ventureone-rewards-credit-card|Miles Transfer Partners|multiple_choice|['No', 'Sometimes', 'Yes']|Do you value the ability to transfer miles to various airline and hotel partners?|Redemption Flexibility|[0.0, 0.5, 1.0]
+capital-one-ventureone-rewards-credit-card|Hertz Five Star Status|multiple_choice|['No', 'Sometimes', 'Yes']|Do you rent cars frequently enough to benefit from elite status and skipping the counter?|Car Rental|[0.0, 0.5, 1.0]
+discover-it-miles|No Foreign Transaction Fees|multiple_choice|['No', 'Yes']|Do you travel abroad and want to avoid the typical 3% fee on every purchase?|Travel|[0.0, 1.0]
+discover-it-miles|Free FICO Score|multiple_choice|['No', 'Sometimes', 'Yes']|Are you focused on monitoring and improving your credit score monthly?|Credit Monitoring|[0.0, 0.5, 1.0]
+wells-fargo-autograph-card|No Foreign Transaction Fees|multiple_choice|['No', 'Yes']|Do you travel abroad and want to avoid the typical 3% fee on every purchase?|Travel|[0.0, 1.0]
+wells-fargo-autograph-card|Cell Phone Protection|multiple_choice|['No', 'Somewhat', 'Highly']|Do you value having up to $600 in phone protection just by paying your bill?|Protection|[0.0, 0.5, 1.0]
+huntington-voice-visa-card|No Penalty APR|multiple_choice|['No', 'Yes']|Is having a card that doesn't increase your rate for a late payment important to you?|Financial Protection|[0.0, 1.0]
+huntington-voice-visa-card|Roadside Dispatch|multiple_choice|['No', 'Sometimes', 'Yes']|Do you value having 24/7 access to emergency roadside services?|Roadside Assistance|[0.0, 0.5, 1.0]
+navy-federal-nrewards-secured-credit-card|No Foreign Transaction Fees|multiple_choice|['No', 'Yes']|Do you travel abroad and want to avoid the typical 3% fee on every purchase?|Travel|[0.0, 1.0]
+navy-federal-nrewards-secured-credit-card|No Cash Advance Fees|multiple_choice|['No', 'Sometimes', 'Yes']|Do you value the ability to get a cash advance without paying a high fee?|Financial|[0.0, 0.5, 1.0]
+pnc-premier-traveler-visa-signature-credit-card|No Foreign Transaction Fees|multiple_choice|['No', 'Yes']|Do you travel abroad and want to avoid the typical 3% fee on every purchase?|Travel|[0.0, 1.0]
+pnc-premier-traveler-visa-signature-credit-card|Luxury Hotel Collection Benefits|multiple_choice|['No', 'Sometimes', 'Yes']|Do you enjoy perks like room upgrades and food credits when staying at luxury hotels?|Hotel|[0.0, 0.5, 1.0]
+citi-strata-elite-card|Hotel Credit|multiple_choice|['No', 'Once a year', 'Twice+']|Do you book hotel stays of 2+ nights and want up to $300 off?|Hotel|[0.0, 0.7, 1.0]
+citi-strata-elite-card|Splurge Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you shop at Best Buy or American Airlines and want up to $200 in annual credits?|Lifestyle|[0.0, 0.5, 1.0]
+citi-strata-elite-card|Blacklane Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you use premium car services like Blacklane for airport transfers?|Transportation|[0.0, 0.5, 1.0]
+citi-strata-elite-card|Priority Pass Membership|multiple_choice|['Never', 'Occasionally', 'Often']|Do you travel enough to value unlimited access to over 1,500 airport lounges?|Airport Lounge|[0.0, 0.5, 1.0]
+citi-strata-elite-card|Admirals Club Passes|multiple_choice|['No', 'Sometimes', 'Yes']|Would you value having 4 one-time passes to American Airlines Admirals Clubs?|Airport Lounge|[0.0, 0.5, 1.0]
+citi-strata-elite-card|Application Fee Credit|multiple_choice|['No', 'Yes']|Do you want a credit for Global Entry or TSA PreCheck application fees?|Travel Security|[0.0, 1.0]
+citi-strata-elite-card|Citigold Credit|multiple_choice|['No', 'Yes']|Are you a Citigold client who can qualify for a $145 annual credit?|Banking|[0.0, 1.0]
+citi-strata-elite-card|Private Client Credit|multiple_choice|['No', 'Yes']|Are you a Citigold Private Client who can qualify for an annual fee credit?|Banking|[0.0, 1.0]
+citi-strata-elite-card|Travel Protections|multiple_choice|['No', 'Somewhat', 'Highly']|Do you value a suite of travel insurances like trip cancellation and lost luggage?|Travel Protection|[0.0, 0.5, 1.0]
+citi-strata-elite-card|No Foreign Fees|multiple_choice|['No', 'Yes']|Do you travel abroad and want to avoid the typical 3% fee on every purchase?|Fee Waiver|[0.0, 1.0]
+citi-strata-elite-card|Mixology Classes|multiple_choice|['No', 'Yes']|Are you interested in learning professional cocktail-making from home?|Lifestyle|[0.0, 1.0]
+chase-sapphire-reserve|Apple TV+ & Music|multiple_choice|['No', 'Sometimes', 'Yes']|Do you currently pay for Apple TV+ or Apple Music and want them for free?|Streaming|[0.0, 0.5, 1.0]
+chase-sapphire-reserve|StubHub Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you buy tickets for live events and want up to $300 in annual credits?|Entertainment|[0.0, 0.5, 1.0]
+capital-one-venture-x-rewards-credit-card|PRIOR Subscription|multiple_choice|['No', 'Yes']|Are you an enthusiast for curated, high-end travel guides and unique experiences?|Travel|[0.0, 1.0]
+bilt-mastercard|Rent Day Bonus|multiple_choice|['No', 'Sometimes', 'Yes']|Do you value earning double points on all non-rent purchases on the 1st of every month?|Rewards Bonus|[0.0, 0.5, 1.0]
+bilt-mastercard|Lyft Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you use Lyft enough to earn a $5 monthly credit?|Rideshare|[0.0, 0.5, 1.0]
+prime-visa|Grubhub+ Membership|multiple_choice|['No', 'Yes']|Do you want a free year of delivery membership for your favorite local restaurants?|Food Delivery|[0.0, 1.0]
+prime-visa|Gift Card|multiple_choice|['No', 'Yes']|How likely are you to use a $150 Amazon gift card immediately upon approval?|Shopping|[0.0, 1.0]
+apple-card|HYSA Access|multiple_choice|['No', 'Sometimes', 'Yes']|Do you want a high-yield savings account that automatically grows your earned rewards?|Savings Interest|[0.0, 0.5, 1.0]
+apple-card|0% Financing|multiple_choice|['No', 'Sometimes', 'Yes']|Do you like the flexibility of paying for major Apple hardware purchases over time interest-free?|Financial Protection|[0.0, 0.5, 1.0]
+chase-freedom-unlimited|DoorDash NR Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you order convenience or grocery items via DoorDash and want $10 off quarterly?|Delivery|[0.0, 0.5, 1.0]
+chase-freedom-flex|DoorDash NR Credit|multiple_choice|['No', 'Sometimes', 'Yes']|Do you order convenience or grocery items via DoorDash and want $10 off quarterly?|Delivery|[0.0, 0.5, 1.0]
+discover-it-cash-back|Free FICO Score|multiple_choice|['No', 'Sometimes', 'Yes']|Are you focused on monitoring and improving your credit score monthly?|Credit Monitoring|[0.0, 0.5, 1.0]
+sams-club-mastercard|Gas Rewards|multiple_choice|['No', 'Occasionally', 'Regularly']|Do you spend a significant amount on gas each year and want 5% back?|Rewards Bonus|[0.0, 0.5, 1.0]
+bank-of-america-customized-cash-rewards-credit-card-for-students|Flexible Bonus|multiple_choice|['No', 'Sometimes', 'Yes']|Do you want to choose which category (Online Shopping, Dining, Gas) earns you 3% back?|Rewards Bonus|[0.0, 0.5, 1.0]
+citi-double-cash-card|Fraud Protection|multiple_choice|['No', 'Somewhat', 'Highly']|Is having protection against unauthorized charges a top priority for you?|Card Protection|[0.0, 0.5, 1.0]
+pnc-cash-rewards-visa-credit-card|Spending Tools|multiple_choice|['No', 'Sometimes', 'Yes']|Do you value digital tools to track and categorize your spending automatically?|Business Management|[0.0, 0.5, 1.0]
+capital-one-quicksilver-secured-cash-rewards-credit-card|Credit Review|multiple_choice|['No', 'Somewhat', 'Highly']|Are you focused on moving from a secured card to an unsecured one by building credit?|Credit Building|[0.0, 0.5, 1.0]
+discover-it-student-chrome|Good Grade Bonus|multiple_choice|['No', 'Yes']|Are you a student who maintains a 3.0+ GPA and wants to be rewarded for it?|Rewards Bonus|[0.0, 1.0]
+ink-business-unlimited-credit-card|Primary Coverage|multiple_choice|['No', 'Sometimes', 'Yes']|Do you rent cars for business and want the peace of mind of primary insurance coverage?|Rental Cars|[0.0, 0.5, 1.0]
+discover-it-secured-credit-card|Deposit Refund|multiple_choice|['No', 'Somewhat', 'Highly']|Are you focused on establishing a credit history to eventually get your deposit back?|Credit Building|[0.0, 0.5, 1.0]
+best-buy-credit-card|Special Financing|multiple_choice|['No', 'Sometimes', 'Yes']|Do you value interest-free financing on large electronics or appliance purchases?|Financial Protection|[0.0, 0.5, 1.0]
+prime-visa|No Foreign Fees|multiple_choice|['No', 'Yes']|Do you travel abroad and want to avoid the typical 3% fee on every purchase?|Fee Waiver|[0.0, 1.0]
+blue-business-plus-credit-card-from-american-express|Buying Power|multiple_choice|['No', 'Somewhat', 'Highly']|Do you value the flexibility to spend above your credit limit for large business purchases?|Financial Protection|[0.0, 0.5, 1.0]
+blue-business-cash-card-from-american-express|Buying Power|multiple_choice|['No', 'Somewhat', 'Highly']|Do you value the flexibility to spend above your credit limit for large business purchases?|Financial Protection|[0.0, 0.5, 1.0]
+bank-of-america-customized-cash-rewards-credit-card-for-students|Preferred Rewards|multiple_choice|['No', 'Sometimes', 'Yes']|Do you have bank balances that could qualify you for higher reward rates?|Rewards Bonus|[0.0, 0.5, 1.0]
+citi-double-cash-card|Presale Access|multiple_choice|['No', 'Sometimes', 'Yes']|Do you enjoy early access to concert tickets or preferred seating?|Entertainment|[0.0, 0.5, 1.0]
+pnc-cash-rewards-visa-credit-card|Account Bonus|multiple_choice|['No', 'Sometimes', 'Yes']|Do you have a PNC account where you could redeem rewards for extra value?|Rewards Bonus|[0.0, 0.5, 1.0]

@@ -21,14 +21,14 @@ def index(request):
 
 def load_credit_card_questions():
     """
-    Reads credit_card_questions.csv and returns a lookup dict.
-    Key: (slug-id, BenefitShortDescription) -> Question Data Dict
+    Reads credit_card_questions.csv and returns a lookup dict for CSV-driven questions.
+    Returns: { slug: [ {question_data}, ... ] }
     """
     csv_path = os.path.join(os.path.dirname(__file__), 'credit_card_questions.csv')
-    questions = {}
+    questions_by_slug = {}
     
     if not os.path.exists(csv_path):
-        return questions
+        return questions_by_slug
 
     try:
         with open(csv_path, 'r', encoding='utf-8') as f:
@@ -44,17 +44,29 @@ def load_credit_card_questions():
                 except (ValueError, SyntaxError):
                     choice_list = []
 
+                # Parse ChoiceWeight string to list
+                try:
+                    choice_weight_str = row.get('ChoiceWeight', '[]')
+                    choice_weights = ast.literal_eval(choice_weight_str)
+                except (ValueError, SyntaxError):
+                    choice_weights = []
+
                 if slug and short_desc:
-                    questions[(slug, short_desc)] = {
+                    if slug not in questions_by_slug:
+                        questions_by_slug[slug] = []
+                    
+                    questions_by_slug[slug].append({
+                        'short_desc': short_desc,
                         'question_type': row.get('QuestionType', 'yes_no'),
                         'choices': choice_list,
+                        'weights': choice_weights,
                         'question': row.get('Question', ''),
                         'category': row.get('BenefitCategory', '')
-                    }
+                    })
     except Exception as e:
         print(f"Error reading questions CSV: {e}")
         
-    return questions
+    return questions_by_slug
 
 def worth_it_list(request):
     """
@@ -98,62 +110,58 @@ def worth_it_audit(request, card_slug):
         # If that fails, we might want to search by 'slug' field query, but let's assume direct lookup works for now.
         return redirect('worth_it_list')
 
-    # Load custom questions
-    questions_map = load_credit_card_questions()
+    # Load custom questions strictly from CSV
+    all_questions = load_credit_card_questions()
+    card_questions = all_questions.get(card_slug, [])
 
-    # Filter benefits with dollar value
-    benefits = card.get('benefits', [])
+    # Create a lookup map for card benefits to get dollar values
+    # Key: short_description -> Benefit Dict
+    benefits_map = {b.get('short_description', ''): b for b in card.get('benefits', [])}
+
     audit_benefits = []
     
-    for b in benefits:
-        if b.get('dollar_value') and b.get('dollar_value') > 0:
-            short_desc = b.get('short_description', '')
-            
-            # Check for custom question
-            q_data = questions_map.get((card_slug, short_desc))
-            
-            # Defaults
-            time_cat = b.get('time_category', 'Annually')
-            input_type = 'toggle' # Default
-            choices = []
+    # Iterate purely based on CSV questions
+    for q_data in card_questions:
+        short_desc = q_data['short_desc']
+        
+        # Get benefit data from DB if available
+        # If not available, we use default or 0 value, but we still show the question if user wants it.
+        # But calculator needs dollar_value.
+        benefit_data = benefits_map.get(short_desc)
+        
+        dollar_value = 0
+        time_cat = 'Annually'
+        
+        if benefit_data:
+            dollar_value = benefit_data.get('dollar_value', 0)
+            time_cat = benefit_data.get('time_category', 'Annually')
+        
+        # Prepare display logic
+        label = q_data['question']
+        q_type = q_data['question_type']
+        choices = q_data['choices']
+        
+        if q_type == 'multiple_choice' and choices:
+            input_type = 'multiple_choice'
+            max_val = len(choices) - 1
+        else:
+            input_type = 'toggle'
             max_val = 1
-            
-            if q_data:
-                # Use data from CSV
-                label = q_data['question']
-                q_type = q_data['question_type']
-                choices = q_data['choices']
-                
-                if q_type == 'multiple_choice' and choices:
-                    input_type = 'multiple_choice'
-                    max_val = len(choices) - 1 # We'll use index as value
-                else:
-                    input_type = 'toggle'
-                    max_val = 1
-            else:
-                # Fallback logic
-                if 'Monthly' in time_cat:
-                    input_type = 'slider'
-                    max_val = 12
-                elif 'Quarterly' in time_cat:
-                    input_type = 'slider'
-                    max_val = 4
-                elif 'Semi' in time_cat:
-                    input_type = 'slider'
-                    max_val = 2
-                
-                if 'Monthly' in time_cat or 'Quarterly' in time_cat:
-                    label = f"How often do you use the ${b.get('dollar_value')} {b.get('short_description', 'credit')}?"
-                else:
-                    label = f"Would you use the ${b.get('dollar_value')} {b.get('short_description', 'credit')}?"
-
-            b['audit_config'] = {
+        
+        # Construct audit item
+        # We attach the question config effectively creating a "benefit view model"
+        audit_item = {
+            'short_description': short_desc,
+            'dollar_value': dollar_value,
+            'time_category': time_cat,
+            'audit_config': {
                 'input_type': input_type,
                 'max_val': max_val,
                 'label': label,
                 'choices': choices
             }
-            audit_benefits.append(b)
+        }
+        audit_benefits.append(audit_item)
 
     return render(request, 'calculators/worth_it_audit.html', {
         'card': card,
@@ -170,61 +178,70 @@ def worth_it_calculate(request, card_slug):
         annual_fee = card.get('annual_fee', 0)
         total_value = 0.0
         
-        # Load questions map for calculation logic
-        questions_map = load_credit_card_questions()
+        # Load questions strictly from CSV
+        all_questions = load_credit_card_questions()
+        card_questions = all_questions.get(card_slug, [])
+
+        # Benefit lookup map
+        benefits_map = {b.get('short_description', ''): b for b in card.get('benefits', [])}
         
-        # Iterate through POST data
-        # Expected format: benefit_{index}: value
-        for key, value in request.POST.items():
-            if key.startswith('benefit_'):
+        # Iterate through QUESTIONS to calculate value
+        for idx, q_data in enumerate(card_questions):
+            # Form field name: benefit_{index}
+            field_name = f'benefit_{idx}'
+            value_str = request.POST.get(field_name)
+            
+            if value_str is not None:
                 try:
-                    val = float(value)
-                    # We need to know the 'value per unit' or calculate based on the benefit logic.
-                    # Let's look up by index.
-                    b_idx = int(key.split('_')[1])
-                    if 0 <= b_idx < len(card.get('benefits', [])):
-                        benefit = card['benefits'][b_idx]
-                        short_desc = benefit.get('short_description', '')
+                    val = float(value_str)
+                    
+                    short_desc = q_data['short_desc']
+                    benefit_data = benefits_map.get(short_desc)
+                    
+                    dollar_val = 0.0
+                    time_cat = ''
+                    if benefit_data:
+                        dollar_val = benefit_data.get('dollar_value') or 0
+                        time_cat = benefit_data.get('time_category', '')
+
+                    benefit_value = 0.0
+                    
+                    if q_data['question_type'] == 'multiple_choice':
+                        # Logic for multiple choice
+                        # val is the INDEX selected (0 to N-1)
+                        choices = q_data['choices']
+                        weights = q_data.get('weights', [])
                         
-                        # Check for custom question to match logic
-                        q_data = questions_map.get((card_slug, short_desc))
-                        
-                        # Calculation Logic
-                        time_cat = benefit.get('time_category', '')
-                        dollar_val = benefit.get('dollar_value') or 0
-                        
-                        benefit_value = 0.0
-                        
-                        if q_data and q_data['question_type'] == 'multiple_choice':
-                            # Logic for multiple choice
-                            # val is the INDEX selected (0 to N-1)
-                            choices = q_data['choices']
-                            if choices:
+                        if choices:
+                            idx_val = int(val)
+                            # Check if we have valid weights for this choice
+                            if weights and 0 <= idx_val < len(weights):
+                                utilization = weights[idx_val]
+                                benefit_value = utilization * dollar_val
+                            else:
+                                # Fallback: Linear interpolation
                                 max_idx = len(choices) - 1
                                 if max_idx > 0:
-                                    # Linear interpolation: index / max_idx
-                                    # 0 -> 0%, Max -> 100%
-                                    # Example: ['Never', 'Rarely', 'Often'] -> 0, 0.5, 1.0
                                     utilization = val / max_idx
                                     benefit_value = utilization * dollar_val
                                 else:
-                                    # Single choice? assume 100% if selected?
+                                    # Single choice? assume 100%
                                     benefit_value = dollar_val if val >= 0 else 0
-                            else:
-                                benefit_value = dollar_val if val > 0 else 0
-                        
-                        elif 'Monthly' in time_cat:
-                            # dollar_val is annual total.
-                            benefit_value = (val / 12.0) * dollar_val
-                        elif 'Quarterly' in time_cat:
-                            benefit_value = (val / 4.0) * dollar_val
-                        elif 'Semi' in time_cat:
-                            benefit_value = (val / 2.0) * dollar_val
                         else:
-                            # Toggle (1 or 0)
-                            benefit_value = val * dollar_val
-                            
-                        total_value += benefit_value
+                            benefit_value = dollar_val if val > 0 else 0
+                    
+                    elif 'Monthly' in time_cat:
+                        benefit_value = (val / 12.0) * dollar_val
+                    elif 'Quarterly' in time_cat:
+                        benefit_value = (val / 4.0) * dollar_val
+                    elif 'Semi' in time_cat:
+                        benefit_value = (val / 2.0) * dollar_val
+                    else:
+                        # Toggle (1 or 0)
+                        benefit_value = val * dollar_val
+                        
+                    total_value += benefit_value
+
                 except (ValueError, IndexError):
                     continue
         
