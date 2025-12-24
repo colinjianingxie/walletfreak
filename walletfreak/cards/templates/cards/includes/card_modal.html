@@ -433,13 +433,13 @@ function openCardModal(cardId) {
             btn.disabled = true;
             btn.innerHTML = 'Already in Wallet <span class="material-icons" style="font-size: 18px;">check_circle</span>';
             btn.style.background = '#94A3B8';
-            btn.style.cursor = 'not-allowed';
+            btn.style.setProperty('cursor', 'default', 'important');
             btn.onclick = null;
         } else {
             btn.disabled = false;
             btn.innerHTML = 'Add to Wallet <span class="material-icons" style="font-size: 18px;">add</span>';
             btn.style.background = '#0F172A';
-            btn.style.cursor = 'pointer';
+            btn.style.setProperty('cursor', 'pointer', 'important');
             btn.onclick = addToWalletFromModal;
         }
     };

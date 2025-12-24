@@ -3,6 +3,7 @@
 
 {% block extra_css %}
 <!-- Bootstrap removed to prevent nav styling conflicts. Layout handled by custom CSS below. -->
+<link rel="stylesheet" href="{% static 'css/card_modal.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -65,6 +66,7 @@
                                 <span class="btn-content">
                                     <!-- Added inline style and !important to ensure functionality -->
                                     <span class="material-icons spin d-none" id="btnSpinner" style="display: none !important;">sync</span>
+                                    <span class="material-icons" id="btnIcon">track_changes</span>
                                     <span class="btn-text">Scan ROI Leaderboard</span>
                                 </span>
                             </button>
@@ -109,32 +111,34 @@
                 <div class="logic-block">
                     <h4><span class="material-icons">paid</span> Net Value</h4>
                     <p>
-                        We calculate the total dollar value you extract from a card, combining the signup bonus and rewards earned on your spend.
+                        We convert points into cash values (e.g., 1.0¢–1.5¢ per point) to determine the Total Dollar Return. This includes the Signup Bonus plus rewards earned on your planned spend.
                     </p>
                     <div class="formula">
-                        (Bonus + Earn Rate × Spend) - Annual Fee
+                        (Bonus Value + Rewards on Spend) - Annual Fee
                     </div>
                 </div>
 
                 <div class="logic-block">
                     <h4><span class="material-icons">fact_check</span> Feasibility Check</h4>
                     <p>
-                        We ensured you can meet the spending requirement without exceeding your monthly budget.
+                        We verify you can meet the bonus requirement comfortably. The card's monthly burn rate must not exceed your own monthly spending pace.
                     </p>
                     <div class="formula">
-                        Req / Signup Months ≤ (Total Spend / Your Timeframe)
+                        (Card Spend Req / Signup Months) ≤ (Your Total Spend / Your Timeframe)
                     </div>
                 </div>
                 
                 <div class="logic-block">
                     <h4><span class="material-icons">leaderboard</span> Ranking Logic</h4>
                     <p>
-                        Cards are ranked primarily by the highest <strong>Net Value</strong> (Total Profit). We prioritize putting the most money in your pocket over abstract efficiency metrics.
+                        Cards are ranked by highest **Net Value** (Total Profit). Ties are broken by **ROI** (Return on Spend). We prioritize putting the most money in your pocket over abstract efficiency.
                     </p>
                 </div>
             </div>
         </div>
     </div>
+
+    {% include 'cards/includes/card_modal.html' %}
 
 <style>
     body {
@@ -326,23 +330,24 @@
 
     /* Input Fields */
     .input-group-dark {
-        background: #0F172A; /* Darker background (Slate 900) */
-        border-radius: 12px;
-        border: 1px solid #334155;
+        background: rgba(255, 255, 255, 0.1); /* Lighter background matching target */
+        border-radius: 16px; /* Slightly rounder */
+        border: 1px solid rgba(255, 255, 255, 0.1);
         display: flex;
         align-items: center;
-        padding: 6px 16px; /* Reduced height */
+        padding: 16px 20px; /* Chunkier padding */
         transition: all 0.2s;
     }
     .input-group-dark:focus-within {
         border-color: #FCD34D; /* Amber focus */
         box-shadow: 0 0 0 3px rgba(252, 211, 77, 0.2);
+        background: rgba(255, 255, 255, 0.15);
     }
     
     .prefix {
-        color: #64748B;
+        color: #94A3B8; /* Lighter grey */
         font-weight: 600;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         margin-right: 12px;
     }
 
@@ -352,7 +357,7 @@
         color: white;
         font-family: 'Outfit', sans-serif;
         font-weight: 700;
-        font-size: 1.15rem; /* Reduced font size */
+        font-size: 1.25rem; /* Larger font */
         width: 100%;
         padding: 0;
         margin: 0;
@@ -401,14 +406,48 @@
     .spin { animation: spin 1s linear infinite; }
 
     /* Mobile Responsive */
-    @media (max-width: 768px) {
+    @media (max-width: 992px) {
         /* On mobile, stack column, remove h-100 constraint from row if needed via utility class override */
-        .optimizer-card > .row { flex-direction: column; }
-        .col-md-6 { width: 100%; padding: 48px 24px !important; }
-        .scanner-section { padding: 24px; margin-top: 20px; }
-        .headline { font-size: 2.5rem; text-align: center; }
-        .subheadline { text-align: center; margin: 0 auto; }
-        .optimizer-card .col-md-6.border-end-dark { border-right: none !important; padding-bottom: 0 !important; }
+        .optimizer-card > .row { flex-direction: column !important; height: auto !important; }
+        
+        /* Left Column (Text) */
+        .col-md-6.border-end-dark { 
+            width: 100% !important; 
+            max-width: 100% !important; 
+            flex: 0 0 auto !important; 
+            padding: 48px 24px 24px 24px !important;
+            align-items: center !important; /* Center Badge/Text flex items */
+            border-right: none !important; 
+            padding-bottom: 0 !important; 
+            border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+        }
+
+        /* Right Column (Form) */
+        .col-md-6:not(.border-end-dark) {
+            width: 100% !important; 
+            max-width: 100% !important; 
+            flex: 0 0 auto !important; 
+            padding: 24px !important;
+        }
+
+        /* Stack input fields */
+        .col-6 { 
+            width: 100% !important; 
+            max-width: 100% !important; 
+            flex: 0 0 100% !important; 
+            padding-left: 0 !important; /* Remove gutter padding since full width */
+            padding-right: 0 !important;
+            margin-bottom: 20px !important; /* Gap between inputs */
+        }
+        .col-6:last-child { margin-bottom: 0 !important; }
+        
+        .scanner-section { 
+            padding: 32px 24px !important; 
+            margin-top: 0 !important; /* Remove extra margin as padding handles it */
+        }
+        
+        .headline { font-size: 2.25rem; text-align: center !important; }
+        .subheadline { text-align: center !important; margin: 0 auto; }
         
         .result-row { flex-direction: column; gap: 20px; align-items: flex-start;  }
         .progress-area { width: 100%; border-left: none; border-right: none; padding: 0; min-height: auto; }
@@ -593,14 +632,15 @@
         align-items: center;
         gap: 6px;
         cursor: pointer;
-        transition: color 0.2s;
-        text-decoration: underline;
-        text-decoration-color: rgba(100, 116, 139, 0.3);
-        text-underline-offset: 4px;
+        transition: all 0.2s;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(100, 116, 139, 0.3);
+        padding-bottom: 2px;
+        white-space: nowrap;
     }
     .btn-link-subtle:hover {
         color: #FCD34D;
-        text-decoration-color: #FCD34D;
+        border-bottom-color: #FCD34D;
     }
     
     .custom-modal-overlay {
@@ -707,6 +747,10 @@
 </style>
 
 <script>
+// Initialize global cards data for modal
+window.allCardsData = {};
+window.walletCardIds = new Set();
+
 document.getElementById('optimizerForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -737,15 +781,28 @@ document.getElementById('optimizerForm').addEventListener('submit', function(e) 
             'X-CSRFToken': formData.get('csrfmiddlewaretoken')
         }
     })
-    .then(response => response.text())
-    .then(html => {
+    .then(response => response.json())
+    .then(data => {
         // UI State: Done
         setTimeout(() => {
             loadingState.classList.add('d-none');
             loadingState.style.display = 'none'; // Force hide
             
+            // Populate card data for modal
+            if (data.cards_data && Array.isArray(data.cards_data)) {
+                data.cards_data.forEach(card => {
+                    window.allCardsData[card.id] = card;
+                    if (card.slug) window.allCardsData[card.slug] = card;
+                });
+            }
+            
+            // Populate wallet data
+            if (data.wallet_card_ids) {
+                window.walletCardIds = new Set(data.wallet_card_ids);
+            }
+            
             const resultsContainer = document.getElementById('resultsContainer');
-            resultsContainer.innerHTML = html;
+            resultsContainer.innerHTML = data.html;
             resultsContainer.classList.remove('d-none');
             resultsContainer.style.display = 'block'; // Remove inline display:none
             

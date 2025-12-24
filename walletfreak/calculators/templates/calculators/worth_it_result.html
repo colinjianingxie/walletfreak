@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/card_modal.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="result-page-wrapper">
     <!-- Top Navigation - Left Aligned -->
@@ -70,11 +74,31 @@
                 <a href="{% url 'worth_it_audit' card.slug %}" class="btn btn-secondary-dark">
                     Start Over
                 </a>
+
+                <!-- View Details -->
+                <button onclick="openCardModal('{{ card.id }}')" class="btn btn-secondary-dark">
+                    View Details
+                </button>
             </div>
 
         </div>
     </div>
 </div>
+
+{% include 'cards/includes/card_modal.html' %}
+
+<script>
+    // Initialize card data for modal
+    const cardData = {{ card_json|safe }};
+    const allCardsData = {};
+    // Use both ID and Slug as keys to be safe
+    allCardsData[cardData.id] = cardData;
+    if (cardData.slug) {
+        allCardsData[cardData.slug] = cardData;
+    }
+    // Wallet State for Modal
+    const walletCardIds = new Set({{ wallet_card_ids|safe|default:'[]' }});
+</script>
 
 <style>
     /* Page Background - Subtle Blue/White Gradient */
@@ -90,14 +114,15 @@
         flex-direction: column;
     }
 
-    /* Keep content centered but padded bottom to move visual center up */
+    /* Adjusted alignment to move content up */
     .result-content-container {
         flex: 1;
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: flex-start; /* Changed from center to flex-start */
         padding: 20px 0;
-        padding-bottom: 120px; /* Moves the center visual UP by adding space below */
+        padding-top: 40px; /* Explicit top positioning */
+        padding-bottom: 60px; 
     }
 
     /* Back Link - Top Left Corner container */
@@ -236,8 +261,8 @@
         display: flex;
         gap: 16px;
         justify-content: center;
-        max-width: 600px;
-        margin: 64px auto 0; /* Updated top margin for spacing */
+        max-width: 700px; /* Increased width to accommodate 3 buttons */
+        margin: 64px auto 0; 
         width: 100%;
     }
 
@@ -250,7 +275,7 @@
         border-radius: 14px;
         border: none;
         font-size: 1rem;
-        min-width: 180px;
+        min-width: 160px; /* Slightly reduced min-width */
         text-decoration: none;
         display: inline-flex;
         justify-content: center;
@@ -258,6 +283,7 @@
         transition: all 0.2s;
         height: 56px;
         flex: 1;
+        cursor: pointer;
     }
     .btn-primary-white:hover {
         transform: translateY(-1px);
@@ -270,11 +296,11 @@
         color: white;
         font-family: 'Outfit', sans-serif;
         font-weight: 700;
-        padding: 14px 28px;
+        padding: 14px 24px;
         border-radius: 14px;
         border: 1px solid rgba(255,255,255,0.05); /* Very subtle border */
         font-size: 1rem;
-        min-width: 180px;
+        min-width: 160px; /* Slightly reduced min-width */
         text-decoration: none;
         display: inline-flex;
         justify-content: center;
@@ -282,6 +308,7 @@
         transition: background 0.2s;
         height: 56px;
         flex: 1;
+        cursor: pointer;
     }
     .btn-secondary-dark:hover {
         background: #334155; /* Slate 700 */

@@ -258,34 +258,27 @@
         "slots": [
             {
                 "name": "The Hub & Travel",
-                "description": "Premium travel for food-motivated trips.",
+                "description": "Premium travel for food-motivated trips. Credits for high-end dining and reservations.",
                 "cards": [
-                    "american-express-gold-card",
+                    "american-express-platinum-card",
                     "chase-sapphire-reserve"
                 ]
             },
             {
-                "name": "Grocery Maxers",
-                "description": "The gold standard for supermarket spend.",
-                "cards": [
-                    "blue-cash-preferred-card-from-american-express",
-                    "american-express-gold-card"
-                ]
-            },
-            {
-                "name": "Lifestyle & Delivery",
+                "name": "Lifestyle & Grocery & Delivery",
                 "description": "DashPass and Grubhub+ memberships.",
                 "cards": [
                     "prime-visa",
+                    "blue-cash-preferred-card-from-american-express",
                     "chase-freedom-unlimited"
                 ]
             },
             {
                 "name": "Foodie Specialists",
-                "description": "Credits for high-end dining and reservations.",
+                "description": "Everyday dining and reservations.",
                 "cards": [
                     "american-express-gold-card",
-                    "citi-strata-elite-card"
+                    "chase-sapphire-preferred-card"
                 ]
             }
         ],
@@ -315,18 +308,11 @@
                 ]
             },
             {
-                "name": "Household Essentials",
-                "description": "6% groceries and 5% Amazon/Whole Foods.",
+                "name": "Household Essentials & Kids",
+                "description": "6% groceries and 5% Amazon/Whole Foods. The Disney Bundle and high-limit retail credits.",
                 "cards": [
                     "blue-cash-preferred-card-from-american-express",
-                    "prime-visa"
-                ]
-            },
-            {
-                "name": "Lifestyle & Kids",
-                "description": "The Disney Bundle and high-limit retail credits.",
-                "cards": [
-                    "blue-cash-preferred-card-from-american-express",
+                    "prime-visa",
                     "citi-strata-elite-card"
                 ]
             },
@@ -357,17 +343,10 @@
         "description": "Your life happens on the road. You need a setup that handles gas, EV charging, transit, and roadside emergencies flawlessly.",
         "slots": [
             {
-                "name": "The Commuter Hub",
-                "description": "Roadside dispatch and flat-rate catch-alls.",
-                "cards": [
-                    "wells-fargo-active-cash-card",
-                    "huntington-voice-rewards-credit-card"
-                ]
-            },
-            {
                 "name": "Fuel & Energy Core",
                 "description": "Permanent 5% on Gas/EV.",
                 "cards": [
+                    "wells-fargo-active-cash-card",
                     "sams-club-mastercard",
                     "citi-custom-cash-card",
                     "us-bank-altitude-connect-visa-signature-card"
@@ -507,14 +486,6 @@
         "description": "You want a setup that looks as good as the rewards. Heavy cards, elite lounges, and credits that fund your urban lifestyle.",
         "slots": [
             {
-                "name": "The Status Hub",
-                "description": "Heavy metal and Centurion/Delta lounge access.",
-                "cards": [
-                    "american-express-platinum-card",
-                    "the-business-platinum-card-from-american-express"
-                ]
-            },
-            {
                 "name": "Urban Dining & Food",
                 "description": "Uber credits and high-end restaurant access.",
                 "cards": [
@@ -527,15 +498,17 @@
                 "description": "Equinox, Saks, and premium chauffeur credits.",
                 "cards": [
                     "american-express-platinum-card",
-                    "citi-strata-elite-card"
+                    "citi-strata-elite-card",
+                    "the-business-platinum-card-from-american-express"
                 ]
             },
             {
                 "name": "Flex Specialists",
-                "description": "Cards with the best physical aesthetic.",
+                "description": "Cards with the best physical aesthetic. Useful for day-to-day",
                 "cards": [
                     "apple-card",
-                    "bilt-mastercard"
+                    "bilt-mastercard",
+                    "prime-visa"
                 ]
             }
         ],

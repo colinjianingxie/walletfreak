@@ -29,7 +29,9 @@
     <div class="rank-number">#{{ forloop.counter }}</div>
     
     <!-- Card Image -->
-    <img src="{{ result.card.image_url|default:'' }}" class="card-thumb" alt="{{ result.card.name }}">
+    <!-- Card Image -->
+    <img src="{{ result.card.image_url|default:'' }}" class="card-thumb" alt="{{ result.card.name }}" 
+         onclick="openCardModal('{{ result.card.id }}')" style="cursor: pointer;">
     
     <!-- Card Info -->
     <div class="card-details">
@@ -40,7 +42,7 @@
         <div class="badge bg-success text-white mb-2" style="font-size: 0.6rem; letter-spacing: 0.1em;">FEE-NEUTRAL</div>
         {% endif %}
         
-        <h3 class="card-name">{{ result.card.name }}</h3>
+        <h3 class="card-name" onclick="openCardModal('{{ result.card.id }}')" style="cursor: pointer;">{{ result.card.name }}</h3>
         <div class="card-issuer">{{ result.card.bank|default:"ISSUER" }}</div>
         
         <div class="mt-2 text-muted" style="font-size: 0.75rem;">

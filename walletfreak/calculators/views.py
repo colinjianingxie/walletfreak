@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.http import JsonResponse
+from django.template.loader import render_to_string
 import csv
+import json
 import os
 import math
 import ast
@@ -265,6 +267,14 @@ def worth_it_calculate(request, card_slug):
         else:
             optimization_score = 100 # No fee, infinite value ratio essentially
 
+        # Check wallet status
+        wallet_card_ids = []
+        if request.user.is_authenticated:
+            uid = request.session.get('uid')
+            if uid:
+                user_cards = db.get_user_cards(uid)
+                wallet_card_ids = [c.get('card_id') for c in user_cards]
+
         # Return context for result template
         return render(request, 'calculators/worth_it_result.html', {
             'card': card,
@@ -274,7 +284,9 @@ def worth_it_calculate(request, card_slug):
             'net_profit_abs': abs(score),
             'score_display': optimization_score, # 0-100
             'score_percentage': optimization_score, # For CSS circle
-            'is_worth_it': score >= 0
+            'is_worth_it': score >= 0,
+            'card_json': json.dumps(card, default=str),
+            'wallet_card_ids': wallet_card_ids
         })
     
     return redirect('worth_it_audit', card_slug=card_slug)
@@ -353,4 +365,17 @@ def optimizer_calculate(request):
         'mode': mode
     }
     
-    return render(request, 'calculators/optimizer_results.html', context)
+    # Render HTML partial
+    html = render_to_string('calculators/optimizer_results.html', context, request=request)
+    
+    # Extract card data for modal usage
+    cards_data = [r['card'] for r in results]
+    
+    # Ensure JSON serializable (handle datetimes etc)
+    cards_data_json = json.loads(json.dumps(cards_data, default=str))
+    
+    return JsonResponse({
+        'html': html,
+        'cards_data': cards_data_json,
+        'wallet_card_ids': list(user_wallet_slugs)
+    })
