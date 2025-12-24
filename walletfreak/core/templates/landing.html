@@ -15,6 +15,37 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
+    <style>
+        #initial-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease-out;
+        }
+        #initial-loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .loader-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid #E2E8F0;
+            border-top: 4px solid #2563EB;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 
     <script id="firebase-config" type="application/json">
         {{ firebase_config_json|safe }}
@@ -24,32 +55,54 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
+        const hideLoader = () => {
+            const loader = document.getElementById('initial-loader');
+            if (loader && !loader.classList.contains('hidden')) {
+                loader.classList.add('hidden');
+                setTimeout(() => loader.remove(), 500);
+            }
+        };
+
         // Auth State Observer
         auth.onAuthStateChanged(async (user) => {
             if (user) {
                 if (user.emailVerified || user.providerData[0].providerId === 'phone') {
-                    const idToken = await user.getIdToken();
                     const isDjangoAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}" === "true";
 
                     if (!isDjangoAuthenticated) {
-                        const idToken = await user.getIdToken();
-                        fetch('/accounts/api/login/', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({ idToken: idToken })
-                        }).then(res => {
-                            if (res.ok) window.location.reload();
-                        });
+                        try {
+                            const idToken = await user.getIdToken();
+                            const res = await fetch('/accounts/api/login/', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ idToken: idToken })
+                            });
+                            
+                            if (res.ok) {
+                                window.location.reload();
+                                return;
+                            }
+                        } catch (e) {
+                            console.error('Login sync failed:', e);
+                        }
                     }
                 }
             }
+            // If not logged in, or verified, or login sync failed - show page
+            hideLoader();
         });
+
+        // Safety timeout
+        setTimeout(hideLoader, 5000);
     </script>
 </head>
 
 <body>
+    <div id="initial-loader">
+        <div class="loader-spinner"></div>
+    </div>
     {% include 'includes/navbar.html' %}
 
     <main style="min-height: calc(100vh - 70px);">
