@@ -4,6 +4,7 @@ from django.http import JsonResponse
 import csv
 import os
 import math
+import ast
 from datetime import datetime, date
 from core.services import db
 from .services import OptimizerService
@@ -17,6 +18,43 @@ def index(request):
         'page_title': 'The Freak Lab',
     }
     return render(request, 'calculators/index.html', context)
+
+def load_credit_card_questions():
+    """
+    Reads credit_card_questions.csv and returns a lookup dict.
+    Key: (slug-id, BenefitShortDescription) -> Question Data Dict
+    """
+    csv_path = os.path.join(os.path.dirname(__file__), 'credit_card_questions.csv')
+    questions = {}
+    
+    if not os.path.exists(csv_path):
+        return questions
+
+    try:
+        with open(csv_path, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f, delimiter='|')
+            for row in reader:
+                slug = row.get('slug-id', '').strip()
+                short_desc = row.get('BenefitShortDescription', '').strip()
+                
+                # Parse ChoiceList string to list
+                try:
+                    choice_list_str = row.get('ChoiceList', '[]')
+                    choice_list = ast.literal_eval(choice_list_str)
+                except (ValueError, SyntaxError):
+                    choice_list = []
+
+                if slug and short_desc:
+                    questions[(slug, short_desc)] = {
+                        'question_type': row.get('QuestionType', 'yes_no'),
+                        'choices': choice_list,
+                        'question': row.get('Question', ''),
+                        'category': row.get('BenefitCategory', '')
+                    }
+    except Exception as e:
+        print(f"Error reading questions CSV: {e}")
+        
+    return questions
 
 def worth_it_list(request):
     """
@@ -60,38 +98,60 @@ def worth_it_audit(request, card_slug):
         # If that fails, we might want to search by 'slug' field query, but let's assume direct lookup works for now.
         return redirect('worth_it_list')
 
+    # Load custom questions
+    questions_map = load_credit_card_questions()
+
     # Filter benefits with dollar value
     benefits = card.get('benefits', [])
     audit_benefits = []
     
     for b in benefits:
         if b.get('dollar_value') and b.get('dollar_value') > 0:
-            # Determine input type based on time_category
+            short_desc = b.get('short_description', '')
+            
+            # Check for custom question
+            q_data = questions_map.get((card_slug, short_desc))
+            
+            # Defaults
             time_cat = b.get('time_category', 'Annually')
             input_type = 'toggle' # Default
+            choices = []
             max_val = 1
             
-            if 'Monthly' in time_cat:
-                input_type = 'slider'
-                max_val = 12
-                # Ensure period_values exists or is calculable
-            elif 'Quarterly' in time_cat:
-                input_type = 'slider' # or number
-                max_val = 4
-            elif 'Semi' in time_cat:
-                input_type = 'slider'
-                max_val = 2
+            if q_data:
+                # Use data from CSV
+                label = q_data['question']
+                q_type = q_data['question_type']
+                choices = q_data['choices']
                 
-            if 'Monthly' in time_cat or 'Quarterly' in time_cat:
-                label = f"How often do you use the ${b.get('dollar_value')} {b.get('short_description', 'credit')}?"
+                if q_type == 'multiple_choice' and choices:
+                    input_type = 'multiple_choice'
+                    max_val = len(choices) - 1 # We'll use index as value
+                else:
+                    input_type = 'toggle'
+                    max_val = 1
             else:
-                # Annual or Semi-Annual (Toggles)
-                label = f"Would you use the ${b.get('dollar_value')} {b.get('short_description', 'credit')}?"
+                # Fallback logic
+                if 'Monthly' in time_cat:
+                    input_type = 'slider'
+                    max_val = 12
+                elif 'Quarterly' in time_cat:
+                    input_type = 'slider'
+                    max_val = 4
+                elif 'Semi' in time_cat:
+                    input_type = 'slider'
+                    max_val = 2
+                
+                if 'Monthly' in time_cat or 'Quarterly' in time_cat:
+                    label = f"How often do you use the ${b.get('dollar_value')} {b.get('short_description', 'credit')}?"
+                else:
+                    label = f"Would you use the ${b.get('dollar_value')} {b.get('short_description', 'credit')}?"
 
             b['audit_config'] = {
                 'input_type': input_type,
                 'max_val': max_val,
-                'label': label
+                'label': label,
+                'choices': choices
             }
             audit_benefits.append(b)
 
@@ -110,6 +170,9 @@ def worth_it_calculate(request, card_slug):
         annual_fee = card.get('annual_fee', 0)
         total_value = 0.0
         
+        # Load questions map for calculation logic
+        questions_map = load_credit_card_questions()
+        
         # Iterate through POST data
         # Expected format: benefit_{index}: value
         for key, value in request.POST.items():
@@ -117,21 +180,41 @@ def worth_it_calculate(request, card_slug):
                 try:
                     val = float(value)
                     # We need to know the 'value per unit' or calculate based on the benefit logic.
-                    # Simpler approach: Pass the dollar value per unit in the form or look it up.
                     # Let's look up by index.
                     b_idx = int(key.split('_')[1])
                     if 0 <= b_idx < len(card.get('benefits', [])):
                         benefit = card['benefits'][b_idx]
+                        short_desc = benefit.get('short_description', '')
+                        
+                        # Check for custom question to match logic
+                        q_data = questions_map.get((card_slug, short_desc))
                         
                         # Calculation Logic
                         time_cat = benefit.get('time_category', '')
                         dollar_val = benefit.get('dollar_value') or 0
                         
-                        if 'Monthly' in time_cat:
-                            # dollar_val is usually Total Annual Value in the CSV? 
-                            # Let's check parse_benefits_csv.py.
-                            # "per_month = dollar_value / 12". So dollar_value IS the annual total.
-                            # So value obtained = (input_months / 12) * dollar_value
+                        benefit_value = 0.0
+                        
+                        if q_data and q_data['question_type'] == 'multiple_choice':
+                            # Logic for multiple choice
+                            # val is the INDEX selected (0 to N-1)
+                            choices = q_data['choices']
+                            if choices:
+                                max_idx = len(choices) - 1
+                                if max_idx > 0:
+                                    # Linear interpolation: index / max_idx
+                                    # 0 -> 0%, Max -> 100%
+                                    # Example: ['Never', 'Rarely', 'Often'] -> 0, 0.5, 1.0
+                                    utilization = val / max_idx
+                                    benefit_value = utilization * dollar_val
+                                else:
+                                    # Single choice? assume 100% if selected?
+                                    benefit_value = dollar_val if val >= 0 else 0
+                            else:
+                                benefit_value = dollar_val if val > 0 else 0
+                        
+                        elif 'Monthly' in time_cat:
+                            # dollar_val is annual total.
                             benefit_value = (val / 12.0) * dollar_val
                         elif 'Quarterly' in time_cat:
                             benefit_value = (val / 4.0) * dollar_val

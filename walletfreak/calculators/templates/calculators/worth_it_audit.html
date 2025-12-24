@@ -63,6 +63,20 @@
                                        readonly>
                                 <button type="button" class="stepper-btn plus" onclick="updateStepper(this, 1, {{ benefit.audit_config.max_val }})">+</button>
                             </div>
+                        {% elif benefit.audit_config.input_type == 'multiple_choice' %}
+                            <!-- Multiple Choice -->
+                            <div class="multiple-choice-control">
+                                {% for choice in benefit.audit_config.choices %}
+                                    <input type="radio" name="benefit_{{ forloop.parentloop.counter0 }}" 
+                                           id="b{{ forloop.parentloop.counter0 }}_{{ forloop.counter0 }}" 
+                                           value="{{ forloop.counter0 }}" 
+                                           class="btn-check" 
+                                           {% if forloop.first %}checked{% endif %}>
+                                    <label class="btn btn-choice" for="b{{ forloop.parentloop.counter0 }}_{{ forloop.counter0 }}">
+                                        {{ choice }}
+                                    </label>
+                                {% endfor %}
+                            </div>
                         {% else %}
                             <!-- Yes/No Toggle -->
                             <div class="toggle-control">
@@ -213,7 +227,50 @@
         margin: 0; 
     }
 
-    /* Toggle Control */
+    /* Utilities */
+    .btn-check {
+        position: absolute;
+        clip: rect(0,0,0,0);
+        pointer-events: none;
+    }
+
+    /* Multiple Choice */
+    .multiple-choice-control {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        background: transparent;
+        padding: 0;
+        border-radius: 0;
+    }
+    .btn-choice {
+        display: inline-block;
+        border-radius: 12px;
+        padding: 10px 20px;
+        font-weight: 600;
+        color: #94A3B8; /* Muted text for inactive */
+        background: #F8FAFC; /* Light gray background for inactive */
+        border: 1px solid transparent; /* Prevent layout shift if border added later */
+        transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        font-size: 0.95rem;
+        flex-grow: 0; /* Intrinsic width */
+        text-align: center;
+        white-space: nowrap;
+        cursor: pointer;
+        user-select: none;
+    }
+    .btn-choice:hover {
+        background: #F1F5F9;
+        color: #64748B;
+    }
+    .btn-check:checked + .btn-choice {
+        background: #5555ff; /* Primary Purple */
+        color: white;
+        box-shadow: 0 4px 12px rgba(85, 85, 255, 0.25);
+        transform: translateY(-1px);
+    }
+
+    /* Toggle Control - Keep as Segmented Control style */
     .toggle-control {
         background: #F8FAFC;
         padding: 4px;
@@ -221,17 +278,21 @@
         display: inline-flex;
     }
     .btn-toggle {
+        display: inline-block;
         border-radius: 8px;
         padding: 8px 24px;
         font-weight: 600;
         color: #64748B;
         border: none;
         transition: all 0.2s;
+        cursor: pointer;
+        user-select: none;
     }
     .btn-check:checked + .btn-toggle {
-        background: white;
-        color: #0F172A;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        background: #5555ff;
+        color: white;
+        box-shadow: 0 4px 12px rgba(85, 85, 255, 0.25);
+        transform: translateY(-1px);
     }
     
     /* Calculate Button */
