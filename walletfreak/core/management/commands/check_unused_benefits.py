@@ -162,7 +162,7 @@ class Command(BaseCommand):
                          continue
 
                     last_sent = user.get('last_benefit_email_sent_at')
-                    freq_days = float(benefit_prefs.get('repeat_frequency', 7))
+                    freq_days = float(benefit_prefs.get('repeat_frequency', 1))
                     
                     should_notify = True
                     if last_sent:
