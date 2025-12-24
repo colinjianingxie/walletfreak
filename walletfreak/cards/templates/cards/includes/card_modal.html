@@ -287,7 +287,7 @@ function openCardModal(cardId) {
         img.onload = () => onSuccess(url);
         img.onerror = onError;
         // Add cache buster to prevent caching issues
-        img.src = `${url}?v=${new Date().getTime()}`;
+        img.src = url;
     };
 
     // Chain step 3: Try remote URL
@@ -594,25 +594,25 @@ function openCardModal(cardId) {
             let valueClass = 'benefit-value';
             const numericType = benefit.numeric_type ? benefit.numeric_type.toLowerCase() : '';
 
-            if (numericType === 'cash') {
-                if (!valueDisplay.includes('$')) {
-                    valueDisplay = '$' + valueDisplay;
-                }
-                valueClass += ' benefit-value-money';
-            } else if (numericType === 'percent') {
-                if (!valueDisplay.includes('%')) {
-                    valueDisplay += '%';
-                }
-                valueClass += ' benefit-value-money';
-            } else {
-                // Points, Miles, Upgrade, or any other type -> Just the number
-                // Also fallback for missing type -> Just the number
-                valueClass += ' benefit-value-money'; // Keep money style for bold/color if desired, or remove if "money" implies green/$
-            }
-
             // Special case for "Included" text which shouldn't look like a number
-            if (String(value).toLowerCase() === 'included') {
+            if (valueDisplay.toLowerCase() === 'included') {
                  valueClass = 'benefit-value benefit-value-included';
+            } else {
+                if (numericType === 'cash') {
+                    if (!valueDisplay.includes('$')) {
+                        valueDisplay = '$' + valueDisplay;
+                    }
+                    valueClass += ' benefit-value-money';
+                } else if (numericType === 'percent') {
+                    if (!valueDisplay.includes('%')) {
+                        valueDisplay += '%';
+                    }
+                    valueClass += ' benefit-value-money';
+                } else {
+                    // Points, Miles, Upgrade, or any other type -> Just the number
+                    // Also fallback for missing type -> Just the number
+                    valueClass += ' benefit-value-money'; 
+                }
             }
             
             const wrapper = document.createElement('div');
