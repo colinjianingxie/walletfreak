@@ -4,7 +4,6 @@ import math
 from datetime import datetime, date
 from django.conf import settings
 from core.services import db
-from .points_valuations import get_cents_per_point
 
 class OptimizerService:
     def __init__(self):
@@ -92,16 +91,6 @@ class OptimizerService:
             except (ValueError, TypeError):
                 continue
                 
-            # 4. Filter: Expired (DISABLED)
-            # User Request: "Do not exclude cards-expired, assume all cards are active."
-            # if eff_date_str:
-            #     try:
-            #         eff_date = datetime.strptime(eff_date_str, '%Y-%m-%d').date()
-            #         if eff_date < today:
-            #             continue
-            #     except ValueError:
-            #         pass
-            
             # 5. Filter: Infeasible
             if req_spend > planned_spend:
                 continue
@@ -117,8 +106,18 @@ class OptimizerService:
                     continue
 
             # 7. Valuation
-            # Determine CPP
-            cpp = get_cents_per_point(slug, bonus_type)
+            # Determine CPP from card object
+            # Default to 1.0 if N/A or missing
+            
+            raw_cpp = card_obj.get('points_value_cpp') or card_obj.get('PointsValueCpp', '1.0')
+            try:
+                # Handle 'N/A' or other non-numeric strings by defaulting to 1.0
+                if isinstance(raw_cpp, str) and not raw_cpp.replace('.', '', 1).isdigit():
+                     cpp = 1.0
+                else:
+                     cpp = float(raw_cpp)
+            except (ValueError, TypeError):
+                cpp = 1.0
             
             # Bonus Value ($)
             if bonus_type.lower() == 'cash':
