@@ -455,7 +455,27 @@ def parse_benefit_overrides_csv(csv_path):
         
     return overrides
 
-def generate_cards_from_csv(csv_path, signup_csv_path=None, rates_csv_path=None, master_csv_path=None, overrides_csv_path=None):
+def parse_verdicts_csv(csv_path):
+    """
+    Parse the verdicts CSV and return a dictionary of verdicts.
+    
+    CSV Format: slug-id|FreakVerdict
+    """
+    verdicts = {}
+    try:
+        with open(csv_path, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f, delimiter='|')
+            for row in reader:
+                slug = row.get('slug-id', '').strip()
+                verdict = row.get('FreakVerdict', '').strip()
+                if slug:
+                    verdicts[slug] = verdict
+    except FileNotFoundError:
+        print(f"Warning: Verdicts CSV not found at {csv_path}")
+        
+    return verdicts
+
+def generate_cards_from_csv(csv_path, signup_csv_path=None, rates_csv_path=None, master_csv_path=None, overrides_csv_path=None, verdicts_csv_path=None):
     """
     Main function to parse CSV and return Firestore-ready card data.
     """
@@ -511,6 +531,13 @@ def generate_cards_from_csv(csv_path, signup_csv_path=None, rates_csv_path=None,
                         for p_key, p_val in period_updates.items():
                             benefits[idx]['period_values'][p_key] = p_val
                 
+    if verdicts_csv_path:
+        verdicts_data = parse_verdicts_csv(verdicts_csv_path)
+        for card_name, card in cards_dict.items():
+            slug = card.get('slug')
+            if slug and slug in verdicts_data:
+                card['verdict'] = verdicts_data[slug]
+
     return convert_to_firestore_format(cards_dict)
 
 
