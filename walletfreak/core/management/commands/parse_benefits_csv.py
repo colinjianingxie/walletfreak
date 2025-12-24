@@ -23,12 +23,28 @@ def parse_signup_bonuses_csv(csv_path):
                     value = int(row['SignUpBonusValue'].strip())
                 except ValueError:
                     pass
+
+                # Parse SpendAmount
+                spend_amount = 0
+                try:
+                    spend_amount = int(row.get('SpendAmount', '0').strip())
+                except ValueError:
+                    pass
+
+                # Parse SignupDurationMonths
+                duration_months = 0
+                try:
+                    duration_months = int(row.get('SignupDurationMonths', '0').strip())
+                except ValueError:
+                    pass
                     
                 bonuses[key] = {
                     'terms': row['Terms'].strip(),
                     'value': value,
                     'currency': row['SignUpBonusType'].strip(),
-                    'effective_date': row['EffectiveDate'].strip()
+                    'effective_date': row['EffectiveDate'].strip(),
+                    'spend_amount': spend_amount,
+                    'duration_months': duration_months
                 }
     except FileNotFoundError:
         print(f"Warning: Signup bonus CSV not found at {csv_path}")
@@ -76,7 +92,8 @@ def parse_earning_rates_csv(csv_path):
                     'rate': rate,
                     'currency': row['Currency'].strip(),
                     'category': row['BenefitCategory'].strip(),
-                    'details': row.get('AdditionalDetails', '').strip()
+                    'details': row.get('AdditionalDetails', '').strip(),
+                    'is_default': row.get('IsDefault', '').strip().lower() == 'yes'
                 }
                 
                 rates_dict[key]['earning_rates'].append(earning_rate)
@@ -502,14 +519,14 @@ if __name__ == '__main__':
     import os
     csv_path = os.path.join(os.path.dirname(__file__), '../../../default_card_benefits.csv')
     signup_csv_path = os.path.join(os.path.dirname(__file__), '../../../default_signup.csv')
-    cards = generate_cards_from_csv(csv_path, signup_csv_path)
+    rates_csv_path = os.path.join(os.path.dirname(__file__), '../../../default_rates.csv')
+    
+    cards = generate_cards_from_csv(csv_path, signup_csv_path, rates_csv_path=rates_csv_path)
     print(f"Parsed {len(cards)} cards")
-    for card in cards[:2]:  # Print first 2 as sample
+    for card in cards[:5]:  # Print first 5 as sample
         print(f"\n{card['name']} ({card['issuer']}):")
         print(f"  Image URL: {card.get('image_url', 'N/A')}")
-        print(f"  Min Score: {card.get('min_credit_score', 'N/A')}")
-        print(f"  Max Score: {card.get('max_credit_score', 'N/A')}")
-        print(f"  App Link: {card.get('application_link', 'N/A')}")
-        print(f"  Benefits: {len(card['benefits'])}")
-        for benefit in card['benefits'][:3]:
-            print(f"    - {benefit['description'][:30]}... (Type: {benefit.get('numeric_type')}, Value: {benefit.get('numeric_value')})")
+        EARNING_RATES = card.get('earning_rates', [])
+        print(f"  Earning Rates: {len(EARNING_RATES)}")
+        for rate in EARNING_RATES:
+            print(f"    - {rate['rate']} {rate['currency']} ({rate['category']}) - Default: {rate.get('is_default')}")

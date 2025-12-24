@@ -57,7 +57,7 @@
                 </p>
 
                 {% if user.is_authenticated %}
-                    <a href="#" style="color: #FFC107; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; letter-spacing: 0.05em; font-size: 0.9rem;">
+                    <a href="{% url 'optimizer_input' %}" style="color: #FFC107; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; letter-spacing: 0.05em; font-size: 0.9rem;">
                         ANALYZE NOW <span class="material-icons" style="font-size: 18px;">arrow_forward</span>
                     </a>
                 {% else %}

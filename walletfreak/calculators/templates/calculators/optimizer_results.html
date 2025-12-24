@@ -1,0 +1,98 @@
+
+<!-- Leaderboard Header -->
+<div class="leaderboard-header">
+    <div><span class="material-icons" style="font-size: 16px; vertical-align: text-bottom; margin-right: 4px;">emoji_events</span> Recommendation Leaderboard</div>
+    <div>{% if mode == 'combo' %}Combined Strategy ($ Spent){% else %}Sorted by Net Value & ROI{% endif %}</div>
+</div>
+
+{% if results %}
+<!-- Insight Box -->
+<div class="alert alert-primary d-flex align-items-start gap-3 mb-4" style="background: #EEF2FF; border: none; border-radius: 20px; padding: 24px;">
+    <div style="background: #4F46E5; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+        <span class="material-icons" style="font-size: 20px;">info</span>
+    </div>
+    <div>
+        <h6 style="color: #1E1B4B; font-weight: 800; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em; margin-bottom: 8px;">The Freak's Insight</h6>
+        <p style="color: #4338CA; margin: 0; font-size: 0.95rem; line-height: 1.5;">
+            {% with top=results.0 %}
+            The <strong>{{ top.card.name }}</strong> provides the highest value for your spend.
+            Ensure you can meet the ${{ top.req_spend }} spend requirement within {{ top.req_months }} months.
+            {% endwith %}
+        </p>
+    </div>
+</div>
+{% endif %}
+
+{% for result in results %}
+<div class="result-row">
+    <!-- Rank -->
+    <div class="rank-number">#{{ forloop.counter }}</div>
+    
+    <!-- Card Image -->
+    <img src="{{ result.card.image_url|default:'' }}" class="card-thumb" alt="{{ result.card.name }}">
+    
+    <!-- Card Info -->
+    <div class="card-details">
+        <!-- Tag -->
+        {% if forloop.first %}
+        <div class="badge bg-primary text-white mb-2" style="font-size: 0.6rem; letter-spacing: 0.1em;">TOP PICK</div>
+        {% elif result.card.annual_fee == 0 %}
+        <div class="badge bg-success text-white mb-2" style="font-size: 0.6rem; letter-spacing: 0.1em;">FEE-NEUTRAL</div>
+        {% endif %}
+        
+        <h3 class="card-name">{{ result.card.name }}</h3>
+        <div class="card-issuer">{{ result.card.bank|default:"ISSUER" }}</div>
+        
+        <div class="mt-2 text-muted" style="font-size: 0.75rem;">
+            Bonus: {{ result.bonus_text }} | Fee: ${{ result.annual_fee|floatformat:0 }}
+        </div>
+    </div>
+    
+    <!-- Spend / Progress -->
+    <div class="progress-area">
+        <div class="progress-label">
+            <span>SPEND ALLOCATION</span>
+            <!-- If combo mode, we might show allocated vs required -->
+            <span>${{ result.req_spend }}</span> 
+        </div>
+        <div class="d-flex justify-content-between mt-1" style="font-size: 0.65rem; color: #64748B;">
+             <span>{{ result.req_months }} Months</span>
+             <span>+${{ result.ongoing_rate|floatformat:2 }}/$1 Ongoing</span>
+        </div>
+    </div>
+    
+    <!-- ROI Score -->
+    <div class="roi-badge">
+        <div class="roi-lbl">ROI SCORE</div>
+        <div class="roi-val" style="color: #4F46E5;">{{ result.roi|floatformat:1 }}%</div>
+    </div>
+    
+    <!-- Net Value & Action -->
+    <div class="net-value-area">
+        <div class="net-lbl">NET VALUE</div>
+        <div class="net-val">${{ result.net_value|floatformat:0 }}</div>
+        
+        {% if result.card.apply_link or result.card.application_link %}
+            <a href="{{ result.card.apply_link|default:result.card.application_link }}" target="_blank" class="btn-apply-sm">
+                APPLY <span class="material-icons" style="font-size: 14px;">arrow_forward</span>
+            </a>
+        {% else %}
+             <button disabled class="btn-apply-sm text-muted" style="border:none; bg:transparent;">NO LINK</button>
+        {% endif %}
+    </div>
+
+</div>
+{% empty %}
+<div class="text-center py-5">
+    <h3>No suitable cards found.</h3>
+    <p>Try increasing your planned spend or timeframe.</p>
+</div>
+{% endfor %}
+
+{% if results and mode == 'combo' %}
+<div class="alert alert-info mt-4">
+    <strong>Combo Strategy:</strong> These cards maximize your return for your ${{ planned_spend }} budget. Apply for the top card first!
+</div>
+{% endif %}
+
+<!-- Insight Box Moved to Top -->

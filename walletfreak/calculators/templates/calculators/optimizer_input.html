@@ -1,0 +1,790 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<!-- Bootstrap removed to prevent nav styling conflicts. Layout handled by custom CSS below. -->
+{% endblock %}
+
+{% block content %}
+<div class="optimizer-container">
+    <!-- Back to Lab -->
+    <div class="container mb-4">
+        <a href="{% url 'calculators_index' %}" class="back-link">
+            <span class="material-icons">arrow_back</span>
+            Back to Lab
+        </a>
+    </div>
+
+    <!-- Main Card -->
+    <div class="container d-flex justify-content-center">
+        <div class="optimizer-card">
+            <div class="row g-0 h-100">
+                <!-- Left Side: Copy -->
+                <div class="col-md-6 p-5 d-flex flex-column justify-content-center border-end-dark" style="min-height: 500px;">
+                    <div class="mb-4">
+                        <span class="badge-pill">
+                            <span class="material-icons">bolt</span>
+                            SIGN-UP BONUS INTEL
+                        </span>
+                    </div>
+                    <h1 class="headline">Target your next big haul.</h1>
+                    <p class="subheadline">
+                        Enter your planned spend to see which card's welcome offer provides the highest mathematical return.
+                    </p>
+                </div>
+
+                <!-- Right Side: Form -->
+                <div class="col-md-6 p-4 p-lg-5 d-flex align-items-center">
+                    <div class="scanner-section">
+                        <form id="optimizerForm" class="w-100">
+                            {% csrf_token %}
+                            <div class="row g-3 mb-4">
+                                <div class="col-6">
+                                    <label class="form-label">PLANNED SPEND</label>
+                                    <div class="input-group-dark">
+                                        <span class="prefix">$</span>
+                                        <input type="number" name="spend" class="form-control-dark" value="4000" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label">TIMEFRAME</label>
+                                    <div class="input-group-dark">
+                                        <span class="prefix material-icons">calendar_today</span>
+                                        <select name="timeframe" class="form-select-dark">
+                                            <option value="1">1 Month</option>
+                                            <option value="2">2 Months</option>
+                                            <option value="3" selected>3 Months</option>
+                                            <option value="4">4 Months</option>
+                                            <option value="6">6 Months</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-scan" id="scanBtn">
+                                <span class="btn-content">
+                                    <!-- Added inline style and !important to ensure functionality -->
+                                    <span class="material-icons spin d-none" id="btnSpinner" style="display: none !important;">sync</span>
+                                    <span class="btn-text">Scan ROI Leaderboard</span>
+                                </span>
+                            </button>
+                        </form>
+                        
+                        <!-- How It Works Link -->
+                        <div class="text-center mt-3">
+                            <button type="button" class="btn-link-subtle" id="howItWorksBtn">
+                                <span class="material-icons" style="font-size: 16px;">help_outline</span>
+                                How it works
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Loading State (Hidden by default) -->
+    <div id="loadingState" class="container text-center py-5" style="display: none; margin-top: 150px;">
+        <div class="search-spinner">
+            <span class="material-icons search-icon">search</span>
+        </div>
+        <div class="loading-text">SCANNING ROI LEADERBOARD...</div>
+    </div>
+
+    <!-- Results Container -->
+    <div id="resultsContainer" class="container mt-4 mb-5" style="display: none;">
+        <!-- Results will be injected here -->
+    </div>
+
+    <!-- How It Works Modal -->
+    <div id="howItWorksModal" class="custom-modal-overlay" style="display: none;">
+        <div class="custom-modal">
+            <div class="modal-header">
+                <h3 class="text-white">The Logic Behind The Rank</h3>
+                <button type="button" class="btn-close-modal" id="closeModalBtn">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="logic-block">
+                    <h4><span class="material-icons">paid</span> Net Value</h4>
+                    <p>
+                        We calculate the total dollar value you extract from a card, combining the signup bonus and rewards earned on your spend.
+                    </p>
+                    <div class="formula">
+                        (Bonus + Earn Rate × Spend) - Annual Fee
+                    </div>
+                </div>
+
+                <div class="logic-block">
+                    <h4><span class="material-icons">fact_check</span> Feasibility Check</h4>
+                    <p>
+                        We ensured you can meet the spending requirement without exceeding your monthly budget.
+                    </p>
+                    <div class="formula">
+                        Req / Signup Months ≤ (Total Spend / Your Timeframe)
+                    </div>
+                </div>
+                
+                <div class="logic-block">
+                    <h4><span class="material-icons">leaderboard</span> Ranking Logic</h4>
+                    <p>
+                        Cards are ranked primarily by the highest <strong>Net Value</strong> (Total Profit). We prioritize putting the most money in your pocket over abstract efficiency metrics.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<style>
+    body {
+        background: radial-gradient(circle at 10% 20%, #F8FAFC 0%, #FFFFFF 100%);
+        min-height: 100vh;
+        margin: 0; 
+        /* Reset for when bootstrap is gone if base doesn't cover it (base does, but safe to have) */
+    }
+
+    /* Bootstrap Replacement Utilities */
+    .d-flex { display: flex !important; }
+    .d-none { display: none !important; }
+    .flex-column { flex-direction: column !important; }
+    .justify-content-center { justify-content: center !important; }
+    .justify-content-between { justify-content: space-between !important; }
+    .align-items-center { align-items: center !important; }
+    .align-items-start { align-items: flex-start !important; }
+    .h-100 { height: 100% !important; }
+    .w-100 { width: 100% !important; }
+    .text-center { text-align: center !important; }
+    .text-white { color: white !important; }
+    
+    .gap-3 { gap: 1rem !important; }
+    .gap-2 { gap: 0.5rem !important; }
+    
+    .mb-1 { margin-bottom: 0.25rem !important; }
+    .mb-2 { margin-bottom: 0.5rem !important; }
+    .mb-4 { margin-bottom: 1.5rem !important; }
+    .mt-1 { margin-top: 0.25rem !important; }
+    .mt-2 { margin-top: 0.5rem !important; }
+    .mt-3 { margin-top: 1rem !important; }
+    .mt-4 { margin-top: 1.5rem !important; }
+    .mb-5 { margin-bottom: 3rem !important; }
+    .p-4 { padding: 1.5rem !important; }
+    .p-5 { padding: 3rem !important; }
+    
+    .bg-primary { background-color: var(--primary) !important; }
+    .bg-success { background-color: var(--success) !important; }
+    
+    /* Alerts */
+    .alert {
+        position: relative;
+        padding: 1rem 1rem;
+        margin-bottom: 1rem;
+        border: 1px solid transparent;
+        border-radius: 0.375rem;
+    }
+    .alert-info {
+        color: #055160;
+        background-color: #cff4fc;
+        border-color: #b6effb;
+    }
+    .alert-primary {
+        color: #084298;
+        background-color: #cfe2ff;
+        border-color: #b6d4fe;
+    }
+    
+    /* Grid System Mimic */
+    .container {
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+    
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px; /* g-0 usually means 0 margin, but we use g-3 logic inside form */
+        margin-left: -15px;
+    }
+    
+    .g-0 {
+        margin-right: 0;
+        margin-left: 0;
+    }
+    .g-0 > .col-md-6 {
+        padding-right: 0;
+        padding-left: 0;
+    }
+    
+    .row.g-3 {
+        margin-right: -0.75rem; /* half of 1.5rem g-3 gap */
+        margin-left: -0.75rem;
+    }
+    .row.g-3 > .col-6 {
+        padding-right: 0.75rem;
+        padding-left: 0.75rem;
+    }
+
+    .col-md-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+        position: relative;
+        width: 100%;
+    }
+    
+    .col-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+        position: relative;
+        width: 100%;
+        padding-left: 15px; 
+        padding-right: 15px;
+    }
+    
+    .border-end-dark {
+        border-right: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #0F172A;
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+    .back-link .material-icons { font-size: 16px; }
+
+    /* Card Structure */
+    .optimizer-card {
+        background: #0F172A;
+        border-radius: 32px;
+        color: white;
+        width: 100%;
+        max-width: 1200px;
+        box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.5);
+        overflow: hidden;
+        margin: 0 auto;
+    }
+    
+    /* Left Side Text */
+    .headline {
+        font-family: 'Outfit', sans-serif;
+        font-weight: 800;
+        font-size: 3.5rem; 
+        line-height: 1.05;
+        margin-bottom: 1.5rem;
+        color: white;
+        letter-spacing: -0.02em;
+    }
+    .subheadline {
+        color: #94A3B8;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        max-width: 90%;
+        font-weight: 400;
+    }
+
+    /* Badge - Ensure it's not clipped */
+    .badge-pill {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 8px 16px;
+        border-radius: 100px;
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        color: #FCD34D; 
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid rgba(253, 224, 71, 0.2);
+        margin-bottom: 24px; /* Space below badge */
+    }
+    .badge-pill .material-icons { font-size: 16px; }
+
+    /* Form Section */
+    .scanner-section {
+        background: #1E293B; /* Lighter Slate 800 */
+        padding: 40px; 
+        border-radius: 24px;
+        border: 1px solid rgba(255,255,255,0.1); 
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .form-label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        color: #8D99AE; 
+        margin-bottom: 0.75rem;
+        display: block;
+        text-transform: uppercase;
+    }
+
+    /* Input Fields */
+    .input-group-dark {
+        background: #0F172A; /* Darker background (Slate 900) */
+        border-radius: 12px;
+        border: 1px solid #334155;
+        display: flex;
+        align-items: center;
+        padding: 6px 16px; /* Reduced height */
+        transition: all 0.2s;
+    }
+    .input-group-dark:focus-within {
+        border-color: #FCD34D; /* Amber focus */
+        box-shadow: 0 0 0 3px rgba(252, 211, 77, 0.2);
+    }
+    
+    .prefix {
+        color: #64748B;
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-right: 12px;
+    }
+
+    .form-control-dark, .form-select-dark {
+        background: transparent;
+        border: none;
+        color: white;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 700;
+        font-size: 1.15rem; /* Reduced font size */
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        outline: none;
+        height: auto;
+        line-height: 1.5;
+    }
+
+    /* Scan Button */
+    .btn-scan {
+        width: 100%;
+        background: #FFD600; 
+        border: none;
+        border-radius: 12px;
+        padding: 18px;
+        color: #0F172A;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 800;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        box-shadow: 0 0 20px rgba(255, 214, 0, 0.2);
+        position: relative;
+        overflow: hidden;
+        margin-top: 1.5rem;
+    }
+    
+    .btn-scan:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 30px rgba(255, 214, 0, 0.4);
+    }
+    
+    .btn-scan:active {
+        transform: scale(0.99);
+    }
+
+    .btn-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    .spin { animation: spin 1s linear infinite; }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        /* On mobile, stack column, remove h-100 constraint from row if needed via utility class override */
+        .optimizer-card > .row { flex-direction: column; }
+        .col-md-6 { width: 100%; padding: 48px 24px !important; }
+        .scanner-section { padding: 24px; margin-top: 20px; }
+        .headline { font-size: 2.5rem; text-align: center; }
+        .subheadline { text-align: center; margin: 0 auto; }
+        .optimizer-card .col-md-6.border-end-dark { border-right: none !important; padding-bottom: 0 !important; }
+        
+        .result-row { flex-direction: column; gap: 20px; align-items: flex-start;  }
+        .progress-area { width: 100%; border-left: none; border-right: none; padding: 0; min-height: auto; }
+        .roi-badge, .net-value-area { border-left: none; width: 100%; flex-direction: row; justify-content: space-between; align-items: center; }
+    }
+
+    /* Leaderboard Results CSS */
+    .leaderboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #64748B;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        padding-bottom: 1rem;
+        letter-spacing: 0.05em;
+    }
+
+    .result-row {
+        background: #FFFFFF;
+        border-radius: 24px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        padding: 24px 32px;
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        margin-bottom: 16px;
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: 1px solid #F1F5F9;
+    }
+    .result-row:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .rank-number {
+        font-family: 'Outfit', sans-serif;
+        font-weight: 900;
+        font-size: 1.5rem;
+        color: #E2E8F0;
+        width: 40px;
+    }
+
+    .card-thumb {
+        width: 100px;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+
+    .card-details {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .card-name {
+        font-family: 'Outfit', sans-serif;
+        font-weight: 800;
+        font-size: 1.25rem;
+        color: #0F172A;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    .card-issuer {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #64748B;
+        text-transform: uppercase;
+        margin-top: 4px;
+        letter-spacing: 0.05em;
+    }
+
+    /* Progress Bar */
+    .progress-area {
+        flex: 2;
+        min-width: 240px;
+    }
+    .progress-label {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 700;
+        font-size: 0.65rem;
+        color: #94A3B8;
+        margin-bottom: 8px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+    .progress-track {
+        height: 8px;
+        background: #F1F5F9;
+        border-radius: 100px;
+        overflow: hidden;
+    }
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #10B981 0%, #34D399 100%);
+        border-radius: 100px;
+        transition: width 1s ease-out;
+    }
+
+    /* ROI Badge */
+    .roi-badge {
+        flex: 0 0 auto;
+        background: #EEF2FF;
+        border-radius: 16px;
+        padding: 12px 24px;
+        text-align: center;
+        min-width: 100px;
+    }
+    .roi-lbl {
+        font-size: 0.6rem;
+        font-weight: 800;
+        color: #818CF8;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 4px;
+    }
+    .roi-val {
+        font-family: 'Outfit', sans-serif;
+        font-weight: 800;
+        font-size: 1.5rem;
+        color: #4F46E5;
+        line-height: 1;
+    }
+
+    /* Net Value Area */
+    .net-value-area {
+        flex: 0 0 auto;
+        text-align: right;
+        min-width: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 4px;
+    }
+    .net-lbl {
+        font-size: 0.6rem;
+        font-weight: 700;
+        color: #94A3B8;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    .net-val {
+        font-family: 'Outfit', sans-serif;
+        font-weight: 800;
+        font-size: 1.5rem;
+        color: #10B981; /* Green */
+        line-height: 1;
+        margin-bottom: 8px;
+    }
+    
+    .btn-apply-sm {
+        background: transparent;
+        color: #0F172A;
+        font-size: 0.7rem;
+        font-weight: 800;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        transition: gap 0.2s;
+        border: none;
+    }
+    .btn-apply-sm:hover {
+        color: #4338CA;
+        gap: 8px;
+    }
+
+    /* Modal Styles */
+    .btn-link-subtle {
+        background: none;
+        border: none;
+        color: #64748B;
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+        transition: color 0.2s;
+        text-decoration: underline;
+        text-decoration-color: rgba(100, 116, 139, 0.3);
+        text-underline-offset: 4px;
+    }
+    .btn-link-subtle:hover {
+        color: #FCD34D;
+        text-decoration-color: #FCD34D;
+    }
+    
+    .custom-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(15, 23, 42, 0.8); /* Dark slate overlay */
+        backdrop-filter: blur(8px);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        animation: fadeIn 0.2s ease-out;
+    }
+    
+    .custom-modal {
+        background: #1E293B;
+        border: 1px solid rgba(255,255,255,0.1);
+        width: 100%;
+        max-width: 500px;
+        border-radius: 24px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        color: white;
+        overflow: hidden;
+        animation: scaleIn 0.2s ease-out;
+    }
+    
+    .modal-header {
+        padding: 24px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .modal-header h3 {
+        margin: 0;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 700;
+        font-size: 1.25rem;
+    }
+    
+    .btn-close-modal {
+        background: rgba(255,255,255,0.05);
+        border: none;
+        color: #94A3B8;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .btn-close-modal:hover {
+        background: rgba(255,255,255,0.1);
+        color: white;
+    }
+    
+    .modal-body {
+        padding: 32px 24px;
+    }
+    
+    .logic-block {
+        margin-bottom: 24px;
+    }
+    .logic-block:last-child { margin-bottom: 0; }
+    
+    .logic-block h4 {
+        font-size: 0.9rem;
+        color: #FCD34D;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .logic-block h4 .material-icons { font-size: 18px; }
+    
+    .logic-block p {
+        font-size: 0.95rem;
+        color: #CBD5E1;
+        line-height: 1.5;
+        margin-bottom: 12px;
+    }
+    
+    .formula {
+        background: rgba(15, 23, 42, 0.5);
+        padding: 12px;
+        border-radius: 8px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.85rem;
+        color: #10B981;
+        border-left: 3px solid #10B981;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes scaleIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+</style>
+
+<script>
+document.getElementById('optimizerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const form = this;
+    const btn = document.getElementById('scanBtn');
+    const spinner = document.getElementById('btnSpinner');
+    
+    // UI State: Loading
+    spinner.classList.remove('d-none');
+    spinner.style.display = 'inline-block'; // Or block/flex
+    spinner.style.setProperty('display', 'block', 'important');
+    
+    // Show Full Page Loading Animation
+    document.getElementById('resultsContainer').classList.add('d-none');
+    const loadingState = document.getElementById('loadingState');
+    loadingState.classList.remove('d-none');
+    loadingState.style.display = 'block'; // Force display
+    
+    // Smooth scroll
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    
+    const formData = new FormData(form);
+    
+    fetch("{% url 'optimizer_calculate' %}", {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+        }
+    })
+    .then(response => response.text())
+    .then(html => {
+        // UI State: Done
+        setTimeout(() => {
+            loadingState.classList.add('d-none');
+            loadingState.style.display = 'none'; // Force hide
+            
+            const resultsContainer = document.getElementById('resultsContainer');
+            resultsContainer.innerHTML = html;
+            resultsContainer.classList.remove('d-none');
+            resultsContainer.style.display = 'block'; // Remove inline display:none
+            
+            spinner.classList.add('d-none');
+            spinner.style.removeProperty('display'); // Ensure inline style is removed
+            
+            resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+        }, 1500); 
+    })
+    .catch(err => {
+        console.error(err);
+        alert('Error calculating results.');
+        spinner.classList.add('d-none');
+        spinner.style.removeProperty('display');
+    });
+});
+
+// Modal Logic
+const modal = document.getElementById('howItWorksModal');
+const btn = document.getElementById('howItWorksBtn');
+const closeBtn = document.getElementById('closeModalBtn');
+
+btn.addEventListener('click', () => {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // Prevent bg scrolling
+});
+
+const closeModal = () => {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+};
+
+closeBtn.addEventListener('click', closeModal);
+
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        closeModal();
+    }
+});
+</script>
+{% endblock %}

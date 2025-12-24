@@ -1,201 +1,211 @@
-Vendor|CardName|EarningRate|Currency|BenefitCategory|AdditionalDetails|slug-id
-Chase|Chase Sapphire Preferred Card|5|points|Travel|through Chase Travel|chase-sapphire-preferred-card
-Chase|Chase Sapphire Preferred Card|3|points|Dining & Groceries|dining worldwide, online groceries, select streaming|chase-sapphire-preferred-card
-Chase|Chase Sapphire Preferred Card|2|points|Travel|all other travel purchases|chase-sapphire-preferred-card
-Chase|Chase Sapphire Preferred Card|1|points|All Purchases|everything else|chase-sapphire-preferred-card
-American Express|American Express Gold Card|4|points|Dining|restaurants worldwide (up to $50,000/year, then 1x)|american-express-gold-card
-American Express|American Express Gold Card|4|points|Groceries|U.S. supermarkets (up to $25,000/year, then 1x)|american-express-gold-card
-American Express|American Express Gold Card|3|points|Flights|booked directly with airlines or Amex Travel|american-express-gold-card
-American Express|American Express Gold Card|1|points|All Purchases|everything else|american-express-gold-card
-Capital One|Capital One Venture X Rewards Credit Card|10|miles|Hotels & Rental Cars|booked through Capital One Travel|capital-one-venture-x-rewards-credit-card
-Capital One|Capital One Venture X Rewards Credit Card|5|miles|Flights & Vacation Rentals|booked through Capital One Travel|capital-one-venture-x-rewards-credit-card
-Capital One|Capital One Venture X Rewards Credit Card|2|miles|All Purchases|everything else (unlimited)|capital-one-venture-x-rewards-credit-card
-Chase|Chase Freedom Unlimited|5|cash back|Travel|through Chase Travel|chase-freedom-unlimited
-Chase|Chase Freedom Unlimited|3|cash back|Dining & Drugstores|dining (incl. takeout/delivery) & drugstores|chase-freedom-unlimited
-Chase|Chase Freedom Unlimited|1.5|cash back|All Purchases|everything else (unlimited)|chase-freedom-unlimited
-Wells Fargo|Wells Fargo Active Cash Card|2|cash rewards|All Purchases|unlimited everything|wells-fargo-active-cash-card
-American Express|Blue Cash Preferred Card from American Express|6|cash back|Groceries|U.S. supermarkets (up to $6,000/year, then 1%)|blue-cash-preferred-card-from-american-express
-American Express|Blue Cash Preferred Card from American Express|6|cash back|Streaming|select U.S. streaming subscriptions|blue-cash-preferred-card-from-american-express
-American Express|Blue Cash Preferred Card from American Express|3|cash back|Gas & Transit|U.S. gas stations & transit|blue-cash-preferred-card-from-american-express
-American Express|Blue Cash Preferred Card from American Express|1|cash back|All Purchases|everything else|blue-cash-preferred-card-from-american-express
-Citi|Citi Double Cash Card|2|cash back|All Purchases|unlimited (1% on purchase + 1% on payment)|citi-double-cash-card
-Capital One|Capital One Venture Rewards Credit Card|5|miles|Hotels, Vacation Rentals & Rental Cars|booked through Capital One Travel|capital-one-venture-rewards-credit-card
-Capital One|Capital One Venture Rewards Credit Card|2|miles|All Purchases|everything else (unlimited)|capital-one-venture-rewards-credit-card
-Chase|Chase Sapphire Reserve|10|points|Hotels & Car Rentals|through Chase Travel (after $300 annual travel credit)|chase-sapphire-reserve
-Chase|Chase Sapphire Reserve|5|points|Flights|through Chase Travel (after $300 annual travel credit)|chase-sapphire-reserve
-Chase|Chase Sapphire Reserve|3|points|Dining & Travel|dining worldwide & all other travel (direct)|chase-sapphire-reserve
-Chase|Chase Sapphire Reserve|1|points|All Purchases|everything else|chase-sapphire-reserve
-American Express|American Express Platinum Card|5|points|Flights & Prepaid Hotels|flights direct/Amex Travel & prepaid hotels via Amex Travel (up to $500k/year)|american-express-platinum-card
-American Express|American Express Platinum Card|1|points|All Purchases|everything else (non-bonus spend)|american-express-platinum-card
-Chase|Prime Visa|5|cash back|Amazon & Whole Foods|Amazon.com, Amazon Fresh, Whole Foods, Chase Travel (with Prime)|prime-visa
-Chase|Prime Visa|10|cash back|Rotating Amazon|rotating categories/items (10% or more)|prime-visa
-Chase|Prime Visa|2|cash back|Gas, Dining & Transit|gas stations, restaurants, local transit/commuting|prime-visa
-Chase|Prime Visa|1|cash back|All Purchases|everything else|prime-visa
-Discover|Discover it Cash Back|5|cash back|Rotating Categories|quarterly rotating (up to $1,500/quarter upon activation)|discover-it-cash-back
-Discover|Discover it Cash Back|1|cash back|All Purchases|everything else|discover-it-cash-back
-Wells Fargo|Wells Fargo Reflect Card|0|N/A|No Rewards|no ongoing rewards (intro APR card)|wells-fargo-reflect-card
-Capital One|Capital One Savor Cash Rewards Credit Card|3|cash back|Dining, Entertainment, Streaming & Groceries|grocery stores (excl. superstores), dining, entertainment, popular streaming|capital-one-savor-cash-rewards-credit-card
-Capital One|Capital One Savor Cash Rewards Credit Card|1|cash back|All Purchases|everything else|capital-one-savor-cash-rewards-credit-card
-Chase|Chase Freedom Flex|5|cash back|Rotating Categories|quarterly rotating (up to $1,500/quarter upon activation)|chase-freedom-flex
-Chase|Chase Freedom Flex|5|cash back|Travel|through Chase Travel|chase-freedom-flex
-Chase|Chase Freedom Flex|3|cash back|Dining & Drugstores|dining (incl. takeout/delivery) & drugstores|chase-freedom-flex
-Chase|Chase Freedom Flex|1|cash back|All Purchases|everything else|chase-freedom-flex
-Citi|Citi Strata Premier Card|10|points|Hotels, Car Rentals & Attractions|through CitiTravel.com|citi-strata-premier-card
-Citi|Citi Strata Premier Card|3|points|Air Travel, Gas, Restaurants, Supermarkets & Hotels||citi-strata-premier-card
-Citi|Citi Strata Premier Card|1|points|All Purchases|everything else|citi-strata-premier-card
-American Express|Blue Cash Everyday Card from American Express|3|cash back|Groceries|U.S. supermarkets (up to $6,000/year, then 1%)|blue-cash-everyday-card-from-american-express
-American Express|Blue Cash Everyday Card from American Express|3|cash back|Online Retail|U.S. online retail purchases (up to $6,000/year, then 1%)|blue-cash-everyday-card-from-american-express
-American Express|Blue Cash Everyday Card from American Express|3|cash back|Gas|U.S. gas stations (up to $6,000/year, then 1%)|blue-cash-everyday-card-from-american-express
-American Express|Blue Cash Everyday Card from American Express|1|cash back|All Purchases|everything else|blue-cash-everyday-card-from-american-express
-Capital One|Capital One Quicksilver Cash Rewards Credit Card|5|cash back|Hotels & Rental Cars|booked through Capital One Travel|capital-one-quicksilver-cash-rewards-credit-card
-Capital One|Capital One Quicksilver Cash Rewards Credit Card|1.5|cash back|All Purchases|unlimited everything else|capital-one-quicksilver-cash-rewards-credit-card
-Chase|United Explorer Card|2|miles|United, Dining & Direct Hotels|United purchases, dining, direct hotel bookings|united-explorer-card
-Chase|United Explorer Card|1|miles|All Purchases|everything else|united-explorer-card
-Chase|Marriott Bonvoy Boundless Credit Card|17|points|Marriott Hotels|total points at Marriott Bonvoy hotels|marriott-bonvoy-boundless-credit-card
-Chase|Marriott Bonvoy Boundless Credit Card|3|points|Dining & Groceries|select categories (varies)|marriott-bonvoy-boundless-credit-card
-Chase|Marriott Bonvoy Boundless Credit Card|2|points|All Purchases|everything else|marriott-bonvoy-boundless-credit-card
-American Express|Delta SkyMiles Platinum American Express Card|3|miles|Delta & Direct Hotels|Delta purchases & direct hotel bookings|delta-skymiles-platinum-american-express-card
-American Express|Delta SkyMiles Platinum American Express Card|2|miles|Dining & Groceries|U.S. supermarkets & restaurants (some versions)|delta-skymiles-platinum-american-express-card
-American Express|Delta SkyMiles Platinum American Express Card|1|miles|All Purchases|everything else|delta-skymiles-platinum-american-express-card
-American Express|Hilton Honors American Express Surpass Card|14|points|Hilton Hotels|total at Hilton properties|hilton-honors-american-express-surpass-card
-American Express|Hilton Honors American Express Surpass Card|6|points|Groceries & Dining|U.S. supermarkets, U.S. restaurants, U.S. gas|hilton-honors-american-express-surpass-card
-American Express|Hilton Honors American Express Surpass Card|3|points|All Purchases|everything else|hilton-honors-american-express-surpass-card
-Chase|Southwest Rapid Rewards Priority Credit Card|3|points|Southwest Purchases|Southwest flights (varies by fare)|southwest-rapid-rewards-priority-credit-card
-Chase|Southwest Rapid Rewards Priority Credit Card|2|points|Dining, Hotels, Rental Cars & Transit|select partners|southwest-rapid-rewards-priority-credit-card
-Chase|Southwest Rapid Rewards Priority Credit Card|1|points|All Purchases|everything else|southwest-rapid-rewards-priority-credit-card
-Discover|Discover it Miles|1.5|miles|All Purchases|unlimited everything|discover-it-miles
-Capital One|Capital One VentureOne Rewards Credit Card|5|miles|Hotels & Rental Cars|through Capital One Travel|capital-one-ventureone-rewards-credit-card
-Capital One|Capital One VentureOne Rewards Credit Card|1.25|miles|All Purchases|everything else (unlimited)|capital-one-ventureone-rewards-credit-card
-Chase|IHG One Rewards Premier Credit Card|26|points|IHG Hotels|total points at IHG hotels|ihg-one-rewards-premier-credit-card
-Chase|IHG One Rewards Premier Credit Card|5|points|Travel|purchases in travel categories|ihg-one-rewards-premier-credit-card
-Chase|IHG One Rewards Premier Credit Card|3|points|All Purchases|everything else|ihg-one-rewards-premier-credit-card
-American Express|American Express Green Card|3|points|Travel & Transit|broad travel including transit & restaurants|american-express-green-card
-American Express|American Express Green Card|1|points|All Purchases|everything else|american-express-green-card
-Chase|United Quest Card|3|miles|United Purchases|United flights (higher on some)|united-quest-card
-Chase|United Quest Card|2|miles|Dining & Travel|dining, select streaming, other travel|united-quest-card
-Chase|United Quest Card|1|miles|All Purchases|everything else|united-quest-card
-Citi|Citi Simplicity Card|0|N/A|No Rewards|no ongoing rewards|citi-simplicity-card
-Discover|Discover it Chrome|2|cash back|Gas & Restaurants|up to $1,000/quarter, then 1%|discover-it-chrome
-Discover|Discover it Chrome|1|cash back|All Purchases|everything else|discover-it-chrome
-Chase|The World of Hyatt Credit Card|9|points|Hyatt Hotels|total points at Hyatt properties|the-world-of-hyatt-credit-card
-Chase|The World of Hyatt Credit Card|2|points|Dining, Flights, Transit & Gym|frequent categories|the-world-of-hyatt-credit-card
-Chase|The World of Hyatt Credit Card|1|points|All Purchases|everything else|the-world-of-hyatt-credit-card
-Capital One|Capital One QuicksilverOne Cash Rewards Credit Card|1.5|cash back|All Purchases|unlimited everything|capital-one-quicksilverone-cash-rewards-credit-card
-American Express|Marriott Bonvoy Brilliant American Express Card|6|points|Marriott Hotels||marriott-bonvoy-brilliant-american-express-card
-American Express|Marriott Bonvoy Brilliant American Express Card|3|points|Dining & Flights|restaurants worldwide & flights direct|marriott-bonvoy-brilliant-american-express-card
-American Express|Marriott Bonvoy Brilliant American Express Card|2|points|All Purchases|everything else|marriott-bonvoy-brilliant-american-express-card
-American Express|Delta SkyMiles Reserve American Express Card|4|miles|Delta Purchases||delta-skymiles-reserve-american-express-card
-American Express|Delta SkyMiles Reserve American Express Card|1|miles|All Purchases|everything else|delta-skymiles-reserve-american-express-card
-American Express|Hilton Honors Aspire Card from American Express|14|points|Hilton Hotels|total points|hilton-honors-aspire-card-from-american-express
-American Express|Hilton Honors Aspire Card from American Express|7|points|Dining, Flights & Rental Cars|U.S. restaurants, flights direct, rental cars|hilton-honors-aspire-card-from-american-express
-American Express|Hilton Honors Aspire Card from American Express|3|points|All Purchases|everything else|hilton-honors-aspire-card-from-american-express
-Chase|Aeroplan Credit Card|7|points|Air Canada Purchases|up to (total)|aeroplan-credit-card
-Chase|Aeroplan Credit Card|3|points|Dining & Travel|dining & other travel|aeroplan-credit-card
-Chase|Aeroplan Credit Card|1|points|All Purchases|everything else|aeroplan-credit-card
-Chase|British Airways Visa Signature Card|3|Avios|BA, Aer Lingus, Iberia, LEVEL||british-airways-visa-signature-card
-Chase|British Airways Visa Signature Card|2|points|Hotels & Travel|direct hotels & select|british-airways-visa-signature-card
-Chase|British Airways Visa Signature Card|1|points|All Purchases|everything else|british-airways-visa-signature-card
-U.S. Bank|U.S. Bank Smartly Visa Signature Card|4|cash back|All Purchases|with qualifying accounts (base 2%)|us-bank-smartly-visa-signature-card
-Capital One|Capital One Savor Student Cash Rewards Credit Card|3|cash back|Dining, Entertainment, Streaming & Groceries||capital-one-savor-student-cash-rewards-credit-card
-Capital One|Capital One Savor Student Cash Rewards Credit Card|1|cash back|All Purchases|everything else|capital-one-savor-student-cash-rewards-credit-card
-Discover|Discover it Secured Credit Card|2|cash back|Gas & Restaurants|up to $1,000/quarter|discover-it-secured-credit-card
-Discover|Discover it Secured Credit Card|1|cash back|All Purchases|everything else|discover-it-secured-credit-card
-Capital One|Capital One Platinum Secured Credit Card|0|N/A|No Rewards|credit building card|capital-one-platinum-secured-credit-card
-Chase|Chase Slate Edge|0|N/A|No Rewards|credit building/APR focus|chase-slate-edge
-Chase|IHG One Rewards Traveler Credit Card|17|points|IHG Hotels|total points|ihg-one-rewards-traveler-credit-card
-Chase|IHG One Rewards Traveler Credit Card|5|points|Travel|select travel|ihg-one-rewards-traveler-credit-card
-Chase|IHG One Rewards Traveler Credit Card|3|points|All Purchases|everything else|ihg-one-rewards-traveler-credit-card
-Chase|United Club Card|4|miles|United Purchases||united-club-card
-Chase|United Club Card|2|miles|Dining & Travel|other travel|united-club-card
-Chase|United Club Card|1|miles|All Purchases|everything else|united-club-card
-Bank of America|Bank of America Customized Cash Rewards credit card for Students|3|cash back|Choice Category|monthly choice (online shopping, dining, travel, etc.)|bank-of-america-customized-cash-rewards-credit-card-for-students
-Bank of America|Bank of America Customized Cash Rewards credit card for Students|2|cash back|Groceries & Wholesale Clubs|up to $2,500/quarter combined with choice|bank-of-america-customized-cash-rewards-credit-card-for-students
-Bank of America|Bank of America Customized Cash Rewards credit card for Students|1|cash back|All Purchases|everything else|bank-of-america-customized-cash-rewards-credit-card-for-students
-Discover|Discover it Student Cash Back|5|cash back|Rotating Categories|quarterly (up to $1,500/quarter)|discover-it-student-cash-back
-Discover|Discover it Student Cash Back|1|cash back|All Purchases|everything else|discover-it-student-cash-back
-Capital One|Capital One Quicksilver Student Cash Rewards Credit Card|5|cash back|Hotels & Rental Cars|through Capital One Travel|capital-one-quicksilver-student-cash-rewards-credit-card
-Capital One|Capital One Quicksilver Student Cash Rewards Credit Card|1.5|cash back|All Purchases|unlimited everything else|capital-one-quicksilver-student-cash-rewards-credit-card
-Discover|Discover it Student Chrome|2|cash back|Gas & Restaurants|up to $1,000/quarter|discover-it-student-chrome
-Discover|Discover it Student Chrome|1|cash back|All Purchases|everything else|discover-it-student-chrome
-Capital One|Capital One Quicksilver Secured Cash Rewards Credit Card|5|cash back|Hotels & Rental Cars|through Capital One Travel|capital-one-quicksilver-secured-cash-rewards-credit-card
-Capital One|Capital One Quicksilver Secured Cash Rewards Credit Card|1.5|cash back|All Purchases|unlimited everything else|capital-one-quicksilver-secured-cash-rewards-credit-card
-U.S. Bank|U.S. Bank Shield™ Visa Card|0|N/A|No Rewards|protection-focused|us-bank-shield-visa-card
-Goldman Sachs|Apple Card|3|cash back|Apple & Select Partners|with Apple Pay|apple-card
-Goldman Sachs|Apple Card|2|cash back|All Purchases|with Apple Pay|apple-card
-Goldman Sachs|Apple Card|1|cash back|All Purchases|physical card|apple-card
-Citi|Costco Anywhere Visa Card by Citi|5|cash back|Gas|at Costco|costco-anywhere-visa-card-by-citi
-Citi|Costco Anywhere Visa Card by Citi|4|cash back|Gas & EV Charging|worldwide (up to $7,000/year combined)|costco-anywhere-visa-card-by-citi
-Citi|Costco Anywhere Visa Card by Citi|3|cash back|Dining & Travel|restaurants & eligible travel|costco-anywhere-visa-card-by-citi
-Citi|Costco Anywhere Visa Card by Citi|2|cash back|Costco Purchases|all other Costco & Costco.com|costco-anywhere-visa-card-by-citi
-Citi|Costco Anywhere Visa Card by Citi|1|cash back|All Purchases|everything else|costco-anywhere-visa-card-by-citi
-Bank of America|Bank of America Travel Rewards Credit Card|3|points|Travel|through Bank of America Travel Center|bank-of-america-travel-rewards-credit-card
-Bank of America|Bank of America Travel Rewards Credit Card|1.5|points|All Purchases|unlimited everything else|bank-of-america-travel-rewards-credit-card
-Bank of America|Bank of America Premium Rewards Credit Card|2|points|Travel & Dining||bank-of-america-premium-rewards-credit-card
-Bank of America|Bank of America Premium Rewards Credit Card|1.5|points|All Purchases|everything else|bank-of-america-premium-rewards-credit-card
-Chase|Ink Business Cash Credit Card|5|cash back|Office Supplies & Telecom|office supply stores, internet/cable/phone (up to $25,000/year combined)|ink-business-cash-credit-card
-Chase|Ink Business Cash Credit Card|2|cash back|Gas & Dining|gas stations & restaurants (up to $25,000/year combined)|ink-business-cash-credit-card
-Chase|Ink Business Cash Credit Card|1|cash back|All Purchases|everything else|ink-business-cash-credit-card
-Chase|Ink Business Unlimited Credit Card|1.5|cash back|All Purchases|unlimited everything|ink-business-unlimited-credit-card
-Citi|Citi Custom Cash Card|5|cash back|Top Category|top eligible category each billing cycle (up to $500, then 1%)|citi-custom-cash-card
-Citi|Citi Custom Cash Card|1|cash back|All Purchases|everything else|citi-custom-cash-card
-Citi|Citi Secured Mastercard|0|N/A|No Rewards|credit-building card|citi-secured-mastercard
-Synchrony|Best Buy Credit Card|5|points|Best Buy Purchases|or special financing|best-buy-credit-card
-Synchrony|Amazon Prime Store Card|5|cash back|Amazon Purchases|with Prime (or special financing)|amazon-prime-store-card
-Synchrony|Amazon Store Card|0|N/A|Special Financing|no rewards without Prime|amazon-store-card
-Wells Fargo|Wells Fargo Active Cash Secured Credit Card|2|cash rewards|All Purchases|unlimited everything|wells-fargo-active-cash-secured-credit-card
-Wells Fargo|Wells Fargo Autograph Card|3|points|Restaurants, Travel, Gas/EV, Transit, Streaming & Phone Plans|unlimited|wells-fargo-autograph-card
-Wells Fargo|Wells Fargo Autograph Card|1|points|All Purchases|everything else|wells-fargo-autograph-card
-Wells Fargo|Wells Fargo Reflect Secured Credit Card|0|N/A|No Rewards|protection-focused|wells-fargo-reflect-secured-credit-card
-USAA|USAA Cashback Rewards Plus American Express Card|5|cash back|Gas & Military Bases|up to $3,000/year|usaa-cashback-rewards-plus-american-express-card
-USAA|USAA Cashback Rewards Plus American Express Card|2|cash back|Groceries|up to $3,000/year|usaa-cashback-rewards-plus-american-express-card
-USAA|USAA Cashback Rewards Plus American Express Card|1|cash back|All Purchases|everything else|usaa-cashback-rewards-plus-american-express-card
-USAA|USAA Preferred Cash Rewards Visa Signature Card|1.5|cash back|All Purchases|unlimited everything|usaa-preferred-cash-rewards-visa-signature-card
-PNC|PNC Core Visa Credit Card|1.5|cash back|All Purchases|unlimited (higher with relationship in some versions)|pnc-core-visa-credit-card
-PNC|PNC Premier Traveler Visa Signature Credit Card|3|miles|Travel||pnc-premier-traveler-visa-signature-credit-card
-PNC|PNC Premier Traveler Visa Signature Credit Card|2|miles|All Purchases|everything else|pnc-premier-traveler-visa-signature-credit-card
-Navy Federal|Navy Federal nRewards Secured Credit Card|1|points|All Purchases|everything|navy-federal-nrewards-secured-credit-card
-PenFed|PenFed Power Cash Rewards Visa Signature Card|2|cash back|All Purchases|for Honors Advantage (otherwise 1.5%)|penfed-power-cash-rewards-visa-signature-card
-PenFed|PenFed Pathfinder Rewards Visa Signature Card|4|points|Travel|(5x for Honors Advantage)|penfed-pathfinder-rewards-visa-signature-card
-PenFed|PenFed Pathfinder Rewards Visa Signature Card|1.5|points|All Purchases|everything else|penfed-pathfinder-rewards-visa-signature-card
-Huntington|Huntington Voice Visa Card|3|points|Choice Category|quarterly choice from 10 categories|huntington-voice-visa-card
-Huntington|Huntington Voice Visa Card|1|points|All Purchases|everything else|huntington-voice-visa-card
-U.S. Bank|U.S. Bank Altitude Connect Visa Signature Card|5|points|Prepaid Hotels & Car Rentals|through Altitude Rewards Center|us-bank-altitude-connect-visa-signature-card
-U.S. Bank|U.S. Bank Altitude Connect Visa Signature Card|4|points|Travel & Gas/EV|gas/EV first $1,000/quarter|us-bank-altitude-connect-visa-signature-card
-U.S. Bank|U.S. Bank Altitude Connect Visa Signature Card|2|points|Dining, Groceries & Streaming||us-bank-altitude-connect-visa-signature-card
-U.S. Bank|U.S. Bank Altitude Connect Visa Signature Card|1|points|All Purchases|everything else|us-bank-altitude-connect-visa-signature-card
-U.S. Bank|U.S. Bank Altitude Reserve Visa Infinite Card|5|points|Travel|through Altitude Rewards (hotels/flights/cars prepaid)|us-bank-altitude-reserve-visa-infinite-card
-U.S. Bank|U.S. Bank Altitude Reserve Visa Infinite Card|3|points|Mobile Wallet & Travel|select mobile wallet & other travel|us-bank-altitude-reserve-visa-infinite-card
-U.S. Bank|U.S. Bank Altitude Reserve Visa Infinite Card|1|points|All Purchases|everything else|us-bank-altitude-reserve-visa-infinite-card
-Synchrony|Lowe’s Advantage Card|5|cash back|Lowe's Purchases|or special financing|lowes-advantage-card
-Synchrony|Sam’s Club Mastercard|5|cash back|Gas|up to $6,000/year|sams-club-mastercard
-Synchrony|Sam’s Club Mastercard|3|cash back|Dining & Takeout||sams-club-mastercard
-Synchrony|Sam’s Club Mastercard|1|cash back|All Purchases|everything else|sams-club-mastercard
-Synchrony|PayPal Credit|0|N/A|Promotional Financing|no ongoing rewards|paypal-credit
-PNC|PNC Cash Rewards Visa Credit Card|4|cash back|Gas||pnc-cash-rewards-visa-credit-card
-PNC|PNC Cash Rewards Visa Credit Card|3|cash back|Restaurants||pnc-cash-rewards-visa-credit-card
-PNC|PNC Cash Rewards Visa Credit Card|2|cash back|Groceries||pnc-cash-rewards-visa-credit-card
-PNC|PNC Cash Rewards Visa Credit Card|1|cash back|All Purchases|everything else|pnc-cash-rewards-visa-credit-card
-Santander|Santander Unlimited Cash Rewards Card|1.5|cash back|All Purchases|unlimited everything|santander-unlimited-cash-rewards-card
-Wells Fargo|Bilt Mastercard|1|points|Rent|up to 100,000 points per calendar year, no transaction fee when paid through the Bilt app|bilt-mastercard
-Wells Fargo|Bilt Mastercard|3|points|Dining|restaurants worldwide, takeout & eligible delivery services; requires at least 5 posted transactions per billing cycle to earn points|bilt-mastercard
-Wells Fargo|Bilt Mastercard|2|points|Travel|airfare, hotels, car rentals, cruises (direct or via travel agencies); requires at least 5 posted transactions per billing cycle to earn points|bilt-mastercard
-Wells Fargo|Bilt Mastercard|1|points|All Purchases|everything else (non-rent, non-dining, non-travel); requires at least 5 posted transactions per billing cycle to earn points|bilt-mastercard
-Chase|Ink Business Preferred Credit Card|3|points|Business Categories|first $150,000 combined annually on travel, shipping, internet/cable/phone, social media & search engine advertising|ink-business-preferred-credit-card
-Chase|Ink Business Preferred Credit Card|1|points|All Purchases|everything else|ink-business-preferred-credit-card
-Chase|Ink Business Premier Credit Card|5|cash back|Travel|purchased through Chase Travel|ink-business-premier-credit-card
-Chase|Ink Business Premier Credit Card|2.5|cash back|Large Purchases|every purchase of $5,000 or more|ink-business-premier-credit-card
-Chase|Ink Business Premier Credit Card|2|cash back|All Purchases|everything else|ink-business-premier-credit-card
-American Express|The Business Platinum Card from American Express|5|points|Flights & Prepaid Hotels|flights booked directly or via Amex Travel + prepaid hotels via Amex Travel|the-business-platinum-card-from-american-express
-American Express|The Business Platinum Card from American Express|1.5|points|Key Business Categories & Large Purchases|U.S. electronics/software/cloud, U.S. shipping, U.S. advertising (select media), U.S. construction/hardware, U.S. gas stations, wireless services, transit + all purchases $5,000+ (up to $2M combined per year, then 1x)|the-business-platinum-card-from-american-express
-American Express|The Business Platinum Card from American Express|1|points|All Purchases|everything else|the-business-platinum-card-from-american-express
-American Express|American Express Business Gold Card|4|points|Top 2 Categories Monthly|automatically the 2 highest-spend categories from the 6 eligible (U.S. gas stations, U.S. restaurants, U.S. advertising select media, U.S. shipping, U.S. tech providers/electronics/software/cloud, transit/airfare direct from airlines) – up to $150,000 combined per calendar year, then 1x|american-express-business-gold-card
-American Express|American Express Business Gold Card|3|points|Flights & Prepaid Hotels|flights & prepaid hotels booked on AmexTravel.com|american-express-business-gold-card
-American Express|American Express Business Gold Card|1|points|All Purchases|everything else|american-express-business-gold-card
-American Express|Blue Business Plus Credit Card from American Express|2|points|All Purchases|everyday business purchases up to $50,000 per calendar year|blue-business-plus-credit-card-from-american-express
-American Express|Blue Business Plus Credit Card from American Express|1|points|All Purchases|after $50,000 per calendar year|blue-business-plus-credit-card-from-american-express
-American Express|Blue Business Cash™ Card from American Express|2|cash back|All Purchases|eligible business purchases up to $50,000 per calendar year|blue-business-cash-card-from-american-express
-American Express|Blue Business Cash™ Card from American Express|1|cash back|All Purchases|after $50,000 per calendar year|blue-business-cash-card-from-american-express
-Capital One|Capital One Spark Cash Plus|5|cash back|Hotels & Rental Cars|booked through Capital One Travel|capital-one-spark-cash-plus
-Capital One|Capital One Spark Cash Plus|2|cash back|All Purchases|unlimited on every purchase|capital-one-spark-cash-plus
-Capital One|Capital One Spark Miles for Business|5|miles|Hotels & Rental Cars|booked through Capital One Travel|capital-one-spark-miles-for-business
-Capital One|Capital One Spark Miles for Business|2|miles|All Purchases|unlimited on every purchase|capital-one-spark-miles-for-business
+Vendor|CardName|EarningRate|Currency|BenefitCategory|AdditionalDetails|slug-id|IsDefault
+Chase|Chase Sapphire Preferred Card|5|points|Travel|through Chase Travel|chase-sapphire-preferred-card|No
+Chase|Chase Sapphire Preferred Card|3|points|Dining & Groceries|dining worldwide, online groceries, select streaming|chase-sapphire-preferred-card|No
+Chase|Chase Sapphire Preferred Card|2|points|Travel|all other travel purchases|chase-sapphire-preferred-card|No
+Chase|Chase Sapphire Preferred Card|1|points|All Purchases|everything else|chase-sapphire-preferred-card|Yes
+American Express|American Express Gold Card|4|points|Dining|restaurants worldwide (up to $50,000/year, then 1x)|american-express-gold-card|No
+American Express|American Express Gold Card|4|points|Groceries|U.S. supermarkets (up to $25,000/year, then 1x)|american-express-gold-card|No
+American Express|American Express Gold Card|3|points|Flights|booked directly with airlines or Amex Travel|american-express-gold-card|No
+American Express|American Express Gold Card|1|points|All Purchases|everything else|american-express-gold-card|Yes
+Capital One|Capital One Venture X Rewards Credit Card|10|miles|Hotels & Rental Cars|booked through Capital One Travel|capital-one-venture-x-rewards-credit-card|No
+Capital One|Capital One Venture X Rewards Credit Card|5|miles|Flights & Vacation Rentals|booked through Capital One Travel|capital-one-venture-x-rewards-credit-card|No
+Capital One|Capital One Venture X Rewards Credit Card|2|miles|All Purchases|everything else (unlimited)|capital-one-venture-x-rewards-credit-card|Yes
+Chase|Chase Freedom Unlimited|5|cash back|Travel|through Chase Travel|chase-freedom-unlimited|No
+Chase|Chase Freedom Unlimited|3|cash back|Dining & Drugstores|dining (incl. takeout/delivery) & drugstores|chase-freedom-unlimited|No
+Chase|Chase Freedom Unlimited|1.5|cash back|All Purchases|everything else (unlimited)|chase-freedom-unlimited|Yes
+Wells Fargo|Wells Fargo Active Cash Card|2|cash rewards|All Purchases|unlimited everything|wells-fargo-active-cash-card|Yes
+American Express|Blue Cash Preferred Card from American Express|6|cash back|Groceries|U.S. supermarkets (up to $6,000/year, then 1%)|blue-cash-preferred-card-from-american-express|No
+American Express|Blue Cash Preferred Card from American Express|6|cash back|Streaming|select U.S. streaming subscriptions|blue-cash-preferred-card-from-american-express|No
+American Express|Blue Cash Preferred Card from American Express|3|cash back|Gas & Transit|U.S. gas stations & transit|blue-cash-preferred-card-from-american-express|No
+American Express|Blue Cash Preferred Card from American Express|1|cash back|All Purchases|everything else|blue-cash-preferred-card-from-american-express|Yes
+Citi|Citi Double Cash Card|2|cash back|All Purchases|unlimited (1% on purchase + 1% on payment)|citi-double-cash-card|Yes
+Capital One|Capital One Venture Rewards Credit Card|5|miles|Hotels, Vacation Rentals & Rental Cars|booked through Capital One Travel|capital-one-venture-rewards-credit-card|No
+Capital One|Capital One Venture Rewards Credit Card|2|miles|All Purchases|everything else (unlimited)|capital-one-venture-rewards-credit-card|Yes
+Chase|Chase Sapphire Reserve|10|points|Hotels & Car Rentals|through Chase Travel (after $300 annual travel credit)|chase-sapphire-reserve|No
+Chase|Chase Sapphire Reserve|5|points|Flights|through Chase Travel (after $300 annual travel credit)|chase-sapphire-reserve|No
+Chase|Chase Sapphire Reserve|3|points|Dining & Travel|dining worldwide & all other travel (direct)|chase-sapphire-reserve|No
+Chase|Chase Sapphire Reserve|1|points|All Purchases|everything else|chase-sapphire-reserve|Yes
+American Express|American Express Platinum Card|5|points|Flights & Prepaid Hotels|flights direct/Amex Travel & prepaid hotels via Amex Travel (up to $500k/year)|american-express-platinum-card|No
+American Express|American Express Platinum Card|1|points|All Purchases|everything else (non-bonus spend)|american-express-platinum-card|Yes
+Chase|Prime Visa|5|cash back|Amazon & Whole Foods|Amazon.com, Amazon Fresh, Whole Foods, Chase Travel (with Prime)|prime-visa|No
+Chase|Prime Visa|10|cash back|Rotating Amazon|rotating categories/items (10% or more)|prime-visa|No
+Chase|Prime Visa|2|cash back|Gas, Dining & Transit|gas stations, restaurants, local transit/commuting|prime-visa|No
+Chase|Prime Visa|1|cash back|All Purchases|everything else|prime-visa|Yes
+Discover|Discover it Cash Back|5|cash back|Rotating Categories|quarterly rotating (up to $1,500/quarter upon activation)|discover-it-cash-back|No
+Discover|Discover it Cash Back|1|cash back|All Purchases|everything else|discover-it-cash-back|Yes
+Wells Fargo|Wells Fargo Reflect Card|0|N/A|No Rewards|no ongoing rewards (intro APR card)|wells-fargo-reflect-card|Yes
+Capital One|Capital One Savor Cash Rewards Credit Card|3|cash back|Dining, Entertainment, Streaming & Groceries|grocery stores (excl. superstores), dining, entertainment, popular streaming|capital-one-savor-cash-rewards-credit-card|No
+Capital One|Capital One Savor Cash Rewards Credit Card|1|cash back|All Purchases|everything else|capital-one-savor-cash-rewards-credit-card|Yes
+Chase|Chase Freedom Flex|5|cash back|Rotating Categories|quarterly rotating (up to $1,500/quarter upon activation)|chase-freedom-flex|No
+Chase|Chase Freedom Flex|5|cash back|Travel|through Chase Travel|chase-freedom-flex|No
+Chase|Chase Freedom Flex|3|cash back|Dining & Drugstores|dining (incl. takeout/delivery) & drugstores|chase-freedom-flex|No
+Chase|Chase Freedom Flex|1|cash back|All Purchases|everything else|chase-freedom-flex|Yes
+Citi|Citi Strata Premier Card|10|points|Hotels, Car Rentals & Attractions|through CitiTravel.com|citi-strata-premier-card|No
+Citi|Citi Strata Premier Card|3|points|Air Travel, Gas, Restaurants, Supermarkets & Hotels||citi-strata-premier-card|No
+Citi|Citi Strata Premier Card|1|points|All Purchases|everything else|citi-strata-premier-card|Yes
+American Express|Blue Cash Everyday Card from American Express|3|cash back|Groceries|U.S. supermarkets (up to $6,000/year, then 1%)|blue-cash-everyday-card-from-american-express|No
+American Express|Blue Cash Everyday Card from American Express|3|cash back|Online Retail|U.S. online retail purchases (up to $6,000/year, then 1%)|blue-cash-everyday-card-from-american-express|No
+American Express|Blue Cash Everyday Card from American Express|3|cash back|Gas|U.S. gas stations (up to $6,000/year, then 1%)|blue-cash-everyday-card-from-american-express|No
+American Express|Blue Cash Everyday Card from American Express|1|cash back|All Purchases|everything else|blue-cash-everyday-card-from-american-express|Yes
+Capital One|Capital One Quicksilver Cash Rewards Credit Card|5|cash back|Hotels & Rental Cars|booked through Capital One Travel|capital-one-quicksilver-cash-rewards-credit-card|No
+Capital One|Capital One Quicksilver Cash Rewards Credit Card|1.5|cash back|All Purchases|unlimited everything else|capital-one-quicksilver-cash-rewards-credit-card|Yes
+Chase|United Explorer Card|2|miles|United, Dining & Direct Hotels|United purchases, dining, direct hotel bookings|united-explorer-card|No
+Chase|United Explorer Card|1|miles|All Purchases|everything else|united-explorer-card|Yes
+Chase|Marriott Bonvoy Boundless Credit Card|17|points|Marriott Hotels|total points at Marriott Bonvoy hotels|marriott-bonvoy-boundless-credit-card|No
+Chase|Marriott Bonvoy Boundless Credit Card|3|points|Dining & Groceries|select categories (varies)|marriott-bonvoy-boundless-credit-card|No
+Chase|Marriott Bonvoy Boundless Credit Card|2|points|All Purchases|everything else|marriott-bonvoy-boundless-credit-card|Yes
+American Express|Delta SkyMiles Platinum American Express Card|3|miles|Delta & Direct Hotels|Delta purchases & direct hotel bookings|delta-skymiles-platinum-american-express-card|No
+American Express|Delta SkyMiles Platinum American Express Card|2|miles|Dining & Groceries|U.S. supermarkets & restaurants (some versions)|delta-skymiles-platinum-american-express-card|No
+American Express|Delta SkyMiles Platinum American Express Card|1|miles|All Purchases|everything else|delta-skymiles-platinum-american-express-card|Yes
+American Express|Hilton Honors American Express Surpass Card|14|points|Hilton Hotels|total at Hilton properties|hilton-honors-american-express-surpass-card|No
+American Express|Hilton Honors American Express Surpass Card|6|points|Groceries & Dining|U.S. supermarkets, U.S. restaurants, U.S. gas|hilton-honors-american-express-surpass-card|No
+American Express|Hilton Honors American Express Surpass Card|3|points|All Purchases|everything else|hilton-honors-american-express-surpass-card|Yes
+Chase|Southwest Rapid Rewards Priority Credit Card|3|points|Southwest Purchases|Southwest flights (varies by fare)|southwest-rapid-rewards-priority-credit-card|No
+Chase|Southwest Rapid Rewards Priority Credit Card|2|points|Dining, Hotels, Rental Cars & Transit|select partners|southwest-rapid-rewards-priority-credit-card|No
+Chase|Southwest Rapid Rewards Priority Credit Card|1|points|All Purchases|everything else|southwest-rapid-rewards-priority-credit-card|Yes
+Discover|Discover it Miles|1.5|miles|All Purchases|unlimited everything|discover-it-miles|Yes
+Capital One|Capital One VentureOne Rewards Credit Card|5|miles|Hotels & Rental Cars|through Capital One Travel|capital-one-ventureone-rewards-credit-card|No
+Capital One|Capital One VentureOne Rewards Credit Card|1.25|miles|All Purchases|everything else (unlimited)|capital-one-ventureone-rewards-credit-card|Yes
+Chase|IHG One Rewards Premier Credit Card|26|points|IHG Hotels|total points at IHG hotels|ihg-one-rewards-premier-credit-card|No
+Chase|IHG One Rewards Premier Credit Card|5|points|Travel|purchases in travel categories|ihg-one-rewards-premier-credit-card|No
+Chase|IHG One Rewards Premier Credit Card|3|points|All Purchases|everything else|ihg-one-rewards-premier-credit-card|Yes
+American Express|American Express Green Card|3|points|Travel & Transit|broad travel including transit & restaurants|american-express-green-card|No
+American Express|American Express Green Card|1|points|All Purchases|everything else|american-express-green-card|Yes
+Chase|United Quest Card|3|miles|United Purchases|United flights (higher on some)|united-quest-card|No
+Chase|United Quest Card|2|miles|Dining & Travel|dining, select streaming, other travel|united-quest-card|No
+Chase|United Quest Card|1|miles|All Purchases|everything else|united-quest-card|Yes
+Citi|Citi Simplicity Card|0|N/A|No Rewards|no ongoing rewards|citi-simplicity-card|Yes
+Discover|Discover it Chrome|2|cash back|Gas & Restaurants|up to $1,000/quarter, then 1%|discover-it-chrome|No
+Discover|Discover it Chrome|1|cash back|All Purchases|everything else|discover-it-chrome|Yes
+Chase|The World of Hyatt Credit Card|9|points|Hyatt Hotels|total points at Hyatt properties|the-world-of-hyatt-credit-card|No
+Chase|The World of Hyatt Credit Card|2|points|Dining, Flights, Transit & Gym|frequent categories|the-world-of-hyatt-credit-card|No
+Chase|The World of Hyatt Credit Card|1|points|All Purchases|everything else|the-world-of-hyatt-credit-card|Yes
+Capital One|Capital One QuicksilverOne Cash Rewards Credit Card|1.5|cash back|All Purchases|unlimited everything|capital-one-quicksilverone-cash-rewards-credit-card|Yes
+American Express|Marriott Bonvoy Brilliant American Express Card|6|points|Marriott Hotels||marriott-bonvoy-brilliant-american-express-card|No
+American Express|Marriott Bonvoy Brilliant American Express Card|3|points|Dining & Flights|restaurants worldwide & flights direct|marriott-bonvoy-brilliant-american-express-card|No
+American Express|Marriott Bonvoy Brilliant American Express Card|2|points|All Purchases|everything else|marriott-bonvoy-brilliant-american-express-card|Yes
+American Express|Delta SkyMiles Reserve American Express Card|4|miles|Delta Purchases||delta-skymiles-reserve-american-express-card|No
+American Express|Delta SkyMiles Reserve American Express Card|1|miles|All Purchases|everything else|delta-skymiles-reserve-american-express-card|Yes
+American Express|Hilton Honors Aspire Card from American Express|14|points|Hilton Hotels|total points|hilton-honors-aspire-card-from-american-express|No
+American Express|Hilton Honors Aspire Card from American Express|7|points|Dining, Flights & Rental Cars|U.S. restaurants, flights direct, rental cars|hilton-honors-aspire-card-from-american-express|No
+American Express|Hilton Honors Aspire Card from American Express|3|points|All Purchases|everything else|hilton-honors-aspire-card-from-american-express|Yes
+Chase|Aeroplan Credit Card|7|points|Air Canada Purchases|up to (total)|aeroplan-credit-card|No
+Chase|Aeroplan Credit Card|3|points|Dining & Travel|dining & other travel|aeroplan-credit-card|No
+Chase|Aeroplan Credit Card|1|points|All Purchases|everything else|aeroplan-credit-card|Yes
+Chase|British Airways Visa Signature Card|3|Avios|BA, Aer Lingus, Iberia, LEVEL||british-airways-visa-signature-card|No
+Chase|British Airways Visa Signature Card|2|points|Hotels & Travel|direct hotels & select|british-airways-visa-signature-card|No
+Chase|British Airways Visa Signature Card|1|points|All Purchases|everything else|british-airways-visa-signature-card|Yes
+U.S. Bank|U.S. Bank Smartly Visa Signature Card|4|cash back|All Purchases|with qualifying accounts (base 2%)|us-bank-smartly-visa-signature-card|Yes
+Capital One|Capital One Savor Student Cash Rewards Credit Card|3|cash back|Dining, Entertainment, Streaming & Groceries||capital-one-savor-student-cash-rewards-credit-card|No
+Capital One|Capital One Savor Student Cash Rewards Credit Card|1|cash back|All Purchases|everything else|capital-one-savor-student-cash-rewards-credit-card|Yes
+Discover|Discover it Secured Credit Card|2|cash back|Gas & Restaurants|up to $1,000/quarter|discover-it-secured-credit-card|No
+Discover|Discover it Secured Credit Card|1|cash back|All Purchases|everything else|discover-it-secured-credit-card|Yes
+Capital One|Capital One Platinum Secured Credit Card|0|N/A|No Rewards|credit building card|capital-one-platinum-secured-credit-card|Yes
+Chase|Chase Slate Edge|0|N/A|No Rewards|credit building/APR focus|chase-slate-edge|Yes
+Chase|IHG One Rewards Traveler Credit Card|17|points|IHG Hotels|total points|ihg-one-rewards-traveler-credit-card|No
+Chase|IHG One Rewards Traveler Credit Card|5|points|Travel|select travel|ihg-one-rewards-traveler-credit-card|No
+Chase|IHG One Rewards Traveler Credit Card|3|points|All Purchases|everything else|ihg-one-rewards-traveler-credit-card|Yes
+Chase|United Club Card|4|miles|United Purchases||united-club-card|No
+Chase|United Club Card|2|miles|Dining & Travel|other travel|united-club-card|No
+Chase|United Club Card|1|miles|All Purchases|everything else|united-club-card|Yes
+Bank of America|Bank of America Customized Cash Rewards credit card for Students|3|cash back|Choice Category|monthly choice (online shopping, dining, travel, etc.)|bank-of-america-customized-cash-rewards-credit-card-for-students|No
+Bank of America|Bank of America Customized Cash Rewards credit card for Students|2|cash back|Groceries & Wholesale Clubs|up to $2,500/quarter combined with choice|bank-of-america-customized-cash-rewards-credit-card-for-students|No
+Bank of America|Bank of America Customized Cash Rewards credit card for Students|1|cash back|All Purchases|everything else|bank-of-america-customized-cash-rewards-credit-card-for-students|Yes
+Discover|Discover it Student Cash Back|5|cash back|Rotating Categories|quarterly (up to $1,500/quarter)|discover-it-student-cash-back|No
+Discover|Discover it Student Cash Back|1|cash back|All Purchases|everything else|discover-it-student-cash-back|Yes
+Capital One|Capital One Quicksilver Student Cash Rewards Credit Card|5|cash back|Hotels & Rental Cars|through Capital One Travel|capital-one-quicksilver-student-cash-rewards-credit-card|No
+Capital One|Capital One Quicksilver Student Cash Rewards Credit Card|1.5|cash back|All Purchases|unlimited everything else|capital-one-quicksilver-student-cash-rewards-credit-card|Yes
+Discover|Discover it Student Chrome|2|cash back|Gas & Restaurants|up to $1,000/quarter|discover-it-student-chrome|No
+Discover|Discover it Student Chrome|1|cash back|All Purchases|everything else|discover-it-student-chrome|Yes
+Capital One|Capital One Quicksilver Secured Cash Rewards Credit Card|5|cash back|Hotels & Rental Cars|through Capital One Travel|capital-one-quicksilver-secured-cash-rewards-credit-card|No
+Capital One|Capital One Quicksilver Secured Cash Rewards Credit Card|1.5|cash back|All Purchases|unlimited everything else|capital-one-quicksilver-secured-cash-rewards-credit-card|Yes
+U.S. Bank|U.S. Bank Shield™ Visa Card|0|N/A|No Rewards|protection-focused|us-bank-shield-visa-card|Yes
+Goldman Sachs|Apple Card|3|cash back|Apple & Select Partners|with Apple Pay|apple-card|No
+Goldman Sachs|Apple Card|2|cash back|All Purchases|with Apple Pay|apple-card|Yes
+Goldman Sachs|Apple Card|1|cash back|All Purchases|physical card|apple-card|Yes
+Citi|Costco Anywhere Visa Card by Citi|5|cash back|Gas|at Costco|costco-anywhere-visa-card-by-citi|No
+Citi|Costco Anywhere Visa Card by Citi|4|cash back|Gas & EV Charging|worldwide (up to $7,000/year combined)|costco-anywhere-visa-card-by-citi|No
+Citi|Costco Anywhere Visa Card by Citi|3|cash back|Dining & Travel|restaurants & eligible travel|costco-anywhere-visa-card-by-citi|No
+Citi|Costco Anywhere Visa Card by Citi|2|cash back|Costco Purchases|all other Costco & Costco.com|costco-anywhere-visa-card-by-citi|No
+Citi|Costco Anywhere Visa Card by Citi|1|cash back|All Purchases|everything else|costco-anywhere-visa-card-by-citi|Yes
+Bank of America|Bank of America Travel Rewards Credit Card|3|points|Travel|through Bank of America Travel Center|bank-of-america-travel-rewards-credit-card|No
+Bank of America|Bank of America Travel Rewards Credit Card|1.5|points|All Purchases|unlimited everything else|bank-of-america-travel-rewards-credit-card|Yes
+Bank of America|Bank of America Premium Rewards Credit Card|2|points|Travel & Dining||bank-of-america-premium-rewards-credit-card|No
+Bank of America|Bank of America Premium Rewards Credit Card|1.5|points|All Purchases|everything else|bank-of-america-premium-rewards-credit-card|Yes
+Chase|Ink Business Cash Credit Card|5|cash back|Office Supplies & Telecom|office supply stores, internet/cable/phone (up to $25,000/year combined)|ink-business-cash-credit-card|No
+Chase|Ink Business Cash Credit Card|2|cash back|Gas & Dining|gas stations & restaurants (up to $25,000/year combined)|ink-business-cash-credit-card|No
+Chase|Ink Business Cash Credit Card|1|cash back|All Purchases|everything else|ink-business-cash-credit-card|Yes
+Chase|Ink Business Unlimited Credit Card|1.5|cash back|All Purchases|unlimited everything|ink-business-unlimited-credit-card|Yes
+Citi|Citi Custom Cash Card|5|cash back|Top Category|top eligible category each billing cycle (up to $500, then 1%)|citi-custom-cash-card|No
+Citi|Citi Custom Cash Card|1|cash back|All Purchases|everything else|citi-custom-cash-card|Yes
+Citi|Citi Secured Mastercard|0|N/A|No Rewards|credit-building card|citi-secured-mastercard|Yes
+Synchrony|Best Buy Credit Card|5|points|Best Buy Purchases|or special financing|best-buy-credit-card|No
+Synchrony|Amazon Prime Store Card|5|cash back|Amazon Purchases|with Prime (or special financing)|amazon-prime-store-card|No
+Synchrony|Amazon Store Card|0|N/A|Special Financing|no rewards without Prime|amazon-store-card|No
+Wells Fargo|Wells Fargo Active Cash Secured Credit Card|2|cash rewards|All Purchases|unlimited everything|wells-fargo-active-cash-secured-credit-card|Yes
+Wells Fargo|Wells Fargo Autograph Card|3|points|Restaurants, Travel, Gas/EV, Transit, Streaming & Phone Plans|unlimited|wells-fargo-autograph-card|No
+Wells Fargo|Wells Fargo Autograph Card|1|points|All Purchases|everything else|wells-fargo-autograph-card|Yes
+Wells Fargo|Wells Fargo Reflect Secured Credit Card|0|N/A|No Rewards|protection-focused|wells-fargo-reflect-secured-credit-card|Yes
+USAA|USAA Cashback Rewards Plus American Express Card|5|cash back|Gas & Military Bases|up to $3,000/year|usaa-cashback-rewards-plus-american-express-card|No
+USAA|USAA Cashback Rewards Plus American Express Card|2|cash back|Groceries|up to $3,000/year|usaa-cashback-rewards-plus-american-express-card|No
+USAA|USAA Cashback Rewards Plus American Express Card|1|cash back|All Purchases|everything else|usaa-cashback-rewards-plus-american-express-card|Yes
+USAA|USAA Preferred Cash Rewards Visa Signature Card|1.5|cash back|All Purchases|unlimited everything|usaa-preferred-cash-rewards-visa-signature-card|Yes
+PNC|PNC Core Visa Credit Card|1.5|cash back|All Purchases|unlimited (higher with relationship in some versions)|pnc-core-visa-credit-card|Yes
+PNC|PNC Premier Traveler Visa Signature Credit Card|3|miles|Travel||pnc-premier-traveler-visa-signature-credit-card|No
+PNC|PNC Premier Traveler Visa Signature Credit Card|2|miles|All Purchases|everything else|pnc-premier-traveler-visa-signature-credit-card|Yes
+Navy Federal|Navy Federal nRewards Secured Credit Card|1|points|All Purchases|everything|navy-federal-nrewards-secured-credit-card|Yes
+PenFed|PenFed Power Cash Rewards Visa Signature Card|2|cash back|All Purchases|for Honors Advantage (otherwise 1.5%)|penfed-power-cash-rewards-visa-signature-card|Yes
+PenFed|PenFed Pathfinder Rewards Visa Signature Card|4|points|Travel|(5x for Honors Advantage)|penfed-pathfinder-rewards-visa-signature-card|No
+PenFed|PenFed Pathfinder Rewards Visa Signature Card|1.5|points|All Purchases|everything else|penfed-pathfinder-rewards-visa-signature-card|Yes
+Huntington|Huntington Voice Visa Card|3|points|Choice Category|quarterly choice from 10 categories|huntington-voice-visa-card|No
+Huntington|Huntington Voice Visa Card|1|points|All Purchases|everything else|huntington-voice-visa-card|Yes
+U.S. Bank|U.S. Bank Altitude Connect Visa Signature Card|5|points|Prepaid Hotels & Car Rentals|through Altitude Rewards Center|us-bank-altitude-connect-visa-signature-card|No
+U.S. Bank|U.S. Bank Altitude Connect Visa Signature Card|4|points|Travel & Gas/EV|gas/EV first $1,000/quarter|us-bank-altitude-connect-visa-signature-card|No
+U.S. Bank|U.S. Bank Altitude Connect Visa Signature Card|2|points|Dining, Groceries & Streaming||us-bank-altitude-connect-visa-signature-card|No
+U.S. Bank|U.S. Bank Altitude Connect Visa Signature Card|1|points|All Purchases|everything else|us-bank-altitude-connect-visa-signature-card|Yes
+U.S. Bank|U.S. Bank Altitude Reserve Visa Infinite Card|5|points|Travel|through Altitude Rewards (hotels/flights/cars prepaid)|us-bank-altitude-reserve-visa-infinite-card|No
+U.S. Bank|U.S. Bank Altitude Reserve Visa Infinite Card|3|points|Mobile Wallet & Travel|select mobile wallet & other travel|us-bank-altitude-reserve-visa-infinite-card|No
+U.S. Bank|U.S. Bank Altitude Reserve Visa Infinite Card|1|points|All Purchases|everything else|us-bank-altitude-reserve-visa-infinite-card|Yes
+Synchrony|Lowe’s Advantage Card|5|cash back|Lowe's Purchases|or special financing|lowes-advantage-card|No
+Synchrony|Sam’s Club Mastercard|5|cash back|Gas|up to $6,000/year|sams-club-mastercard|No
+Synchrony|Sam’s Club Mastercard|3|cash back|Dining & Takeout||sams-club-mastercard|No
+Synchrony|Sam’s Club Mastercard|1|cash back|All Purchases|everything else|sams-club-mastercard|Yes
+Synchrony|PayPal Credit|0|N/A|Promotional Financing|no ongoing rewards|paypal-credit|No
+PNC|PNC Cash Rewards Visa Credit Card|4|cash back|Gas||pnc-cash-rewards-visa-credit-card|No
+PNC|PNC Cash Rewards Visa Credit Card|3|cash back|Restaurants||pnc-cash-rewards-visa-credit-card|No
+PNC|PNC Cash Rewards Visa Credit Card|2|cash back|Groceries||pnc-cash-rewards-visa-credit-card|No
+PNC|PNC Cash Rewards Visa Credit Card|1|cash back|All Purchases|everything else|pnc-cash-rewards-visa-credit-card|Yes
+Santander|Santander Unlimited Cash Rewards Card|1.5|cash back|All Purchases|unlimited everything|santander-unlimited-cash-rewards-card|Yes
+Wells Fargo|Bilt Mastercard|1|points|Rent|up to 100,000 points per calendar year, no transaction fee when paid through the Bilt app|bilt-mastercard|No
+Wells Fargo|Bilt Mastercard|3|points|Dining|restaurants worldwide, takeout & eligible delivery services; requires at least 5 posted transactions per billing cycle to earn points|bilt-mastercard|No
+Wells Fargo|Bilt Mastercard|2|points|Travel|airfare, hotels, car rentals, cruises (direct or via travel agencies); requires at least 5 posted transactions per billing cycle to earn points|bilt-mastercard|No
+Wells Fargo|Bilt Mastercard|1|points|All Purchases|everything else (non-rent, non-dining, non-travel); requires at least 5 posted transactions per billing cycle to earn points|bilt-mastercard|Yes
+Chase|Ink Business Preferred Credit Card|3|points|Business Categories|first $150,000 combined annually on travel, shipping, internet/cable/phone, social media & search engine advertising|ink-business-preferred-credit-card|No
+Chase|Ink Business Preferred Credit Card|1|points|All Purchases|everything else|ink-business-preferred-credit-card|Yes
+Chase|Ink Business Premier Credit Card|5|cash back|Travel|purchased through Chase Travel|ink-business-premier-credit-card|No
+Chase|Ink Business Premier Credit Card|2.5|cash back|Large Purchases|every purchase of $5,000 or more|ink-business-premier-credit-card|No
+Chase|Ink Business Premier Credit Card|2|cash back|All Purchases|everything else|ink-business-premier-credit-card|Yes
+American Express|The Business Platinum Card from American Express|5|points|Flights & Prepaid Hotels|flights booked directly or via Amex Travel + prepaid hotels via Amex Travel|the-business-platinum-card-from-american-express|No
+American Express|The Business Platinum Card from American Express|1.5|points|Key Business Categories & Large Purchases|U.S. electronics/software/cloud, U.S. shipping, U.S. advertising (select media), U.S. construction/hardware, U.S. gas stations, wireless services, transit + all purchases $5,000+ (up to $2M combined per year, then 1x)|the-business-platinum-card-from-american-express|No
+American Express|The Business Platinum Card from American Express|1|points|All Purchases|everything else|the-business-platinum-card-from-american-express|Yes
+American Express|American Express Business Gold Card|4|points|Top 2 Categories Monthly|automatically the 2 highest-spend categories from the 6 eligible (U.S. gas stations, U.S. restaurants, U.S. advertising select media, U.S. shipping, U.S. tech providers/electronics/software/cloud, transit/airfare direct from airlines) – up to $150,000 combined per calendar year, then 1x|american-express-business-gold-card|No
+American Express|American Express Business Gold Card|3|points|Flights & Prepaid Hotels|flights & prepaid hotels booked on AmexTravel.com|american-express-business-gold-card|No
+American Express|American Express Business Gold Card|1|points|All Purchases|everything else|american-express-business-gold-card|Yes
+American Express|Blue Business Plus Credit Card from American Express|2|points|All Purchases|everyday business purchases up to $50,000 per calendar year|blue-business-plus-credit-card-from-american-express|Yes
+American Express|Blue Business Plus Credit Card from American Express|1|points|All Purchases|after $50,000 per calendar year|blue-business-plus-credit-card-from-american-express|Yes
+American Express|Blue Business Cash™ Card from American Express|2|cash back|All Purchases|eligible business purchases up to $50,000 per calendar year|blue-business-cash-card-from-american-express|Yes
+American Express|Blue Business Cash™ Card from American Express|1|cash back|All Purchases|after $50,000 per calendar year|blue-business-cash-card-from-american-express|Yes
+Capital One|Capital One Spark Cash Plus|5|cash back|Hotels & Rental Cars|booked through Capital One Travel|capital-one-spark-cash-plus|No
+Capital One|Capital One Spark Cash Plus|2|cash back|All Purchases|unlimited on every purchase|capital-one-spark-cash-plus|Yes
+Capital One|Capital One Spark Miles for Business|5|miles|Hotels & Rental Cars|booked through Capital One Travel|capital-one-spark-miles-for-business|No
+Capital One|Capital One Spark Miles for Business|2|miles|All Purchases|unlimited on every purchase|capital-one-spark-miles-for-business|Yes
+Synchrony|Best Buy Credit Card|0|N/A|All Purchases|no rewards on non-qualifying purchases|best-buy-credit-card|Yes
+Synchrony|Amazon Prime Store Card|0|N/A|All Purchases|no rewards on non-qualifying purchases|amazon-prime-store-card|Yes
+Synchrony|Amazon Store Card|0|N/A|All Purchases|no rewards on non-qualifying purchases|amazon-store-card|Yes
+Synchrony|Lowe’s Advantage Card|0|N/A|All Purchases|no rewards on non-qualifying purchases|lowes-advantage-card|Yes
+Synchrony|PayPal Credit|0|N/A|All Purchases|no rewards on non-qualifying purchases|paypal-credit|Yes
+Citi|Citi Strata Elite Card|12|points|Travel|Hotels, Car Rentals, Attractions booked through Citi Travel|citi-strata-elite-card|No
+Citi|Citi Strata Elite Card|6|points|Travel|Air Travel booked through Citi Travel|citi-strata-elite-card|No
+Citi|Citi Strata Elite Card|6|points|Dining|Citi Nights: Fridays and Saturdays 6 PM - 6 AM ET|citi-strata-elite-card|No
+Citi|Citi Strata Elite Card|3|points|Dining|all other restaurant purchases|citi-strata-elite-card|No
+Citi|Citi Strata Elite Card|1.5|points|All Purchases|everything else|citi-strata-elite-card|Yes

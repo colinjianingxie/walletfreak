@@ -1,7 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.http import JsonResponse
+import csv
+import os
+import math
+from datetime import datetime, date
 from core.services import db
+from .services import OptimizerService
 
 def index(request):
     """
@@ -173,3 +178,79 @@ def worth_it_calculate(request, card_slug):
         })
     
     return redirect('worth_it_audit', card_slug=card_slug)
+
+def optimizer_input(request):
+    """
+    Renders the SUB Optimizer input form.
+    """
+    if not request.user.is_authenticated:
+        return redirect('calculators_index')
+    return render(request, 'calculators/optimizer_input.html')
+
+def load_signup_bonuses():
+    """
+    Reads the default_signup.csv file and returns a dict of bonuses keyed by slug-id.
+    """
+    csv_path = os.path.join(settings.BASE_DIR, 'default_signup.csv')
+    bonuses = {}
+    
+    if not os.path.exists(csv_path):
+        print(f"Error: CSV not found at {csv_path}")
+        return bonuses
+
+    try:
+        with open(csv_path, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f, delimiter='|')
+            for row in reader:
+                slug = row.get('slug-id')
+                if slug:
+                    bonuses[slug] = row
+    except Exception as e:
+        print(f"Error reading signup CSV: {e}")
+        
+    return bonuses
+
+def optimizer_calculate(request):
+    """
+    Calculates ROI for cards based on planned spend and timeframe.
+    Returns HTML partial for htmx/ajax injection.
+    """
+    if not request.user.is_authenticated:
+        return redirect('calculators_index')
+        
+    if request.method != 'POST':
+        return redirect('optimizer_input')
+        
+    try:
+        spend = float(request.POST.get('spend', 0))
+        timeframe_months = int(request.POST.get('timeframe', 3))
+    except ValueError:
+        spend = 4000.0
+        timeframe_months = 3
+        
+    mode = request.POST.get('mode', 'single') # 'single' or 'combo'
+
+    # Get User Wallet (if authenticated)
+    user_wallet_slugs = set()
+    if request.user.is_authenticated:
+        uid = request.session.get('uid') or request.user.username
+        if uid:
+            owned_cards = db.get_user_cards(uid)
+            user_wallet_slugs = {c.get('card_id') for c in owned_cards}
+
+    # Initialize Service
+    service = OptimizerService()
+    results = service.calculate_recommendations(
+        planned_spend=spend,
+        duration_months=timeframe_months,
+        user_wallet_slugs=user_wallet_slugs,
+        mode=mode
+    )
+    
+    context = {
+        'results': results,
+        'planned_spend': spend,
+        'mode': mode
+    }
+    
+    return render(request, 'calculators/optimizer_results.html', context)
