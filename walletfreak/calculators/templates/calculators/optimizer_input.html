@@ -9,7 +9,7 @@
 {% block content %}
 <div class="optimizer-container">
     <!-- Back to Lab -->
-    <div class="container mb-4">
+    <div class="container mb-4" style="margin-top: -20px;">
         <a href="{% url 'calculators_index' %}" class="back-link">
             <span class="material-icons">arrow_back</span>
             Back to Lab
@@ -251,11 +251,18 @@
         border-right: 1px solid rgba(255,255,255,0.1);
     }
 
+    .optimizer-container {
+        padding-top: 20px; /* Consistent spacing */
+    }
+    @media (min-width: 992px) {
+        .optimizer-container { padding-top: 0; }
+    }
+
     .back-link {
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        color: #0F172A;
+        color: #94A3B8;
         font-weight: 700;
         text-decoration: none;
         font-size: 0.9rem;
@@ -428,6 +435,9 @@
             max-width: 100% !important; 
             flex: 0 0 auto !important; 
             padding: 24px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
         }
 
         /* Stack input fields */
@@ -442,6 +452,8 @@
         .col-6:last-child { margin-bottom: 0 !important; }
         
         .scanner-section { 
+            width: 100% !important;
+            max-width: 500px !important;
             padding: 32px 24px !important; 
             margin-top: 0 !important; /* Remove extra margin as padding handles it */
         }
