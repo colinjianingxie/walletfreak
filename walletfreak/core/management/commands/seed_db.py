@@ -32,6 +32,25 @@ class Command(BaseCommand):
         self.stdout.write(f'Parsing verdicts from: {verdicts_csv_path}')
         
         cards_data = generate_cards_from_csv(csv_path, signup_csv_path, rates_csv_path, master_csv_path=master_csv_path, overrides_csv_path=overrides_csv_path, verdicts_csv_path=verdicts_csv_path)
+
+        # Parse referrals
+        referrals_csv_path = os.path.join(base_dir, 'default_referrals.csv')
+        self.stdout.write(f'Parsing referrals from: {referrals_csv_path}')
+        
+        referrals_map = {} # slug -> list of links
+        try:
+            import csv
+            with open(referrals_csv_path, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f, delimiter='|')
+                for row in reader:
+                    slug = row.get('slug-id', '').strip()
+                    link = row.get('ReferralLink', '').strip()
+                    if slug and link:
+                        if slug not in referrals_map:
+                            referrals_map[slug] = []
+                        referrals_map[slug].append(link)
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f'Error parsing referrals: {e}'))
         
         card_slug_map = {} # Name -> Slug
 
@@ -42,6 +61,12 @@ class Command(BaseCommand):
                 slug = slugify(card['name'])
             
             card_slug_map[card['name']] = slug
+            
+            # Inject referrals
+            if slug in referrals_map:
+                # Format as objects for compatibility
+                card['referral_links'] = [{'link': l, 'weight': 1} for l in referrals_map[slug]]
+                self.stdout.write(f'  - Added {len(card["referral_links"])} referral links to {slug}')
             
             db.create_document('credit_cards', card, doc_id=slug)
             earning_rates_count = len(card.get('earning_rates', []))

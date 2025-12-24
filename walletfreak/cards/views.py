@@ -462,17 +462,29 @@ def card_detail(request, card_id):
         raise Http404("Card not found")
     
     # Referral Rotation Logic
-    active_link = None
+    # Referral Rotation Logic
+    active_link = card.get('application_link') # Default fallback (prioritized below if referrals exist)
+
     if card.get('referral_links'):
         links = card['referral_links']
-        # Simple weighted choice
-        # links structure: [{'link': 'url', 'weight': 1}, ...]
+        # Robust handling for list of strings or dicts
+        population = []
+        weights = []
+        
         try:
-            population = [l['link'] for l in links]
-            weights = [l.get('weight', 1) for l in links]
-            active_link = random.choices(population, weights=weights, k=1)[0]
+            for item in links:
+                if isinstance(item, str):
+                    population.append(item)
+                    weights.append(1)
+                elif isinstance(item, dict) and item.get('link'):
+                    population.append(item['link'])
+                    weights.append(item.get('weight', 1))
+            
+            if population:
+                 # Override active_link with a chosen referral link
+                 active_link = random.choices(population, weights=weights, k=1)[0]
         except Exception:
-            pass
+             pass
             
     return render(request, 'cards/card_detail.html', {'card': card, 'active_link': active_link})
 
