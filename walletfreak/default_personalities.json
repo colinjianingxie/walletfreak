@@ -53,52 +53,48 @@
         "name": "Wallet Freak",
         "slug": "wallet-freak",
         "tagline": "The Final Boss — Issuers Fear You",
-        "description": "You run every premium card and hit every credit. Your goal is a perfectly optimized wallet where every single purchase is categorized and every benefit is extracted.",
+        "description": "You run a precisely engineered collection based on the 'creator's wallet.' You hit every credit, use every lounge, and ensure every dollar spent on rent or dining is working toward a free flight.",
         "slots": [
             {
-                "name": "The Hub Collection",
-                "description": "Every lounge network and transfer partner ecosystem.",
+                "name": "Travel & Lounge Hub",
+                "description": "The heavy hitters for lounge access, flight multipliers, and airline credits.",
                 "cards": [
-                    "american-express-platinum-card",
-                    "chase-sapphire-reserve",
-                    "capital-one-venture-x-rewards-credit-card"
+                    "capital-one-venture-x-rewards-credit-card",
+                    "american-express-platinum-card"
                 ]
             },
             {
-                "name": "Max Food & Essentials",
-                "description": "Hitting the 6% grocery and 4x dining caps.",
+                "name": "The Hilton Status Duo",
+                "description": "The 'Double Play' for instant Diamond and Gold status plus high earn on hotel stays.",
                 "cards": [
-                    "blue-cash-preferred-card-from-american-express",
-                    "american-express-gold-card",
+                    "hilton-honors-aspire-card-from-american-express",
+                    "hilton-honors-american-express-surpass-card"
+                ]
+            },
+            {
+                "name": "Dining & Grocery Engine",
+                "description": "Maximum yield on every meal and grocery run.",
+                "cards": [
+                    "chase-sapphire-preferred-card",
                     "capital-one-savor-cash-rewards-credit-card"
                 ]
             },
             {
-                "name": "The Coupon Book Slot",
-                "description": "Managing the $1,500+ in annual lifestyle credits.",
+                "name": "Rent & Everyday Protection",
+                "description": "Turning your mortgage/rent into points and protecting your hardware.",
                 "cards": [
-                    "the-business-platinum-card-from-american-express",
-                    "citi-strata-elite-card"
-                ]
-            },
-            {
-                "name": "The Specialist Feeders",
-                "description": "Catch-alls for the 0.01% of spend that doesn't fit a category.",
-                "cards": [
-                    "blue-business-plus-credit-card-from-american-express",
-                    "bilt-mastercard",
-                    "ink-business-unlimited-credit-card"
+                    "bilt-mastercard"
                 ]
             }
         ],
         "rules": [
             {
-                "title": "Credit Mandatory",
-                "description": "Missing a $10 credit is a cardinal sin."
+                "title": "The Hilton Meta",
+                "description": "Combine the Aspire's $250 resort credit with the Surpass's $200 Hilton credit to make luxury stays nearly free."
             },
             {
-                "title": "Retention Season",
-                "description": "Always call for retention offers every 12 months to offset high AFs."
+                "title": "Dining Diversification",
+                "description": "Use SavorOne for 3% cash back on groceries and entertainment, and CSP for 3x on dining to feed into the Chase ecosystem."
             }
         ]
     },

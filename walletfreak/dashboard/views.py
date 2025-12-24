@@ -291,11 +291,7 @@ def dashboard(request):
                     
                     all_benefits.append(benefit_obj)
                     
-                    # Check if ALL available periods are full (not just current period)
-                    available_periods = [p for p in periods if p.get('is_available', True)]
-                    all_available_full = all(p['status'] == 'full' for p in available_periods) if available_periods else False
-                    
-                    if all_available_full and len(available_periods) > 0:
+                    if current_period_status == 'full':
                         maxed_out_benefits.append(benefit_obj)
                     else:
                         action_needed_benefits.append(benefit_obj)

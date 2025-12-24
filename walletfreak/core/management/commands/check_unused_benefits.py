@@ -77,6 +77,9 @@ class Command(BaseCommand):
                 for idx, benefit in enumerate(benefits):
                     # We are looking for monetary credits
                     # Usually indicated by 'dollar_value' > 0 and benefit_type='Credit' or just checking dollar_value
+                    if benefit.get('benefit_type') != 'Credit':
+                        continue
+
                     dollar_val = benefit.get('dollar_value')
                     
                     if dollar_val and dollar_val > 0:
