@@ -44,7 +44,7 @@
             <div class="monthly-pills-grid">
                 {% for period in benefit.periods %}
                 <div class="period-pill {% if period.status == 'full' %}full{% elif period.status == 'partial' %}partial{% endif %} {% if period.is_current %}current{% endif %} {% if not period.is_available %}unavailable{% endif %}"
-                     {% if period.is_available %}onclick="openBenefitModal('{{ benefit.user_card_id }}', '{{ benefit.benefit_id }}', '{{ benefit.benefit_name|escapejs }}', {{ benefit.amount }}, {{ benefit.used }}, '{{ benefit.frequency|escapejs }}', '{{ period.key }}', '{{ benefit.script_id }}')"{% endif %}
+                     {% if period.is_available %}onclick="openBenefitModal('{{ benefit.user_card_id }}', '{{ benefit.benefit_id }}', '{{ benefit.benefit_name|escapejs }}', {{ benefit.amount }}, {{ benefit.used }}, '{{ benefit.frequency|escapejs }}', '{{ period.key }}', '{{ benefit.script_id }}', false, {{ benefit.ytd_used }})"{% endif %}
                      style="{% if not period.is_available %}cursor: not-allowed;{% endif %}">
                     <div class="pill-label">{{ period.label }}</div>
                     <div style="font-size: 0.65rem; font-weight: 600; color: #64748B;">${{ period.max_value|floatformat:0 }}</div>
@@ -63,7 +63,7 @@
             <div style="display: flex; gap: 1.5rem;">
                 {% for period in benefit.periods %}
                 <div class="period-pill large {% if period.status == 'full' %}full{% elif period.status == 'partial' %}partial{% endif %} {% if period.is_current %}current{% endif %} {% if not period.is_available %}unavailable{% endif %}"
-                     {% if period.is_available %}onclick="openBenefitModal('{{ benefit.user_card_id }}', '{{ benefit.benefit_id }}', '{{ benefit.benefit_name|escapejs }}', {{ benefit.amount }}, {{ benefit.used }}, '{{ benefit.frequency|escapejs }}', '{{ period.key }}', '{{ benefit.script_id }}')"{% endif %}
+                     {% if period.is_available %}onclick="openBenefitModal('{{ benefit.user_card_id }}', '{{ benefit.benefit_id }}', '{{ benefit.benefit_name|escapejs }}', {{ benefit.amount }}, {{ benefit.used }}, '{{ benefit.frequency|escapejs }}', '{{ period.key }}', '{{ benefit.script_id }}', false, {{ benefit.ytd_used }})"{% endif %}
                      style="flex: 1; {% if not period.is_available %}opacity: 0.3; cursor: not-allowed;{% else %}cursor: pointer;{% endif %}">
                     <div class="pill-label">
                         {% if period.label == 'H1' %}Jan - Jun{% elif period.label == 'H2' %}Jul - Dec{% else %}{{ period.label }}{% endif %}
@@ -81,7 +81,7 @@
             <!-- Annual Progress Bar -->
             {{ benefit.periods|json_script:benefit.script_id }}
             <div style="background: #F8FAFC; border-radius: 12px; padding: 1rem; border: 1px solid #E2E8F0; cursor: pointer;"
-                 onclick="openBenefitModal('{{ benefit.user_card_id }}', '{{ benefit.benefit_id }}', '{{ benefit.benefit_name|escapejs }}', {{ benefit.amount }}, {{ benefit.used }}, '{{ benefit.frequency|escapejs }}', '{{ benefit.periods.0.key }}', '{{ benefit.script_id }}')">
+                 onclick="openBenefitModal('{{ benefit.user_card_id }}', '{{ benefit.benefit_id }}', '{{ benefit.benefit_name|escapejs }}', {{ benefit.amount }}, {{ benefit.used }}, '{{ benefit.frequency|escapejs }}', '{{ benefit.periods.0.key }}', '{{ benefit.script_id }}', false, {{ benefit.ytd_used }})">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.875rem; font-weight: 600; color: #64748B;">
                     <span>{{ benefit.periods.0.label }}</span>
                     {% if benefit.used > 0 %}<span style="color: #6366F1;">${{ benefit.used|floatformat:0 }} used</span>{% endif %}

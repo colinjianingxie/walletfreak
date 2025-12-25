@@ -6,7 +6,7 @@ function renderMainDashboardStack() {
     // This is the "My Wallet Card" section on the main dashboard, which just shows a count and "Manage Wallet" button.
     // And filter pills.
     // Also trigger refresh of benefits section from server
-    refreshDashboardBenefits();
+    // refreshDashboardBenefits(); // CAUSES LOOP: fetching server loader HTML overwrites client calculation
 }
 
 let isRefreshingBenefits = false;
@@ -55,13 +55,32 @@ async function refreshDashboardBenefits() {
             currentMaxedOut.remove();
         }
 
+        const newIgnored = doc.getElementById('ignored-benefits-section');
+        const currentIgnored = document.getElementById('ignored-benefits-section');
+        if (newIgnored && currentIgnored) {
+            currentIgnored.innerHTML = newIgnored.innerHTML;
+        } else if (newIgnored && !currentIgnored) {
+            // If ignored section appeared, append it after maxed out or action needed
+            // Ideally we append to the same container
+            if (currentMaxedOut) {
+                currentMaxedOut.parentNode.insertBefore(newIgnored, currentMaxedOut.nextSibling);
+            } else if (currentActionNeeded) {
+                currentActionNeeded.parentNode.insertBefore(newIgnored, currentActionNeeded.nextSibling);
+            }
+        } else if (!newIgnored && currentIgnored) {
+            currentIgnored.remove();
+        }
+
     } catch (e) {
         console.error("Error refreshing dashboard benefits:", e);
     } finally {
         isRefreshingBenefits = false;
         // Re-apply client-side value update since the refresh might have overwritten it
-        if (typeof updateTotalValueExtractedUI === 'function') {
-            updateTotalValueExtractedUI();
+        if (typeof updateYtdRewardsUI === 'function') {
+            updateYtdRewardsUI();
+        }
+        if (typeof updateCreditsUsedUI === 'function') {
+            updateCreditsUsedUI();
         }
         if (typeof updateTotalAnnualFeeUI === 'function') {
             updateTotalAnnualFeeUI();
@@ -141,7 +160,7 @@ let currentBenefitData = {};
 let currentBenefitPeriods = [];
 let currentPeriodIndex = 0;
 
-function openBenefitModal(cardId, benefitId, benefitName, amount, used, frequency, periodKey, scriptId) {
+function openBenefitModal(cardId, benefitId, benefitName, amount, used, frequency, periodKey, scriptId, isIgnored, ytdUsed) {
     // Parse periods from json_script
     const script = document.getElementById(scriptId);
     if (script) {
@@ -160,7 +179,10 @@ function openBenefitModal(cardId, benefitId, benefitName, amount, used, frequenc
         benefitId,
         benefitName,
         amount, // Base amount
-        frequency
+        frequency,
+        isIgnored: !!isIgnored,
+        ytdUsed: ytdUsed || 0,
+        scriptId: scriptId
     };
 
     updateBenefitModalUI();
@@ -193,17 +215,81 @@ function updateBenefitModalUI() {
     document.getElementById('benefit-amount-input').value = '';
     document.getElementById('benefit-amount-input').placeholder = `Remaining: $${maxVal - usedVal}`;
 
-    // Update Mark as Full Button
+    // Update Mark as Full / Reset Button
     const markBtn = document.getElementById('mark-full-btn');
-    if (markBtn) {
-        markBtn.innerHTML = `Mark <span style="margin: 0 0.25rem;">${period.label}</span> as Full`;
+    const resetBtn = document.getElementById('reset-benefit-btn');
+
+    if (markBtn && resetBtn) {
+        // Reset base styles
+        markBtn.style.background = 'white';
+        markBtn.style.borderColor = '#E5E7EB';
+        markBtn.style.color = '#1F2937';
+
         if (period.status === 'full') {
-            markBtn.innerHTML = `<span class="material-icons" style="font-size: 18px; margin-right: 0.5rem;">check</span> ${period.label} is Full`;
-            markBtn.disabled = true;
-            markBtn.style.opacity = '0.7';
+            // Show Reset Button
+            markBtn.style.display = 'none';
+            resetBtn.style.display = 'flex';
         } else {
+            // Show Mark as Full Button
+            resetBtn.style.display = 'none';
+            markBtn.style.display = 'flex';
+
+            markBtn.innerHTML = `Mark <span style="margin: 0 0.25rem;">${period.label}</span> as Full`;
             markBtn.disabled = false;
             markBtn.style.opacity = '1';
+        }
+    }
+
+    // Update Ignore Button & Input State
+    const ignoreBtn = document.getElementById('benefit-ignore-btn');
+    const logBtn = document.getElementById('btn-log-usage');
+    const input = document.getElementById('benefit-amount-input');
+
+    if (ignoreBtn) {
+        if (currentBenefitData.isIgnored) {
+            // IGNORED STATE
+            ignoreBtn.textContent = 'Unignore Benefit';
+            ignoreBtn.style.color = '#3B82F6';
+            ignoreBtn.style.display = 'inline-block';
+            ignoreBtn.disabled = false;
+
+            // Disable inputs
+            if (input) {
+                input.disabled = true;
+                input.placeholder = 'Ignored';
+            }
+            if (logBtn) {
+                logBtn.disabled = true;
+                logBtn.style.opacity = '0.5';
+            }
+            if (resetBtn) {
+                resetBtn.disabled = true;
+                resetBtn.style.opacity = '0.5';
+            }
+            if (markBtn) {
+                markBtn.disabled = true;
+                markBtn.style.opacity = '0.5';
+            }
+
+        } else {
+            // ACTIVE STATE
+            if (input) input.disabled = false;
+            if (logBtn) {
+                // Default to disabled because input is cleared on open
+                logBtn.disabled = true;
+                logBtn.style.opacity = '0.5';
+            }
+            // markBtn state logic is preserved above unless overridden by isIgnored
+
+            if (currentBenefitData.ytdUsed && currentBenefitData.ytdUsed > 0) {
+                // Has usage -> Hide ignore button (cannot ignore)
+                ignoreBtn.style.display = 'none';
+            } else {
+                ignoreBtn.textContent = 'Ignore Benefit';
+                ignoreBtn.style.color = '#94A3B8';
+                ignoreBtn.style.display = 'inline-block';
+                ignoreBtn.disabled = false;
+            }
         }
     }
 }
@@ -228,7 +314,17 @@ function updateProgress(used, total) {
 }
 
 document.getElementById('benefit-amount-input')?.addEventListener('input', (e) => {
-    const val = parseFloat(e.target.value) || 0;
+    const val = parseFloat(e.target.value);
+    const logBtn = document.getElementById('btn-log-usage');
+    if (logBtn) {
+        if (!isNaN(val) && val >= 0) {
+            logBtn.disabled = false;
+            logBtn.style.opacity = '1';
+        } else {
+            logBtn.disabled = true;
+            logBtn.style.opacity = '0.5';
+        }
+    }
 });
 
 function markAsFull() {
@@ -272,6 +368,14 @@ function markAsFull() {
 
                 updateBenefitModalUI();
 
+                // Persist update to DOM script tag
+                if (currentBenefitData.scriptId) {
+                    const script = document.getElementById(currentBenefitData.scriptId);
+                    if (script) {
+                        script.textContent = JSON.stringify(currentBenefitPeriods);
+                    }
+                }
+
                 // Show success feedback
                 if (typeof showToast === 'function') showToast('Marked as full!');
 
@@ -292,9 +396,9 @@ function markAsFull() {
                     setTimeout(() => {
                         btn.innerHTML = originalText;
                         btn.disabled = false;
-                        btn.style.background = '';
-                        btn.style.borderColor = '';
-                        btn.style.color = '';
+                        btn.style.background = 'white';
+                        btn.style.borderColor = '#E5E7EB';
+                        btn.style.color = '#1F2937';
                     }, 500);
                 }, 1000);
             } else {
@@ -314,7 +418,7 @@ function markAsFull() {
 function saveBenefitUsage() {
     const input = document.getElementById('benefit-amount-input');
     const amount = parseFloat(input.value);
-    if (isNaN(amount) || amount <= 0) return;
+    if (isNaN(amount) || amount < 0) return;
 
     const period = currentBenefitPeriods[currentPeriodIndex];
     const btn = document.getElementById('btn-log-usage');
@@ -325,6 +429,7 @@ function saveBenefitUsage() {
     const formData = new FormData();
     formData.append('amount', amount);
     formData.append('period_key', period.key);
+    formData.append('increment', 'true');
     formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
 
     fetch(`/wallet/update-benefit/${currentBenefitData.cardId}/${currentBenefitData.benefitId}/`, {
@@ -401,10 +506,20 @@ function saveBenefitUsage() {
                 if (newUsed >= period.max_value) {
                     period.status = 'full';
                     period.is_full = true;
+                    // Persist update to DOM
+                    if (currentBenefitData.scriptId && document.getElementById(currentBenefitData.scriptId)) {
+                        document.getElementById(currentBenefitData.scriptId).textContent = JSON.stringify(currentBenefitPeriods);
+                    }
                     if (typeof showToast === 'function') showToast('Benefit maxed out!');
-                    closeBenefitModal();
+
+                    // Update UI to show Reset button
+                    updateBenefitModalUI();
                 } else {
                     period.status = 'partial';
+                    // Persist update to DOM
+                    if (currentBenefitData.scriptId && document.getElementById(currentBenefitData.scriptId)) {
+                        document.getElementById(currentBenefitData.scriptId).textContent = JSON.stringify(currentBenefitPeriods);
+                    }
                     updateBenefitModalUI();
                     if (typeof showToast === 'function') showToast('Usage logged!');
                 }
@@ -414,14 +529,55 @@ function saveBenefitUsage() {
 
                 input.value = '';
 
-                // Try to update UI if possible, else just rely on background sync
+                // Update UI based on new state
+                updateBenefitModalUI();
+
+                // Enable button (but keep disabled until new input)
+                btn.innerHTML = originalText;
+                btn.disabled = true;
+                btn.style.opacity = '0.5';
+
+            } else {
+                alert('Error: ' + (data.error || 'Unknown error'));
                 btn.innerHTML = originalText;
                 btn.disabled = false;
+            }
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        });
+}
 
-                // OPTIONAL: Close modal if it makes sense? 
-                // "I want the process to be smoother" implies staying context.
+function toggleIgnoreBenefit() {
+    const btn = document.getElementById('benefit-ignore-btn');
+    const originalText = btn.innerHTML;
+    const isIgnored = currentBenefitData.isIgnored;
+
+    btn.innerHTML = '<span class="loader"></span> processing...';
+    btn.disabled = true;
+
+    const formData = new FormData();
+    formData.append('is_ignored', !isIgnored);
+    formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+
+    fetch(`/wallet/toggle-ignore-benefit/${currentBenefitData.cardId}/${currentBenefitData.benefitId}/`, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+    })
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
+        .then(async data => {
+            if (data.success) {
+                // Wait for dashboard to refresh FIRST to ensure backend sync is visualized
+                await refreshDashboardBenefits();
+
+                if (typeof showToast === 'function') showToast(isIgnored ? 'Benefit unignored!' : 'Benefit ignored!');
                 closeBenefitModal();
-
             } else {
                 alert('Error: ' + (data.error || 'Unknown error'));
                 btn.innerHTML = originalText;
@@ -430,8 +586,73 @@ function saveBenefitUsage() {
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Error logging usage: ' + error.message);
+            alert('Error updating benefit: ' + error.message);
             btn.innerHTML = originalText;
             btn.disabled = false;
+        });
+}
+
+function resetBenefit() {
+    const period = currentBenefitPeriods[currentPeriodIndex];
+    const btn = document.getElementById('reset-benefit-btn');
+    const originalText = (btn) ? btn.innerHTML : 'Reset Usage';
+
+    if (btn) {
+        btn.innerHTML = '<span class="loader"></span> Resetting...';
+        btn.disabled = true;
+    }
+
+    const formData = new FormData();
+    formData.append('amount', 0);
+    formData.append('period_key', period.key);
+    formData.append('is_full', 'false');
+    formData.append('increment', 'false'); // Explicit set to 0
+    formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+
+    fetch(`/wallet/update-benefit/${currentBenefitData.cardId}/${currentBenefitData.benefitId}/`, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+    })
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
+        .then(async data => {
+            if (data.success) {
+                // Update local state
+                period.status = 'empty';
+                period.is_full = false;
+                period.used = 0;
+
+                // Persist update to DOM
+                if (currentBenefitData.scriptId && document.getElementById(currentBenefitData.scriptId)) {
+                    document.getElementById(currentBenefitData.scriptId).textContent = JSON.stringify(currentBenefitPeriods);
+                }
+
+                // Refresh dashboard
+                refreshDashboardBenefits();
+
+                if (typeof showToast === 'function') showToast('Benefit usage reset!');
+
+                closeBenefitModal();
+            } else {
+                alert('Error: ' + (data.error || 'Unknown error'));
+                if (btn) {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error resetting benefit: ' + error.message);
+            if (btn) {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
         });
 }

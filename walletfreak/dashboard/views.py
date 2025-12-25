@@ -73,7 +73,7 @@ def dashboard(request):
     all_benefits = []
     action_needed_benefits = []
     maxed_out_benefits = []
-    maxed_out_benefits = []
+    ignored_benefits = []
     total_used_value = 0
     total_potential_value = 0
     total_annual_fee = 0
@@ -283,6 +283,9 @@ def dashboard(request):
                             period_end = datetime(current_year, 12, 31, 23, 59, 59)
                         days_until_expiration = (period_end - now).days
                     
+                    # Check if ignored
+                    is_ignored = benefit_usage_data.get('is_ignored', False)
+                    
                     benefit_obj = {
                         'user_card_id': card['id'],  # Firestore document ID for user_cards subcollection
                         'card_id': card['card_id'],  # Card slug for filtering
@@ -295,21 +298,33 @@ def dashboard(request):
                         'frequency': frequency,
                         'current_period_status': current_period_status,
                         'script_id': f"{card['card_id']}_{benefit_id}",  # Unique ID for DOM elements
-                        'days_until_expiration': days_until_expiration
+                        'days_until_expiration': days_until_expiration,
+                        'is_ignored': is_ignored,
+                        'ytd_used': ytd_used
                     }
                     
                     all_benefits.append(benefit_obj)
                     
-                    if current_period_status == 'full':
+                    if is_ignored:
+                        ignored_benefits.append(benefit_obj)
+                    elif current_period_status == 'full':
                         maxed_out_benefits.append(benefit_obj)
                     else:
                         action_needed_benefits.append(benefit_obj)
                     
-                    # YTD Total Rewards sums ALL valid benefits (potential)
-                    total_potential_value += dollar_value
+                    # YTD Total Rewards sums ALL valid benefits (potential) - EXCLUDING ignored
+                    if not is_ignored:
+                        total_potential_value += dollar_value
 
                     # Credits Used and Net Performance are based strictly on "Credit" type benefits
-                    if benefit_type == 'Credit':
+                    # Also exclude output from these metrics if ignored? 
+                    # The requirement says "Remove the value of that benefit from YTD Total rewards."
+                    # It also says "user cannot log any of the values".
+                    # Let's assume ignored benefits do not contribute to Credits Used either if they were partially used before ignoring?
+                    # The prompt says: "When the benefit is ignored, Remove the value of that benefit from YTD Total rewards."
+                    # It implies it shouldn't count.
+                    # Credits Used includes all benefits with monetary value (Credits, Perks, Bonus etc)
+                    if (benefit_type == 'Credit' or benefit_type == 'Perk') and not is_ignored:
                         total_used_value += ytd_used
         except Exception as e:
             print(f"Error processing card benefits: {e}")
@@ -359,6 +374,7 @@ def dashboard(request):
         'net_performance': round(total_used_value - total_annual_fee, 2),
         'action_needed_benefits': action_needed_benefits,
         'maxed_out_benefits': maxed_out_benefits,
+        'ignored_benefits': ignored_benefits,
         
         # 5/24 Status
         'chase_524_count': chase_524_count,
@@ -538,8 +554,9 @@ def update_benefit_usage(request, user_card_id, benefit_id):
         usage_amount = float(request.POST.get('amount', 0))
         period_key = request.POST.get('period_key')
         is_full = request.POST.get('is_full') == 'true'
+        increment = request.POST.get('increment') == 'true'
         
-        db.update_benefit_usage(uid, user_card_id, benefit_id, usage_amount, period_key=period_key, is_full=is_full)
+        db.update_benefit_usage(uid, user_card_id, benefit_id, usage_amount, period_key=period_key, is_full=is_full, increment=increment)
         return JsonResponse({'success': True})
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)}, status=500)
@@ -585,6 +602,63 @@ def publish_personality(request):
     try:
         # Update user profile to make personality public
         db.update_document('users', uid, {'personality_public': True})
+        return JsonResponse({'success': True})
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
+
+@login_required
+@require_POST
+def toggle_benefit_ignore_status(request, user_card_id, benefit_id):
+    """Toggle ignore status for a benefit"""
+    uid = request.session.get('uid')
+    if not uid:
+        return JsonResponse({'success': False, 'error': 'Not authenticated'}, status=401)
+    
+    try:
+        is_ignored = request.POST.get('is_ignored') == 'true'
+        
+        # Validation: Cannot ignore if usage > 0
+        if is_ignored:
+            # Check current usage
+            # We need to fetch the current state to verify
+            cards = db.get_user_cards(uid) # This gets all cards
+            # Filter for specific card
+            target_card = next((c for c in cards if c.get('id') == user_card_id), None)
+            
+            if target_card:
+                benefit_usage = target_card.get('benefit_usage', {}).get(benefit_id, {})
+                
+                # Check if any usage exists
+                # 'used' legacy field or iterating periods
+                legacy_used = benefit_usage.get('used', 0)
+                periods = benefit_usage.get('periods', {})
+                
+                total_used = legacy_used
+                for p_key, p_val in periods.items():
+                    total_used += p_val.get('used', 0)
+                    
+                # Note: This is a loose check. Ideally we check if `total_used > 0`.
+                # However, our data model might double count if we sum legacy + periods.
+                # But if either is > 0, it's used.
+                
+                # Actually, wait. 
+                # If we have periods, `used` might be just the current period.
+                # Let's check strict "has any value logged".
+                has_usage = False
+                if benefit_usage.get('used', 0) > 0:
+                    has_usage = True
+                
+                if not has_usage:
+                    for p in periods.values():
+                        if p.get('used', 0) > 0:
+                            has_usage = True
+                            break
+                            
+                if has_usage:
+                     return JsonResponse({'success': False, 'error': 'Cannot ignore a benefit with logged usage'}, status=400)
+
+        db.toggle_benefit_ignore(uid, user_card_id, benefit_id, is_ignored)
         return JsonResponse({'success': True})
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)}, status=500)

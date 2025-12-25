@@ -34,6 +34,20 @@ function updateWalletUI() {
         renderMainDashboardStack();
     }
 
+    // Check if card count changed -> trigger refresh to load new benefit cards from server
+    // We use a global variable to track previous state
+    if (typeof lastWalletCardCount === 'undefined') {
+        window.lastWalletCardCount = count;
+        // Initial load often doesn't need refresh (rendered by server), 
+        // OR it does if we rely on client side triggers.
+        // Assuming server render is fresh on page load.
+    } else if (window.lastWalletCardCount !== count) {
+        window.lastWalletCardCount = count;
+        if (typeof refreshDashboardBenefits === 'function') {
+            refreshDashboardBenefits();
+        }
+    }
+
     // 5. Update Chase 5/24 Status
     updateChase524UI();
 
@@ -54,8 +68,8 @@ function updateNetPerformanceUI() {
     if (!display || !pill) return;
 
     // 1. Calculate Total Value (Credits Only) using shared helper
+    // 1. Calculate Total Value (Credits Only) using shared helper
     const totalUsed = calculateCreditsUsed();
-    console.log("Net Performance Calc - Total Used (Credits Only):", totalUsed);
 
     // 2. Calculate Total Fees
     let totalFees = 0;
@@ -71,7 +85,8 @@ function updateNetPerformanceUI() {
     }
 
     const net = totalUsed - totalFees;
-    console.log("Net Performance Calc - Net:", net);
+
+
 
     // Update Display
     display.textContent = `$${net.toFixed(2)}`;
@@ -143,9 +158,9 @@ function calculateCreditsUsed() {
                                                 const val = parseFloat(staticBenefit.dollar_value);
                                                 const name = staticBenefit.description || staticBenefit.name || 'Unnamed';
 
-                                                // MATCH PY: benefit_type == 'Credit' AND dollar_value > 0
-                                                if (type === 'Credit' && val > 0) {
-                                                    console.log(`[+] Adding Credit: ${name} (Type: ${type}, Val: ${val}) - Amount: ${data.used}`);
+                                                // MATCH PY: benefit_type == 'Credit' OR 'Perk' AND dollar_value > 0
+                                                if ((type === 'Credit' || type === 'Perk') && val > 0) {
+                                                    console.log(`[+] Adding Benefit: ${name} (Type: ${type}, Val: ${val}) - Amount: ${data.used}`);
                                                     totalUsed += (data.used || 0);
                                                 } else {
                                                     console.log(`[-] Skipping ${name} (Type: ${type}, Val: ${val})`);
@@ -191,11 +206,23 @@ function updateYtdRewardsUI() {
             if (typeof allCardsData !== 'undefined') {
                 const staticCard = allCardsData.find(c => c.id === userCard.card_id);
                 if (staticCard && staticCard.benefits) {
-                    staticCard.benefits.forEach(b => {
+                    staticCard.benefits.forEach((b, index) => {
                         // Sum ALL benefits potential (as per user request)
                         // logic mirrors views.py: total_potential_value sums all valid benefits
+                        // AND now respects is_ignored from userCard logic
                         if (b.dollar_value && b.benefit_type !== 'Protection' && b.benefit_type !== 'Bonus') {
-                            totalPotential += parseFloat(b.dollar_value);
+                            // benefit_usage keys are benefit_{index} (0-based index from CSV order)
+                            // We trust staticCard.benefits matches this order.
+                            const usageKey = `benefit_${index}`;
+                            let isIgnored = false;
+
+                            if (userCard.benefit_usage && userCard.benefit_usage[usageKey]) {
+                                isIgnored = userCard.benefit_usage[usageKey].is_ignored || false;
+                            }
+
+                            if (!isIgnored) {
+                                totalPotential += parseFloat(b.dollar_value);
+                            }
                         }
                     });
                 }

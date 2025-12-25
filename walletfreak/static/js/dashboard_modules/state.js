@@ -66,7 +66,7 @@ function setupUserListener() {
     userListenerUnsubscribe = db.collection('users').doc(currentUserUid)
         .onSnapshot(async (doc) => {
             if (!doc.exists) return;
-            console.log("User listener updated:", doc.data()); // Debug log
+
 
             const data = doc.data();
             const personalitySlug = data.assigned_personality;

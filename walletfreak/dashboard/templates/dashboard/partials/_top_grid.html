@@ -13,14 +13,16 @@
                     <span class="material-icons" style="font-size: 14px; vertical-align: middle; margin-right: 6px;">north_east</span>
                     YTD Total Rewards
                 </div>
-                <div id="ytd-rewards-display" style="font-size: 2.5rem; font-weight: 800; line-height: 1; margin-bottom: 0.75rem;">
-                    ${{ total_potential_value|floatformat:0 }}<span style="font-size: 1.25rem; font-weight: 500; opacity: 0.5;">.{{ total_potential_value|floatformat:2|slice:"-2:" }}</span>
+                <div id="ytd-rewards-display" style="font-size: 2.5rem; font-weight: 800; line-height: 1; margin-bottom: 0.75rem; min-height: 40px; display: flex; align-items: center;">
+                    <div class="loader" style="width: 24px; height: 24px; border-width: 3px;"></div>
                 </div>
                 
                 <!-- Credits Used Sub-stat -->
                 <div style="display: flex; align-items: center; background: rgba(96, 165, 250, 0.1); border-radius: 6px; padding: 4px 8px; width: fit-content;">
                     <span class="material-icons" style="font-size: 14px; color: #818CF8; margin-right: 6px;">bolt</span>
-                    <span id="credits-used-display" style="font-size: 0.75rem; font-weight: 600; color: #E0E7FF; letter-spacing: 0.02em;">CREDITS USED: ${{ total_extracted_value|default:0 }}</span>
+                    <span id="credits-used-display" style="font-size: 0.75rem; font-weight: 600; color: #E0E7FF; letter-spacing: 0.02em;">
+                         <div class="loader" style="width: 12px; height: 12px; border-width: 2px;"></div>
+                    </span>
                 </div>
             </div>
 
@@ -55,11 +57,11 @@
                     Net Performance (Value - Fees)
                 </div>
                 <div style="display: flex; align-items: center; gap: 1rem;">
-                    <div id="net-performance-val" style="font-size: 2rem; font-weight: 800; line-height: 1; {% if net_performance < 0 %}color: #F97316;{% else %}color: #10B981;{% endif %}">
-                        ${{ net_performance|floatformat:2 }}
+                    <div id="net-performance-val" style="font-size: 2rem; font-weight: 800; line-height: 1; color: #64748B;">
+                        <div class="loader" style="width: 24px; height: 24px; border-width: 3px;"></div>
                     </div>
-                    <div id="net-performance-badge" style="padding: 0.35rem 0.85rem; border-radius: 8px; font-size: 0.75rem; font-weight: 700; {% if net_performance < 0 %}background: rgba(249, 115, 22, 0.2); color: #F97316;{% else %}background: rgba(16, 185, 129, 0.2); color: #10B981;{% endif %}">
-                        {% if net_performance < 0 %}VALUE DEFICIT{% else %}PROFIT MODE{% endif %}
+                    <div id="net-performance-badge" style="padding: 0.35rem 0.85rem; border-radius: 8px; font-size: 0.75rem; font-weight: 700; background: #E2E8F0; color: #64748B;">
+                        LOADING...
                     </div>
                 </div>
             </div>

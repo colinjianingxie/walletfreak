@@ -3,7 +3,7 @@
 {% load card_extras %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}?v=1.3">
 <link rel="stylesheet" href="{% static 'css/mobile_modal.css' %}">
 {% endblock %}
 
@@ -28,6 +28,7 @@
 {% include "dashboard/partials/_filters.html" %}
 {% include "dashboard/partials/_section_action.html" %}
 {% include "dashboard/partials/_section_maxed.html" %}
+{% include "dashboard/partials/_section_ignored.html" %}
 
 <!-- Modals -->
 {% include "dashboard/modals/_manage_wallet.html" %}
