@@ -115,7 +115,8 @@ def parse_master_cards_csv(csv_path):
             'image_url': str,
             'min_credit_score': int or None,
             'max_credit_score': int or None,
-            'application_link': str
+            'application_link': str,
+            'annual_fee': int
         }
     }
     """
@@ -160,12 +161,22 @@ def parse_master_cards_csv(csv_path):
                 # Parse ApplicationLink
                 app_link = (row.get('ApplicationLink') or '').strip()
                         
+                # Parse AnnualFee
+                annual_fee = 0
+                af_str = row.get('AnnualFee', '').strip()
+                if af_str:
+                    try:
+                        annual_fee = int(af_str)
+                    except ValueError:
+                        pass
+
                 master_data[key] = {
                     'points_value_cpp': cpp,
                     'image_url': image_url,
                     'min_credit_score': min_score,
                     'max_credit_score': max_score,
-                    'application_link': app_link
+                    'application_link': app_link,
+                    'annual_fee': annual_fee
                 }
     except FileNotFoundError:
         print(f"Warning: Master cards CSV not found at {csv_path}")
@@ -176,7 +187,7 @@ def parse_benefits_csv(csv_path):
     """
     Parse the benefits CSV and return structured card data.
     
-    CSV Format: Vendor,CardName,AnnualFee,BenefitDescription,Category,DollarValue,EffectiveDate
+    CSV Format: Vendor,CardName,BenefitDescription,Category,DollarValue,EffectiveDate
     
     Returns a dictionary mapping card names to their data structure:
     {
@@ -218,7 +229,7 @@ def parse_benefits_csv(csv_path):
             # robust key: prioritize slug-id
             key = slug_id if slug_id else card_name
             
-            annual_fee_str = row['AnnualFee'].strip()
+            # AnnualFee is no longer in this CSV
             benefit_desc = row['BenefitDescription'].strip()
             additional_details = row.get('AdditionalDetails', '').strip()
             category = row['BenefitCategory'].strip()
@@ -230,14 +241,6 @@ def parse_benefits_csv(csv_path):
             benefit_type = row.get('BenefitType', '').strip()
             numeric_value_str = row.get('NumericValue', '').strip()
             numeric_type_str = row.get('NumericType', '').strip()
-            
-            # Parse annual fee
-            annual_fee = 0
-            if annual_fee_str:
-                try:
-                    annual_fee = int(annual_fee_str)
-                except ValueError:
-                    annual_fee = 0
             
             # Parse dollar value
             dollar_value = None
@@ -255,7 +258,7 @@ def parse_benefits_csv(csv_path):
                 cards_dict[key]['name'] = card_name
                 cards_dict[key]['slug'] = slug_id
                 cards_dict[key]['issuer'] = vendor
-                cards_dict[key]['annual_fee'] = annual_fee
+                # cards_dict[key]['annual_fee'] = 0 # Will be populated from master CSV
             
             # Add benefit
             # Parse numeric value
@@ -511,6 +514,8 @@ def generate_cards_from_csv(csv_path, signup_csv_path=None, rates_csv_path=None,
                 card['min_credit_score'] = data['min_credit_score']
                 card['max_credit_score'] = data['max_credit_score']
                 card['application_link'] = data['application_link']
+                if 'annual_fee' in data:
+                    card['annual_fee'] = data['annual_fee']
 
     if overrides_csv_path:
         overrides_data = parse_benefit_overrides_csv(overrides_csv_path)

@@ -1,0 +1,43 @@
+{% load card_extras %}
+<!-- Ignored Benefits Section -->
+{% if ignored_benefits %}
+<div id="ignored-section" style="margin-bottom: 3rem;">
+    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+        <div style="width: 32px; height: 32px; background: #F3F4F6; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #6B7280;">
+            <span class="material-icons" style="font-size: 18px;">visibility_off</span>
+        </div>
+        <h2 style="font-size: 1.25rem; font-weight: 800; margin: 0; color: #1F2937;">Ignored Benefits <span style="color: #94A3B8; font-weight: 600; font-size: 1rem; margin-left: 0.25rem;">({{ ignored_benefits|length }})</span></h2>
+    </div>
+
+    <div class="ignored-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); gap: 1.5rem;">
+        {% for benefit in ignored_benefits %}
+        <div class="benefit-card" data-card-id="{{ benefit.card_id }}" style="background: #F9FAFB; border-radius: 24px; padding: 1.5rem; border: 1px dashed #D1D5DB; opacity: 0.75; transition: all 0.2s;">
+            <!-- Card Header -->
+            <div class="benefit-card-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                <div style="display: flex; gap: 1rem;">
+                    <img src="{% get_card_image_url benefit.card_id %}" style="width: 48px; height: auto; object-fit: contain; border-radius: 4px; filter: grayscale(100%);" alt="{{ benefit.card_name }}">
+                    <div>
+                        <h3 style="font-size: 1.125rem; font-weight: 700; margin: 0 0 0.25rem 0; color: #6B7280; text-decoration: line-through;">{{ benefit.benefit_name }}</h3>
+                        <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em; text-transform: uppercase;">
+                            {{ benefit.card_name }} • Ignored
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-size: 1.25rem; font-weight: 800; color: #9CA3AF;">$0</div>
+                    <div style="font-size: 0.7rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: line-through;">${{ benefit.amount|floatformat:0 }} VAL</div>
+                </div>
+            </div>
+
+            <!-- Restore Button / Click area -->
+            <button onclick="openBenefitModal('{{ benefit.user_card_id }}', '{{ benefit.benefit_id }}', '{{ benefit.benefit_name|escapejs }}', {{ benefit.amount }}, {{ benefit.used }}, '{{ benefit.frequency|escapejs }}', '{{ benefit.periods.0.key }}', '{{ benefit.script_id }}', {{ benefit.is_ignored|yesno:'true,false' }}, {{ benefit.has_usage|yesno:'true,false' }})" 
+                    style="width: 100%; background: white; border: 1px solid #E5E7EB; padding: 0.75rem; border-radius: 12px; color: #6B7280; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.2s;">
+                <span class="material-icons" style="font-size: 18px;">settings_backup_restore</span>
+                Manage / Restore
+            </button>
+            {{ benefit.periods|json_script:benefit.script_id }}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
