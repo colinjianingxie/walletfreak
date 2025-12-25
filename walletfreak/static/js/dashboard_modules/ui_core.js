@@ -37,8 +37,9 @@ function updateWalletUI() {
     // 5. Update Chase 5/24 Status
     updateChase524UI();
 
-    // 6. Update Total Value Extracted
-    updateTotalValueExtractedUI();
+    // 6. Update Total Value Extracted & YTD Rewards
+    updateYtdRewardsUI();
+    updateCreditsUsedUI();
 
     // 7. Update Total Annual Fees
     updateTotalAnnualFeeUI();
@@ -48,28 +49,13 @@ function updateWalletUI() {
 }
 
 function updateNetPerformanceUI() {
-    const display = document.getElementById('net-performance-display');
-    const pill = document.getElementById('net-performance-pill');
+    const display = document.getElementById('net-performance-val');
+    const pill = document.getElementById('net-performance-badge');
     if (!display || !pill) return;
 
-    // 1. Calculate Total Value
-    const currentYear = new Date().getFullYear().toString();
-    let totalUsed = 0;
-    if (typeof walletCards !== 'undefined' && Array.isArray(walletCards)) {
-        walletCards.forEach(card => {
-            if (card.benefit_usage) {
-                Object.values(card.benefit_usage).forEach(benefit => {
-                    if (benefit.periods) {
-                        Object.entries(benefit.periods).forEach(([key, data]) => {
-                            if (key.startsWith(currentYear)) {
-                                totalUsed += (data.used || 0);
-                            }
-                        });
-                    }
-                });
-            }
-        });
-    }
+    // 1. Calculate Total Value (Credits Only) using shared helper
+    const totalUsed = calculateCreditsUsed();
+    console.log("Net Performance Calc - Total Used (Credits Only):", totalUsed);
 
     // 2. Calculate Total Fees
     let totalFees = 0;
@@ -85,6 +71,7 @@ function updateNetPerformanceUI() {
     }
 
     const net = totalUsed - totalFees;
+    console.log("Net Performance Calc - Net:", net);
 
     // Update Display
     display.textContent = `$${net.toFixed(2)}`;
@@ -127,11 +114,8 @@ function updateTotalAnnualFeeUI() {
     displayElement.innerHTML = `$${intPart}<span style="font-size: 1.25rem; font-weight: 500; opacity: 0.5;">${decimalPart}</span>`;
 }
 
-function updateTotalValueExtractedUI() {
-    const displayElement = document.getElementById('total-value-display');
-    if (!displayElement) return;
-
-    // Calculate total extracted value for the current year
+// Helper to calculate total credits used (shared logic)
+function calculateCreditsUsed() {
     const currentYear = new Date().getFullYear().toString();
     let totalUsed = 0;
 
@@ -141,9 +125,35 @@ function updateTotalValueExtractedUI() {
                 Object.values(card.benefit_usage).forEach(benefit => {
                     if (benefit.periods) {
                         Object.entries(benefit.periods).forEach(([key, data]) => {
-                            // key format is typically YEAR_MONTH or YEAR_QX or YEAR_HX
                             if (key.startsWith(currentYear)) {
-                                totalUsed += (data.used || 0);
+                                // ALWAYS verify against static data (Source of Truth) to match Backend logic
+                                // Ignore benefit.benefit_type on the user object as it may be stale or incorrect
+                                if (typeof allCardsData !== 'undefined') {
+                                    const staticCard = allCardsData.find(c => c.id === card.card_id);
+                                    if (staticCard && staticCard.benefits) {
+                                        // Find benefit index from key "benefit_X"
+                                        const benefitKey = Object.keys(card.benefit_usage).find(k => card.benefit_usage[k] === benefit);
+                                        if (benefitKey) {
+                                            const benefitIndex = parseInt(benefitKey.split('_')[1]);
+                                            const staticBenefit = staticCard.benefits[benefitIndex];
+
+                                            // Strict check and LOGGING
+                                            if (staticBenefit) {
+                                                const type = staticBenefit.benefit_type;
+                                                const val = parseFloat(staticBenefit.dollar_value);
+                                                const name = staticBenefit.description || staticBenefit.name || 'Unnamed';
+
+                                                // MATCH PY: benefit_type == 'Credit' AND dollar_value > 0
+                                                if (type === 'Credit' && val > 0) {
+                                                    console.log(`[+] Adding Credit: ${name} (Type: ${type}, Val: ${val}) - Amount: ${data.used}`);
+                                                    totalUsed += (data.used || 0);
+                                                } else {
+                                                    console.log(`[-] Skipping ${name} (Type: ${type}, Val: ${val})`);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         });
                     }
@@ -151,13 +161,53 @@ function updateTotalValueExtractedUI() {
             }
         });
     }
+    return totalUsed;
+}
 
-    // Format with commas and decimals
-    // Format: $<Int><span class="decimals">.00</span>
-    const intPart = Math.floor(totalUsed).toLocaleString();
-    const decimalPart = (totalUsed % 1).toFixed(2).substring(1); // .XX
+function updateCreditsUsedUI() {
+    const displayElement = document.getElementById('credits-used-display');
+    if (!displayElement) return;
 
-    displayElement.innerHTML = `$${intPart}<span style="font-size: 1.25rem; font-weight: 500; opacity: 0.5;">${decimalPart}</span>`;
+    const totalUsed = calculateCreditsUsed();
+
+    // Format: CREDITS USED: $<Val>
+    displayElement.textContent = `CREDITS USED: $${totalUsed.toFixed(2)}`;
+}
+
+function updateYtdRewardsUI() {
+    // YTD Rewards is essentially static potential from the server for now,
+    // but if we were to calculate it client side it would be sum of all benefit potentials.
+    // For now, let's just leave the server value or strictly implement if needed.
+    // Since this value shouldn't change based on usage (it's potential), we arguably don't need to update it client-side.
+    // However if the user *Adds* a card, we should.
+
+    const displayElement = document.getElementById('ytd-rewards-display');
+    if (!displayElement) return;
+
+    let totalPotential = 0;
+
+    if (typeof walletCards !== 'undefined' && Array.isArray(walletCards)) {
+        walletCards.forEach(userCard => {
+            if (typeof allCardsData !== 'undefined') {
+                const staticCard = allCardsData.find(c => c.id === userCard.card_id);
+                if (staticCard && staticCard.benefits) {
+                    staticCard.benefits.forEach(b => {
+                        // Sum ALL benefits potential (as per user request)
+                        // logic mirrors views.py: total_potential_value sums all valid benefits
+                        if (b.dollar_value && b.benefit_type !== 'Protection' && b.benefit_type !== 'Bonus') {
+                            totalPotential += parseFloat(b.dollar_value);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    // Format using strict locale
+    const formattedTotal = totalPotential.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const parts = formattedTotal.split('.');
+
+    displayElement.innerHTML = `$${parts[0]}<span style="font-size: 1.25rem; font-weight: 500; opacity: 0.5;">.${parts[1]}</span>`;
 }
 
 function updateChase524UI() {

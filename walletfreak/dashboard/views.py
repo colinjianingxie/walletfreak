@@ -109,8 +109,10 @@ def dashboard(request):
             
             # Process each benefit
             for idx, benefit in enumerate(card_details.get('benefits', [])):
-                # Filter out Protection and Bonus benefits
-                if benefit.get('benefit_type') in ['Protection', 'Bonus']:
+                benefit_type = benefit.get('benefit_type')
+
+                # Filter out Protection and Bonus benefits for display lists
+                if benefit_type in ['Protection', 'Bonus']:
                     continue
 
                 dollar_value = benefit.get('dollar_value')
@@ -125,6 +127,7 @@ def dashboard(request):
                     periods = []
                     current_period_status = 'empty' # empty, partial, full
                     current_period_used = 0
+                    ytd_used = 0
                     
                     # Get period values mapping from benefit
                     period_values = benefit.get('period_values', {})
@@ -142,6 +145,7 @@ def dashboard(request):
                             
                             p_data = benefit_usage_data.get('periods', {}).get(period_key, {})
                             p_used = p_data.get('used', 0)
+                            ytd_used += p_used
                             p_full = p_data.get('is_full', False)
                             
                             status = 'empty'
@@ -197,6 +201,8 @@ def dashboard(request):
                         else:
                             current_period_status = h2_status
                             current_period_used = h2_data.get('used', 0)
+                        
+                        ytd_used = h1_data.get('used', 0) + h2_data.get('used', 0)
 
                     elif 'quarterly' in frequency.lower():
                         # Q1-Q4
@@ -213,6 +219,8 @@ def dashboard(request):
                             q_data = benefit_usage_data.get('periods', {}).get(q_key, {})
                             q_status = 'full' if (q_data.get('is_full') or q_data.get('used', 0) >= q_max) else ('partial' if q_data.get('used', 0) > 0 else 'empty')
                             periods.append({'label': f'Q{q}', 'key': q_key, 'status': q_status, 'is_current': q == curr_q, 'max_value': q_max, 'is_available': q_available, 'used': q_data.get('used', 0)})
+                            
+                            ytd_used += q_data.get('used', 0)
                             
                             if q == curr_q:
                                 current_period_status = q_status
@@ -232,6 +240,7 @@ def dashboard(request):
                         
                         current_period_status = status
                         current_period_used = p_used
+                        ytd_used = p_used
 
                     # Calculate days until current period expires
                     days_until_expiration = None
@@ -296,8 +305,12 @@ def dashboard(request):
                     else:
                         action_needed_benefits.append(benefit_obj)
                     
-                    total_used_value += current_period_used
+                    # YTD Total Rewards sums ALL valid benefits (potential)
                     total_potential_value += dollar_value
+
+                    # Credits Used and Net Performance are based strictly on "Credit" type benefits
+                    if benefit_type == 'Credit':
+                        total_used_value += ytd_used
         except Exception as e:
             print(f"Error processing card benefits: {e}")
             continue

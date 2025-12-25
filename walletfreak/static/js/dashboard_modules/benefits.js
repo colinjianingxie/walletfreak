@@ -281,6 +281,9 @@ function markAsFull() {
                 btn.style.borderColor = '#10B981';
                 btn.style.color = '#047857';
 
+                // Refresh dashboard to update top stats
+                refreshDashboardBenefits();
+
                 // Delay closing to allow user to see the success state
                 setTimeout(() => {
                     closeBenefitModal();
@@ -405,6 +408,9 @@ function saveBenefitUsage() {
                     updateBenefitModalUI();
                     if (typeof showToast === 'function') showToast('Usage logged!');
                 }
+
+                // Refresh dashboard to update top stats
+                refreshDashboardBenefits();
 
                 input.value = '';
 

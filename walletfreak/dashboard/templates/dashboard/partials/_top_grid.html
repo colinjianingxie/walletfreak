@@ -11,10 +11,16 @@
             <div style="flex: 1;">
                 <div style="font-size: 0.75rem; font-weight: 700; color: #60A5FA; letter-spacing: 0.05em; margin-bottom: 0.5rem; text-transform: uppercase; display: flex; align-items: center;">
                     <span class="material-icons" style="font-size: 14px; vertical-align: middle; margin-right: 6px;">north_east</span>
-                    YTD Rewards
+                    YTD Total Rewards
                 </div>
-                <div id="total-value-display" style="font-size: 2.5rem; font-weight: 800; line-height: 1;">
-                    ${{ total_extracted_value|floatformat:0 }}<span style="font-size: 1.25rem; font-weight: 500; opacity: 0.5;">.{{ total_extracted_value|floatformat:2|slice:"-2:" }}</span>
+                <div id="ytd-rewards-display" style="font-size: 2.5rem; font-weight: 800; line-height: 1; margin-bottom: 0.75rem;">
+                    ${{ total_potential_value|floatformat:0 }}<span style="font-size: 1.25rem; font-weight: 500; opacity: 0.5;">.{{ total_potential_value|floatformat:2|slice:"-2:" }}</span>
+                </div>
+                
+                <!-- Credits Used Sub-stat -->
+                <div style="display: flex; align-items: center; background: rgba(96, 165, 250, 0.1); border-radius: 6px; padding: 4px 8px; width: fit-content;">
+                    <span class="material-icons" style="font-size: 14px; color: #818CF8; margin-right: 6px;">bolt</span>
+                    <span id="credits-used-display" style="font-size: 0.75rem; font-weight: 600; color: #E0E7FF; letter-spacing: 0.02em;">CREDITS USED: ${{ total_extracted_value|default:0 }}</span>
                 </div>
             </div>
 
@@ -27,8 +33,14 @@
                     <span class="material-icons" style="font-size: 14px; vertical-align: middle; margin-right: 6px;">remove_circle_outline</span>
                     Annual Fees
                 </div>
-                <div id="total-annual-fee-display" style="font-size: 2.5rem; font-weight: 800; line-height: 1; color: #E5E7EB;">
+                <div id="total-annual-fee-display" style="font-size: 2.5rem; font-weight: 800; line-height: 1; color: #E5E7EB; margin-bottom: 0.75rem;">
                     ${{ total_annual_fee|default:0|floatformat:0 }}<span style="font-size: 1.25rem; font-weight: 500; opacity: 0.5;">.00</span>
+                </div>
+
+                <!-- Card Count Sub-stat -->
+                <div style="display: flex; align-items: center; background: rgba(148, 163, 184, 0.1); border-radius: 6px; padding: 4px 8px; width: fit-content;">
+                    <span class="material-icons" style="font-size: 14px; color: #94A3B8; margin-right: 6px;">credit_card</span>
+                    <span style="font-size: 0.75rem; font-weight: 600; color: #CBD5E1; letter-spacing: 0.02em;">ACROSS {{ active_cards|length }} CARDS</span>
                 </div>
             </div>
         </div>
@@ -40,20 +52,20 @@
         <div style="display: flex; justify-content: space-between; align-items: flex-end;">
             <div>
                 <div style="font-size: 0.75rem; font-weight: 700; color: #64748B; letter-spacing: 0.1em; margin-bottom: 0.5rem; text-transform: uppercase;">
-                    Net Performance
+                    Net Performance (Value - Fees)
                 </div>
                 <div style="display: flex; align-items: center; gap: 1rem;">
-                    <div id="net-performance-display" style="font-size: 2rem; font-weight: 800; line-height: 1; {% if net_performance < 0 %}color: #F97316;{% else %}color: #10B981;{% endif %}">
+                    <div id="net-performance-val" style="font-size: 2rem; font-weight: 800; line-height: 1; {% if net_performance < 0 %}color: #F97316;{% else %}color: #10B981;{% endif %}">
                         ${{ net_performance|floatformat:2 }}
                     </div>
-                    <div id="net-performance-pill" style="padding: 0.35rem 0.85rem; border-radius: 8px; font-size: 0.75rem; font-weight: 700; {% if net_performance < 0 %}background: rgba(249, 115, 22, 0.2); color: #F97316;{% else %}background: rgba(16, 185, 129, 0.2); color: #10B981;{% endif %}">
-                        {% if net_performance < 0 %}Underutilizing{% else %}Profit Mode{% endif %}
+                    <div id="net-performance-badge" style="padding: 0.35rem 0.85rem; border-radius: 8px; font-size: 0.75rem; font-weight: 700; {% if net_performance < 0 %}background: rgba(249, 115, 22, 0.2); color: #F97316;{% else %}background: rgba(16, 185, 129, 0.2); color: #10B981;{% endif %}">
+                        {% if net_performance < 0 %}VALUE DEFICIT{% else %}PROFIT MODE{% endif %}
                     </div>
                 </div>
             </div>
             
             <!-- Graph Icon -->
-            <div class="graph-icon-container" style="width: 48px; height: 48px; background: #1F2937; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #60A5FA;">
+            <div class="graph-icon-container" style="width: 48px; height: 48px; background: {% if net_performance < 0 %}rgba(249, 115, 22, 0.1){% else %}rgba(16, 185, 129, 0.1){% endif %}; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: {% if net_performance < 0 %}#F97316{% else %}#10B981{% endif %};">
                 <span class="material-icons" style="font-size: 24px;">show_chart</span>
             </div>
         </div>
