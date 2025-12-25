@@ -379,28 +379,8 @@ function markAsFull() {
                 // Show success feedback
                 if (typeof showToast === 'function') showToast('Marked as full!');
 
-                // Update button to show success state
-                btn.innerHTML = '<span class="material-icons" style="font-size: 20px; margin-right: 0.5rem;">check_circle</span> Marked!';
-                btn.style.background = '#ECFDF5';
-                btn.style.borderColor = '#10B981';
-                btn.style.color = '#047857';
-
                 // Refresh dashboard to update top stats
                 refreshDashboardBenefits();
-
-                // Delay closing to allow user to see the success state
-                setTimeout(() => {
-                    closeBenefitModal();
-
-                    // Reset button style after modal is closed
-                    setTimeout(() => {
-                        btn.innerHTML = originalText;
-                        btn.disabled = false;
-                        btn.style.background = 'white';
-                        btn.style.borderColor = '#E5E7EB';
-                        btn.style.color = '#1F2937';
-                    }, 500);
-                }, 1000);
             } else {
                 alert('Error: ' + (data.error || 'Unknown error'));
                 btn.innerHTML = originalText;
@@ -638,7 +618,12 @@ function resetBenefit() {
 
                 if (typeof showToast === 'function') showToast('Benefit usage reset!');
 
-                closeBenefitModal();
+                updateBenefitModalUI();
+
+                if (btn) {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }
             } else {
                 alert('Error: ' + (data.error || 'Unknown error'));
                 if (btn) {
