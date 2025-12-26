@@ -188,10 +188,25 @@ def worth_it_calculate(request, card_slug):
         benefits_map = {b.get('short_description', ''): b for b in card.get('benefits', [])}
         
         # Iterate through QUESTIONS to calculate value
+        total_user_weight = 0.0
+        total_max_weight = 0.0
+        
         for idx, q_data in enumerate(card_questions):
             # Form field name: benefit_{index}
             field_name = f'benefit_{idx}'
             value_str = request.POST.get(field_name)
+            
+            # Determining Max Weight for this question
+            weights = q_data.get('weights', [])
+            this_question_max_weight = 1.0
+            if weights:
+                try:
+                    this_question_max_weight = max(weights)
+                except ValueError:
+                    this_question_max_weight = 1.0
+            
+            # Default user weight for this question
+            this_question_user_weight = 0.0
             
             if value_str is not None:
                 try:
@@ -212,60 +227,79 @@ def worth_it_calculate(request, card_slug):
                         # Logic for multiple choice
                         # val is the INDEX selected (0 to N-1)
                         choices = q_data['choices']
-                        weights = q_data.get('weights', [])
                         
                         if choices:
                             idx_val = int(val)
                             # Check if we have valid weights for this choice
                             if weights and 0 <= idx_val < len(weights):
                                 utilization = weights[idx_val]
+                                this_question_user_weight = utilization
                                 benefit_value = utilization * dollar_val
                             else:
                                 # Fallback: Linear interpolation
                                 max_idx = len(choices) - 1
                                 if max_idx > 0:
                                     utilization = val / max_idx
+                                    this_question_user_weight = utilization # Approx weight
                                     benefit_value = utilization * dollar_val
                                 else:
                                     # Single choice? assume 100%
+                                    this_question_user_weight = 1.0 if val >= 0 else 0.0
                                     benefit_value = dollar_val if val >= 0 else 0
                         else:
+                            this_question_user_weight = 1.0 if val > 0 else 0.0
                             benefit_value = dollar_val if val > 0 else 0
                     
                     elif 'Monthly' in time_cat:
+                        # Monthly benfits are often toggles or counters. 
+                        # If it's a toggle (val=1), utilization is 1.0
+                        # If it is a counter, we might need normalization? 
+                        # But standard toggle returns 1.0. 
+                        # Assuming val is utilization-proxy for toggle.
+                        # For simple toggle: val is 1.0 or 0.0.
+                        this_question_user_weight = 1.0 if val > 0 else 0.0
                         benefit_value = (val / 12.0) * dollar_val
                     elif 'Quarterly' in time_cat:
+                        this_question_user_weight = 1.0 if val > 0 else 0.0
                         benefit_value = (val / 4.0) * dollar_val
                     elif 'Semi' in time_cat:
+                        this_question_user_weight = 1.0 if val > 0 else 0.0
                         benefit_value = (val / 2.0) * dollar_val
                     else:
                         # Toggle (1 or 0)
+                        this_question_user_weight = val # Assuming val is 0.0 or 1.0
                         benefit_value = val * dollar_val
                         
                     total_value += benefit_value
+                    total_user_weight += this_question_user_weight
+                    total_max_weight += this_question_max_weight
 
                 except (ValueError, IndexError):
+                    # Still add max weight even if user input invalid? 
+                    # Probably best to skip or assume 0 user weight.
+                    total_max_weight += this_question_max_weight
                     continue
+            else:
+                # Value missing, still count towards max weight potential
+                # Recalculate max weight as it wasn't done above if value_str is None (logic flow adjustment)
+                # Actually, duplicate logic needed if we want to count missed questions.
+                # But let's assume all questions come in POST or are ignored.
+                # If we want to be strict, we really should calculate max_weight outside the 'if value_str' block.
+                # Moving max_weight calc up... done.
+                total_max_weight += this_question_max_weight
         
         score = total_value - annual_fee
         
-        # Calculate percentage for circular progress (arbitrary max scale, e.g. 2x annual fee or fixed max)
-        # Let's say max score is 100 for visual purposes, or relative to fees.
-        # User design shows "84 SCORE". Let's map it:
-        # If score > 0, maybe percentage is (score / (annual_fee * 2)) * 100?
-        # Or simply, let's treat "Score" as a proprietary 0-100 metric for now, 
-        # or just visualize the profitability ratio.
-        # Simple approach: If profitable, 100%. If breakeven 50%. 
-        # Better: (Total Value / Annual Fee) * 50. scale.
-        
-        # Implementation for "Score" based on Value vs Fee ratio.
-        # 1.0 (Break even) = 50 score.
-        # 2.0 (2x value) = 100 score.
-        if annual_fee > 0:
-            ratio = total_value / annual_fee
-            optimization_score = min(max(int(ratio * 50), 0), 100)
-        else:
-            optimization_score = 100 # No fee, infinite value ratio essentially
+        # New Scoring Logic based on Weights
+        # Fit Score = (Total User Weight / Total Max Weight) * 100
+        fit_percentage = 0
+        if total_max_weight > 0:
+            fit_percentage = (total_user_weight / total_max_weight) * 100
+            
+        # Optimization Score / Worth It determination
+        # Threshold: 50%
+        optimization_score = min(max(int(fit_percentage), 0), 100)
+        is_worth_it = fit_percentage >= 50
 
         # Check wallet status
         wallet_card_ids = []
