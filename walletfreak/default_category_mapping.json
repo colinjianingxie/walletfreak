@@ -1,27 +1,15 @@
 [
     {
-        "CategoryName": "Travel Portals",
-        "Icon": "fa-solid fa-magnifying-glass-location",
-        "CategoryNameDetailed": [
-            "Chase Travel",
-            "Amex Travel",
-            "Capital One Travel",
-            "Citi Travel",
-            "Wells Fargo Travel",
-            "Bank of America Travel",
-            "US Bank Travel",
-            "The Edit by Chase Travel",
-            "Fine Hotels & Resorts",
-            "The Hotel Collection",
-            "Lifestyle Collection"
-        ]
-    },
-    {
         "CategoryName": "Airlines",
         "Icon": "fa-solid fa-plane",
         "CategoryNameDetailed": [
             "Generic Airlines",
+            "Direct Flight",
             "American Airlines",
+            "Capital One Travel Flights",
+            "Chase Travel Flights",
+            "Citi Travel Flights",
+            "Amex Travel Flights",
             "United",
             "Delta",
             "Southwest",
@@ -39,6 +27,10 @@
         "Icon": "fa-solid fa-hotel",
         "CategoryNameDetailed": [
             "Generic Hotels",
+            "Capital One Travel Hotels",
+            "Chase Travel Hotels",
+            "Citi Travel Hotels",
+            "Amex Travel Hotels",
             "Hilton",
             "Hyatt",
             "IHG",
@@ -77,6 +69,10 @@
         "Icon": "fa-solid fa-car-side",
         "CategoryNameDetailed": [
             "Generic Transportation",
+            "Capital One Travel Rental Cars",
+            "Chase Travel Rental Cars",
+            "Citi Travel Rental Cars",
+            "Amex Travel Rental Cars",
             "Uber",
             "Lyft",
             "Rental Cars",
@@ -85,6 +81,7 @@
             "Blacklane",
             "EV Charging",
             "Gas",
+            "International Gas",
             "Transit",
             "Military Bases"
         ]
@@ -111,6 +108,7 @@
         "Icon": "fa-solid fa-ticket",
         "CategoryNameDetailed": [
             "Generic Entertainment",
+            "Capital One Entertainment",
             "Disney",
             "Apple Music",
             "Apple TV+",
@@ -166,7 +164,8 @@
             "PRIOR",
             "Global Entry",
             "TSA PreCheck",
-            "NEXUS"
+            "NEXUS",
+            "Citi Travel Attractions"
         ]
     },
     {
