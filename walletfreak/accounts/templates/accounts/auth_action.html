@@ -124,7 +124,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     firebase.auth().confirmPasswordReset(actionCode, newPassword)
                         .then(() => {
-                            showSuccess('Password Reset', 'Your password has been successfully updated. You can now login with your new password.');
+                            // Log out from Firebase and Backend
+                            firebase.auth().signOut().then(() => {
+                                fetch('/accounts/api/logout/')
+                                    .then(() => {
+                                        showSuccess('Password Reset', 'Your password has been successfully updated. You have been logged out and can now login with your new password.');
+                                    });
+                            });
                         })
                         .catch((error) => {
                             showError(error.message);
