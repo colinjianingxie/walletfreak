@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/contact.css' %}">
+{% endblock %}
+
+{% block main_style %}padding: 0; background: #F8FAFC; min-height: calc(100vh - 70px);{% endblock %}
+
+{% block full_width_content %}
+<div class="contact-page-wrapper">
+    <!-- Header -->
+    <div class="contact-header">
+        <div class="header-bg-blob"></div>
+        <div class="header-content">
+            <div class="get-in-touch-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="badge-icon"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>
+                <span>GET IN TOUCH</span>
+            </div>
+            <h1 class="contact-title">Let's Talk <span class="gradient-text">Optimization.</span></h1>
+            <p class="contact-subtitle">Have a card request or a question about your stack? Reach out directly.</p>
+        </div>
+    </div>
+
+    <!-- Form Container -->
+    <div class="contact-form-container">
+        <div class="contact-card">
+            
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <div class="contact-content-stack">
+                <div class="direct-email-container">
+                    <div class="direct-email-group">
+                        <div class="email-icon-box">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg>
+                        </div>
+                        <div>
+                            <p class="label-text">DIRECT EMAIL</p>
+                            <a href="mailto:colin@walletfreak.com" class="email-link">colin@walletfreak.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <form method="POST" action="{% url 'contact' %}" class="contact-form-fields">
+                    {% csrf_token %}
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="label-text">Name</label>
+                            <input required name="name" placeholder="Alex Smith" class="contact-input" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label class="label-text">Email</label>
+                            <input required name="email" placeholder="alex@example.com" class="contact-input" type="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="label-text">Message</label>
+                        <textarea required name="message" rows="4" placeholder="How can we help?" class="contact-input textarea-resize-none"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"></path><path d="m21.854 2.147-10.94 10.939"></path></svg>
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

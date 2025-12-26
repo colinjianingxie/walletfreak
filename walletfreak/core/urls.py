@@ -5,6 +5,7 @@ urlpatterns = [
     path('', views.home, name='home'),
 
     path('features/', views.features, name='features'),
+    path('contact/', views.contact, name='contact'),
     path('api/get-firebase-token/', views.get_firebase_token, name='get_firebase_token'),
     
     # Cron Jobs

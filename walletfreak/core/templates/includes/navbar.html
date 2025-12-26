@@ -23,6 +23,7 @@
                 <a href="{% url 'calculators_index' %}" data-nav="calculators">Calculators</a>
                 <a href="{% url 'personality_list' %}" data-nav="personalities">Personalities</a>
                 <a href="{% url 'blog_list' %}" data-nav="blog">Blog</a>
+                <a href="{% url 'contact' %}" data-nav="contact">Contact</a>
             </div>
 
             {% if user.is_authenticated %}
@@ -164,6 +165,13 @@
                 <span class="mobile-menu-text">Blog</span>
             </a>
 
+            <a href="{% url 'contact' %}" class="mobile-menu-item" data-nav="contact">
+                <div class="mobile-menu-icon">
+                    <span class="material-icons">mail</span>
+                </div>
+                <span class="mobile-menu-text">Contact</span>
+            </a>
+
 
 
             {% else %}
@@ -201,6 +209,13 @@
                     <span class="material-icons">menu_book</span>
                 </div>
                 <span class="mobile-menu-text">Blog</span>
+            </a>
+
+            <a href="{% url 'contact' %}" class="mobile-menu-item" data-nav="contact">
+                <div class="mobile-menu-icon">
+                    <span class="material-icons">mail</span>
+                </div>
+                <span class="mobile-menu-text">Contact</span>
             </a>
             {% endif %}
         </div>
@@ -248,6 +263,8 @@
                 activeNav = 'personalities';
             } else if (currentPath.startsWith('/blog')) {
                 activeNav = 'blog';
+            } else if (currentPath.startsWith('/contact')) {
+                activeNav = 'contact';
             }
 
             // Remove active class from all navigation items
@@ -302,6 +319,10 @@
                             case 'blog':
                                 icon.style.background = '#FFF7ED';
                                 icon.style.color = '#EA580C';
+                                break;
+                            case 'contact':
+                                icon.style.background = '#EFF6FF';
+                                icon.style.color = '#2563EB';
                                 break;
                         }
                     }

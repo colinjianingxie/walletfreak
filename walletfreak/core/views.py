@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from .services import db
 import firebase_admin
 from firebase_admin import auth
+from django.core.mail import send_mail
+from django.contrib import messages
 
 @login_required
 def get_firebase_token(request):
@@ -67,6 +69,55 @@ def features(request):
         'firebase_config': settings.FIREBASE_CLIENT_CONFIG,
     }
     return render(request, 'features.html', context)
+
+
+def contact(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message_content = request.POST.get('message')
+        
+        # Construct email content
+        # Subject: Contact Email from <name>: <email>
+        subject = f"Contact Email from {name}: {email}"
+        
+        text_content = f"Name: {name}\nEmail: {email}\n\nMessage:\n{message_content}"
+        
+        html_content = f"""
+        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+            <h2>New Contact Request</h2>
+            <p><strong>Name:</strong> {name}</p>
+            <p><strong>Email:</strong> {email}</p>
+            <hr style="border: 1px solid #eee; margin: 20px 0;">
+            <p style="white-space: pre-wrap;">{message_content}</p>
+        </div>
+        """
+        
+        try:
+            # Use Firestore Trigger Email via db service instead of direct SMTP
+            # This matches check_unused_benefits.py implementation
+            result = db.send_email_notification(
+                to='colin@walletfreak.com',
+                subject=subject,
+                html_content=html_content,
+                text_content=text_content
+            )
+            
+            if result:
+                messages.success(request, "Thanks for reaching out! We'll be in touch shortly.")
+            else:
+                # If result is None, something failed in queuing
+                print("Failed to queue email to Firestore.")
+                messages.error(request, "There was an error sending your message. Please try again later.")
+                
+        except Exception as e:
+            # Print the full error to console for debugging
+            print(f"Error sending email: {e}") 
+            messages.error(request, "There was an error sending your message. Please try again later.")
+            
+        return redirect('contact')
+        
+    return render(request, 'contact.html')
 
 
 @csrf_exempt
