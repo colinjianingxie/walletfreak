@@ -5,12 +5,10 @@
 <link rel="stylesheet" href="{% static 'css/spend_it.css' %}">
 <link rel="stylesheet" href="{% static 'css/card_modal.css' %}">
 <style>
-    .si-index-card {
-        background: white;
+    .tool-card {
         border-radius: 2.5rem;
         padding: 2rem;
         height: 100%;
-        border: 1px solid #F8FAFC;
         box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         transition: all 0.3s ease;
         display: flex;
@@ -19,64 +17,100 @@
         position: relative;
         overflow: hidden;
         text-decoration: none;
+        border: 1px solid transparent; 
     }
-    .si-index-card:hover {
+
+    .tool-card.light {
+        background: white;
+        border-color: #F8FAFC;
+    }
+
+    .tool-card.dark {
+        background: #0f172a;
+        color: white;
+    }
+
+    .tool-card:hover {
         transform: translateY(-4px);
+    }
+    
+    .tool-card.light:hover {
         box-shadow: 0 20px 40px rgba(37, 99, 235, 0.1);
     }
-    .si-ic-icon {
+
+    .tool-card.dark:hover {
+         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .tool-icon-box {
         width: 3.5rem;
         height: 3.5rem;
-        background: #2563EB;
-        color: white;
         border-radius: 1rem;
         display: flex;
         align-items: center;
         justify-content: center;
         margin-bottom: 1.5rem;
-        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+        position: relative;
+        z-index: 2;
     }
-    .si-ic-title {
+
+    .tool-title {
         font-size: 1.5rem;
         font-weight: 800;
-        color: #0F172A;
         margin-bottom: 0.75rem;
         font-family: 'Outfit', sans-serif;
+        position: relative;
+        z-index: 2;
     }
-    .si-ic-desc {
-        color: #64748B;
+
+    .tool-desc {
         font-size: 0.95rem;
         line-height: 1.5;
         margin-bottom: 2rem;
+        flex-grow: 1;
+        position: relative;
+        z-index: 2;
     }
-    .si-ic-link {
+
+    .tool-link {
         margin-top: auto;
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        color: #2563EB;
         font-weight: 800;
         font-size: 0.75rem;
         text-transform: uppercase;
         letter-spacing: 0.1em;
+        position: relative;
+        z-index: 2;
+        text-decoration: none;
     }
-    .si-bg-icon {
+
+    /* Background Icon Animation */
+    .tool-bg-icon {
         position: absolute;
         bottom: -2rem;
         right: -2rem;
         width: 10rem;
         height: 10rem;
-        color: #F1F5F9;
         opacity: 0.5;
         transform: rotate(-12deg);
         transition: all 0.5s ease;
         pointer-events: none;
+        z-index: 1;
     }
-    .si-index-card:hover .si-bg-icon {
-        color: #EFF6FF;
+
+    .tool-card:hover .tool-bg-icon {
         transform: rotate(0) scale(1.1);
-        opacity: 1;
+        opacity: 0.8; 
     }
+    
+    .tool-card.light .tool-bg-icon { color: #F1F5F9; }
+    .tool-card.dark .tool-bg-icon { color: rgba(255,255,255,0.05); }
+
+    .tool-card.light:hover .tool-bg-icon { color: #EFF6FF; opacity: 1; }
+    .tool-card.dark:hover .tool-bg-icon { color: rgba(255,255,255,0.1); opacity: 1; }
+
 </style>
 {% endblock %}
 
@@ -95,41 +129,41 @@
     <!-- Calculators Grid -->
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
         
-        <!-- Spend It Optimizer Card (New) -->
-        <div class="si-index-card" style="position: relative; display: block; cursor: default;">
+        <!-- Spend It Optimizer Card -->
+        <div class="tool-card light" style="cursor: default;">
             
-            <div class="si-bg-icon">
+            <div class="tool-bg-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
             </div>
             
-            <div class="si-ic-icon">
+            <div class="tool-icon-box" style="background: #2563EB; color: white; box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
             </div>
             
-            <h2 class="si-ic-title">"Spend It" Optimizer</h2>
+            <h2 class="tool-title" style="color: #0F172A;">"Spend It" Optimizer</h2>
             
-            <p class="si-ic-desc">
+            <p class="tool-desc" style="color: #64748B;">
                 Buying something big? Find the best card in your wallet (or out of it) for this purchase.
             </p>
             
             {% if user.is_authenticated %}
-                <a href="{% url 'spend_it_input' %}" class="si-ic-link" style="text-decoration: none;">
+                <a href="{% url 'spend_it_input' %}" class="tool-link" style="color: #2563EB;">
                     Optimize Spend 
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
                 </a>
                 <!-- Make the whole card clickable if auth -->
-                <a href="{% url 'spend_it_input' %}" style="position: absolute; inset: 0; z-index: 1;"></a>
+                <a href="{% url 'spend_it_input' %}" style="position: absolute; inset: 0; z-index: 3;"></a>
             {% else %}
-                <div class="si-ic-link" style="opacity: 0.5;">
+                <div class="tool-link" style="color: #2563EB; opacity: 0.5;">
                     Optimize Spend 
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
                 </div>
                 
-                <!-- Blurred Content Overlay for Unauthenticated Users -->
+                <!-- Blurred Content Overlay -->
                 <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); background: rgba(255, 255, 255, 0.6); z-index: 10; display: flex; align-items: center; justify-content: center; border-radius: 2.5rem;">
                     <div style="text-align: center;">
-                        <span class="material-icons" style="font-size: 40px; color: var(--si-primary); margin-bottom: 1rem;">lock</span>
-                        <p style="color: var(--si-text-main); font-weight: 600; margin-bottom: 1rem;">Log in to use</p>
+                        <span class="material-icons" style="font-size: 40px; color: #2563EB; margin-bottom: 1rem;">lock</span>
+                        <p style="color: #0F172A; font-weight: 600; margin-bottom: 1rem;">Log in to use</p>
                         <a href="{% url 'login' %}?next={% url 'spend_it_input' %}" style="display: inline-block; padding: 0.75rem 1.5rem; background: #2563EB; color: white; border-radius: 8px; font-weight: 600; text-decoration: none; box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2); transition: all 0.2s;">
                             Log In
                         </a>
@@ -139,49 +173,51 @@
         </div>
 
         <!-- Worth It? Analyzer Card -->
-        <div class="calc-card" style="background: white; border-radius: 2.4rem; padding: 2.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column; height: 100%;">
-            <div style="width: 56px; height: 56px; background: #5555ff; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+        <div class="tool-card light">
+            <div class="tool-bg-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line><line x1="16" x2="16" y1="14" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></svg>
+            </div>
+
+            <div class="tool-icon-box" style="background: #5555ff;">
                 <span class="material-icons" style="color: white; font-size: 28px;">attach_money</span>
             </div>
             
-            <h3 style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.5rem; margin-bottom: 1rem; color: var(--dark);">
-                "Worth It?" Analyzer
-            </h3>
+            <h3 class="tool-title" style="color: var(--dark);">"Worth It?" Analyzer</h3>
             
-            <p style="color: #666; line-height: 1.6; margin-bottom: 2rem; flex-grow: 1;">
+            <p class="tool-desc" style="color: #666;">
                 Determine if a high annual fee card is actually profitable for your lifestyle based on your real spending habits.
             </p>
             
-            <a href="{% url 'worth_it_list' %}" style="color: #5555ff; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; letter-spacing: 0.05em; font-size: 0.9rem;">
-                OPEN TOOL <span class="material-icons" style="font-size: 18px;">arrow_forward</span>
+            <a href="{% url 'worth_it_list' %}" class="tool-link" style="color: #5555ff;">
+                OPEN TOOL <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
             </a>
+            <a href="{% url 'worth_it_list' %}" style="position: absolute; inset: 0; z-index: 3;"></a>
         </div>
 
         <!-- SUB Optimizer Card -->
-        <div class="calc-card" style="background: #0f172a; border-radius: 24px; padding: 2.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: transform 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column; height: 100%; color: white;">
+        <div class="tool-card dark">
             
-            <!-- Lightning Graphic Background -->
-            <div style="position: absolute; bottom: -20px; right: -20px; opacity: 0.1; transform: rotate(-15deg);">
-                 <span class="material-icons" style="font-size: 150px; color: white;">bolt</span>
+            <div class="tool-bg-icon">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>
             </div>
 
-            <div style="width: 56px; height: 56px; background: #FFC107; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; position: relative; z-index: 2;">
+            <div class="tool-icon-box" style="background: #FFC107;">
                 <span class="material-icons" style="color: black; font-size: 28px;">trending_up</span>
             </div>
             
             <div style="position: relative; z-index: 2; flex-grow: 1; display: flex; flex-direction: column;">
-                <h3 style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.5rem; margin-bottom: 1rem; color: white;">
-                    SUB Optimizer
-                </h3>
+                <h3 class="tool-title" style="color: white;">SUB Optimizer</h3>
                 
-                <p style="color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 2rem; flex-grow: 1;">
+                <p class="tool-desc" style="color: rgba(255,255,255,0.7);">
                     Entering a high-spend period? Find the card with the best return on investment for your upcoming purchase.
                 </p>
                 
                 {% if user.is_authenticated %}
-                    <a href="{% url 'optimizer_input' %}" style="color: #FFC107; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; letter-spacing: 0.05em; font-size: 0.9rem;">
-                        ANALYZE NOW <span class="material-icons" style="font-size: 18px;">arrow_forward</span>
+                    <a href="{% url 'optimizer_input' %}" class="tool-link" style="color: #FFC107;">
+                        ANALYZE NOW 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
                     </a>
+                     <a href="{% url 'optimizer_input' %}" style="position: absolute; inset: 0; z-index: 3;"></a>
                 {% else %}
                     <!-- Blurred Content Overlay for Unauthenticated Users -->
                     <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); background: rgba(15, 23, 42, 0.6); z-index: 10; display: flex; align-items: center; justify-content: center; border-radius: 24px;">
