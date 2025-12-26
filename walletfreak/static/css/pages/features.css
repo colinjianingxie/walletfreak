@@ -1,0 +1,224 @@
+/* Responsive Grid and Custom Utilities for New Carousel */
+.carousel-container {
+    margin-bottom: 0;
+    background-color: white;
+    border-radius: 2.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    border: 1px solid #f1f5f9;
+    overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .carousel-container {
+        margin-bottom: 0;
+        border-radius: 4rem;
+    }
+}
+
+.carousel-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 800px;
+}
+
+@media (min-width: 1024px) {
+    .carousel-layout {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        min-height: 600px;
+    }
+}
+
+.col-text {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    order: 1;
+    flex: 1;
+    gap: 2rem;
+}
+
+@media (min-width: 768px) {
+    .col-text {
+        padding: 4rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .col-text {
+        grid-column: span 5;
+        height: 100%;
+    }
+}
+
+.col-visual {
+    background-color: #f8fafc;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 400px;
+    order: 2;
+}
+
+@media (min-width: 768px) {
+    .col-visual {
+        padding: 4rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .col-visual {
+        grid-column: span 7;
+    }
+}
+
+/* Tabs */
+.tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+}
+
+@media (min-width: 768px) {
+    .tab-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+    }
+}
+
+.tab-btn-active {
+    background-color: #0f172a;
+    color: white;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.tab-btn-inactive {
+    background-color: #f8fafc;
+    color: #94a3b8;
+}
+
+.tab-btn-inactive:hover {
+    background-color: #f1f5f9;
+}
+
+/* Nav Buttons */
+.nav-btn-prev {
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: #f8fafc;
+    color: #94a3b8;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-btn-prev:hover {
+    background-color: #f1f5f9;
+    color: #0f172a;
+}
+
+.nav-btn-next {
+    flex: 1;
+    padding: 1rem;
+    background-color: #0f172a;
+    color: white;
+    border-radius: 1rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.875rem;
+}
+
+.nav-btn-next:hover {
+    background-color: #1e293b;
+    transform: translateY(-1px);
+}
+
+/* Animations */
+.animate-in {
+    animation: fadeInZoom 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInZoom {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.slide-in-text {
+    animation: slideInLeft 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Credit Card Icon Specifics */
+.credit-card-icon {
+    width: 4rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: transform 0.5s;
+}
+
+@media (min-width: 768px) {
+    .credit-card-icon {
+        width: 5rem;
+        height: 3rem;
+    }
+}
+
+.carousel-visual-block:hover .credit-card-icon {
+    transform: rotate(-3deg);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    section[style*="grid-template-columns: 1fr 1fr"]>div {
+        grid-template-columns: 1fr !important;
+    }
+
+    section div[style*="grid-template-columns: repeat"] {
+        grid-template-columns: 1fr !important;
+    }
+}

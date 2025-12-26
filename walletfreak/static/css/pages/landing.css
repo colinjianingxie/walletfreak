@@ -1,0 +1,297 @@
+/* Initial Loader */
+#initial-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease-out;
+}
+
+#initial-loader.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader-spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid #E2E8F0;
+    border-top: 4px solid #2563EB;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Hero Card Stack */
+.hero-card {
+    width: 380px;
+    height: 240px;
+    border-radius: 20px;
+    position: absolute;
+    padding: 2rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: white;
+    transition: transform 0.3s ease;
+}
+
+.hero-card:hover {
+    transform: scale(1.05) rotate(0deg) !important;
+    z-index: 10 !important;
+}
+
+.card-amex {
+    background: #94A3B8;
+    /* Platinum color */
+    background: linear-gradient(135deg, #E2E8F0 0%, #94A3B8 100%);
+    color: #1F2937;
+}
+
+.card-chase {
+    background: #1D4ED8;
+    background: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%);
+}
+
+.card-amex-gold {
+    background: #F59E0B;
+    background: linear-gradient(135deg, #FCD34D 0%, #D97706 100%);
+    box-shadow: 0 25px 50px -12px rgba(217, 119, 6, 0.4);
+}
+
+.card-chip {
+    width: 48px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+}
+
+.card-logo {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 1rem;
+}
+
+.card-number {
+    font-family: monospace;
+    font-size: 1.25rem;
+    letter-spacing: 0.1em;
+    margin-top: auto;
+    margin-bottom: 1rem;
+}
+
+.card-name {
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+/* Blog Cards */
+.blog-card-item {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.blog-card-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.blog-card-image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.blog-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: white;
+    color: #1F2937;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 0.25rem 0.75rem;
+    border-radius: 99px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.blog-card-content {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.blog-meta {
+    font-size: 0.75rem;
+    color: #94A3B8;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.blog-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #0F172A;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+}
+
+.blog-excerpt {
+    font-size: 0.95rem;
+    color: #64748B;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex: 1;
+}
+
+.blog-link {
+    color: #2563EB;
+    font-weight: 700;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+/* Dark Cards */
+.dark-card-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.dark-card-item.active {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.dark-card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.dark-card-title {
+    font-weight: 700;
+    color: white;
+    font-size: 0.9rem;
+}
+
+.dark-card-sub {
+    font-size: 0.75rem;
+    color: #94A3B8;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@media (max-width: 1024px) {
+    div[style*="grid-template-columns: 1fr 1.2fr"] {
+        grid-template-columns: 1fr !important;
+    }
+
+    .card-stack-container {
+        transform: scale(0.8);
+    }
+}
+
+/* Mobile Hero Section Adjustments */
+@media (max-width: 768px) {
+
+    /* Hero card container - reduce height and adjust positioning */
+    .grid-responsive-hero>div:last-child {
+        height: 420px !important;
+        display: flex !important;
+        align-items: flex-start !important;
+        justify-content: center !important;
+        margin-top: 1rem !important;
+    }
+
+    /* Card stack positioning - larger and less spacing */
+    .card-stack-container {
+        transform: scale(1) !important;
+        position: relative;
+        width: 100%;
+        height: 360px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Individual card adjustments for mobile - LARGER cards */
+    .hero-card {
+        width: 340px !important;
+        height: 215px !important;
+    }
+
+    /* Amex Platinum - back left */
+    .hero-card.card-amex {
+        transform: rotate(-8deg) translate(-55px, -15px) !important;
+    }
+
+    /* Chase Sapphire - middle */
+    .hero-card.card-chase {
+        transform: rotate(-2deg) translate(-5px, 5px) !important;
+    }
+
+    /* Amex Gold - front right */
+    .hero-card.card-amex-gold {
+        transform: rotate(5deg) translate(45px, 25px) !important;
+    }
+
+    /* Annual Value Badge - position on right side overlaying cards */
+    .grid-responsive-hero>div:last-child>div:first-child {
+        top: auto !important;
+        bottom: 35% !important;
+        right: 5% !important;
+    }
+}

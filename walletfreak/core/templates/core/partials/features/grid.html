@@ -1,0 +1,87 @@
+<!-- Feature Cards Grid -->
+<section style="padding: 0 0 4rem; max-width: 1200px; margin: 0 auto; position: relative; z-index: 2;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+        
+        <!-- Granular Tracking -->
+        <a href="{% url 'login' %}" style="display: block; text-decoration: none; background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 10px 20px -5px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 1px 3px rgba(0,0,0,0.1)'">
+            <div style="width: 48px; height: 48px; background: rgba(99, 102, 241, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+            </div>
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; color: #0f172a;">Granular Tracking</h3>
+            <p style="font-size: 0.9375rem; line-height: 1.6; color: #64748b;">Track benefits monthly, quarterly, semi-annually, or annually. We know Uber Cash is monthly and Hotel Credits are annual—so we built a system that understands the difference.</p>
+        </a>
+
+        <!-- Strategy Blueprints -->
+        <a href="{% url 'personality_list' %}" style="display: block; text-decoration: none; background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 10px 20px -5px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 1px 3px rgba(0,0,0,0.1)'">
+            <div style="width: 48px; height: 48px; background: rgba(139, 92, 246, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 6v6l4 2"></path>
+                </svg>
+            </div>
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; color: #0f172a;">Strategy Blueprints</h3>
+            <p style="font-size: 0.9375rem; line-height: 1.6; color: #64748b;">Don't know which cards to pair? Our AI analyzes your personality to generate a "Perfect Loadout"—a combination of cards that maximize points for your specific goals.</p>
+        </a>
+
+        <!-- Net Value Analysis -->
+        <a href="{% url 'login' %}" style="display: block; text-decoration: none; background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 10px 20px -5px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 1px 3px rgba(0,0,0,0.1)'">
+            <div style="width: 48px; height: 48px; background: rgba(34, 197, 94, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+            </div>
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; color: #0f172a;">Net Value Analysis</h3>
+            <p style="font-size: 0.9375rem; line-height: 1.6; color: #64748b;">We calculate your 'Real Annual Fee' by subtracting the value of the credits you actually use. See exactly how much profit you're making from each card.</p>
+        </a>
+
+        <!-- Smart Expiration Alerts -->
+        <a href="{% url 'login' %}" style="display: block; text-decoration: none; background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 10px 20px -5px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 1px 3px rgba(0,0,0,0.1)'">
+            <div style="width: 48px; height: 48px; background: rgba(251, 191, 36, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+            </div>
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; color: #0f172a;">Smart Expiration Alerts</h3>
+            <p style="font-size: 0.9375rem; line-height: 1.6; color: #64748b;">Never let a credit expire again. We send timely notifications before the end of the month, quarter, or year so you can use it or lose it.</p>
+        </a>
+
+        <!-- Calculators -->
+        <a href="{% url 'calculators_index' %}" style="display: block; text-decoration: none; background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 10px 20px -5px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 1px 3px rgba(0,0,0,0.1)'">
+            <div style="width: 48px; height: 48px; background: rgba(239, 68, 68, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2">
+                    <rect x="4" y="2" width="16" height="20" rx="2" stroke-linejoin="round"></rect>
+                    <line x1="8" y1="6" x2="16" y2="6" stroke-linecap="round"></line>
+                    <line x1="16" y1="14" x2="16" y2="14" stroke-linecap="round" stroke-width="3"></line>
+                    <line x1="12" y1="14" x2="12" y2="14" stroke-linecap="round" stroke-width="3"></line>
+                    <line x1="8" y1="14" x2="8" y2="14" stroke-linecap="round" stroke-width="3"></line>
+                    <line x1="16" y1="18" x2="16" y2="18" stroke-linecap="round" stroke-width="3"></line>
+                    <line x1="12" y1="18" x2="12" y2="18" stroke-linecap="round" stroke-width="3"></line>
+                    <line x1="8" y1="18" x2="8" y2="18" stroke-linecap="round" stroke-width="3"></line>
+                </svg>
+            </div>
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; color: #0f172a;">Calculators</h3>
+            <p style="font-size: 0.9375rem; line-height: 1.6; color: #64748b;">Crunch the numbers with our suite of calculators. From 'Worth It' audits to point optimization, we do the math for you.</p>
+        </a>
+
+        <!-- Benefit Library -->
+        <a href="{% url 'card_list' %}" style="display: block; text-decoration: none; background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 10px 20px -5px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 1px 3px rgba(0,0,0,0.1)'">
+            <div style="width: 48px; height: 48px; background: rgba(59, 130, 246, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                    <path d="M2 17l10 5 10-5"></path>
+                    <path d="M2 12l10 5 10-5"></path>
+                </svg>
+            </div>
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; color: #0f172a;">Benefit Library</h3>
+            <p style="font-size: 0.9375rem; line-height: 1.6; color: #64748b;">Forget the fine print. We've indexed the insurance policies, purchase protections, and lounge access rules for over 100 premium cards.</p>
+        </a>
+
+    </div>
+</section>

@@ -1,0 +1,60 @@
+{% load static %}
+<footer style="background: var(--dark); color: white; padding: 4rem 0; margin-top: auto; border-top: none;">
+    <div class="container">
+        <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
+            <!-- Brand Section -->
+            <div style="grid-column: span 1;">
+                <a href="/" class="logo" style="color: white; margin-bottom: 1rem; display: inline-flex; align-items: center; gap: 0.75rem; text-decoration: none;">
+                    <img src="{% static 'images/logo_main.png' %}" alt="WalletFreak" style="height: 32px; width: auto;">
+                    <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: -0.02em;">WalletFreak</span>
+                </a>
+                <p style="color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 1.5rem;">
+                    Master your wallet. Freakishly fast. The ultimate tool for credit card optimization.
+                </p>
+                <!-- Social links removed -->
+            </div>
+
+            <!-- Product Links -->
+            <div>
+                <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 1.5rem; letter-spacing: 0.05em; color: white;">
+                    PRODUCT</h4>
+                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'dashboard' %}"
+                        style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Wallet</a>
+                    {% else %}
+                    <a href="{% url 'features' %}"
+                        style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Features</a>
+                    {% endif %}
+                    <a href="{% url 'personality_list' %}"
+                        style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Wallet
+                        Vibe Quiz</a>
+                    <a href="{% url 'personality_list' %}"
+                        style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Personalities</a>
+                    <a href="{% url 'calculators_index' %}"
+                        style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Calculators</a>
+                </div>
+            </div>
+
+            <!-- Resources Links -->
+            <div>
+                <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 1.5rem; letter-spacing: 0.05em; color: white;">
+                    RESOURCES</h4>
+                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    <a href="{% url 'blog_list' %}"
+                        style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">The
+                        Ledger</a>
+                    <a href="{% url 'card_list' %}"
+                        style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;">Card
+                        Database</a>
+                </div>
+            </div>
+        </div>
+
+        <div
+            style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; text-align: center; color: rgba(255,255,255,0.5); font-size: 0.875rem;">
+            <p>&copy; 2025 WalletFreak. All rights reserved. WalletFreak is not a bank or lender.</p>
+        </div>
+    </div>
+</footer>
