@@ -389,71 +389,6 @@ async function saveAllPreferences() {
     }
 }
 
-// --- Email Editing ---
-
-async function submitChangeEmail() {
-    const emailInput = document.getElementById('new-email-input');
-    const newEmail = emailInput.value.trim();
-
-    if (!newEmail) {
-        showToast('Please enter a valid email address.', 'error');
-        return;
-    }
-
-    if (newEmail === firebase.auth().currentUser.email) {
-        showToast('New email is the same as current email.', 'info');
-        closeChangeEmailModal();
-        return;
-    }
-
-    const btn = document.getElementById('btn-save-email');
-    const originalText = btn.innerText;
-    btn.innerHTML = '<span class="loader"></span> Saving...';
-    btn.disabled = true;
-
-    try {
-        const user = firebase.auth().currentUser;
-
-        // 1. Update in Firebase Auth
-        await user.updateEmail(newEmail);
-
-        // 2. Sync with Backend
-        const response = await fetch(window.PROFILE_CONFIG.urls.sync_profile, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': window.PROFILE_CONFIG.csrf_token },
-            body: JSON.stringify({ email: newEmail })
-        });
-
-        const data = await response.json();
-
-        if (data.status === 'success') {
-            showToast('Email updated successfully! Remember to verify it.');
-
-            // Update UI
-            document.getElementById('user-email-display').innerText = newEmail;
-
-            // Send verification email to new address
-            await user.sendEmailVerification();
-            showToast('Verification email sent to new address.', 'info');
-
-            closeChangeEmailModal();
-        } else {
-            throw new Error(data.message || 'Failed to sync email to server');
-        }
-
-    } catch (error) {
-        console.error('Error updating email:', error);
-
-        if (error.code === 'auth/requires-recent-login') {
-            showToast('Security check: Please log out and sign in again to change your email.', 'error');
-        } else {
-            showToast(error.message, 'error');
-        }
-    } finally {
-        btn.innerHTML = originalText;
-        btn.disabled = false;
-    }
-}
 
 // --- Password Reset ---
 
@@ -502,7 +437,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('avatar-modal'),
         document.getElementById('name-modal'),
         document.getElementById('username-modal'),
-        document.getElementById('email-modal'),
         document.getElementById('settings-saved-modal')
     ];
 
@@ -518,13 +452,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initNotificationSettings();
 });
 
-// Modal Close Functions Global Export
-function closeChangeEmailModal() {
-    document.getElementById('email-modal').style.display = 'none';
-}
-function openChangeEmailModal() {
-    document.getElementById('email-modal').style.display = 'flex';
-}
+
 function closeSettingsSavedModal() {
     document.getElementById('settings-saved-modal').style.display = 'none';
 }
