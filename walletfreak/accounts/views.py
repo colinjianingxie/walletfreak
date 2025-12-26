@@ -44,12 +44,21 @@ def firebase_login(request):
         # Get or create Django user
         user, created = User.objects.get_or_create(username=uid)
         
-        # Always update name and email
+        # Always update email
         user.email = email
-        user.first_name = first_name
-        user.last_name = last_name
+        
+        # Only update name if it's currently empty or user is new
+        if not user.first_name:
+            user.first_name = first_name
+        if not user.last_name:
+            user.last_name = last_name
+            
         if created:
             user.set_unusable_password()
+            # Ensure names are set for new users (redundant check but safe)
+            if not user.first_name: user.first_name = first_name
+            if not user.last_name: user.last_name = last_name
+            
         user.save()
             
         # Create or Update Firestore profile
@@ -71,12 +80,25 @@ def firebase_login(request):
             }
             db.create_user_profile(uid, user_data)
         else:
-            # Existing user - only update name/email, preserve is_super_staff and other fields
+            # Existing user - only update email, preserve is_super_staff and other fields
+            # Also preserve name if it exists in Firestore to avoid overwriting user edits
             user_data = {
                 'email': email,
-                'first_name': first_name,
-                'last_name': last_name,
             }
+            
+            # optional: we could sync back to Firestore if Django has a name but Firestore doesn't, 
+            # but for now let's just NOT overwrite if Firestore has something.
+            # Actually, the requirement is "don't reset my names". 
+            # So if we simply don't send first_name/last_name in the update, it won't overwrite.
+            
+            # However, if the user name IS empty in Firestore, we should probably fill it from token?
+            # Let's check existing profile first.
+            
+            if not existing_profile.get('first_name'):
+                user_data['first_name'] = first_name
+            if not existing_profile.get('last_name'):
+                user_data['last_name'] = last_name
+                
             # Use merge=True to preserve existing fields like is_super_staff
             db.db.collection('users').document(uid).set(user_data, merge=True)
 
