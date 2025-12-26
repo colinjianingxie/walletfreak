@@ -81,6 +81,8 @@
 /* Titles and Text */
 .contact-title {
     font-size: 2.25rem;
+    color: white;
+    /* Explicitly set to white */
     /* text-4xl */
     font-weight: 900;
     /* font-black */
