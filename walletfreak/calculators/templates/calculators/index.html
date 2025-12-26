@@ -111,6 +111,18 @@
     .tool-card.light:hover .tool-bg-icon { color: #EFF6FF; opacity: 1; }
     .tool-card.dark:hover .tool-bg-icon { color: rgba(255,255,255,0.1); opacity: 1; }
 
+    .calculator-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    @media (min-width: 768px) {
+        .calculator-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
 </style>
 {% endblock %}
 
@@ -127,9 +139,54 @@
     </div>
 
     <!-- Calculators Grid -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+    <div class="calculator-grid">
         
-        <!-- Spend It Optimizer Card -->
+        <!-- Worth It? Analyzer Card -->
+        <div class="tool-card light">
+            <div class="tool-bg-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line><line x1="16" x2="16" y1="14" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></svg>
+            </div>
+
+            <div class="tool-icon-box" style="background: #5555ff;">
+                <span class="material-icons" style="color: white; font-size: 28px;">attach_money</span>
+            </div>
+            
+            <h3 class="tool-title" style="color: var(--dark);">"Worth It?" Analyzer</h3>
+            
+            <p class="tool-desc" style="color: #666;">
+                Annual fee audit. See if your high-end cards are worth the cost.
+            </p>
+            
+            <a href="{% url 'worth_it_list' %}" class="tool-link" style="color: #5555ff;">
+                OPEN TOOL <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+            <a href="{% url 'worth_it_list' %}" style="position: absolute; inset: 0; z-index: 3;"></a>
+        </div>
+
+        <!-- Category Optimizer Card -->
+        <div class="tool-card light">
+            <div class="tool-bg-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-50 opacity-50 group-hover:text-purple-50 transition-colors"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"></path><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path></svg>
+            </div>
+
+            <div class="tool-icon-box" style="background: #a855f7; color: white; box-shadow: 0 10px 20px rgba(168, 85, 247, 0.2);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"></path><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path></svg>
+            </div>
+            
+            <h3 class="tool-title" style="color: var(--dark);">Category Optimizer</h3>
+            
+            <p class="tool-desc" style="color: #666;">
+                Optimize broad spend. Find the best card for your recurring budget.
+            </p>
+            
+            <a href="#" class="tool-link" style="color: #a855f7;">
+                ANALYZE SPEND <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+            <!-- Placeholder link for now -->
+            <a href="#" style="position: absolute; inset: 0; z-index: 3;"></a>
+        </div>
+
+        <!-- Spend It Optimizer Card (Use ID for Single Swipe Tool name in screenshot) -->
         <div class="tool-card light" style="cursor: default;">
             
             <div class="tool-bg-icon">
@@ -140,22 +197,22 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
             </div>
             
-            <h2 class="tool-title" style="color: #0F172A;">"Spend It" Optimizer</h2>
+            <h2 class="tool-title" style="color: #0F172A;">Single Swipe Tool</h2>
             
             <p class="tool-desc" style="color: #64748B;">
-                Buying something big? Find the best card in your wallet (or out of it) for this purchase.
+                Brand specific focus. Find the best card for one specific store or purchase.
             </p>
             
             {% if user.is_authenticated %}
                 <a href="{% url 'spend_it_input' %}" class="tool-link" style="color: #2563EB;">
-                    Optimize Spend 
+                    OPTIMIZE SWIPE 
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
                 </a>
                 <!-- Make the whole card clickable if auth -->
                 <a href="{% url 'spend_it_input' %}" style="position: absolute; inset: 0; z-index: 3;"></a>
             {% else %}
                 <div class="tool-link" style="color: #2563EB; opacity: 0.5;">
-                    Optimize Spend 
+                    OPTIMIZE SWIPE 
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
                 </div>
                 
@@ -170,28 +227,6 @@
                     </div>
                 </div>
             {% endif %}
-        </div>
-
-        <!-- Worth It? Analyzer Card -->
-        <div class="tool-card light">
-            <div class="tool-bg-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line><line x1="16" x2="16" y1="14" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></svg>
-            </div>
-
-            <div class="tool-icon-box" style="background: #5555ff;">
-                <span class="material-icons" style="color: white; font-size: 28px;">attach_money</span>
-            </div>
-            
-            <h3 class="tool-title" style="color: var(--dark);">"Worth It?" Analyzer</h3>
-            
-            <p class="tool-desc" style="color: #666;">
-                Determine if a high annual fee card is actually profitable for your lifestyle based on your real spending habits.
-            </p>
-            
-            <a href="{% url 'worth_it_list' %}" class="tool-link" style="color: #5555ff;">
-                OPEN TOOL <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-            </a>
-            <a href="{% url 'worth_it_list' %}" style="position: absolute; inset: 0; z-index: 3;"></a>
         </div>
 
         <!-- SUB Optimizer Card -->
@@ -209,12 +244,12 @@
                 <h3 class="tool-title" style="color: white;">SUB Optimizer</h3>
                 
                 <p class="tool-desc" style="color: rgba(255,255,255,0.7);">
-                    Entering a high-spend period? Find the card with the best return on investment for your upcoming purchase.
+                    Welcome offer math. Squeeze maximum value from your big spend.
                 </p>
                 
                 {% if user.is_authenticated %}
                     <a href="{% url 'optimizer_input' %}" class="tool-link" style="color: #FFC107;">
-                        ANALYZE NOW 
+                        ANALYZE SUB 
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
                     </a>
                      <a href="{% url 'optimizer_input' %}" style="position: absolute; inset: 0; z-index: 3;"></a>
