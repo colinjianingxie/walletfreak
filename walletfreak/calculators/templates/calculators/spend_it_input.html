@@ -2,116 +2,250 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/spend_it.css' %}">
+<!-- Tailwind CSS for this specific page design -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Outfit', 'sans-serif'],
+          }
+        }
+      }
+    }
+</script>
+<style>
+    /* Overlay to ensure Tailwind doesn't conflict too much with global styles if there are specificity issues, 
+       though we are mostly using utility classes. 
+       Specific overrides for the new design: */
+    .si-selected-cat {
+        border-color: #4F46E5 !important; /* indigo-600 */
+        background-color: #4F46E5 !important;
+        color: white !important;
+        box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.1), 0 4px 6px -2px rgba(79, 70, 229, 0.05) !important;
+    }
+    .si-selected-cat .si-icon-bg {
+        background-color: rgba(255, 255, 255, 0.2) !important;
+        color: white !important;
+    }
+
+    .si-selected-brand {
+        background-color: #0F172A !important; /* slate-900 */
+        border-color: #0F172A !important;
+        color: white !important;
+    }
+</style>
 {% endblock %}
 
-{% block main_style %}{% endblock %}
-
 {% block full_width_content %}
-<div class="spend-it-page">
-    <div class="container animate-enter">
+<main class="flex-1 relative z-10 w-full min-h-screen bg-slate-50 font-sans">
+    <div class="max-w-7xl mx-auto p-6 md:p-10 pb-32 animate-in slide-in-from-bottom-4 duration-500">
         
-        <a href="{% url 'calculators_index' %}" class="spend-it-back-link">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg> 
+        <a href="{% url 'calculators_index' %}" class="flex items-center gap-2 text-slate-400 hover:text-slate-900 transition-colors font-bold text-sm mb-8">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left w-4 h-4" aria-hidden="true"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg> 
             Back to Lab
         </a>
 
-        <!-- Main Card -->
-        <div class="spend-it-main-card">
-            
-            <div class="spend-it-header">
-                <h2>How much is the swipe?</h2>
-                <p>Find the highest point haul for this specific purchase.</p>
-            </div>
-
-            <form id="spend-it-form" 
+        <div class="space-y-10">
+            <!-- Main Card Container -->
+            <form id="spend-it-form"
                   hx-post="{% url 'spend_it_calculate' %}"
                   hx-target="#results-container"
                   hx-swap="innerHTML"
-                  hx-indicator="#submit-btn">
-                  
+                  hx-indicator="#submit-text, #submit-loader"
+                  class="max-w-4xl mx-auto bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl shadow-slate-200/50 border border-slate-100 flex flex-col gap-10 items-center">
+                
                 {% csrf_token %}
 
-                <!-- Amount Input -->
-                <div class="amount-input-group" onclick="document.querySelector('input[name=amount]').focus()">
-                    <span class="currency-symbol">$</span>
-                    <input 
-                        name="amount"
-                        class="amount-field" 
-                        type="number" 
-                        value="500" 
-                        placeholder="0"
-                        required>
-                </div>
-
-                <!-- Category Selection -->
-                <div>
-                    <label class="category-label">Spending Category</label>
-                    
-                    <!-- Hidden input to store selected category -->
-                    <input type="hidden" name="category" id="selected-category" value="Dining">
-
-                    <div class="category-grid" id="category-grid">
-                        
-                        <!-- Dynamic Categories -->
-                        {% for cat in unique_categories %}
-                        <button type="button" data-val="{{ cat }}" class="category-btn {% if cat == 'Dining' %}active{% endif %}">
-                            <!-- Generic Icon since we don't have SVGs for all dynamic cats -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.91 8.84 5.91 2.23a1 1 0 0 0-1.24 1.37l2.35 6.2a.7.7 0 0 1 0 .48l-2.35 6.2a1 1 0 0 0 1.24 1.37l15-6.6a1 1 0 0 0 0-1.41Z"></path></svg>
-                            <span>{{ cat }}</span>
-                        </button>
-                        {% endfor %}
-
-                        <!-- Everything Else (Always present) -->
-                        <button type="button" data-val="Everything Else" class="category-btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
-                            <span>Everything<br>Else</span>
-                        </button>
-                        
+                <div class="w-full space-y-10">
+                    <div class="text-center">
+                        <h2 class="text-3xl font-black text-slate-900 mb-2">The Swipe Analyzer</h2>
+                        <p class="text-slate-500 font-medium">Crunching the data for your specific purchase.</p>
                     </div>
+
+                    <div class="space-y-10">
+                        <!-- Amount Input -->
+                        <div class="relative max-w-lg mx-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign absolute left-6 top-1/2 -translate-y-1/2 w-8 h-8 text-indigo-500" aria-hidden="true"><line x1="12" x2="12" y1="2" y2="22"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                            <input 
+                                name="amount"
+                                class="w-full pl-16 pr-8 py-6 bg-slate-50 border-2 border-transparent focus:border-indigo-500 focus:bg-white rounded-3xl text-4xl font-black outline-none transition-all text-center placeholder-slate-300 text-slate-900" 
+                                type="number" 
+                                value="500"
+                                placeholder="0"
+                                required>
+                        </div>
+
+                        <!-- Step 1: Core Category -->
+                        <div class="space-y-4">
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block text-center">Step 1: Core Category</label>
+                            
+                            <!-- Hidden Input for Step 1 -->
+                            <input type="hidden" name="category" id="selected-category" value="">
+
+                            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                                {% for cat in categories %}
+                                <button type="button" 
+                                        onclick="selectCategory(this, '{{ cat.CategoryName }}')" 
+                                        class="cat-btn flex flex-col items-center justify-center gap-2 p-4 rounded-2xl font-bold text-xs transition-all border-2 bg-white border-slate-50 text-slate-500 hover:border-indigo-200"
+                                        data-details="{{ cat.json_details }}">
+                                    
+                                    <div class="si-icon-bg w-8 h-8 rounded-full bg-current/10 flex items-center justify-center mb-1 transition-colors">
+                                        <!-- Render Icon based on key -->
+                                        {% if cat.IconKey == 'plane' %}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide w-4 h-4"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+                                        {% elif cat.IconKey == 'building-2' %}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide w-4 h-4"><path d="M10 12h4"/><path d="M10 8h4"/><path d="M14 21v-3a2 2 0 0 0-4 0v3"/><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"/><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/></svg>
+                                        {% elif cat.IconKey == 'utensils' %}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide w-4 h-4"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+                                        {% elif cat.IconKey == 'store' %}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide w-4 h-4"><path d="M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5"/><path d="M17.774 10.31a1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.451 0 1.12 1.12 0 0 0-1.548 0 2.5 2.5 0 0 1-3.452 0 1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.77-3.248l2.889-4.184A2 2 0 0 1 7 2h10a2 2 0 0 1 1.653.873l2.895 4.192a2.5 2.5 0 0 1-3.774 3.244"/><path d="M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05"/></svg>
+                                        {% elif cat.IconKey == 'fuel' %}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide w-4 h-4"><path d="M14 13h2a2 2 0 0 1 2 2v2a2 2 0 0 0 4 0v-6.998a2 2 0 0 0-.59-1.42L18 5"/><path d="M14 21V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v16"/><path d="M2 21h13"/><path d="M3 9h11"/></svg>
+                                        {% elif cat.IconKey == 'laptop' %}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide w-4 h-4"><path d="M18 5a2 2 0 0 1 2 2v8.526a2 2 0 0 0 .212.897l1.068 2.127a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45l1.068-2.127A2 2 0 0 0 4 15.526V7a2 2 0 0 1 2-2z"/><path d="M20.054 15.987H3.946"/></svg>
+                                        {% elif cat.IconKey == 'shopping-bag' %}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide w-4 h-4"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                                        {% elif cat.IconKey == 'ticket' %}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide w-4 h-4"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg>
+                                        {% elif cat.IconKey == 'heart-pulse' %}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide w-4 h-4"><path d="M19 14c1.49-1.28 3.6-1.28 5.1 0 1.26 1.08 1.26 2.83 0 3.91l-1.41 1.41c-1.26 1.08-3.31 1.08-4.57 0l-1.41-1.41c-1.26-1.08-1.26-2.83 0-3.91l1.41-1.41c.3-.26.65-.43 1.02-.51"/><path d="M2.9 8.1c1.26-1.08 3.31-1.08 4.57 0l1.41 1.41c1.26 1.08 1.26 2.83 0 3.91l-1.41 1.41c-1.26 1.08-3.31 1.08-4.57 0L1.5 13.4c-1.26-1.08-1.26-2.83 0-3.91L2.9 8.1z"/><path d="m11 13-3-3"/><path d="m16 8-3 3"/><path d="m13.5 10.5 4 4"/></svg>
+                                        {% else %}
+                                            <!-- Default/Fallback -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide w-4 h-4"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
+                                        {% endif %}
+                                    </div>
+                                    <span class="text-center leading-tight">{{ cat.CategoryName }}</span>
+                                </button>
+                                {% endfor %}
+
+                                <!-- Always include "Other" as a fallback -->
+                                <button type="button" 
+                                        onclick="selectCategory(this, 'Everything Else')" 
+                                        class="cat-btn flex flex-col items-center justify-center gap-2 p-4 rounded-2xl font-bold text-xs transition-all border-2 bg-white border-slate-50 text-slate-500 hover:border-indigo-200"
+                                        data-details='[]'>
+                                    <div class="si-icon-bg w-8 h-8 rounded-full bg-current/10 flex items-center justify-center mb-1 transition-colors">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide w-4 h-4"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
+                                    </div>
+                                    Other
+                                </button>
+
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Specific Brand / Type (Hidden initially) -->
+                        <div id="step-2-container" class="space-y-4 animate-in slide-in-from-top-2 duration-300 hidden">
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block text-center">Step 2: Specific Brand / Type</label>
+                            
+                            <!-- Hidden Input for Step 2 -->
+                            <input type="hidden" name="sub_category" id="selected-sub-category" value="">
+
+                            <div class="flex flex-wrap justify-center gap-2" id="step-2-buttons">
+                                <!-- Populated via JS -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" 
+                            class="w-full py-5 bg-indigo-600 text-white rounded-2xl font-black text-xl shadow-xl shadow-indigo-200 hover:bg-indigo-700 transition-all active:scale-95 flex items-center justify-center gap-3">
+                        <span id="submit-loader" class="htmx-indicator hidden">
+                            <svg class="animate-spin h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                        </span>
+                        <span id="submit-text" class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-6 h-6" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg> 
+                            Calculate Optimized ROI
+                        </span>
+                    </button>
                 </div>
-
-                <!-- Submit Button -->
-                <button type="submit" class="si-btn-primary" id="submit-btn">
-                    <span class="si-btn-content">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-6 h-6" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg> 
-                        Find My Best Card
-                    </span>
-                    <div class="si-btn-loader"></div>
-                </button>
             </form>
-        </div>
-
-        <!-- RESULTS CONTAINER -->
-        <div id="results-container"></div>
             
+             <!-- RESULTS CONTAINER -->
+            <div id="results-container"></div>
+
+        </div>
     </div>
-</div>
+</main>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const btns = document.querySelectorAll('.category-btn');
-        const input = document.getElementById('selected-category');
-        
-        btns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remove active class from all
-                btns.forEach(b => b.classList.remove('active'));
+    function selectCategory(btn, categoryName) {
+        // 1. Reset all category buttons
+        document.querySelectorAll('.cat-btn').forEach(b => {
+             b.classList.remove('si-selected-cat');
+        });
+
+        // 2. Highlight selected
+        btn.classList.add('si-selected-cat');
+
+        // 3. Update Hidden Input
+        document.getElementById('selected-category').value = categoryName;
+
+        // 4. Handle Step 2 Population
+        const step2Container = document.getElementById('step-2-container');
+        const step2Buttons = document.getElementById('step-2-buttons');
+        step2Buttons.innerHTML = ''; // Clear previous
+
+        let detailsString = btn.getAttribute('data-details');
+        let details = [];
+        try {
+            details = JSON.parse(detailsString);
+        } catch(e) {
+            console.warn("Could not parse details", e);
+        }
+
+        if (details && details.length > 0) {
+            // Populate buttons
+            details.forEach((subCat, index) => {
+                const subBtn = document.createElement('button');
+                subBtn.type = 'button';
+                subBtn.className = 'px-6 py-2.5 rounded-full text-sm font-bold transition-all border-2 bg-slate-50 border-slate-50 text-slate-400 hover:border-indigo-200 hover:text-indigo-600 sub-cat-btn';
+                subBtn.textContent = subCat;
+                subBtn.onclick = () => selectSubCategory(subBtn, subCat);
+                step2Buttons.appendChild(subBtn);
                 
-                // Add active class to clicked
-                btn.classList.add('active');
-                
-                // Update input
-                input.value = btn.getAttribute('data-val');
+                // Select first one by default? Or let user choose?
+                // Visuals: "Restaurants" is black (selected), others gray.
+                if (index === 0) {
+                     selectSubCategory(subBtn, subCat);
+                }
             });
+            step2Container.classList.remove('hidden');
+        } else {
+            step2Container.classList.add('hidden');
+            document.getElementById('selected-sub-category').value = '';
+        }
+    }
+
+    function selectSubCategory(btn, subCategoryName) {
+        // Reset sub buttons
+        document.querySelectorAll('.sub-cat-btn').forEach(b => {
+             b.classList.remove('si-selected-brand');
+             b.classList.add('bg-slate-50', 'border-slate-50', 'text-slate-400');
+             b.classList.remove('hover:border-indigo-200', 'hover:text-indigo-600'); // Re-enable hover? No, just classes.
+             // Actually, the base classes have hover. 
         });
+
+        // Highlight selected
+        btn.classList.add('si-selected-brand');
+        btn.classList.remove('bg-slate-50', 'border-slate-50', 'text-slate-400', 'hover:border-indigo-200', 'hover:text-indigo-600');
+
+        // Update Hidden Input (using the same 'category' input or a new one? Request usually expects 'category')
+        // The backend expects 'category'. If we have a specific brand, that should likely be the category sent to the backend 
+        // if the backend can handle it, OR we send both.
+        // Looking at `spend_it_calculate`, it does `category = request.POST.get('category')`. 
+        // If the user selects "Delta", we probably want to send "Delta". 
+        // So I will update the MAIN category input with the sub-selection.
         
-        // Results Scrolling
-        document.body.addEventListener('htmx:afterSwap', (event) => {
-             if(event.detail.target.id === 'results-container') {
-                 event.detail.target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-             }
-        });
+        document.getElementById('selected-category').value = subCategoryName;
+    }
+    
+    // Auto-scroll to results
+    document.body.addEventListener('htmx:afterSwap', (event) => {
+         if(event.detail.target.id === 'results-container') {
+             event.detail.target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+         }
     });
 </script>
 {% endblock %}

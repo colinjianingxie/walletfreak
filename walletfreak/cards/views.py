@@ -291,6 +291,9 @@ def card_list(request):
                  if count >= 3: break
                  
                  cat = item.get('category') or item.get('cat') or item.get('description') or 'Purchase'
+                 if isinstance(cat, list):
+                     cat = ", ".join(cat)
+                 
                  rate = item.get('rate') or item.get('multiplier') or item.get('value') or 0
                  currency = item.get('currency', 'points')
                  

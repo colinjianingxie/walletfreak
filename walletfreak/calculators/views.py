@@ -417,16 +417,60 @@ def optimizer_calculate(request):
 def spend_it_input(request):
     """
     Renders the Spend It Optimizer input form.
+    Loads category structure from default_category_mapping.json
     """
+    # Load Category Mapping
+    json_path = os.path.join(settings.BASE_DIR, 'default_category_mapping.json')
+    categories = []
+    
+    if os.path.exists(json_path):
+        try:
+            with open(json_path, 'r', encoding='utf-8') as f:
+                categories = json.load(f)
+        except Exception as e:
+            print(f"Error loading category mapping: {e}")
+
+    # Filter out ignored categories
+    ignored_categories = ["Financial & Rewards", "Protection", "Travel Perks"]
+    categories = [cat for cat in categories if cat.get('CategoryName') not in ignored_categories]
+
+    # Map Categories to SVGs (using the keys from the JSON)
+    # We'll inject the SVG content or ID directly into the dict for the template
+    icon_mapping = {
+        "Airlines": "plane",
+        "Hotels": "building-2",
+        "Dining & Delivery": "utensils",
+        "Groceries": "store",
+        "Transportation": "fuel",
+        "Shopping": "shopping-bag",
+        "Entertainment": "ticket",
+        "Business & Tech": "laptop",
+        "Health & Wellness": "heart-pulse",
+        "Travel Perks": "passport",
+        "Large Expenses": "landmark",
+        "Financial & Rewards": "coins",
+        "Protection": "shield",
+    }
+
+    # Get valid categories from CSV (already filtered for generics by service)
     service = OptimizerService()
-    unique_categories = service.get_all_unique_categories()
-    
-    # Ensure 'Everything Else' is always an option, effectively 'All Purchases'
-    # We'll handle 'Everything Else' specially in template as the last item or specific button
-    
+    valid_categories = set(c.lower() for c in service.get_all_unique_categories())
+
+    # Enrich categories with icon keys and JSON-safe details
+    for cat in categories:
+        cat_name = cat.get('CategoryName')
+        cat['IconKey'] = icon_mapping.get(cat_name, 'circle-dollar-sign')
+        
+        # Filter details to only include those present in active rates
+        details = cat.get('CategoryNameDetailed', [])
+        filtered_details = [d for d in details if d.lower() in valid_categories]
+        
+        # Serialize details for safe JS usage in template data attributes
+        cat['json_details'] = json.dumps(filtered_details)
+
     context = {
         'page_title': '"Spend It" Optimizer',
-        'unique_categories': unique_categories
+        'categories': categories
     }
     return render(request, 'calculators/spend_it_input.html', context)
 
@@ -440,10 +484,13 @@ def spend_it_calculate(request):
         
     try:
         amount = float(request.POST.get('amount', 0))
-        category = request.POST.get('category', 'Everything Else')
+        # The form sends 'category' which might be specific (e.g. 'Delta') or generic (e.g. 'Dining') via the dynamic inputs
+        input_category = request.POST.get('category', '').strip()
+        if not input_category:
+            input_category = 'Everything Else'
     except ValueError:
         amount = 0.0
-        category = 'Everything Else'
+        input_category = 'Everything Else'
 
     # Get User Wallet (if authenticated)
     user_wallet_slugs = set()
@@ -453,17 +500,57 @@ def spend_it_calculate(request):
             owned_cards = db.get_user_cards(uid)
             user_wallet_slugs = {c.get('card_id') for c in owned_cards}
 
+    # Resolve Parent Category using the mapping file
+    json_path = os.path.join(settings.BASE_DIR, 'default_category_mapping.json')
+    parent_category = None
+    specific_category = input_category
+
+    if os.path.exists(json_path):
+        try:
+            with open(json_path, 'r', encoding='utf-8') as f:
+                mapping = json.load(f)
+                
+            # Search for the input category in the mapping
+            # It could be the "CategoryName" (generic) or inside "CategoryNameDetailed" (specific)
+            for item in mapping:
+                cat_name = item.get('CategoryName')
+                detailed = item.get('CategoryNameDetailed', [])
+                
+                if input_category == cat_name or input_category in detailed:
+                    # Match found
+                    # Determine Parent Rate Category
+                    # We look for the "Generic ..." variant in the detailed list as that matches the CSV convention.
+                    # e.g. "Hotels" -> "Generic Hotels", "Dining & Delivery" -> "Generic Dining"
+                    generic_fallback = next((d for d in detailed if d.startswith('Generic ')), None)
+                    
+                    if generic_fallback:
+                        parent_category = generic_fallback
+                    else:
+                        # Fallback for groups without a "Generic" prefix (e.g. Travel Portals)
+                        parent_category = cat_name
+                    
+                    break
+            
+            # Fallback for "Everything Else" or unmapped
+            if not parent_category and input_category == 'Everything Else':
+                parent_category = 'All Purchases'
+
+        except Exception as e:
+            print(f"Error resolving parent category: {e}")
+
     service = OptimizerService()
     results = service.calculate_spend_recommendations(
         amount=amount,
-        category=category,
+        specific_category=specific_category,
+        parent_category=parent_category,
         user_wallet_slugs=user_wallet_slugs
     )
     
     context = {
         'results': results,
         'amount': amount,
-        'category': category
+        'category': input_category,
+        'parent_category': parent_category
     }
     
     return render(request, 'calculators/spend_it_results.html', context)

@@ -44,7 +44,7 @@ class OptimizerService:
             with open(csv_path, 'r', encoding='utf-8') as f:
                 reader = csv.DictReader(f, delimiter='|')
                 for row in reader:
-                    if row.get('IsDefault') == 'Yes':
+                    if row.get('IsDefault') in ('Yes', 'True'):
                         slug = row.get('slug-id')
                         try:
                             rate = float(row.get('EarningRate', 0))
@@ -271,7 +271,8 @@ class OptimizerService:
                         'rate': rate_val,
                         'currency': row.get('Currency', 'points'),
                         'details': row.get('AdditionalDetails', ''),
-                        'is_default': row.get('IsDefault') == 'Yes'
+                        'details': row.get('AdditionalDetails', ''),
+                        'is_default': row.get('IsDefault') in ('Yes', 'True')
                     })
         except Exception as e:
             print(f"Error reading all rates CSV: {e}")
@@ -297,15 +298,20 @@ class OptimizerService:
                     cat_list = cat_data if isinstance(cat_data, list) else [str(cat_data)]
                 
                 for c in cat_list:
+                    # Filter out empty and "All Purchases"
                     if c and c.lower() != 'all purchases': 
                          unique_cats.add(c)
                          
         sorted_cats = sorted(list(unique_cats))
         return sorted_cats
 
-    def calculate_spend_recommendations(self, amount, category, user_wallet_slugs):
+    def calculate_spend_recommendations(self, amount, specific_category, parent_category, user_wallet_slugs):
         """
-        Recommends cards for a specific purchase amount and category.
+        Recommends cards for a specific purchase amount and category using a fallback strategy:
+        1. Strict Match (Specific Category)
+        2. Parent Match (Generic Category)
+        3. Default Rate (All Purchases / Base)
+        
         Returns: { 'wallet': [], 'opportunities': [] }
         """
         all_rates = self._load_all_rates()
@@ -313,117 +319,162 @@ class OptimizerService:
         wallet_recs = []
         opportunity_recs = []
         
-        # Category Mapping (Frontend -> CSV Categories)
-        # Frontend: [Dining, Travel, Groceries, Gas, Tech & Gadgets, Everything Else]
-        # CSV contains diverse strings. We need a fuzzy matcher or mapped list.
-        category_map = {
-            'Dining': ['Dining', 'Restaurants'],
-            'Travel': ['Travel', 'Flights', 'Hotels', 'Transit', 'Car Rentals'],
-            'Groceries': ['Groceries', 'Supermarkets', 'Whole Foods'],
-            'Gas': ['Gas', 'EV Charging', 'Fuel'],
-            'Tech & Gadgets': ['Online Retail', 'Electronics', 'Amazon', 'Best Buy', 'Apple'],
-            'Dining': ['Dining', 'Restaurants'],
-            'Travel': ['Travel', 'Flights', 'Hotels', 'Transit', 'Car Rentals'],
-            'Groceries': ['Groceries', 'Supermarkets', 'Whole Foods'],
-            'Gas': ['Gas', 'EV Charging', 'Fuel'],
-            'Tech & Gadgets': ['Online Retail', 'Electronics', 'Amazon', 'Best Buy', 'Apple'],
-            'Everything Else': ['All Purchases'] # Still used for keyword matching if needed
-        }
-        
-        target_keywords = category_map.get(category, ['All Purchases'])
-        
-        # Helper to find best rate for a card
+        # Helper to find best rate for a card with fallback logic
         def get_best_rate_for_card(slug, rates_list):
             best_rate = 0.0
             best_rate_data = None
+            match_type = 'Default' # 'Specific', 'Generic', 'Default'
             
-            # Check specific category matches first
+            # 1. Try Specific Match
+            if specific_category:
+                for r in rates_list:
+                    cat_data = r['category']
+                    # Parse JSON list
+                    if isinstance(cat_data, str):
+                        try:
+                            cat_list = json.loads(cat_data)
+                        except json.JSONDecodeError:
+                            cat_list = [cat_data]
+                    else:
+                        cat_list = cat_data if isinstance(cat_data, list) else [str(cat_data)]
+                    
+                    for c_str in cat_list:
+                        # Exact match or case-insensitive? Strict for now.
+                        if c_str.lower() == specific_category.lower():
+                            if r['rate'] > best_rate:
+                                best_rate = r['rate']
+                                best_rate_data = r
+                                match_type = 'Specific'
+                                # Found specific match, keep looking? 
+                                # If there are multiple specific matches (unlikely), take max.
+            
+            if match_type == 'Specific':
+                return best_rate, best_rate_data, 'Specific'
+
+            # 2. Try Parent Match (if specific didn't hit)
+            if parent_category:
+                parent_best_rate = 0.0
+                parent_match_data = None
+                
+                for r in rates_list:
+                    cat_data = r['category']
+                    if isinstance(cat_data, str):
+                        try:
+                            cat_list = json.loads(cat_data)
+                        except json.JSONDecodeError:
+                            cat_list = [cat_data]
+                    else:
+                        cat_list = cat_data if isinstance(cat_data, list) else [str(cat_data)]
+                        
+                    for c_str in cat_list:
+                        if c_str.lower() == parent_category.lower():
+                             if r['rate'] > parent_best_rate:
+                                 parent_best_rate = r['rate']
+                                 parent_match_data = r
+                
+                if parent_match_data:
+                    return parent_best_rate, parent_match_data, 'Generic'
+
+            # 3. Fallback to Default / All Purchases
+            default_best_rate = 0.0
+            default_match_data = None
+            
             for r in rates_list:
-                # Parse category JSON if string
+                # Check for explicit 'All Purchases' or IsDefault flag
+                is_base = r['is_default']
+                is_all_purchases = False
+                
                 cat_data = r['category']
                 if isinstance(cat_data, str):
-                    try:
-                        cat_list = json.loads(cat_data)
-                    except json.JSONDecodeError:
-                        cat_list = [cat_data]
-                else:
-                    cat_list = cat_data if isinstance(cat_data, list) else [str(cat_data)]
-
-                # Check if any keyword matches
-                match = False
-                if category == 'Everything Else':
-                     if r['is_default']:
-                         match = True
-                else:
-                    for cat_str in cat_list:
-                        for kw in target_keywords:
-                            if kw.lower() in cat_str.lower():
-                                match = True
-                                break
-                        if match: break
-                            
-                if match:
-                    if r['rate'] > best_rate:
-                        best_rate = r['rate']
-                        best_rate_data = r
-                        # Normalize category field for result to be the matching string
-                        # Or keep the whole list? For "category_matched" we might want the specific match or the primary one.
-                        # Let's attach the matched list for now or just the first one?
-                        # user wants to display ALL unique rate categories for the card later.
-                        pass
+                    if 'All Purchases' in cat_data: is_all_purchases = True
+                elif isinstance(cat_data, list):
+                    if 'All Purchases' in cat_data: is_all_purchases = True
+                    
+                if is_base or is_all_purchases:
+                    if r['rate'] > default_best_rate:
+                        default_best_rate = r['rate']
+                        default_match_data = r
             
-            # Fallback to "All Purchases" / Default if no specific match
-            if best_rate == 0.0:
-                for r in rates_list:
-                    if r['is_default'] or 'All Purchases' in r['category']:
-                         # If we already found a rate (e.g. 0), override? 
-                         # Usually All Purchases is the floor.
-                         if r['rate'] > best_rate:
-                             best_rate = r['rate']
-                             best_rate_data = r
-            
-            return best_rate, best_rate_data
+            return default_best_rate, default_match_data, 'Default'
 
         # Process ALL cards
         for slug, card_obj in self.cards_map.items():
             card_rates = all_rates.get(slug, [])
-            if not card_rates:
-                continue
-
-            rate_val, rate_data = get_best_rate_for_card(slug, card_rates)
             
-            if not rate_data:
-                continue
-                
-            # Valuation
+            rate_val, rate_data, match_type = get_best_rate_for_card(slug, card_rates)
+            
+            # If absolutely no rate found (unlikely if 'All Purchases' exists), skip or assume 0
+            if not rate_data and rate_val == 0:
+                 # Try to fallback to 1x if nothing else?
+                 rate_val = 1.0
+                 rate_data = {'currency': 'points', 'category': 'Base Estimate'}
+                 match_type = 'Default'
+
+            # Valuation (CPP)
             raw_cpp = card_obj.get('points_value_cpp') or card_obj.get('PointsValueCpp', '1.0')
             try:
                 cpp = float(raw_cpp) if isinstance(raw_cpp, (int, float)) or raw_cpp.replace('.', '', 1).isdigit() else 1.0
             except:
                 cpp = 1.0
 
-            # Estimate Points
-            # If cash back currency, points = dollar value? 
-            # Or points = amount * rate (if rate is %)
-            # Rate in CSV is usually "3" for 3x or 3%.
+            # Estimate Points & Value
+            currency_lower = rate_data.get('currency', 'points').lower()
+            
+            # Calculations
             est_points = amount * rate_val
             
-            # Estimate Value ($)
-            currency_lower = rate_data['currency'].lower()
             if 'cash' in currency_lower:
-                # Cash back: Rate 3 means 3% usually -> 0.03 * amount
-                # Wait, earlier logic said:
-                # "Cash back rate is usually percent (e.g. 1.5 for 1.5%) -> 0.015 dollars per dollar"
-                # But here rate_val is e.g. 1.5. 
-                # So dollar value = amount * (rate_val / 100)
                 est_value = amount * (rate_val / 100.0)
-                # For display consistency, let's show "Points equivalent" as est_value * 100?
-                # Or just show points as the raw 300 (for $100 * 3%).
-                # User mock shows "1,500" Est Points.
-                est_points = amount * rate_val # e.g. 100 * 3 = 300
+                # Ensure points display logic matches user expectation (multiplier * amount as "points" equivalent?)
+                # For consistency with previous step, we stick to:
+                est_points = amount * rate_val 
             else:
-                # Points: 3x -> 300 points
+                # Points: 3x -> 300 points -> Value = 300 * (cpp/100)
                 est_value = est_points * (cpp / 100.0)
+                
+            # RENT LOGIC (3% Fee)
+            # If category is Rent, apply 3% fee to value for all except Bilt
+            if specific_category and specific_category.lower() == 'rent':
+                if 'bilt' not in slug.lower(): # bilt-mastercard
+                     fee = amount * 0.03
+                     est_value -= fee
+
+            # Determine Display Logic for "Matched Category"
+            matched_display = "All Purchases"
+            if rate_data.get('category'):
+                raw_cats = rate_data['category']
+                if isinstance(raw_cats, str):
+                    try:
+                         # Try JSON parse
+                         cat_list = json.loads(raw_cats)
+                    except:
+                         cat_list = [raw_cats]
+                else:
+                    cat_list = raw_cats if isinstance(raw_cats, list) else [str(raw_cats)]
+                
+                # Check what matched
+                found_match = False
+                # Check specific
+                if specific_category:
+                     for c in cat_list:
+                         if c.lower() == specific_category.lower():
+                             matched_display = c
+                             found_match = True
+                             break
+                # Check parent
+                if not found_match and parent_category:
+                     for c in cat_list:
+                         if c.lower() == parent_category.lower():
+                             matched_display = c
+                             found_match = True
+                             break
+                # Fallback
+                if not found_match:
+                    # Likely All Purchases or Base Rate
+                    if 'All Purchases' in cat_list:
+                        matched_display = "All Purchases"
+                    else:
+                        matched_display = cat_list[0] # Show whatever category that drove this rate
 
             # Collect all unique categories for this card for display
             unique_categories = set()
@@ -439,23 +490,13 @@ class OptimizerService:
                 
                 for c in c_list:
                     unique_categories.add(c)
-            
-            # Filter out "All Purchases" or similar generic if desired, or keep all.
-            # User said: "get all unique rates categories for each card and display it"
-            
-            # Format category_matched for display
-            # If rate_data has a list, join them or pick one? 
-            # In the loop above `get_best_rate_for_card` we didn't update `rate_data['category']` which is still the raw string/json.
-            # Let's clean it up for the single match too.
-            matched_cats_str = rate_data['category']
-            if isinstance(matched_cats_str, str):
-                try:
-                    m_list = json.loads(matched_cats_str)
-                    matched_display = ", ".join(m_list)
-                except:
-                    matched_display = matched_cats_str
+
+            # Currency Display Logic
+            if 'cash' in currency_lower:
+                currency_display = 'Cashback'
             else:
-                 matched_display = ", ".join(matched_cats_str) if isinstance(matched_cats_str, list) else str(matched_cats_str)
+                # Capitalize (Points, Miles, Avios)
+                currency_display = currency_lower.title() # "Avios", "Points"
 
             result_item = {
                 'card': card_obj,
@@ -465,7 +506,12 @@ class OptimizerService:
                 'category_matched': matched_display,
                 'slug': slug,
                 'card_name': card_obj.get('name', 'Unknown Card'),
-                'categories': sorted(list(unique_categories))
+                'categories': sorted(list(unique_categories)),
+                'currency': currency_lower,
+                'currency_display': currency_display,
+                'match_type': match_type,
+                'is_specific_match': match_type == 'Specific',
+                'cpp': cpp
             }
             
             if slug in user_wallet_slugs:
@@ -474,19 +520,37 @@ class OptimizerService:
                 opportunity_recs.append(result_item)
                 
         # Sort and limit
-        wallet_recs.sort(key=lambda x: x['est_value'], reverse=True)
-        opportunity_recs.sort(key=lambda x: x['est_value'], reverse=True)
+        # Sort key: (is_specific, value)
+        # specific='Specific' -> 1, else 0
+        def sort_key(item):
+            priority = 1 if item['match_type'] == 'Specific' else 0
+            return (priority, item['est_value'])
+
+        wallet_recs.sort(key=sort_key, reverse=True)
+        
+        # Identify Winner(s)
+        if wallet_recs:
+            max_val = wallet_recs[0]['est_value']
+            for item in wallet_recs:
+                item['is_winner'] = abs(item['est_value'] - max_val) < 0.01
+
+        # 3. Calculate Opportunity Cost / Net Gain
+        opportunity_recs.sort(key=sort_key, reverse=True)
         
         # Calculate Lost Value
         best_wallet_val = wallet_recs[0]['est_value'] if wallet_recs else 0.0
         best_opp_val = opportunity_recs[0]['est_value'] if opportunity_recs else 0.0
         
         lost_value = max(0.0, best_opp_val - best_wallet_val)
+        net_gain = best_opp_val - best_wallet_val
+
+        # Calculate differential for each opportunity vs best wallet card
+        for item in opportunity_recs:
+            item['diff_vs_wallet'] = max(0.0, item['est_value'] - best_wallet_val)
         
         # Helper to strict-ify data for JSON serialization in templates
         def sanitize_card_for_json(card_data):
-            # Create a copy to avoid mutating original cache if needed (though cards_map is ref)
-            # Actually we just need to ensure datetime objects are strings
+            # ... (helper code)
             clean = {}
             for k, v in card_data.items():
                 if isinstance(v, (datetime, date)):
@@ -506,7 +570,8 @@ class OptimizerService:
             item['card_json'] = json.dumps(sanitize_card_for_json(item['card']))
 
         return {
-            'wallet': wallet_recs[:3],
-            'opportunities': opportunity_recs[:3],
-            'lost_value': lost_value
+            'wallet': wallet_recs,
+            'opportunities': opportunity_recs[:5],
+            'lost_value': lost_value,
+            'net_gain': net_gain
         }

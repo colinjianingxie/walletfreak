@@ -249,7 +249,14 @@ def parse_benefits_csv(csv_path):
             # AnnualFee is no longer in this CSV
             benefit_desc = row['BenefitDescription'].strip()
             additional_details = row.get('AdditionalDetails', '').strip()
-            category = row['BenefitCategory'].strip()
+            category_raw = row['BenefitCategory'].strip()
+            try:
+                import json
+                category = json.loads(category_raw)
+                if not isinstance(category, list):
+                    category = [str(category)]
+            except json.JSONDecodeError:
+                category = [category_raw]
             time_category = row['TimeCategory'].strip()
             dollar_value_str = row['DollarValue'].strip()
             enrollment_required_str = row.get('EnrollmentRequired', 'False').strip()

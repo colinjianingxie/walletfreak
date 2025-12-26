@@ -346,13 +346,50 @@ function selectCardForPreview(card, element) {
                 });
 
                 earning.forEach(item => {
-                    const cat = item.category || item.cat || item.description || 'Category';
+                    // Support different field names
+                    let cat = item.category || item.cat || item.description || 'Category';
+                    // Handle array categories (new format)
+                    if (Array.isArray(cat)) {
+                        cat = cat.join(', ');
+                    }
+
                     const rate = parseFloat(item.rate || item.value || 0);
                     const currency = item.currency || 'points';
 
+                    // Build details text similar to card_modal.html
+                    let details = item.details || item.description_long || item.additional_details || '';
+
+                    // Handle array details
+                    if (Array.isArray(details)) {
+                        details = details.join(', ');
+                    }
+
+                    if (!details) {
+                        // Generate default details text
+                        if ((currency && String(currency).toLowerCase().includes('cash')) || (item.benefit_type === 'Cashback')) {
+                            details = `Earn ${rate}% cash back on ${cat.toLowerCase()}.`;
+                        } else {
+                            details = `Earn ${rate}x ${currency} on ${cat.toLowerCase()}.`;
+                        }
+                    }
+
+                    // Title Case Helper
+                    const toTitleCase = (str) => {
+                        if (typeof str !== 'string') return String(str);
+                        return str.toLowerCase().split(' ').map(word => {
+                            return word.charAt(0).toUpperCase() + word.slice(1);
+                        }).join(' ');
+                    };
+
+                    const displayTitle = toTitleCase(details);
+
                     let displayRate;
-                    if ((currency && String(currency).toLowerCase().includes('cash')) || (item.benefit_type === 'Cashback')) {
-                        displayRate = `${rate}%`;
+                    if ((currency && String(currency).toLowerCase().includes('cash')) || (item.benefit_type === 'Cashback') || String(item.rate || '').includes('%')) {
+                        // Fix: if rate is raw number, append %. If it's "3%", leave it.
+                        // But we parsed float above.
+                        // Let's stick to simple logic:
+                        if (String(item.rate).includes('%')) displayRate = item.rate;
+                        else displayRate = `${rate}%`;
                     } else {
                         displayRate = `${rate}x`;
                     }
@@ -360,7 +397,7 @@ function selectCardForPreview(card, element) {
                     const row = document.createElement('div');
                     row.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; font-size: 0.875rem;';
                     row.innerHTML = `
-                        <div style="color: #475569; font-weight: 500;">${cat}</div>
+                        <div style="color: #475569; font-weight: 500;">${displayTitle}</div>
                         <div style="font-weight: 700; color: #0F172A; background: #E0E7FF; color: #4338CA; padding: 0.125rem 0.5rem; border-radius: 4px;">${displayRate}</div>
                     `;
                     earningContainer.appendChild(row);

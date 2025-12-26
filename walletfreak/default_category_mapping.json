@@ -1,0 +1,213 @@
+[
+    {
+        "CategoryName": "Travel Portals",
+        "Icon": "fa-solid fa-magnifying-glass-location",
+        "CategoryNameDetailed": [
+            "Chase Travel",
+            "Amex Travel",
+            "Capital One Travel",
+            "Citi Travel",
+            "Wells Fargo Travel",
+            "Bank of America Travel",
+            "US Bank Travel",
+            "The Edit by Chase Travel",
+            "Fine Hotels & Resorts",
+            "The Hotel Collection",
+            "Lifestyle Collection"
+        ]
+    },
+    {
+        "CategoryName": "Airlines",
+        "Icon": "fa-solid fa-plane",
+        "CategoryNameDetailed": [
+            "Generic Airlines",
+            "American Airlines",
+            "United",
+            "Delta",
+            "Southwest",
+            "Air Canada",
+            "British Airways",
+            "Aer Lingus",
+            "Iberia",
+            "LEVEL",
+            "Admirals Club",
+            "Avios"
+        ]
+    },
+    {
+        "CategoryName": "Hotels",
+        "Icon": "fa-solid fa-hotel",
+        "CategoryNameDetailed": [
+            "Generic Hotels",
+            "Hilton",
+            "Hyatt",
+            "IHG",
+            "Marriott",
+            "Conrad",
+            "Waldorf Astoria",
+            "Vacation Rentals"
+        ]
+    },
+    {
+        "CategoryName": "Dining & Delivery",
+        "Icon": "fa-solid fa-utensils",
+        "CategoryNameDetailed": [
+            "Generic Dining",
+            "Citi Nights",
+            "DoorDash",
+            "Grubhub",
+            "Resy",
+            "Dunkin",
+            "Cheesecake Factory",
+            "Goldbelly",
+            "Wine.com",
+            "Five Guys"
+        ]
+    },
+    {
+        "CategoryName": "Groceries",
+        "Icon": "fa-solid fa-cart-shopping",
+        "CategoryNameDetailed": [
+            "Generic Groceries",
+            "Whole Foods"
+        ]
+    },
+    {
+        "CategoryName": "Transportation",
+        "Icon": "fa-solid fa-car-side",
+        "CategoryNameDetailed": [
+            "Generic Transportation",
+            "Uber",
+            "Lyft",
+            "Rental Cars",
+            "Hertz",
+            "National",
+            "Blacklane",
+            "EV Charging",
+            "Gas",
+            "Transit",
+            "Military Bases"
+        ]
+    },
+    {
+        "CategoryName": "Shopping",
+        "Icon": "fa-solid fa-bag-shopping",
+        "CategoryNameDetailed": [
+            "Generic Shopping",
+            "Amazon",
+            "Walmart",
+            "Costco",
+            "Wholesale Clubs",
+            "Best Buy",
+            "Saks",
+            "lululemon",
+            "Drugstores",
+            "PayPal",
+            "Lowe's"
+        ]
+    },
+    {
+        "CategoryName": "Entertainment",
+        "Icon": "fa-solid fa-ticket",
+        "CategoryNameDetailed": [
+            "Generic Entertainment",
+            "Disney",
+            "Apple Music",
+            "Apple TV+",
+            "StubHub",
+            "viagogo",
+            "Mixology",
+            "Streaming",
+            "Attractions"
+        ]
+    },
+    {
+        "CategoryName": "Business & Tech",
+        "Icon": "fa-solid fa-laptop-code",
+        "CategoryNameDetailed": [
+            "Generic Business & Tech",
+            "Dell",
+            "Indeed",
+            "Adobe",
+            "Business Management",
+            "Advertising",
+            "Office Supplies",
+            "Shipping",
+            "Software",
+            "Apple",
+            "Cloud",
+            "Telecom",
+            "Phone Plans",
+            "FedEx"
+        ]
+    },
+    {
+        "CategoryName": "Health & Wellness",
+        "Icon": "fa-solid fa-heart-pulse",
+        "CategoryNameDetailed": [
+            "Generic Health & Wellness",
+            "Equinox",
+            "Oura",
+            "Peloton"
+        ]
+    },
+    {
+        "CategoryName": "Travel Perks",
+        "Icon": "fa-solid fa-passport",
+        "CategoryNameDetailed": [
+            "Generic Travel Perks",
+            "CLEAR",
+            "Priority Pass",
+            "Lounge Access",
+            "LoungeBuddy",
+            "SmartDelay",
+            "GigSky",
+            "Travel Security",
+            "PRIOR",
+            "Global Entry",
+            "TSA PreCheck",
+            "NEXUS"
+        ]
+    },
+    {
+        "CategoryName": "Large Expenses",
+        "Icon": "fa-solid fa-money-check-dollar",
+        "CategoryNameDetailed": [
+            "Rent",
+            "Large Purchases"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards",
+            "All Purchases",
+            "Anniversary Bonus",
+            "Status",
+            "Banking",
+            "Rotating Categories",
+            "Choice Category",
+            "Top Category",
+            "Mobile Wallet",
+            "Credit Building",
+            "Credit Monitoring",
+            "No Rewards",
+            "Rewards Bonus",
+            "Fee Waiver"
+        ]
+    },
+    {
+        "CategoryName": "Protection",
+        "Icon": "fa-solid fa-shield-halved",
+        "CategoryNameDetailed": [
+            "Generic Protection",
+            "Cell Phone Protection",
+            "Insurance",
+            "Roadside Assistance",
+            "Rental Coverage",
+            "Card Protection",
+            "Fraud Protection"
+        ]
+    }
+]

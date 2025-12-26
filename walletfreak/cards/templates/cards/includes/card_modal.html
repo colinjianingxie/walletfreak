@@ -519,7 +519,12 @@ function openCardModal(cardId) {
         
         earning.forEach((item, index) => {
             // Support different field names
-            const cat = item.category || item.cat || item.description || 'Category';
+            let cat = item.category || item.cat || item.description || 'Category';
+            
+            // Handle array categories (new format)
+            if (Array.isArray(cat)) {
+                cat = cat.join(', ');
+            }
             const rate = item.rate || item.mult || item.multiplier || item.value || 0;
             const currency = item.currency || 'points';
             
@@ -539,6 +544,12 @@ function openCardModal(cardId) {
             
             // Build details text
             let details = item.details || item.description_long || item.additional_details || '';
+            
+            // Handle array details if present
+            if (Array.isArray(details)) {
+                details = details.join(', ');
+            }
+            
             if (!details) {
                 // Generate default details text
                 if (currency.toLowerCase().includes('cash')) {
@@ -548,18 +559,24 @@ function openCardModal(cardId) {
                 }
             }
             
+            // Title Case Helper
+            const toTitleCase = (str) => {
+                if (typeof str !== 'string') return String(str);
+                return str.toLowerCase().split(' ').map(word => {
+                    return word.charAt(0).toUpperCase() + word.slice(1);
+                }).join(' ');
+            };
+            
+            const displayTitle = toTitleCase(details);
+            
             const wrapper = document.createElement('div');
             wrapper.className = 'expandable-row-wrapper';
             wrapper.innerHTML = `
-                <div class="expandable-row" onclick="toggleExpandable(this)">
-                    <div class="earning-cat">${cat}</div>
+                <div class="expandable-row" style="cursor: default;">
+                    <div class="earning-cat">${displayTitle}</div>
                     <div class="earning-actions" style="display: flex; align-items: center; gap: 0.5rem;">
                         <div class="earning-mult">${mult}</div>
-                        <span class="material-icons expand-arrow" style="font-size: 20px; color: #94A3B8;">expand_more</span>
                     </div>
-                </div>
-                <div class="expandable-content">
-                    <div class="expandable-content-inner">${details}</div>
                 </div>
             `;
             earningContainer.appendChild(wrapper);
