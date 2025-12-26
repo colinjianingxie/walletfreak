@@ -500,34 +500,34 @@ def spend_it_calculate(request):
             owned_cards = db.get_user_cards(uid)
             user_wallet_slugs = {c.get('card_id') for c in owned_cards}
 
-    # Resolve Parent Category using the mapping file
+    # Resolve Parent Category and Siblings using the mapping file
     json_path = os.path.join(settings.BASE_DIR, 'default_category_mapping.json')
     parent_category = None
     specific_category = input_category
-
+    sibling_categories = []
+    
     if os.path.exists(json_path):
         try:
             with open(json_path, 'r', encoding='utf-8') as f:
                 mapping = json.load(f)
                 
             # Search for the input category in the mapping
-            # It could be the "CategoryName" (generic) or inside "CategoryNameDetailed" (specific)
             for item in mapping:
                 cat_name = item.get('CategoryName')
                 detailed = item.get('CategoryNameDetailed', [])
                 
                 if input_category == cat_name or input_category in detailed:
                     # Match found
-                    # Determine Parent Rate Category
-                    # We look for the "Generic ..." variant in the detailed list as that matches the CSV convention.
-                    # e.g. "Hotels" -> "Generic Hotels", "Dining & Delivery" -> "Generic Dining"
+                    # 1. Determine Parent Rate Category (existing logic)
                     generic_fallback = next((d for d in detailed if d.startswith('Generic ')), None)
-                    
                     if generic_fallback:
                         parent_category = generic_fallback
                     else:
-                        # Fallback for groups without a "Generic" prefix (e.g. Travel Portals)
                         parent_category = cat_name
+                    
+                    # 2. Extract Sibling Categories (New Logic)
+                    # Exclude the specific category itself and Generic fallback if used as parent
+                    sibling_categories = [d for d in detailed if d != specific_category and d != parent_category]
                     
                     break
             
@@ -536,14 +536,15 @@ def spend_it_calculate(request):
                 parent_category = 'All Purchases'
 
         except Exception as e:
-            print(f"Error resolving parent category: {e}")
+            print(f"Error resolving parent/sibling categories: {e}")
 
     service = OptimizerService()
     results = service.calculate_spend_recommendations(
         amount=amount,
         specific_category=specific_category,
         parent_category=parent_category,
-        user_wallet_slugs=user_wallet_slugs
+        user_wallet_slugs=user_wallet_slugs,
+        sibling_categories=sibling_categories
     )
     
     context = {

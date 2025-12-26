@@ -305,15 +305,16 @@ class OptimizerService:
         sorted_cats = sorted(list(unique_cats))
         return sorted_cats
 
-    def calculate_spend_recommendations(self, amount, specific_category, parent_category, user_wallet_slugs):
+    def calculate_spend_recommendations(self, amount, specific_category, parent_category, user_wallet_slugs, sibling_categories=None):
         """
-        Recommends cards for a specific purchase amount and category using a fallback strategy:
-        1. Strict Match (Specific Category)
-        2. Parent Match (Generic Category)
-        3. Default Rate (All Purchases / Base)
+        Recommends cards for a specific purchase amount and category.
+        Also calculates synergies for wallet cards based on performance in sibling categories.
         
         Returns: { 'wallet': [], 'opportunities': [] }
         """
+        if sibling_categories is None:
+            sibling_categories = []
+            
         all_rates = self._load_all_rates()
         
         wallet_recs = []
@@ -533,6 +534,116 @@ class OptimizerService:
             max_val = wallet_recs[0]['est_value']
             for item in wallet_recs:
                 item['is_winner'] = abs(item['est_value'] - max_val) < 0.01
+                
+            # Synergy Calculation for Wallet Cards
+            if sibling_categories:
+                # 1. Pre-calculate max rates for each sibling category across the wallet
+                max_rates_by_sibling = {sib: 0.0 for sib in sibling_categories}
+                
+                # We need to look at ALL wallet cards to find the true max, even those not in wallet_recs (though wallet_recs should have all by definition of calculate_recommendations logic filtering)
+                # Actually calculate_recommendations iterates all known cards and splits by wallet/opportunity.
+                # So wallet_recs contains all wallet cards.
+                
+                for item in wallet_recs:
+                    slug = item['slug']
+                    card_rates = all_rates.get(slug, [])
+                    
+                    for sibling in sibling_categories:
+                        sib_rate = 0.0
+                        # Simplified lookup
+                        for r in card_rates:
+                            cat_data = r['category']
+                            if isinstance(cat_data, str):
+                                try:
+                                    cat_list = json.loads(cat_data)
+                                except:
+                                    cat_list = [cat_data]
+                            else:
+                                cat_list = cat_data if isinstance(cat_data, list) else [str(cat_data)]
+                            
+                            for c in cat_list:
+                                if c.lower() == sibling.lower():
+                                    if r['rate'] > sib_rate:
+                                        sib_rate = r['rate']
+                        
+                        if sib_rate > max_rates_by_sibling[sibling]:
+                            max_rates_by_sibling[sibling] = sib_rate
+
+                # 2. Assign Synergies
+                for item in wallet_recs:
+                    slug = item['slug']
+                    card_rates = all_rates.get(slug, [])
+                    
+                    best_synergy = None
+                    best_synergy_rate = 0.0
+                    
+                    for sibling in sibling_categories:
+                        # Find rate
+                        sib_rate = 0.0
+                        for r in card_rates:
+                            cat_data = r['category']
+                            if isinstance(cat_data, str):
+                                try:
+                                    cat_list = json.loads(cat_data)
+                                except:
+                                    cat_list = [cat_data]
+                            else:
+                                cat_list = cat_data if isinstance(cat_data, list) else [str(cat_data)]
+                            for c in cat_list:
+                                if c.lower() == sibling.lower():
+                                    if r['rate'] > sib_rate:
+                                        sib_rate = r['rate']
+                        
+                        if sib_rate > 0:
+                            # Prioritize the sibling that gives the highest rate for this card
+                            # Or prioritize the one where it is an EQUAL PERFORMER?
+                            # Let's prioritize highest rate first.
+                            if sib_rate > best_synergy_rate:
+                                best_synergy_rate = sib_rate
+                                
+                                # Default Styling
+                                label = "Solid Choice"
+                                color_class = "text-slate-700" 
+                                bg_class = "border-slate-100"
+                                text_class = "text-slate-500"
+                                
+                                # Check vs Max
+                                max_for_sib = max_rates_by_sibling.get(sibling, 0.0)
+                                is_tied_for_top = (sib_rate >= max_for_sib and max_for_sib > 0)
+                                
+                                if is_tied_for_top:
+                                    label = "EQUAL PERFORMER"
+                                    color_class = "text-indigo-600"
+                                    bg_class = "border-indigo-100"
+                                    text_class = "text-indigo-700"
+                                elif sib_rate >= 4.0:
+                                    label = "POTENTIAL CANDIDATE"
+                                    color_class = "text-green-700" 
+                                    bg_class = "border-green-100"
+                                    text_class = "text-green-600"
+                                elif sib_rate >= 3.0:
+                                    label = "Top Performer"
+                                    color_class = "text-green-700"
+                                    bg_class = "border-green-100"
+                                    text_class = "text-green-600"
+                                    
+                                # Description
+                                if 'cash' in item['currency']:
+                                    desc = f"Earns {sib_rate}% on {sibling}."
+                                else:
+                                    desc = f"Earns {sib_rate}x points on {sibling}."
+                                    
+                                best_synergy = {
+                                    'name': sibling,
+                                    'rate': sib_rate,
+                                    'label': label,
+                                    'description': desc,
+                                    'color_class': color_class,
+                                    'bg_class': bg_class,
+                                    'text_class': text_class
+                                }
+                    
+                    item['synergy'] = best_synergy
 
         # 3. Calculate Opportunity Cost / Net Gain
         opportunity_recs.sort(key=sort_key, reverse=True)
