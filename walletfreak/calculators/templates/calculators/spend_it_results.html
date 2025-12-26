@@ -1,0 +1,140 @@
+{% load humanize %}
+
+<div class="si-results-wrapper">
+    {% if results.wallet or results.opportunities %}
+        
+        <!-- WALLET Matches -->
+        <div>
+            {% if results.wallet %}
+            <div class="si-section-header">
+                <div class="si-section-title">
+                    <i class="material-icons" style="font-size: 16px;">account_balance_wallet</i>
+                    From Your Wallet
+                </div>
+            </div>
+            
+            {% for item in results.wallet %}
+            <div class="wallet-card {% if forloop.first %}top-performer{% endif %}">
+                <div class="wc-content">
+                    <div class="wc-image">
+                        <!-- Try to find image or use default placeholder -->
+                        {% if item.card.image_url %}
+                            <img src="{{ item.card.image_url }}" alt="{{ item.card_name }}">
+                        {% else %}
+                             <div style="width: 100%; height: 100%; background: #e2e8f0; display: flex; align-items: center; justify-content: center;">
+                                <i class="material-icons" style="color: #94a3b8; font-size: 24px;">credit_card</i>
+                             </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="wc-info">
+                        <h4>{{ item.card_name }}</h4>
+                        <!-- Display Matched Category Badge -->
+                        <div class="wc-badge">{{ item.category_matched }}</div>
+                        
+                        <!-- Unique Categories Pills -->
+                        <div style="margin-top: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.25rem;">
+                            {% for cat in item.categories %}
+                                <span style="font-size: 0.65rem; background: #F1F5F9; color: #64748B; padding: 0.15rem 0.4rem; border-radius: 4px; border: 1px solid #E2E8F0;">
+                                    {{ cat }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wc-metrics">
+                    <div class="wc-metric-box">
+                        <div class="wc-metric-val currency-val">${{ item.est_value|floatformat:2 }}</div>
+                        <div class="wc-metric-label">Est. Value</div>
+                    </div>
+                    
+                    <div class="wc-divider"></div>
+                    
+                    <div class="wc-metric-box">
+                        <div class="wc-metric-val">{{ item.est_points|intcomma }}</div>
+                        <div class="wc-metric-label">Points</div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <!-- Lost Value Summary -->
+            {% if results.lost_value > 0 %}
+            <div class="si-lost-value-wrapper">
+                <div class="lv-container">
+                    <div class="lv-icon">
+                        <i class="material-icons">savings</i>
+                    </div>
+                    <div>
+                        <div class="lv-label">Potential missed value</div>
+                        <div class="lv-amount">${{ results.lost_value|floatformat:2 }}</div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- OPPORTUNITIES Matches -->
+        <div>
+            {% if results.opportunities %}
+            <div class="opp-panel">
+                <div class="opp-glow"></div>
+                
+                <div class="opp-header">
+                    <h4>
+                        <i class="material-icons" style="font-size: 20px; color: #6366F1;">explore</i>
+                        New Opportunities
+                    </h4>
+                    <p>Cards you don't have that would earn more on this purchase.</p>
+                </div>
+
+                <div class="opp-list">
+                    {% for item in results.opportunities %}
+                    <div class="opp-item">
+                        <div class="opp-main">
+                            <div class="opp-img">
+                                {% if item.card.image_url %}
+                                    <img src="{{ item.card.image_url }}" alt="{{ item.card_name }}">
+                                {% else %}
+                                     <div style="width: 100%; height: 100%; background: #334155; display: flex; align-items: center; justify-content: center;">
+                                        <i class="material-icons" style="color: #94a3b8; font-size: 24px;">credit_card</i>
+                                     </div>
+                                {% endif %}
+                            </div>
+                            <div class="opp-info">
+                                <div class="opp-name">{{ item.card_name }}</div>
+                                <div class="opp-details">{{ item.earning_rate }} return on {{ item.category_matched }}</div>
+                                <!-- Unique Categories Pills (Simplified for dark mode) -->
+                                <div style="margin-top: 0.25rem; display: flex; flex-wrap: wrap; gap: 0.25rem;">
+                                    {% for cat in item.categories|slice:":3" %}
+                                        <span style="font-size: 0.6rem; background: rgba(255,255,255,0.1); color: #94a3b8; padding: 0.1rem 0.3rem; border-radius: 3px;">
+                                            {{ cat }}
+                                        </span>
+                                    {% endfor %}
+                                    {% if item.categories|length > 3 %}
+                                        <span style="font-size: 0.6rem; color: #64748B;">+{{ item.categories|length|add:"-3" }} more</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="opp-val-box">
+                            <div class="opp-val">${{ item.est_value|floatformat:2 }}</div>
+                            <div class="opp-val-label">Est. Value</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+    {% else %}
+        <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; color: #94A3B8;">
+            <i class="material-icons" style="font-size: 48px; margin-bottom: 1rem; color: #CBD5E1;">search_off</i>
+            <p>No recommendations found for this category.</p>
+        </div>
+    {% endif %}
+</div>

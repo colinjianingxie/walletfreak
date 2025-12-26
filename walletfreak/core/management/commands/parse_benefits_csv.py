@@ -55,7 +55,7 @@ def parse_earning_rates_csv(csv_path):
     """
     Parse the earning rates CSV and return a dictionary of earning rates by card.
     
-    CSV Format: Vendor|CardName|EarningRate|Currency|BenefitCategory|AdditionalDetails|slug-id
+    CSV Format: Vendor|CardName|EarningRate|Currency|RateCategory|AdditionalDetails|slug-id|IsDefault
     
     Returns a dictionary mapping card keys (slug or name) to their earning rates:
     {
@@ -64,13 +64,15 @@ def parse_earning_rates_csv(csv_path):
                 {
                     'rate': float,
                     'currency': str,  # 'points', 'miles', 'cash back', etc.
-                    'category': str,  # 'Travel', 'Dining', 'All Purchases', etc.
-                    'details': str
+                    'category': list,  # ["Travel", "Dining", etc.]
+                    'details': str,
+                    'is_default': bool
                 }
             ]
         }
     }
     """
+    import json
     rates_dict = defaultdict(lambda: {'earning_rates': []})
     
     try:
@@ -88,12 +90,27 @@ def parse_earning_rates_csv(csv_path):
                 except ValueError:
                     pass
                 
+                # Parse RateCategory (now a list)
+                category_raw = row.get('RateCategory', '[]').strip()
+                try:
+                    category = json.loads(category_raw)
+                    if not isinstance(category, list):
+                        # Fallback to single item list if string
+                        category = [str(category)]
+                except json.JSONDecodeError:
+                    # Fallback if not valid JSON (e.g. legacy plain string)
+                    category = [category_raw]
+
+                # Parse IsDefault
+                is_default_str = row.get('IsDefault', '').strip().lower()
+                is_default = (is_default_str == 'true')
+                
                 earning_rate = {
                     'rate': rate,
                     'currency': row['Currency'].strip(),
-                    'category': row['BenefitCategory'].strip(),
+                    'category': category,
                     'details': row.get('AdditionalDetails', '').strip(),
-                    'is_default': row.get('IsDefault', '').strip().lower() == 'yes'
+                    'is_default': is_default
                 }
                 
                 rates_dict[key]['earning_rates'].append(earning_rate)

@@ -11,6 +11,14 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.stdout.write('Seeding database...')
         
+        # 0. Pre-flight Check: Audit Data Integrity
+        import audit_slugs
+        self.stdout.write('Running pre-flight data audits...')
+        audit_passed = audit_slugs.run_audits()
+        if not audit_passed:
+            self.stdout.write(self.style.ERROR('Audit FAILED. Aborting database seed.'))
+            return
+
         # 1. Credit Cards Data - Parse from CSV
         from .parse_benefits_csv import generate_cards_from_csv
         

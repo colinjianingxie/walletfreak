@@ -8,4 +8,6 @@ urlpatterns = [
     path('worth-it/<slug:card_slug>/calculate/', views.worth_it_calculate, name='worth_it_calculate'),
     path('optimizer/', views.optimizer_input, name='optimizer_input'),
     path('optimizer/calculate/', views.optimizer_calculate, name='optimizer_calculate'),
+    path('spend-it/', views.spend_it_input, name='spend_it_input'),
+    path('spend-it/calculate/', views.spend_it_calculate, name='spend_it_calculate'),
 ]

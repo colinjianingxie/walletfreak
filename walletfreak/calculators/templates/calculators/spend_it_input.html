@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/spend_it.css' %}">
+{% endblock %}
+
+{% block main_style %}{% endblock %}
+
+{% block full_width_content %}
+<div class="spend-it-page">
+    <div class="container animate-enter">
+        
+        <a href="{% url 'calculators_index' %}" class="spend-it-back-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg> 
+            Back to Lab
+        </a>
+
+        <!-- Main Card -->
+        <div class="spend-it-main-card">
+            
+            <div class="spend-it-header">
+                <h2>How much is the swipe?</h2>
+                <p>Find the highest point haul for this specific purchase.</p>
+            </div>
+
+            <form id="spend-it-form" 
+                  hx-post="{% url 'spend_it_calculate' %}"
+                  hx-target="#results-container"
+                  hx-swap="innerHTML"
+                  hx-indicator="#submit-btn">
+                  
+                {% csrf_token %}
+
+                <!-- Amount Input -->
+                <div class="amount-input-group" onclick="document.querySelector('input[name=amount]').focus()">
+                    <span class="currency-symbol">$</span>
+                    <input 
+                        name="amount"
+                        class="amount-field" 
+                        type="number" 
+                        value="500" 
+                        placeholder="0"
+                        required>
+                </div>
+
+                <!-- Category Selection -->
+                <div>
+                    <label class="category-label">Spending Category</label>
+                    
+                    <!-- Hidden input to store selected category -->
+                    <input type="hidden" name="category" id="selected-category" value="Dining">
+
+                    <div class="category-grid" id="category-grid">
+                        
+                        <!-- Dynamic Categories -->
+                        {% for cat in unique_categories %}
+                        <button type="button" data-val="{{ cat }}" class="category-btn {% if cat == 'Dining' %}active{% endif %}">
+                            <!-- Generic Icon since we don't have SVGs for all dynamic cats -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.91 8.84 5.91 2.23a1 1 0 0 0-1.24 1.37l2.35 6.2a.7.7 0 0 1 0 .48l-2.35 6.2a1 1 0 0 0 1.24 1.37l15-6.6a1 1 0 0 0 0-1.41Z"></path></svg>
+                            <span>{{ cat }}</span>
+                        </button>
+                        {% endfor %}
+
+                        <!-- Everything Else (Always present) -->
+                        <button type="button" data-val="Everything Else" class="category-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+                            <span>Everything<br>Else</span>
+                        </button>
+                        
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="si-btn-primary" id="submit-btn">
+                    <span class="si-btn-content">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-6 h-6" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg> 
+                        Find My Best Card
+                    </span>
+                    <div class="si-btn-loader"></div>
+                </button>
+            </form>
+        </div>
+
+        <!-- RESULTS CONTAINER -->
+        <div id="results-container"></div>
+            
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const btns = document.querySelectorAll('.category-btn');
+        const input = document.getElementById('selected-category');
+        
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all
+                btns.forEach(b => b.classList.remove('active'));
+                
+                // Add active class to clicked
+                btn.classList.add('active');
+                
+                // Update input
+                input.value = btn.getAttribute('data-val');
+            });
+        });
+        
+        // Results Scrolling
+        document.body.addEventListener('htmx:afterSwap', (event) => {
+             if(event.detail.target.id === 'results-container') {
+                 event.detail.target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+             }
+        });
+    });
+</script>
+{% endblock %}

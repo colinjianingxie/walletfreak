@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.template.loader import render_to_string
 import csv
 import json
@@ -413,3 +413,57 @@ def optimizer_calculate(request):
         'cards_data': cards_data_json,
         'wallet_card_ids': list(user_wallet_slugs)
     })
+
+def spend_it_input(request):
+    """
+    Renders the Spend It Optimizer input form.
+    """
+    service = OptimizerService()
+    unique_categories = service.get_all_unique_categories()
+    
+    # Ensure 'Everything Else' is always an option, effectively 'All Purchases'
+    # We'll handle 'Everything Else' specially in template as the last item or specific button
+    
+    context = {
+        'page_title': '"Spend It" Optimizer',
+        'unique_categories': unique_categories
+    }
+    return render(request, 'calculators/spend_it_input.html', context)
+
+def spend_it_calculate(request):
+    """
+    Calculates best cards for a specific purchase amount and category.
+    Returns HTML partial for htmx/ajax injection.
+    """
+    if request.method != 'POST':
+        return redirect('spend_it_input')
+        
+    try:
+        amount = float(request.POST.get('amount', 0))
+        category = request.POST.get('category', 'Everything Else')
+    except ValueError:
+        amount = 0.0
+        category = 'Everything Else'
+
+    # Get User Wallet (if authenticated)
+    user_wallet_slugs = set()
+    if request.user.is_authenticated:
+        uid = request.session.get('uid') or request.user.username
+        if uid:
+            owned_cards = db.get_user_cards(uid)
+            user_wallet_slugs = {c.get('card_id') for c in owned_cards}
+
+    service = OptimizerService()
+    results = service.calculate_spend_recommendations(
+        amount=amount,
+        category=category,
+        user_wallet_slugs=user_wallet_slugs
+    )
+    
+    context = {
+        'results': results,
+        'amount': amount,
+        'category': category
+    }
+    
+    return render(request, 'calculators/spend_it_results.html', context)
