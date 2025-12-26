@@ -160,11 +160,10 @@ function calculateCreditsUsed() {
 
                                                 // MATCH PY: benefit_type == 'Credit' OR 'Perk' AND dollar_value > 0
                                                 if ((type === 'Credit' || type === 'Perk') && val > 0) {
-                                                    console.log(`[+] Adding Benefit: ${name} (Type: ${type}, Val: ${val}) - Amount: ${data.used}`);
+
                                                     totalUsed += (data.used || 0);
-                                                } else {
-                                                    console.log(`[-] Skipping ${name} (Type: ${type}, Val: ${val})`);
                                                 }
+
                                             }
                                         }
                                     }

@@ -38,7 +38,7 @@ function setupWalletListener() {
     walletListenerUnsubscribe = db.collection('users').doc(currentUserUid).collection('user_cards')
         .where('status', '==', 'active') // Only listen for active cards for the stack
         .onSnapshot((snapshot) => {
-            console.log("Wallet update received:", snapshot.size, "docs");
+
             const cards = [];
             snapshot.forEach((doc) => {
                 cards.push({ id: doc.id, ...doc.data() });
@@ -48,8 +48,7 @@ function setupWalletListener() {
             updateWalletUI();
         }, (error) => {
             console.error("Error listening to wallet updates:", error);
-            console.log("Current User UID (Django):", currentUserUid);
-            console.log("Current User UID (Auth):", firebase.auth().currentUser ? firebase.auth().currentUser.uid : 'null');
+
         });
 
     // Also setup user listener for personality
