@@ -13,9 +13,27 @@
         {% endfor %}
     {% endif %}
     
-    <table style="width: 100%; border-collapse: collapse; margin-top: 2rem;">
+
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem;">
+        {% if is_prompt_admin %}
+        <button type="button" id="btn-bulk-prompt" class="btn btn-primary" disabled
+                style="padding: 0.75rem 1.5rem; font-weight: 600; opacity: 0.5; cursor: not-allowed;">
+            Generate Bulk Prompt
+        </button>
+        {% else %}
+        <div></div>
+        {% endif %}
+    </div>
+
+    <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
         <thead>
             <tr style="text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                {% if is_prompt_admin %}
+                <th style="padding: 1rem; width: 40px; text-align: center;">
+                    <input type="checkbox" id="select-all" style="cursor: pointer;">
+                </th>
+                {% endif %}
                 <th style="padding: 1rem;">Name</th>
                 <th style="padding: 1rem;">Issuer</th>
                 <th style="padding: 1rem;">Fee</th>
@@ -26,16 +44,201 @@
         <tbody>
             {% for card in cards %}
             <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                {% if is_prompt_admin %}
+                <td style="padding: 1rem; text-align: center;">
+                    <input type="checkbox" class="card-checkbox" value="{{ card.id }}" style="cursor: pointer;">
+                </td>
+                {% endif %}
                 <td style="padding: 1rem;">{{ card.name }}</td>
                 <td style="padding: 1rem;">{{ card.issuer }}</td>
                 <td style="padding: 1rem;">${{ card.annual_fee }}</td>
                 <td style="padding: 1rem;">{{ card.benefits|length }}</td>
                 <td style="padding: 1rem;">
-                    <a href="{% url 'admin_card_edit' card.id %}" class="btn btn-outline" style="font-size: 0.8rem;">View</a>
+                    {% if is_prompt_admin %}
+                    <button type="button" class="btn btn-primary btn-update-prompt" 
+                            data-card-id="{{ card.id }}"
+                            style="font-size: 0.8rem; padding: 0.5rem 1rem;">
+                        Update
+                    </button>
+                    {% else %}
+                    <span style="opacity: 0.5; font-size: 0.8rem;">Read Only</span>
+                    {% endif %}
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+
+    <!-- Modal -->
+    <div id="ai-prompt-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center;">
+        <div style="background: #1f2937; padding: 2rem; border-radius: 1rem; width: 90%; max-width: 800px; max-height: 90vh; display: flex; flex-direction: column; color: white; border: 1px solid rgba(255,255,255,0.1);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3 style="margin: 0;">AI Update Prompt</h3>
+                <button onclick="document.getElementById('ai-prompt-modal').style.display='none'" 
+                        style="background: transparent; border: none; color: rgba(255,255,255,0.6); cursor: pointer; font-size: 1.5rem;">&times;</button>
+            </div>
+            
+            <div style="flex: 1; overflow-y: auto; margin-bottom: 1rem;">
+                <textarea id="prompt-output" readonly 
+                          style="width: 100%; height: 400px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem; color: #e5e7eb; padding: 1rem; font-family: monospace; font-size: 0.875rem; white-space: pre-wrap;"></textarea>
+            </div>
+            
+            <div style="display: flex; justify-content: flex-end; gap: 1rem;">
+                <button onclick="copyToClipboard()" class="btn btn-primary" id="btn-copy">
+                    Copy to Clipboard
+                </button>
+                <button onclick="document.getElementById('ai-prompt-modal').style.display='none'" class="btn btn-outline">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    {% if is_prompt_admin %}
+    <script>
+        document.querySelectorAll('.btn-update-prompt').forEach(button => {
+            button.addEventListener('click', function() {
+                const btn = this;
+                const cardId = btn.getAttribute('data-card-id');
+                const originalText = btn.innerText;
+                
+                btn.innerText = 'Generating...';
+                btn.disabled = true;
+
+                // Construct URL correctly - needs to match pattern cards/<card_id>/generate-prompt/
+                // We'll trust that cardId is the slug we need
+                const url = `/custom-admin/cards/${cardId}/generate-prompt/`; // Hardcoded base path to ensure correctness relative to root
+
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.text().then(text => { throw new Error(text || response.statusText) });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.error) {
+                            alert('Error: ' + data.error);
+                        } else {
+                            document.getElementById('prompt-output').value = data.prompt;
+                            document.getElementById('ai-prompt-modal').style.display = 'flex';
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Fetch error:', err);
+                        // Try to extract a meaningful error message from HTML if that's what was returned
+                        let msg = err.message;
+                        if (msg && msg.trim().startsWith('<!DOCTYPE')) {
+                            msg = 'Server returned HTML error (likely 404 or 500). Check console.';
+                        }
+                        alert('Request failed: ' + msg);
+                    })
+                    .finally(() => {
+                        btn.innerText = originalText;
+                        btn.disabled = false;
+                    });
+            });
+        });
+
+        // Bulk Selection Logic
+        const selectAll = document.getElementById('select-all');
+        const bulkBtn = document.getElementById('btn-bulk-prompt');
+        const checkboxes = document.querySelectorAll('.card-checkbox');
+
+        function updateBulkButton() {
+            const checkedCount = document.querySelectorAll('.card-checkbox:checked').length;
+            if (checkedCount > 0) {
+                bulkBtn.disabled = false;
+                bulkBtn.style.opacity = '1';
+                bulkBtn.style.cursor = 'pointer';
+                bulkBtn.innerText = `Generate Bulk Prompt (${checkedCount})`;
+            } else {
+                bulkBtn.disabled = true;
+                bulkBtn.style.opacity = '0.5';
+                bulkBtn.style.cursor = 'not-allowed';
+                bulkBtn.innerText = 'Generate Bulk Prompt';
+            }
+        }
+
+        if (selectAll) {
+            selectAll.addEventListener('change', function() {
+                checkboxes.forEach(cb => cb.checked = this.checked);
+                updateBulkButton();
+            });
+        }
+
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', function() {
+                if (!this.checked) {
+                    if (selectAll) selectAll.checked = false;
+                } else {
+                    const allChecked = document.querySelectorAll('.card-checkbox:checked').length === checkboxes.length;
+                    if (selectAll) selectAll.checked = allChecked;
+                }
+                updateBulkButton();
+            });
+        });
+
+        // Bulk Generation Logic
+        if (bulkBtn) {
+            bulkBtn.addEventListener('click', function() {
+                const checkedBoxes = document.querySelectorAll('.card-checkbox:checked');
+                const ids = Array.from(checkedBoxes).map(cb => cb.value);
+                
+                if (ids.length === 0) return;
+
+                const btn = this;
+                const originalText = btn.innerText;
+                btn.innerText = 'Generating...';
+                btn.disabled = true;
+
+                fetch('/custom-admin/cards/generate-bulk-prompt/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ card_ids: ids })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(text => { throw new Error(text || response.statusText) });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        alert('Error: ' + data.error);
+                    } else {
+                        document.getElementById('prompt-output').value = data.prompt;
+                        document.getElementById('ai-prompt-modal').style.display = 'flex';
+                    }
+                })
+                .catch(err => {
+                    console.error('Fetch error:', err);
+                    alert('Request failed: ' + err.message);
+                })
+                .finally(() => {
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                });
+            });
+        }
+
+        function copyToClipboard() {
+            const copyText = document.getElementById("prompt-output");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); 
+            
+            document.execCommand("copy");
+            
+            const btn = document.getElementById('btn-copy');
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            setTimeout(() => {
+                btn.innerText = originalText;
+            }, 2000);
+        }
+    </script>
+    {% endif %}
 </div>
 {% endblock %}

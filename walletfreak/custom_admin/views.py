@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.admin.views.decorators import staff_member_required
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.utils.text import slugify
 from core.services import db
@@ -26,7 +27,22 @@ def admin_dashboard(request):
 @staff_member_required
 def admin_card_list(request):
     cards = db.get_cards()
-    return render(request, 'custom_admin/card_list.html', {'cards': cards})
+    
+    # Check permissions for Update button
+    uid = request.session.get('uid')
+    if not uid and request.user.is_authenticated:
+        uid = request.user.username
+        
+    user_profile = db.get_user_profile(uid) if uid else {}
+    email = user_profile.get('email', '').lower()
+    is_super = user_profile.get('is_super_staff', False)
+    
+    is_prompt_admin = (email == 'colinjianingxie@gmail.com' and is_super)
+    
+    return render(request, 'custom_admin/card_list.html', {
+        'cards': cards,
+        'is_prompt_admin': is_prompt_admin
+    })
 
 @staff_member_required
 def admin_card_edit(request, card_id):
@@ -43,7 +59,10 @@ def admin_card_edit(request, card_id):
          card['benefits_json'] = "[]"
 
     # Check permissions for the template (Prompt Gen button)
-    uid = request.session.get('firebase_uid')
+    uid = request.session.get('uid')
+    if not uid and request.user.is_authenticated:
+        uid = request.user.username
+        
     user_profile = db.get_user_profile(uid) if uid else {}
     email = user_profile.get('email', '').lower()
     is_super = user_profile.get('is_super_staff', False)
@@ -63,7 +82,10 @@ def admin_generate_prompt(request, card_id):
     Restricted to specific super staff.
     """
     # 1. Check User Email & Super Staff Status
-    uid = request.session.get('firebase_uid')
+    uid = request.session.get('uid')
+    if not uid and request.user.is_authenticated:
+        uid = request.user.username
+        
     if not uid:
         return JsonResponse({'error': 'Unauthorized'}, status=403)
         
@@ -91,3 +113,43 @@ def admin_generate_prompt(request, card_id):
         return JsonResponse({'prompt': prompt_text})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
+
+@csrf_exempt
+@staff_member_required
+def admin_generate_bulk_prompt(request):
+    """
+    Generate AI prompt for multiple cards.
+    """
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+        
+    try:
+        data = json.loads(request.body)
+        slug_ids = data.get('card_ids', [])
+        
+        if not slug_ids:
+            return JsonResponse({'error': 'No cards selected'}, status=400)
+            
+        # Check permissions
+        uid = request.session.get('uid')
+        if not uid and request.user.is_authenticated:
+            uid = request.user.username
+            
+        if not uid:
+             return JsonResponse({'error': 'Unauthorized'}, status=403)
+             
+        user_profile = db.get_user_profile(uid)
+        email = user_profile.get('email', '').lower()
+        is_super = user_profile.get('is_super_staff', False)
+        
+        if email != 'colinjianingxie@gmail.com' or not is_super:
+            return JsonResponse({'error': 'Unauthorized: Restricted access'}, status=403)
+            
+        from .utils import PromptGenerator
+        generator = PromptGenerator()
+        prompt_text = generator.generate_prompt(slug_ids)
+        
+        return JsonResponse({'prompt': prompt_text})
+        
+    except Exception as e:
+         return JsonResponse({'error': str(e)}, status=500)

@@ -20,109 +20,91 @@ class PromptGenerator:
         # This suggests the project root provided in `Additional Metadata` /Users/xie/Desktop/projects/walletfreak/walletfreak IS the Django root.
         
         self.files = {
-            'benefits': 'default_card_benefits.csv',
-            'rates': 'default_rates.csv',
-            'signup': 'default_signup.csv',
-            'mapping': 'default_category_mapping.json',
-            # 'questions': 'calculators/credit_card_questions.csv' # Not strictly used for output yet but available
+            'credit_cards': os.path.join(settings.BASE_DIR, 'default_credit_cards.csv'),
+            'benefits': os.path.join(settings.BASE_DIR, 'default_card_benefits.csv'),
+            'rates': os.path.join(settings.BASE_DIR, 'default_rates.csv'),
+            'signup': os.path.join(settings.BASE_DIR, 'default_signup.csv'),
+            'questions': os.path.join(settings.BASE_DIR, 'calculators/credit_card_questions.csv'),
+            'mapping': os.path.join(settings.BASE_DIR, 'default_category_mapping.json')
         }
         
-    def _load_csv(self, filename):
-        path = os.path.join(settings.BASE_DIR, filename)
-        data = []
-        if os.path.exists(path):
-            try:
-                with open(path, 'r', encoding='utf-8') as f:
-                    reader = csv.DictReader(f, delimiter='|')
-                    for row in reader:
-                        data.append(row)
-            except Exception as e:
-                print(f"Error reading {filename}: {e}")
-        return data
+    def _load_csv(self, filepath):
+        if not os.path.exists(filepath):
+            return []
+        with open(filepath, mode='r', encoding='utf-8') as f:
+            reader = csv.DictReader(f, delimiter='|')
+            return list(reader)
 
-    def _load_json(self, filename):
-        path = os.path.join(settings.BASE_DIR, filename)
-        if os.path.exists(path):
-            try:
-                with open(path, 'r', encoding='utf-8') as f:
-                    return json.load(f)
-            except Exception as e:
-                print(f"Error reading {filename}: {e}")
-        return {}
+    def _load_json(self, filepath):
+        if not os.path.exists(filepath):
+            return {}
+        with open(filepath, mode='r', encoding='utf-8') as f:
+            return json.load(f)
 
-    def generate_prompt(self, slug_id):
-        # 1. Gather Data
-        benefits = [b for b in self._load_csv(self.files['benefits']) if b.get('slug-id') == slug_id]
-        rates = [r for r in self._load_csv(self.files['rates']) if r.get('slug-id') == slug_id]
-        signup = [s for s in self._load_csv(self.files['signup']) if s.get('slug-id') == slug_id]
+    def _format_csv_section(self, name, data, slug_ids, slug_field='slug-id'):
+        """Helper to format a CSV section with schema and matching rows for multiple slugs"""
+        if not data:
+            return f"Given {name}: No file found or empty."
+        
+        # Get headers from the first row
+        headers = list(data[0].keys()) if data else []
+        schema_str = " | ".join(headers)
+        
+        # Filter for slugs
+        matches = [row for row in data if row.get(slug_field) in slug_ids]
+        
+        if not matches:
+             return f"Given {name}: No matching data found for selected cards.\nSchema: {schema_str}"
+
+        rows_str = "\n".join([" | ".join([str(val) for val in row.values()]) for row in matches])
+        
+        return f"Given {name} for selected cards that follow the format below:\nSchema: {schema_str}\nRows:\n{rows_str}"
+
+    def generate_prompt(self, slug_ids):
+        # Ensure slug_ids is a list
+        if isinstance(slug_ids, str):
+            slug_ids = [slug_ids]
+            
+        # 1. Load All Data
+        credit_cards = self._load_csv(self.files['credit_cards'])
+        benefits = self._load_csv(self.files['benefits'])
+        rates = self._load_csv(self.files['rates'])
+        signup = self._load_csv(self.files['signup'])
+        questions = self._load_csv(self.files['questions'])
         mapping = self._load_json(self.files['mapping'])
         
-        # 2. Format Benefits
-        benefits_str = ""
-        if benefits:
-            # Get headers from the first row to show schema
-            headers = list(benefits[0].keys()) if benefits else []
-            schema_str = " | ".join(headers)
-            rows_str = "\n".join([" | ".join(b.values()) for b in benefits])
-            benefits_str = f"Benefit Schema: {schema_str}\nCurrent Benefits Data:\n{rows_str}"
-        else:
-            benefits_str = "No existing benefits found."
-
-        # 3. Format Rates (Split logic requested: "split it to many rows if there's a multiplier... applies to multiple categories")
-        # The user wants the OUTPUT prompt to ask the AI to do this.
-        # "For rates, it is imperative to split it to many rows... format <schema>..."
-        # So we just provide the CURRENT rates and the INSTRUCTION.
-        rates_str = ""
-        if rates:
-            headers = list(rates[0].keys()) if rates else []
-            schema_str = " | ".join(headers)
-            rows_str = "\n".join([" | ".join(r.values()) for r in rates])
-            rates_str = f"Rate Schema: {schema_str}\nCurrent Rates Data:\n{rows_str}"
-        else:
-            rates_str = "No existing rates found."
-
-        # 4. Signup Bonuses
-        signup_str = ""
-        if signup:
-            headers = list(signup[0].keys()) if signup else []
-            schema_str = " | ".join(headers)
-            rows_str = "\n".join([" | ".join(s.values()) for s in signup])
-            signup_str = f"Signup Bonus Schema: {schema_str}\nCurrent Signup Data:\n{rows_str}"
-        else:
-            signup_str = "No existing signup bonuses found."
-            
-        # 5. Mapping
-        # Just Dump a snippet or instructions? "updated category mapping in their respective schemas"
-        # Since mapping is global, maybe we just mention it exists or provide the relevant keys if possible?
-        # User said: "The category mappings are located under... default_category_mapping.json"
-        # "I want to return... updated category mapping..."
-        # I'll include the whole file or a summary? It might be large.
-        # Let's provide a clear instruction about the mapping file structure.
-        # Or better, just include the JSON content if it's not too huge (5KB is fine).
+        # 2. Format Sections
+        cards_section = self._format_csv_section("Credit Card Info", credit_cards, slug_ids, 'slug-id')
+        benefits_section = self._format_csv_section("Benefits", benefits, slug_ids, 'slug-id')
+        rates_section = self._format_csv_section("Rates", rates, slug_ids, 'slug-id')
+        signup_section = self._format_csv_section("Signup Bonuses", signup, slug_ids, 'slug-id')
+        questions_section = self._format_csv_section("Credit Card Questions", questions, slug_ids, 'slug-id')
+        
+        # Mapping (JSON dump)
         mapping_str = json.dumps(mapping, indent=2)
 
         today = datetime.now().strftime("%Y-%m-%d")
 
-        # Construct the final prompt text
+        # 3. Construct Prompt
+        card_context_str = f"slugs: {', '.join(slug_ids)}" if len(slug_ids) < 10 else f"{len(slug_ids)} selected cards"
+
         prompt = f"""Context:
-Given benefits for slug-id '{slug_id}' that follow the format below:
+{cards_section}
 
-{benefits_str}
+{benefits_section}
 
-Given rates for slug-id '{slug_id}' that follow the format below:
+{rates_section}
 
-{rates_str}
+{signup_section}
 
-Given signup bonuses for slug-id '{slug_id}' that follow the format below:
-
-{signup_str}
+{questions_section}
 
 Given the current Category Mappings (JSON):
 {mapping_str}
 
 ---
 
-As of {today}, what are the latest and most accurate up-to-date data for the credit card with slug '{slug_id}'? 
+As of {today}, what are the latest and most accurate up-to-date data for the selected cards ({card_context_str})? 
 Read from the original vendor's source to find the latest and most accurate data.
 
 I want you to return the benefits, sign up bonuses, rates, and updated category mapping in their respective schemas (matching the formats provided above).

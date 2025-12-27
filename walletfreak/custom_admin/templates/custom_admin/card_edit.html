@@ -86,7 +86,7 @@
             btn.innerText = 'Generating...';
             btn.disabled = true;
 
-            fetch("{% url 'admin_generate_prompt' card_id=card.card_id %}")
+            fetch("{% url 'admin_generate_prompt' card_id=card.id %}")
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {

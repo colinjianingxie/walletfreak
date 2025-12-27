@@ -98,6 +98,10 @@ class Command(BaseCommand):
                         
                         b_usage = usage_data.get(usage_key, {})
                         
+                        # Check if ignored
+                        if b_usage.get('is_ignored', False):
+                            continue
+                        
                         used_amount = 0
                         is_full = False
                         
@@ -135,7 +139,8 @@ class Command(BaseCommand):
                         
                         # Fix: Include ALL benefits for the current period, regardless of usage
                         # But ensure we only show if there is a valid limit (i.e., it's a credit benefit)
-                        if limit > 0:
+                        # AND if there is unused value remaining (user requirement: "only want to send an email for the benefits that still need to be used")
+                        if limit > 0 and unused > 0.01:
                             item = {
                                 'card_name': card_name,
                                 'benefit': desc,
@@ -172,10 +177,16 @@ class Command(BaseCommand):
                         now = datetime.datetime.now(datetime.timezone.utc)
                         next_run = last_sent + datetime.timedelta(days=freq_days)
                         
-                        if now < next_run:
+                        # Add buffer zone of 1 hour (as per user request)
+                        # If the differential is within 1 hour, it is valid.
+                        # So if we are at 23h elapsed for a 24h cycle, (now) vs (next_run - 1h).
+                        # if now < (next_run - 1h) -> skip.
+                        
+                        buffer = datetime.timedelta(hours=1)
+                        if now < (next_run - buffer):
                             should_notify = False
-                            time_left = next_run - now
-                            self.stdout.write(f"  -> Skipping: Recently notified. Next email in {time_left}.")
+                            time_left = (next_run - buffer) - now
+                            self.stdout.write(f"  -> Skipping: Recently notified. Next email in {time_left} (incl buffer).")
                     
                     if should_notify:
                         self.stdout.write(f"  -> Sending email to {user_email}...")
