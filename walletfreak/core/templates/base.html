@@ -63,22 +63,16 @@
 
                 if (isDjangoAuthenticated) {
                     // Django is signed in, but Firebase is not.
-                    // We need to fetch a custom token and sign in.
-                    console.log('Django authenticated, syncing Firebase auth...');
-                    try {
-                        const response = await fetch('/api/get-firebase-token/');
-                        if (response.ok) {
-                            const data = await response.json();
-                            if (data.token) {
-                                await auth.signInWithCustomToken(data.token);
-                                console.log('Firebase auth synced successfully');
-                            }
-                        } else {
-                            console.error('Failed to get firebase token');
-                        }
-                    } catch (e) {
-                        console.error('Error syncing firebase auth', e);
-                    }
+                    // This indicates a session mismatch, likely due to:
+                    // 1. Session revocation (Global Logout)
+                    // 2. Cleared local storage
+                    // 3. Expired Firebase session
+                    // In all cases, we should trust the Firebase state (missing) and logout of Django
+                    // to ensure security and consistency.
+                    console.log('Session mismatch detected. Logging out...');
+                    fetch('/accounts/api/logout/').then(() => {
+                        window.location.reload();
+                    });
                 }
             }
         });

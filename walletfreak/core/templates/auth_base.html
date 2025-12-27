@@ -31,13 +31,12 @@
                     const idToken = await user.getIdToken();
                     const isDjangoAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}" === "true";
 
-                if (!isDjangoAuthenticated) {
-                        // Skip if we are on the login page - let the specific login handler handle it
+                    if (!isDjangoAuthenticated) {
+                        // Skip if we are on the login page
                         if (window.location.pathname === '/accounts/login/') {
                             return;
                         }
                         
-                        const idToken = await user.getIdToken();
                         fetch('/accounts/api/login/', {
                             method: 'POST',
                             headers: {
@@ -48,6 +47,18 @@
                             if (res.ok) window.location.reload();
                         });
                     }
+                }
+            } else {
+                // User is NOT signed in to Firebase
+                const isDjangoAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}" === "true";
+                
+                if (isDjangoAuthenticated) {
+                    // Django is signed in, but Firebase is not.
+                    // This indicates a session mismatch (e.g. global logout)
+                    console.log('Session mismatch detected in auth_base. Logging out...');
+                    fetch('/accounts/api/logout/').then(() => {
+                        window.location.reload();
+                    });
                 }
             }
         });

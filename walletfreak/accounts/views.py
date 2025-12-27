@@ -128,6 +128,33 @@ def firebase_login(request):
         print(f"Login error: {e}")  # Log error to console for debugging
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
+
+@csrf_exempt
+def global_logout(request):
+    """Revoke all refresh tokens for the user"""
+    if request.method != 'POST':
+        return JsonResponse({'status': 'error', 'message': 'Method not allowed'}, status=405)
+    
+    try:
+        data = json.loads(request.body)
+        id_token = data.get('idToken')
+        
+        if not id_token:
+            return JsonResponse({'status': 'error', 'message': 'No token provided'}, status=400)
+
+        # Verify the token
+        decoded_token = auth.verify_id_token(id_token)
+        uid = decoded_token['uid']
+        
+        # Revoke refresh tokens
+        auth.revoke_refresh_tokens(uid)
+        
+        return JsonResponse({'status': 'success'})
+        
+    except Exception as e:
+        print(f"Global logout error: {e}")
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
 def logout_view(request):
     """Logout from both Django and clear Firebase session"""
     try:

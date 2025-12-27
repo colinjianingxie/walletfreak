@@ -124,16 +124,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     firebase.auth().confirmPasswordReset(actionCode, newPassword)
                         .then(() => {
-                            // Log out from Firebase and Backend
-                            firebase.auth().signOut().then(() => {
-                                fetch('/accounts/api/logout/')
-                                    .then(() => {
-                                        showSuccess('Password Reset', 'Your password has been successfully updated. You have been logged out and can now login with your new password.');
-                                    });
+                            // 1. Sign in with the NEW password to get a fresh ID token
+                            return firebase.auth().signInWithEmailAndPassword(email, newPassword);
+                        })
+                        .then((userCredential) => {
+                            // 2. Get the token
+                            return userCredential.user.getIdToken();
+                        })
+                        .then((idToken) => {
+                            // 3. Call backend to revoke all sessions
+                            return fetch('/accounts/api/global-logout/', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ idToken: idToken })
                             });
                         })
+                        .then(() => {
+                            // 4. Log out from Firebase and Backend (locally)
+                            return firebase.auth().signOut();
+                        })
+                        .then(() => {
+                            return fetch('/accounts/api/logout/');
+                        })
+                        .then(() => {
+                            showSuccess('Password Reset', 'Your password has been successfully updated. All other sessions have been logged out.');
+                        })
                         .catch((error) => {
-                            showError(error.message);
+                            console.error("Error during global logout sequence:", error);
+                            // Even if global logout fails, we still show success for the password reset itself
+                            // But we should try to ensure local logout at least
+                            firebase.auth().signOut();
+                            fetch('/accounts/api/logout/');
+                             showSuccess('Password Reset', 'Your password has been updated. Please login again.');
                         });
                 });
             })
