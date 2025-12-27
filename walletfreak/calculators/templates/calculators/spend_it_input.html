@@ -2,77 +2,389 @@
 {% load static %}
 
 {% block extra_css %}
-<!-- Tailwind CSS for this specific page design -->
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Outfit', 'sans-serif'],
-          }
-        }
-      }
-    }
-</script>
+
+<link rel="stylesheet" href="{% static 'css/card_modal.css' %}">
 <style>
-    /* Overlay to ensure Tailwind doesn't conflict too much with global styles if there are specificity issues, 
-       though we are mostly using utility classes. 
-       Specific overrides for the new design: */
+    /* Custom CSS for Spend It Calculator - Replacing Tailwind */
+    
+    :root {
+        --si-primary: #4F46E5; /* Indigo 600 */
+        --si-primary-hover: #4338CA; /* Indigo 700 */
+        --si-bg: #FFFFFF;
+        --si-text-main: #0F172A; /* Slate 900 */
+        --si-text-muted: #64748B; /* Slate 500 */
+        --si-text-light: #94A3B8; /* Slate 400 */
+        --si-border: #F1F5F9; /* Slate 100 */
+        --si-input-bg: #F8FAFC; /* Slate 50 */
+    }
+
+    .spend-it-main {
+        flex: 1;
+        position: relative;
+        z-index: 10;
+        width: 100%;
+        min-height: 100vh;
+        background-color: white;
+        font-family: 'Outfit', sans-serif;
+    }
+
+    .spend-it-wrapper {
+        max-width: 80rem; /* 7xl */
+        margin: 0 auto;
+        padding: 2rem 1.5rem 8rem 1.5rem; /* pt-8 pb-32 px-6 */
+    }
+
+    @media (min-width: 768px) {
+        .spend-it-wrapper {
+            padding: 3rem 2.5rem 8rem 2.5rem; /* md:pt-12 md:px-10 */
+        }
+    }
+
+    /* Back Link */
+    .back-link {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--si-text-light);
+        font-weight: 700;
+        font-size: 0.875rem;
+        margin-bottom: 2rem;
+        transition: color 0.15s;
+        text-decoration: none;
+    }
+    .back-link:hover {
+        color: var(--si-text-main);
+    }
+
+    .content-spacer {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem; /* space-y-10 */
+    }
+
+    /* Main Card */
+    .spend-it-card {
+        max-width: 56rem; /* 4xl */
+        margin: 0 auto;
+        background-color: white;
+        border-radius: 2.5rem;
+        padding: 2rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); /* approximated shadow-2xl */
+        border: 1px solid var(--si-border);
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+        align-items: center;
+        width: 100%;
+    }
+
+    @media (min-width: 768px) {
+        .spend-it-card {
+            padding: 3rem;
+        }
+    }
+
+    .form-content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem; /* space-y-10 */
+    }
+
+    .header-section {
+        text-align: center;
+    }
+    
+    .title {
+        font-size: 1.875rem; /* 3xl */
+        font-weight: 900;
+        color: var(--si-text-main);
+        margin-bottom: 0.5rem;
+        line-height: 1.25;
+    }
+
+    .subtitle {
+        color: var(--si-text-muted);
+        font-weight: 500;
+    }
+
+    .inputs-section {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+    }
+
+    /* Amount Input */
+    .amount-input-wrapper {
+        position: relative;
+        max-width: 32rem; /* lg */
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 1.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 2rem;
+        height: 2rem;
+        color: var(--si-primary);
+        pointer-events: none;
+    }
+
+    .amount-input {
+        width: 100%;
+        padding: 1.5rem 2rem 1.5rem 4rem; /* py-6 pl-16 pr-8 */
+        background-color: var(--si-input-bg);
+        border: 2px solid transparent;
+        border-radius: 1.5rem;
+        font-size: 2.25rem; /* 4xl */
+        font-weight: 900;
+        outline: none;
+        transition: all 0.2s;
+        text-align: center;
+        color: var(--si-text-main);
+    }
+    
+    .amount-input::placeholder {
+        color: #CBD5E1; /* slate-300 */
+    }
+
+    .amount-input:focus {
+        border-color: var(--si-primary);
+        background-color: white;
+    }
+
+    /* Steps */
+    .step-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .step-label {
+        font-size: 0.625rem; /* 10px */
+        font-weight: 900;
+        color: var(--si-text-light);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        display: block;
+        text-align: center;
+    }
+
+    /* Grid */
+    .category-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    @media (min-width: 640px) { .category-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 768px) { .category-grid { grid-template-columns: repeat(4, 1fr); } }
+    @media (min-width: 1024px) { .category-grid { grid-template-columns: repeat(6, 1fr); } }
+
+    .cat-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 1rem;
+        border-radius: 1rem;
+        font-weight: 700;
+        font-size: 0.75rem; /* xs */
+        transition: all 0.2s;
+        border: 2px solid var(--si-input-bg);
+        background-color: white;
+        color: var(--si-text-muted);
+        cursor: pointer;
+    }
+
+    /* Small Screen Adjustment (< 300px) */
+    @media (max-width: 300px) {
+        .cat-btn {
+            padding: 0.5rem;
+            font-size: 0.625rem; /* 10px */
+        }
+    }
+
+    .cat-btn:hover {
+        border-color: #C7D2FE; /* indigo-200 */
+    }
+
+    .cat-icon-bg {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 9999px;
+        background-color: rgba(0,0,0,0.05); /* current/10 approx */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.25rem;
+        transition: background-color 0.2s;
+        color: inherit;
+    }
+
+    .cat-label {
+        text-align: center;
+        line-height: 1.25;
+    }
+
+    /* Selected States */
     .si-selected-cat {
-        border-color: #4F46E5 !important; /* indigo-600 */
+        border-color: #4F46E5 !important;
         background-color: #4F46E5 !important;
         color: white !important;
         box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.1), 0 4px 6px -2px rgba(79, 70, 229, 0.05) !important;
     }
-    .si-selected-cat .si-icon-bg {
+    .si-selected-cat .cat-icon-bg {
         background-color: rgba(255, 255, 255, 0.2) !important;
         color: white !important;
     }
 
+    /* Step 2 Buttons */
+    .sub-category-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .sub-cat-btn {
+        padding: 0.625rem 1.5rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 700;
+        transition: all 0.2s;
+        border: 2px solid var(--si-input-bg);
+        background-color: var(--si-input-bg);
+        color: var(--si-text-light);
+        cursor: pointer;
+    }
+
+    .sub-cat-btn:hover {
+        border-color: #C7D2FE;
+        color: var(--si-primary);
+    }
+    
     .si-selected-brand {
-        background-color: #0F172A !important; /* slate-900 */
+        background-color: #0F172A !important;
         border-color: #0F172A !important;
         color: white !important;
     }
+
+    /* Submit Button */
+    .submit-btn {
+        width: 100%;
+        padding: 1.25rem;
+        background-color: var(--si-primary);
+        color: white;
+        border-radius: 1rem;
+        font-weight: 900;
+        font-size: 1.25rem; /* xl */
+        box-shadow: 0 20px 25px -5px rgba(129, 140, 248, 0.5); /* shadow-indigo-200 approx */
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        border: none;
+        cursor: pointer;
+    }
+
+    .submit-btn:hover {
+        background-color: var(--si-primary-hover);
+    }
+    .submit-btn:active {
+        transform: scale(0.95);
+    }
+
+    .btn-text {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .spinner-icon {
+        animation: spin 1s linear infinite;
+        height: 1.5rem;
+        width: 1.5rem;
+        color: white;
+    }
+    
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    /* Animations */
+    .animate-in {
+        animation-duration: 0.5s;
+        animation-fill-mode: both;
+    }
+    .slide-in-from-bottom-4 {
+        animation-name: slideInBottom;
+    }
+    .slide-in-from-top-2 {
+        animation-name: slideInTop;
+        animation-duration: 0.3s;
+    }
+
+    @keyframes slideInBottom {
+        from { transform: translateY(1rem); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes slideInTop {
+        from { transform: translateY(-0.5rem); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    .hidden {
+        display: none !important;
+    }
+    
+    /* Utilities needed for JS toggles */
+    .text-indigo-600 { color: #4F46E5; }
+    .bg-slate-50 { background-color: #F8FAFC; }
+    .border-slate-50 { border-color: #F8FAFC; }
+    .text-slate-400 { color: #94A3B8; }
 </style>
 {% endblock %}
 
 {% block main_style %}{% endblock %}
 
 {% block full_width_content %}
-<main class="flex-1 relative z-10 w-full min-h-screen bg-white font-sans">
-    <div class="max-w-7xl mx-auto px-6 pb-6 pt-8 md:px-10 md:pb-10 md:pt-12 pb-32 animate-in slide-in-from-bottom-4 duration-500">
+
+<main class="spend-it-main">
+    <div class="spend-it-wrapper animate-in slide-in-from-bottom-4 duration-500">
         
-        <a href="{% url 'calculators_index' %}" class="flex items-center gap-2 text-slate-400 hover:text-slate-900 transition-colors font-bold text-sm mb-8">
+        <a href="{% url 'calculators_index' %}" class="back-link">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left w-4 h-4" aria-hidden="true"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg> 
             Back to Lab
         </a>
 
-        <div class="space-y-10">
+        <div class="content-spacer">
             <!-- Main Card Container -->
             <form id="spend-it-form"
                   hx-post="{% url 'spend_it_calculate' %}"
                   hx-target="#results-container"
                   hx-swap="innerHTML"
                   hx-indicator="#submit-text, #submit-loader"
-                  class="max-w-4xl mx-auto bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl shadow-slate-200/50 border border-slate-100 flex flex-col gap-10 items-center">
+                  class="spend-it-card">
                 
                 {% csrf_token %}
 
-                <div class="w-full space-y-10">
-                    <div class="text-center">
-                        <h2 class="text-3xl font-black text-slate-900 mb-2">The Swipe Analyzer</h2>
-                        <p class="text-slate-500 font-medium">Crunching the data for your specific purchase.</p>
+                <div class="form-content">
+                    <div class="header-section">
+                        <h2 class="title">The Swipe Analyzer</h2>
+                        <p class="subtitle">Crunching the data for your specific purchase.</p>
                     </div>
 
-                    <div class="space-y-10">
+                    <div class="inputs-section">
                         <!-- Amount Input -->
-                        <div class="relative max-w-lg mx-auto">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign absolute left-6 top-1/2 -translate-y-1/2 w-8 h-8 text-indigo-500" aria-hidden="true"><line x1="12" x2="12" y1="2" y2="22"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                        <div class="amount-input-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign input-icon" aria-hidden="true"><line x1="12" x2="12" y1="2" y2="22"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                             <input 
                                 name="amount"
-                                class="w-full pl-16 pr-8 py-6 bg-slate-50 border-2 border-transparent focus:border-indigo-500 focus:bg-white rounded-3xl text-4xl font-black outline-none transition-all text-center placeholder-slate-300 text-slate-900" 
+                                class="amount-input" 
                                 type="number" 
                                 value="500"
                                 placeholder="0"
@@ -80,20 +392,20 @@
                         </div>
 
                         <!-- Step 1: Core Category -->
-                        <div class="space-y-4">
-                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block text-center">Step 1: Core Category</label>
+                        <div class="step-wrapper">
+                            <label class="step-label">Step 1: Core Category</label>
                             
                             <!-- Hidden Input for Step 1 -->
                             <input type="hidden" name="category" id="selected-category" value="">
 
-                            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                            <div class="category-grid">
                                 {% for cat in categories %}
                                 <button type="button" 
                                         onclick="selectCategory(this, '{{ cat.CategoryName }}')" 
-                                        class="cat-btn flex flex-col items-center justify-center gap-2 p-4 max-[300px]:p-2 rounded-2xl font-bold text-xs max-[300px]:text-[10px] transition-all border-2 bg-white border-slate-50 text-slate-500 hover:border-indigo-200"
+                                        class="cat-btn"
                                         data-details="{{ cat.json_details }}">
                                     
-                                    <div class="si-icon-bg w-8 h-8 rounded-full bg-current/10 flex items-center justify-center mb-1 transition-colors">
+                                    <div class="cat-icon-bg">
                                         <!-- Render Icon based on key -->
                                         {% if cat.IconKey == 'plane' %}
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide w-4 h-4"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
@@ -118,32 +430,31 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide w-4 h-4"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
                                         {% endif %}
                                     </div>
-                                    <span class="text-center leading-tight">{{ cat.CategoryName }}</span>
+                                    <span class="cat-label">{{ cat.CategoryName }}</span>
                                 </button>
                                 {% endfor %}
 
                                 <!-- Always include "Other" as a fallback -->
                                 <button type="button" 
                                         onclick="selectCategory(this, 'Everything Else')" 
-                                        class="cat-btn flex flex-col items-center justify-center gap-2 p-4 max-[300px]:p-2 rounded-2xl font-bold text-xs max-[300px]:text-[10px] transition-all border-2 bg-white border-slate-50 text-slate-500 hover:border-indigo-200"
+                                        class="cat-btn"
                                         data-details='[]'>
-                                    <div class="si-icon-bg w-8 h-8 rounded-full bg-current/10 flex items-center justify-center mb-1 transition-colors">
+                                    <div class="cat-icon-bg">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide w-4 h-4"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
                                     </div>
                                     Other
                                 </button>
-
                             </div>
                         </div>
 
                         <!-- Step 2: Specific Brand / Type (Hidden initially) -->
-                        <div id="step-2-container" class="space-y-4 animate-in slide-in-from-top-2 duration-300 hidden">
-                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block text-center">Step 2: Specific Brand / Type</label>
+                        <div id="step-2-container" class="step-wrapper animate-in slide-in-from-top-2 duration-300 hidden">
+                            <label class="step-label">Step 2: Specific Brand / Type</label>
                             
                             <!-- Hidden Input for Step 2 -->
                             <input type="hidden" name="sub_category" id="selected-sub-category" value="">
 
-                            <div class="flex flex-wrap justify-center gap-2" id="step-2-buttons">
+                            <div class="sub-category-grid" id="step-2-buttons">
                                 <!-- Populated via JS -->
                             </div>
                         </div>
@@ -151,12 +462,11 @@
                     </div>
 
                     <!-- Submit Button -->
-                    <button type="submit" 
-                            class="w-full py-5 bg-indigo-600 text-white rounded-2xl font-black text-xl shadow-xl shadow-indigo-200 hover:bg-indigo-700 transition-all active:scale-95 flex items-center justify-center gap-3">
+                    <button type="submit" class="submit-btn" id="calculate-btn">
                         <span id="submit-loader" class="htmx-indicator hidden">
-                            <svg class="animate-spin h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                            <svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                         </span>
-                        <span id="submit-text" class="flex items-center gap-3">
+                        <span id="submit-text" class="btn-text">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-6 h-6" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg> 
                             Calculate
                         </span>
@@ -169,7 +479,11 @@
 
         </div>
     </div>
+
+
 </main>
+
+{% include "cards/includes/card_modal.html" %}
 
 <script>
     function selectCategory(btn, categoryName) {
@@ -197,12 +511,13 @@
             console.warn("Could not parse details", e);
         }
 
+
         if (details && details.length > 0) {
             // Populate buttons
             details.forEach((subCat, index) => {
                 const subBtn = document.createElement('button');
                 subBtn.type = 'button';
-                subBtn.className = 'px-6 py-2.5 rounded-full text-sm font-bold transition-all border-2 bg-slate-50 border-slate-50 text-slate-400 hover:border-indigo-200 hover:text-indigo-600 sub-cat-btn';
+                subBtn.className = 'sub-cat-btn';
                 subBtn.textContent = subCat;
                 subBtn.onclick = () => selectSubCategory(subBtn, subCat);
                 step2Buttons.appendChild(subBtn);
@@ -224,14 +539,10 @@
         // Reset sub buttons
         document.querySelectorAll('.sub-cat-btn').forEach(b => {
              b.classList.remove('si-selected-brand');
-             b.classList.add('bg-slate-50', 'border-slate-50', 'text-slate-400');
-             b.classList.remove('hover:border-indigo-200', 'hover:text-indigo-600'); // Re-enable hover? No, just classes.
-             // Actually, the base classes have hover. 
         });
 
         // Highlight selected
         btn.classList.add('si-selected-brand');
-        btn.classList.remove('bg-slate-50', 'border-slate-50', 'text-slate-400', 'hover:border-indigo-200', 'hover:text-indigo-600');
 
         // Update Hidden Input (using the same 'category' input or a new one? Request usually expects 'category')
         // The backend expects 'category'. If we have a specific brand, that should likely be the category sent to the backend 
