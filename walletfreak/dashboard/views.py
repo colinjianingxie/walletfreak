@@ -96,6 +96,10 @@ def dashboard(request):
                  # Taking valid cards only is safer.
                  # print(f"Card {card['card_id']} not found in global cache.")
                  continue
+
+            # SYNC: Update active card with canonical details to fix stale images/names
+            card['image_url'] = card_details.get('image_url')
+            card['name'] = card_details.get('name')
             
             total_annual_fee += card_details.get('annual_fee', 0)
             

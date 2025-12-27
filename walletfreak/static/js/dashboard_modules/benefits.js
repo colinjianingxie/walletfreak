@@ -415,6 +415,9 @@ function markAsFull() {
 
                 // Refresh dashboard to update top stats
                 refreshDashboardBenefits();
+
+                // Update UI to show reset button
+                updateBenefitModalUI();
             } else {
                 alert('Error: ' + (data.error || 'Unknown error'));
                 btn.innerHTML = originalText;
@@ -476,23 +479,19 @@ function saveBenefitUsage() {
                 if (newUsed >= maxVal) {
                     period.status = 'full';
                     period.is_full = true;
-                    // Persist update to DOM
-                    if (currentBenefitData.scriptId && document.getElementById(currentBenefitData.scriptId)) {
-                        document.getElementById(currentBenefitData.scriptId).textContent = JSON.stringify(currentBenefitPeriods);
-                    }
                     if (typeof showToast === 'function') showToast('Benefit maxed out!');
-
-                    // NEW REQUIREMENT: Close modal if maxed out
-                    closeBenefitModal();
                 } else {
                     period.status = 'partial';
-                    // Persist update to DOM
-                    if (currentBenefitData.scriptId && document.getElementById(currentBenefitData.scriptId)) {
-                        document.getElementById(currentBenefitData.scriptId).textContent = JSON.stringify(currentBenefitPeriods);
-                    }
-                    updateBenefitModalUI();
                     if (typeof showToast === 'function') showToast('Usage logged!');
                 }
+
+                // Persist update to DOM
+                if (currentBenefitData.scriptId && document.getElementById(currentBenefitData.scriptId)) {
+                    document.getElementById(currentBenefitData.scriptId).textContent = JSON.stringify(currentBenefitPeriods);
+                }
+
+                // Update UI (keep modal open)
+                updateBenefitModalUI();
 
                 // Refresh dashboard to update top stats
                 refreshDashboardBenefits();
@@ -510,6 +509,10 @@ function saveBenefitUsage() {
                 btn.innerHTML = originalText;
                 btn.disabled = false;
             }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error logging usage: ' + error.message);
             btn.innerHTML = originalText;
             btn.disabled = false;
         });
