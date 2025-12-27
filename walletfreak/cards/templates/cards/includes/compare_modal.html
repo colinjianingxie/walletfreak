@@ -342,7 +342,16 @@ function openCompareModal() {
         if (benefits.length > 0) {
             benefits.forEach(benefit => {
                 const value = benefit.value || '';
-                const displayValue = typeof value === 'number' ? `$${value}` : (String(value).includes('Miles') || String(value).includes('Points') ? value : (value ? `$${value}` : 'Included'));
+                let displayValue = value;
+                
+                // Only add $ if the value is purely numerical
+                // Remove commas for the check to handle "1,000"
+                const cleanValue = String(value).replace(/,/g, '').trim();
+                const isNumerical = /^-?\d+(\.\d+)?$/.test(cleanValue);
+                
+                if (typeof value === 'number' || (isNumerical && cleanValue !== '')) {
+                    displayValue = `$${value}`;
+                }
                 
                 const benefitItem = document.createElement('div');
                 benefitItem.style.cssText = 'margin-bottom: 0.875rem;';
