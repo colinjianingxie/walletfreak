@@ -2,7 +2,9 @@ Vendor|CardName|EarningRate|Currency|RateCategory|AdditionalDetails|slug-id|IsDe
 Chase|Chase Sapphire Preferred Card|5|points|["Chase Travel Flights"]|flights through Chase Travel|chase-sapphire-preferred-card|False
 Chase|Chase Sapphire Preferred Card|5|points|["Chase Travel Hotels"]|hotels through Chase Travel|chase-sapphire-preferred-card|False
 Chase|Chase Sapphire Preferred Card|5|points|["Chase Travel Rental Cars"]|rental cars through Chase Travel|chase-sapphire-preferred-card|False
-Chase|Chase Sapphire Preferred Card|3|points|["Generic Dining", "Generic Groceries", "Streaming"]|dining, online groceries, streaming|chase-sapphire-preferred-card|False
+Chase|Chase Sapphire Preferred Card|3|points|["Generic Dining"]|dining|chase-sapphire-preferred-card|False
+Chase|Chase Sapphire Preferred Card|3|points|["Online Groceries"]|online groceries|chase-sapphire-preferred-card|False
+Chase|Chase Sapphire Preferred Card|3|points|["Streaming"]|streaming|chase-sapphire-preferred-card|False
 Chase|Chase Sapphire Preferred Card|2|points|["Generic Airlines", "Generic Hotels", "Generic Transportation"]|all other travel (direct)|chase-sapphire-preferred-card|False
 Chase|Chase Sapphire Preferred Card|1|points|["Generic Financial & Rewards"]|everything else|chase-sapphire-preferred-card|True
 American Express|American Express Gold Card|4|points|["Generic Dining"]|restaurants worldwide|american-express-gold-card|False
