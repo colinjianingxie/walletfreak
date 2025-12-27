@@ -238,7 +238,9 @@
             });
 
             if (response.ok) {
-                window.location.href = '/wallet/';
+                const urlParams = new URLSearchParams(window.location.search);
+                const nextUrl = urlParams.get('next') || '/wallet/';
+                window.location.href = nextUrl;
             } else {
                 throw new Error('Backend authentication failed');
             }
@@ -273,7 +275,9 @@
             });
 
             if (response.ok) {
-                window.location.href = '/wallet/';
+                const urlParams = new URLSearchParams(window.location.search);
+                const nextUrl = urlParams.get('next') || '/wallet/';
+                window.location.href = nextUrl;
             }
         } catch (error) {
             console.error(error);
@@ -304,7 +308,9 @@
             });
 
             if (response.ok) {
-                window.location.href = '/wallet/';
+                const urlParams = new URLSearchParams(window.location.search);
+                const nextUrl = urlParams.get('next') || '/wallet/';
+                window.location.href = nextUrl;
             }
         } catch (error) {
             console.error(error);

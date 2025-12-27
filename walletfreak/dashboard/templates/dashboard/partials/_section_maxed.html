@@ -84,7 +84,7 @@
                  onclick="openBenefitModal('{{ benefit.user_card_id }}', '{{ benefit.benefit_id }}', '{{ benefit.benefit_name|escapejs }}', {{ benefit.amount }}, {{ benefit.used }}, '{{ benefit.frequency|escapejs }}', '{{ benefit.periods.0.key }}', '{{ benefit.script_id }}', false, {{ benefit.ytd_used }})">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.875rem; font-weight: 600; color: #64748B;">
                     <span>{{ benefit.periods.0.label }}</span>
-                    {% if benefit.used > 0 %}<span style="color: #6366F1;">${{ benefit.used|floatformat:0 }} used</span>{% endif %}
+                    <span style="color: #64748B;">${{ benefit.amount|sub:benefit.used|floatformat:0 }} left</span>
                 </div>
                 <div style="height: 8px; background: #E2E8F0; border-radius: 4px; overflow: hidden;">
                     <div style="width: 100%; height: 100%; background: #16A34A; border-radius: 4px;"></div>

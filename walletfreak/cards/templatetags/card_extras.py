@@ -120,3 +120,11 @@ def replace_underscore(value):
     if hasattr(value, 'replace'):
         return value.replace('_', ' ')
     return value
+
+@register.filter
+def sub(value, arg):
+    """Subtract arg from value"""
+    try:
+        return float(value) - float(arg)
+    except (ValueError, TypeError):
+        return value
