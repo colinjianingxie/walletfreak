@@ -19,6 +19,9 @@ us-bank-altitude-reserve-visa-infinite-card | Travel & Dining Credit | multiple_
 us-bank-altitude-reserve-visa-infinite-card | Priority Pass | multiple_choice | ['No', 'Sometimes', 'Yes'] | Would you value having 12 one-time passes to airport lounges annually? | Lounge Access | [0.0, 0.5, 1.0]
 us-bank-altitude-reserve-visa-infinite-card | TSA Credit | multiple_choice | ['No', 'Yes'] | Do you want a credit to cover the application fee for Global Entry or TSA PreCheck? | Travel Security | [0.0, 1.0]
 ---
+slug-id | FreakVerdict
+us-bank-altitude-reserve-visa-infinite-card | 10/10. Flat 50k points for $4,500 spend.
+---
 [
     {
         "CategoryName": "Airlines",

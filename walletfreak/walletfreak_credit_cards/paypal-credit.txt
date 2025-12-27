@@ -13,6 +13,9 @@ Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType |
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 paypal-credit | Promotional Financing | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you often use PayPal and value interest-free financing on larger purchases? | Online Shopping | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+paypal-credit | No Freak verdict for this card yet
+---
 [
     {
         "CategoryName": "Financial & Rewards",

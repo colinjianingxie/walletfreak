@@ -103,48 +103,51 @@ def parse_update_file(filepath):
     signup = {}
     questions = []
     category_mapping = []
+    freak_verdict = None
     
-    # We expect 6 parts in order, but let's be safe
-    # The file structure is constant as per populate_updates.py
-    
-    # 1. Card Info
-    if len(parts) > 0:
-        rows = parse_csv_content_robust(parts[0])
-        if rows:
-            card_info = rows[0] # Should be single row
+    for part in parts:
+        part = part.strip()
+        if not part:
+            continue
             
-    # 2. Benefits
-    if len(parts) > 1:
-        benefits = parse_csv_content_robust(parts[1])
+        # Check for JSON block (Category Mapping)
+        if part.startswith('['):
+            try:
+                category_mapping = json.loads(part)
+            except json.JSONDecodeError:
+                logger.error(f"Failed to parse category mapping JSON in {filepath}")
+            continue
+            
+        # Parse as CSV to check headers
+        rows = parse_csv_content_robust(part)
+        if not rows:
+            continue
+            
+        headers = set(rows[0].keys())
         
-    # 3. Rates
-    if len(parts) > 2:
-        rates = parse_csv_content_robust(parts[2])
-        
-    # 4. Signup Bonus
-    if len(parts) > 3:
-        rows = parse_csv_content_robust(parts[3])
-        if rows:
+        # Identify section based on headers
+        if 'PointsValueCpp' in headers and 'ImageURL' in headers:
+            card_info = rows[0]
+        elif 'BenefitDescription' in headers:
+            benefits = rows
+        elif 'EarningRate' in headers and 'RateCategory' in headers:
+            rates = rows
+        elif 'SignUpBonusValue' in headers and 'SpendAmount' in headers:
             signup = rows[0]
-            
-    # 5. Questions
-    if len(parts) > 4:
-        questions = parse_csv_content_robust(parts[4])
-        
-    # 6. Category Mapping
-    if len(parts) > 5:
-        try:
-            category_mapping = json.loads(parts[5])
-        except json.JSONDecodeError:
-            logger.error(f"Failed to parse category mapping JSON in {filepath}")
-            
+        elif 'Question' in headers and 'ChoiceList' in headers:
+            questions = rows
+        elif 'FreakVerdict' in headers:
+             # Expecting single row for verdict
+             freak_verdict = rows[0].get('FreakVerdict')
+
     return {
         'card_info': card_info,
         'benefits': benefits,
         'rates': rates,
         'signup': signup,
         'questions': questions,
-        'category_mapping': category_mapping
+        'category_mapping': category_mapping,
+        'freak_verdict': freak_verdict
     }
 
 def process_card_data(parsed_data):
@@ -267,32 +270,9 @@ def process_card_data(parsed_data):
     else:
         card_doc['sign_up_bonus'] = {}
 
-    # Initial Rewards Summary Logic (simplified)
-    # Sort simplified benefits to find top 2
-    # Reuse logic from parse_benefits_csv if precise match needed, but here is a simple version:
-    summary = ""
-    # Find multipliers/cashback
-    rates_summary = []
-    for b in processed_benefits:
-        if b.get('numeric_value'):
-            if b.get('benefit_type') == 'Multiplier':
-                rates_summary.append(f"{b['numeric_value']}x {b['short_description']}")
-            elif b.get('benefit_type') == 'Cashback':
-                rates_summary.append(f"{b['numeric_value']}% {b['short_description']}")
-    
-    if rates_summary:
-        summary = ", ".join(rates_summary[:2])
-    else:
-        # Credits fall back
-        credits = [b for b in processed_benefits if b.get('benefit_type') == 'Credit' and b.get('numeric_value')]
-        if credits:
-            credits.sort(key=lambda x: x['numeric_value'], reverse=True)
-            top = credits[0]
-            summary = f"${top['numeric_value']} {top['short_description']}"
-        else:
-             summary = "Various Benefits"
-    card_doc['rewards_summary'] = summary
-    
+    # Freak Verdict
+    card_doc['freak_verdict'] = parsed_data.get('freak_verdict')
+
     return card_doc, parsed_data['category_mapping'], parsed_data['questions']
 
 def is_float(s):

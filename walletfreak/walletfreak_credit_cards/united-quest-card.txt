@@ -19,6 +19,9 @@ united-quest-card | Free Bags | multiple_choice | ['No', 'Sometimes', 'Yes'] | D
 united-quest-card | United Credit | multiple_choice | ['No', 'Yes'] | Do you spend at least $125 a year on United tickets to fully utilize this credit? | Airline | [0.0, 1.0]
 united-quest-card | Award Discount | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you book United flights with miles and want to save 10,000 miles on your bookings twice a year? | Airline | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+united-quest-card | 10/10. Flat 70k miles for $4,000 spend. No tiered nonsense.
+---
 [
     {
         "CategoryName": "Airlines",

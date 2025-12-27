@@ -11,6 +11,9 @@ Capital One | Capital One QuicksilverOne Cash Rewards Credit Card |  | Spend $50
 ---
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 ---
+slug-id | FreakVerdict
+capital-one-quicksilverone-cash-rewards-credit-card | 10/10. Flat $200 for $500 spend.
+---
 [
     {
         "CategoryName": "Financial & Rewards",

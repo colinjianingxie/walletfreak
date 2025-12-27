@@ -98,21 +98,14 @@ function updateAnniversaryDate(userCardId, newDate) {
             if (data.success) {
                 closeEditAnniversaryModal();
 
-                // Update the DOM instead of reloading
-                const dateDisplay = document.getElementById(`anniversary-date-display-${userCardId}`);
-                if (dateDisplay) {
-                    dateDisplay.textContent = newDate;
-                }
-
-                // Update the button's data attribute so next open has correct date
-                const btn = document.getElementById(`anniversary-edit-btn-${userCardId}`);
-                if (btn) {
-                    btn.dataset.anniversaryDate = newDate;
-                }
-
                 if (typeof showToast === 'function') {
                     showToast('Anniversary date updated', 'success');
                 }
+
+                // Reload the page to refresh benefit calculations
+                setTimeout(() => {
+                    window.location.reload();
+                }, 500);
             } else {
                 alert('Failed to update anniversary date: ' + (data.error || 'Unknown error'));
             }

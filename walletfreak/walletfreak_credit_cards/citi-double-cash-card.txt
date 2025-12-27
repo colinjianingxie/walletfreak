@@ -15,6 +15,9 @@ slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | Benef
 citi-double-cash-card | Fraud Protection | multiple_choice | ['No', 'Somewhat', 'Highly'] | Is having protection against unauthorized charges a top priority for you? | Card Protection | [0.0, 0.5, 1.0]
 citi-double-cash-card | Presale Access | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you enjoy early access to concert tickets or preferred seating? | Entertainment | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+citi-double-cash-card | 0/10. No signup bonus. Poor value for churners.
+---
 [
     {
         "CategoryName": "Financial & Rewards",

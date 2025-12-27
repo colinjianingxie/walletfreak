@@ -12,6 +12,9 @@ Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType |
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 us-bank-shield-visa-card | Phone Protection | multiple_choice | ['No', 'Yes'] | Do you want up to $600 in phone protection with just a $25 deductible? | Cell Phone Protection | [0.0, 1.0]
 ---
+slug-id | FreakVerdict
+us-bank-shield-visa-card | No Freak verdict for this card yet
+---
 [
     {
         "CategoryName": "Financial & Rewards",

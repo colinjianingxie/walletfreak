@@ -12,6 +12,9 @@ Synchrony | Amazon Prime Store Card |  | Approved with Prime | 100 | Cash | amaz
 ---
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 ---
+slug-id | FreakVerdict
+amazon-prime-store-card | 7/10. Instant $100 but requires paid Prime membership.
+---
 [
     {
         "CategoryName": "Shopping",

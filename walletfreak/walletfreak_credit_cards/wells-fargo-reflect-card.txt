@@ -12,6 +12,9 @@ Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType |
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 wells-fargo-reflect-card | Phone Protection | multiple_choice | ['No', 'Yes'] | Would you like up to $600 in coverage for your cell phone just for paying your monthly bill? | Cell Phone Protection | [0.0, 1.0]
 ---
+slug-id | FreakVerdict
+wells-fargo-reflect-card | No Freak verdict for this card yet
+---
 [
     {
         "CategoryName": "Financial & Rewards",

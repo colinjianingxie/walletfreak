@@ -16,6 +16,9 @@ American Express | Blue Cash Preferred Card from American Express |  | Spend $30
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 blue-cash-preferred-card-from-american-express | Disney Credit | multiple_choice | ['No', 'Yes'] | Do you currently pay for Disney+, Hulu, or ESPN+ and want $10 back every month? | Streaming | [0.0, 1.0]
 ---
+slug-id | FreakVerdict
+blue-cash-preferred-card-from-american-express | 10/10. Flat $250 for $3k spend. Simple cash back.
+---
 [
     {
         "CategoryName": "Groceries",

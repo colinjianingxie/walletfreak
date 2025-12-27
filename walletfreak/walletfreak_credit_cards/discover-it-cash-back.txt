@@ -14,6 +14,9 @@ Discover | Discover it Cash Back |  | First year cashback match | 0 | Cash | dis
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 discover-it-cash-back | Free FICO Score | multiple_choice | ['No', 'Sometimes', 'Yes'] | Are you focused on monitoring and improving your credit score monthly? | Credit Monitoring | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+discover-it-cash-back | 5/10. No upfront bonus. Cashback match arrives after 12 months.
+---
 [
     {
         "CategoryName": "Financial & Rewards",

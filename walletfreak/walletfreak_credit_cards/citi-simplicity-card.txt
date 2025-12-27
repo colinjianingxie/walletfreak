@@ -12,6 +12,9 @@ Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType |
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 citi-simplicity-card | No Fees | multiple_choice | ['No', 'Yes'] | Is having no late fees or penalty rates a priority for your financial peace of mind? | Card Protection | [0.0, 1.0]
 ---
+slug-id | FreakVerdict
+citi-simplicity-card | No Freak verdict for this card yet
+---
 [
     {
         "CategoryName": "Financial & Rewards",

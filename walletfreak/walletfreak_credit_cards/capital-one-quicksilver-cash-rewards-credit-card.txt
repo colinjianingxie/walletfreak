@@ -13,6 +13,9 @@ Capital One | Capital One Quicksilver Cash Rewards Credit Card |  | Spend $500 i
 ---
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 ---
+slug-id | FreakVerdict
+capital-one-quicksilver-cash-rewards-credit-card | 10/10. Simple $200 for $500 spend.
+---
 [
     {
         "CategoryName": "Hotels",

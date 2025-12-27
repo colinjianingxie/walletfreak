@@ -20,6 +20,9 @@ slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | Benef
 chase-freedom-flex | DashPass | multiple_choice | ['No', 'Yes'] | Do you want to save on delivery fees for your food orders? | Delivery | [0.0, 1.0]
 chase-freedom-flex | DoorDash NR Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you order convenience or grocery items via DoorDash and want $10 off quarterly? | Delivery | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+chase-freedom-flex | 10/10. Identical to its sibling. $500 spend for $200. Clear terms with no hidden tiers.
+---
 [
     {
         "CategoryName": "Airlines",

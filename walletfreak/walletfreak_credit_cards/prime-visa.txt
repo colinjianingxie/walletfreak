@@ -24,6 +24,9 @@ prime-visa | Grubhub+ Membership | multiple_choice | ['No', 'Yes'] | Do you want
 prime-visa | Gift Card | multiple_choice | ['No', 'Yes'] | How likely are you to use a $150 Amazon gift card immediately upon approval? | Shopping | [0.0, 1.0]
 prime-visa | No Foreign Fees | multiple_choice | ['No', 'Yes'] | Do you travel abroad and want to avoid the typical 3% fee on every purchase? | Fee Waiver | [0.0, 1.0]
 ---
+slug-id | FreakVerdict
+prime-visa | 7/10. Instant bonus on approval is great but requires a $139 per year Prime membership. Membership gated bonus.
+---
 [
     {
         "CategoryName": "Airlines",

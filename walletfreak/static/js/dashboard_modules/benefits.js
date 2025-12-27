@@ -446,7 +446,7 @@ function saveBenefitUsage() {
     const formData = new FormData();
     formData.append('amount', amount);
     formData.append('period_key', period.key);
-    formData.append('increment', 'true');
+    formData.append('increment', 'false'); // user requested overwrite logic
     formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
 
     fetch(`/wallet/update-benefit/${currentBenefitData.cardId}/${currentBenefitData.benefitId}/`, {
@@ -467,8 +467,8 @@ function saveBenefitUsage() {
             if (data.success) {
                 // ... (previous code)
 
-                // Update local state
-                const newUsed = (period.used || 0) + amount;
+                // Update local state - OVERWRITE logic
+                const newUsed = amount; // Was: (period.used || 0) + amount;
                 period.used = newUsed;
 
                 // Update ytdUsed to reflect that benefit has been used

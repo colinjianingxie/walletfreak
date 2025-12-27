@@ -21,6 +21,9 @@ ihg-one-rewards-premier-credit-card | Spend Bonus | multiple_choice | ['No', 'Ma
 ihg-one-rewards-premier-credit-card | TSA Credit | multiple_choice | ['No', 'Yes'] | Do you want a credit to cover your Global Entry or TSA PreCheck application? | Travel Security | [0.0, 1.0]
 ihg-one-rewards-premier-credit-card | Platinum Status | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you stay at IHG hotels often enough to value room upgrades and early check-in? | Hotel Status | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+ihg-one-rewards-premier-credit-card | 10/10. Straightforward 140k points after $3,000 spend. No tiers.
+---
 [
     {
         "CategoryName": "Hotels",

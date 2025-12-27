@@ -14,6 +14,9 @@ Synchrony | Best Buy Credit Card |  | No welcome bonus | 0 | Cash | best-buy-cre
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 best-buy-credit-card | Special Financing | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you value interest-free financing on large electronics or appliance purchases? | Financial Protection | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+best-buy-credit-card | 0/10. No welcome bonus.
+---
 [
     {
         "CategoryName": "Shopping",

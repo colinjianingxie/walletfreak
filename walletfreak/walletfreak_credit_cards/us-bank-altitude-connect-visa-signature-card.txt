@@ -22,6 +22,9 @@ us-bank-altitude-connect-visa-signature-card | Priority Pass | multiple_choice |
 us-bank-altitude-connect-visa-signature-card | GigSky Global Data | multiple_choice | ['No', 'Yes'] | Do you travel internationally and need mobile data without swapping physical SIM cards? | Travel | [0.0, 1.0]
 us-bank-altitude-connect-visa-signature-card | SmartDelay | multiple_choice | ['No', 'Yes'] | Would you value free lounge access for you and guests if your flight is delayed? | Lounge Access | [0.0, 1.0]
 ---
+slug-id | FreakVerdict
+us-bank-altitude-connect-visa-signature-card | 10/10. Flat 50k points for $2k spend.
+---
 [
     {
         "CategoryName": "Hotels",

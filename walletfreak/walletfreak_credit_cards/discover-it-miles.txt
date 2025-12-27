@@ -15,6 +15,9 @@ slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | Benef
 discover-it-miles | No Foreign Transaction Fees | multiple_choice | ['No', 'Yes'] | Do you travel abroad and want to avoid the typical 3% fee on every purchase? | Travel | [0.0, 1.0]
 discover-it-miles | Free FICO Score | multiple_choice | ['No', 'Sometimes', 'Yes'] | Are you focused on monitoring and improving your credit score monthly? | Credit Monitoring | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+discover-it-miles | 5/10. No upfront bonus. One year delayed match.
+---
 [
     {
         "CategoryName": "Financial & Rewards",

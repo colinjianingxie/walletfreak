@@ -15,6 +15,9 @@ slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | Benef
 huntington-voice-visa-card | No Penalty APR | multiple_choice | ['No', 'Yes'] | Is having a card that doesn't increase your rate for a late payment important to you? | Financial Protection | [0.0, 1.0]
 huntington-voice-visa-card | Roadside Dispatch | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you value having 24/7 access to emergency roadside services? | Roadside Assistance | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+huntington-voice-visa-card | No Freak verdict for this card yet
+---
 [
     {
         "CategoryName": "Financial & Rewards",

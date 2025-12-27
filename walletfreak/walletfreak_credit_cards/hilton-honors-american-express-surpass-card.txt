@@ -20,6 +20,9 @@ hilton-honors-american-express-surpass-card | Gold Status | multiple_choice | ['
 hilton-honors-american-express-surpass-card | Hilton Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you stay at Hilton properties and want $200 in annual credits? | Hotel | [0.0, 0.5, 1.0]
 hilton-honors-american-express-surpass-card | Free Night | multiple_choice | ['No', 'Yes'] | Can you spend $15,000 a year on one card to earn a free night at a Hilton hotel? | Hotel | [0.0, 1.0]
 ---
+slug-id | FreakVerdict
+hilton-honors-american-express-surpass-card | 10/10. Flat 155k points for $3k spend. Very clean.
+---
 [
     {
         "CategoryName": "Hotels",

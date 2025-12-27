@@ -13,6 +13,9 @@ Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType |
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 discover-it-student-chrome | Good Grade Bonus | multiple_choice | ['No', 'Yes'] | Are you a student who maintains a 3.0+ GPA and wants to be rewarded for it? | Rewards Bonus | [0.0, 1.0]
 ---
+slug-id | FreakVerdict
+discover-it-student-chrome | No Freak verdict for this card yet
+---
 [
     {
         "CategoryName": "Dining & Delivery",

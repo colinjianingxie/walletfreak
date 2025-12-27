@@ -16,6 +16,9 @@ American Express | Blue Cash Everyday Card from American Express |  | Spend $200
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 blue-cash-everyday-card-from-american-express | Disney Credit | multiple_choice | ['No', 'Yes'] | Do you want $7 back every month on your Disney Bundle subscription? | Streaming | [0.0, 1.0]
 ---
+slug-id | FreakVerdict
+blue-cash-everyday-card-from-american-express | 10/10. Flat $200 for $2k spend. Transparent and easy.
+---
 [
     {
         "CategoryName": "Groceries",

@@ -21,6 +21,9 @@ apple-card | 0% Financing | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do yo
 apple-card | HYSA Access | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you want a high-yield savings account that automatically grows your earned rewards? | Savings Interest | [0.0, 0.5, 1.0]
 apple-card | 0% Financing | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you like the flexibility of paying for major Apple hardware purchases over time interest-free? | Financial Protection | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+apple-card | 0/10. No welcome bonus. Weak signup value.
+---
 [
     {
         "CategoryName": "Business & Tech",

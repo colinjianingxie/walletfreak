@@ -12,6 +12,9 @@ Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType |
 ---
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 ---
+slug-id | FreakVerdict
+ink-business-cash-credit-card | No Freak verdict for this card yet
+---
 [
     {
         "CategoryName": "Dining & Delivery",

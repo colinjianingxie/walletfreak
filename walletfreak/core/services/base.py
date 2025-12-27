@@ -37,9 +37,9 @@ class BaseFirestoreService:
             return {**doc.to_dict(), 'id': doc.id}
         return None
 
-    def create_document(self, collection_name, data, doc_id=None):
+    def create_document(self, collection_name, data, doc_id=None, merge=False):
         if doc_id:
-            self.db.collection(collection_name).document(doc_id).set(data)
+            self.db.collection(collection_name).document(doc_id).set(data, merge=merge)
             return doc_id
         else:
             update_time, doc_ref = self.db.collection(collection_name).add(data)

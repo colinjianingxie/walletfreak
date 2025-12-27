@@ -16,6 +16,9 @@ slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | Benef
 american-express-green-card | CLEAR Credit | multiple_choice | ['No', 'Yes'] | Do you want to breeze through airport security with a $189 CLEAR Plus credit? | Travel Security | [0.0, 1.0]
 american-express-green-card | LoungeBuddy Credit | multiple_choice | ['No', 'Yes'] | Do you like the flexibility of choosing different airport lounges and paying with a $100 credit? | Lounge Access | [0.0, 1.0]
 ---
+slug-id | FreakVerdict
+american-express-green-card | 10/10. Flat 40k points for $3k spend. No caveats.
+---
 [
     {
         "CategoryName": "Dining & Delivery",

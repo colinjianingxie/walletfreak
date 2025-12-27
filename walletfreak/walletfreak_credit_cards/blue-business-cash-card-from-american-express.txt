@@ -14,6 +14,9 @@ American Express | Blue Business Cash™ Card from American Express | 2025-12-07
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 blue-business-cash-card-from-american-express | Buying Power | multiple_choice | ['No', 'Somewhat', 'Highly'] | Do you value the flexibility to spend above your credit limit for large business purchases? | Financial Protection | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+blue-business-cash-card-from-american-express | 10/10. Flat $250 for $3k spend.
+---
 [
     {
         "CategoryName": "Financial & Rewards",

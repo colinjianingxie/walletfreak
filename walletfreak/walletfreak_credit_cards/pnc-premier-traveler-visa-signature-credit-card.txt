@@ -15,6 +15,9 @@ slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | Benef
 pnc-premier-traveler-visa-signature-credit-card | No Foreign Transaction Fees | multiple_choice | ['No', 'Yes'] | Do you travel abroad and want to avoid the typical 3% fee on every purchase? | Travel | [0.0, 1.0]
 pnc-premier-traveler-visa-signature-credit-card | Luxury Hotel Collection Benefits | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you enjoy perks like room upgrades and food credits when staying at luxury hotels? | Hotel | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+pnc-premier-traveler-visa-signature-credit-card | No Freak verdict for this card yet
+---
 [
     {
         "CategoryName": "Travel Perks",

@@ -24,6 +24,9 @@ chase-sapphire-preferred-card | Hotel Credit | multiple_choice | ['0-2', '3-5', 
 chase-sapphire-preferred-card | Anniversary Bonus | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you value an annual anniversary bonus to boost your travel rewards balance? | Anniversary Bonus | [0.0, 0.5, 1.0]
 chase-sapphire-preferred-card | DashPass | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you use food delivery services at least twice a month? | Delivery | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+chase-sapphire-preferred-card | 10/10. Simple and clean. No tiered spending or hidden boosts. $5,000 in 3 months gets you the full 75k points.
+---
 [
     {
         "CategoryName": "Airlines",

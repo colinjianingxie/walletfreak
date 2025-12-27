@@ -12,6 +12,9 @@ Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType |
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 ink-business-unlimited-credit-card | Primary Coverage | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you rent cars for business and want the peace of mind of primary insurance coverage? | Rental Cars | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+ink-business-unlimited-credit-card | No Freak verdict for this card yet
+---
 [
     {
         "CategoryName": "Financial & Rewards",

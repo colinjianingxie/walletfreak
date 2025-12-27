@@ -21,6 +21,9 @@ southwest-rapid-rewards-priority-credit-card | Southwest Credit | multiple_choic
 southwest-rapid-rewards-priority-credit-card | Upgraded Boardings | multiple_choice | ['No', 'Sometimes', 'Yes'] | How important is it for you to be in the A1-A15 boarding group to pick your favorite seat? | Airline | [0.0, 0.5, 1.0]
 southwest-rapid-rewards-priority-credit-card | Inflight Savings | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you buy drinks or Wi-Fi on Southwest flights and want 25% back? | Airline | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+southwest-rapid-rewards-priority-credit-card | 10/10. Flat 85k points for $3,000 spend. Excellent for Companion Pass chasers.
+---
 [
     {
         "CategoryName": "Airlines",

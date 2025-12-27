@@ -16,6 +16,9 @@ slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | Benef
 bank-of-america-travel-rewards-credit-card | No Foreign Transaction Fees | multiple_choice | ['No', 'Yes'] | Do you travel abroad and want to avoid the typical 3% fee on every purchase? | Travel | [0.0, 1.0]
 bank-of-america-travel-rewards-credit-card | Preferred Rewards Bonus | multiple_choice | ['None', 'Some', 'High'] | Do you have significant balances with Bank of America to unlock a 25%-75% points bonus? | Rewards Bonus | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+bank-of-america-travel-rewards-credit-card | 10/10. Flat 25k points for $1k spend.
+---
 [
     {
         "CategoryName": "Airlines",

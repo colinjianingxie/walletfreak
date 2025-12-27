@@ -12,6 +12,9 @@ Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType |
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 citi-secured-mastercard | Credit Building | multiple_choice | ['No', 'Somewhat', 'Highly'] | Is establishing a credit history your main priority right now? | Credit Building | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+citi-secured-mastercard | No Freak verdict for this card yet
+---
 [
     {
         "CategoryName": "Financial & Rewards",

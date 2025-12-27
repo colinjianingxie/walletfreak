@@ -12,6 +12,9 @@ Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType |
 ---
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 ---
+slug-id | FreakVerdict
+usaa-cashback-rewards-plus-american-express-card | No Freak verdict for this card yet
+---
 [
     {
         "CategoryName": "Groceries",

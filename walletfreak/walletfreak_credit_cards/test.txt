@@ -24,4 +24,7 @@ Synchrony | Amazon Prime Store Card |  | Instantly upon approval with Prime | 60
 ---
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 ---
+slug-id | FreakVerdict
+test | No Freak verdict for this card yet
+---
 []

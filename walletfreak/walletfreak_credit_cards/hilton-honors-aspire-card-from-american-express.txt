@@ -29,6 +29,9 @@ hilton-honors-aspire-card-from-american-express | National Executive Status | mu
 hilton-honors-aspire-card-from-american-express | Property Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you stay at Waldorf Astoria or Conrad hotels and want a $100 credit for a 2-night stay? | Hotel | [0.0, 0.5, 1.0]
 hilton-honors-aspire-card-from-american-express | Cell Phone Protection | multiple_choice | ['No', 'Somewhat', 'Highly'] | Do you value up to $800 per claim in cell phone protection with a $50 deductible? | Insurance | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+hilton-honors-aspire-card-from-american-express | 10/10. Flat 175k points for $6k spend.
+---
 [
     {
         "CategoryName": "Airlines",

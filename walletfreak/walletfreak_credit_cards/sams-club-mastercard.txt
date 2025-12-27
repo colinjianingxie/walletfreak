@@ -14,6 +14,9 @@ Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType |
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 sams-club-mastercard | Gas Rewards | multiple_choice | ['No', 'Occasionally', 'Regularly'] | Do you spend a significant amount on gas each year and want 5% back? | Rewards Bonus | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+sams-club-mastercard | No Freak verdict for this card yet
+---
 [
     {
         "CategoryName": "Dining & Delivery",

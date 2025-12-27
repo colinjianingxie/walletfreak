@@ -16,6 +16,9 @@ slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | Benef
 ihg-one-rewards-traveler-credit-card | Silver Status | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you value having IHG Silver status for perks like points that don't expire? | Hotel Status | [0.0, 0.5, 1.0]
 ihg-one-rewards-traveler-credit-card | Fourth Night Free | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you book IHG stays with points and want every 4th night to be free? | Hotel | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+ihg-one-rewards-traveler-credit-card | No Freak verdict for this card yet
+---
 [
     {
         "CategoryName": "Hotels",

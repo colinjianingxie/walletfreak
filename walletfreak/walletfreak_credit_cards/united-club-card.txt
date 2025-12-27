@@ -17,6 +17,9 @@ slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | Benef
 united-club-card | Club Membership | multiple_choice | ['Never', 'Occasionally', 'Often'] | Do you fly United enough to justify unlimited access to United Club lounges? | Lounge Access | [0.0, 0.5, 1.0]
 united-club-card | Free Bags | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you want to avoid baggage fees for both your first and second checked bags? | Airline | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+united-club-card | 10/10. Large $5,000 spend but a flat 90k miles with no hidden stages.
+---
 [
     {
         "CategoryName": "Airlines",

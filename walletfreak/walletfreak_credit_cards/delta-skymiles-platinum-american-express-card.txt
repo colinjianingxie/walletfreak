@@ -23,6 +23,9 @@ delta-skymiles-platinum-american-express-card | Resy Credit | multiple_choice | 
 delta-skymiles-platinum-american-express-card | Rideshare Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you use rideshares enough to utilize $120 in annual credits? | Rideshare | [0.0, 0.5, 1.0]
 delta-skymiles-platinum-american-express-card | Delta Stays Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | How likely are you to book a hotel through Delta's portal to use a $150 statement credit? | Hotel | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+delta-skymiles-platinum-american-express-card | 10/10. Flat 60k miles for $3k spend.
+---
 [
     {
         "CategoryName": "Airlines",

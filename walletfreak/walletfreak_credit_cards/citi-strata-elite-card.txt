@@ -38,6 +38,9 @@ citi-strata-elite-card | Travel Protections | multiple_choice | ['No', 'Somewhat
 citi-strata-elite-card | No Foreign Fees | multiple_choice | ['No', 'Yes'] | Do you travel abroad and want to avoid the typical 3% fee on every purchase? | Fee Waiver | [0.0, 1.0]
 citi-strata-elite-card | Mixology Classes | multiple_choice | ['No', 'Yes'] | Are you interested in learning professional cocktail-making from home? | Lifestyle | [0.0, 1.0]
 ---
+slug-id | FreakVerdict
+citi-strata-elite-card | 10/10. Flat 100k points for $6k spend.
+---
 [
     {
         "CategoryName": "Airlines",

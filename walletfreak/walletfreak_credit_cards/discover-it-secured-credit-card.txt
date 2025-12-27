@@ -13,6 +13,9 @@ Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType |
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 discover-it-secured-credit-card | Deposit Refund | multiple_choice | ['No', 'Somewhat', 'Highly'] | Are you focused on establishing a credit history to eventually get your deposit back? | Credit Building | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+discover-it-secured-credit-card | No Freak verdict for this card yet
+---
 [
     {
         "CategoryName": "Dining & Delivery",

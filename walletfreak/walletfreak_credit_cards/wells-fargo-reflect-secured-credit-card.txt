@@ -12,6 +12,9 @@ Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType |
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 wells-fargo-reflect-secured-credit-card | Phone Protection | multiple_choice | ['No', 'Yes'] | Do you want phone protection coverage while building your credit history? | Cell Phone Protection | [0.0, 1.0]
 ---
+slug-id | FreakVerdict
+wells-fargo-reflect-secured-credit-card | No Freak verdict for this card yet
+---
 [
     {
         "CategoryName": "Financial & Rewards",

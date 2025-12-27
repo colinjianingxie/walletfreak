@@ -19,6 +19,9 @@ slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | Benef
 chase-freedom-unlimited | DashPass | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you value a free delivery membership for your favorite local restaurants? | Delivery | [0.0, 0.5, 1.0]
 chase-freedom-unlimited | DoorDash NR Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you order convenience or grocery items via DoorDash and want $10 off quarterly? | Delivery | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+chase-freedom-unlimited | 10/10. Extremely low barrier to entry. Simple $500 spend for a quick $200 back.
+---
 [
     {
         "CategoryName": "Airlines",

@@ -15,6 +15,9 @@ Chase | British Airways Visa Signature Card |  | Spend $7500 in 6 months | 10000
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 british-airways-visa-signature-card | Travel Together | multiple_choice | ['No', 'Yes'] | Can you spend $30,000 a year to earn a companion ticket for a British Airways flight? | Airline | [0.0, 1.0]
 ---
+slug-id | FreakVerdict
+british-airways-visa-signature-card | 5/10. Tiered spend that jumps from $5k to $20k to unlock full value.
+---
 [
     {
         "CategoryName": "Airlines",

@@ -17,6 +17,9 @@ slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | Benef
 pnc-cash-rewards-visa-credit-card | Spending Tools | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you value digital tools to track and categorize your spending automatically? | Business Management | [0.0, 0.5, 1.0]
 pnc-cash-rewards-visa-credit-card | Account Bonus | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you have a PNC account where you could redeem rewards for extra value? | Rewards Bonus | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+pnc-cash-rewards-visa-credit-card | No Freak verdict for this card yet
+---
 [
     {
         "CategoryName": "Dining & Delivery",

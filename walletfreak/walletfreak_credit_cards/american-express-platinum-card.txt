@@ -36,6 +36,9 @@ american-express-platinum-card | Saks Credit | multiple_choice | ['No', 'Sometim
 american-express-platinum-card | Equinox Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Is a premium high-end gym membership like Equinox a priority for your health routine? | Fitness | [0.0, 0.5, 1.0]
 american-express-platinum-card | Oura Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you value advanced sleep and health tracking with a premium smart ring? | Fitness,Wellness | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+american-express-platinum-card | 10/10. Clear terms. $8,000 spend for 175k points with no hoops.
+---
 [
     {
         "CategoryName": "Airlines",

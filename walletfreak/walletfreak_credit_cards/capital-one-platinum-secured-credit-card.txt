@@ -12,6 +12,9 @@ Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType |
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 capital-one-platinum-secured-credit-card | Credit Building | multiple_choice | ['No', 'Somewhat', 'Highly'] | Is building or repairing your credit history your primary goal for a new card? | Credit Building | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+capital-one-platinum-secured-credit-card | No Freak verdict for this card yet
+---
 [
     {
         "CategoryName": "Financial & Rewards",

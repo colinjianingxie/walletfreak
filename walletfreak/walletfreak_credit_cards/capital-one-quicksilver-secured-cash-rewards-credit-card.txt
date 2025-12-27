@@ -14,6 +14,9 @@ Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType |
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 capital-one-quicksilver-secured-cash-rewards-credit-card | Credit Review | multiple_choice | ['No', 'Somewhat', 'Highly'] | Are you focused on moving from a secured card to an unsecured one by building credit? | Credit Building | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+capital-one-quicksilver-secured-cash-rewards-credit-card | No Freak verdict for this card yet
+---
 [
     {
         "CategoryName": "Hotels",

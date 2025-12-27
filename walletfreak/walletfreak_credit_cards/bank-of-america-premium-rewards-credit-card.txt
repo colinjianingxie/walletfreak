@@ -18,6 +18,9 @@ bank-of-america-premium-rewards-credit-card | Rewards Boost | multiple_choice | 
 bank-of-america-premium-rewards-credit-card | Airline Credit | multiple_choice | ['No', 'Yes'] | Do you spend at least $100 on airline incidental fees (bags, seats) annually? | Airline | [0.0, 1.0]
 bank-of-america-premium-rewards-credit-card | TSA Credit | multiple_choice | ['No', 'Yes'] | Do you want a credit to cover the application fee for Global Entry or TSA PreCheck? | Travel Security | [0.0, 1.0]
 ---
+slug-id | FreakVerdict
+bank-of-america-premium-rewards-credit-card | 10/10. Flat 60k points for $4k spend.
+---
 [
     {
         "CategoryName": "Dining & Delivery",

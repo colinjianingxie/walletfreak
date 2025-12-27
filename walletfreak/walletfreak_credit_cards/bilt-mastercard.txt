@@ -25,6 +25,9 @@ bilt-mastercard | Lyft Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | D
 bilt-mastercard | Rent Day Bonus | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you value earning double points on all non-rent purchases on the 1st of every month? | Rewards Bonus | [0.0, 0.5, 1.0]
 bilt-mastercard | Lyft Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you use Lyft enough to earn a $5 monthly credit? | Rideshare | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+bilt-mastercard | 0/10. No signup bonus. Card is for rent benefits only.
+---
 [
     {
         "CategoryName": "Airlines",

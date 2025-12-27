@@ -17,6 +17,9 @@ Citi | Citi Strata Premier Card |  | Spend $6000 in 3 months | 100000 | Points |
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 citi-strata-premier-card | Hotel Savings | multiple_choice | ['No', 'Once a year', 'Twice+'] | Do you book single hotel stays over $500 that could benefit from a $100 annual discount? | Hotel | [0.0, 0.7, 1.0]
 ---
+slug-id | FreakVerdict
+citi-strata-premier-card | 10/10. Flat 100k points for $6k spend. Strong offer.
+---
 [
     {
         "CategoryName": "Airlines",

@@ -13,6 +13,9 @@ Wells Fargo | Wells Fargo Active Cash Card |  | Spend $500 in 3 months | 200 | C
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 wells-fargo-active-cash-card | Phone Protection | multiple_choice | ['No', 'Somewhat', 'Highly'] | Do you value having insurance to protect your phone against damage or theft just by paying your bill? | Cell Phone Protection | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+wells-fargo-active-cash-card | 10/10. Flat $200 for $500 spend.
+---
 [
     {
         "CategoryName": "Financial & Rewards",

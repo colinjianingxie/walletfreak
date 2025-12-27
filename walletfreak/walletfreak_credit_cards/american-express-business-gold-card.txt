@@ -17,6 +17,9 @@ slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | Benef
 american-express-business-gold-card | Flexible Business Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you regularly spend $20/month at FedEx, Grubhub, or office supply stores? | Business Expenses | [0.0, 0.5, 1.0]
 american-express-business-gold-card | Walmart+ Credit | multiple_choice | ['No', 'Yes'] | Would you utilize a free Walmart+ membership for business or personal use? | Shopping | [0.0, 1.0]
 ---
+slug-id | FreakVerdict
+american-express-business-gold-card | 10/10. Flat 100k points for $15k spend.
+---
 [
     {
         "CategoryName": "Airlines",

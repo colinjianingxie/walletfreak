@@ -16,6 +16,9 @@ slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | Benef
 wells-fargo-autograph-card | No Foreign Transaction Fees | multiple_choice | ['No', 'Yes'] | Do you travel abroad and want to avoid the typical 3% fee on every purchase? | Travel | [0.0, 1.0]
 wells-fargo-autograph-card | Cell Phone Protection | multiple_choice | ['No', 'Somewhat', 'Highly'] | Do you value having up to $600 in phone protection just by paying your bill? | Protection | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+wells-fargo-autograph-card | 10/10. Flat 20k points for $1,000 spend.
+---
 [
     {
         "CategoryName": "Dining & Delivery",

@@ -12,6 +12,9 @@ Discover | Discover it Chrome |  | First year cashback match | 0 | Cash | discov
 ---
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 ---
+slug-id | FreakVerdict
+discover-it-chrome | 5/10. No immediate bonus. Must wait a year.
+---
 [
     {
         "CategoryName": "Dining & Delivery",

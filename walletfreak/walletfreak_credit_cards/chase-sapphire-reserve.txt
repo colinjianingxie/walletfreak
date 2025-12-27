@@ -43,6 +43,9 @@ chase-sapphire-reserve | Exclusive Tables | multiple_choice | ['No', 'Sometimes'
 chase-sapphire-reserve | Apple TV+ & Music | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you currently pay for Apple TV+ or Apple Music and want them for free? | Streaming | [0.0, 0.5, 1.0]
 chase-sapphire-reserve | StubHub Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you buy tickets for live events and want up to $300 in annual credits? | Entertainment | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+chase-sapphire-reserve | 10/10. Heavy hitter but straightforward. $6,000 spend in 3 months for a massive 125k points. No shenanigans.
+---
 [
     {
         "CategoryName": "Airlines",

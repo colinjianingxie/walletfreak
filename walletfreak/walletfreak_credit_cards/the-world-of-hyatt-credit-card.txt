@@ -19,6 +19,9 @@ the-world-of-hyatt-credit-card | Free Night | multiple_choice | ['No', 'Yes'] | 
 the-world-of-hyatt-credit-card | Spend Free Night | multiple_choice | ['No', 'Yes'] | Can you spend $15,000 a year on one card to earn an extra free night at a Hyatt? | Hotel | [0.0, 1.0]
 the-world-of-hyatt-credit-card | Discoverist Status | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you value Hyatt Discoverist status for perks like late checkout and bottled water? | Hotel Status | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+the-world-of-hyatt-credit-card | 2/10. Bonus mirage. 30k after $3k then requires heavy spend with a 2x boost to earn the rest.
+---
 [
     {
         "CategoryName": "Airlines",

@@ -19,6 +19,9 @@ blue-business-plus-credit-card-from-american-express | Free Employee Cards | mul
 blue-business-plus-credit-card-from-american-express | Buying Power | multiple_choice | ['No', 'Somewhat', 'Highly'] | Do you value the flexibility to spend above your credit limit for large business purchases? | Financial Protection | [0.0, 0.5, 1.0]
 blue-business-plus-credit-card-from-american-express | Buying Power | multiple_choice | ['No', 'Somewhat', 'Highly'] | Do you value the flexibility to spend above your credit limit for large business purchases? | Financial Protection | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+blue-business-plus-credit-card-from-american-express | 10/10. Flat 15k points for $3k spend.
+---
 [
     {
         "CategoryName": "Financial & Rewards",

@@ -29,6 +29,9 @@ the-business-platinum-card-from-american-express | CLEAR Credit | multiple_choic
 the-business-platinum-card-from-american-express | Walmart+ Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you value free grocery shipping and the Paramount+ streaming service? | Shopping | [0.0, 0.5, 1.0]
 the-business-platinum-card-from-american-express | Global Lounge Access | multiple_choice | ['Never', 'Occasionally', 'Often'] | How often do you travel for business and value high-end airport lounge access? | Lounge Access | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+the-business-platinum-card-from-american-express | 10/10. Flat 200k points for $20k spend. No tiers.
+---
 [
     {
         "CategoryName": "Airlines",

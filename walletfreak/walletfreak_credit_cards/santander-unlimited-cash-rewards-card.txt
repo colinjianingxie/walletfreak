@@ -10,6 +10,9 @@ Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType |
 ---
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 ---
+slug-id | FreakVerdict
+santander-unlimited-cash-rewards-card | No Freak verdict for this card yet
+---
 [
     {
         "CategoryName": "Financial & Rewards",

@@ -25,6 +25,9 @@ ink-business-preferred-credit-card | Cell Phone Protection | multiple_choice | [
 ink-business-preferred-credit-card | Primary Rental Coverage | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you rent cars for business and want the peace of mind of primary insurance coverage? | Rental Cars | [0.0, 0.5, 1.0]
 ink-business-preferred-credit-card | No FTF | multiple_choice | ['No', 'Yes'] | Do you make international business purchases and want to avoid transaction fees? | Travel | [0.0, 1.0]
 ---
+slug-id | FreakVerdict
+ink-business-preferred-credit-card | 10/10. Flat 100k points for $8k spend.
+---
 [
     {
         "CategoryName": "Airlines",

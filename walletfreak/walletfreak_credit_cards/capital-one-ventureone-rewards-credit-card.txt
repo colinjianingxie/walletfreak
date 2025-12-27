@@ -19,6 +19,9 @@ capital-one-ventureone-rewards-credit-card | No Foreign Transaction Fees | multi
 capital-one-ventureone-rewards-credit-card | Miles Transfer Partners | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you value the ability to transfer miles to various airline and hotel partners? | Redemption Flexibility | [0.0, 0.5, 1.0]
 capital-one-ventureone-rewards-credit-card | Hertz Five Star Status | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you rent cars frequently enough to benefit from elite status and skipping the counter? | Car Rental | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+capital-one-ventureone-rewards-credit-card | 10/10. Simple 20k miles for $500 spend.
+---
 [
     {
         "CategoryName": "Hotels",

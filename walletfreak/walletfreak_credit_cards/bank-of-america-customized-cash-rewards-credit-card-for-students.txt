@@ -16,6 +16,9 @@ slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | Benef
 bank-of-america-customized-cash-rewards-credit-card-for-students | Flexible Bonus | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you want to choose which category (Online Shopping, Dining, Gas) earns you 3% back? | Rewards Bonus | [0.0, 0.5, 1.0]
 bank-of-america-customized-cash-rewards-credit-card-for-students | Preferred Rewards | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you have bank balances that could qualify you for higher reward rates? | Rewards Bonus | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+bank-of-america-customized-cash-rewards-credit-card-for-students | No Freak verdict for this card yet
+---
 [
     {
         "CategoryName": "Groceries",

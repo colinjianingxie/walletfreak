@@ -17,6 +17,9 @@ slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | Benef
 marriott-bonvoy-boundless-credit-card | Free Night | multiple_choice | ['No', 'Yes'] | Would you use a "Free Night Award" at a Marriott property worth up to 35,000 points annually? | Hotel | [0.0, 1.0]
 marriott-bonvoy-boundless-credit-card | Elite Credits | multiple_choice | ['No', 'Yes'] | Are you trying to reach a higher level of Marriott status and need a 15-night head start each year? | Hotel Status | [0.0, 1.0]
 ---
+slug-id | FreakVerdict
+marriott-bonvoy-boundless-credit-card | 4/10. Tiered trap. The 150k points usually require extra spend windows beyond the initial $3k.
+---
 [
     {
         "CategoryName": "Hotels",

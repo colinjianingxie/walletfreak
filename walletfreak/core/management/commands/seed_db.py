@@ -17,7 +17,7 @@ class Command(BaseCommand):
         parser.add_argument(
             '--types',
             type=str,
-            help='Comma-separated list of data types to seed for cards: rates, benefits, calculator_questions, sign_up_bonus, freak_verdicts',
+            help='Comma-separated list of data types to seed for cards: rates, benefits, calculator_questions, sign_up_bonus, freak_verdicts (or verdict)',
         )
         parser.add_argument(
             '--referrals',
@@ -54,6 +54,10 @@ class Command(BaseCommand):
         # Convert comma-separated strings to lists
         card_slugs_list = [s.strip() for s in card_slugs.split(',') if s.strip()] if card_slugs else None
         types_list = [t.strip() for t in types.split(',') if t.strip()] if types else None
+        
+        # Normalize 'verdict' to 'freak_verdicts'
+        if types_list:
+             types_list = ['freak_verdicts' if t == 'verdict' else t for t in types_list]
         
         # Validate types
         valid_types = {'rates', 'benefits', 'calculator_questions', 'sign_up_bonus', 'freak_verdicts'}
@@ -128,6 +132,8 @@ class Command(BaseCommand):
         
         # Seed cards
         for card in cards_data:
+            seeded_types = []
+            
             if card.get('slug'):
                 slug = card['slug']
             else:
@@ -144,7 +150,13 @@ class Command(BaseCommand):
             card.pop('sign_up_bonus', None)
             
             # Create main card document (without subcollection data) - always update main doc
-            db.create_document('credit_cards', card, doc_id=slug)
+            # Use merge=True if we are doing a partial seed (types_list) to avoid wiping other fields (e.g. referrals)
+            should_merge = bool(types_list)
+            db.create_document('credit_cards', card, doc_id=slug, merge=should_merge)
+            
+            # Freak Verdicts validation/logic
+            if not types_list or 'freak_verdicts' in types_list:
+                seeded_types.append('verdict')
             
             # Seed Subcollections based on types filter
             import hashlib
@@ -158,11 +170,9 @@ class Command(BaseCommand):
                             doc.reference.delete()
                 except Exception as e:
                     pass
-
-            seeded_types = []
             
             # Benefits
-            if not types_list or 'benefits' in types_list or 'freak_verdicts' in types_list:
+            if not types_list or 'benefits' in types_list:
                 b_path = f'credit_cards/{slug}/benefits'
                 delete_subcollection(b_path)
                 for i, b in enumerate(benefits):

@@ -25,6 +25,9 @@ american-express-gold-card | Resy Credit | multiple_choice | ['No', 'Sometimes',
 american-express-gold-card | Dunkin Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Is a morning coffee or donut from Dunkin' a staple of your routine? | Dining | [0.0, 0.5, 1.0]
 american-express-gold-card | Hotel Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | How likely are you to book hotel stays through a bank portal to earn extra value on trip perks? | Hotel | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+american-express-gold-card | 10/10. High spend but flat 100k points. Amex keeps it simple.
+---
 [
     {
         "CategoryName": "Airlines",

@@ -16,6 +16,9 @@ Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType |
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 costco-anywhere-visa-card-by-citi | Reward Certificate | multiple_choice | ['No', 'Occasionally', 'Regularly'] | Do you shop at Costco enough to value an annual reward certificate? | Shopping | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+costco-anywhere-visa-card-by-citi | No Freak verdict for this card yet
+---
 [
     {
         "CategoryName": "Dining & Delivery",

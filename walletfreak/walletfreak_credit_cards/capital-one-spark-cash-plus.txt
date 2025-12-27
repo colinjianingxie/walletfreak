@@ -15,6 +15,9 @@ Capital One | Capital One Spark Cash Plus | 2025-12-07 | Spend $30,000 in 3 mont
 slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
 capital-one-spark-cash-plus | Annual Fee Refund | multiple_choice | ['No', 'Maybe', 'Yes'] | Does your business spend over $150,000 annually to earn back your annual fee? | Annual Fee Refund | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+capital-one-spark-cash-plus | 1/10. Whale bait. Extra rewards only matter at extreme spend levels.
+---
 [
     {
         "CategoryName": "Hotels",

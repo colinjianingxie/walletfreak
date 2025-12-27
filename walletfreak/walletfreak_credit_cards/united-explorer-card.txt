@@ -22,6 +22,9 @@ united-explorer-card | Club Passes | multiple_choice | ['No', 'Sometimes', 'Yes'
 united-explorer-card | TSA Credit | multiple_choice | ['No', 'Yes'] | Do you want the government to reimburse your Global Entry or TSA PreCheck application fee? | Travel Security | [0.0, 1.0]
 united-explorer-card | Inflight Savings | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you buy snacks or drinks on United flights and want 25% back? | Airline | [0.0, 0.5, 1.0]
 ---
+slug-id | FreakVerdict
+united-explorer-card | 10/10. Flat 70k miles for $3,000 spend. United bonuses are very transparent.
+---
 [
     {
         "CategoryName": "Airlines",
