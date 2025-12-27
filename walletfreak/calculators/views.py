@@ -21,54 +21,7 @@ def index(request):
     }
     return render(request, 'calculators/index.html', context)
 
-def load_credit_card_questions():
-    """
-    Reads credit_card_questions.csv and returns a lookup dict for CSV-driven questions.
-    Returns: { slug: [ {question_data}, ... ] }
-    """
-    csv_path = os.path.join(os.path.dirname(__file__), 'credit_card_questions.csv')
-    questions_by_slug = {}
-    
-    if not os.path.exists(csv_path):
-        return questions_by_slug
 
-    try:
-        with open(csv_path, 'r', encoding='utf-8') as f:
-            reader = csv.DictReader(f, delimiter='|')
-            for row in reader:
-                slug = row.get('slug-id', '').strip()
-                short_desc = row.get('BenefitShortDescription', '').strip()
-                
-                # Parse ChoiceList string to list
-                try:
-                    choice_list_str = row.get('ChoiceList', '[]')
-                    choice_list = ast.literal_eval(choice_list_str)
-                except (ValueError, SyntaxError):
-                    choice_list = []
-
-                # Parse ChoiceWeight string to list
-                try:
-                    choice_weight_str = row.get('ChoiceWeight', '[]')
-                    choice_weights = ast.literal_eval(choice_weight_str)
-                except (ValueError, SyntaxError):
-                    choice_weights = []
-
-                if slug and short_desc:
-                    if slug not in questions_by_slug:
-                        questions_by_slug[slug] = []
-                    
-                    questions_by_slug[slug].append({
-                        'short_desc': short_desc,
-                        'question_type': row.get('QuestionType', 'yes_no'),
-                        'choices': choice_list,
-                        'weights': choice_weights,
-                        'question': row.get('Question', ''),
-                        'category': row.get('BenefitCategory', '')
-                    })
-    except Exception as e:
-        print(f"Error reading questions CSV: {e}")
-        
-    return questions_by_slug
 
 def worth_it_list(request):
     """
@@ -112,9 +65,8 @@ def worth_it_audit(request, card_slug):
         # If that fails, we might want to search by 'slug' field query, but let's assume direct lookup works for now.
         return redirect('worth_it_list')
 
-    # Load custom questions strictly from CSV
-    all_questions = load_credit_card_questions()
-    card_questions = all_questions.get(card_slug, [])
+    # Load custom questions from Firestore (pre-fetched in card object)
+    card_questions = card.get('card_questions', [])
 
     # Create a lookup map for card benefits to get dollar values
     # Key: short_description -> Benefit Dict
@@ -180,9 +132,8 @@ def worth_it_calculate(request, card_slug):
         annual_fee = card.get('annual_fee', 0)
         total_value = 0.0
         
-        # Load questions strictly from CSV
-        all_questions = load_credit_card_questions()
-        card_questions = all_questions.get(card_slug, [])
+        # Load questions from Firestore (pre-fetched in card object)
+        card_questions = card.get('card_questions', [])
 
         # Benefit lookup map
         benefits_map = {b.get('short_description', ''): b for b in card.get('benefits', [])}

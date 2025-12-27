@@ -1,5 +1,6 @@
 from firebase_admin import firestore
 from datetime import datetime, timedelta
+import ast
 
 class CardMixin:
     def __init__(self, *args, **kwargs):
@@ -48,6 +49,7 @@ class CardMixin:
             c['benefits'] = []
             c['earning_rates'] = []
             c['sign_up_bonus'] = {} 
+            c['card_questions'] = []
             c['_raw_bonuses'] = []
 
         # 2. Fetch Benefits (Collection Group)
@@ -87,10 +89,25 @@ class CardMixin:
         except Exception as e:
             print(f"Error fetching sign_up_bonus collection group: {e}")
 
-        # 5. Process Bonuses per card
+        # 5. Fetch Card Questions (Collection Group)
+        try:
+            questions_docs = self.db.collection_group('card_questions').stream()
+            for doc in questions_docs:
+                parent = doc.reference.parent.parent
+                if parent and parent.id in cards_map:
+                    data = doc.to_dict()
+                    data['id'] = doc.id
+                    if 'card_questions' not in cards_map[parent.id]:
+                        cards_map[parent.id]['card_questions'] = []
+                    cards_map[parent.id]['card_questions'].append(data)
+        except Exception as e:
+            print(f"Error fetching card_questions collection group: {e}")
+
+        # 6. Process Bonuses and Questions per card
         for card in cards_map.values():
             raw_bonuses = card.pop('_raw_bonuses')
             card['sign_up_bonus'] = self._process_signup_bonuses(raw_bonuses)
+            card['card_questions'] = self._process_card_questions(card.get('card_questions', []))
 
         result = list(cards_map.values())
         
@@ -137,6 +154,52 @@ class CardMixin:
             return default_bonus
         return {}
 
+    def _process_card_questions(self, questions):
+        """
+        Parses stringified list fields in card questions.
+        """
+        processed = []
+        for q in questions:
+            # Parse ChoiceList
+            choice_list = []
+            try:
+                raw_choices = q.get('ChoiceList')
+                if isinstance(raw_choices, str):
+                    choice_list = ast.literal_eval(raw_choices)
+                elif isinstance(raw_choices, list):
+                    choice_list = raw_choices
+            except (ValueError, SyntaxError):
+                choice_list = []
+
+            # Parse ChoiceWeight
+            choice_weights = []
+            try:
+                raw_weights = q.get('ChoiceWeight')
+                if isinstance(raw_weights, str):
+                    choice_weights = ast.literal_eval(raw_weights)
+                elif isinstance(raw_weights, list):
+                    choice_weights = raw_weights
+            except (ValueError, SyntaxError):
+                choice_weights = []
+                
+            # Normalize keys to match view expectation (snake_case vs CamelCase in DB?)
+            # The CSV keys were BenefitShortDescription, Question, etc.
+            # We should standardize to what the view expects:
+            # 'short_desc', 'question_type', 'choices', 'weights', 'question', 'category'
+            
+            item = {
+                'short_desc': q.get('BenefitShortDescription', ''),
+                'question_type': q.get('QuestionType', 'yes_no'),
+                'choices': choice_list,
+                'weights': choice_weights,
+                'question': q.get('Question', ''),
+                'category': q.get('BenefitCategory', ''),
+                'id': q.get('id')
+            }
+            processed.append(item)
+            
+        return processed
+
     def _enrich_card_with_subcollections(self, card_id, card_data):
         """
         Fetches benefits, earning_rates, and sign_up_bonus from subcollections
@@ -157,6 +220,10 @@ class CardMixin:
             # 3. Sign Up Bonus
             bonuses = [{**doc.to_dict(), 'id': doc.id} for doc in card_ref.collection('sign_up_bonus').stream()]
             card_data['sign_up_bonus'] = self._process_signup_bonuses(bonuses)
+
+            # 4. Card Questions
+            questions = [{**doc.to_dict(), 'id': doc.id} for doc in card_ref.collection('card_questions').stream()]
+            card_data['card_questions'] = self._process_card_questions(questions)
 
         except Exception as e:
             print(f"Error enriching card {card_id}: {e}")

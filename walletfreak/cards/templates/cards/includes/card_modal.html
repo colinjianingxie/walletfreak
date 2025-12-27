@@ -349,7 +349,7 @@ function openCardModal(cardId) {
     if (matchEl) matchEl.textContent = matchScoreText;
 
     document.getElementById('modal-annual-fee').textContent = '$' + (card.annualFee || card.annual_fee || 0);
-    document.getElementById('modal-verdict-text').textContent = card.verdict || card.description || 'No verdict available.';
+    document.getElementById('modal-verdict-text').textContent = card.freak_verdict || card.verdict || card.description || 'No verdict available.';
     
     // Welcome Offer
     // Welcome Offer
