@@ -19,7 +19,7 @@ function updateWalletUI() {
     // 3. Update Available Cards (Global) for Search
     // Filter allCardsData to exclude cards currently in wallet
     if (typeof allCardsData !== 'undefined') {
-        const walletCardIds = new Set(walletCards.map(c => c.card_id));
+        const walletCardIds = new Set(walletCards.map(c => c.card_id || c.id));
         availableCards = allCardsData.filter(card => !walletCardIds.has(card.id));
 
         // Refresh the search list if it's visible
@@ -76,7 +76,9 @@ function updateNetPerformanceUI() {
     if (typeof walletCards !== 'undefined' && Array.isArray(walletCards)) {
         walletCards.forEach(userCard => {
             if (typeof allCardsData !== 'undefined') {
-                const staticCard = allCardsData.find(c => c.id === userCard.card_id);
+                // Fix: Subcollection uses 'id' as slug, legacy uses 'card_id'
+                const slug = userCard.card_id || userCard.id;
+                const staticCard = allCardsData.find(c => c.id === slug);
                 if (staticCard && staticCard.annual_fee) {
                     totalFees += parseFloat(staticCard.annual_fee);
                 }
@@ -114,7 +116,8 @@ function updateTotalAnnualFeeUI() {
         walletCards.forEach(userCard => {
             // Find static card data to get the fee
             if (typeof allCardsData !== 'undefined') {
-                const staticCard = allCardsData.find(c => c.id === userCard.card_id);
+                const slug = userCard.card_id || userCard.id;
+                const staticCard = allCardsData.find(c => c.id === slug);
                 if (staticCard && staticCard.annual_fee) {
                     totalFees += parseFloat(staticCard.annual_fee);
                 }
@@ -144,12 +147,19 @@ function calculateCreditsUsed() {
                                 // ALWAYS verify against static data (Source of Truth) to match Backend logic
                                 // Ignore benefit.benefit_type on the user object as it may be stale or incorrect
                                 if (typeof allCardsData !== 'undefined') {
-                                    const staticCard = allCardsData.find(c => c.id === card.card_id);
+                                    const slug = card.card_id || card.id;
+                                    const staticCard = allCardsData.find(c => c.id === slug);
                                     if (staticCard && staticCard.benefits) {
                                         // Find benefit index from key "benefit_X"
                                         const benefitKey = Object.keys(card.benefit_usage).find(k => card.benefit_usage[k] === benefit);
                                         if (benefitKey) {
-                                            const benefitIndex = parseInt(benefitKey.split('_')[1]);
+                                            // Fix: Handle both 'benefit_X' and 'X' keys
+                                            let benefitIndex;
+                                            if (benefitKey.startsWith('benefit_')) {
+                                                benefitIndex = parseInt(benefitKey.split('_')[1]);
+                                            } else {
+                                                benefitIndex = parseInt(benefitKey);
+                                            }
                                             const staticBenefit = staticCard.benefits[benefitIndex];
 
                                             // Strict check and LOGGING
@@ -197,13 +207,23 @@ function updateYtdRewardsUI() {
     if (typeof walletCards !== 'undefined' && Array.isArray(walletCards)) {
         walletCards.forEach(userCard => {
             if (typeof allCardsData !== 'undefined') {
-                const staticCard = allCardsData.find(c => c.id === userCard.card_id);
+                const slug = userCard.card_id || userCard.id;
+                const staticCard = allCardsData.find(c => c.id === slug);
                 if (staticCard && staticCard.benefits) {
                     staticCard.benefits.forEach((b, index) => {
                         // Filter out Protection and Bonus benefits
                         if (b.dollar_value && b.benefit_type !== 'Protection' && b.benefit_type !== 'Bonus') {
-                            const usageKey = `benefit_${index}`;
-                            let isIgnored = userCard.benefit_usage && userCard.benefit_usage[usageKey] ? userCard.benefit_usage[usageKey].is_ignored : false;
+                            // Fix: Support both legacy 'benefit_X' and new 'X' index keys
+                            const simpleKey = index.toString();
+                            const legacyKey = `benefit_${index}`;
+
+                            let benefitData = null;
+                            if (userCard.benefit_usage) {
+                                if (userCard.benefit_usage[simpleKey]) benefitData = userCard.benefit_usage[simpleKey];
+                                else if (userCard.benefit_usage[legacyKey]) benefitData = userCard.benefit_usage[legacyKey];
+                            }
+
+                            let isIgnored = benefitData ? benefitData.is_ignored : false;
 
                             if (!isIgnored) {
                                 // Calculate available potential
@@ -253,9 +273,10 @@ function calculateAvailablePotential(benefit, anniversaryDateStr) {
 
     let available = 0;
     const lowerFreq = frequency.toLowerCase();
+    const periodValues = benefit.period_values || {};
 
     if (lowerFreq.includes('monthly')) {
-        const monthlyVal = val / 12;
+        const defaultMonthlyVal = val / 12;
         // Check each month 1-12
         for (let m = 1; m <= 12; m++) {
             let isAvailable = false;
@@ -267,11 +288,16 @@ function calculateAvailablePotential(benefit, anniversaryDateStr) {
                 isAvailable = (m >= annMonth && m <= currentMonth);
             }
 
-            if (isAvailable) available += monthlyVal;
+            if (isAvailable) {
+                const pKey = `${currentYear}_${m.toString().padStart(2, '0')}`;
+                // Use override if exists and not null/undefined
+                const pVal = (periodValues[pKey] !== undefined) ? parseFloat(periodValues[pKey]) : defaultMonthlyVal;
+                available += pVal;
+            }
         }
 
     } else if (lowerFreq.includes('quarterly')) {
-        const qVal = val / 4;
+        const defaultQVal = val / 4;
         const currentQ = Math.floor((currentMonth - 1) / 3) + 1;
         const annQ = Math.floor((annMonth - 1) / 3) + 1;
 
@@ -283,11 +309,15 @@ function calculateAvailablePotential(benefit, anniversaryDateStr) {
                 isAvailable = (q >= annQ && q <= currentQ);
             }
 
-            if (isAvailable) available += qVal;
+            if (isAvailable) {
+                const pKey = `${currentYear}_Q${q}`;
+                const pVal = (periodValues[pKey] !== undefined) ? parseFloat(periodValues[pKey]) : defaultQVal;
+                available += pVal;
+            }
         }
 
     } else if (lowerFreq.includes('semi-annually')) {
-        const hVal = val / 2;
+        const defaultHVal = val / 2;
 
         // H1 check
         let h1Available = false;
@@ -298,7 +328,11 @@ function calculateAvailablePotential(benefit, anniversaryDateStr) {
             h1Available = (annMonth <= 6 && currentMonth >= 1);
         }
         // Only count if H1 is current or passed
-        if (h1Available && currentMonth >= 1) available += hVal;
+        if (h1Available && currentMonth >= 1) {
+            const pKey = `${currentYear}_H1`;
+            const pVal = (periodValues[pKey] !== undefined) ? parseFloat(periodValues[pKey]) : defaultHVal;
+            available += pVal;
+        }
 
         // H2 check
         let h2Available = false;
@@ -308,11 +342,18 @@ function calculateAvailablePotential(benefit, anniversaryDateStr) {
             // (ann<=6 and curr>=7) OR (ann>=7 and curr >= ann)
             h2Available = (annMonth <= 6 && currentMonth >= 7) || (annMonth >= 7 && currentMonth >= annMonth);
         }
-        if (h2Available) available += hVal;
+        if (h2Available) {
+            const pKey = `${currentYear}_H2`;
+            const pVal = (periodValues[pKey] !== undefined) ? parseFloat(periodValues[pKey]) : defaultHVal;
+            available += pVal;
+        }
 
     } else {
         // Annual / Ongoing - assume full value available if card is active
-        available = val;
+        // Check for yearly override?
+        const pKey = `${currentYear}`;
+        const pVal = (periodValues[pKey] !== undefined) ? parseFloat(periodValues[pKey]) : val;
+        available = pVal;
     }
 
     return available;

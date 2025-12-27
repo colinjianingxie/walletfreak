@@ -103,7 +103,17 @@ class Command(BaseCommand):
                 card['referral_links'] = [{'link': l, 'weight': 1} for l in referrals_map[slug]]
                 self.stdout.write(f'  - Added {len(card["referral_links"])} referral links to {slug}')
             
-            # Create main card document
+            # Extract subcollection data before removing from main document
+            benefits = card.get('benefits', [])
+            rates = card.get('earning_rates', [])
+            bonus = card.get('sign_up_bonus')
+            
+            # Remove redundant keys from main card document (now stored in subcollections)
+            card.pop('benefits', None)
+            card.pop('earning_rates', None)
+            card.pop('sign_up_bonus', None)
+            
+            # Create main card document (without subcollection data)
             db.create_document('credit_cards', card, doc_id=slug)
             
             # Seed Subcollections
@@ -129,7 +139,6 @@ class Command(BaseCommand):
             # 1. Benefits
             b_path = f'credit_cards/{slug}/benefits'
             delete_subcollection(b_path)
-            benefits = card.get('benefits', [])
             for i, b in enumerate(benefits):
                 # Use simple index as ID for overrides compatibility
                 b_id = str(i)
@@ -138,7 +147,6 @@ class Command(BaseCommand):
             # 2. Earning Rates
             r_path = f'credit_cards/{slug}/earning_rates'
             delete_subcollection(r_path)
-            rates = card.get('earning_rates', [])
             for i, r in enumerate(rates):
                 # Use simple index as ID
                 r_id = str(i)
@@ -147,7 +155,6 @@ class Command(BaseCommand):
             # 3. Sign Up Bonus
             s_path = f'credit_cards/{slug}/sign_up_bonus'
             delete_subcollection(s_path)
-            bonus = card.get('sign_up_bonus')
             if bonus:
                 # Some cards might have empty bonus dict or None
                 if bonus.get('value') or bonus.get('terms'):

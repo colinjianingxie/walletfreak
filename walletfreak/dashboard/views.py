@@ -42,6 +42,9 @@ def dashboard(request):
         print(f"Error fetching all cards: {e}")
         all_cards = []
     
+    # Create lookup map for efficient access
+    cards_map = {c['id']: c for c in all_cards}
+    
     # Get IDs of cards already in user's wallet
     user_card_ids = set()
     for card in active_cards + inactive_cards + eyeing_cards:
@@ -84,10 +87,15 @@ def dashboard(request):
     
     for card in active_cards:
         try:
-            # Get full card details
-            card_details = db.get_card_by_slug(card['card_id'])
+            # Get full card details - OPTIMIZED: Use cached map instead of DB call
+            card_details = cards_map.get(card['card_id'])
+            
+            # Fallback if somehow not in map (e.g. card deleted but user has it)
             if not card_details:
-                continue
+                 # Try fetching directly or skip? Skip effectively handles deleted cards.
+                 # Taking valid cards only is safer.
+                 # print(f"Card {card['card_id']} not found in global cache.")
+                 continue
             
             total_annual_fee += card_details.get('annual_fee', 0)
             

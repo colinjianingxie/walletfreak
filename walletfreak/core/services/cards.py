@@ -1,7 +1,38 @@
 from firebase_admin import firestore
+from datetime import datetime, timedelta
 
 class CardMixin:
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._cards_cache = None
+        self._cards_cache_time = None
+        self._cards_cache_ttl = timedelta(minutes=5)  # Cache for 5 minutes
+    
+    def _invalidate_cards_cache(self):
+        """Invalidate the cards cache (call this when cards are updated)"""
+        self._cards_cache = None
+        self._cards_cache_time = None
+    
+    def get_cards_basic(self):
+        """
+        Get basic card info without subcollections (benefits, rates, bonuses).
+        Use this when you only need card metadata (name, issuer, annual_fee, etc.)
+        This is MUCH cheaper than get_cards() - only ~90 reads instead of 700-1300.
+        """
+        cards_snapshot = self.get_collection('credit_cards')
+        return cards_snapshot
     def get_cards(self):
+        """
+        Get all cards with full subcollections (benefits, earning_rates, sign_up_bonus).
+        This is cached for 5 minutes to reduce Firestore reads.
+        WARNING: This is expensive (~700-1300 reads). Use get_cards_basic() when possible.
+        """
+        # Check cache first
+        if self._cards_cache is not None and self._cards_cache_time is not None:
+            if datetime.now() - self._cards_cache_time < self._cards_cache_ttl:
+                return self._cards_cache
+        
+        # Cache miss or expired - fetch from Firestore
         # optimized: Use Collection Group queries to fetch all subcollections in 3 requests total
         # instead of N * 3 requests.
         
@@ -61,7 +92,13 @@ class CardMixin:
             raw_bonuses = card.pop('_raw_bonuses')
             card['sign_up_bonus'] = self._process_signup_bonuses(raw_bonuses)
 
-        return list(cards_map.values())
+        result = list(cards_map.values())
+        
+        # Update cache
+        self._cards_cache = result
+        self._cards_cache_time = datetime.now()
+        
+        return result
     
     def get_card_by_slug(self, slug):
         card_data = self.get_document('credit_cards', slug)

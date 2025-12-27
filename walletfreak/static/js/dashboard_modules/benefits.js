@@ -191,12 +191,16 @@ function openBenefitModal(cardId, benefitId, benefitName, amount, used, frequenc
 
 function updateBenefitModalUI() {
     const period = currentBenefitPeriods[currentPeriodIndex];
-    const maxVal = period.max_value || currentBenefitData.amount;
+    // Fix: Allow 0 as valid value (don't falback to amount if 0)
+    const maxVal = (period.max_value !== undefined && period.max_value !== null) ? period.max_value : currentBenefitData.amount;
 
     let usedVal = period.used || 0;
     if (period.status === 'full') {
         usedVal = maxVal;
     }
+
+    // Check if period is disabled (max value 0)
+    const isDisabled = (maxVal === 0);
 
     // Update Header
     document.getElementById('benefit-modal-title').textContent = currentBenefitData.benefitName;
@@ -207,13 +211,26 @@ function updateBenefitModalUI() {
 
     // Update Values
     document.getElementById('benefit-current-used-display').textContent = `$${usedVal}`;
-    document.getElementById('benefit-total-value-display').textContent = `$${maxVal}`;
+
+    if (isDisabled) {
+        document.getElementById('benefit-total-value-display').innerHTML = '<span style="color: #9CA3AF; font-size: 0.8em; font-weight: 600;">DISABLED</span>';
+    } else {
+        document.getElementById('benefit-total-value-display').textContent = `$${maxVal}`;
+    }
 
     updateProgress(usedVal, maxVal);
 
     // Update Input
-    document.getElementById('benefit-amount-input').value = '';
-    document.getElementById('benefit-amount-input').placeholder = `Remaining: $${maxVal - usedVal}`;
+    const input = document.getElementById('benefit-amount-input');
+
+    input.value = '';
+    if (isDisabled) {
+        input.disabled = true;
+        input.placeholder = "Benefit Disabled";
+    } else {
+        input.disabled = false;
+        input.placeholder = `Remaining: $${maxVal - usedVal}`;
+    }
 
     // Update Mark as Full / Reset Button
     const markBtn = document.getElementById('mark-full-btn');
@@ -225,7 +242,10 @@ function updateBenefitModalUI() {
         markBtn.style.borderColor = '#E5E7EB';
         markBtn.style.color = '#1F2937';
 
-        if (period.status === 'full') {
+        if (isDisabled) {
+            markBtn.style.display = 'none';
+            resetBtn.style.display = 'none';
+        } else if (period.status === 'full') {
             // Show Reset Button
             markBtn.style.display = 'none';
             resetBtn.style.display = 'flex';
@@ -243,7 +263,12 @@ function updateBenefitModalUI() {
     // Update Ignore Button & Input State
     const ignoreBtn = document.getElementById('benefit-ignore-btn');
     const logBtn = document.getElementById('btn-log-usage');
-    const input = document.getElementById('benefit-amount-input');
+
+    // Force disable log button if disabled
+    if (isDisabled && logBtn) {
+        logBtn.disabled = true;
+        logBtn.style.opacity = '0.5';
+    }
 
     if (ignoreBtn) {
         if (currentBenefitData.isIgnored) {
@@ -253,7 +278,7 @@ function updateBenefitModalUI() {
             ignoreBtn.style.display = 'inline-block';
             ignoreBtn.disabled = false;
 
-            // Disable inputs
+            // Disable inputs (override disabled state from above if needed, but they are compatible)
             if (input) {
                 input.disabled = true;
                 input.placeholder = 'Ignored';
@@ -273,13 +298,18 @@ function updateBenefitModalUI() {
 
         } else {
             // ACTIVE STATE
-            if (input) input.disabled = false;
+            // Ensure input state respects isDisabled
+            if (input && !isDisabled) input.disabled = false;
+
             if (logBtn) {
                 // Default to disabled because input is cleared on open
-                logBtn.disabled = true;
+                logBtn.disabled = true; // Always start disabled until input
                 logBtn.style.opacity = '0.5';
             }
-            // markBtn state logic is preserved above unless overridden by isIgnored
+
+            // If disabled, we might want to hide ignore button? Or keep it?
+            // "Disabled" usually means it doesn't apply. Ignoring it is moot.
+            // But let's keep it visible just in case they want to ignore it for some reason.
 
             if (currentBenefitData.ytdUsed && currentBenefitData.ytdUsed > 0) {
                 // Has usage -> Hide ignore button (cannot ignore)
@@ -329,7 +359,8 @@ document.getElementById('benefit-amount-input')?.addEventListener('input', (e) =
 
 function markAsFull() {
     const period = currentBenefitPeriods[currentPeriodIndex];
-    const maxVal = period.max_value || currentBenefitData.amount;
+    // Fix: Allow 0 as valid value (don't falback to amount if 0)
+    const maxVal = (period.max_value !== undefined && period.max_value !== null) ? period.max_value : currentBenefitData.amount;
 
     const btn = document.getElementById('mark-full-btn');
     const originalText = btn.innerHTML;
@@ -365,6 +396,9 @@ function markAsFull() {
                 // Note: The backend logic should set 'used' to max. We simulate it here.
                 // We don't have 'used' property on period object usually (it's in benefit_usage map), 
                 // but updateBenefitModalUI uses a check: if status=='full' usedVal=maxVal.
+
+                // Update ytdUsed to reflect that benefit has been used
+                currentBenefitData.ytdUsed = (currentBenefitData.ytdUsed || 0) + maxVal;
 
                 updateBenefitModalUI();
 
@@ -428,62 +462,18 @@ function saveBenefitUsage() {
         })
         .then(data => {
             if (data.success) {
-                // Update local state logic
-                // The backend adds to existing usage.
-                // We need to know current used to add to it?
-                // currentBenefitPeriods objects don't explicitly store 'used' in the snippets I saw?
-                // Wait, openBenefitModal logic:
-                // currentBenefitPeriods = JSON.parse(script.textContent);
-                // The structure coming from views.py (line 276 'periods': periods) has 'status', 'is_current', 'max_value', 'key', 'label'.
-                // Does it have 'used' or 'current_period_used'?
-                // views.py appends: {'label': ..., 'status': ..., 'is_available': ...}
-                // It does NOT seem to include 'used' amount in the periods array in views.py!
-                // Wait, line 276: 'periods': periods.
-                // And line 275: 'used': current_period_used.
-                // The 'periods' list items (lines 222, 173, 145) ONLY have label, key, status, is_current, max_value, is_available.
-                // They DO NOT have the numeric 'used' value for that specific period!
-                // BUT updateBenefitModalUI (line 164) calculates `usedVal`.
-                // "if (period.status === 'full') usedVal = maxVal; else if (period.key === ... find(p=>p.is_current).key) usedVal = 0;"
-                // WAIT. Line 167: `else if (period.key === ...) usedVal = 0`.
-                // This implies `updateBenefitModalUI` assumes 0 used unless full?
-                // OR `currentBenefitData.amount` is used?
-                // Let's re-read `updateBenefitModalUI`.
-                // Line 162: `const maxVal = period.max_value || currentBenefitData.amount;`
-                // Line 164: `let usedVal = 0;`
-                // The snippets suggest `usedVal` is improperly calculated or I missed where it gets it from.
-                // `openBenefitModal` (line 152) stores `amount` (Base amount) in `currentBenefitData`.
-                // It passes `used`? "openBenefitModal(..., used, ...)"
-                // Line 134: `function openBenefitModal(..., amount, used, ...)`
-                // But `updateBenefitModalUI` doesn't seem to use `currentBenefitData.used`.
-                // Actually, I suspect the `periods` JSON *should* contain `used` if the modal supports historical/multi-period viewing.
-                // IF `updateBenefitModalUI` is flawed (always showing 0 unless full), that's a separate bug, BUT the user screenshot (which I can't see but assume exists) shows "$0 of $12.92".
-                // If I log usage, I want that $0 to become $5.
-                // If the `periods` object in JSON lacks `used`, I cannot update it accurately locally without knowing the previous `used`.
-                // `views.py` snippet (line 145) `periods.append({...})` - I verified it lacks `used`.
-                // THIS IS A POTENTIAL ISSUE.
-                // However, `saveBenefitUsage` sends the *incremental* amount? "Add Usage".
-                // `formData.append('amount', amount)`.
-                // If the UI was showing 0, and I add 5, I can just show 5?
-                // But if I navigate to another month, I'm blind.
-
-                // FIX: I will blindly assume 0 if unknown, and add the input amount.
-                // Or better: update `benefit_usage` in `walletCards` (which IS updated by snapshot) and re-derive `currentBenefitPeriods` from `walletCards`?
-                // Yes! `walletCards` has the raw data.
-                // But `walletCards` is Firestore format. `currentBenefitPeriods` is UI format (labels etc).
-                // I can just rely on the *toast* saying "Logged!" and the user closing the modal eventually.
-                // But for "smoother", updating the text to "Remaining: $X" is nice.
-
-                // Let's try to update `currentBenefitData.used`?
-                // Actually, let's just close the modal? "Smoother" might just mean "don't reload page".
-                // If I close the modal, it's fine.
-                // Or I can keep it open and reset input.
+                // ... (previous code)
 
                 // Update local state
                 const newUsed = (period.used || 0) + amount;
                 period.used = newUsed;
 
+                // Update ytdUsed to reflect that benefit has been used
+                currentBenefitData.ytdUsed = (currentBenefitData.ytdUsed || 0) + amount;
+
                 // Check if maxed out
-                if (newUsed >= period.max_value) {
+                const maxVal = (period.max_value !== undefined && period.max_value !== null) ? period.max_value : currentBenefitData.amount;
+                if (newUsed >= maxVal) {
                     period.status = 'full';
                     period.is_full = true;
                     // Persist update to DOM
@@ -492,8 +482,8 @@ function saveBenefitUsage() {
                     }
                     if (typeof showToast === 'function') showToast('Benefit maxed out!');
 
-                    // Update UI to show Reset button
-                    updateBenefitModalUI();
+                    // NEW REQUIREMENT: Close modal if maxed out
+                    closeBenefitModal();
                 } else {
                     period.status = 'partial';
                     // Persist update to DOM
@@ -507,10 +497,8 @@ function saveBenefitUsage() {
                 // Refresh dashboard to update top stats
                 refreshDashboardBenefits();
 
+                // Clear input (if modal wasn't closed)
                 input.value = '';
-
-                // Update UI based on new state
-                updateBenefitModalUI();
 
                 // Enable button (but keep disabled until new input)
                 btn.innerHTML = originalText;
@@ -531,12 +519,13 @@ function toggleIgnoreBenefit() {
     const btn = document.getElementById('benefit-ignore-btn');
     const originalText = btn.innerHTML;
     const isIgnored = currentBenefitData.isIgnored;
+    const newIgnoredState = !isIgnored;
 
     btn.innerHTML = '<span class="loader"></span> processing...';
     btn.disabled = true;
 
     const formData = new FormData();
-    formData.append('is_ignored', !isIgnored);
+    formData.append('is_ignored', newIgnoredState);
     formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
 
     fetch(`/wallet/toggle-ignore-benefit/${currentBenefitData.cardId}/${currentBenefitData.benefitId}/`, {
@@ -556,8 +545,22 @@ function toggleIgnoreBenefit() {
                 // Wait for dashboard to refresh FIRST to ensure backend sync is visualized
                 await refreshDashboardBenefits();
 
-                if (typeof showToast === 'function') showToast(isIgnored ? 'Benefit unignored!' : 'Benefit ignored!');
-                closeBenefitModal();
+                if (newIgnoredState) {
+                    // Being Ignored -> Close Modal
+                    if (typeof showToast === 'function') showToast('Benefit ignored!');
+                    closeBenefitModal();
+                } else {
+                    // Being Unignored -> Keep Modal Open
+                    if (typeof showToast === 'function') showToast('Benefit unignored!');
+
+                    // Update local state to reflect change in UI
+                    currentBenefitData.isIgnored = false;
+                    updateBenefitModalUI();
+
+                    // Reset button
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }
             } else {
                 alert('Error: ' + (data.error || 'Unknown error'));
                 btn.innerHTML = originalText;
