@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container" style="padding: 2rem 0; max-width: 800px;">
-    <h1>Edit Card: {{ card.name }}</h1>
+    <h1>Card Details: {{ card.name }}</h1>
     
     {% if messages %}
         {% for message in messages %}
@@ -12,46 +12,115 @@
         {% endfor %}
     {% endif %}
     
-    <form method="post" style="margin-top: 2rem;">
-        {% csrf_token %}
+    <div style="margin-top: 2rem; background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 1rem; border: 1px solid rgba(255,255,255,0.1);">
         
-        <div style="margin-bottom: 1.5rem;">
-            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Card Name</label>
-            <input type="text" name="name" value="{{ card.name }}" required 
-                   style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem; color: white;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+            <div>
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: rgba(255,255,255,0.6);">Card Name</label>
+                <div style="font-size: 1.125rem;">{{ card.name }}</div>
+            </div>
+            
+            <div>
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: rgba(255,255,255,0.6);">Issuer</label>
+                <div style="font-size: 1.125rem;">{{ card.issuer }}</div>
+            </div>
+            
+            <div>
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: rgba(255,255,255,0.6);">Annual Fee</label>
+                <div style="font-size: 1.125rem;">${{ card.annual_fee }}</div>
+            </div>
+
+            <div>
+                 <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: rgba(255,255,255,0.6);">Image URL</label>
+                 <div style="font-size: 0.875rem; word-break: break-all; opacity: 0.8;">{{ card.image_url }}</div>
+            </div>
         </div>
         
-        <div style="margin-bottom: 1.5rem;">
-            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Issuer</label>
-            <input type="text" name="issuer" value="{{ card.issuer }}" required 
-                   style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem; color: white;">
+        <div style="margin-bottom: 2rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: rgba(255,255,255,0.6);">Benefits Data (JSON)</label>
+            <pre style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-size: 0.875rem; color: #e5e7eb;">{{ card.benefits_json }}</pre>
         </div>
-        
-        <div style="margin-bottom: 1.5rem;">
-            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Annual Fee ($)</label>
-            <input type="number" name="annual_fee" value="{{ card.annual_fee }}" step="0.01" required 
-                   style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem; color: white;">
+
+        <div style="display: flex; gap: 1rem; align-items: center;">
+            <a href="{% url 'admin_card_list' %}" class="btn btn-outline">Back to List</a>
+            
+            {% if is_prompt_admin %}
+            <button type="button" id="btn-generate-prompt" class="btn btn-primary" 
+                    style="padding: 0.75rem 1.5rem; font-weight: 600;">
+                Update (Generate Prompt)
+            </button>
+            {% endif %}
         </div>
-        
-        <div style="margin-bottom: 1.5rem;">
-            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Image URL</label>
-            <input type="text" name="image_url" value="{{ card.image_url }}" 
-                   style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem; color: white;">
+    </div>
+
+    <!-- Modal -->
+    <div id="ai-prompt-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center;">
+        <div style="background: #1f2937; padding: 2rem; border-radius: 1rem; width: 90%; max-width: 800px; max-height: 90vh; display: flex; flex-direction: column; color: white; border: 1px solid rgba(255,255,255,0.1);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3 style="margin: 0;">AI Update Prompt</h3>
+                <button onclick="document.getElementById('ai-prompt-modal').style.display='none'" 
+                        style="background: transparent; border: none; color: rgba(255,255,255,0.6); cursor: pointer; font-size: 1.5rem;">&times;</button>
+            </div>
+            
+            <div style="flex: 1; overflow-y: auto; margin-bottom: 1rem;">
+                <textarea id="prompt-output" readonly 
+                          style="width: 100%; height: 400px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem; color: #e5e7eb; padding: 1rem; font-family: monospace; font-size: 0.875rem; white-space: pre-wrap;"></textarea>
+            </div>
+            
+            <div style="display: flex; justify-content: flex-end; gap: 1rem;">
+                <button onclick="copyToClipboard()" class="btn btn-primary" id="btn-copy">
+                    Copy to Clipboard
+                </button>
+                <button onclick="document.getElementById('ai-prompt-modal').style.display='none'" class="btn btn-outline">
+                    Close
+                </button>
+            </div>
         </div>
-        
-        <div style="margin-bottom: 1.5rem;">
-            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Benefits (JSON)</label>
-            <p style="font-size: 0.875rem; color: rgba(255,255,255,0.6); margin-bottom: 0.5rem;">
-                Edit the benefits as JSON. Each benefit should have: description, category, dollar_value (or null), effective_date
-            </p>
-            <textarea name="benefits" rows="15" required 
-                      style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem; color: white; font-family: monospace; font-size: 0.875rem;">{{ card.benefits_json }}</textarea>
-        </div>
-        
-        <div style="display: flex; gap: 1rem;">
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-            <a href="{% url 'admin_card_list' %}" class="btn btn-outline">Cancel</a>
-        </div>
-    </form>
+    </div>
+
+    {% if is_prompt_admin %}
+    <script>
+        document.getElementById('btn-generate-prompt').addEventListener('click', function() {
+            const btn = this;
+            const originalText = btn.innerText;
+            btn.innerText = 'Generating...';
+            btn.disabled = true;
+
+            fetch("{% url 'admin_generate_prompt' card_id=card.card_id %}")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert('Error: ' + data.error);
+                    } else {
+                        document.getElementById('prompt-output').value = data.prompt;
+                        document.getElementById('ai-prompt-modal').style.display = 'flex';
+                    }
+                })
+                .catch(err => {
+                    console.error('Fetch error:', err);
+                    alert('Request failed. Check console for details.');
+                })
+                .finally(() => {
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                });
+        });
+
+        function copyToClipboard() {
+            const copyText = document.getElementById("prompt-output");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); 
+            
+            document.execCommand("copy");
+            
+            const btn = document.getElementById('btn-copy');
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            setTimeout(() => {
+                btn.innerText = originalText;
+            }, 2000);
+        }
+    </script>
+    {% endif %}
 </div>
 {% endblock %}
