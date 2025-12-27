@@ -107,7 +107,29 @@ Given the current Category Mappings (JSON):
 As of {today}, what are the latest and most accurate up-to-date data for the selected cards ({card_context_str})? 
 Read from the original vendor's source to find the latest and most accurate data.
 
-I want you to return the benefits, sign up bonuses, rates, and updated category mapping in their respective schemas (matching the formats provided above).
+I want you to generate an "update file" containing the updated data.
+The update file MUST follow the precise format below, using '---' as a separator between sections:
+
+[Content for default_credit_cards.csv]
+---
+[Content for default_card_benefits.csv]
+---
+[Content for default_rates.csv]
+---
+[Content for default_signup.csv]
+---
+[Content for credit_card_questions.csv]
+---
+[Content for default_category_mapping.json]
+
+**Format Rules:**
+1. Each section must contain the full CSV or JSON content for that file, including headers.
+2. Only include rows relevant to the selected cards.
+3. Do not add markdown code blocks (like ```csv) inside the sections if possible, just the raw text.
+4. Separators must be exactly '---' on a new line.
+5. Do not modify the ImageURL in default_credit_cards.csv.
+6. Do NOT output the file names or headers (e.g. "<updated ...>") before the content. Only the content itself.
+7. For default_category_mapping.json, ONLY include NEW categories that need to be added. Do not output the full existing mapping.
 
 **Specific Instructions for Rates:**
 It is imperative to split rates into many rows if there is a multiplier or cashback that applies to multiple categories.
@@ -124,6 +146,6 @@ Examples:
 - Groceries (be specific if it excludes superstores etc)
 - Train vs Generic Transportation
 
-Please generate the update data now.
+Please generate the update file now.
 """
         return prompt

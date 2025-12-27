@@ -1,0 +1,56 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Chase | Ink Business Premier Credit Card | 195 | N/A | ink-business-premier-credit-card | /static/images/credit_cards/ink-business-premier-credit-card.webp | 670 | 850 | https://creditcards.chase.com/ink-business-credit-cards/premier | False
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Chase | Ink Business Premier Credit Card | Cell phone protection | up to $1,000 per claim | ["Cell Phone Protection", "Generic Protection"] | Per Claim | 1000 | False | 2025-12-07 | Cell Phone Protection | Protection | 1000 | N/A | ink-business-premier-credit-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Chase | Ink Business Premier Credit Card | 5 | cash back | ["Chase Travel Flights"] | flights through Chase Travel | ink-business-premier-credit-card | False
+Chase | Ink Business Premier Credit Card | 5 | cash back | ["Chase Travel Hotels"] | hotels through Chase Travel | ink-business-premier-credit-card | False
+Chase | Ink Business Premier Credit Card | 5 | cash back | ["Chase Travel Rental Cars"] | rental cars through Chase Travel | ink-business-premier-credit-card | False
+Chase | Ink Business Premier Credit Card | 2.5 | cash back | ["Large Purchases"] | $5,000+ purchases | ink-business-premier-credit-card | False
+Chase | Ink Business Premier Credit Card | 2 | cash back | ["Generic Financial & Rewards"] | everything else | ink-business-premier-credit-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+Chase | Ink Business Premier Credit Card | 2025-12-07 | Spend $10,000 in 3 months | 1000 | Cash | ink-business-premier-credit-card | 10000 | 3
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+ink-business-premier-credit-card | Cell Phone Protection | multiple_choice | ['No', 'Somewhat', 'Highly'] | Does your business value up to $1,000 in coverage for employee cell phones? | Cell Phone Protection | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Airlines",
+        "Icon": "fa-solid fa-plane",
+        "CategoryNameDetailed": [
+            "Chase Travel Flights"
+        ]
+    },
+    {
+        "CategoryName": "Hotels",
+        "Icon": "fa-solid fa-hotel",
+        "CategoryNameDetailed": [
+            "Chase Travel Hotels"
+        ]
+    },
+    {
+        "CategoryName": "Transportation",
+        "Icon": "fa-solid fa-car-side",
+        "CategoryNameDetailed": [
+            "Chase Travel Rental Cars"
+        ]
+    },
+    {
+        "CategoryName": "Large Expenses",
+        "Icon": "fa-solid fa-money-check-dollar",
+        "CategoryNameDetailed": [
+            "Large Purchases"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

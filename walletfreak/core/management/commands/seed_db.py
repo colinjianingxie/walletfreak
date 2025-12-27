@@ -19,29 +19,56 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR('Audit FAILED. Aborting database seed.'))
             return
 
-        # 1. Credit Cards Data - Parse from CSV
-        from .parse_benefits_csv import generate_cards_from_csv
+        # 1. Credit Cards Data - Parse from Text Files
+        from .parse_updates import generate_cards_from_files, apply_overrides
         
-        # Get the CSV paths
+        # Get the updates directory path
         base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
-        csv_path = os.path.join(base_dir, 'default_card_benefits.csv')
-        signup_csv_path = os.path.join(base_dir, 'default_signup.csv')
-        rates_csv_path = os.path.join(base_dir, 'default_rates.csv')
-        # points_csv_path variable is effectively the master_csv_path
-        master_csv_path = os.path.join(base_dir, 'default_credit_cards.csv')
-        overrides_csv_path = os.path.join(base_dir, 'credit_card_benefit_overrides.csv')
-        verdicts_csv_path = os.path.join(base_dir, 'default_freak_verdicts.csv')
+        updates_dir = os.path.join(base_dir, 'walletfreak_credit_cards')
+        overrides_path = os.path.join(base_dir, 'credit_card_benefit_overrides.csv')
         
-        self.stdout.write(f'Parsing cards from: {csv_path}')
-        self.stdout.write(f'Parsing signup bonuses from: {signup_csv_path}')
-        self.stdout.write(f'Parsing earning rates from: {rates_csv_path}')
-        self.stdout.write(f'Parsing master cards data from: {master_csv_path}')
-        self.stdout.write(f'Parsing benefit overrides from: {overrides_csv_path}')
-        self.stdout.write(f'Parsing verdicts from: {verdicts_csv_path}')
+        self.stdout.write(f'Parsing cards from: {updates_dir}')
         
-        cards_data = generate_cards_from_csv(csv_path, signup_csv_path, rates_csv_path, master_csv_path=master_csv_path, overrides_csv_path=overrides_csv_path, verdicts_csv_path=verdicts_csv_path)
+        cards_data, categories_data, questions_data = generate_cards_from_files(updates_dir)
+        
+        # Apply Overrides
+        self.stdout.write(f'Applying benefit overrides from: {overrides_path}')
+        apply_overrides(cards_data, overrides_path)
 
-        # Parse referrals
+        # Upsert Categories
+        self.stdout.write(f'Upserting {len(categories_data)} categories...')
+        for category in categories_data:
+            cat_name = category.get('CategoryName')
+            if cat_name:
+                db.create_document('categories', category, doc_id=slugify(cat_name))
+                self.stdout.write(f'  - Upserted Category: {cat_name}')
+                
+        # Upsert Card Questions
+        self.stdout.write(f'Upserting {len(questions_data)} card questions...')
+        
+        # Group questions by slug
+        questions_by_slug = {}
+        for q in questions_data:
+            slug = q.get('slug-id')
+            if slug:
+                if slug not in questions_by_slug:
+                    questions_by_slug[slug] = []
+                questions_by_slug[slug].append(q)
+        
+        seeded_q_count = 0
+        for slug, questions in questions_by_slug.items():
+            for i, cx in enumerate(questions):
+                # Use simple index as ID
+                doc_id = str(i)
+                
+                # Use subcollection path
+                collection_path = f"credit_cards/{slug}/card_questions"
+                db.create_document(collection_path, cx, doc_id=doc_id)
+                seeded_q_count += 1
+            
+        self.stdout.write(f'  - Seeded {seeded_q_count} questions into subcollections.')
+
+        # Parse referrals (Legacy CSV usage for now, or could be moved to files later)
         referrals_csv_path = os.path.join(base_dir, 'default_referrals.csv')
         self.stdout.write(f'Parsing referrals from: {referrals_csv_path}')
         
@@ -76,9 +103,96 @@ class Command(BaseCommand):
                 card['referral_links'] = [{'link': l, 'weight': 1} for l in referrals_map[slug]]
                 self.stdout.write(f'  - Added {len(card["referral_links"])} referral links to {slug}')
             
+            # Create main card document
             db.create_document('credit_cards', card, doc_id=slug)
-            earning_rates_count = len(card.get('earning_rates', []))
-            self.stdout.write(f'Seeded card: {card["name"]} with {len(card["benefits"])} benefits and {earning_rates_count} earning rates')
+            
+            # Seed Subcollections
+            import hashlib
+            import json
+
+            # Helper to generate stable ID
+            def get_stable_id(data_dict):
+                # Sort keys to ensure consistent order
+                s = json.dumps(data_dict, sort_keys=True, default=str)
+                return hashlib.md5(s.encode('utf-8')).hexdigest()
+
+            def delete_subcollection(coll_path):
+                try:
+                    docs = list(db.db.collection(coll_path).stream())
+                    if docs:
+                        # self.stdout.write(f'  - Clearing {len(docs)} docs from {coll_path}')
+                        for doc in docs:
+                            doc.reference.delete()
+                except Exception as e:
+                    pass
+
+            # 1. Benefits
+            b_path = f'credit_cards/{slug}/benefits'
+            delete_subcollection(b_path)
+            benefits = card.get('benefits', [])
+            for i, b in enumerate(benefits):
+                # Use simple index as ID for overrides compatibility
+                b_id = str(i)
+                db.create_document(b_path, b, doc_id=b_id)
+            
+            # 2. Earning Rates
+            r_path = f'credit_cards/{slug}/earning_rates'
+            delete_subcollection(r_path)
+            rates = card.get('earning_rates', [])
+            for i, r in enumerate(rates):
+                # Use simple index as ID
+                r_id = str(i)
+                db.create_document(r_path, r, doc_id=r_id)
+
+            # 3. Sign Up Bonus
+            s_path = f'credit_cards/{slug}/sign_up_bonus'
+            delete_subcollection(s_path)
+            bonus = card.get('sign_up_bonus')
+            if bonus:
+                # Some cards might have empty bonus dict or None
+                if bonus.get('value') or bonus.get('terms'):
+                     # Use effective_date as ID per user request
+                     # Fallback to 'default' if not present
+                     bonus_id = bonus.get('effective_date')
+                     if not bonus_id:
+                         bonus_id = 'default'
+                     db.create_document(s_path, bonus, doc_id=bonus_id)
+            
+            earning_rates_count = len(rates)
+            self.stdout.write(f'Seeded card: {card["name"]} with {len(benefits)} benefits, {earning_rates_count} rates, and bonus.')
+
+        # 2. Personalities Data with Wallet Setup
+        # ... (Personalities seeding code remains same) ...
+
+        # Upsert Categories
+        # ... (Categories seeding code remains same) ...
+                
+        # Upsert Card Questions
+        self.stdout.write(f'Upserting {len(questions_data)} card questions...')
+        
+        # Group questions by slug
+        questions_by_slug = {}
+        # ... (grouping logic remains same) ...
+        # (Re-implementing loop to fit replacement context)
+        for q in questions_data:
+            slug = q.get('slug-id')
+            if slug:
+                if slug not in questions_by_slug:
+                    questions_by_slug[slug] = []
+                questions_by_slug[slug].append(q)
+        
+        seeded_q_count = 0
+        for slug, questions in questions_by_slug.items():
+            q_path = f"credit_cards/{slug}/card_questions"
+            delete_subcollection(q_path)
+            
+            for i, cx in enumerate(questions):
+                # Use simple index as ID
+                doc_id = str(i)
+                db.create_document(q_path, cx, doc_id=doc_id)
+                seeded_q_count += 1
+            
+        self.stdout.write(f'  - Seeded {seeded_q_count} questions into subcollections.')
 
         # 2. Personalities Data with Wallet Setup
         json_path = os.path.join(settings.BASE_DIR, 'default_personalities.json')

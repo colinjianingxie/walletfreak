@@ -117,7 +117,8 @@ def dashboard(request):
 
                 dollar_value = benefit.get('dollar_value')
                 if dollar_value and dollar_value > 0:
-                    benefit_id = f"benefit_{idx}"
+                    # benefit_id = f"benefit_{idx}" # OLD
+                    benefit_id = str(idx) # NEW: Simple index "0", "1", etc.
                     frequency = benefit.get('time_category', 'Annually (calendar year)')
                     
                     # Get usage from user's card data
@@ -338,11 +339,25 @@ def dashboard(request):
     
     # Calculate Chase 5/24 Status
     # Rule: Ineligible if 5 or more personal cards opened in last 24 months
+    # Only count cards that are marked as Is524
+    
+    # Create lookup map for card 5/24 status
+    # default to True if not found to be safe, but per user request we trust the flag
+    # defaulting to True is safer for 5/24 estimation if data is missing, 
+    # but user said "If the card is not Is524, feel free to ignore it".
+    # Since I'm seeding it, it should be there.
+    card_524_map = {c['id']: c.get('is_524', True) for c in all_cards}
+    
     cutoff_date = datetime.now() - timedelta(days=365*2)
     chase_524_count = 0
     
     # Check both active and inactive cards (history matters)
     for card in active_cards + inactive_cards:
+        # Check if card counts towards 5/24
+        card_id = card.get('card_id')
+        if not card_524_map.get(card_id, True):
+            continue
+
         ann_date_str = card.get('anniversary_date')
         if ann_date_str:
             try:

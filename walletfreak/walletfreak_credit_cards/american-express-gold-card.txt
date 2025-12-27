@@ -1,0 +1,58 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+American Express | American Express Gold Card | 325 | 1.0 | american-express-gold-card | /static/images/credit_cards/american-express-gold-card.jpg | 670 | 850 | https://www.americanexpress.com/us/credit-cards/card/gold-card/ | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+American Express | American Express Gold Card | $120 Uber Cash for U.S. rides & Uber Eats | $10 monthly | ["Uber", "Generic Transportation", "Generic Dining"] | Monthly | 120 | False | 2025-11-29 | Uber Cash | Credit | 120.0 | Cash | american-express-gold-card
+American Express | American Express Gold Card | $120 Dining Credit | $10 monthly at Grubhub The Cheesecake Factory Goldbelly Wine.com Five Guys | ["Grubhub", "Generic Dining"] | Monthly | 120 | True | 2025-11-29 | Dining Credit | Credit | 120.0 | Cash | american-express-gold-card
+American Express | American Express Gold Card | $100 Resy Credit | $50 semi-annually | ["Resy", "Generic Dining"] | Semi-annually | 100 | True | 2025-11-29 | Resy Credit | Credit | 100.0 | Cash | american-express-gold-card
+American Express | American Express Gold Card | $84 Dunkin' Credit | $7 monthly | ["Dunkin", "Generic Dining"] | Monthly | 84 | True | 2025-11-29 | Dunkin Credit | Credit | 84.0 | Cash | american-express-gold-card
+American Express | American Express Gold Card | $100 Hotel Collection Credit on qualifying 2-night minimum stays via Amex Travel |  | ["Generic Hotels"] | Per qualifying stay | 100 | False | 2025-11-29 | Hotel Credit | Credit | 100.0 | Cash | american-express-gold-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+American Express | American Express Gold Card | 4 | points | ["Generic Dining"] | restaurants worldwide | american-express-gold-card | False
+American Express | American Express Gold Card | 4 | points | ["Generic Groceries"] | U.S. supermarkets | american-express-gold-card | False
+American Express | American Express Gold Card | 3 | points | ["Generic Airlines"] | flights booked direct | american-express-gold-card | False
+American Express | American Express Gold Card | 3 | points | ["Amex Travel Flights"] | flights via Amex Travel | american-express-gold-card | False
+American Express | American Express Gold Card | 1 | points | ["Generic Financial & Rewards"] | everything else | american-express-gold-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+American Express | American Express Gold Card | 2025-06-26 | Spend $6000 in 6 months | 100000 | Points | american-express-gold-card | 6000 | 6
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+american-express-gold-card | Uber Cash | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you use Uber for transportation or order from local restaurants via Uber Eats monthly? | Rideshare,Food Delivery | [0.0, 0.5, 1.0]
+american-express-gold-card | Dining Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you regularly order takeout from Grubhub or visit dining chains like The Cheesecake Factory? | Dining | [0.0, 0.5, 1.0]
+american-express-gold-card | Resy Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you enjoy discovering and booking tables at popular local restaurants through Resy? | Dining | [0.0, 0.5, 1.0]
+american-express-gold-card | Dunkin Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Is a morning coffee or donut from Dunkin' a staple of your routine? | Dining | [0.0, 0.5, 1.0]
+american-express-gold-card | Hotel Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | How likely are you to book hotel stays through a bank portal to earn extra value on trip perks? | Hotel | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Airlines",
+        "Icon": "fa-solid fa-plane",
+        "CategoryNameDetailed": [
+            "Generic Airlines",
+            "Amex Travel Flights"
+        ]
+    },
+    {
+        "CategoryName": "Dining & Delivery",
+        "Icon": "fa-solid fa-utensils",
+        "CategoryNameDetailed": [
+            "Generic Dining"
+        ]
+    },
+    {
+        "CategoryName": "Groceries",
+        "Icon": "fa-solid fa-cart-shopping",
+        "CategoryNameDetailed": [
+            "Generic Groceries"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

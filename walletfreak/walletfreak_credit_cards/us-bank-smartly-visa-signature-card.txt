@@ -1,0 +1,21 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+U.S. Bank | U.S. Bank Smartly Visa Signature Card | N/A | N/A | us-bank-smartly-visa-signature-card | /static/images/credit_cards/us-bank-smartly-visa-signature-card.png | 670 | 850 | https://applications.usbank.com/oad/termsSimpleApply.controller?locationCode=8069&offerId=36672BDX52&sourceCode=87869 | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+U.S. Bank | U.S. Bank Smartly Visa Signature Card | 4 | cash back | ["Generic Financial & Rewards"] | qualifying accounts (capped at $10,000 per billing cycle) | us-bank-smartly-visa-signature-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+---
+[
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

@@ -1,0 +1,26 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Citi | Citi Double Cash Card | 0 | N/A | citi-double-cash-card | /static/images/credit_cards/citi-double-cash-card.png | 670 | 850 | https://www.citi.com/credit-cards/citi-double-cash-credit-card | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Citi | Double Cash | $0 Liability on unauthorized charges |  | ["Fraud Protection", "Card Protection", "Generic Protection"] | Ongoing | 0 | False | 2025-12-24 | Fraud Protection | Protection | 0 | N/A | citi-double-cash-card
+Citi | Double Cash Card | Citi Entertainment |  | ["Generic Entertainment"] | Ongoing | 0 | False | 2025-12-24 | Presale Access | Perk | 0 | N/A | citi-double-cash-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Citi | Citi Double Cash Card | 2 | cash back | ["Generic Financial & Rewards"] | unlimited (1% on purchase + 1% on payment) | citi-double-cash-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+Citi | Citi Double Cash Card |  | No welcome bonus | 0 | Cash | citi-double-cash-card | 0 | 0
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+citi-double-cash-card | Fraud Protection | multiple_choice | ['No', 'Somewhat', 'Highly'] | Is having protection against unauthorized charges a top priority for you? | Card Protection | [0.0, 0.5, 1.0]
+citi-double-cash-card | Presale Access | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you enjoy early access to concert tickets or preferred seating? | Entertainment | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

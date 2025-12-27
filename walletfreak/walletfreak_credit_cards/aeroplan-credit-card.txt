@@ -1,0 +1,49 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Chase | Aeroplan Credit Card | 95 | 1.3 | aeroplan-credit-card | /static/images/credit_cards/aeroplan-credit-card.png | 670 | 850 | https://creditcards.chase.com/a1/Aeroplan/75kplus25knaep | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Chase | Aeroplan Credit Card | Free first checked bag on Air Canada flights |  | ["Air Canada", "Generic Airlines"] | Permanent |  | False | 2025-11-29 | Free Bag | Perk |  | N/A | aeroplan-credit-card
+Chase | Aeroplan Credit Card | Global Entry/TSA PreCheck credit |  | ["Travel Security", "Global Entry", "TSA PreCheck"] | Every 4 years | 120 | False | 2025-11-29 | TSA Credit | Credit | 120.0 | Cash | aeroplan-credit-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Chase | Aeroplan Credit Card | 7 | points | ["Air Canada"] | total points | aeroplan-credit-card | False
+Chase | Aeroplan Credit Card | 3 | points | ["Generic Dining", "Generic Travel Perks"] | dining & other travel | aeroplan-credit-card | False
+Chase | Aeroplan Credit Card | 1 | points | ["Generic Financial & Rewards"] | everything else | aeroplan-credit-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+Chase | Aeroplan Credit Card | 2025-12-02 | Spend $4000 in 3 months + additional | 75000 | Points | aeroplan-credit-card | 4000 | 3
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+aeroplan-credit-card | Free Bag | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you fly Air Canada and check bags for yourself or your travel companions? | Airline | [0.0, 0.5, 1.0]
+aeroplan-credit-card | TSA Credit | multiple_choice | ['No', 'Yes'] | Do you want a credit to cover the application fee for Global Entry or TSA PreCheck? | Travel Security | [0.0, 1.0]
+---
+[
+    {
+        "CategoryName": "Airlines",
+        "Icon": "fa-solid fa-plane",
+        "CategoryNameDetailed": [
+            "Air Canada"
+        ]
+    },
+    {
+        "CategoryName": "Dining & Delivery",
+        "Icon": "fa-solid fa-utensils",
+        "CategoryNameDetailed": [
+            "Generic Dining"
+        ]
+    },
+    {
+        "CategoryName": "Travel Perks",
+        "Icon": "fa-solid fa-passport",
+        "CategoryNameDetailed": [
+            "Generic Travel Perks"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

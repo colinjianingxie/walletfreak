@@ -1,0 +1,67 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Chase | Chase Freedom Flex | 0 | N/A | chase-freedom-flex | /static/images/credit_cards/chase-freedom-flex.avif | 670 | 850 | https://secure.chase.com/web/oao/application/card?sourceCode=HPKP&action=guest#/origination/cardDetails/index/index;cellCode=61DS;combo=Y | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Chase | Chase Freedom Flex | Complimentary DashPass membership | activate by 12/31/2027 | ["DoorDash", "Generic Dining"] | Minimum 12 months from activation | 120 | False | 2025-11-29 | DashPass | Perk | 120 | Cash | chase-freedom-flex
+Chase | Freedom Flex | $40 annual DoorDash NR credit |  | ["DoorDash", "Generic Dining"] | Quarterly | 40 | True | 2025-12-24 | DoorDash NR Credit | Credit | 40 | Cash | chase-freedom-flex
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Chase | Chase Freedom Flex | 5 | cash back | ["Rotating Categories"] | quarterly rotating categories | chase-freedom-flex | False
+Chase | Chase Freedom Flex | 5 | cash back | ["Chase Travel Flights"] | flights through Chase Travel | chase-freedom-flex | False
+Chase | Chase Freedom Flex | 5 | cash back | ["Chase Travel Hotels"] | hotels through Chase Travel | chase-freedom-flex | False
+Chase | Chase Freedom Flex | 5 | cash back | ["Chase Travel Rental Cars"] | rental cars through Chase Travel | chase-freedom-flex | False
+Chase | Chase Freedom Flex | 3 | cash back | ["Generic Dining", "Drugstores"] | dining & drugstores | chase-freedom-flex | False
+Chase | Chase Freedom Flex | 1 | cash back | ["Generic Financial & Rewards"] | everything else | chase-freedom-flex | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+Chase | Chase Freedom Flex |  | Spend $500 in 3 months | 200 | Cash | chase-freedom-flex | 500 | 3
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+chase-freedom-flex | DashPass | multiple_choice | ['No', 'Yes'] | Do you want to save on delivery fees for your food orders? | Delivery | [0.0, 1.0]
+chase-freedom-flex | DoorDash NR Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you order convenience or grocery items via DoorDash and want $10 off quarterly? | Delivery | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Airlines",
+        "Icon": "fa-solid fa-plane",
+        "CategoryNameDetailed": [
+            "Chase Travel Flights"
+        ]
+    },
+    {
+        "CategoryName": "Hotels",
+        "Icon": "fa-solid fa-hotel",
+        "CategoryNameDetailed": [
+            "Chase Travel Hotels"
+        ]
+    },
+    {
+        "CategoryName": "Dining & Delivery",
+        "Icon": "fa-solid fa-utensils",
+        "CategoryNameDetailed": [
+            "Generic Dining"
+        ]
+    },
+    {
+        "CategoryName": "Transportation",
+        "Icon": "fa-solid fa-car-side",
+        "CategoryNameDetailed": [
+            "Chase Travel Rental Cars"
+        ]
+    },
+    {
+        "CategoryName": "Shopping",
+        "Icon": "fa-solid fa-bag-shopping",
+        "CategoryNameDetailed": [
+            "Drugstores"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards",
+            "Rotating Categories"
+        ]
+    }
+]

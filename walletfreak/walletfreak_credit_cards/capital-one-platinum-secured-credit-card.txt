@@ -1,0 +1,23 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Capital One | Capital One Platinum Secured Credit Card | 0 | N/A | capital-one-platinum-secured-credit-card | /static/images/credit_cards/capital-one-platinum-secured-credit-card.webp | 300 | 579 | https://www.capitalone.com/credit-cards/apply/platinum-secured/ | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Capital One | Capital One Platinum Secured Credit Card | Credit line increase potential after on-time payments |  | ["Credit Building", "Generic Financial & Rewards"] | Permanent |  | False | 2025-11-29 | Credit Building | Perk |  | N/A | capital-one-platinum-secured-credit-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Capital One | Capital One Platinum Secured Credit Card | 0 | N/A | ["Generic Financial & Rewards"] | credit building | capital-one-platinum-secured-credit-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+capital-one-platinum-secured-credit-card | Credit Building | multiple_choice | ['No', 'Somewhat', 'Highly'] | Is building or repairing your credit history your primary goal for a new card? | Credit Building | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

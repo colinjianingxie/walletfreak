@@ -1,0 +1,85 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Chase | Chase Sapphire Reserve | 795 | 1.5 | chase-sapphire-reserve | /static/images/credit_cards/chase-sapphire-reserve.jpg | 740 | 850 | https://secure.chase.com/web/oao/application/card?sourceCode=HWHN&action=guest#/origination/cardDetails/index/index;cellCode=61DS;combo=Y | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Chase | Chase Sapphire Reserve | $300 Annual Travel Credit | applies to broad travel purchases | ["Generic Travel Perks"] | Annually (cardmember year) | 300 | False | 2025-11-29 | Travel Credit | Credit | 300.0 | Cash | chase-sapphire-reserve
+Chase | Chase Sapphire Reserve | $500 The Edit by Chase Travel hotel credit | $250 semi-annually on prepaid 2-night stays | ["Chase Travel Hotels"] | Semi-annually (calendar year) | 500 | False | 2025-11-29 | The Edit Hotel Credit | Credit | 500.0 | Cash | chase-sapphire-reserve
+Chase | Chase Sapphire Reserve | Global Entry / TSA PreCheck / NEXUS fee credit | up to $120 every 4 years | ["Travel Security", "Global Entry", "TSA PreCheck", "NEXUS"] | Every 4 years | 120 | False | 2025-11-29 | Trusted Traveler Credit | Credit | 120.0 | Cash | chase-sapphire-reserve
+Chase | Chase Sapphire Reserve | Priority Pass Select airport lounge membership | includes Chase Sapphire Lounges access | ["Priority Pass", "Lounge Access"] | Ongoing | 0 | False | 2025-11-29 | Priority Pass | Perk | 3 | Lounge | chase-sapphire-reserve
+Chase | Chase Sapphire Reserve | DoorDash credits | monthly promos totaling $300 per year | ["DoorDash", "Generic Dining"] | Monthly | 300 | False | 2025-11-29 | DoorDash Credit | Credit | 300.0 | Cash | chase-sapphire-reserve
+Chase | Chase Sapphire Reserve | StubHub & viagogo credits | entertainment credits totaling $300 per year | ["StubHub", "viagogo", "Generic Entertainment"] | Monthly | 300 | False | 2025-11-29 | Entertainment Credit | Credit | 300.0 | Cash | chase-sapphire-reserve
+Chase | Chase Sapphire Reserve | Lyft credits | credits totaling $120 per year plus bonus points | ["Lyft", "Generic Transportation"] | Monthly | 120 | False | 2025-11-29 | Lyft Credit | Credit | 120.0 | Cash | chase-sapphire-reserve
+Chase | Chase Sapphire Reserve | Peloton credits | credits totaling $120 per year plus bonus points | ["Peloton", "Generic Health & Wellness"] | Monthly | 120 | False | 2025-11-29 | Peloton Credit | Credit | 120.0 | Cash | chase-sapphire-reserve
+Chase | Chase Sapphire Reserve | Complimentary IHG One Rewards Platinum Elite status |  | ["IHG", "Generic Hotels", "Status"] | Ongoing |  | False | 2025-11-29 | IHG Platinum Status | Status | 1 | Upgrade | chase-sapphire-reserve
+Chase | Chase Sapphire Reserve | Sapphire Reserve Exclusive Tables dining benefits | exclusive dining access and credits | ["Generic Dining"] | Ongoing |  | False | 2025-11-29 | Exclusive Tables | Perk | 1 | Perk | chase-sapphire-reserve
+Chase | Chase Sapphire Reserve | Complimentary Apple TV+ and Music |  | ["Apple TV+", "Apple Music", "Generic Entertainment"] | Annually | 250 | True | 2025-12-24 | Apple TV+ & Music | Perk | 250 | Cash | chase-sapphire-reserve
+Chase | Chase Sapphire Reserve | $300 StubHub and viagogo credit |  | ["StubHub", "viagogo", "Generic Entertainment"] | Semi-annually | 300 | False | 2025-12-24 | StubHub Credit | Credit | 300 | Cash | chase-sapphire-reserve
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Chase | Chase Sapphire Reserve | 8 | points | ["Chase Travel Hotels"] | hotels through Chase Travel | chase-sapphire-reserve | False
+Chase | Chase Sapphire Reserve | 8 | points | ["Chase Travel Rental Cars"] | rental cars through Chase Travel | chase-sapphire-reserve | False
+Chase | Chase Sapphire Reserve | 8 | points | ["Chase Travel Flights"] | flights through Chase Travel | chase-sapphire-reserve | False
+Chase | Chase Sapphire Reserve | 4 | points | ["Generic Airlines"] | flights booked directly with airlines | chase-sapphire-reserve | False
+Chase | Chase Sapphire Reserve | 4 | points | ["Generic Hotels"] | hotels booked directly | chase-sapphire-reserve | False
+Chase | Chase Sapphire Reserve | 3 | points | ["Generic Dining"] | dining worldwide (incl. takeout/delivery) | chase-sapphire-reserve | False
+Chase | Chase Sapphire Reserve | 1 | points | ["Generic Transportation"] | all other travel (e.g., cruises, transit, direct car rentals) | chase-sapphire-reserve | False
+Chase | Chase Sapphire Reserve | 1 | points | ["Generic Financial & Rewards"] | everything else | chase-sapphire-reserve | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+Chase | Chase Sapphire Reserve | 2025-08-21 | Spend $6000 in 3 months | 125000 | Points | chase-sapphire-reserve | 6000 | 3
+Chase | Chase Sapphire Reserve | 2025-08-21 | Spend $6000 in 3 months | 125000 | Points | chase-sapphire-reserve | 6000 | 3
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+chase-sapphire-reserve | Travel Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you spend at least $300 annually on travel, including flights, tolls, and parking? | Travel | [0.0, 0.5, 1.0]
+chase-sapphire-reserve | The Edit Hotel Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you enjoy staying at curated luxury hotels and receiving on-property experience credits? | Hotel | [0.0, 0.5, 1.0]
+chase-sapphire-reserve | Trusted Traveler Credit | multiple_choice | ['No', 'Yes'] | Do you value having a credit for Global Entry, TSA PreCheck, or NEXUS for smoother travel? | Travel | [0.0, 1.0]
+chase-sapphire-reserve | Priority Pass | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you value having unlimited access to airport lounges for food and quiet workspace? | Lounge | [0.0, 0.5, 1.0]
+chase-sapphire-reserve | DoorDash Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you regularly use food delivery and value up to $300 in annual credits? | Delivery | [0.0, 0.5, 1.0]
+chase-sapphire-reserve | Entertainment Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | How often do you buy tickets for live concerts, professional sports, or theater events via StubHub? | Entertainment | [0.0, 0.5, 1.0]
+chase-sapphire-reserve | Lyft Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you use Lyft for commuting or travel and want to earn bonus points and statement credits? | Rideshare | [0.0, 0.5, 1.0]
+chase-sapphire-reserve | Peloton Credit | multiple_choice | ['No', 'Yes'] | Is a premium fitness subscription like Peloton a priority for your health routine? | Fitness | [0.0, 1.0]
+chase-sapphire-reserve | IHG Platinum Status | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you stay at IHG hotels and value perks like room upgrades and late checkout? | Hotel Status | [0.0, 0.5, 1.0]
+chase-sapphire-reserve | Exclusive Tables | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you enjoy having special access to sought-after restaurant reservations? | Dining | [0.0, 0.5, 1.0]
+chase-sapphire-reserve | Apple TV+ & Music | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you currently pay for Apple TV+ or Apple Music and want them for free? | Streaming | [0.0, 0.5, 1.0]
+chase-sapphire-reserve | StubHub Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you buy tickets for live events and want up to $300 in annual credits? | Entertainment | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Airlines",
+        "Icon": "fa-solid fa-plane",
+        "CategoryNameDetailed": [
+            "Generic Airlines",
+            "Chase Travel Flights"
+        ]
+    },
+    {
+        "CategoryName": "Hotels",
+        "Icon": "fa-solid fa-hotel",
+        "CategoryNameDetailed": [
+            "Generic Hotels",
+            "Chase Travel Hotels"
+        ]
+    },
+    {
+        "CategoryName": "Dining & Delivery",
+        "Icon": "fa-solid fa-utensils",
+        "CategoryNameDetailed": [
+            "Generic Dining"
+        ]
+    },
+    {
+        "CategoryName": "Transportation",
+        "Icon": "fa-solid fa-car-side",
+        "CategoryNameDetailed": [
+            "Generic Transportation",
+            "Chase Travel Rental Cars"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

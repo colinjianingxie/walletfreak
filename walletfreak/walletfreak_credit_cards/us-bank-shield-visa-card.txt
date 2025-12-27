@@ -1,0 +1,23 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+U.S. Bank | U.S. Bank Shield™ Visa Card | 0 | N/A | us-bank-shield-visa-card | /static/images/credit_cards/us-bank-shield-visa-card.png | 670 | 850 | https://applications.usbank.com/oad/termsSimpleApply.controller?locationCode=8069&offerId=7HDBW6317B&sourceCode=86798 | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+U.S. Bank | U.S. Bank Shield™ Visa Card | Cell phone protection up to $600 per claim |  | ["Cell Phone Protection", "Generic Protection"] | Permanent (per claim) | 600 | False | 2025-11-29 | Phone Protection | Protection | 600 | N/A | us-bank-shield-visa-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+U.S. Bank | U.S. Bank Shield™ Visa Card | 0 | N/A | ["Generic Financial & Rewards"] | protection-focused | us-bank-shield-visa-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+us-bank-shield-visa-card | Phone Protection | multiple_choice | ['No', 'Yes'] | Do you want up to $600 in phone protection with just a $25 deductible? | Cell Phone Protection | [0.0, 1.0]
+---
+[
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

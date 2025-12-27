@@ -1,0 +1,49 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+American Express | Blue Cash Preferred Card from American Express | 95 | N/A | blue-cash-preferred-card-from-american-express | /static/images/credit_cards/blue-cash-preferred-card-from-american-express.png | 670 | 850 | https://www.americanexpress.com/us/credit-cards/card/blue-cash-preferred/ | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+American Express | Blue Cash Preferred Card from American Express | $120 Disney Bundle Credit | $10 monthly for enrolled bundle subscription | ["Disney", "Generic Entertainment"] | Monthly | 120 | False | 2025-11-29 | Disney Credit | Credit | 120.0 | Cash | blue-cash-preferred-card-from-american-express
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+American Express | Blue Cash Preferred Card from American Express | 6 | cash back | ["Generic Groceries"] | U.S. supermarkets (up to $6,000/year, then 1%) | blue-cash-preferred-card-from-american-express | False
+American Express | Blue Cash Preferred Card from American Express | 6 | cash back | ["Streaming"] | select U.S. streaming subscriptions | blue-cash-preferred-card-from-american-express | False
+American Express | Blue Cash Preferred Card from American Express | 3 | cash back | ["Gas", "Transit"] | U.S. gas stations & transit | blue-cash-preferred-card-from-american-express | False
+American Express | Blue Cash Preferred Card from American Express | 1 | cash back | ["Generic Financial & Rewards"] | everything else | blue-cash-preferred-card-from-american-express | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+American Express | Blue Cash Preferred Card from American Express |  | Spend $3000 in 6 months | 250 | Cash | blue-cash-preferred-card-from-american-express | 3000 | 6
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+blue-cash-preferred-card-from-american-express | Disney Credit | multiple_choice | ['No', 'Yes'] | Do you currently pay for Disney+, Hulu, or ESPN+ and want $10 back every month? | Streaming | [0.0, 1.0]
+---
+[
+    {
+        "CategoryName": "Groceries",
+        "Icon": "fa-solid fa-cart-shopping",
+        "CategoryNameDetailed": [
+            "Generic Groceries"
+        ]
+    },
+    {
+        "CategoryName": "Transportation",
+        "Icon": "fa-solid fa-car-side",
+        "CategoryNameDetailed": [
+            "Gas",
+            "Transit"
+        ]
+    },
+    {
+        "CategoryName": "Entertainment",
+        "Icon": "fa-solid fa-ticket",
+        "CategoryNameDetailed": [
+            "Streaming"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

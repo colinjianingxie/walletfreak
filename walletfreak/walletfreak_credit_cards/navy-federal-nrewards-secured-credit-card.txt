@@ -1,0 +1,25 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Navy Federal | Navy Federal nRewards Secured Credit Card | 0 | 1.0 | navy-federal-nrewards-secured-credit-card | /static/images/credit_cards/navy-federal-nrewards-secured-credit-card.jpg | 300 | 579 | https://links.navyfederal.org/cc?productId=NFCC02 | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Navy Federal | nRewards Secured | No foreign transaction fees |  | ["Generic Travel Perks", "Fee Waiver"] | Ongoing | 50 | False | 2025-12-08 | No FTF | Perk |  | N/A | navy-federal-nrewards-secured-credit-card
+Navy Federal | nRewards Secured | No cash advance fees |  | ["Generic Financial & Rewards"] | Ongoing | 50 | False | 2025-12-08 | No Advance Fees | Perk |  | N/A | navy-federal-nrewards-secured-credit-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Navy Federal | Navy Federal nRewards Secured Credit Card | 1 | points | ["Generic Financial & Rewards"] | everything | navy-federal-nrewards-secured-credit-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+navy-federal-nrewards-secured-credit-card | No Foreign Transaction Fees | multiple_choice | ['No', 'Yes'] | Do you travel abroad and want to avoid the typical 3% fee on every purchase? | Travel | [0.0, 1.0]
+navy-federal-nrewards-secured-credit-card | No Cash Advance Fees | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you value the ability to get a cash advance without paying a high fee? | Financial | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

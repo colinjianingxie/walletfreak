@@ -1,0 +1,71 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Citi | Citi Strata Premier Card | 95 | 1.0 | citi-strata-premier-card | /static/images/credit_cards/citi-strata-premier-card.webp | 670 | 850 | https://www.citi.com/credit-cards/citi-strata-premier-credit-card | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Citi | Citi Strata Premier Card | $100 annual hotel savings benefit on $500+ single stay through CitiTravel.com |  | ["Generic Hotels"] | Annually (calendar year) | 100 | False | 2025-11-29 | Hotel Savings | Credit | 100.0 | Cash | citi-strata-premier-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Citi | Citi Strata Premier Card | 10 | points | ["Citi Travel Hotels"] | hotels through Citi Travel | citi-strata-premier-card | False
+Citi | Citi Strata Premier Card | 10 | points | ["Citi Travel Rental Cars"] | rental cars through Citi Travel | citi-strata-premier-card | False
+Citi | Citi Strata Premier Card | 10 | points | ["Citi Travel Attractions"] | attractions through Citi Travel | citi-strata-premier-card | False
+Citi | Citi Strata Premier Card | 3 | points | ["Generic Airlines", "Gas", "Generic Dining", "Generic Groceries"] | Air, Gas, Dining, Groceries | citi-strata-premier-card | False
+Citi | Citi Strata Premier Card | 1 | points | ["Generic Financial & Rewards"] | everything else | citi-strata-premier-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+Citi | Citi Strata Premier Card |  | Spend $6000 in 3 months | 100000 | Points | citi-strata-premier-card | 6000 | 3
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+citi-strata-premier-card | Hotel Savings | multiple_choice | ['No', 'Once a year', 'Twice+'] | Do you book single hotel stays over $500 that could benefit from a $100 annual discount? | Hotel | [0.0, 0.7, 1.0]
+---
+[
+    {
+        "CategoryName": "Airlines",
+        "Icon": "fa-solid fa-plane",
+        "CategoryNameDetailed": [
+            "Generic Airlines"
+        ]
+    },
+    {
+        "CategoryName": "Hotels",
+        "Icon": "fa-solid fa-hotel",
+        "CategoryNameDetailed": [
+            "Citi Travel Hotels"
+        ]
+    },
+    {
+        "CategoryName": "Dining & Delivery",
+        "Icon": "fa-solid fa-utensils",
+        "CategoryNameDetailed": [
+            "Generic Dining"
+        ]
+    },
+    {
+        "CategoryName": "Groceries",
+        "Icon": "fa-solid fa-cart-shopping",
+        "CategoryNameDetailed": [
+            "Generic Groceries"
+        ]
+    },
+    {
+        "CategoryName": "Transportation",
+        "Icon": "fa-solid fa-car-side",
+        "CategoryNameDetailed": [
+            "Citi Travel Rental Cars",
+            "Gas"
+        ]
+    },
+    {
+        "CategoryName": "Travel Perks",
+        "Icon": "fa-solid fa-passport",
+        "CategoryNameDetailed": [
+            "Citi Travel Attractions"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

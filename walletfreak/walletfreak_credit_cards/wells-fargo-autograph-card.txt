@@ -1,0 +1,63 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Wells Fargo | Wells Fargo Autograph Card | 0 | 1.0 | wells-fargo-autograph-card | /static/images/credit_cards/wells-fargo-autograph-card.png | 670 | 850 | https://creditcards.wellsfargo.com/autograph-visa-credit-card/ | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Wells Fargo | Wells Fargo Autograph℠ Card | No foreign transaction fees |  | ["Generic Travel Perks", "Fee Waiver"] | Ongoing | 50 | False | 2025-12-08 | No FTF | Perk |  | N/A | wells-fargo-autograph-card
+Wells Fargo | Wells Fargo Autograph℠ Card | Cell phone protection up to $600 |  | ["Cell Phone Protection", "Generic Protection"] | Ongoing | 100 | False | 2025-12-08 | Cell Phone Protection | Protection | 600 | N/A | wells-fargo-autograph-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Wells Fargo | Wells Fargo Autograph Card | 3 | points | ["Generic Dining", "Generic Travel Perks", "Generic Transportation", "EV Charging", "Streaming", "Phone Plans"] | unlimited categories | wells-fargo-autograph-card | False
+Wells Fargo | Wells Fargo Autograph Card | 1 | points | ["Generic Financial & Rewards"] | everything else | wells-fargo-autograph-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+Wells Fargo | Wells Fargo Autograph Card |  | Spend $1000 in 3 months | 20000 | Points | wells-fargo-autograph-card | 1000 | 3
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+wells-fargo-autograph-card | No Foreign Transaction Fees | multiple_choice | ['No', 'Yes'] | Do you travel abroad and want to avoid the typical 3% fee on every purchase? | Travel | [0.0, 1.0]
+wells-fargo-autograph-card | Cell Phone Protection | multiple_choice | ['No', 'Somewhat', 'Highly'] | Do you value having up to $600 in phone protection just by paying your bill? | Protection | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Dining & Delivery",
+        "Icon": "fa-solid fa-utensils",
+        "CategoryNameDetailed": [
+            "Generic Dining"
+        ]
+    },
+    {
+        "CategoryName": "Transportation",
+        "Icon": "fa-solid fa-car-side",
+        "CategoryNameDetailed": [
+            "Generic Transportation",
+            "EV Charging"
+        ]
+    },
+    {
+        "CategoryName": "Entertainment",
+        "Icon": "fa-solid fa-ticket",
+        "CategoryNameDetailed": [
+            "Streaming"
+        ]
+    },
+    {
+        "CategoryName": "Business & Tech",
+        "Icon": "fa-solid fa-laptop-code",
+        "CategoryNameDetailed": [
+            "Phone Plans"
+        ]
+    },
+    {
+        "CategoryName": "Travel Perks",
+        "Icon": "fa-solid fa-passport",
+        "CategoryNameDetailed": [
+            "Generic Travel Perks"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

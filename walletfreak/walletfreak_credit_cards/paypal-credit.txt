@@ -1,0 +1,25 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Synchrony | PayPal Credit | 0 | N/A | paypal-credit | /static/images/credit_cards/paypal-credit.png | 670 | 850 | https://www.paypal.com/us/digital-wallet/ways-to-pay/credit-services | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+PayPal Credit | PayPal Credit | Promotional financing offers on PayPal purchases |  | ["PayPal", "Generic Shopping", "Generic Shopping"] | Permanent |  | False | 2025-11-29 | Promotional Financing | Perk |  | N/A | paypal-credit
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Synchrony | PayPal Credit | 0 | N/A | ["No Rewards"] | no rewards | paypal-credit | False
+Synchrony | PayPal Credit | 0 | N/A | ["Generic Financial & Rewards"] | non-qualifying spend | paypal-credit | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+paypal-credit | Promotional Financing | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you often use PayPal and value interest-free financing on larger purchases? | Online Shopping | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards",
+            "No Rewards"
+        ]
+    }
+]

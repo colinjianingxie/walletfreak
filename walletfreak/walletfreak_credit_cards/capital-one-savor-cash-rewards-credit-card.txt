@@ -1,0 +1,64 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Capital One | Capital One Savor Cash Rewards Credit Card | N/A | N/A | capital-one-savor-cash-rewards-credit-card | /static/images/credit_cards/capital-one-savor-cash-rewards-credit-card.jpeg | 670 | 850 | https://www.capitalone.com/credit-cards/apply/savor-rewards/ | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Capital One | Capital One Savor Cash Rewards Credit Card | 8 | cash back | ["Capital One Entertainment"] | bookings | capital-one-savor-cash-rewards-credit-card | False
+Capital One | Capital One Savor Cash Rewards Credit Card | 5 | cash back | ["Capital One Travel Hotels"] | hotels booked through Capital One Travel | capital-one-savor-cash-rewards-credit-card | False
+Capital One | Capital One Savor Cash Rewards Credit Card | 5 | cash back | ["Capital One Travel Rental Cars"] | rental cars booked through Capital One Travel | capital-one-savor-cash-rewards-credit-card | False
+Capital One | Capital One Savor Cash Rewards Credit Card | 4 | cash back | ["Generic Dining", "Generic Entertainment", "Streaming"] | dining, entertainment, streaming | capital-one-savor-cash-rewards-credit-card | False
+Capital One | Capital One Savor Cash Rewards Credit Card | 3 | cash back | ["Generic Groceries"] | grocery stores (excl superstores) | capital-one-savor-cash-rewards-credit-card | False
+Capital One | Capital One Savor Cash Rewards Credit Card | 1 | cash back | ["Generic Financial & Rewards"] | everything else | capital-one-savor-cash-rewards-credit-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+Capital One | Capital One Savor Cash Rewards Credit Card |  | Spend $500 in 3 months | 200 | Cash | capital-one-savor-cash-rewards-credit-card | 500 | 3
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+---
+[
+    {
+        "CategoryName": "Hotels",
+        "Icon": "fa-solid fa-hotel",
+        "CategoryNameDetailed": [
+            "Capital One Travel Hotels"
+        ]
+    },
+    {
+        "CategoryName": "Dining & Delivery",
+        "Icon": "fa-solid fa-utensils",
+        "CategoryNameDetailed": [
+            "Generic Dining"
+        ]
+    },
+    {
+        "CategoryName": "Groceries",
+        "Icon": "fa-solid fa-cart-shopping",
+        "CategoryNameDetailed": [
+            "Generic Groceries"
+        ]
+    },
+    {
+        "CategoryName": "Transportation",
+        "Icon": "fa-solid fa-car-side",
+        "CategoryNameDetailed": [
+            "Capital One Travel Rental Cars"
+        ]
+    },
+    {
+        "CategoryName": "Entertainment",
+        "Icon": "fa-solid fa-ticket",
+        "CategoryNameDetailed": [
+            "Generic Entertainment",
+            "Capital One Entertainment",
+            "Streaming"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

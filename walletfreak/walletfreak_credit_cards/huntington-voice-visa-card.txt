@@ -1,0 +1,27 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Huntington | Huntington Voice Visa Card | 0 | 1.0 | huntington-voice-visa-card | /static/images/credit_cards/huntington-voice-visa-card.png | 670 | 850 | https://www.huntington.com/apply/cc-rewards | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Huntington | Huntington Voice Rewards | No penalty APR |  | ["Generic Financial & Rewards", "Generic Protection"] | Ongoing | 40 | False | 2025-12-08 | No Penalty APR | Perk |  | N/A | huntington-voice-visa-card
+Huntington | Huntington Voice Rewards | Roadside Dispatch |  | ["Roadside Assistance", "Generic Protection"] | Ongoing | 25 | False | 2025-12-08 | Roadside Dispatch | Perk |  | N/A | huntington-voice-visa-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Huntington | Huntington Voice Visa Card | 3 | points | ["Choice Category"] | quarterly choice | huntington-voice-visa-card | False
+Huntington | Huntington Voice Visa Card | 1 | points | ["Generic Financial & Rewards"] | everything else | huntington-voice-visa-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+huntington-voice-visa-card | No Penalty APR | multiple_choice | ['No', 'Yes'] | Is having a card that doesn't increase your rate for a late payment important to you? | Financial Protection | [0.0, 1.0]
+huntington-voice-visa-card | Roadside Dispatch | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you value having 24/7 access to emergency roadside services? | Roadside Assistance | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards",
+            "Choice Category"
+        ]
+    }
+]

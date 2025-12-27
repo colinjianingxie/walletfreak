@@ -1,0 +1,32 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Synchrony | Best Buy Credit Card | 0 | 1.0 | best-buy-credit-card | /static/images/credit_cards/best-buy-credit-card.png | 670 | 850 | https://www.citi.com/credit-cards/citi-best-buy-credit-cards | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Synchrony | Best Buy Credit Card | Special Financing Offers |  | ["Best Buy", "Generic Shopping", "Generic Financial & Rewards"] | Ongoing | 0 | False | 2025-12-24 | Special Financing | Perk | 0 | N/A | best-buy-credit-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Synchrony | Best Buy Credit Card | 5 | points | ["Best Buy"] |  | best-buy-credit-card | False
+Synchrony | Best Buy Credit Card | 0 | N/A | ["Generic Financial & Rewards"] | non-qualifying spend | best-buy-credit-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+Synchrony | Best Buy Credit Card |  | No welcome bonus | 0 | Cash | best-buy-credit-card | 0 | 0
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+best-buy-credit-card | Special Financing | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you value interest-free financing on large electronics or appliance purchases? | Financial Protection | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Shopping",
+        "Icon": "fa-solid fa-bag-shopping",
+        "CategoryNameDetailed": [
+            "Best Buy"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

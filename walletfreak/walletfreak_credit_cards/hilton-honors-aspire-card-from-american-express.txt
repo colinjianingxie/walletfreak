@@ -1,0 +1,68 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+American Express | Hilton Honors Aspire Card from American Express | 550 | 0.5 | hilton-honors-aspire-card-from-american-express | /static/images/credit_cards/hilton-honors-aspire-card-from-american-express.jpeg | 670 | 850 | https://www.americanexpress.com/us/credit-cards/card/hilton-honors-aspire/ | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+American Express | Hilton Honors Aspire Card from American Express | Diamond status | Top-tier Hilton status | ["Hilton", "Generic Hotels", "Status"] | Permanent |  | False | 2025-12-25 | Diamond Status | Status |  | N/A | hilton-honors-aspire-card-from-american-express
+American Express | Hilton Honors Aspire Card from American Express | $400 Hilton resort credit | Up to $200 semi-annually | ["Hilton", "Generic Hotels"] | Semi-annually | 400 | False | 2025-12-25 | Resort Credit | Credit | 400.0 | Cash | hilton-honors-aspire-card-from-american-express
+American Express | Hilton Honors Aspire Card from American Express | $200 Flight Credit | Up to $50 quarterly | ["Generic Airlines"] | Quarterly | 200 | False | 2025-12-25 | Flight Credit | Credit | 200.0 | Cash | hilton-honors-aspire-card-from-american-express
+American Express | Hilton Honors Aspire Card from American Express | Annual Free Night Reward | Standard night at any Hilton | ["Hilton", "Generic Hotels"] | Annually (anniversary year) |  | False | 2025-12-25 | Free Night | Perk | 1 | FreeNight | hilton-honors-aspire-card-from-american-express
+American Express | Hilton Honors Aspire Card from American Express | $199 CLEAR Plus Credit |  | ["CLEAR", "Travel Security"] | Annually (calendar year) | 199 | True | 2025-12-25 | CLEAR Plus Credit | Credit | 199.0 | Cash | hilton-honors-aspire-card-from-american-express
+American Express | Hilton Honors Aspire Card from American Express | National Car Rental Emerald Club Executive status |  | ["National", "Rental Cars", "Status"] | Permanent |  | True | 2025-12-25 | National Executive Status | Status |  | N/A | hilton-honors-aspire-card-from-american-express
+American Express | Hilton Honors Aspire Card from American Express | $100 Property Credit | Waldorf Astoria/Conrad 2-night min | ["Waldorf Astoria", "Conrad", "Generic Hotels"] | Per Stay | 100 | False | 2025-12-25 | Property Credit | Credit | 100.0 | Cash | hilton-honors-aspire-card-from-american-express
+American Express | Hilton Honors Aspire Card from American Express | Cell Phone Protection | Up to $800 per claim | ["Cell Phone Protection", "Generic Protection"] | Permanent | 800 | False | 2025-12-25 | Cell Phone Protection | Protection | 800.0 | Cash | hilton-honors-aspire-card-from-american-express
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+American Express | Hilton Honors Aspire Card from American Express | 14 | points | ["Hilton"] | total points | hilton-honors-aspire-card-from-american-express | False
+American Express | Hilton Honors Aspire Card from American Express | 7 | points | ["Generic Dining", "Generic Airlines", "Rental Cars"] | restaurants, flights direct, rental cars | hilton-honors-aspire-card-from-american-express | False
+American Express | Hilton Honors Aspire Card from American Express | 3 | points | ["Generic Financial & Rewards"] | everything else | hilton-honors-aspire-card-from-american-express | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+American Express | Hilton Honors Aspire Card from American Express | 2026-01-14 | Spend $6000 in 6 months | 175000 | Points | hilton-honors-aspire-card-from-american-express | 6000 | 6
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+hilton-honors-aspire-card-from-american-express | Diamond Status | multiple_choice | ['Rarely', 'Occasionally', 'Always'] | How often do you stay at Hilton properties and value perks like executive lounge access and suite upgrades? | Hotel Status | [0.0, 0.5, 1.0]
+hilton-honors-aspire-card-from-american-express | Resort Credit | multiple_choice | ['No', 'Once a year', 'Twice+ a year'] | Do you typically visit Hilton Resorts where you can use up to $400 in annual credits ($200 semi-annually) for dining, spa, or activities? | Hotel | [0.0, 0.5, 1.0]
+hilton-honors-aspire-card-from-american-express | Flight Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you fly enough to utilize up to $200 in credits ($50 quarterly) for flight purchases? | Airline | [0.0, 0.5, 1.0]
+hilton-honors-aspire-card-from-american-express | Free Night | multiple_choice | ['No', 'Yes'] | Would you use a "Free Night Reward" at a high-end Hilton property that would otherwise cost hundreds of dollars? | Hotel | [0.0, 1.0]
+hilton-honors-aspire-card-from-american-express | CLEAR Plus Credit | multiple_choice | ['No', 'Yes'] | Do you want up to $209 back annually for CLEAR Plus membership to expedite airport security? | Travel Security | [0.0, 1.0]
+hilton-honors-aspire-card-from-american-express | National Executive Status | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you rent cars from National and value executive status for faster service and upgrades? | Car Rental | [0.0, 0.5, 1.0]
+hilton-honors-aspire-card-from-american-express | Property Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you stay at Waldorf Astoria or Conrad hotels and want a $100 credit for a 2-night stay? | Hotel | [0.0, 0.5, 1.0]
+hilton-honors-aspire-card-from-american-express | Cell Phone Protection | multiple_choice | ['No', 'Somewhat', 'Highly'] | Do you value up to $800 per claim in cell phone protection with a $50 deductible? | Insurance | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Airlines",
+        "Icon": "fa-solid fa-plane",
+        "CategoryNameDetailed": [
+            "Generic Airlines"
+        ]
+    },
+    {
+        "CategoryName": "Hotels",
+        "Icon": "fa-solid fa-hotel",
+        "CategoryNameDetailed": [
+            "Hilton"
+        ]
+    },
+    {
+        "CategoryName": "Dining & Delivery",
+        "Icon": "fa-solid fa-utensils",
+        "CategoryNameDetailed": [
+            "Generic Dining"
+        ]
+    },
+    {
+        "CategoryName": "Transportation",
+        "Icon": "fa-solid fa-car-side",
+        "CategoryNameDetailed": [
+            "Rental Cars"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

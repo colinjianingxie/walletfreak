@@ -1,0 +1,37 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Capital One | Capital One Quicksilver Student Cash Rewards Credit Card | N/A | N/A | capital-one-quicksilver-student-cash-rewards-credit-card | /static/images/credit_cards/capital-one-quicksilver-student-cash-rewards-credit-card.jpeg | 580 | 669 | https://www.capitalone.com/credit-cards/apply/quicksilver-rewards-for-students/ | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Capital One | Capital One Quicksilver Student Cash Rewards Credit Card | 5 | cash back | ["Capital One Travel Hotels"] | hotels through Capital One Travel | capital-one-quicksilver-student-cash-rewards-credit-card | False
+Capital One | Capital One Quicksilver Student Cash Rewards Credit Card | 5 | cash back | ["Capital One Travel Rental Cars"] | rental cars through Capital One Travel | capital-one-quicksilver-student-cash-rewards-credit-card | False
+Capital One | Capital One Quicksilver Student Cash Rewards Credit Card | 1.5 | cash back | ["Generic Financial & Rewards"] | unlimited everything else | capital-one-quicksilver-student-cash-rewards-credit-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+---
+[
+    {
+        "CategoryName": "Hotels",
+        "Icon": "fa-solid fa-hotel",
+        "CategoryNameDetailed": [
+            "Capital One Travel Hotels"
+        ]
+    },
+    {
+        "CategoryName": "Transportation",
+        "Icon": "fa-solid fa-car-side",
+        "CategoryNameDetailed": [
+            "Capital One Travel Rental Cars"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

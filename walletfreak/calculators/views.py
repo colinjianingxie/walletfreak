@@ -333,28 +333,7 @@ def optimizer_input(request):
         return redirect('calculators_index')
     return render(request, 'calculators/optimizer_input.html')
 
-def load_signup_bonuses():
-    """
-    Reads the default_signup.csv file and returns a dict of bonuses keyed by slug-id.
-    """
-    csv_path = os.path.join(settings.BASE_DIR, 'default_signup.csv')
-    bonuses = {}
-    
-    if not os.path.exists(csv_path):
-        print(f"Error: CSV not found at {csv_path}")
-        return bonuses
 
-    try:
-        with open(csv_path, 'r', encoding='utf-8') as f:
-            reader = csv.DictReader(f, delimiter='|')
-            for row in reader:
-                slug = row.get('slug-id')
-                if slug:
-                    bonuses[slug] = row
-    except Exception as e:
-        print(f"Error reading signup CSV: {e}")
-        
-    return bonuses
 
 def optimizer_calculate(request):
     """

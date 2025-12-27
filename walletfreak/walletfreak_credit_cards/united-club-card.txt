@@ -1,0 +1,49 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Chase | United Club Card | 525 | 1.2 | united-club-card | /static/images/credit_cards/united-club-card.AVIF | 670 | 850 | https://creditcards.chase.com/rewards-credit-cards/united/club | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Chase | United Club Card | United Club membership | unlimited access + 2 guests | ["United", "Lounge Access"] | Permanent |  | False | 2025-11-29 | Club Membership | Access | 3 | Lounge | united-club-card
+Chase | United Club Card | Free first & second checked bag on United flights |  | ["United", "Generic Airlines"] | Permanent |  | False | 2025-11-29 | Free Bags | Perk |  | N/A | united-club-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Chase | United Club Card | 4 | miles | ["United"] |  | united-club-card | False
+Chase | United Club Card | 2 | miles | ["Generic Dining", "Generic Travel Perks"] | other travel | united-club-card | False
+Chase | United Club Card | 1 | miles | ["Generic Financial & Rewards"] | everything else | united-club-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+Chase | United Club Card |  | Spend $5000 in 3 months | 90000 | Miles | united-club-card | 5000 | 3
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+united-club-card | Club Membership | multiple_choice | ['Never', 'Occasionally', 'Often'] | Do you fly United enough to justify unlimited access to United Club lounges? | Lounge Access | [0.0, 0.5, 1.0]
+united-club-card | Free Bags | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you want to avoid baggage fees for both your first and second checked bags? | Airline | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Airlines",
+        "Icon": "fa-solid fa-plane",
+        "CategoryNameDetailed": [
+            "United"
+        ]
+    },
+    {
+        "CategoryName": "Dining & Delivery",
+        "Icon": "fa-solid fa-utensils",
+        "CategoryNameDetailed": [
+            "Generic Dining"
+        ]
+    },
+    {
+        "CategoryName": "Travel Perks",
+        "Icon": "fa-solid fa-passport",
+        "CategoryNameDetailed": [
+            "Generic Travel Perks"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

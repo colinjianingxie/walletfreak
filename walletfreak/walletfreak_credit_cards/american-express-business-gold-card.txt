@@ -1,0 +1,67 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+American Express | American Express Business Gold Card | 375 | 1.0 | american-express-business-gold-card | /static/images/credit_cards/american-express-business-gold-card.png | 670 | 850 | https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-gold-card-amex/ | False
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+American Express | American Express Business Gold Card | $240 Flexible Business Credit | $20 monthly | ["FedEx", "Grubhub", "Generic Business & Tech", "Generic Dining"] | Monthly | 240 | True | 2025-12-07 | Flexible Business Credit | Credit | 240.0 | Cash | american-express-business-gold-card
+American Express | American Express Business Gold Card | $155 Walmart+ monthly membership credit |  | ["Walmart", "Generic Shopping"] | Monthly | 155 | True | 2025-12-07 | Walmart+ Credit | Credit | 155.0 | Cash | american-express-business-gold-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+American Express | American Express Business Gold Card | 4 | points | ["Transit", "Generic Dining", "Advertising", "Software", "Generic Airlines"] | top categories automatically | american-express-business-gold-card | False
+American Express | American Express Business Gold Card | 3 | points | ["Amex Travel Flights", "Amex Travel Hotels", "Amex Travel Rental Cars", "Generic Hotels"] | AmexTravel.com bookings | american-express-business-gold-card | False
+American Express | American Express Business Gold Card | 1 | points | ["Generic Financial & Rewards"] | everything else | american-express-business-gold-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+American Express | American Express Business Gold Card | 2025-12-07 | Spend $15,000 in 3 months | 100000 | Points | american-express-business-gold-card | 15000 | 3
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+american-express-business-gold-card | Flexible Business Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you regularly spend $20/month at FedEx, Grubhub, or office supply stores? | Business Expenses | [0.0, 0.5, 1.0]
+american-express-business-gold-card | Walmart+ Credit | multiple_choice | ['No', 'Yes'] | Would you utilize a free Walmart+ membership for business or personal use? | Shopping | [0.0, 1.0]
+---
+[
+    {
+        "CategoryName": "Airlines",
+        "Icon": "fa-solid fa-plane",
+        "CategoryNameDetailed": [
+            "Generic Airlines",
+            "Amex Travel Flights"
+        ]
+    },
+    {
+        "CategoryName": "Hotels",
+        "Icon": "fa-solid fa-hotel",
+        "CategoryNameDetailed": [
+            "Generic Hotels",
+            "Amex Travel Hotels"
+        ]
+    },
+    {
+        "CategoryName": "Dining & Delivery",
+        "Icon": "fa-solid fa-utensils",
+        "CategoryNameDetailed": [
+            "Generic Dining"
+        ]
+    },
+    {
+        "CategoryName": "Transportation",
+        "Icon": "fa-solid fa-car-side",
+        "CategoryNameDetailed": [
+            "Amex Travel Rental Cars",
+            "Transit"
+        ]
+    },
+    {
+        "CategoryName": "Business & Tech",
+        "Icon": "fa-solid fa-laptop-code",
+        "CategoryNameDetailed": [
+            "Advertising",
+            "Software"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

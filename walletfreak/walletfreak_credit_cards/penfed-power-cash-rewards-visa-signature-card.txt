@@ -1,0 +1,21 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+PenFed | PenFed Power Cash Rewards Visa Signature Card | N/A | N/A | penfed-power-cash-rewards-visa-signature-card | /static/images/credit_cards/penfed-power-cash-rewards-visa-signature-card.jpg | 670 | 850 | https://www.penfed.org/content/penfed/en/penfedroot/credit-cards/power-cash-rewards-visa.html | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+PenFed | PenFed Power Cash Rewards Visa Signature Card | 2 | cash back | ["Generic Financial & Rewards"] | unlimited | penfed-power-cash-rewards-visa-signature-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+---
+[
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

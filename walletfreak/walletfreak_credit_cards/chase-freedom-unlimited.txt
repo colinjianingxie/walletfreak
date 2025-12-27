@@ -1,0 +1,65 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Chase | Chase Freedom Unlimited | 0 | N/A | chase-freedom-unlimited | /static/images/credit_cards/chase-freedom-unlimited.jpg | 670 | 850 | https://secure.chase.com/web/oao/application/card?sourceCode=HZCH&action=guest#/origination/cardDetails/index/index;cellCode=61DS;combo=Y | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Chase | Chase Freedom Unlimited | Complimentary DashPass membership | activate by 12/31/2027 | ["DoorDash", "Generic Dining"] | Minimum 12 months from activation | 120 | False | 2025-11-29 | DashPass | Perk | 120 | Cash | chase-freedom-unlimited
+Chase | Freedom Unlimited | $40 annual DoorDash NR credit |  | ["DoorDash", "Generic Dining"] | Quarterly | 40 | True | 2025-12-24 | DoorDash NR Credit | Credit | 40 | Cash | chase-freedom-unlimited
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Chase | Chase Freedom Unlimited | 5 | cash back | ["Chase Travel Flights"] | flights through Chase Travel | chase-freedom-unlimited | False
+Chase | Chase Freedom Unlimited | 5 | cash back | ["Chase Travel Hotels"] | hotels through Chase Travel | chase-freedom-unlimited | False
+Chase | Chase Freedom Unlimited | 5 | cash back | ["Chase Travel Rental Cars"] | rental cars through Chase Travel | chase-freedom-unlimited | False
+Chase | Chase Freedom Unlimited | 3 | cash back | ["Generic Dining", "Drugstores"] | dining (incl. takeout/delivery) & drugstores | chase-freedom-unlimited | False
+Chase | Chase Freedom Unlimited | 1.5 | cash back | ["Generic Financial & Rewards"] | everything else (unlimited) | chase-freedom-unlimited | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+Chase | Chase Freedom Unlimited |  | Spend $500 in 3 months | 200 | Cash | chase-freedom-unlimited | 500 | 3
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+chase-freedom-unlimited | DashPass | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you value a free delivery membership for your favorite local restaurants? | Delivery | [0.0, 0.5, 1.0]
+chase-freedom-unlimited | DoorDash NR Credit | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you order convenience or grocery items via DoorDash and want $10 off quarterly? | Delivery | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Airlines",
+        "Icon": "fa-solid fa-plane",
+        "CategoryNameDetailed": [
+            "Chase Travel Flights"
+        ]
+    },
+    {
+        "CategoryName": "Hotels",
+        "Icon": "fa-solid fa-hotel",
+        "CategoryNameDetailed": [
+            "Chase Travel Hotels"
+        ]
+    },
+    {
+        "CategoryName": "Dining & Delivery",
+        "Icon": "fa-solid fa-utensils",
+        "CategoryNameDetailed": [
+            "Generic Dining"
+        ]
+    },
+    {
+        "CategoryName": "Transportation",
+        "Icon": "fa-solid fa-car-side",
+        "CategoryNameDetailed": [
+            "Chase Travel Rental Cars"
+        ]
+    },
+    {
+        "CategoryName": "Shopping",
+        "Icon": "fa-solid fa-bag-shopping",
+        "CategoryNameDetailed": [
+            "Drugstores"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

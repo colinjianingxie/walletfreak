@@ -1,0 +1,77 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+U.S. Bank | U.S. Bank Altitude Connect Visa Signature Card | 0 | 1.0 | us-bank-altitude-connect-visa-signature-card | /static/images/credit_cards/us-bank-altitude-connect-visa-signature-card.png | 670 | 850 | https://applications.usbank.com/oad/termsSimpleApply.controller?locationCode=18569&offerId=8BB5BD89H1&sourceCode=88416 | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+U.S. Bank | U.S. Bank Altitude Connect Visa Signature Card | Up to $100 Global Entry/TSA PreCheck credit |  | ["Travel Security", "Global Entry", "TSA PreCheck"] | Every 4 years | 100 | False | 2025-11-29 | TSA Credit | Credit | 100.0 | Cash | us-bank-altitude-connect-visa-signature-card
+U.S. Bank | U.S. Bank Altitude Connect Visa Signature Card | 4 Priority Pass Select visits per year |  | ["Priority Pass", "Lounge Access"] | Permanent |  | False | 2025-11-29 | Priority Pass | Access | 4.0 | Lounge | us-bank-altitude-connect-visa-signature-card
+U.S. Bank | Altitude Connect | GigSky Global Mobile Data eSIM |  | ["GigSky", "Generic Travel Perks"] | Annually | 50 | True | 2025-12-24 | GigSky Global Data | Perk | 50 | Cash | us-bank-altitude-connect-visa-signature-card
+U.S. Bank | Altitude Connect | SmartDelay Lounge Access |  | ["SmartDelay", "Lounge Access"] | Per occurrence | 50 | True | 2025-12-24 | SmartDelay | Access | 1 | Lounge | us-bank-altitude-connect-visa-signature-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+U.S. Bank | U.S. Bank Altitude Connect Visa Signature Card | 5 | points | ["Generic Hotels", "Rental Cars"] | through Altitude Rewards | us-bank-altitude-connect-visa-signature-card | False
+U.S. Bank | U.S. Bank Altitude Connect Visa Signature Card | 4 | points | ["Generic Travel Perks", "Generic Transportation", "EV Charging"] | travel & gas | us-bank-altitude-connect-visa-signature-card | False
+U.S. Bank | U.S. Bank Altitude Connect Visa Signature Card | 2 | points | ["Generic Dining", "Generic Groceries", "Generic Entertainment"] | dining & groceries | us-bank-altitude-connect-visa-signature-card | False
+U.S. Bank | U.S. Bank Altitude Connect Visa Signature Card | 1 | points | ["Generic Financial & Rewards"] | everything else | us-bank-altitude-connect-visa-signature-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+U.S. Bank | U.S. Bank Altitude Connect Visa Signature Card |  | Spend $2000 in 120 days | 50000 | Points | us-bank-altitude-connect-visa-signature-card | 2000 | 4
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+us-bank-altitude-connect-visa-signature-card | TSA Credit | multiple_choice | ['No', 'Yes'] | Do you want a credit to cover the application fee for Global Entry or TSA PreCheck? | Travel Security | [0.0, 1.0]
+us-bank-altitude-connect-visa-signature-card | Priority Pass | multiple_choice | ['No', 'Sometimes', 'Yes'] | Would you value having 4 one-time passes to airport lounges annually? | Lounge Access | [0.0, 0.5, 1.0]
+us-bank-altitude-connect-visa-signature-card | GigSky Global Data | multiple_choice | ['No', 'Yes'] | Do you travel internationally and need mobile data without swapping physical SIM cards? | Travel | [0.0, 1.0]
+us-bank-altitude-connect-visa-signature-card | SmartDelay | multiple_choice | ['No', 'Yes'] | Would you value free lounge access for you and guests if your flight is delayed? | Lounge Access | [0.0, 1.0]
+---
+[
+    {
+        "CategoryName": "Hotels",
+        "Icon": "fa-solid fa-hotel",
+        "CategoryNameDetailed": [
+            "Generic Hotels"
+        ]
+    },
+    {
+        "CategoryName": "Dining & Delivery",
+        "Icon": "fa-solid fa-utensils",
+        "CategoryNameDetailed": [
+            "Generic Dining"
+        ]
+    },
+    {
+        "CategoryName": "Groceries",
+        "Icon": "fa-solid fa-cart-shopping",
+        "CategoryNameDetailed": [
+            "Generic Groceries"
+        ]
+    },
+    {
+        "CategoryName": "Transportation",
+        "Icon": "fa-solid fa-car-side",
+        "CategoryNameDetailed": [
+            "Generic Transportation",
+            "Rental Cars",
+            "EV Charging"
+        ]
+    },
+    {
+        "CategoryName": "Entertainment",
+        "Icon": "fa-solid fa-ticket",
+        "CategoryNameDetailed": [
+            "Generic Entertainment"
+        ]
+    },
+    {
+        "CategoryName": "Travel Perks",
+        "Icon": "fa-solid fa-passport",
+        "CategoryNameDetailed": [
+            "Generic Travel Perks"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

@@ -1,0 +1,51 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+American Express | Marriott Bonvoy Brilliant American Express Card | 650 | 0.8 | marriott-bonvoy-brilliant-american-express-card | /static/images/credit_cards/marriott-bonvoy-brilliant-american-express-card.jpeg | 670 | 850 | https://www.americanexpress.com/us/credit-cards/card/marriott-bonvoy-brilliant/ | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+American Express | Marriott Bonvoy Brilliant American Express Card | Platinum Elite status |  | ["Marriott", "Generic Hotels", "Status"] | Permanent |  | False | 2025-11-29 | Platinum Status | Status |  | N/A | marriott-bonvoy-brilliant-american-express-card
+American Express | Marriott Bonvoy Brilliant American Express Card | $300 Marriott dining statement credit | up to $25 monthly | ["Marriott", "Generic Dining", "Generic Hotels"] | Monthly | 300 | False | 2025-11-29 | Marriott Dining | Credit | 300.0 | Cash | marriott-bonvoy-brilliant-american-express-card
+American Express | Marriott Bonvoy Brilliant American Express Card | 85,000-point Free Night Award annually after renewal |  | ["Marriott", "Generic Hotels"] | Annually (anniversary year) |  | False | 2025-11-29 | Free Night | Free Night | 1 | FreeNight | marriott-bonvoy-brilliant-american-express-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+American Express | Marriott Bonvoy Brilliant American Express Card | 6 | points | ["Marriott"] |  | marriott-bonvoy-brilliant-american-express-card | False
+American Express | Marriott Bonvoy Brilliant American Express Card | 3 | points | ["Generic Dining", "Generic Airlines"] | restaurants & flights direct | marriott-bonvoy-brilliant-american-express-card | False
+American Express | Marriott Bonvoy Brilliant American Express Card | 2 | points | ["Generic Financial & Rewards"] | everything else | marriott-bonvoy-brilliant-american-express-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+American Express | Marriott Bonvoy Brilliant American Express Card |  | Spend $6000 in 6 months | 100000 | Points | marriott-bonvoy-brilliant-american-express-card | 6000 | 6
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+marriott-bonvoy-brilliant-american-express-card | Platinum Status | multiple_choice | ['No', 'Sometimes', 'Always'] | Do you stay at Marriott hotels often enough to value free breakfast and 4 p.m. late checkout? | Hotel Status | [0.0, 0.5, 1.0]
+marriott-bonvoy-brilliant-american-express-card | Marriott Dining | multiple_choice | ['No', 'Monthly', 'Weekly'] | How often do you dine at restaurants where a $25 monthly credit would be easy to use? | Dining,Hotel | [0.0, 0.8, 1.0]
+marriott-bonvoy-brilliant-american-express-card | Free Night | multiple_choice | ['No', 'Yes'] | Would you use an annual 85,000-point free night at premium hotels like Ritz-Carlton or St. Regis? | Hotel | [0.0, 1.0]
+---
+[
+    {
+        "CategoryName": "Airlines",
+        "Icon": "fa-solid fa-plane",
+        "CategoryNameDetailed": [
+            "Generic Airlines"
+        ]
+    },
+    {
+        "CategoryName": "Hotels",
+        "Icon": "fa-solid fa-hotel",
+        "CategoryNameDetailed": [
+            "Marriott"
+        ]
+    },
+    {
+        "CategoryName": "Dining & Delivery",
+        "Icon": "fa-solid fa-utensils",
+        "CategoryNameDetailed": [
+            "Generic Dining"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

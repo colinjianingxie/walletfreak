@@ -1,0 +1,44 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Capital One | Capital One VentureOne Rewards Credit Card | 0 | 1.0 | capital-one-ventureone-rewards-credit-card | /static/images/credit_cards/capital-one-ventureone-rewards-credit-card.webp | 670 | 850 | https://www.capitalone.com/credit-cards/apply/ventureone-rewards/ | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Capital One | Capital One VentureOne Rewards | No foreign transaction fees |  | ["Generic Travel Perks", "Fee Waiver"] | Ongoing | 50 | False | 2025-12-08 | No FTF | Perk |  | N/A | capital-one-ventureone-rewards-credit-card
+Capital One | Capital One VentureOne Rewards | Ability to transfer miles to partners |  | ["Generic Financial & Rewards"] | Ongoing |  | False | 2025-12-08 | Miles Transfer | Perk |  | N/A | capital-one-ventureone-rewards-credit-card
+Capital One | Capital One VentureOne Rewards | Complimentary Hertz Five Star® status |  | ["Hertz", "Rental Cars", "Status"] | Ongoing | 150 | True | 2025-12-08 | Hertz Status | Perk |  | N/A | capital-one-ventureone-rewards-credit-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Capital One | Capital One VentureOne Rewards Credit Card | 5 | miles | ["Capital One Travel Hotels"] | hotels through Capital One Travel | capital-one-ventureone-rewards-credit-card | False
+Capital One | Capital One VentureOne Rewards Credit Card | 5 | miles | ["Capital One Travel Rental Cars"] | rental cars through Capital One Travel | capital-one-ventureone-rewards-credit-card | False
+Capital One | Capital One VentureOne Rewards Credit Card | 1.25 | miles | ["Generic Financial & Rewards"] | everything else | capital-one-ventureone-rewards-credit-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+Capital One | Capital One VentureOne Rewards Credit Card |  | Spend $500 in 3 months | 20000 | Miles | capital-one-ventureone-rewards-credit-card | 500 | 3
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+capital-one-ventureone-rewards-credit-card | No Foreign Transaction Fees | multiple_choice | ['No', 'Yes'] | Do you travel abroad and want to avoid the typical 3% fee on every purchase? | Travel | [0.0, 1.0]
+capital-one-ventureone-rewards-credit-card | Miles Transfer Partners | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you value the ability to transfer miles to various airline and hotel partners? | Redemption Flexibility | [0.0, 0.5, 1.0]
+capital-one-ventureone-rewards-credit-card | Hertz Five Star Status | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you rent cars frequently enough to benefit from elite status and skipping the counter? | Car Rental | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Hotels",
+        "Icon": "fa-solid fa-hotel",
+        "CategoryNameDetailed": [
+            "Capital One Travel Hotels"
+        ]
+    },
+    {
+        "CategoryName": "Transportation",
+        "Icon": "fa-solid fa-car-side",
+        "CategoryNameDetailed": [
+            "Capital One Travel Rental Cars"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

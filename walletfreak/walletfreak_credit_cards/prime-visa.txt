@@ -1,0 +1,79 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Prime Visa | Prime Visa | 0 | N/A | prime-visa | /static/images/credit_cards/prime-visa.png | 670 | 850 | https://creditcards.chase.com/rewards-credit-cards/amazon-rewards/prime-visa | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Chase | Prime Visa | Complimentary Grubhub+ membership |  | ["Grubhub", "Generic Dining"] | Annually | 120 | True | 2025-12-24 | Grubhub+ Membership | Perk | 120 | Cash | prime-visa
+Chase | Prime Visa | $150 Instant Amazon Gift Card |  | ["Amazon", "Generic Shopping"] | One-time | 150 | False | 2025-12-24 | Gift Card | Perk | 150 | Cash | prime-visa
+Chase | Prime Visa | No foreign transaction fees |  | ["Generic Travel Perks", "Fee Waiver"] | Ongoing | 50 | False | 2025-12-24 | No FTF | Waiver | 0 | Percent | prime-visa
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Chase | Prime Visa | 5 | cash back | ["Amazon"] | Amazon | prime-visa | False
+Chase | Prime Visa | 5 | cash back | ["Whole Foods"] | Whole Foods | prime-visa | False
+Chase | Prime Visa | 5 | cash back | ["Chase Travel Flights"] | flights through Portal | prime-visa | False
+Chase | Prime Visa | 5 | cash back | ["Chase Travel Hotels"] | hotels through Portal | prime-visa | False
+Chase | Prime Visa | 5 | cash back | ["Chase Travel Rental Cars"] | rental cars through Portal | prime-visa | False
+Chase | Prime Visa | 10 | cash back | ["Generic Shopping"] | rotating items (distinct from generic Amazon) | prime-visa | False
+Chase | Prime Visa | 2 | cash back | ["Gas", "Generic Dining"] | gas & dining | prime-visa | False
+Chase | Prime Visa | 1 | cash back | ["Generic Financial & Rewards"] | everything else | prime-visa | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+Chase | Prime Visa |  | Approved with eligible Prime membership | 200 | Cash | prime-visa | 0 | 0
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+prime-visa | Grubhub+ Membership | multiple_choice | ['No', 'Yes'] | Do you want a free year of delivery membership for your favorite local restaurants? | Food Delivery | [0.0, 1.0]
+prime-visa | Gift Card | multiple_choice | ['No', 'Yes'] | How likely are you to use a $150 Amazon gift card immediately upon approval? | Shopping | [0.0, 1.0]
+prime-visa | No Foreign Fees | multiple_choice | ['No', 'Yes'] | Do you travel abroad and want to avoid the typical 3% fee on every purchase? | Fee Waiver | [0.0, 1.0]
+---
+[
+    {
+        "CategoryName": "Airlines",
+        "Icon": "fa-solid fa-plane",
+        "CategoryNameDetailed": [
+            "Chase Travel Flights"
+        ]
+    },
+    {
+        "CategoryName": "Hotels",
+        "Icon": "fa-solid fa-hotel",
+        "CategoryNameDetailed": [
+            "Chase Travel Hotels"
+        ]
+    },
+    {
+        "CategoryName": "Dining & Delivery",
+        "Icon": "fa-solid fa-utensils",
+        "CategoryNameDetailed": [
+            "Generic Dining"
+        ]
+    },
+    {
+        "CategoryName": "Groceries",
+        "Icon": "fa-solid fa-cart-shopping",
+        "CategoryNameDetailed": [
+            "Whole Foods"
+        ]
+    },
+    {
+        "CategoryName": "Transportation",
+        "Icon": "fa-solid fa-car-side",
+        "CategoryNameDetailed": [
+            "Chase Travel Rental Cars",
+            "Gas"
+        ]
+    },
+    {
+        "CategoryName": "Shopping",
+        "Icon": "fa-solid fa-bag-shopping",
+        "CategoryNameDetailed": [
+            "Generic Shopping",
+            "Amazon"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

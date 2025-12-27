@@ -1,0 +1,39 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Capital One | Capital One Quicksilver Secured Cash Rewards Credit Card | 0 | N/A | capital-one-quicksilver-secured-cash-rewards-credit-card | /static/images/credit_cards/capital-one-quicksilver-secured-cash-rewards-credit-card.webp | 300 | 579 | https://www.capitalone.com/credit-cards/apply/quicksilver-secured-rewards/ | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Capital One | Quicksilver Secured | Automatic Credit Line Review |  | ["Credit Building", "Generic Financial & Rewards"] | Ongoing | 0 | False | 2025-12-24 | Credit Review | Perk | 0 | N/A | capital-one-quicksilver-secured-cash-rewards-credit-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Capital One | Capital One Quicksilver Secured Cash Rewards Credit Card | 5 | cash back | ["Capital One Travel Hotels"] | hotels through Capital One Travel | capital-one-quicksilver-secured-cash-rewards-credit-card | False
+Capital One | Capital One Quicksilver Secured Cash Rewards Credit Card | 5 | cash back | ["Capital One Travel Rental Cars"] | rental cars through Capital One Travel | capital-one-quicksilver-secured-cash-rewards-credit-card | False
+Capital One | Capital One Quicksilver Secured Cash Rewards Credit Card | 1.5 | cash back | ["Generic Financial & Rewards"] | unlimited everything else | capital-one-quicksilver-secured-cash-rewards-credit-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+capital-one-quicksilver-secured-cash-rewards-credit-card | Credit Review | multiple_choice | ['No', 'Somewhat', 'Highly'] | Are you focused on moving from a secured card to an unsecured one by building credit? | Credit Building | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Hotels",
+        "Icon": "fa-solid fa-hotel",
+        "CategoryNameDetailed": [
+            "Capital One Travel Hotels"
+        ]
+    },
+    {
+        "CategoryName": "Transportation",
+        "Icon": "fa-solid fa-car-side",
+        "CategoryNameDetailed": [
+            "Capital One Travel Rental Cars"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

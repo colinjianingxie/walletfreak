@@ -1,6 +1,7 @@
 import csv
 import json
 import os
+import ast
 
 def load_category_map(json_path):
     mapping = {}
@@ -21,118 +22,128 @@ def parse_category_field(raw_str):
     if not raw_str:
         return []
     try:
-        data = json.loads(raw_str)
-        if isinstance(data, list):
-            return [str(x) for x in data]
-        return [str(data)]
-    except json.JSONDecodeError:
+        # Text files use python list repr (e.g. ['Generic Dining'])
+        if raw_str.startswith('[') and raw_str.endswith(']'):
+            return ast.literal_eval(raw_str)
+        return [raw_str]
+    except Exception:
+        # Fallback to single string
         return [raw_str]
 
 def audit():
     base_dir = os.path.dirname(os.path.abspath(__file__))
     mapping_path = os.path.join(base_dir, 'default_category_mapping.json')
-    rates_path = os.path.join(base_dir, 'default_rates.csv')
-    benefits_path = os.path.join(base_dir, 'default_card_benefits.csv')
-
+    cards_dir = os.path.join(base_dir, 'walletfreak_credit_cards')
+    
     category_map = load_category_map(mapping_path)
     print(f"Loaded {len(category_map)} detailed categories form mapping.")
 
+    if not os.path.exists(cards_dir):
+        print(f"Error: Directory {cards_dir} not found.")
+        return
+
+    files = [f for f in os.listdir(cards_dir) if f.endswith('.txt')]
+    print(f"Scanning {len(files)} files in {cards_dir}...\n")
+
+    unmapped_rates_count = 0
+    unmapped_benefits_count = 0
+    duplicate_rates_count = 0
+    
+    allowed_duplicate_groups = {"Protection", "Financial & Rewards", "Travel Perks"}
+    
+    for filename in files:
+        filepath = os.path.join(cards_dir, filename)
+        try:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            parts = content.split('\n---\n')
+            
+            # --- INFO Section (for Name/Slug) ---
+            slug = filename # fallback
+            card_name = filename
+            if len(parts) > 0 and parts[0].strip():
+                lines = parts[0].strip().split('\n')
+                if len(lines) > 1:
+                    headers = [h.strip() for h in lines[0].split('|')]
+                    vals = [v.strip() for v in lines[1].split('|')]
+                    row = dict(zip(headers, vals))
+                    slug = row.get('slug-id', filename)
+                    card_name = row.get('CardName', filename)
+
+            # --- BENEFITS Audit ---
+            if len(parts) > 1 and parts[1].strip():
+                lines = parts[1].strip().split('\n')
+                if len(lines) > 1:
+                    headers = [h.strip() for h in lines[0].split('|')]
+                    
+                    for i, line in enumerate(lines[1:], start=1):
+                         vals = [v.strip() for v in line.split('|')]
+                         if not vals or len(vals) != len(headers): continue
+                         b_row = dict(zip(headers, vals))
+                         
+                         cat_raw = b_row.get('BenefitCategory', '')
+                         cats = parse_category_field(cat_raw)
+                         
+                         for c in cats:
+                            if c not in category_map:
+                                unmapped_benefits_count += 1
+                                print(f"[FAIL] {slug} (Benefit): Unmapped Category '{c}'")
+                                print(f"       Desc: {b_row.get('BenefitDescription', '')[:60]}...")
+                                print("-" * 30)
+
+            # --- RATES Audit ---
+            if len(parts) > 2 and parts[2].strip():
+                lines = parts[2].strip().split('\n')
+                if len(lines) > 1:
+                    headers = [h.strip() for h in lines[0].split('|')]
+                    
+                    seen_rate_cats = {} # cat -> line_idx
+                    
+                    for i, line in enumerate(lines[1:], start=1):
+                        vals = [v.strip() for v in line.split('|')]
+                        if not vals or len(vals) != len(headers): continue
+                        r_row = dict(zip(headers, vals))
+                        
+                        cat_raw = r_row.get('RateCategory', '')
+                        cats = parse_category_field(cat_raw)
+                        
+                        for c in cats:
+                            # 1. Map Check
+                            if c not in category_map:
+                                unmapped_rates_count += 1
+                                print(f"[FAIL] {slug} (Rate): Unmapped Category '{c}'")
+                                print(f"       Rate: {r_row.get('EarningRate')} {r_row.get('Currency')}")
+                                print("-" * 30)
+                            
+                            # 2. Duplicate Check within Card
+                            hl_group = category_map.get(c, "Unknown")
+                            if c in seen_rate_cats:
+                                if hl_group not in allowed_duplicate_groups:
+                                    duplicate_rates_count += 1
+                                    print(f"[FAIL] {slug} (Rate): Duplicate Category '{c}'")
+                                    print(f"       Conflict with previous entry")
+                                    print("-" * 30)
+                            else:
+                                seen_rate_cats[c] = i
+
+        except Exception as e:
+            print(f"Error processing {filename}: {e}")
+
     print("\n" + "="*50)
-    print("AUDITING RATES (default_rates.csv)")
+    print("AUDIT SUMMARY")
     print("="*50)
     
-    try:
-        with open(rates_path, 'r', encoding='utf-8') as f:
-            reader = csv.DictReader(f, delimiter='|')
-            unmapped_count = 0
-            duplicate_count = 0
-            
-            # Store rates by slug for duplicate detection
-            rates_by_slug = {} # slug -> list of (line_num, [categories])
-
-            for i, row in enumerate(reader, start=2): # Header is 1
-                raw_cat = row.get('RateCategory', '')
-                cats = parse_category_field(raw_cat)
-                slug = row.get('slug-id', 'unknown_slug')
-                
-                # Mapping Check
-                for c in cats:
-                    if c not in category_map:
-                        unmapped_count += 1
-                        print(f"[FAIL] Row {i}: Unmapped Rate Category '{c}'")
-                        print(f"       Card: {row.get('CardName', 'Unknown')}")
-                        print(f"       Rate: {row.get('EarningRate', '')} {row.get('Currency', '')} ({raw_cat})")
-                        print("-" * 30)
-
-                # Collect for Duplicate Check
-                if slug not in rates_by_slug:
-                    rates_by_slug[slug] = []
-                rates_by_slug[slug].append({'line': i, 'categories': cats, 'card_name': row.get('CardName')})
-
-            # Duplicate Check logic
-            print("\n" + "-"*50)
-            print("Checking for DUPLICATE rate categories per card...")
-            print("-"*50)
-            
-            allowed_duplicate_groups = {"Protection", "Financial & Rewards", "Travel Perks"}
-
-            for slug, entries in rates_by_slug.items():
-                seen_cats = {} # cat_string -> line_number
-                for entry in entries:
-                    for c in entry['categories']:
-                        # Check high-level group
-                        hl_group = category_map.get(c, "Unknown")
-                        
-                        if c in seen_cats:
-                            if hl_group not in allowed_duplicate_groups:
-                                duplicate_count += 1
-                                print(f"[FAIL] CARD: {entry['card_name']} (slug: {slug})")
-                                print(f"       Duplicate Category: '{c}' (Group: {hl_group})")
-                                print(f"       Conflict between Row {seen_cats[c]} and Row {entry['line']}")
-                                print("-" * 30)
-                        else:
-                            seen_cats[c] = entry['line']
-
-            if unmapped_count == 0 and duplicate_count == 0:
-                print("All rate categories mapped and unique successfully.")
-            else:
-                if unmapped_count > 0:
-                    print(f"Found {unmapped_count} unmapped rate categories.")
-                if duplicate_count > 0:
-                    print(f"Found {duplicate_count} duplicate rate category definitions.")
-
-
-    except FileNotFoundError:
-        print(f"Error: {rates_path} not found")
-
-    print("\n" + "="*50)
-    print("AUDITING BENEFITS (default_card_benefits.csv)")
-    print("="*50)
-
-    try:
-        with open(benefits_path, 'r', encoding='utf-8') as f:
-            reader = csv.DictReader(f, delimiter='|')
-            unmapped_count = 0
-            for i, row in enumerate(reader, start=2):
-                raw_cat = row.get('BenefitCategory', '')
-                cats = parse_category_field(raw_cat)
-                
-                for c in cats:
-                    if c not in category_map:
-                        unmapped_count += 1
-                        print(f"[FAIL] Row {i}: Unmapped Benefit Category '{c}'")
-                        print(f"       Card: {row.get('CardName', 'Unknown')}")
-                        print(f"       Benefit: {row.get('BenefitDescription', '')[:60]}...")
-                        print(f"       Category Field: {raw_cat}")
-                        print("-" * 30)
-                        
-            if unmapped_count == 0:
-                print("All benefit categories mapped successfully.")
-            else:
-                print(f"Found {unmapped_count} unmapped benefit categories.")
-
-    except FileNotFoundError:
-        print(f"Error: {benefits_path} not found")
+    if unmapped_rates_count == 0 and unmapped_benefits_count == 0 and duplicate_rates_count == 0:
+        print("AUDIT PASSED: All categories mapped and clean.")
+    else:
+        if unmapped_rates_count > 0:
+            print(f"Found {unmapped_rates_count} unmapped rate categories.")
+        if unmapped_benefits_count > 0:
+            print(f"Found {unmapped_benefits_count} unmapped benefit categories.")
+        if duplicate_rates_count > 0:
+            print(f"Found {duplicate_rates_count} duplicate rate category definitions.")
+        print("AUDIT FAILED.")
 
 if __name__ == "__main__":
     audit()

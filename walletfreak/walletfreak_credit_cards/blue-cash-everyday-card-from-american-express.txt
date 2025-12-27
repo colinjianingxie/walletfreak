@@ -1,0 +1,48 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+American Express | Blue Cash Everyday Card from American Express | 0 | N/A | blue-cash-everyday-card-from-american-express | /static/images/credit_cards/blue-cash-everyday-card-from-american-express.png | 670 | 850 | https://www.americanexpress.com/us/credit-cards/card/blue-cash-everyday/ | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+American Express | Blue Cash Everyday Card from American Express | $84 Disney Bundle Credit | $7 monthly for enrolled bundle | ["Disney", "Generic Entertainment"] | Monthly | 84 | True | 2025-11-29 | Disney Credit | Credit | 84.0 | Cash | blue-cash-everyday-card-from-american-express
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+American Express | Blue Cash Everyday Card from American Express | 3 | cash back | ["Generic Groceries"] | U.S. supermarkets | blue-cash-everyday-card-from-american-express | False
+American Express | Blue Cash Everyday Card from American Express | 3 | cash back | ["Generic Shopping"] | U.S. online retail | blue-cash-everyday-card-from-american-express | False
+American Express | Blue Cash Everyday Card from American Express | 3 | cash back | ["Gas"] | U.S. gas stations | blue-cash-everyday-card-from-american-express | False
+American Express | Blue Cash Everyday Card from American Express | 1 | cash back | ["Generic Financial & Rewards"] | everything else | blue-cash-everyday-card-from-american-express | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+American Express | Blue Cash Everyday Card from American Express |  | Spend $2000 in 6 months | 200 | Cash | blue-cash-everyday-card-from-american-express | 2000 | 6
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+blue-cash-everyday-card-from-american-express | Disney Credit | multiple_choice | ['No', 'Yes'] | Do you want $7 back every month on your Disney Bundle subscription? | Streaming | [0.0, 1.0]
+---
+[
+    {
+        "CategoryName": "Groceries",
+        "Icon": "fa-solid fa-cart-shopping",
+        "CategoryNameDetailed": [
+            "Generic Groceries"
+        ]
+    },
+    {
+        "CategoryName": "Transportation",
+        "Icon": "fa-solid fa-car-side",
+        "CategoryNameDetailed": [
+            "Gas"
+        ]
+    },
+    {
+        "CategoryName": "Shopping",
+        "Icon": "fa-solid fa-bag-shopping",
+        "CategoryNameDetailed": [
+            "Generic Shopping"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

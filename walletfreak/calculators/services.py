@@ -9,54 +9,31 @@ from core.services import db
 class OptimizerService:
     def __init__(self):
         self.cards_map = {c['id']: c for c in db.get_cards()}
-        self.bonuses = self._load_signup_bonuses()
-        self.default_rates = self._load_default_rates()
-
-    def _load_signup_bonuses(self):
-        csv_path = os.path.join(settings.BASE_DIR, 'default_signup.csv')
-        bonuses = {}
-        if not os.path.exists(csv_path):
-            return bonuses
+        # self.bonuses and self.default_rates no longer loaded from CSV here on init 
+        # because we will derive them from cards_map on the fly or pre-process them
         
-        try:
-            with open(csv_path, 'r', encoding='utf-8') as f:
-                reader = csv.DictReader(f, delimiter='|')
-                for row in reader:
-                    slug = row.get('slug-id')
-                    if slug:
-                        bonuses[slug] = row
-        except Exception as e:
-            print(f"Error reading signup CSV: {e}")
-        return bonuses
-
     def _load_default_rates(self):
         """
-        Loads the simple default ongoing rate for each card.
-        We look for 'IsDefault' == 'Yes'.
+        Derives default rates from enriched card data.
         Returns dict: {slug: {'rate': float, 'currency': str}}
         """
-        csv_path = os.path.join(settings.BASE_DIR, 'default_rates.csv')
         rates = {}
-        if not os.path.exists(csv_path):
-            return rates
+        for slug, card in self.cards_map.items():
+            found_default = False
+            for r in card.get('earning_rates', []):
+                if r.get('is_default'):
+                    rates[slug] = {
+                        'rate': r.get('rate', 0.0),
+                        'currency': r.get('currency', 'points')
+                    }
+                    found_default = True
+                    break
             
-        try:
-            with open(csv_path, 'r', encoding='utf-8') as f:
-                reader = csv.DictReader(f, delimiter='|')
-                for row in reader:
-                    if row.get('IsDefault') in ('Yes', 'True'):
-                        slug = row.get('slug-id')
-                        try:
-                            rate = float(row.get('EarningRate', 0))
-                        except ValueError:
-                            rate = 0.0
-                            
-                        rates[slug] = {
-                            'rate': rate,
-                            'currency': row.get('Currency', 'points')
-                        }
-        except Exception as e:
-            print(f"Error reading default rates CSV: {e}")
+            if not found_default:
+                # Fallback: Try to find 'All Purchases' or base rate?
+                # For now stick to strict is_default or 0
+                pass
+                
         return rates
 
     def calculate_recommendations(self, planned_spend, duration_months, user_wallet_slugs=None, mode='single'):
@@ -72,81 +49,69 @@ class OptimizerService:
         
         candidates = []
         
-        for slug, bonus_data in self.bonuses.items():
+        default_rates = self._load_default_rates()
+        
+        for slug, card_obj in self.cards_map.items():
             # 1. Filter: In Wallet
             if slug in user_wallet_slugs:
                 continue
                 
-            # 2. Filter: Exist in DB
-            card_obj = self.cards_map.get(slug)
-            if not card_obj:
+            # 3. Parse Bonus Data from Enriched Card Object
+            bonus_data = card_obj.get('sign_up_bonus') or {}
+            if not bonus_data:
                 continue
                 
-            # 3. Parse Bonus Data
             try:
-                req_spend = float(bonus_data.get('SpendAmount', 0))
-                req_months = int(bonus_data.get('SignupDurationMonths', 0))
-                bonus_qty = float(bonus_data.get('SignUpBonusValue', 0))
-                bonus_type = bonus_data.get('SignUpBonusType', 'Points')
-                eff_date_str = bonus_data.get('EffectiveDate', '').strip()
+                # Map keys from parse_updates.py / Firestore
+                req_spend = float(bonus_data.get('spend_amount', 0))
+                req_months = int(bonus_data.get('duration_months', 0))
+                bonus_qty = float(bonus_data.get('value', 0))
+                bonus_type = bonus_data.get('currency', 'Points') # 'currency' holds the type (Points/Cash)
+                # eff_date_str = bonus_data.get('effective_date', '') # Not used in logic below currently
             except (ValueError, TypeError):
                 continue
                 
             # 5. Filter: Infeasible
             if req_spend > planned_spend:
                 continue
-            # Logic Update: Removed hard duration constraint.
-            # We now allow longer durations if the monthly run rate fits within capacity.
 
             # 6. Additional Filter: Monthly Spend Constraint
-            # "monthly_req = spend_amount / signup_duration_months <= monthly_spend_capacity"
             if req_months > 0:
                 monthly_req = req_spend / req_months
-                # Allow a small buffer or strict? Rule said <=.
-                if monthly_req > monthly_spend_capacity + 1.0: # +1 for float tolerance
+                if monthly_req > monthly_spend_capacity + 1.0:
                     continue
-
-            # 7. Valuation
-            # Determine CPP from card object
-            # Default to 1.0 if N/A or missing
             
-            raw_cpp = card_obj.get('points_value_cpp') or card_obj.get('PointsValueCpp', '1.0')
+            # 7. Valuation
+            raw_cpp = card_obj.get('points_value_cpp') or 1.0
             try:
-                # Handle 'N/A' or other non-numeric strings by defaulting to 1.0
-                if isinstance(raw_cpp, str) and not raw_cpp.replace('.', '', 1).isdigit():
-                     cpp = 1.0
-                else:
-                     cpp = float(raw_cpp)
-            except (ValueError, TypeError):
+                cpp = float(raw_cpp) if isinstance(raw_cpp, (int, float)) else 1.0
+            except:
                 cpp = 1.0
             
             # Bonus Value ($)
-            if bonus_type.lower() == 'cash':
+            if str(bonus_type).lower() == 'cash':
                 bonus_value = bonus_qty
             else:
                 bonus_value = bonus_qty * (cpp / 100.0)
                 
             # Ongoing Rate Value ($ per $1 spend)
-            default_rate_info = self.default_rates.get(slug, {'rate': 0, 'currency': 'points'})
+            default_rate_info = default_rates.get(slug, {'rate': 0, 'currency': 'points'})
             def_rate_val = default_rate_info['rate']
             def_currency = default_rate_info['currency']
             
             # Convert ongoing rate to dollar value per dollar spent
-            if 'cash' in def_currency.lower() or 'cash' in bonus_type.lower(): # Fallback to bonus type if rate currency ambiguous
-                 # Cash back rate is usually percent (e.g. 1.5 for 1.5%) -> 0.015 dollars per dollar
-                 # Wait, usually "1.5" in CSV means 1.5%.
+            if 'cash' in str(def_currency).lower() or 'cash' in str(bonus_type).lower():
                  ongoing_rate_dollar = def_rate_val / 100.0
             else:
-                 # Points/Miles: e.g. 2x points -> 2 * CPP / 100
                  ongoing_rate_dollar = def_rate_val * (cpp / 100.0)
 
             # Metrics Calculation
-            # "total_earn_from_spend = planned_spend * ongoing_rate"
-            # NOTE: User requirement says "Includes bonus + ongoing on full spend".
             total_earn_from_spend = planned_spend * ongoing_rate_dollar
             
             total_value = bonus_value + total_earn_from_spend
             
+            # annual_fee is inside card_obj.get('annual_fee') 
+            # In parse_updates it's stored as int on root.
             annual_fee = float(card_obj.get('annual_fee', 0))
             net_value = total_value - annual_fee
             
@@ -154,11 +119,8 @@ class OptimizerService:
             if planned_spend > 0:
                 roi = (net_value / planned_spend) * 100
             else:
-                roi = 0 # Or -inf
+                roi = 0
                 
-            # Marginal Density
-            # (bonus_value - fee) / spend_amount + ongoing_rate
-            # If spend_amount (req_spend) is 0, use placeholder 500
             denom = req_spend if req_spend > 0 else 500.0
             marginal_density = (bonus_value - annual_fee) / denom + ongoing_rate_dollar
 
@@ -181,6 +143,19 @@ class OptimizerService:
             return self._optimize_combo(candidates, planned_spend, monthly_spend_capacity)
         else:
             return self._optimize_single(candidates)
+
+    def _load_all_rates(self):
+        """
+        Derives ALL rates from enriched card data.
+        Returns dict: {slug: [ {category, rate, currency, details}, ... ]}
+        """
+        rates_by_slug = {}
+        for slug, card in self.cards_map.items():
+            # card['earning_rates'] contains the list of rate dicts
+            rates_by_slug[slug] = card.get('earning_rates', [])
+        return rates_by_slug
+
+
             
     def _optimize_single(self, candidates):
         # Sort by Net Value DESC, then ROI DESC
@@ -240,44 +215,7 @@ class OptimizerService:
             
         return final_results
             
-    def _load_all_rates(self):
-        """
-        Loads ALL rates from default_rates.csv, not just default ones.
-        Returns dict: {slug: [ {category, rate, currency, details}, ... ]}
-        """
-        csv_path = os.path.join(settings.BASE_DIR, 'default_rates.csv')
-        rates_by_slug = {}
-        if not os.path.exists(csv_path):
-            return rates_by_slug
-            
-        try:
-            with open(csv_path, 'r', encoding='utf-8') as f:
-                reader = csv.DictReader(f, delimiter='|')
-                for row in reader:
-                    slug = row.get('slug-id')
-                    if not slug:
-                        continue
-                        
-                    if slug not in rates_by_slug:
-                        rates_by_slug[slug] = []
-                        
-                    try:
-                        rate_val = float(row.get('EarningRate', 0))
-                    except ValueError:
-                        rate_val = 0.0
-                        
-                    rates_by_slug[slug].append({
-                        'category': row.get('RateCategory', '[]'), # Changed from BenefitCategory
-                        'rate': rate_val,
-                        'currency': row.get('Currency', 'points'),
-                        'details': row.get('AdditionalDetails', ''),
-                        'details': row.get('AdditionalDetails', ''),
-                        'is_default': row.get('IsDefault') in ('Yes', 'True')
-                    })
-        except Exception as e:
-            print(f"Error reading all rates CSV: {e}")
-            
-        return rates_by_slug
+
 
     def get_all_unique_categories(self):
         """

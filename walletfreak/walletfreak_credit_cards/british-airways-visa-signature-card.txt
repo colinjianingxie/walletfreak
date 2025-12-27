@@ -1,0 +1,50 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Chase | British Airways Visa Signature Card | 95 | 1.3 | british-airways-visa-signature-card | /static/images/credit_cards/british-airways-visa-signature-card.png | 670 | 850 | https://creditcards.chase.com/rewards-credit-cards/british-airways-visa | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Chase | British Airways Visa Signature Card | Travel Together Ticket after $30,000 spend annually |  | ["British Airways", "Generic Airlines"] | Calendar year |  | False | 2025-11-29 | Travel Together | Perk |  | N/A | british-airways-visa-signature-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Chase | British Airways Visa Signature Card | 3 | Avios | ["British Airways", "Aer Lingus", "Iberia", "LEVEL"] |  | british-airways-visa-signature-card | False
+Chase | British Airways Visa Signature Card | 2 | points | ["Generic Hotels", "Generic Travel Perks"] | direct hotels | british-airways-visa-signature-card | False
+Chase | British Airways Visa Signature Card | 1 | points | ["Generic Financial & Rewards"] | everything else | british-airways-visa-signature-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+Chase | British Airways Visa Signature Card |  | Spend $7500 in 6 months | 100000 | Miles | british-airways-visa-signature-card | 7500 | 6
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+british-airways-visa-signature-card | Travel Together | multiple_choice | ['No', 'Yes'] | Can you spend $30,000 a year to earn a companion ticket for a British Airways flight? | Airline | [0.0, 1.0]
+---
+[
+    {
+        "CategoryName": "Airlines",
+        "Icon": "fa-solid fa-plane",
+        "CategoryNameDetailed": [
+            "British Airways",
+            "Aer Lingus",
+            "Iberia",
+            "LEVEL"
+        ]
+    },
+    {
+        "CategoryName": "Hotels",
+        "Icon": "fa-solid fa-hotel",
+        "CategoryNameDetailed": [
+            "Generic Hotels"
+        ]
+    },
+    {
+        "CategoryName": "Travel Perks",
+        "Icon": "fa-solid fa-passport",
+        "CategoryNameDetailed": [
+            "Generic Travel Perks"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

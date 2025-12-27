@@ -1,0 +1,49 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Chase | Marriott Bonvoy Boundless Credit Card | 95 | 0.8 | marriott-bonvoy-boundless-credit-card | /static/images/credit_cards/marriott-bonvoy-boundless-credit-card.png | 670 | 850 | https://secure.chase.com/web/oao/application/card?sourceCode=HTJT&action=guest#/origination/cardDetails/index/index;cellCode=61DS;combo=Y | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Chase | Marriott Bonvoy Boundless Credit Card | Free Night Award each cardmember anniversary | up to 35,000 points | ["Marriott", "Generic Hotels"] | Annually (anniversary year) |  | False | 2025-11-29 | Free Night | Free Night | 1 | FreeNight | marriott-bonvoy-boundless-credit-card
+Chase | Marriott Bonvoy Boundless Credit Card | 15 Elite Night Credits annually |  | ["Marriott", "Generic Hotels", "Status"] | Permanent (calendar year) |  | False | 2025-11-29 | Elite Credits | Bonus | 15 | N/A | marriott-bonvoy-boundless-credit-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Chase | Marriott Bonvoy Boundless Credit Card | 17 | points | ["Marriott"] | total points at Marriott hotels | marriott-bonvoy-boundless-credit-card | False
+Chase | Marriott Bonvoy Boundless Credit Card | 3 | points | ["Generic Dining", "Generic Groceries"] | select categories | marriott-bonvoy-boundless-credit-card | False
+Chase | Marriott Bonvoy Boundless Credit Card | 2 | points | ["Generic Financial & Rewards"] | everything else | marriott-bonvoy-boundless-credit-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+Chase | Marriott Bonvoy Boundless Credit Card |  | Spend $3000 in 3 months + additional spend for full | 150000 | Points | marriott-bonvoy-boundless-credit-card | 3000 | 3
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+marriott-bonvoy-boundless-credit-card | Free Night | multiple_choice | ['No', 'Yes'] | Would you use a "Free Night Award" at a Marriott property worth up to 35,000 points annually? | Hotel | [0.0, 1.0]
+marriott-bonvoy-boundless-credit-card | Elite Credits | multiple_choice | ['No', 'Yes'] | Are you trying to reach a higher level of Marriott status and need a 15-night head start each year? | Hotel Status | [0.0, 1.0]
+---
+[
+    {
+        "CategoryName": "Hotels",
+        "Icon": "fa-solid fa-hotel",
+        "CategoryNameDetailed": [
+            "Marriott"
+        ]
+    },
+    {
+        "CategoryName": "Dining & Delivery",
+        "Icon": "fa-solid fa-utensils",
+        "CategoryNameDetailed": [
+            "Generic Dining"
+        ]
+    },
+    {
+        "CategoryName": "Groceries",
+        "Icon": "fa-solid fa-cart-shopping",
+        "CategoryNameDetailed": [
+            "Generic Groceries"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

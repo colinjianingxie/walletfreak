@@ -1,0 +1,33 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+PNC | PNC Premier Traveler Visa Signature Credit Card | 85 | 1.0 | pnc-premier-traveler-visa-signature-credit-card | /static/images/credit_cards/pnc-premier-traveler-visa-signature-credit-card.png | 670 | 850 | https://www.pnc.com/en/personal-banking/banking/credit-cards/pnc-premier-traveler-visa-signature-credit-card.html | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+PNC | PNC Premier Traveler Visa | No foreign transaction fees |  | ["Generic Travel Perks", "Fee Waiver"] | Ongoing | 50 | False | 2025-12-08 | No FTF | Perk |  | N/A | pnc-premier-traveler-visa-signature-credit-card
+PNC | PNC Premier Traveler Visa | Visa Signature Luxury Hotel benefits |  | ["Generic Hotels"] | Per stay | 100 | False | 2025-12-08 | Luxury Hotel Perks | Perk |  | N/A | pnc-premier-traveler-visa-signature-credit-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+PNC | PNC Premier Traveler Visa Signature Credit Card | 3 | miles | ["Generic Travel Perks"] |  | pnc-premier-traveler-visa-signature-credit-card | False
+PNC | PNC Premier Traveler Visa Signature Credit Card | 2 | miles | ["Generic Financial & Rewards"] | everything else | pnc-premier-traveler-visa-signature-credit-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+pnc-premier-traveler-visa-signature-credit-card | No Foreign Transaction Fees | multiple_choice | ['No', 'Yes'] | Do you travel abroad and want to avoid the typical 3% fee on every purchase? | Travel | [0.0, 1.0]
+pnc-premier-traveler-visa-signature-credit-card | Luxury Hotel Collection Benefits | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you enjoy perks like room upgrades and food credits when staying at luxury hotels? | Hotel | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Travel Perks",
+        "Icon": "fa-solid fa-passport",
+        "CategoryNameDetailed": [
+            "Generic Travel Perks"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

@@ -1,0 +1,26 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Discover | Discover it Cash Back | 0 | N/A | discover-it-cash-back | /static/images/credit_cards/discover-it-cash-back.png | 670 | 850 | https://www.discovercard.com/application/website/apply?srcCde=GJVP&adobe_mc=... | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Discover | it Cash Back | Free FICO Credit Score access |  | ["Credit Monitoring", "Generic Financial & Rewards"] | Monthly | 10 | False | 2025-12-24 | Free FICO Score | Perk | 10 | Cash | discover-it-cash-back
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Discover | Discover it Cash Back | 5 | cash back | ["Rotating Categories"] | quarterly rotating categories | discover-it-cash-back | False
+Discover | Discover it Cash Back | 1 | cash back | ["Generic Financial & Rewards"] | everything else | discover-it-cash-back | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+Discover | Discover it Cash Back |  | First year cashback match | 0 | Cash | discover-it-cash-back | 0 | 0
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+discover-it-cash-back | Free FICO Score | multiple_choice | ['No', 'Sometimes', 'Yes'] | Are you focused on monitoring and improving your credit score monthly? | Credit Monitoring | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards",
+            "Rotating Categories"
+        ]
+    }
+]

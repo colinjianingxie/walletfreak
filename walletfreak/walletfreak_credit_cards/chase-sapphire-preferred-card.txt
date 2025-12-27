@@ -1,0 +1,73 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Chase | Chase Sapphire Preferred Card | 95 | 1.25 | chase-sapphire-preferred-card | /static/images/credit_cards/chase-sapphire-preferred-card.png | 670 | 850 | https://secure.chase.com/web/oao/application/card?sourceCode=HSGD&action=guest#/origination/cardDetails/index/index;cellCode=61DS;combo=Y | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Chase | Chase Sapphire Preferred Card | $50 Annual Chase Travel Hotel Credit |  | ["Generic Hotels"] | Annually (anniversary year) | 50 | False | 2025-11-29 | Hotel Credit | Credit | 50.0 | Cash | chase-sapphire-preferred-card
+Chase | Chase Sapphire Preferred Card | 10% anniversary points bonus based on total purchases in prior account anniversary year |  | ["Anniversary Bonus"] | Annually (anniversary year) |  | False | 2025-11-29 | Anniversary Bonus | Bonus | 10.0 | Percent | chase-sapphire-preferred-card
+Chase | Chase Sapphire Preferred Card | Complimentary DashPass membership | activate by 12/31/2027 | ["DoorDash", "Generic Dining"] | Minimum 12 months from activation | 120 | False | 2025-11-29 | DashPass | Perk | 120 | Cash | chase-sapphire-preferred-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Chase | Chase Sapphire Preferred Card | 5 | points | ["Chase Travel Flights"] | flights through Chase Travel | chase-sapphire-preferred-card | False
+Chase | Chase Sapphire Preferred Card | 5 | points | ["Chase Travel Hotels"] | hotels through Chase Travel | chase-sapphire-preferred-card | False
+Chase | Chase Sapphire Preferred Card | 5 | points | ["Chase Travel Rental Cars"] | rental cars through Chase Travel | chase-sapphire-preferred-card | False
+Chase | Chase Sapphire Preferred Card | 3 | points | ["Generic Dining"] | dining | chase-sapphire-preferred-card | False
+Chase | Chase Sapphire Preferred Card | 3 | points | ["Online Groceries"] | online groceries | chase-sapphire-preferred-card | False
+Chase | Chase Sapphire Preferred Card | 3 | points | ["Streaming"] | streaming | chase-sapphire-preferred-card | False
+Chase | Chase Sapphire Preferred Card | 2 | points | ["Generic Airlines", "Generic Hotels", "Generic Transportation"] | all other travel (direct) | chase-sapphire-preferred-card | False
+Chase | Chase Sapphire Preferred Card | 1 | points | ["Generic Financial & Rewards"] | everything else | chase-sapphire-preferred-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+Chase | Chase Sapphire Preferred Card | 2025-03-26 | Spend $5000 in 3 months | 75000 | Points | chase-sapphire-preferred-card | 5000 | 3
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+chase-sapphire-preferred-card | Hotel Credit | multiple_choice | ['0-2', '3-5', '6-10', '11+'] | How many hotel nights do you typically book in a year through a travel portal? | Hotel | [0.0, 0.4, 0.8, 1.0]
+chase-sapphire-preferred-card | Anniversary Bonus | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you value an annual anniversary bonus to boost your travel rewards balance? | Anniversary Bonus | [0.0, 0.5, 1.0]
+chase-sapphire-preferred-card | DashPass | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you use food delivery services at least twice a month? | Delivery | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Airlines",
+        "Icon": "fa-solid fa-plane",
+        "CategoryNameDetailed": [
+            "Generic Airlines",
+            "Chase Travel Flights"
+        ]
+    },
+    {
+        "CategoryName": "Hotels",
+        "Icon": "fa-solid fa-hotel",
+        "CategoryNameDetailed": [
+            "Generic Hotels",
+            "Chase Travel Hotels"
+        ]
+    },
+    {
+        "CategoryName": "Dining & Delivery",
+        "Icon": "fa-solid fa-utensils",
+        "CategoryNameDetailed": [
+            "Generic Dining"
+        ]
+    },
+    {
+        "CategoryName": "Transportation",
+        "Icon": "fa-solid fa-car-side",
+        "CategoryNameDetailed": [
+            "Generic Transportation",
+            "Chase Travel Rental Cars"
+        ]
+    },
+    {
+        "CategoryName": "Entertainment",
+        "Icon": "fa-solid fa-ticket",
+        "CategoryNameDetailed": [
+            "Streaming"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

@@ -1,0 +1,41 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Chase | IHG One Rewards Traveler Credit Card | 0 | 0.6 | ihg-one-rewards-traveler-credit-card | /static/images/credit_cards/ihg-one-rewards-traveler-credit-card.png | 670 | 850 | https://creditcards.chase.com/rewards-credit-cards/ihg/traveler | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Chase | IHG One Rewards Traveler Credit Card | Silver Elite status |  | ["IHG", "Generic Hotels", "Status"] | Permanent |  | False | 2025-11-29 | Silver Status | Status |  | N/A | ihg-one-rewards-traveler-credit-card
+Chase | IHG One Rewards Traveler Credit Card | Fourth Reward Night Free on award stays |  | ["IHG", "Generic Hotels"] | Permanent |  | False | 2025-11-29 | Fourth Night Free | Perk |  | N/A | ihg-one-rewards-traveler-credit-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Chase | IHG One Rewards Traveler Credit Card | 17 | points | ["IHG"] | total points | ihg-one-rewards-traveler-credit-card | False
+Chase | IHG One Rewards Traveler Credit Card | 5 | points | ["Generic Travel Perks"] | select travel | ihg-one-rewards-traveler-credit-card | False
+Chase | IHG One Rewards Traveler Credit Card | 3 | points | ["Generic Financial & Rewards"] | everything else | ihg-one-rewards-traveler-credit-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+ihg-one-rewards-traveler-credit-card | Silver Status | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you value having IHG Silver status for perks like points that don't expire? | Hotel Status | [0.0, 0.5, 1.0]
+ihg-one-rewards-traveler-credit-card | Fourth Night Free | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you book IHG stays with points and want every 4th night to be free? | Hotel | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Hotels",
+        "Icon": "fa-solid fa-hotel",
+        "CategoryNameDetailed": [
+            "IHG"
+        ]
+    },
+    {
+        "CategoryName": "Travel Perks",
+        "Icon": "fa-solid fa-passport",
+        "CategoryNameDetailed": [
+            "Generic Travel Perks"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

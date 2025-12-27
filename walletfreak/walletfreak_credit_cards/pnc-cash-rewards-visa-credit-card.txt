@@ -1,0 +1,49 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+PNC | PNC Cash Rewards Visa Credit Card | 0 | N/A | pnc-cash-rewards-visa-credit-card | /static/images/credit_cards/pnc-cash-rewards-visa-credit-card.png | 670 | 850 | https://lending.pnc.com/cccr/getting-started?promoCode=base | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+PNC | Cash Rewards Visa | PNC Purchase Analysis |  | ["Generic Business & Tech", "Business Management"] | Ongoing | 0 | False | 2025-12-24 | Spending Tools | Perk | 0 | N/A | pnc-cash-rewards-visa-credit-card
+PNC | Cash Rewards Visa | PNC Cash Rewards Bonus |  | ["Rewards Bonus", "Generic Financial & Rewards"] | Ongoing | 0 | False | 2025-12-24 | Account Bonus | Bonus | 0 | N/A | pnc-cash-rewards-visa-credit-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+PNC | PNC Cash Rewards Visa Credit Card | 4 | cash back | ["Gas"] |  | pnc-cash-rewards-visa-credit-card | False
+PNC | PNC Cash Rewards Visa Credit Card | 3 | cash back | ["Generic Dining"] |  | pnc-cash-rewards-visa-credit-card | False
+PNC | PNC Cash Rewards Visa Credit Card | 2 | cash back | ["Generic Groceries"] |  | pnc-cash-rewards-visa-credit-card | False
+PNC | PNC Cash Rewards Visa Credit Card | 1 | cash back | ["Generic Financial & Rewards"] | everything else | pnc-cash-rewards-visa-credit-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+pnc-cash-rewards-visa-credit-card | Spending Tools | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you value digital tools to track and categorize your spending automatically? | Business Management | [0.0, 0.5, 1.0]
+pnc-cash-rewards-visa-credit-card | Account Bonus | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you have a PNC account where you could redeem rewards for extra value? | Rewards Bonus | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Dining & Delivery",
+        "Icon": "fa-solid fa-utensils",
+        "CategoryNameDetailed": [
+            "Generic Dining"
+        ]
+    },
+    {
+        "CategoryName": "Groceries",
+        "Icon": "fa-solid fa-cart-shopping",
+        "CategoryNameDetailed": [
+            "Generic Groceries"
+        ]
+    },
+    {
+        "CategoryName": "Transportation",
+        "Icon": "fa-solid fa-car-side",
+        "CategoryNameDetailed": [
+            "Gas"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

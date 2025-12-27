@@ -1,0 +1,38 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Discover | Discover it Secured Credit Card | 0 | N/A | discover-it-secured-credit-card | /static/images/credit_cards/discover-it-secured-credit-card.png | 300 | 579 | https://www.discovercard.com/application/website/apply?srcCde=KXPA&adobe_mc=... | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Discover | it Secured | Refundable Security Deposit |  | ["Credit Building", "Generic Financial & Rewards"] | Ongoing | 0 | False | 2025-12-24 | Deposit Refund | Perk | 0 | N/A | discover-it-secured-credit-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Discover | Discover it Secured Credit Card | 2 | cash back | ["Gas", "Generic Dining"] | gas & dining | discover-it-secured-credit-card | False
+Discover | Discover it Secured Credit Card | 1 | cash back | ["Generic Financial & Rewards"] | everything else | discover-it-secured-credit-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+discover-it-secured-credit-card | Deposit Refund | multiple_choice | ['No', 'Somewhat', 'Highly'] | Are you focused on establishing a credit history to eventually get your deposit back? | Credit Building | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Dining & Delivery",
+        "Icon": "fa-solid fa-utensils",
+        "CategoryNameDetailed": [
+            "Generic Dining"
+        ]
+    },
+    {
+        "CategoryName": "Transportation",
+        "Icon": "fa-solid fa-car-side",
+        "CategoryNameDetailed": [
+            "Gas"
+        ]
+    },
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards"
+        ]
+    }
+]

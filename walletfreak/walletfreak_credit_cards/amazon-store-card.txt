@@ -1,0 +1,25 @@
+Vendor | CardName | AnnualFee | PointsValueCpp | slug-id | ImageURL | MinCreditScore | MaxCreditScore | ApplicationLink | Is524
+Synchrony | Amazon Store Card | 0 | N/A | amazon-store-card | /static/images/credit_cards/amazon-store-card.jpg | 670 | 850 | https://www.amazon.com/Amazon-Prime-Store-Card/b?node=21289116011 | True
+---
+Vendor | CardName | BenefitDescription | AdditionalDetails | BenefitCategory | TimeCategory | DollarValue | EnrollmentRequired | EffectiveDate | BenefitDescriptionShort | BenefitType | NumericValue | NumericType | slug-id
+Synchrony | Amazon Store Card | Special financing offers on Amazon.com purchases |  | ["Amazon", "Generic Shopping"] | Permanent |  | False | 2025-11-29 | Special Financing | Perk |  | N/A | amazon-store-card
+---
+Vendor | CardName | EarningRate | Currency | RateCategory | AdditionalDetails | slug-id | IsDefault
+Synchrony | Amazon Store Card | 0 | N/A | ["No Rewards"] | no rewards without Prime | amazon-store-card | False
+Synchrony | Amazon Store Card | 0 | N/A | ["Generic Financial & Rewards"] | non-qualifying spend | amazon-store-card | True
+---
+Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id | SpendAmount | SignupDurationMonths
+---
+slug-id | BenefitShortDescription | QuestionType | ChoiceList | Question | BenefitCategory | ChoiceWeight
+amazon-store-card | Special Financing | multiple_choice | ['No', 'Sometimes', 'Yes'] | Do you value interest-free financing on large Amazon purchases? | Shopping,Amazon | [0.0, 0.5, 1.0]
+---
+[
+    {
+        "CategoryName": "Financial & Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "Generic Financial & Rewards",
+            "No Rewards"
+        ]
+    }
+]
