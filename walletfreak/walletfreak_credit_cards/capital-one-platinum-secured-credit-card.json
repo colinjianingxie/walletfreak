@@ -1,0 +1,71 @@
+{
+    "Vendor": "Capital One",
+    "CardName": "Capital One Platinum Secured Credit Card",
+    "AnnualFee": 0,
+    "PointsValueCpp": null,
+    "slug-id": "capital-one-platinum-secured-credit-card",
+    "ImageURL": "/static/images/credit_cards/capital-one-platinum-secured-credit-card.webp",
+    "MinCreditScore": 300,
+    "MaxCreditScore": 579,
+    "ApplicationLink": "https://www.capitalone.com/credit-cards/apply/platinum-secured/",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "Credit line increase potential after on-time payments",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Credit Building",
+                "Generic Financial & Rewards"
+            ],
+            "TimeCategory": "Permanent",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Credit Building",
+            "BenefitType": "Perk",
+            "NumericValue": null,
+            "NumericType": null
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 0,
+            "Currency": null,
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "credit building",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Credit Building",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Somewhat",
+                "Highly"
+            ],
+            "Question": "Is building or repairing your credit history your primary goal for a new card?",
+            "BenefitCategory": "Credit Building",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "No Freak verdict for this card yet",
+    "Categories": [
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

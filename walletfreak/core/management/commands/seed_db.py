@@ -85,7 +85,7 @@ class Command(BaseCommand):
         
         # Seed categories and cards
         if seed_all or card_slugs_list or types_list or seed_category_mapping:
-            self._seed_categories_and_cards(base_dir, card_slugs_list, types_list, seed_all or seed_category_mapping)
+            self._seed_categories_and_cards(base_dir, card_slugs_list, types_list, seed_all or seed_category_mapping or bool(card_slugs_list))
         
         # Seed referrals
         if seed_all or seed_referrals or card_slugs_list:
@@ -110,7 +110,8 @@ class Command(BaseCommand):
         
         self.stdout.write(f'Parsing cards from: {updates_dir}')
         
-        cards_data, categories_data, questions_data = generate_cards_from_files(updates_dir)
+        # questions_data is now empty, questions are embedded in cards_data
+        cards_data, categories_data, _ = generate_cards_from_files(updates_dir)
         
         # Apply Overrides
         self.stdout.write(f'Applying benefit overrides from: {overrides_path}')
@@ -142,12 +143,18 @@ class Command(BaseCommand):
             # Extract subcollection data before removing from main document
             benefits = card.get('benefits', [])
             rates = card.get('earning_rates', [])
-            bonus = card.get('sign_up_bonus')
+            # bonus is now expected to be a list
+            bonuses = card.get('sign_up_bonus', [])
+            if isinstance(bonuses, dict): # Handling legacy/edge case if it returned a dict
+                bonuses = [bonuses]
+                
+            questions = card.get('questions', [])
             
             # Remove redundant keys from main card document (now stored in subcollections)
             card.pop('benefits', None)
             card.pop('earning_rates', None)
             card.pop('sign_up_bonus', None)
+            card.pop('questions', None)
             
             # Create main card document (without subcollection data) - always update main doc
             # Use merge=True if we are doing a partial seed (types_list) to avoid wiping other fields (e.g. referrals)
@@ -189,29 +196,36 @@ class Command(BaseCommand):
                     db.create_document(r_path, r, doc_id=r_id)
                 seeded_types.append(f'{len(rates)} rates')
 
-            # Sign Up Bonus
+            # Sign Up Bonus (List)
             if not types_list or 'sign_up_bonus' in types_list:
                 s_path = f'credit_cards/{slug}/sign_up_bonus'
-                delete_subcollection(s_path)
-                if bonus:
-                    if bonus.get('value') or bonus.get('terms'):
-                        bonus_id = bonus.get('effective_date')
+                # Do NOT delete subcollection for bonuses to preserve history of EffectiveDates
+                # But actually, with the new system, we might be re-seeding the whole history from JSON?
+                # If the JSON contains the full history, we technically *could* delete, but safe to just upsert.
+                # If we want to clean up old ones that are NOT in the JSON, we should delete.
+                # However, the previous logic explicitly said "Do NOT delete...". I'll trust that for now, 
+                # or maybe the JSON *is* the source of truth now? 
+                # Assuming JSON is source of truth, but let's stick to upserting for safety.
+                
+                count_bonus = 0
+                for b in bonuses:
+                    if b.get('value') or b.get('terms'):
+                        bonus_id = b.get('effective_date')
                         if not bonus_id:
                             bonus_id = 'default'
-                        db.create_document(s_path, bonus, doc_id=bonus_id)
-                        seeded_types.append('bonus')
+                        db.create_document(s_path, b, doc_id=bonus_id)
+                        count_bonus += 1
+                seeded_types.append(f'{count_bonus} bonuses')
             
             # Card Questions (calculator_questions)
             if not types_list or 'calculator_questions' in types_list:
-                # Find questions for this card
-                card_questions = [q for q in questions_data if q.get('slug-id') == slug]
-                if card_questions:
+                if questions:
                     q_path = f"credit_cards/{slug}/card_questions"
                     delete_subcollection(q_path)
-                    for i, cx in enumerate(card_questions):
+                    for i, cx in enumerate(questions):
                         doc_id = str(i)
                         db.create_document(q_path, cx, doc_id=doc_id)
-                    seeded_types.append(f'{len(card_questions)} questions')
+                    seeded_types.append(f'{len(questions)} questions')
             
             self.stdout.write(f'Seeded card: {card["name"]} with {", ".join(seeded_types)}')
 

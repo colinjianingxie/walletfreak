@@ -36,91 +36,54 @@ def get_cards_data(directory):
         print(f"Error: Directory {directory} not found.")
         return {}
 
-    files = [f for f in os.listdir(directory) if f.endswith('.txt')]
+    files = [f for f in os.listdir(directory) if f.endswith('.json')]
     
     for filename in files:
         filepath = os.path.join(directory, filename)
         try:
             with open(filepath, 'r', encoding='utf-8') as f:
-                content = f.read()
+                data = json.load(f)
             
-            parts = content.split('\n---\n')
-            
-            # Part 1: Info
-            info_lines = [l.strip() for l in parts[0].strip().split('\n') if l.strip()]
-            if len(info_lines) < 2:
-                print(f"[WARN] {filename}: Invalid Info section")
-                continue
-                
-            headers = parse_header_line(info_lines[0])
-            values = parse_data_line(info_lines[1])
-            row = dict(zip(headers, values))
-            slug = row.get('slug-id')
-            
+            slug = data.get('slug-id')
             if not slug:
                 print(f"[WARN] {filename}: Missing slug-id")
                 continue
                 
-            # Part 2: Benefits
-            has_benefits = False
-            if len(parts) > 1 and parts[1].strip():
-                # Just check if there are data rows
-                b_lines = [l.strip() for l in parts[1].strip().split('\n') if l.strip()]
-                if len(b_lines) > 1: # Header + Data
-                    has_benefits = True
+            # Benefits
+            has_benefits = bool(data.get('Benefits'))
 
-            # Part 3: Rates
+            # Rates
             has_rates = False
             rate_integrity = True
             rates_error = None
             
-            if len(parts) > 2 and parts[2].strip():
-                r_lines = [l.strip() for l in parts[2].strip().split('\n') if l.strip()]
-                if len(r_lines) > 1:
-                    has_rates = True
-                    # Validate Rates Integrity
-                    r_headers = parse_header_line(r_lines[0])
-                    default_count = 0
-                    
-                    for line in r_lines[1:]:
-                        r_vals = parse_data_line(line)
-                        if len(r_vals) != len(r_headers):
-                             continue # skipping malformed lines for now, or flag error?
-                        r_row = dict(zip(r_headers, r_vals))
+            rates = data.get('EarningRates', [])
+            if rates:
+                has_rates = True
+                default_count = 0
+                for r in rates:
+                    # Check IsDefault
+                    # JSON handles booleans directly usually, but check just in case
+                    is_def = r.get('IsDefault')
+                    if isinstance(is_def, str):
+                        is_def = is_def.lower() == 'true'
+                    if is_def:
+                        default_count += 1
                         
-                        # Check IsDefault
-                        is_def = r_row.get('IsDefault', 'False').lower() == 'true'
-                        if is_def:
-                            default_count += 1
-                            
-                        # Check JSON Category
-                        import json
-                        cat_raw = r_row.get('RateCategory', '')
-                        try:
-                            # Handling simple list string "['a']"
-                            # Using json.loads might fail on single quotes if not careful, 
-                            # but let's assume valid JSON or python literal for now
-                            # If strict JSON required, it might fail. 
-                            # Let's try flexible parse
-                            if cat_raw.startswith('[') and cat_raw.endswith(']'):
-                                pass # looks like list
-                            else:
-                                rate_integrity = False
-                                rates_error = f"Invalid RateCategory format: {cat_raw}"
-                        except:
-                            rate_integrity = False
-                            rates_error = "JSON Error"
+                    # Check RateCategory (should be list in JSON)
+                    cat = r.get('RateCategory')
+                    if not isinstance(cat, list):
+                         # If it's not a list, it might be a malformed string or null
+                         # Our converter ensured lists, but check anyway
+                         rate_integrity = False
+                         rates_error = f"Invalid RateCategory type: {type(cat)}"
 
-                    if default_count != 1:
-                        rate_integrity = False
-                        rates_error = f"Found {default_count} default rates. Must be exactly 1."
+                if default_count != 1:
+                    rate_integrity = False
+                    rates_error = f"Found {default_count} default rates. Must be exactly 1."
             
-            # Part 4: Signup
-            has_signup = False
-            if len(parts) > 3 and parts[3].strip():
-                s_lines = [l.strip() for l in parts[3].strip().split('\n') if l.strip()]
-                if len(s_lines) > 1:
-                    has_signup = True
+            # Signup
+            has_signup = bool(data.get('SignUpBonuses'))
 
             cards_data[slug] = {
                 'has_benefits': has_benefits,

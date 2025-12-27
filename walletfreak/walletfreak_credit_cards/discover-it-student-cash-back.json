@@ -1,0 +1,47 @@
+{
+    "Vendor": "Discover",
+    "CardName": "Discover it Student Cash Back",
+    "AnnualFee": null,
+    "PointsValueCpp": null,
+    "slug-id": "discover-it-student-cash-back",
+    "ImageURL": "/static/images/credit_cards/discover-it-student-cash-back.jpg",
+    "MinCreditScore": 580,
+    "MaxCreditScore": 669,
+    "ApplicationLink": "https://www.discovercard.com/application/website/apply?srcCde=RJQX&adobe_mc=...",
+    "Is524": true,
+    "Benefits": [],
+    "EarningRates": [
+        {
+            "EarningRate": 5,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Rotating Categories"
+            ],
+            "AdditionalDetails": "quarterly",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [],
+    "Questions": [],
+    "FreakVerdict": "No Freak verdict for this card yet",
+    "Categories": [
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards",
+                "Rotating Categories"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

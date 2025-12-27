@@ -1,0 +1,116 @@
+{
+    "Vendor": "PNC",
+    "CardName": "PNC Premier Traveler Visa Signature Credit Card",
+    "AnnualFee": 85,
+    "PointsValueCpp": 1.0,
+    "slug-id": "pnc-premier-traveler-visa-signature-credit-card",
+    "ImageURL": "/static/images/credit_cards/pnc-premier-traveler-visa-signature-credit-card.png",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.pnc.com/en/personal-banking/banking/credit-cards/pnc-premier-traveler-visa-signature-credit-card.html",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "No foreign transaction fees",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Generic Travel Perks",
+                "Fee Waiver"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 50,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-08",
+            "BenefitDescriptionShort": "No FTF",
+            "BenefitType": "Perk",
+            "NumericValue": null,
+            "NumericType": null
+        },
+        {
+            "BenefitDescription": "Visa Signature Luxury Hotel benefits",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Generic Hotels"
+            ],
+            "TimeCategory": "Per stay",
+            "DollarValue": 100,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-08",
+            "BenefitDescriptionShort": "Luxury Hotel Perks",
+            "BenefitType": "Perk",
+            "NumericValue": null,
+            "NumericType": null
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 3,
+            "Currency": "miles",
+            "RateCategory": [
+                "Generic Travel Perks"
+            ],
+            "AdditionalDetails": null,
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "miles",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [],
+    "Questions": [
+        {
+            "BenefitShortDescription": "No Foreign Transaction Fees",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Do you travel abroad and want to avoid the typical 3% fee on every purchase?",
+            "BenefitCategory": "Travel",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Luxury Hotel Collection Benefits",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you enjoy perks like room upgrades and food credits when staying at luxury hotels?",
+            "BenefitCategory": "Hotel",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "No Freak verdict for this card yet",
+    "Categories": [
+        {
+            "CategoryName": "Travel Perks",
+            "Icon": "fa-solid fa-passport",
+            "CategoryNameDetailed": [
+                "Generic Travel Perks"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

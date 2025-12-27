@@ -1,0 +1,136 @@
+{
+    "Vendor": "Chase",
+    "CardName": "IHG One Rewards Traveler Credit Card",
+    "AnnualFee": 0,
+    "PointsValueCpp": 0.6,
+    "slug-id": "ihg-one-rewards-traveler-credit-card",
+    "ImageURL": "/static/images/credit_cards/ihg-one-rewards-traveler-credit-card.png",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://creditcards.chase.com/rewards-credit-cards/ihg/traveler",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "Silver Elite status",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "IHG",
+                "Generic Hotels",
+                "Status"
+            ],
+            "TimeCategory": "Permanent",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Silver Status",
+            "BenefitType": "Status",
+            "NumericValue": null,
+            "NumericType": null
+        },
+        {
+            "BenefitDescription": "Fourth Reward Night Free on award stays",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "IHG",
+                "Generic Hotels"
+            ],
+            "TimeCategory": "Permanent",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Fourth Night Free",
+            "BenefitType": "Perk",
+            "NumericValue": null,
+            "NumericType": null
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 17,
+            "Currency": "points",
+            "RateCategory": [
+                "IHG"
+            ],
+            "AdditionalDetails": "total points",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 5,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Travel Perks"
+            ],
+            "AdditionalDetails": "select travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Silver Status",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you value having IHG Silver status for perks like points that don't expire?",
+            "BenefitCategory": "Hotel Status",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Fourth Night Free",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you book IHG stays with points and want every 4th night to be free?",
+            "BenefitCategory": "Hotel",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "No Freak verdict for this card yet",
+    "Categories": [
+        {
+            "CategoryName": "Hotels",
+            "Icon": "fa-solid fa-hotel",
+            "CategoryNameDetailed": [
+                "IHG"
+            ]
+        },
+        {
+            "CategoryName": "Travel Perks",
+            "Icon": "fa-solid fa-passport",
+            "CategoryNameDetailed": [
+                "Generic Travel Perks"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

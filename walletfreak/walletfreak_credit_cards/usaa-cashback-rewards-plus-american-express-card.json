@@ -1,0 +1,71 @@
+{
+    "Vendor": "USAA",
+    "CardName": "USAA Cashback Rewards Plus American Express Card",
+    "AnnualFee": null,
+    "PointsValueCpp": null,
+    "slug-id": "usaa-cashback-rewards-plus-american-express-card",
+    "ImageURL": "/static/images/credit_cards/usaa-cashback-rewards-plus-american-express-card.png",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.usaa.com/banking/credit-cards/cashback-rewards-plus-american-express-card",
+    "Is524": true,
+    "Benefits": [],
+    "EarningRates": [
+        {
+            "EarningRate": 5,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Gas",
+                "Military Bases"
+            ],
+            "AdditionalDetails": "gas & military bases",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Groceries"
+            ],
+            "AdditionalDetails": "supermarkets",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [],
+    "Questions": [],
+    "FreakVerdict": "No Freak verdict for this card yet",
+    "Categories": [
+        {
+            "CategoryName": "Groceries",
+            "Icon": "fa-solid fa-cart-shopping",
+            "CategoryNameDetailed": [
+                "Generic Groceries"
+            ]
+        },
+        {
+            "CategoryName": "Transportation",
+            "Icon": "fa-solid fa-car-side",
+            "CategoryNameDetailed": [
+                "Gas",
+                "Military Bases"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

@@ -1,0 +1,174 @@
+{
+    "Vendor": "Capital One",
+    "CardName": "Capital One VentureOne Rewards Credit Card",
+    "AnnualFee": 0,
+    "PointsValueCpp": 1.0,
+    "slug-id": "capital-one-ventureone-rewards-credit-card",
+    "ImageURL": "/static/images/credit_cards/capital-one-ventureone-rewards-credit-card.webp",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.capitalone.com/credit-cards/apply/ventureone-rewards/",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "No foreign transaction fees",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Generic Travel Perks",
+                "Fee Waiver"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 50,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-08",
+            "BenefitDescriptionShort": "No FTF",
+            "BenefitType": "Perk",
+            "NumericValue": null,
+            "NumericType": null
+        },
+        {
+            "BenefitDescription": "Ability to transfer miles to partners",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-08",
+            "BenefitDescriptionShort": "Miles Transfer",
+            "BenefitType": "Perk",
+            "NumericValue": null,
+            "NumericType": null
+        },
+        {
+            "BenefitDescription": "Complimentary Hertz Five Star\u00ae status",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Hertz",
+                "Rental Cars",
+                "Status"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 150,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-12-08",
+            "BenefitDescriptionShort": "Hertz Status",
+            "BenefitType": "Perk",
+            "NumericValue": null,
+            "NumericType": null
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 5,
+            "Currency": "miles",
+            "RateCategory": [
+                "Capital One Travel Hotels"
+            ],
+            "AdditionalDetails": "hotels through Capital One Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 5,
+            "Currency": "miles",
+            "RateCategory": [
+                "Capital One Travel Rental Cars"
+            ],
+            "AdditionalDetails": "rental cars through Capital One Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1.25,
+            "Currency": "miles",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": null,
+            "Terms": "Spend $500 in 3 months",
+            "SignUpBonusValue": 20000,
+            "SignUpBonusType": "Miles",
+            "SpendAmount": 500,
+            "SignupDurationMonths": 3
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "No Foreign Transaction Fees",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Do you travel abroad and want to avoid the typical 3% fee on every purchase?",
+            "BenefitCategory": "Travel",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Miles Transfer Partners",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you value the ability to transfer miles to various airline and hotel partners?",
+            "BenefitCategory": "Redemption Flexibility",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Hertz Five Star Status",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you rent cars frequently enough to benefit from elite status and skipping the counter?",
+            "BenefitCategory": "Car Rental",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "10/10. Simple 20k miles for $500 spend.",
+    "Categories": [
+        {
+            "CategoryName": "Hotels",
+            "Icon": "fa-solid fa-hotel",
+            "CategoryNameDetailed": [
+                "Capital One Travel Hotels"
+            ]
+        },
+        {
+            "CategoryName": "Transportation",
+            "Icon": "fa-solid fa-car-side",
+            "CategoryNameDetailed": [
+                "Capital One Travel Rental Cars"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

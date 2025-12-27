@@ -1,0 +1,206 @@
+{
+    "Vendor": "Chase",
+    "CardName": "IHG One Rewards Premier Credit Card",
+    "AnnualFee": 99,
+    "PointsValueCpp": 0.6,
+    "slug-id": "ihg-one-rewards-premier-credit-card",
+    "ImageURL": "/static/images/credit_cards/ihg-one-rewards-premier-credit-card.png",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://creditcards.chase.com/rewards-credit-cards/ihg/premier",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "Anniversary Free Night Award",
+            "AdditionalDetails": "up to 40,000 points",
+            "BenefitCategory": [
+                "IHG",
+                "Generic Hotels"
+            ],
+            "TimeCategory": "Annually (anniversary year)",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Free Night",
+            "BenefitType": "Free Night",
+            "NumericValue": 1,
+            "NumericType": "FreeNight"
+        },
+        {
+            "BenefitDescription": "$100 statement credit + 10,000 points after $20,000 spend annually",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "IHG",
+                "Generic Hotels"
+            ],
+            "TimeCategory": "Calendar year",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Spend Bonus",
+            "BenefitType": "Bonus",
+            "NumericValue": 10000,
+            "NumericType": null
+        },
+        {
+            "BenefitDescription": "Global Entry/TSA PreCheck credit",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Travel Security",
+                "Global Entry",
+                "TSA PreCheck"
+            ],
+            "TimeCategory": "Every 4 years",
+            "DollarValue": 120,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "TSA Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 120.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "Platinum Elite status",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "IHG",
+                "Generic Hotels",
+                "Status"
+            ],
+            "TimeCategory": "Permanent",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Platinum Status",
+            "BenefitType": "Status",
+            "NumericValue": null,
+            "NumericType": null
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 26,
+            "Currency": "points",
+            "RateCategory": [
+                "IHG"
+            ],
+            "AdditionalDetails": "total points at IHG hotels",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 5,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Travel Perks"
+            ],
+            "AdditionalDetails": "travel categories",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": null,
+            "Terms": "Spend $3000 in 3 months",
+            "SignUpBonusValue": 140000,
+            "SignUpBonusType": "Points",
+            "SpendAmount": 3000,
+            "SignupDurationMonths": 3
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Free Night",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Would you use an annual free night at an IHG hotel worth up to 40,000 points?",
+            "BenefitCategory": "Hotel",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Spend Bonus",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Maybe",
+                "Yes"
+            ],
+            "Question": "Is your annual spending high enough ($20k+) that you would value an extra $100 credit and 10k points?",
+            "BenefitCategory": "Hotel",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "TSA Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Do you want a credit to cover your Global Entry or TSA PreCheck application?",
+            "BenefitCategory": "Travel Security",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Platinum Status",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you stay at IHG hotels often enough to value room upgrades and early check-in?",
+            "BenefitCategory": "Hotel Status",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "10/10. Straightforward 140k points after $3,000 spend. No tiers.",
+    "Categories": [
+        {
+            "CategoryName": "Hotels",
+            "Icon": "fa-solid fa-hotel",
+            "CategoryNameDetailed": [
+                "IHG"
+            ]
+        },
+        {
+            "CategoryName": "Travel Perks",
+            "Icon": "fa-solid fa-passport",
+            "CategoryNameDetailed": [
+                "Generic Travel Perks"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

@@ -1,0 +1,266 @@
+{
+    "Vendor": "American Express",
+    "CardName": "American Express Gold Card",
+    "AnnualFee": 325,
+    "PointsValueCpp": 1.0,
+    "slug-id": "american-express-gold-card",
+    "ImageURL": "/static/images/credit_cards/american-express-gold-card.jpg",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.americanexpress.com/us/credit-cards/card/gold-card/",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "$120 Uber Cash for U.S. rides & Uber Eats",
+            "AdditionalDetails": "$10 monthly",
+            "BenefitCategory": [
+                "Uber",
+                "Generic Transportation",
+                "Generic Dining"
+            ],
+            "TimeCategory": "Monthly",
+            "DollarValue": 120,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Uber Cash",
+            "BenefitType": "Credit",
+            "NumericValue": 120.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$120 Dining Credit",
+            "AdditionalDetails": "$10 monthly at Grubhub The Cheesecake Factory Goldbelly Wine.com Five Guys",
+            "BenefitCategory": [
+                "Grubhub",
+                "Generic Dining"
+            ],
+            "TimeCategory": "Monthly",
+            "DollarValue": 120,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Dining Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 120.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$100 Resy Credit",
+            "AdditionalDetails": "$50 semi-annually",
+            "BenefitCategory": [
+                "Resy",
+                "Generic Dining"
+            ],
+            "TimeCategory": "Semi-annually",
+            "DollarValue": 100,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Resy Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 100.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$84 Dunkin' Credit",
+            "AdditionalDetails": "$7 monthly",
+            "BenefitCategory": [
+                "Dunkin",
+                "Generic Dining"
+            ],
+            "TimeCategory": "Monthly",
+            "DollarValue": 84,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Dunkin Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 84.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$100 Hotel Collection Credit on qualifying 2-night minimum stays via Amex Travel",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Generic Hotels"
+            ],
+            "TimeCategory": "Per qualifying stay",
+            "DollarValue": 100,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Hotel Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 100.0,
+            "NumericType": "Cash"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 4,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Dining"
+            ],
+            "AdditionalDetails": "restaurants worldwide",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 4,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Groceries"
+            ],
+            "AdditionalDetails": "U.S. supermarkets",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Airlines"
+            ],
+            "AdditionalDetails": "flights booked direct",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "points",
+            "RateCategory": [
+                "Amex Travel Flights"
+            ],
+            "AdditionalDetails": "flights via Amex Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-06-26",
+            "Terms": "Spend $6000 in 6 months",
+            "SignUpBonusValue": 100000,
+            "SignUpBonusType": "Points",
+            "SpendAmount": 6000,
+            "SignupDurationMonths": 6
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Uber Cash",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you use Uber for transportation or order from local restaurants via Uber Eats monthly?",
+            "BenefitCategory": "Rideshare,Food Delivery",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Dining Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you regularly order takeout from Grubhub or visit dining chains like The Cheesecake Factory?",
+            "BenefitCategory": "Dining",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Resy Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you enjoy discovering and booking tables at popular local restaurants through Resy?",
+            "BenefitCategory": "Dining",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Dunkin Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Is a morning coffee or donut from Dunkin' a staple of your routine?",
+            "BenefitCategory": "Dining",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Hotel Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "How likely are you to book hotel stays through a bank portal to earn extra value on trip perks?",
+            "BenefitCategory": "Hotel",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "10/10. High spend but flat 100k points. Amex keeps it simple.",
+    "Categories": [
+        {
+            "CategoryName": "Airlines",
+            "Icon": "fa-solid fa-plane",
+            "CategoryNameDetailed": [
+                "Generic Airlines",
+                "Amex Travel Flights"
+            ]
+        },
+        {
+            "CategoryName": "Dining & Delivery",
+            "Icon": "fa-solid fa-utensils",
+            "CategoryNameDetailed": [
+                "Generic Dining"
+            ]
+        },
+        {
+            "CategoryName": "Groceries",
+            "Icon": "fa-solid fa-cart-shopping",
+            "CategoryNameDetailed": [
+                "Generic Groceries"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

@@ -1,0 +1,184 @@
+{
+    "Vendor": "Chase",
+    "CardName": "Chase Freedom Unlimited",
+    "AnnualFee": 0,
+    "PointsValueCpp": null,
+    "slug-id": "chase-freedom-unlimited",
+    "ImageURL": "/static/images/credit_cards/chase-freedom-unlimited.jpg",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://secure.chase.com/web/oao/application/card?sourceCode=HZCH&action=guest#/origination/cardDetails/index/index;cellCode=61DS;combo=Y",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "Complimentary DashPass membership",
+            "AdditionalDetails": "activate by 12/31/2027",
+            "BenefitCategory": [
+                "DoorDash",
+                "Generic Dining"
+            ],
+            "TimeCategory": "Minimum 12 months from activation",
+            "DollarValue": 120,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "DashPass",
+            "BenefitType": "Perk",
+            "NumericValue": 120,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$40 annual DoorDash NR credit",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "DoorDash",
+                "Generic Dining"
+            ],
+            "TimeCategory": "Quarterly",
+            "DollarValue": 40,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-12-24",
+            "BenefitDescriptionShort": "DoorDash NR Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 40,
+            "NumericType": "Cash"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 5,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Chase Travel Flights"
+            ],
+            "AdditionalDetails": "flights through Chase Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 5,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Chase Travel Hotels"
+            ],
+            "AdditionalDetails": "hotels through Chase Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 5,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Chase Travel Rental Cars"
+            ],
+            "AdditionalDetails": "rental cars through Chase Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Dining",
+                "Drugstores"
+            ],
+            "AdditionalDetails": "dining (incl. takeout/delivery) & drugstores",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1.5,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else (unlimited)",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": null,
+            "Terms": "Spend $500 in 3 months",
+            "SignUpBonusValue": 200,
+            "SignUpBonusType": "Cash",
+            "SpendAmount": 500,
+            "SignupDurationMonths": 3
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "DashPass",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you value a free delivery membership for your favorite local restaurants?",
+            "BenefitCategory": "Delivery",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "DoorDash NR Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you order convenience or grocery items via DoorDash and want $10 off quarterly?",
+            "BenefitCategory": "Delivery",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "10/10. Extremely low barrier to entry. Simple $500 spend for a quick $200 back.",
+    "Categories": [
+        {
+            "CategoryName": "Airlines",
+            "Icon": "fa-solid fa-plane",
+            "CategoryNameDetailed": [
+                "Chase Travel Flights"
+            ]
+        },
+        {
+            "CategoryName": "Hotels",
+            "Icon": "fa-solid fa-hotel",
+            "CategoryNameDetailed": [
+                "Chase Travel Hotels"
+            ]
+        },
+        {
+            "CategoryName": "Dining & Delivery",
+            "Icon": "fa-solid fa-utensils",
+            "CategoryNameDetailed": [
+                "Generic Dining"
+            ]
+        },
+        {
+            "CategoryName": "Transportation",
+            "Icon": "fa-solid fa-car-side",
+            "CategoryNameDetailed": [
+                "Chase Travel Rental Cars"
+            ]
+        },
+        {
+            "CategoryName": "Shopping",
+            "Icon": "fa-solid fa-bag-shopping",
+            "CategoryNameDetailed": [
+                "Drugstores"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

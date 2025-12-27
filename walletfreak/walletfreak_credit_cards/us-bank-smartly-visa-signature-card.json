@@ -1,0 +1,37 @@
+{
+    "Vendor": "U.S. Bank",
+    "CardName": "U.S. Bank Smartly Visa Signature Card",
+    "AnnualFee": null,
+    "PointsValueCpp": null,
+    "slug-id": "us-bank-smartly-visa-signature-card",
+    "ImageURL": "/static/images/credit_cards/us-bank-smartly-visa-signature-card.png",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://applications.usbank.com/oad/termsSimpleApply.controller?locationCode=8069&offerId=36672BDX52&sourceCode=87869",
+    "Is524": true,
+    "Benefits": [],
+    "EarningRates": [
+        {
+            "EarningRate": 4,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "qualifying accounts (capped at $10,000 per billing cycle)",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [],
+    "Questions": [],
+    "FreakVerdict": "No Freak verdict for this card yet",
+    "Categories": [
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

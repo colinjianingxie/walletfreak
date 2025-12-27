@@ -1,0 +1,68 @@
+{
+    "Vendor": "Citi",
+    "CardName": "Citi Simplicity Card",
+    "AnnualFee": 0,
+    "PointsValueCpp": null,
+    "slug-id": "citi-simplicity-card",
+    "ImageURL": "/static/images/credit_cards/citi-simplicity-card.jpg",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.citi.com/credit-cards/citi-simplicity-credit-card",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "No late fees no penalty rate no annual fee",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Generic Protection"
+            ],
+            "TimeCategory": "Permanent",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "No Fees",
+            "BenefitType": "Perk",
+            "NumericValue": null,
+            "NumericType": null
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 0,
+            "Currency": null,
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "no ongoing rewards",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [],
+    "Questions": [
+        {
+            "BenefitShortDescription": "No Fees",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Is having no late fees or penalty rates a priority for your financial peace of mind?",
+            "BenefitCategory": "Card Protection",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "No Freak verdict for this card yet",
+    "Categories": [
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

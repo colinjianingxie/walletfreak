@@ -110,7 +110,8 @@ def admin_generate_prompt(request, card_id):
     generator = PromptGenerator()
     try:
         prompt_text = generator.generate_prompt(slug)
-        return JsonResponse({'prompt': prompt_text})
+        seed_command = f"python manage.py seed_db --cards={slug}"
+        return JsonResponse({'prompt': prompt_text, 'seed_command': seed_command})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
@@ -149,7 +150,10 @@ def admin_generate_bulk_prompt(request):
         generator = PromptGenerator()
         prompt_text = generator.generate_prompt(slug_ids)
         
-        return JsonResponse({'prompt': prompt_text})
+        seed_cmd_slugs = ",".join(slug_ids)
+        seed_command = f"python manage.py seed_db --cards={seed_cmd_slugs}"
+        
+        return JsonResponse({'prompt': prompt_text, 'seed_command': seed_command})
         
     except Exception as e:
          return JsonResponse({'error': str(e)}, status=500)

@@ -1,0 +1,53 @@
+{
+    "Vendor": "Synchrony",
+    "CardName": "Lowe\u2019s Advantage Card",
+    "AnnualFee": null,
+    "PointsValueCpp": null,
+    "slug-id": "lowes-advantage-card",
+    "ImageURL": "/static/images/credit_cards/lowes-advantage-card.jpeg",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.lowes.com/l/Credit/consumer-credit-card",
+    "Is524": true,
+    "Benefits": [],
+    "EarningRates": [
+        {
+            "EarningRate": 5,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Lowe's"
+            ],
+            "AdditionalDetails": "Lowe's purchases",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 0,
+            "Currency": null,
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "non-qualifying spend",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [],
+    "Questions": [],
+    "FreakVerdict": "No Freak verdict for this card yet",
+    "Categories": [
+        {
+            "CategoryName": "Shopping",
+            "Icon": "fa-solid fa-bag-shopping",
+            "CategoryNameDetailed": [
+                "Lowe's"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

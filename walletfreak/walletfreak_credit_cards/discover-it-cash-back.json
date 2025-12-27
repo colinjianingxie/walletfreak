@@ -1,0 +1,90 @@
+{
+    "Vendor": "Discover",
+    "CardName": "Discover it Cash Back",
+    "AnnualFee": 0,
+    "PointsValueCpp": null,
+    "slug-id": "discover-it-cash-back",
+    "ImageURL": "/static/images/credit_cards/discover-it-cash-back.png",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.discovercard.com/application/website/apply?srcCde=GJVP&adobe_mc=...",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "Free FICO Credit Score access",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Credit Monitoring",
+                "Generic Financial & Rewards"
+            ],
+            "TimeCategory": "Monthly",
+            "DollarValue": 10,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-24",
+            "BenefitDescriptionShort": "Free FICO Score",
+            "BenefitType": "Perk",
+            "NumericValue": 10,
+            "NumericType": "Cash"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 5,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Rotating Categories"
+            ],
+            "AdditionalDetails": "quarterly rotating categories",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": null,
+            "Terms": "First year cashback match",
+            "SignUpBonusValue": 0,
+            "SignUpBonusType": "Cash",
+            "SpendAmount": 0,
+            "SignupDurationMonths": 0
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Free FICO Score",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Are you focused on monitoring and improving your credit score monthly?",
+            "BenefitCategory": "Credit Monitoring",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "5/10. No upfront bonus. Cashback match arrives after 12 months.",
+    "Categories": [
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards",
+                "Rotating Categories"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

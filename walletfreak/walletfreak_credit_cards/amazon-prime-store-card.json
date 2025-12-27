@@ -1,0 +1,184 @@
+{
+    "Vendor": "Synchrony",
+    "CardName": "Amazon Prime Store Card",
+    "AnnualFee": null,
+    "PointsValueCpp": null,
+    "slug-id": "amazon-prime-store-card",
+    "ImageURL": "/static/images/credit_cards/amazon-prime-store-card.png",
+    "MinCreditScore": 640,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.amazon.com/Amazon-Prime-Store-Card/b?node=21289116011",
+    "Is524": false,
+    "Benefits": [
+        {
+            "BenefitDescription": "0% APR for 6 months with equal monthly payments",
+            "AdditionalDetails": "On purchases of $50 to $599.99. Cannot be combined with 5% back rewards.",
+            "BenefitCategory": "Shopping",
+            "TimeCategory": null,
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": null,
+            "BenefitDescriptionShort": "6 month 0% financing",
+            "BenefitType": "Financing",
+            "NumericValue": 6,
+            "NumericType": "Months"
+        },
+        {
+            "BenefitDescription": "0% APR for 12 months with equal monthly payments",
+            "AdditionalDetails": "On purchases of $600 or more. Cannot be combined with 5% back rewards.",
+            "BenefitCategory": "Shopping",
+            "TimeCategory": null,
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": null,
+            "BenefitDescriptionShort": "12 month 0% financing",
+            "BenefitType": "Financing",
+            "NumericValue": 12,
+            "NumericType": "Months"
+        },
+        {
+            "BenefitDescription": "0% APR for 24 months with equal monthly payments",
+            "AdditionalDetails": "On select Amazon purchases. Cannot be combined with 5% back rewards.",
+            "BenefitCategory": "Shopping",
+            "TimeCategory": null,
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": null,
+            "BenefitDescriptionShort": "24 month 0% financing",
+            "BenefitType": "Financing",
+            "NumericValue": 24,
+            "NumericType": "Months"
+        },
+        {
+            "BenefitDescription": "No interest if paid in full within 6 months",
+            "AdditionalDetails": "On purchases of $149 or more. Deferred interest: full interest charged if not paid in full. Ends February 16, 2026. Cannot be combined with 5% back rewards.",
+            "BenefitCategory": "Shopping",
+            "TimeCategory": null,
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": null,
+            "BenefitDescriptionShort": "6 month deferred interest",
+            "BenefitType": "Deferred Interest",
+            "NumericValue": 6,
+            "NumericType": "Months"
+        },
+        {
+            "BenefitDescription": "No interest if paid in full within 12 months",
+            "AdditionalDetails": "On purchases of $599 or more. Deferred interest: full interest charged if not paid in full. Ends February 16, 2026. Cannot be combined with 5% back rewards.",
+            "BenefitCategory": "Shopping",
+            "TimeCategory": null,
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": null,
+            "BenefitDescriptionShort": "12 month deferred interest",
+            "BenefitType": "Deferred Interest",
+            "NumericValue": 12,
+            "NumericType": "Months"
+        },
+        {
+            "BenefitDescription": "No interest if paid in full within 24 months",
+            "AdditionalDetails": "On select Amazon purchases. Deferred interest: full interest charged if not paid in full. Ends February 16, 2026. Cannot be combined with 5% back rewards.",
+            "BenefitCategory": "Shopping",
+            "TimeCategory": null,
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": null,
+            "BenefitDescriptionShort": "24 month deferred interest",
+            "BenefitType": "Deferred Interest",
+            "NumericValue": 24,
+            "NumericType": "Months"
+        },
+        {
+            "BenefitDescription": "Zero fraud liability",
+            "AdditionalDetails": "You are not liable for unauthorized purchases.",
+            "BenefitCategory": "Protection",
+            "TimeCategory": null,
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": null,
+            "BenefitDescriptionShort": "Zero fraud liability",
+            "BenefitType": "Protection",
+            "NumericValue": null,
+            "NumericType": null
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 5,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Amazon"
+            ],
+            "AdditionalDetails": "with Prime",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 5,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Whole Foods"
+            ],
+            "AdditionalDetails": "with Prime, in-store code required",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 5,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Groceries"
+            ],
+            "AdditionalDetails": "with Prime, on Amazon Fresh",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 5,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Streaming"
+            ],
+            "AdditionalDetails": "with Prime, on Amazon Music and Prime Video",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 5,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Entertainment"
+            ],
+            "AdditionalDetails": "with Prime, on Kindle Unlimited",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 5,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Business & Tech"
+            ],
+            "AdditionalDetails": "with Prime, on Alexa Skills",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 0,
+            "Currency": null,
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "non-qualifying spend",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": null,
+            "Terms": "Instantly upon approval with Prime",
+            "SignUpBonusValue": 60,
+            "SignUpBonusType": "Cash",
+            "SpendAmount": 0,
+            "SignupDurationMonths": 0
+        }
+    ],
+    "Questions": [],
+    "FreakVerdict": "No Freak verdict for this card yet",
+    "Categories": [],
+    "ProcessorVendor": null
+}

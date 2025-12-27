@@ -1,0 +1,111 @@
+{
+    "Vendor": "Huntington",
+    "CardName": "Huntington Voice Visa Card",
+    "AnnualFee": 0,
+    "PointsValueCpp": 1.0,
+    "slug-id": "huntington-voice-visa-card",
+    "ImageURL": "/static/images/credit_cards/huntington-voice-visa-card.png",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.huntington.com/apply/cc-rewards",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "No penalty APR",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Generic Financial & Rewards",
+                "Generic Protection"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 40,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-08",
+            "BenefitDescriptionShort": "No Penalty APR",
+            "BenefitType": "Perk",
+            "NumericValue": null,
+            "NumericType": null
+        },
+        {
+            "BenefitDescription": "Roadside Dispatch",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Roadside Assistance",
+                "Generic Protection"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 25,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-08",
+            "BenefitDescriptionShort": "Roadside Dispatch",
+            "BenefitType": "Perk",
+            "NumericValue": null,
+            "NumericType": null
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 3,
+            "Currency": "points",
+            "RateCategory": [
+                "Choice Category"
+            ],
+            "AdditionalDetails": "quarterly choice",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [],
+    "Questions": [
+        {
+            "BenefitShortDescription": "No Penalty APR",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Is having a card that doesn't increase your rate for a late payment important to you?",
+            "BenefitCategory": "Financial Protection",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Roadside Dispatch",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you value having 24/7 access to emergency roadside services?",
+            "BenefitCategory": "Roadside Assistance",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "No Freak verdict for this card yet",
+    "Categories": [
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards",
+                "Choice Category"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

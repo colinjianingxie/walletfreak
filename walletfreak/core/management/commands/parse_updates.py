@@ -1,203 +1,55 @@
 import os
-import csv
 import json
 import logging
-from io import StringIO
+from datetime import datetime
 from collections import defaultdict
-from core.services import db
 
 logger = logging.getLogger(__name__)
 
-SECTIONS = [
-    "Card Info",
-    "Benefits",
-    "Rates",
-    "Signup Bonus",
-    "Questions",
-    "Category Mapping"
-]
-
-def parse_csv_section(content):
-    """Parses a CSV-like section (pipe-delimited) into a list of dicts."""
-    if not content.strip():
-        return []
-    
-    # Use StringIO to treat string as file for csv module
-    f = StringIO(content.strip())
-    reader = csv.DictReader(f, delimiter='|')
-    
-    # helper to strip whitespace from keys and values
-    cleaned_rows = []
+def is_float(s):
     try:
-        data = list(reader)
-        # The reader keys might have whitespace if not careful, but DictReader usually handles headers well if they are standard.
-        # However, our file format might have spaces around pipes like "Vendor | CardName"
-        # csv.DictReader with delimiter='|' considers " Vendor " as the key if strictly parsing.
-        # Let's clean headers and values manually to be safe.
-        
-        # Actually, let's re-read with a better approach towards whitespace if needed.
-        # But `populate_updates.py` writes with ` | `.
-        # So `a | b` becomes headers `a ` and ` b`.
-        # We need to strip keys and values.
-        
-        # DictReader uses the first line as fieldnames.
-        if not Reader_Fieldnames_Cleaned(reader):
-             # If headers have spaces, we need to map them.
-             pass
+        float(s)
+        return True
+    except (ValueError, TypeError):
+        return False
 
-    except csv.Error as e:
-        logger.error(f"Error parsing CSV section: {e}")
-        return []
-        
-    for row in data:
-        cleaned_row = {k.strip(): v.strip() for k, v in row.items() if k}
-        cleaned_rows.append(cleaned_row)
-        
-    return cleaned_rows
-
-def Reader_Fieldnames_Cleaned(reader):
-    # This is slightly tricky with DictReader after it's been iterated or read.
-    # So instead, let's just parse manually to be robust against " | " spacing.
-    return True
-
-def parse_csv_content_robust(content):
+def process_json_card(data):
     """
-    Manually parses pipe-delimited content to handle ' | ' spacing gracefully.
+    Transforms JSON card data into the structure expected by Firestore.
     """
-    lines = [line.strip() for line in content.strip().split('\n') if line.strip()]
-    if not lines:
-        return []
-    
-    headers = [h.strip() for h in lines[0].split('|')]
-    rows = []
-    
-    for line in lines[1:]:
-        values = [v.strip() for v in line.split('|')]
-        # Combine headers and values
-        # specific handling if lengths differ?
-        row_dict = {}
-        for i, h in enumerate(headers):
-            val = values[i] if i < len(values) else ''
-            row_dict[h] = val
-        rows.append(row_dict)
-        
-    return rows
-
-def parse_update_file(filepath):
-    """
-    Parses a single .txt update file.
-    Returns:
-        card_data (dict): merged card data
-        categories (list): list of category objects to upsert
-        questions (list): list of question objects
-    """
-    with open(filepath, 'r', encoding='utf-8') as f:
-        content = f.read()
-        
-    parts = content.split('\n---\n')
-    
-    # Initialize containers
-    card_info = {}
-    benefits = []
-    rates = []
-    signup = {}
-    questions = []
-    category_mapping = []
-    freak_verdict = None
-    
-    for part in parts:
-        part = part.strip()
-        if not part:
-            continue
-            
-        # Check for JSON block (Category Mapping)
-        if part.startswith('['):
-            try:
-                category_mapping = json.loads(part)
-            except json.JSONDecodeError:
-                logger.error(f"Failed to parse category mapping JSON in {filepath}")
-            continue
-            
-        # Parse as CSV to check headers
-        rows = parse_csv_content_robust(part)
-        if not rows:
-            continue
-            
-        headers = set(rows[0].keys())
-        
-        # Identify section based on headers
-        if 'PointsValueCpp' in headers and 'ImageURL' in headers:
-            card_info = rows[0]
-        elif 'BenefitDescription' in headers:
-            benefits = rows
-        elif 'EarningRate' in headers and 'RateCategory' in headers:
-            rates = rows
-        elif 'SignUpBonusValue' in headers and 'SpendAmount' in headers:
-            signup = rows[0]
-        elif 'Question' in headers and 'ChoiceList' in headers:
-            questions = rows
-        elif 'FreakVerdict' in headers:
-             # Expecting single row for verdict
-             freak_verdict = rows[0].get('FreakVerdict')
-
-    return {
-        'card_info': card_info,
-        'benefits': benefits,
-        'rates': rates,
-        'signup': signup,
-        'questions': questions,
-        'category_mapping': category_mapping,
-        'freak_verdict': freak_verdict
-    }
-
-def process_card_data(parsed_data):
-    """
-    Transforms parsed strings into the structure expected by Firestore/Application.
-    Similar to logic in parse_benefits_csv.py but adapted for the flat dicts.
-    """
-    info = parsed_data['card_info']
-    if not info:
+    if not data:
         return None, [], []
-        
-    # Basic Info
+
+    # Map Basic Info
     card_doc = {
-        'name': info.get('CardName'),
-        'slug': info.get('slug-id'),
-        'issuer': info.get('Vendor'),
-        'annual_fee': int(info.get('AnnualFee', 0)) if info.get('AnnualFee', '0').isdigit() else 0,
-        'image_url': info.get('ImageURL'),
-        'application_link': info.get('ApplicationLink'),
-        'is_524': info.get('Is524', 'True').lower() == 'true',
-        'min_credit_score': int(info.get('MinCreditScore')) if info.get('MinCreditScore', '').isdigit() else None,
-        'max_credit_score': int(info.get('MaxCreditScore')) if info.get('MaxCreditScore', '').isdigit() else None,
-        'points_value_cpp': float(info.get('PointsValueCpp')) if is_float(info.get('PointsValueCpp')) else 0.0,
+        'name': data.get('CardName'),
+        'slug': data.get('slug-id'),
+        'issuer': data.get('Vendor'),
+        'annual_fee': int(data.get('AnnualFee', 0)) if str(data.get('AnnualFee', '0')).isdigit() else 0,
+        'image_url': data.get('ImageURL'),
+        'application_link': data.get('ApplicationLink'),
+        'is_524': bool(data.get('Is524')),
+        'min_credit_score': int(data.get('MinCreditScore')) if str(data.get('MinCreditScore', '')).isdigit() else None,
+        'max_credit_score': int(data.get('MaxCreditScore')) if str(data.get('MaxCreditScore', '')).isdigit() else None,
+        'points_value_cpp': float(data.get('PointsValueCpp')) if is_float(data.get('PointsValueCpp')) else 0.0,
+        'processor_vendor': data.get('ProcessorVendor'),
     }
 
     # Benefits
     processed_benefits = []
-    for b in parsed_data['benefits']:
-        # Deserialize category list if possible, or leave as string
-        cat_raw = b.get('BenefitCategory')
-        try:
-            # It might be a list string "['a', 'b']" or just a string
-            if cat_raw.startswith('[') and cat_raw.endswith(']'):
-                # crude unsafe parse or json loads? default_rates uses single quotes often which is not JSON
-                # but populate_updates uses ast.literal_eval. 
-                import ast
-                category = ast.literal_eval(cat_raw)
-            else:
-                 category = [cat_raw]
-        except:
-            category = [cat_raw]
+    raw_benefits = data.get('Benefits', [])
+    for b in raw_benefits:
+        # Category is usually a list of strings in the new JSON
+        category = b.get('BenefitCategory')
+        if not isinstance(category, list):
+            category = [category] if category else []
             
         # Time Category / Period Values Logic
-        # (Reusing logic from parse_benefits_csv.py)
-        time_category = b.get('TimeCategory', '')
+        time_category = b.get('TimeCategory', '') or ''
         dollar_value = float(b.get('DollarValue')) if is_float(b.get('DollarValue')) else None
         
         period_values = {}
         if dollar_value:
-            from datetime import datetime
             current_year = datetime.now().year
             
             if 'Monthly' in time_category:
@@ -224,9 +76,9 @@ def process_card_data(parsed_data):
             'time_category': time_category,
             'dollar_value': dollar_value,
             'period_values': period_values,
-            'enrollment_required': b.get('EnrollmentRequired', 'False').lower() == 'true',
+            'enrollment_required': str(b.get('EnrollmentRequired', 'False')).lower() == 'true' if isinstance(b.get('EnrollmentRequired'), str) else bool(b.get('EnrollmentRequired')),
             'effective_date': b.get('EffectiveDate'),
-            'short_description': b.get('BenefitDescriptionShort') or b.get('BenefitDescription'), # Fallback
+            'short_description': b.get('BenefitDescriptionShort') or b.get('BenefitDescription'),
             'benefit_type': b.get('BenefitType'),
             'numeric_value': float(b.get('NumericValue')) if is_float(b.get('NumericValue')) else None,
             'numeric_type': b.get('NumericType'),
@@ -235,76 +87,71 @@ def process_card_data(parsed_data):
     
     # Earning Rates
     processed_rates = []
-    for r in parsed_data['rates']:
-        cat_raw = r.get('RateCategory')
-        try:
-            import ast
-            if cat_raw.startswith('[') and cat_raw.endswith(']'):
-                category = ast.literal_eval(cat_raw)
-            else:
-                category = [cat_raw]
-        except:
-             category = [cat_raw]
-             
+    raw_rates = data.get('EarningRates', [])
+    for r in raw_rates:
+        category = r.get('RateCategory')
+        if not isinstance(category, list):
+            category = [category] if category else []
+            
         processed_rates.append({
             'rate': float(r.get('EarningRate')) if is_float(r.get('EarningRate')) else 0.0,
             'currency': r.get('Currency'),
             'category': category,
             'details': r.get('AdditionalDetails'),
-            'is_default': r.get('IsDefault', 'False').lower() == 'true'
+            'is_default': str(r.get('IsDefault', 'False')).lower() == 'true' if isinstance(r.get('IsDefault'), str) else bool(r.get('IsDefault'))
         })
     card_doc['earning_rates'] = processed_rates
     
-    # Signup Bonus
-    s = parsed_data['signup']
-    if s:
-        card_doc['sign_up_bonus'] = {
-            'value': int(s.get('SignUpBonusValue')) if s.get('SignUpBonusValue', '').isdigit() else 0,
-            'currency': s.get('SignUpBonusType'), # Mapped from header 'SignUpBonusType' ? check file. File header says 'SignUpBonusType' column 6
-            # In file: Vendor | CardName | EffectiveDate | Terms | SignUpBonusValue | SignUpBonusType | slug-id ...
-            'terms': s.get('Terms'),
-            'effective_date': s.get('EffectiveDate'),
-            'spend_amount': int(s.get('SpendAmount')) if s.get('SpendAmount', '').isdigit() else 0,
-            'duration_months': int(s.get('SignupDurationMonths')) if s.get('SignupDurationMonths', '').isdigit() else 0,
-        }
-    else:
-        card_doc['sign_up_bonus'] = {}
+    # Signup Bonuses (List)
+    processed_bonuses = []
+    raw_bonuses = data.get('SignUpBonuses', [])
+    # In case it's a dict (old format or edge case), wrap it
+    if isinstance(raw_bonuses, dict):
+        raw_bonuses = [raw_bonuses]
+        
+    for s in raw_bonuses:
+        processed_bonuses.append({
+             'value': int(s.get('SignUpBonusValue')) if str(s.get('SignUpBonusValue', '')).isdigit() else 0,
+             'currency': s.get('SignUpBonusType'), 
+             'terms': s.get('Terms'),
+             'effective_date': s.get('EffectiveDate'),
+             'spend_amount': int(s.get('SpendAmount')) if str(s.get('SpendAmount', '')).isdigit() else 0,
+             'duration_months': int(s.get('SignupDurationMonths')) if str(s.get('SignupDurationMonths', '')).isdigit() else 0,
+        })
+    card_doc['sign_up_bonus'] = processed_bonuses # Now a list
 
     # Freak Verdict
-    card_doc['freak_verdict'] = parsed_data.get('freak_verdict')
+    card_doc['freak_verdict'] = data.get('FreakVerdict')
+    
+    # Questions
+    card_doc['questions'] = data.get('Questions', [])
 
-    return card_doc, parsed_data['category_mapping'], parsed_data['questions']
-
-def is_float(s):
-    try:
-        float(s)
-        return True
-    except (ValueError, TypeError):
-        return False
+    return card_doc, data.get('Categories', [])
 
 def generate_cards_from_files(directory):
     """
-    Reads all .txt files in directory, parses them, and returns:
-    - cards: list of card documents
+    Reads all .json files in directory, parses them, and returns:
+    - cards: list of card documents (with embedded questions and benefits etc)
     - categories: list of unique category objects (merged from all files)
-    - questions: list of question objects
+    - questions: [] (now embedded in cards)
     """
     cards = []
     all_categories = {} # map Name -> Category Object (to deduplicate)
-    all_questions = []
     
     if not os.path.exists(directory):
         print(f"Directory not found: {directory}")
         return [], [], []
 
-    files = [f for f in os.listdir(directory) if f.endswith('.txt')]
-    print(f"Found {len(files)} update files in {directory}")
+    files = [f for f in os.listdir(directory) if f.endswith('.json')]
+    print(f"Found {len(files)} JSON files in {directory}")
 
     for filename in files:
         filepath = os.path.join(directory, filename)
         try:
-            raw_data = parse_update_file(filepath)
-            card_doc, categories, questions = process_card_data(raw_data)
+            with open(filepath, 'r') as f:
+                raw_data = json.load(f)
+            
+            card_doc, categories = process_json_card(raw_data)
             
             if card_doc:
                 cards.append(card_doc)
@@ -321,10 +168,6 @@ def generate_cards_from_files(directory):
                         new_detailed = set(cat.get('CategoryNameDetailed', []))
                         combined = list(existing_detailed.union(new_detailed))
                         all_categories[name]['CategoryNameDetailed'] = combined
-            
-            # Collect questions
-            if questions:
-                all_questions.extend(questions)
                         
         except Exception as e:
             logger.error(f"Failed to process {filename}: {e}")
@@ -332,23 +175,14 @@ def generate_cards_from_files(directory):
             import traceback
             traceback.print_exc()
             
-    return cards, list(all_categories.values()), all_questions
+    return cards, list(all_categories.values()), []
 
 def parse_benefit_overrides_csv(csv_path):
     """
     Parse the benefit overrides CSV.
-    
     CSV Format: slug-id|benefit_index|period_key|numeric_value
-    
-    Returns a dictionary:
-    {
-        'slug-id': {
-            benefit_index (int): {
-                'period_key': numeric_value (float)
-            }
-        }
-    }
     """
+    import csv 
     overrides = defaultdict(lambda: defaultdict(dict))
     
     if not os.path.exists(csv_path):

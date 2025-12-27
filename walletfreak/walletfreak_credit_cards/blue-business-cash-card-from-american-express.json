@@ -1,0 +1,90 @@
+{
+    "Vendor": "American Express",
+    "CardName": "Blue Business Cash\u2122 Card from American Express",
+    "AnnualFee": 0,
+    "PointsValueCpp": null,
+    "slug-id": "blue-business-cash-card-from-american-express",
+    "ImageURL": "/static/images/credit_cards/blue-business-cash-card-from-american-express.png",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.americanexpress.com/en-us/business/credit-cards/blue-business-cash/",
+    "Is524": false,
+    "Benefits": [
+        {
+            "BenefitDescription": "Expanded Buying Power",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Generic Financial & Rewards",
+                "Generic Protection"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 0,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-24",
+            "BenefitDescriptionShort": "Buying Power",
+            "BenefitType": "Perk",
+            "NumericValue": 0,
+            "NumericType": null
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 2,
+            "Currency": "cash back",
+            "RateCategory": [
+                "All Purchases"
+            ],
+            "AdditionalDetails": "up to $50k annually",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "after $50k spend",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-12-07",
+            "Terms": "Spend $3,000 in 3 months",
+            "SignUpBonusValue": 250,
+            "SignUpBonusType": "Cash",
+            "SpendAmount": 3000,
+            "SignupDurationMonths": 3
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Buying Power",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Somewhat",
+                "Highly"
+            ],
+            "Question": "Do you value the flexibility to spend above your credit limit for large business purchases?",
+            "BenefitCategory": "Financial Protection",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "10/10. Flat $250 for $3k spend.",
+    "Categories": [
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards",
+                "All Purchases"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

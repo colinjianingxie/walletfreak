@@ -1,0 +1,111 @@
+{
+    "Vendor": "Capital One",
+    "CardName": "Capital One Venture Rewards Credit Card",
+    "AnnualFee": 95,
+    "PointsValueCpp": 1.0,
+    "slug-id": "capital-one-venture-rewards-credit-card",
+    "ImageURL": "/static/images/credit_cards/capital-one-venture-rewards-credit-card.webp",
+    "MinCreditScore": 700,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.capitalone.com/credit-cards/apply/venture-rewards/",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "Global Entry or TSA PreCheck application fee credit",
+            "AdditionalDetails": "up to $120",
+            "BenefitCategory": [
+                "Travel Security",
+                "Global Entry",
+                "TSA PreCheck"
+            ],
+            "TimeCategory": "Every 4 years",
+            "DollarValue": 120,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "TSA Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 120.0,
+            "NumericType": "Cash"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 5,
+            "Currency": "miles",
+            "RateCategory": [
+                "Capital One Travel Hotels"
+            ],
+            "AdditionalDetails": "hotels booked through Capital One Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 5,
+            "Currency": "miles",
+            "RateCategory": [
+                "Capital One Travel Rental Cars"
+            ],
+            "AdditionalDetails": "rental cars booked through Capital One Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "miles",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else (unlimited)",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-10-01",
+            "Terms": "Spend $4000 in 3 months",
+            "SignUpBonusValue": 75000,
+            "SignUpBonusType": "Miles",
+            "SpendAmount": 4000,
+            "SignupDurationMonths": 3
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "TSA Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Do you travel enough to justify a $120 credit to skip the long security lines at the airport?",
+            "BenefitCategory": "Travel Security",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "10/10. Flat 75k miles for $4k spend.",
+    "Categories": [
+        {
+            "CategoryName": "Hotels",
+            "Icon": "fa-solid fa-hotel",
+            "CategoryNameDetailed": [
+                "Capital One Travel Hotels"
+            ]
+        },
+        {
+            "CategoryName": "Transportation",
+            "Icon": "fa-solid fa-car-side",
+            "CategoryNameDetailed": [
+                "Capital One Travel Rental Cars"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

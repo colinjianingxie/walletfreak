@@ -1,0 +1,72 @@
+{
+    "Vendor": "Chase",
+    "CardName": "Ink Business Unlimited Credit Card",
+    "AnnualFee": 0,
+    "PointsValueCpp": null,
+    "slug-id": "ink-business-unlimited-credit-card",
+    "ImageURL": "/static/images/credit_cards/ink-business-unlimited-credit-card.png",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://secure.chase.com/web/oao/application/card?sourceCode=HXW6&action=guest#/origination/cardDetails/index/index;cellCode=61DS;combo=Y",
+    "Is524": false,
+    "Benefits": [
+        {
+            "BenefitDescription": "Primary Rental Coverage",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Rental Cars",
+                "Rental Coverage",
+                "Generic Protection"
+            ],
+            "TimeCategory": "Per Claim",
+            "DollarValue": 0,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-24",
+            "BenefitDescriptionShort": "Primary Coverage",
+            "BenefitType": "Protection",
+            "NumericValue": 0,
+            "NumericType": null
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 1.5,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "unlimited",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Primary Coverage",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you rent cars for business and want the peace of mind of primary insurance coverage?",
+            "BenefitCategory": "Rental Cars",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "No Freak verdict for this card yet",
+    "Categories": [
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

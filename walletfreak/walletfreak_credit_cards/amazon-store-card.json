@@ -1,0 +1,81 @@
+{
+    "Vendor": "Synchrony",
+    "CardName": "Amazon Store Card",
+    "AnnualFee": 0,
+    "PointsValueCpp": null,
+    "slug-id": "amazon-store-card",
+    "ImageURL": "/static/images/credit_cards/amazon-store-card.jpg",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.amazon.com/Amazon-Prime-Store-Card/b?node=21289116011",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "Special financing offers on Amazon.com purchases",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Amazon",
+                "Generic Shopping"
+            ],
+            "TimeCategory": "Permanent",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Special Financing",
+            "BenefitType": "Perk",
+            "NumericValue": null,
+            "NumericType": null
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 0,
+            "Currency": null,
+            "RateCategory": [
+                "No Rewards"
+            ],
+            "AdditionalDetails": "no rewards without Prime",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 0,
+            "Currency": null,
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "non-qualifying spend",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Special Financing",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you value interest-free financing on large Amazon purchases?",
+            "BenefitCategory": "Shopping,Amazon",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "No Freak verdict for this card yet",
+    "Categories": [
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards",
+                "No Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

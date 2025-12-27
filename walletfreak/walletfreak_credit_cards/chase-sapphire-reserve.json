@@ -1,0 +1,533 @@
+{
+    "Vendor": "Chase",
+    "CardName": "Chase Sapphire Reserve",
+    "AnnualFee": 795,
+    "PointsValueCpp": 1.5,
+    "slug-id": "chase-sapphire-reserve",
+    "ImageURL": "/static/images/credit_cards/chase-sapphire-reserve.jpg",
+    "MinCreditScore": 740,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://secure.chase.com/web/oao/application/card?sourceCode=HWHN&action=guest#/origination/cardDetails/index/index;cellCode=61DS;combo=Y",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "$300 Annual Travel Credit",
+            "AdditionalDetails": "applies to broad travel purchases",
+            "BenefitCategory": [
+                "Generic Travel Perks"
+            ],
+            "TimeCategory": "Annually (cardmember year)",
+            "DollarValue": 300,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Travel Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 300.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$500 The Edit by Chase Travel hotel credit",
+            "AdditionalDetails": "$250 semi-annually on prepaid 2-night stays",
+            "BenefitCategory": [
+                "Chase Travel Hotels"
+            ],
+            "TimeCategory": "Semi-annually (calendar year)",
+            "DollarValue": 500,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "The Edit Hotel Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 500.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "Global Entry / TSA PreCheck / NEXUS fee credit",
+            "AdditionalDetails": "up to $120 every 4 years",
+            "BenefitCategory": [
+                "Travel Security",
+                "Global Entry",
+                "TSA PreCheck",
+                "NEXUS"
+            ],
+            "TimeCategory": "Every 4 years",
+            "DollarValue": 120,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Trusted Traveler Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 120.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "Priority Pass Select airport lounge membership",
+            "AdditionalDetails": "includes Chase Sapphire Lounges access",
+            "BenefitCategory": [
+                "Priority Pass",
+                "Lounge Access"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 0,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Priority Pass",
+            "BenefitType": "Perk",
+            "NumericValue": 3,
+            "NumericType": "Lounge"
+        },
+        {
+            "BenefitDescription": "DoorDash credits",
+            "AdditionalDetails": "monthly promos totaling $300 per year",
+            "BenefitCategory": [
+                "DoorDash",
+                "Generic Dining"
+            ],
+            "TimeCategory": "Monthly",
+            "DollarValue": 300,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "DoorDash Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 300.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "StubHub & viagogo credits",
+            "AdditionalDetails": "entertainment credits totaling $300 per year",
+            "BenefitCategory": [
+                "StubHub",
+                "viagogo",
+                "Generic Entertainment"
+            ],
+            "TimeCategory": "Monthly",
+            "DollarValue": 300,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Entertainment Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 300.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "Lyft credits",
+            "AdditionalDetails": "credits totaling $120 per year plus bonus points",
+            "BenefitCategory": [
+                "Lyft",
+                "Generic Transportation"
+            ],
+            "TimeCategory": "Monthly",
+            "DollarValue": 120,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Lyft Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 120.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "Peloton credits",
+            "AdditionalDetails": "credits totaling $120 per year plus bonus points",
+            "BenefitCategory": [
+                "Peloton",
+                "Generic Health & Wellness"
+            ],
+            "TimeCategory": "Monthly",
+            "DollarValue": 120,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Peloton Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 120.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "Complimentary IHG One Rewards Platinum Elite status",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "IHG",
+                "Generic Hotels",
+                "Status"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "IHG Platinum Status",
+            "BenefitType": "Status",
+            "NumericValue": 1,
+            "NumericType": "Upgrade"
+        },
+        {
+            "BenefitDescription": "Sapphire Reserve Exclusive Tables dining benefits",
+            "AdditionalDetails": "exclusive dining access and credits",
+            "BenefitCategory": [
+                "Generic Dining"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Exclusive Tables",
+            "BenefitType": "Perk",
+            "NumericValue": 1,
+            "NumericType": "Perk"
+        },
+        {
+            "BenefitDescription": "Complimentary Apple TV+ and Music",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Apple TV+",
+                "Apple Music",
+                "Generic Entertainment"
+            ],
+            "TimeCategory": "Annually",
+            "DollarValue": 250,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-12-24",
+            "BenefitDescriptionShort": "Apple TV+ & Music",
+            "BenefitType": "Perk",
+            "NumericValue": 250,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$300 StubHub and viagogo credit",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "StubHub",
+                "viagogo",
+                "Generic Entertainment"
+            ],
+            "TimeCategory": "Semi-annually",
+            "DollarValue": 300,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-24",
+            "BenefitDescriptionShort": "StubHub Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 300,
+            "NumericType": "Cash"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 8,
+            "Currency": "points",
+            "RateCategory": [
+                "Chase Travel Hotels"
+            ],
+            "AdditionalDetails": "hotels through Chase Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 8,
+            "Currency": "points",
+            "RateCategory": [
+                "Chase Travel Rental Cars"
+            ],
+            "AdditionalDetails": "rental cars through Chase Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 8,
+            "Currency": "points",
+            "RateCategory": [
+                "Chase Travel Flights"
+            ],
+            "AdditionalDetails": "flights through Chase Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 4,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Airlines"
+            ],
+            "AdditionalDetails": "flights booked directly with airlines",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 4,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Hotels"
+            ],
+            "AdditionalDetails": "hotels booked directly",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Dining"
+            ],
+            "AdditionalDetails": "dining worldwide (incl. takeout/delivery)",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Transportation"
+            ],
+            "AdditionalDetails": "all other travel (e.g., cruises, transit, direct car rentals)",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-08-21",
+            "Terms": "Spend $6000 in 3 months",
+            "SignUpBonusValue": 125000,
+            "SignUpBonusType": "Points",
+            "SpendAmount": 6000,
+            "SignupDurationMonths": 3
+        },
+        {
+            "EffectiveDate": "2025-08-21",
+            "Terms": "Spend $6000 in 3 months",
+            "SignUpBonusValue": 125000,
+            "SignUpBonusType": "Points",
+            "SpendAmount": 6000,
+            "SignupDurationMonths": 3
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Travel Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you spend at least $300 annually on travel, including flights, tolls, and parking?",
+            "BenefitCategory": "Travel",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "The Edit Hotel Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you enjoy staying at curated luxury hotels and receiving on-property experience credits?",
+            "BenefitCategory": "Hotel",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Trusted Traveler Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Do you value having a credit for Global Entry, TSA PreCheck, or NEXUS for smoother travel?",
+            "BenefitCategory": "Travel",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Priority Pass",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you value having unlimited access to airport lounges for food and quiet workspace?",
+            "BenefitCategory": "Lounge",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "DoorDash Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you regularly use food delivery and value up to $300 in annual credits?",
+            "BenefitCategory": "Delivery",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Entertainment Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "How often do you buy tickets for live concerts, professional sports, or theater events via StubHub?",
+            "BenefitCategory": "Entertainment",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Lyft Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you use Lyft for commuting or travel and want to earn bonus points and statement credits?",
+            "BenefitCategory": "Rideshare",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Peloton Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Is a premium fitness subscription like Peloton a priority for your health routine?",
+            "BenefitCategory": "Fitness",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "IHG Platinum Status",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you stay at IHG hotels and value perks like room upgrades and late checkout?",
+            "BenefitCategory": "Hotel Status",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Exclusive Tables",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you enjoy having special access to sought-after restaurant reservations?",
+            "BenefitCategory": "Dining",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Apple TV+ & Music",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you currently pay for Apple TV+ or Apple Music and want them for free?",
+            "BenefitCategory": "Streaming",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "StubHub Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you buy tickets for live events and want up to $300 in annual credits?",
+            "BenefitCategory": "Entertainment",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "10/10. Heavy hitter but straightforward. $6,000 spend in 3 months for a massive 125k points. No shenanigans.",
+    "Categories": [
+        {
+            "CategoryName": "Airlines",
+            "Icon": "fa-solid fa-plane",
+            "CategoryNameDetailed": [
+                "Generic Airlines",
+                "Chase Travel Flights"
+            ]
+        },
+        {
+            "CategoryName": "Hotels",
+            "Icon": "fa-solid fa-hotel",
+            "CategoryNameDetailed": [
+                "Generic Hotels",
+                "Chase Travel Hotels"
+            ]
+        },
+        {
+            "CategoryName": "Dining & Delivery",
+            "Icon": "fa-solid fa-utensils",
+            "CategoryNameDetailed": [
+                "Generic Dining"
+            ]
+        },
+        {
+            "CategoryName": "Transportation",
+            "Icon": "fa-solid fa-car-side",
+            "CategoryNameDetailed": [
+                "Generic Transportation",
+                "Chase Travel Rental Cars"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

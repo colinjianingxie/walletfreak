@@ -1,0 +1,176 @@
+{
+    "Vendor": "American Express",
+    "CardName": "American Express Business Gold Card",
+    "AnnualFee": 375,
+    "PointsValueCpp": 1.0,
+    "slug-id": "american-express-business-gold-card",
+    "ImageURL": "/static/images/credit_cards/american-express-business-gold-card.png",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-gold-card-amex/",
+    "Is524": false,
+    "Benefits": [
+        {
+            "BenefitDescription": "$240 Flexible Business Credit",
+            "AdditionalDetails": "$20 monthly",
+            "BenefitCategory": [
+                "FedEx",
+                "Grubhub",
+                "Generic Business & Tech",
+                "Generic Dining"
+            ],
+            "TimeCategory": "Monthly",
+            "DollarValue": 240,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-12-07",
+            "BenefitDescriptionShort": "Flexible Business Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 240.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$155 Walmart+ monthly membership credit",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Walmart",
+                "Generic Shopping"
+            ],
+            "TimeCategory": "Monthly",
+            "DollarValue": 155,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-12-07",
+            "BenefitDescriptionShort": "Walmart+ Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 155.0,
+            "NumericType": "Cash"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 4,
+            "Currency": "points",
+            "RateCategory": [
+                "Transit",
+                "Generic Dining",
+                "Advertising",
+                "Software",
+                "Generic Airlines"
+            ],
+            "AdditionalDetails": "top categories automatically",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "points",
+            "RateCategory": [
+                "Amex Travel Flights",
+                "Amex Travel Hotels",
+                "Amex Travel Rental Cars",
+                "Generic Hotels"
+            ],
+            "AdditionalDetails": "AmexTravel.com bookings",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-12-07",
+            "Terms": "Spend $15,000 in 3 months",
+            "SignUpBonusValue": 100000,
+            "SignUpBonusType": "Points",
+            "SpendAmount": 15000,
+            "SignupDurationMonths": 3
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Flexible Business Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you regularly spend $20/month at FedEx, Grubhub, or office supply stores?",
+            "BenefitCategory": "Business Expenses",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Walmart+ Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Would you utilize a free Walmart+ membership for business or personal use?",
+            "BenefitCategory": "Shopping",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "10/10. Flat 100k points for $15k spend.",
+    "Categories": [
+        {
+            "CategoryName": "Airlines",
+            "Icon": "fa-solid fa-plane",
+            "CategoryNameDetailed": [
+                "Generic Airlines",
+                "Amex Travel Flights"
+            ]
+        },
+        {
+            "CategoryName": "Hotels",
+            "Icon": "fa-solid fa-hotel",
+            "CategoryNameDetailed": [
+                "Generic Hotels",
+                "Amex Travel Hotels"
+            ]
+        },
+        {
+            "CategoryName": "Dining & Delivery",
+            "Icon": "fa-solid fa-utensils",
+            "CategoryNameDetailed": [
+                "Generic Dining"
+            ]
+        },
+        {
+            "CategoryName": "Transportation",
+            "Icon": "fa-solid fa-car-side",
+            "CategoryNameDetailed": [
+                "Amex Travel Rental Cars",
+                "Transit"
+            ]
+        },
+        {
+            "CategoryName": "Business & Tech",
+            "Icon": "fa-solid fa-laptop-code",
+            "CategoryNameDetailed": [
+                "Advertising",
+                "Software"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

@@ -1,0 +1,151 @@
+{
+    "Vendor": "Chase",
+    "CardName": "Aeroplan Credit Card",
+    "AnnualFee": 95,
+    "PointsValueCpp": 1.3,
+    "slug-id": "aeroplan-credit-card",
+    "ImageURL": "/static/images/credit_cards/aeroplan-credit-card.png",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://creditcards.chase.com/a1/Aeroplan/75kplus25knaep",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "Free first checked bag on Air Canada flights",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Air Canada",
+                "Generic Airlines"
+            ],
+            "TimeCategory": "Permanent",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Free Bag",
+            "BenefitType": "Perk",
+            "NumericValue": null,
+            "NumericType": null
+        },
+        {
+            "BenefitDescription": "Global Entry/TSA PreCheck credit",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Travel Security",
+                "Global Entry",
+                "TSA PreCheck"
+            ],
+            "TimeCategory": "Every 4 years",
+            "DollarValue": 120,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "TSA Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 120.0,
+            "NumericType": "Cash"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 7,
+            "Currency": "points",
+            "RateCategory": [
+                "Air Canada"
+            ],
+            "AdditionalDetails": "total points",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Dining",
+                "Generic Travel Perks"
+            ],
+            "AdditionalDetails": "dining & other travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-12-02",
+            "Terms": "Spend $4000 in 3 months + additional",
+            "SignUpBonusValue": 75000,
+            "SignUpBonusType": "Points",
+            "SpendAmount": 4000,
+            "SignupDurationMonths": 3
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Free Bag",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you fly Air Canada and check bags for yourself or your travel companions?",
+            "BenefitCategory": "Airline",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "TSA Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Do you want a credit to cover the application fee for Global Entry or TSA PreCheck?",
+            "BenefitCategory": "Travel Security",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "3/10. Multiple tiers. Final portion locked behind a massive $20,000 total spend.",
+    "Categories": [
+        {
+            "CategoryName": "Airlines",
+            "Icon": "fa-solid fa-plane",
+            "CategoryNameDetailed": [
+                "Air Canada"
+            ]
+        },
+        {
+            "CategoryName": "Dining & Delivery",
+            "Icon": "fa-solid fa-utensils",
+            "CategoryNameDetailed": [
+                "Generic Dining"
+            ]
+        },
+        {
+            "CategoryName": "Travel Perks",
+            "Icon": "fa-solid fa-passport",
+            "CategoryNameDetailed": [
+                "Generic Travel Perks"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

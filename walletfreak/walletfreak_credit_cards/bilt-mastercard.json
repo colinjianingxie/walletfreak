@@ -1,0 +1,280 @@
+{
+    "Vendor": "Wells Fargo",
+    "CardName": "Bilt Mastercard",
+    "AnnualFee": 0,
+    "PointsValueCpp": 1.25,
+    "slug-id": "bilt-mastercard",
+    "ImageURL": "/static/images/credit_cards/bilt-mastercard.jpg",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.wellsfargo.com/credit-cards/bilt/",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "Rent Day double points bonus",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Generic Dining",
+                "Generic Travel Perks",
+                "All Purchases",
+                "Generic Financial & Rewards"
+            ],
+            "TimeCategory": "Monthly",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-06",
+            "BenefitDescriptionShort": "Rent Day Bonus",
+            "BenefitType": "Bonus",
+            "NumericValue": 0,
+            "NumericType": null
+        },
+        {
+            "BenefitDescription": "Cell phone protection when bill paid with card",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Cell Phone Protection",
+                "Generic Protection"
+            ],
+            "TimeCategory": "Permanent (per claim)",
+            "DollarValue": 800,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-06",
+            "BenefitDescriptionShort": "Phone Protection",
+            "BenefitType": "Protection",
+            "NumericValue": 800,
+            "NumericType": null
+        },
+        {
+            "BenefitDescription": "No foreign transaction fees",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Generic Travel Perks",
+                "Fee Waiver"
+            ],
+            "TimeCategory": "Permanent",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-06",
+            "BenefitDescriptionShort": "No FTF",
+            "BenefitType": "Perk",
+            "NumericValue": null,
+            "NumericType": null
+        },
+        {
+            "BenefitDescription": "Rent Day double points bonus",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Rewards Bonus",
+                "Generic Financial & Rewards"
+            ],
+            "TimeCategory": "Monthly",
+            "DollarValue": 0,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-24",
+            "BenefitDescriptionShort": "Rent Day Bonus",
+            "BenefitType": "Bonus",
+            "NumericValue": 0,
+            "NumericType": null
+        },
+        {
+            "BenefitDescription": "$60 annual Lyft credit",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Lyft",
+                "Generic Transportation"
+            ],
+            "TimeCategory": "Monthly",
+            "DollarValue": 60,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-24",
+            "BenefitDescriptionShort": "Lyft Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 60,
+            "NumericType": "Cash"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 1,
+            "Currency": "points",
+            "RateCategory": [
+                "Rent"
+            ],
+            "AdditionalDetails": "rent through Bilt app",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Dining"
+            ],
+            "AdditionalDetails": "restaurants worldwide",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Airlines",
+                "Generic Hotels"
+            ],
+            "AdditionalDetails": "direct air & hotel bookings",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": null,
+            "Terms": "No public sign up bonus or welcome offer",
+            "SignUpBonusValue": 0,
+            "SignUpBonusType": "Points",
+            "SpendAmount": 0,
+            "SignupDurationMonths": 0
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Rent Day Bonus",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you enjoy participating in monthly challenges or bonus rewards events on the 1st of the month?",
+            "BenefitCategory": "Dining,Travel,All Purchases",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Phone Protection",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Somewhat",
+                "Highly"
+            ],
+            "Question": "Do you value up to $800 in phone protection with a low $25 deductible?",
+            "BenefitCategory": "Cell Phone Protection",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "No FTF",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Do you travel outside the U.S. and want to avoid the typical 3% fee on every purchase?",
+            "BenefitCategory": "Travel",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Lyft Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you use the Lyft platform for your commuting or travel transportation needs?",
+            "BenefitCategory": "Rideshare",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Rent Day Bonus",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you value earning double points on all non-rent purchases on the 1st of every month?",
+            "BenefitCategory": "Rewards Bonus",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Lyft Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you use Lyft enough to earn a $5 monthly credit?",
+            "BenefitCategory": "Rideshare",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "0/10. No signup bonus. Card is for rent benefits only.",
+    "Categories": [
+        {
+            "CategoryName": "Airlines",
+            "Icon": "fa-solid fa-plane",
+            "CategoryNameDetailed": [
+                "Generic Airlines"
+            ]
+        },
+        {
+            "CategoryName": "Hotels",
+            "Icon": "fa-solid fa-hotel",
+            "CategoryNameDetailed": [
+                "Generic Hotels"
+            ]
+        },
+        {
+            "CategoryName": "Dining & Delivery",
+            "Icon": "fa-solid fa-utensils",
+            "CategoryNameDetailed": [
+                "Generic Dining"
+            ]
+        },
+        {
+            "CategoryName": "Large Expenses",
+            "Icon": "fa-solid fa-money-check-dollar",
+            "CategoryNameDetailed": [
+                "Rent"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

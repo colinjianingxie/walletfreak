@@ -1,0 +1,37 @@
+{
+    "Vendor": "PenFed",
+    "CardName": "PenFed Power Cash Rewards Visa Signature Card",
+    "AnnualFee": null,
+    "PointsValueCpp": null,
+    "slug-id": "penfed-power-cash-rewards-visa-signature-card",
+    "ImageURL": "/static/images/credit_cards/penfed-power-cash-rewards-visa-signature-card.jpg",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.penfed.org/content/penfed/en/penfedroot/credit-cards/power-cash-rewards-visa.html",
+    "Is524": true,
+    "Benefits": [],
+    "EarningRates": [
+        {
+            "EarningRate": 2,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "unlimited",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [],
+    "Questions": [],
+    "FreakVerdict": "No Freak verdict for this card yet",
+    "Categories": [
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

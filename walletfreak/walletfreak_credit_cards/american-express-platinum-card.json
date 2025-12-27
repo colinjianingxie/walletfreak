@@ -1,0 +1,441 @@
+{
+    "Vendor": "American Express",
+    "CardName": "American Express Platinum Card",
+    "AnnualFee": 895,
+    "PointsValueCpp": 1.0,
+    "slug-id": "american-express-platinum-card",
+    "ImageURL": "/static/images/credit_cards/american-express-platinum-card.jpg",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.americanexpress.com/us/credit-cards/card/platinum/",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "$200 Airline Fee Credit",
+            "AdditionalDetails": "selected airline",
+            "BenefitCategory": [
+                "Generic Airlines"
+            ],
+            "TimeCategory": "Annually (calendar year)",
+            "DollarValue": 200,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Airline Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 200.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$600 Hotel Credit on prepaid Fine Hotels + Resorts or The Hotel Collection",
+            "AdditionalDetails": "$300 semi-annually",
+            "BenefitCategory": [
+                "Generic Hotels"
+            ],
+            "TimeCategory": "Semi-annually",
+            "DollarValue": 600,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Hotel Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 600.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$209 CLEAR Plus Credit",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "CLEAR",
+                "Travel Security"
+            ],
+            "TimeCategory": "Annually (calendar year)",
+            "DollarValue": 209,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "CLEAR Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 209.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$200 Uber Cash",
+            "AdditionalDetails": "$15 monthly + $20 bonus December",
+            "BenefitCategory": [
+                "Uber",
+                "Generic Transportation",
+                "Generic Dining"
+            ],
+            "TimeCategory": "Monthly",
+            "DollarValue": 200,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Uber Cash",
+            "BenefitType": "Credit",
+            "NumericValue": 200.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$300 Digital Entertainment Credit",
+            "AdditionalDetails": "$25 monthly",
+            "BenefitCategory": [
+                "Generic Entertainment"
+            ],
+            "TimeCategory": "Monthly",
+            "DollarValue": 300,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Entertainment Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 300.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$400 Resy Credit",
+            "AdditionalDetails": "$100 quarterly",
+            "BenefitCategory": [
+                "Resy",
+                "Generic Dining"
+            ],
+            "TimeCategory": "Quarterly",
+            "DollarValue": 400,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Resy Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 400.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$300 lululemon Credit",
+            "AdditionalDetails": "$75 quarterly",
+            "BenefitCategory": [
+                "lululemon",
+                "Generic Shopping",
+                "Generic Health & Wellness"
+            ],
+            "TimeCategory": "Quarterly",
+            "DollarValue": 300,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "lululemon Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 300.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$155 Walmart+ monthly membership credit",
+            "AdditionalDetails": "plus tax",
+            "BenefitCategory": [
+                "Walmart",
+                "Generic Shopping"
+            ],
+            "TimeCategory": "Monthly",
+            "DollarValue": 155,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Walmart+ Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 155.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$100 Saks Fifth Avenue credit",
+            "AdditionalDetails": "$50 semi-annually",
+            "BenefitCategory": [
+                "Saks",
+                "Generic Shopping"
+            ],
+            "TimeCategory": "Semi-annually",
+            "DollarValue": 100,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Saks Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 100.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$300 Equinox Credit",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Equinox",
+                "Generic Health & Wellness"
+            ],
+            "TimeCategory": "Annually (calendar year)",
+            "DollarValue": 300,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Equinox Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 300.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$200 Oura Ring Credit",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Oura",
+                "Generic Health & Wellness"
+            ],
+            "TimeCategory": "Annually (calendar year)",
+            "DollarValue": 200,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Oura Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 200.0,
+            "NumericType": "Cash"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 5,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Airlines"
+            ],
+            "AdditionalDetails": "direct flights",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 5,
+            "Currency": "points",
+            "RateCategory": [
+                "Amex Travel Hotels"
+            ],
+            "AdditionalDetails": "prepaid hotels via Amex Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 5,
+            "Currency": "points",
+            "RateCategory": [
+                "Amex Travel Flights"
+            ],
+            "AdditionalDetails": "flights via Amex Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-09-18",
+            "Terms": "Spend $8000 in 6 months",
+            "SignUpBonusValue": 175000,
+            "SignUpBonusType": "Points",
+            "SpendAmount": 8000,
+            "SignupDurationMonths": 6
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Airline Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you fly enough to utilize credits for incidental fees like checked bags or on-board refreshments?",
+            "BenefitCategory": "Airline",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Hotel Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "How likely are you to book a 2-night luxury stay through a premium hotel collection to get on-property credits?",
+            "BenefitCategory": "Hotel",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "CLEAR Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you want to skip the identity check line at major airport security checkpoints with biometric verification?",
+            "BenefitCategory": "Travel Security",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Uber Cash",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you use ride-sharing for transit or order restaurant delivery at least once a month?",
+            "BenefitCategory": "Rideshare,Food Delivery",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Entertainment Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you currently pay for subscriptions like The New York Times, Peacock, or The Wall Street Journal?",
+            "BenefitCategory": "Streaming,Entertainment",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Resy Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you dine at sought-after restaurants and value having special access to reservations?",
+            "BenefitCategory": "Dining",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "lululemon Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you frequently buy high-quality athletic wear or yoga gear for your fitness routine?",
+            "BenefitCategory": "Shopping,Fitness",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Walmart+ Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you value free grocery shipping and the Paramount+ streaming service through a single membership?",
+            "BenefitCategory": "Shopping",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Saks Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you shop for designer fashion, luxury skincare, or high-end home decor at premium department stores?",
+            "BenefitCategory": "Shopping",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Equinox Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Is a premium high-end gym membership like Equinox a priority for your health routine?",
+            "BenefitCategory": "Fitness",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Oura Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you value advanced sleep and health tracking with a premium smart ring?",
+            "BenefitCategory": "Fitness,Wellness",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "10/10. Clear terms. $8,000 spend for 175k points with no hoops.",
+    "Categories": [
+        {
+            "CategoryName": "Airlines",
+            "Icon": "fa-solid fa-plane",
+            "CategoryNameDetailed": [
+                "Generic Airlines",
+                "Amex Travel Flights"
+            ]
+        },
+        {
+            "CategoryName": "Hotels",
+            "Icon": "fa-solid fa-hotel",
+            "CategoryNameDetailed": [
+                "Amex Travel Hotels"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

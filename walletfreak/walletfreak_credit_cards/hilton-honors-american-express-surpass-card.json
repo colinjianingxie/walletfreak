@@ -1,0 +1,207 @@
+{
+    "Vendor": "American Express",
+    "CardName": "Hilton Honors American Express Surpass Card",
+    "AnnualFee": 150,
+    "PointsValueCpp": 0.5,
+    "slug-id": "hilton-honors-american-express-surpass-card",
+    "ImageURL": "/static/images/credit_cards/hilton-honors-american-express-surpass-card.avif",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-surpass/",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "Hilton Honors Gold status",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Hilton",
+                "Generic Hotels",
+                "Status"
+            ],
+            "TimeCategory": "Permanent",
+            "DollarValue": null,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Gold Status",
+            "BenefitType": "Status",
+            "NumericValue": null,
+            "NumericType": null
+        },
+        {
+            "BenefitDescription": "$200 Hilton credit",
+            "AdditionalDetails": "$50 quarterly",
+            "BenefitCategory": [
+                "Hilton",
+                "Generic Hotels"
+            ],
+            "TimeCategory": "Quarterly",
+            "DollarValue": 200,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Hilton Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 200.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "Free Night Reward after $15,000 spend in calendar year",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Hilton",
+                "Generic Hotels"
+            ],
+            "TimeCategory": "Calendar year",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Free Night",
+            "BenefitType": "Perk",
+            "NumericValue": 1,
+            "NumericType": "FreeNight"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 12,
+            "Currency": "points",
+            "RateCategory": [
+                "Hilton"
+            ],
+            "AdditionalDetails": "direct with Hilton properties",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 6,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Dining",
+                "Generic Groceries",
+                "Gas"
+            ],
+            "AdditionalDetails": "U.S. restaurants, supermarkets, gas",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 4,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Shopping"
+            ],
+            "AdditionalDetails": "U.S. online retail purchases",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2026-01-14",
+            "Terms": "Spend $3000 in 6 months",
+            "SignUpBonusValue": 155000,
+            "SignUpBonusType": "Points",
+            "SpendAmount": 3000,
+            "SignupDurationMonths": 6
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Gold Status",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you value having Hilton Gold status for perks like space-available room upgrades and food/beverage credits?",
+            "BenefitCategory": "Hotel Status",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Hilton Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you stay at Hilton properties and want $200 in annual credits?",
+            "BenefitCategory": "Hotel",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Free Night",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Can you spend $15,000 a year on one card to earn a free night at a Hilton hotel?",
+            "BenefitCategory": "Hotel",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "10/10. Flat 155k points for $3k spend. Very clean.",
+    "Categories": [
+        {
+            "CategoryName": "Hotels",
+            "Icon": "fa-solid fa-hotel",
+            "CategoryNameDetailed": [
+                "Hilton"
+            ]
+        },
+        {
+            "CategoryName": "Dining & Delivery",
+            "Icon": "fa-solid fa-utensils",
+            "CategoryNameDetailed": [
+                "Generic Dining"
+            ]
+        },
+        {
+            "CategoryName": "Groceries",
+            "Icon": "fa-solid fa-cart-shopping",
+            "CategoryNameDetailed": [
+                "Generic Groceries"
+            ]
+        },
+        {
+            "CategoryName": "Transportation",
+            "Icon": "fa-solid fa-car-side",
+            "CategoryNameDetailed": [
+                "Gas"
+            ]
+        },
+        {
+            "CategoryName": "Shopping",
+            "Icon": "fa-solid fa-bag-shopping",
+            "CategoryNameDetailed": [
+                "Generic Shopping"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

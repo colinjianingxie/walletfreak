@@ -1,0 +1,164 @@
+{
+    "Vendor": "Bank of America",
+    "CardName": "Bank of America Premium Rewards Credit Card",
+    "AnnualFee": 95,
+    "PointsValueCpp": 1.0,
+    "slug-id": "bank-of-america-premium-rewards-credit-card",
+    "ImageURL": "/static/images/credit_cards/bank-of-america-premium-rewards-credit-card.png",
+    "MinCreditScore": 750,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://secure.bankofamerica.com/ogateway/public/apply-now-services/iaoconsumer/rest/public/usa/initialize/cc/v1?requesttype=usa&campaignId=4076573&productOfferCode=47&locale=en_US",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "Rewards Boost",
+            "AdditionalDetails": "Up to 75% more points",
+            "BenefitCategory": [
+                "Rewards Bonus",
+                "Generic Financial & Rewards"
+            ],
+            "TimeCategory": "Permanent",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Rewards Boost",
+            "BenefitType": "Bonus",
+            "NumericValue": 75,
+            "NumericType": "Percent"
+        },
+        {
+            "BenefitDescription": "$100 annual airline incidental credit",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Generic Airlines"
+            ],
+            "TimeCategory": "Annually (calendar year)",
+            "DollarValue": 100,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Airline Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 100.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "Up to $100 Global Entry/TSA PreCheck credit",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Travel Security",
+                "Global Entry",
+                "TSA PreCheck"
+            ],
+            "TimeCategory": "Every 4 years",
+            "DollarValue": 100,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "TSA Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 100.0,
+            "NumericType": "Cash"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 2,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Travel Perks",
+                "Generic Dining"
+            ],
+            "AdditionalDetails": null,
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1.5,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-04-28",
+            "Terms": "Spend $4000 in 90 days",
+            "SignUpBonusValue": 60000,
+            "SignUpBonusType": "Points",
+            "SpendAmount": 4000,
+            "SignupDurationMonths": 3
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Rewards Boost",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "None",
+                "Some",
+                "High"
+            ],
+            "Question": "Do you have significant balances with Bank of America or Merrill to unlock a 25%-75% points bonus?",
+            "BenefitCategory": "Bonus",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Airline Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Do you spend at least $100 on airline incidental fees (bags, seats) annually?",
+            "BenefitCategory": "Airline",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "TSA Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Do you want a credit to cover the application fee for Global Entry or TSA PreCheck?",
+            "BenefitCategory": "Travel Security",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "10/10. Flat 60k points for $4k spend.",
+    "Categories": [
+        {
+            "CategoryName": "Dining & Delivery",
+            "Icon": "fa-solid fa-utensils",
+            "CategoryNameDetailed": [
+                "Generic Dining"
+            ]
+        },
+        {
+            "CategoryName": "Travel Perks",
+            "Icon": "fa-solid fa-passport",
+            "CategoryNameDetailed": [
+                "Generic Travel Perks"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

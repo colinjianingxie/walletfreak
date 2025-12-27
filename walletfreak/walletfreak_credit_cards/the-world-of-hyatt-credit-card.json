@@ -1,0 +1,197 @@
+{
+    "Vendor": "Chase",
+    "CardName": "The World of Hyatt Credit Card",
+    "AnnualFee": 95,
+    "PointsValueCpp": 1.8,
+    "slug-id": "the-world-of-hyatt-credit-card",
+    "ImageURL": "/static/images/credit_cards/the-world-of-hyatt-credit-card.png",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://creditcards.chase.com/rewards-credit-cards/world-of-hyatt",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "Anniversary Free Night Award",
+            "AdditionalDetails": "Category 1-4",
+            "BenefitCategory": [
+                "Hyatt",
+                "Generic Hotels"
+            ],
+            "TimeCategory": "Annually (anniversary year)",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Free Night",
+            "BenefitType": "Perk",
+            "NumericValue": 1,
+            "NumericType": "FreeNight"
+        },
+        {
+            "BenefitDescription": "Additional Free Night Award after $15,000 spend annually",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Hyatt",
+                "Generic Hotels"
+            ],
+            "TimeCategory": "Calendar year",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Spend Free Night",
+            "BenefitType": "Perk",
+            "NumericValue": 1,
+            "NumericType": "FreeNight"
+        },
+        {
+            "BenefitDescription": "Discoverist status",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Hyatt",
+                "Generic Hotels",
+                "Status"
+            ],
+            "TimeCategory": "Permanent",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Discoverist Status",
+            "BenefitType": "Status",
+            "NumericValue": null,
+            "NumericType": null
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 9,
+            "Currency": "points",
+            "RateCategory": [
+                "Hyatt"
+            ],
+            "AdditionalDetails": "total points at Hyatt properties",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Dining",
+                "Generic Airlines",
+                "Generic Transportation",
+                "Generic Health & Wellness"
+            ],
+            "AdditionalDetails": "frequent categories",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": null,
+            "Terms": "Spend $3000 in 3 months + additional spend",
+            "SignUpBonusValue": 30000,
+            "SignUpBonusType": "Points",
+            "SpendAmount": 3000,
+            "SignupDurationMonths": 3
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Free Night",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Would you use a \"Free Night Award\" at a Hyatt Category 1-4 property annually?",
+            "BenefitCategory": "Hotel",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Spend Free Night",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Can you spend $15,000 a year on one card to earn an extra free night at a Hyatt?",
+            "BenefitCategory": "Hotel",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Discoverist Status",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you value Hyatt Discoverist status for perks like late checkout and bottled water?",
+            "BenefitCategory": "Hotel Status",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "2/10. Bonus mirage. 30k after $3k then requires heavy spend with a 2x boost to earn the rest.",
+    "Categories": [
+        {
+            "CategoryName": "Airlines",
+            "Icon": "fa-solid fa-plane",
+            "CategoryNameDetailed": [
+                "Generic Airlines"
+            ]
+        },
+        {
+            "CategoryName": "Hotels",
+            "Icon": "fa-solid fa-hotel",
+            "CategoryNameDetailed": [
+                "Hyatt"
+            ]
+        },
+        {
+            "CategoryName": "Dining & Delivery",
+            "Icon": "fa-solid fa-utensils",
+            "CategoryNameDetailed": [
+                "Generic Dining"
+            ]
+        },
+        {
+            "CategoryName": "Transportation",
+            "Icon": "fa-solid fa-car-side",
+            "CategoryNameDetailed": [
+                "Generic Transportation"
+            ]
+        },
+        {
+            "CategoryName": "Health & Wellness",
+            "Icon": "fa-solid fa-heart-pulse",
+            "CategoryNameDetailed": [
+                "Generic Health & Wellness"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

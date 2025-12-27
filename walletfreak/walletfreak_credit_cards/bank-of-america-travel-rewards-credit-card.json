@@ -1,0 +1,134 @@
+{
+    "Vendor": "Bank of America",
+    "CardName": "Bank of America Travel Rewards Credit Card",
+    "AnnualFee": 0,
+    "PointsValueCpp": 1.0,
+    "slug-id": "bank-of-america-travel-rewards-credit-card",
+    "ImageURL": "/static/images/credit_cards/bank-of-america-travel-rewards-credit-card.png",
+    "MinCreditScore": 750,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://secure.bankofamerica.com/ogateway/public/apply-now-services/iaoconsumer/rest/public/usa/initialize/cc/v1?requesttype=usa&campaignId=4076499&productOfferCode=T9&locale=en_US",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "No foreign transaction fees",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Generic Travel Perks",
+                "Fee Waiver"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 50,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-08",
+            "BenefitDescriptionShort": "No FTF",
+            "BenefitType": "Perk",
+            "NumericValue": null,
+            "NumericType": null
+        },
+        {
+            "BenefitDescription": "Rewards Boost bonus",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Rewards Bonus",
+                "Generic Financial & Rewards"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-08",
+            "BenefitDescriptionShort": "Preferred Rewards",
+            "BenefitType": "Bonus",
+            "NumericValue": 75.0,
+            "NumericType": "Percent"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 3,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Airlines",
+                "Generic Hotels"
+            ],
+            "AdditionalDetails": "through Bank of America Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1.5,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "unlimited everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": null,
+            "Terms": "Spend $1000 in 90 days",
+            "SignUpBonusValue": 25000,
+            "SignUpBonusType": "Points",
+            "SpendAmount": 1000,
+            "SignupDurationMonths": 3
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "No Foreign Transaction Fees",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Do you travel abroad and want to avoid the typical 3% fee on every purchase?",
+            "BenefitCategory": "Travel",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Preferred Rewards Bonus",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "None",
+                "Some",
+                "High"
+            ],
+            "Question": "Do you have significant balances with Bank of America to unlock a 25%-75% points bonus?",
+            "BenefitCategory": "Rewards Bonus",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "10/10. Flat 25k points for $1k spend.",
+    "Categories": [
+        {
+            "CategoryName": "Airlines",
+            "Icon": "fa-solid fa-plane",
+            "CategoryNameDetailed": [
+                "Generic Airlines"
+            ]
+        },
+        {
+            "CategoryName": "Hotels",
+            "Icon": "fa-solid fa-hotel",
+            "CategoryNameDetailed": [
+                "Generic Hotels"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

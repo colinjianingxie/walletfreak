@@ -1,0 +1,137 @@
+{
+    "Vendor": "Bank of America",
+    "CardName": "Bank of America Customized Cash Rewards credit card for Students",
+    "AnnualFee": 0,
+    "PointsValueCpp": null,
+    "slug-id": "bank-of-america-customized-cash-rewards-credit-card-for-students",
+    "ImageURL": "/static/images/credit_cards/bank-of-america-customized-cash-rewards-credit-card-for-students.png",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.bankofamerica.com/upac/#/get-started?campaignId=4076372&productOfferCode=DA",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "Flexible 3% Cash Back Category",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Rewards Bonus",
+                "Generic Financial & Rewards"
+            ],
+            "TimeCategory": "Monthly",
+            "DollarValue": 0,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-24",
+            "BenefitDescriptionShort": "Flexible Bonus",
+            "BenefitType": "Bonus",
+            "NumericValue": 3,
+            "NumericType": "Percent"
+        },
+        {
+            "BenefitDescription": "Preferred Rewards Eligibility",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Rewards Bonus",
+                "Generic Financial & Rewards"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 0,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-24",
+            "BenefitDescriptionShort": "Preferred Rewards",
+            "BenefitType": "Bonus",
+            "NumericValue": 0,
+            "NumericType": null
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 3,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Choice Category"
+            ],
+            "AdditionalDetails": "monthly choice",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Groceries",
+                "Wholesale Clubs"
+            ],
+            "AdditionalDetails": "groceries & wholesale clubs",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Flexible Bonus",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you want to choose which category (Online Shopping, Dining, Gas) earns you 3% back?",
+            "BenefitCategory": "Rewards Bonus",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Preferred Rewards",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you have bank balances that could qualify you for higher reward rates?",
+            "BenefitCategory": "Rewards Bonus",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "No Freak verdict for this card yet",
+    "Categories": [
+        {
+            "CategoryName": "Groceries",
+            "Icon": "fa-solid fa-cart-shopping",
+            "CategoryNameDetailed": [
+                "Generic Groceries"
+            ]
+        },
+        {
+            "CategoryName": "Shopping",
+            "Icon": "fa-solid fa-bag-shopping",
+            "CategoryNameDetailed": [
+                "Wholesale Clubs"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards",
+                "Choice Category"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

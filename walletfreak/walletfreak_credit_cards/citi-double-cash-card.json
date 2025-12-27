@@ -1,0 +1,112 @@
+{
+    "Vendor": "Citi",
+    "CardName": "Citi Double Cash Card",
+    "AnnualFee": 0,
+    "PointsValueCpp": null,
+    "slug-id": "citi-double-cash-card",
+    "ImageURL": "/static/images/credit_cards/citi-double-cash-card.png",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.citi.com/credit-cards/citi-double-cash-credit-card",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "$0 Liability on unauthorized charges",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Fraud Protection",
+                "Card Protection",
+                "Generic Protection"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 0,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-24",
+            "BenefitDescriptionShort": "Fraud Protection",
+            "BenefitType": "Protection",
+            "NumericValue": 0,
+            "NumericType": null
+        },
+        {
+            "BenefitDescription": "Citi Entertainment",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Generic Entertainment"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 0,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-24",
+            "BenefitDescriptionShort": "Presale Access",
+            "BenefitType": "Perk",
+            "NumericValue": 0,
+            "NumericType": null
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 2,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "unlimited (1% on purchase + 1% on payment)",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": null,
+            "Terms": "No welcome bonus",
+            "SignUpBonusValue": 0,
+            "SignUpBonusType": "Cash",
+            "SpendAmount": 0,
+            "SignupDurationMonths": 0
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Fraud Protection",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Somewhat",
+                "Highly"
+            ],
+            "Question": "Is having protection against unauthorized charges a top priority for you?",
+            "BenefitCategory": "Card Protection",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Presale Access",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you enjoy early access to concert tickets or preferred seating?",
+            "BenefitCategory": "Entertainment",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "0/10. No signup bonus. Poor value for churners.",
+    "Categories": [
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

@@ -1,0 +1,124 @@
+{
+    "Vendor": "Chase",
+    "CardName": "British Airways Visa Signature Card",
+    "AnnualFee": 95,
+    "PointsValueCpp": 1.3,
+    "slug-id": "british-airways-visa-signature-card",
+    "ImageURL": "/static/images/credit_cards/british-airways-visa-signature-card.png",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://creditcards.chase.com/rewards-credit-cards/british-airways-visa",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "Travel Together Ticket after $30,000 spend annually",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "British Airways",
+                "Generic Airlines"
+            ],
+            "TimeCategory": "Calendar year",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Travel Together",
+            "BenefitType": "Perk",
+            "NumericValue": null,
+            "NumericType": null
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 3,
+            "Currency": "Avios",
+            "RateCategory": [
+                "British Airways",
+                "Aer Lingus",
+                "Iberia",
+                "LEVEL"
+            ],
+            "AdditionalDetails": null,
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Hotels",
+                "Generic Travel Perks"
+            ],
+            "AdditionalDetails": "direct hotels",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": null,
+            "Terms": "Spend $7500 in 6 months",
+            "SignUpBonusValue": 100000,
+            "SignUpBonusType": "Miles",
+            "SpendAmount": 7500,
+            "SignupDurationMonths": 6
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Travel Together",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Can you spend $30,000 a year to earn a companion ticket for a British Airways flight?",
+            "BenefitCategory": "Airline",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "5/10. Tiered spend that jumps from $5k to $20k to unlock full value.",
+    "Categories": [
+        {
+            "CategoryName": "Airlines",
+            "Icon": "fa-solid fa-plane",
+            "CategoryNameDetailed": [
+                "British Airways",
+                "Aer Lingus",
+                "Iberia",
+                "LEVEL"
+            ]
+        },
+        {
+            "CategoryName": "Hotels",
+            "Icon": "fa-solid fa-hotel",
+            "CategoryNameDetailed": [
+                "Generic Hotels"
+            ]
+        },
+        {
+            "CategoryName": "Travel Perks",
+            "Icon": "fa-solid fa-passport",
+            "CategoryNameDetailed": [
+                "Generic Travel Perks"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

@@ -1,0 +1,151 @@
+{
+    "Vendor": "PNC",
+    "CardName": "PNC Cash Rewards Visa Credit Card",
+    "AnnualFee": 0,
+    "PointsValueCpp": null,
+    "slug-id": "pnc-cash-rewards-visa-credit-card",
+    "ImageURL": "/static/images/credit_cards/pnc-cash-rewards-visa-credit-card.png",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://lending.pnc.com/cccr/getting-started?promoCode=base",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "PNC Purchase Analysis",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Generic Business & Tech",
+                "Business Management"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 0,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-24",
+            "BenefitDescriptionShort": "Spending Tools",
+            "BenefitType": "Perk",
+            "NumericValue": 0,
+            "NumericType": null
+        },
+        {
+            "BenefitDescription": "PNC Cash Rewards Bonus",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Rewards Bonus",
+                "Generic Financial & Rewards"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 0,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-24",
+            "BenefitDescriptionShort": "Account Bonus",
+            "BenefitType": "Bonus",
+            "NumericValue": 0,
+            "NumericType": null
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 4,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Gas"
+            ],
+            "AdditionalDetails": null,
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Dining"
+            ],
+            "AdditionalDetails": null,
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Groceries"
+            ],
+            "AdditionalDetails": null,
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Spending Tools",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you value digital tools to track and categorize your spending automatically?",
+            "BenefitCategory": "Business Management",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Account Bonus",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you have a PNC account where you could redeem rewards for extra value?",
+            "BenefitCategory": "Rewards Bonus",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "No Freak verdict for this card yet",
+    "Categories": [
+        {
+            "CategoryName": "Dining & Delivery",
+            "Icon": "fa-solid fa-utensils",
+            "CategoryNameDetailed": [
+                "Generic Dining"
+            ]
+        },
+        {
+            "CategoryName": "Groceries",
+            "Icon": "fa-solid fa-cart-shopping",
+            "CategoryNameDetailed": [
+                "Generic Groceries"
+            ]
+        },
+        {
+            "CategoryName": "Transportation",
+            "Icon": "fa-solid fa-car-side",
+            "CategoryNameDetailed": [
+                "Gas"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

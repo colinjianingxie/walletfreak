@@ -1,0 +1,247 @@
+{
+    "Vendor": "Chase",
+    "CardName": "Chase Sapphire Preferred Card",
+    "AnnualFee": 95,
+    "PointsValueCpp": 1.25,
+    "slug-id": "chase-sapphire-preferred-card",
+    "ImageURL": "/static/images/credit_cards/chase-sapphire-preferred-card.png",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://secure.chase.com/web/oao/application/card?sourceCode=HSGD&action=guest#/origination/cardDetails/index/index;cellCode=61DS;combo=Y",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "$50 Annual Chase Travel Hotel Credit",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Generic Hotels"
+            ],
+            "TimeCategory": "Annually (anniversary year)",
+            "DollarValue": 50,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Hotel Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 50.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "10% anniversary points bonus based on total purchases in prior account anniversary year",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Anniversary Bonus"
+            ],
+            "TimeCategory": "Annually (anniversary year)",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Anniversary Bonus",
+            "BenefitType": "Bonus",
+            "NumericValue": 10.0,
+            "NumericType": "Percent"
+        },
+        {
+            "BenefitDescription": "Complimentary DashPass membership",
+            "AdditionalDetails": "activate by 12/31/2027",
+            "BenefitCategory": [
+                "DoorDash",
+                "Generic Dining"
+            ],
+            "TimeCategory": "Minimum 12 months from activation",
+            "DollarValue": 120,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "DashPass",
+            "BenefitType": "Perk",
+            "NumericValue": 120,
+            "NumericType": "Cash"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 5,
+            "Currency": "points",
+            "RateCategory": [
+                "Chase Travel Flights"
+            ],
+            "AdditionalDetails": "flights through Chase Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 5,
+            "Currency": "points",
+            "RateCategory": [
+                "Chase Travel Hotels"
+            ],
+            "AdditionalDetails": "hotels through Chase Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 5,
+            "Currency": "points",
+            "RateCategory": [
+                "Chase Travel Rental Cars"
+            ],
+            "AdditionalDetails": "rental cars through Chase Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Dining"
+            ],
+            "AdditionalDetails": "dining",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "points",
+            "RateCategory": [
+                "Online Groceries"
+            ],
+            "AdditionalDetails": "online groceries",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "points",
+            "RateCategory": [
+                "Streaming"
+            ],
+            "AdditionalDetails": "streaming",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Airlines",
+                "Generic Hotels",
+                "Generic Transportation"
+            ],
+            "AdditionalDetails": "all other travel (direct)",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-03-26",
+            "Terms": "Spend $5000 in 3 months",
+            "SignUpBonusValue": 75000,
+            "SignUpBonusType": "Points",
+            "SpendAmount": 5000,
+            "SignupDurationMonths": 3
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Hotel Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "0-2",
+                "3-5",
+                "6-10",
+                "11+"
+            ],
+            "Question": "How many hotel nights do you typically book in a year through a travel portal?",
+            "BenefitCategory": "Hotel",
+            "ChoiceWeight": [
+                0.0,
+                0.4,
+                0.8,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Anniversary Bonus",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you value an annual anniversary bonus to boost your travel rewards balance?",
+            "BenefitCategory": "Anniversary Bonus",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "DashPass",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you use food delivery services at least twice a month?",
+            "BenefitCategory": "Delivery",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "10/10. Simple and clean. No tiered spending or hidden boosts. $5,000 in 3 months gets you the full 75k points.",
+    "Categories": [
+        {
+            "CategoryName": "Airlines",
+            "Icon": "fa-solid fa-plane",
+            "CategoryNameDetailed": [
+                "Generic Airlines",
+                "Chase Travel Flights"
+            ]
+        },
+        {
+            "CategoryName": "Hotels",
+            "Icon": "fa-solid fa-hotel",
+            "CategoryNameDetailed": [
+                "Generic Hotels",
+                "Chase Travel Hotels"
+            ]
+        },
+        {
+            "CategoryName": "Dining & Delivery",
+            "Icon": "fa-solid fa-utensils",
+            "CategoryNameDetailed": [
+                "Generic Dining"
+            ]
+        },
+        {
+            "CategoryName": "Transportation",
+            "Icon": "fa-solid fa-car-side",
+            "CategoryNameDetailed": [
+                "Generic Transportation",
+                "Chase Travel Rental Cars"
+            ]
+        },
+        {
+            "CategoryName": "Entertainment",
+            "Icon": "fa-solid fa-ticket",
+            "CategoryNameDetailed": [
+                "Streaming"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

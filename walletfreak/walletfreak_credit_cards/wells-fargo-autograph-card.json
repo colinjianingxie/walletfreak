@@ -1,0 +1,160 @@
+{
+    "Vendor": "Wells Fargo",
+    "CardName": "Wells Fargo Autograph Card",
+    "AnnualFee": 0,
+    "PointsValueCpp": 1.0,
+    "slug-id": "wells-fargo-autograph-card",
+    "ImageURL": "/static/images/credit_cards/wells-fargo-autograph-card.png",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://creditcards.wellsfargo.com/autograph-visa-credit-card/",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "No foreign transaction fees",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Generic Travel Perks",
+                "Fee Waiver"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 50,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-08",
+            "BenefitDescriptionShort": "No FTF",
+            "BenefitType": "Perk",
+            "NumericValue": null,
+            "NumericType": null
+        },
+        {
+            "BenefitDescription": "Cell phone protection up to $600",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Cell Phone Protection",
+                "Generic Protection"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 100,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-08",
+            "BenefitDescriptionShort": "Cell Phone Protection",
+            "BenefitType": "Protection",
+            "NumericValue": 600,
+            "NumericType": null
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 3,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Dining",
+                "Generic Travel Perks",
+                "Generic Transportation",
+                "EV Charging",
+                "Streaming",
+                "Phone Plans"
+            ],
+            "AdditionalDetails": "unlimited categories",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": null,
+            "Terms": "Spend $1000 in 3 months",
+            "SignUpBonusValue": 20000,
+            "SignUpBonusType": "Points",
+            "SpendAmount": 1000,
+            "SignupDurationMonths": 3
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "No Foreign Transaction Fees",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Do you travel abroad and want to avoid the typical 3% fee on every purchase?",
+            "BenefitCategory": "Travel",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Cell Phone Protection",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Somewhat",
+                "Highly"
+            ],
+            "Question": "Do you value having up to $600 in phone protection just by paying your bill?",
+            "BenefitCategory": "Protection",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "10/10. Flat 20k points for $1,000 spend.",
+    "Categories": [
+        {
+            "CategoryName": "Dining & Delivery",
+            "Icon": "fa-solid fa-utensils",
+            "CategoryNameDetailed": [
+                "Generic Dining"
+            ]
+        },
+        {
+            "CategoryName": "Transportation",
+            "Icon": "fa-solid fa-car-side",
+            "CategoryNameDetailed": [
+                "Generic Transportation",
+                "EV Charging"
+            ]
+        },
+        {
+            "CategoryName": "Entertainment",
+            "Icon": "fa-solid fa-ticket",
+            "CategoryNameDetailed": [
+                "Streaming"
+            ]
+        },
+        {
+            "CategoryName": "Business & Tech",
+            "Icon": "fa-solid fa-laptop-code",
+            "CategoryNameDetailed": [
+                "Phone Plans"
+            ]
+        },
+        {
+            "CategoryName": "Travel Perks",
+            "Icon": "fa-solid fa-passport",
+            "CategoryNameDetailed": [
+                "Generic Travel Perks"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

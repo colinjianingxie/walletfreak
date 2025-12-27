@@ -1,0 +1,252 @@
+{
+    "Vendor": "American Express",
+    "CardName": "Delta SkyMiles Platinum American Express Card",
+    "AnnualFee": 350,
+    "PointsValueCpp": 1.2,
+    "slug-id": "delta-skymiles-platinum-american-express-card",
+    "ImageURL": "/static/images/credit_cards/delta-skymiles-platinum-american-express-card.png",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-platinum-american-express-card/",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "Annual Companion Certificate",
+            "AdditionalDetails": "Main Cabin domestic/round-trip",
+            "BenefitCategory": [
+                "Delta",
+                "Generic Airlines"
+            ],
+            "TimeCategory": "Annually (renewal)",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Companion Certificate",
+            "BenefitType": "Perk",
+            "NumericValue": null,
+            "NumericType": null
+        },
+        {
+            "BenefitDescription": "Global Entry/TSA PreCheck credit",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Travel Security",
+                "Global Entry",
+                "TSA PreCheck"
+            ],
+            "TimeCategory": "Every 4-4.5 years",
+            "DollarValue": 120,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "TSA Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 120.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$120 Resy Credit",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Resy",
+                "Generic Dining"
+            ],
+            "TimeCategory": "Annually (calendar year)",
+            "DollarValue": 120,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Resy Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 120,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$120 Rideshare Credit",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Generic Transportation"
+            ],
+            "TimeCategory": "Annually (calendar year)",
+            "DollarValue": 120,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Rideshare Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 120,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$150 Delta Stays Credit",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Delta",
+                "Generic Hotels"
+            ],
+            "TimeCategory": "Annually (calendar year)",
+            "DollarValue": 150,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Delta Stays Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 150,
+            "NumericType": "Cash"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 3,
+            "Currency": "miles",
+            "RateCategory": [
+                "Delta",
+                "Generic Hotels"
+            ],
+            "AdditionalDetails": "Delta & direct hotels",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "miles",
+            "RateCategory": [
+                "Generic Dining",
+                "Generic Groceries"
+            ],
+            "AdditionalDetails": "supermarkets & restaurants",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "miles",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": null,
+            "Terms": "Spend $3000 in 6 months",
+            "SignUpBonusValue": 60000,
+            "SignUpBonusType": "Miles",
+            "SpendAmount": 3000,
+            "SignupDurationMonths": 6
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Companion Certificate",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Do you travel with a companion and want a \"buy one, get one\" certificate for a domestic flight once a year?",
+            "BenefitCategory": "Airline",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "TSA Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Do you want an easy way to cover the cost of Global Entry or TSA PreCheck?",
+            "BenefitCategory": "Travel Security",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Resy Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you dine at Resy restaurants and want $120 in annual statement credits?",
+            "BenefitCategory": "Dining",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Rideshare Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you use rideshares enough to utilize $120 in annual credits?",
+            "BenefitCategory": "Rideshare",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Delta Stays Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "How likely are you to book a hotel through Delta's portal to use a $150 statement credit?",
+            "BenefitCategory": "Hotel",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "10/10. Flat 60k miles for $3k spend.",
+    "Categories": [
+        {
+            "CategoryName": "Airlines",
+            "Icon": "fa-solid fa-plane",
+            "CategoryNameDetailed": [
+                "Delta"
+            ]
+        },
+        {
+            "CategoryName": "Hotels",
+            "Icon": "fa-solid fa-hotel",
+            "CategoryNameDetailed": [
+                "Generic Hotels"
+            ]
+        },
+        {
+            "CategoryName": "Dining & Delivery",
+            "Icon": "fa-solid fa-utensils",
+            "CategoryNameDetailed": [
+                "Generic Dining"
+            ]
+        },
+        {
+            "CategoryName": "Groceries",
+            "Icon": "fa-solid fa-cart-shopping",
+            "CategoryNameDetailed": [
+                "Generic Groceries"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

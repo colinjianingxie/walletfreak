@@ -1,0 +1,95 @@
+{
+    "Vendor": "Discover",
+    "CardName": "Discover it Secured Credit Card",
+    "AnnualFee": 0,
+    "PointsValueCpp": null,
+    "slug-id": "discover-it-secured-credit-card",
+    "ImageURL": "/static/images/credit_cards/discover-it-secured-credit-card.png",
+    "MinCreditScore": 300,
+    "MaxCreditScore": 579,
+    "ApplicationLink": "https://www.discovercard.com/application/website/apply?srcCde=KXPA&adobe_mc=...",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "Refundable Security Deposit",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Credit Building",
+                "Generic Financial & Rewards"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 0,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-24",
+            "BenefitDescriptionShort": "Deposit Refund",
+            "BenefitType": "Perk",
+            "NumericValue": 0,
+            "NumericType": null
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 2,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Gas",
+                "Generic Dining"
+            ],
+            "AdditionalDetails": "gas & dining",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Deposit Refund",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Somewhat",
+                "Highly"
+            ],
+            "Question": "Are you focused on establishing a credit history to eventually get your deposit back?",
+            "BenefitCategory": "Credit Building",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "No Freak verdict for this card yet",
+    "Categories": [
+        {
+            "CategoryName": "Dining & Delivery",
+            "Icon": "fa-solid fa-utensils",
+            "CategoryNameDetailed": [
+                "Generic Dining"
+            ]
+        },
+        {
+            "CategoryName": "Transportation",
+            "Icon": "fa-solid fa-car-side",
+            "CategoryNameDetailed": [
+                "Gas"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}

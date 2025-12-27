@@ -1,0 +1,144 @@
+{
+    "Vendor": "Chase",
+    "CardName": "Ink Business Premier Credit Card",
+    "AnnualFee": 195,
+    "PointsValueCpp": null,
+    "slug-id": "ink-business-premier-credit-card",
+    "ImageURL": "/static/images/credit_cards/ink-business-premier-credit-card.webp",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://creditcards.chase.com/ink-business-credit-cards/premier",
+    "Is524": false,
+    "Benefits": [
+        {
+            "BenefitDescription": "Cell phone protection",
+            "AdditionalDetails": "up to $1,000 per claim",
+            "BenefitCategory": [
+                "Cell Phone Protection",
+                "Generic Protection"
+            ],
+            "TimeCategory": "Per Claim",
+            "DollarValue": 1000,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-07",
+            "BenefitDescriptionShort": "Cell Phone Protection",
+            "BenefitType": "Protection",
+            "NumericValue": 1000,
+            "NumericType": null
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 5,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Chase Travel Flights"
+            ],
+            "AdditionalDetails": "flights through Chase Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 5,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Chase Travel Hotels"
+            ],
+            "AdditionalDetails": "hotels through Chase Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 5,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Chase Travel Rental Cars"
+            ],
+            "AdditionalDetails": "rental cars through Chase Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2.5,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Large Purchases"
+            ],
+            "AdditionalDetails": "$5,000+ purchases",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-12-07",
+            "Terms": "Spend $10,000 in 3 months",
+            "SignUpBonusValue": 1000,
+            "SignUpBonusType": "Cash",
+            "SpendAmount": 10000,
+            "SignupDurationMonths": 3
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Cell Phone Protection",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Somewhat",
+                "Highly"
+            ],
+            "Question": "Does your business value up to $1,000 in coverage for employee cell phones?",
+            "BenefitCategory": "Cell Phone Protection",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "10/10. Flat $1,000 for $10k spend.",
+    "Categories": [
+        {
+            "CategoryName": "Airlines",
+            "Icon": "fa-solid fa-plane",
+            "CategoryNameDetailed": [
+                "Chase Travel Flights"
+            ]
+        },
+        {
+            "CategoryName": "Hotels",
+            "Icon": "fa-solid fa-hotel",
+            "CategoryNameDetailed": [
+                "Chase Travel Hotels"
+            ]
+        },
+        {
+            "CategoryName": "Transportation",
+            "Icon": "fa-solid fa-car-side",
+            "CategoryNameDetailed": [
+                "Chase Travel Rental Cars"
+            ]
+        },
+        {
+            "CategoryName": "Large Expenses",
+            "Icon": "fa-solid fa-money-check-dollar",
+            "CategoryNameDetailed": [
+                "Large Purchases"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ],
+    "ProcessorVendor": null
+}
