@@ -189,12 +189,6 @@ function updateCreditsUsedUI() {
 }
 
 function updateYtdRewardsUI() {
-    // YTD Rewards is essentially static potential from the server for now,
-    // but if we were to calculate it client side it would be sum of all benefit potentials.
-    // For now, let's just leave the server value or strictly implement if needed.
-    // Since this value shouldn't change based on usage (it's potential), we arguably don't need to update it client-side.
-    // However if the user *Adds* a card, we should.
-
     const displayElement = document.getElementById('ytd-rewards-display');
     if (!displayElement) return;
 
@@ -206,21 +200,14 @@ function updateYtdRewardsUI() {
                 const staticCard = allCardsData.find(c => c.id === userCard.card_id);
                 if (staticCard && staticCard.benefits) {
                     staticCard.benefits.forEach((b, index) => {
-                        // Sum ALL benefits potential (as per user request)
-                        // logic mirrors views.py: total_potential_value sums all valid benefits
-                        // AND now respects is_ignored from userCard logic
+                        // Filter out Protection and Bonus benefits
                         if (b.dollar_value && b.benefit_type !== 'Protection' && b.benefit_type !== 'Bonus') {
-                            // benefit_usage keys are benefit_{index} (0-based index from CSV order)
-                            // We trust staticCard.benefits matches this order.
                             const usageKey = `benefit_${index}`;
-                            let isIgnored = false;
-
-                            if (userCard.benefit_usage && userCard.benefit_usage[usageKey]) {
-                                isIgnored = userCard.benefit_usage[usageKey].is_ignored || false;
-                            }
+                            let isIgnored = userCard.benefit_usage && userCard.benefit_usage[usageKey] ? userCard.benefit_usage[usageKey].is_ignored : false;
 
                             if (!isIgnored) {
-                                totalPotential += parseFloat(b.dollar_value);
+                                // Calculate available potential
+                                totalPotential += calculateAvailablePotential(b, userCard.anniversary_date);
                             }
                         }
                     });
@@ -234,6 +221,101 @@ function updateYtdRewardsUI() {
     const parts = formattedTotal.split('.');
 
     displayElement.innerHTML = `$${parts[0]}<span style="font-size: 1.25rem; font-weight: 500; opacity: 0.5;">.${parts[1]}</span>`;
+}
+
+/**
+ * Helper to calculate available potential value for a benefit based on anniversary date
+ * Replicates dashboard/views.py logic
+ */
+function calculateAvailablePotential(benefit, anniversaryDateStr) {
+    if (!benefit.dollar_value) return 0;
+    const val = parseFloat(benefit.dollar_value);
+    if (isNaN(val) || val <= 0) return 0;
+
+    const frequency = benefit.time_category || 'Annually';
+
+    // Date Logic
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth() + 1; // 1-12
+
+    let annMonth = 1;
+    let annYear = currentYear;
+
+    if (anniversaryDateStr) {
+        // Parse YYYY-MM-DD manually to avoid timezone issues
+        const parts = anniversaryDateStr.split('-');
+        if (parts.length === 3) {
+            annYear = parseInt(parts[0]);
+            annMonth = parseInt(parts[1]);
+        }
+    }
+
+    let available = 0;
+    const lowerFreq = frequency.toLowerCase();
+
+    if (lowerFreq.includes('monthly')) {
+        const monthlyVal = val / 12;
+        // Check each month 1-12
+        for (let m = 1; m <= 12; m++) {
+            let isAvailable = false;
+            // Available if: anniversary year < current year (all months up to current)
+            // OR (same year AND month >= anniversary_month AND month <= current_month)
+            if (annYear < currentYear) {
+                isAvailable = m <= currentMonth;
+            } else if (annYear === currentYear) {
+                isAvailable = (m >= annMonth && m <= currentMonth);
+            }
+
+            if (isAvailable) available += monthlyVal;
+        }
+
+    } else if (lowerFreq.includes('quarterly')) {
+        const qVal = val / 4;
+        const currentQ = Math.floor((currentMonth - 1) / 3) + 1;
+        const annQ = Math.floor((annMonth - 1) / 3) + 1;
+
+        for (let q = 1; q <= 4; q++) {
+            let isAvailable = false;
+            if (annYear < currentYear) {
+                isAvailable = q <= currentQ;
+            } else if (annYear === currentYear) {
+                isAvailable = (q >= annQ && q <= currentQ);
+            }
+
+            if (isAvailable) available += qVal;
+        }
+
+    } else if (lowerFreq.includes('semi-annually')) {
+        const hVal = val / 2;
+
+        // H1 check
+        let h1Available = false;
+        if (annYear < currentYear) {
+            h1Available = currentMonth >= 1; // Always available if year passed? logic says m <= current
+        } else if (annYear === currentYear) {
+            // Available if ann in H1 and we are past start
+            h1Available = (annMonth <= 6 && currentMonth >= 1);
+        }
+        // Only count if H1 is current or passed
+        if (h1Available && currentMonth >= 1) available += hVal;
+
+        // H2 check
+        let h2Available = false;
+        if (annYear < currentYear) {
+            h2Available = currentMonth >= 7;
+        } else if (annYear === currentYear) {
+            // (ann<=6 and curr>=7) OR (ann>=7 and curr >= ann)
+            h2Available = (annMonth <= 6 && currentMonth >= 7) || (annMonth >= 7 && currentMonth >= annMonth);
+        }
+        if (h2Available) available += hVal;
+
+    } else {
+        // Annual / Ongoing - assume full value available if card is active
+        available = val;
+    }
+
+    return available;
 }
 
 function updateChase524UI() {

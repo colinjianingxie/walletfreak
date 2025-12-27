@@ -314,7 +314,13 @@ def dashboard(request):
                     
                     # YTD Total Rewards sums ALL valid benefits (potential) - EXCLUDING ignored
                     if not is_ignored:
-                        total_potential_value += dollar_value
+                        # Calculate available potential value based on periods
+                        benefit_potential = 0
+                        for p in periods:
+                            if p.get('is_available', True): # Default to True if not specified (e.g. Annual)
+                                benefit_potential += p.get('max_value', 0)
+                        
+                        total_potential_value += benefit_potential
 
                     # Credits Used and Net Performance are based strictly on "Credit" type benefits
                     # Also exclude output from these metrics if ignored? 
