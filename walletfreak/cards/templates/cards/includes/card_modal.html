@@ -341,9 +341,14 @@ function openCardModal(cardId) {
         dynamicScore = userMatchScores[cardId];
     }
 
-    const matchScore = (dynamicScore !== null) ? dynamicScore : (card.match_score !== undefined ? card.match_score : (card.matchScore || '90'));
-    // Ensure we don't duplicate '%'
-    const matchScoreText = String(matchScore).includes('%') ? matchScore : matchScore + '% Match';
+    const rawScore = (dynamicScore !== null) ? dynamicScore : (card.match_score !== undefined ? card.match_score : (card.matchScore || '90'));
+    
+    // Format to 1 decimal place
+    let cleanScore = String(rawScore).replace('%', '').replace(' Match', '').trim();
+    let floatScore = parseFloat(cleanScore);
+    let displayScore = !isNaN(floatScore) ? floatScore.toFixed(1) : cleanScore;
+    
+    const matchScoreText = `${displayScore}% Match`;
     
     const matchEl = document.getElementById('modal-match-score');
     if (matchEl) matchEl.textContent = matchScoreText;

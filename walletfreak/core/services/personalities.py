@@ -224,6 +224,15 @@ class PersonalityMixin:
             # --- Weighted Aggregation ---
             final_score = (d1_score * 0.45) + (d2_score * 0.35) + (d3_score * 0.15) + (d4_score * 0.05)
             
+            # PENALTY: Student Cards for established users
+            # If user has >= 2 cards, they likely don't need a student card
+            # Scale down significantly (e.g. 10% of original score) rather than complete 0
+            name = card.get('name') or ''
+            slug = card.get('slug') or ''
+            is_student_card = 'student' in name.lower() or 'student' in slug.lower()
+            if is_student_card and len(user_cards) >= 2:
+                final_score *= 0.1
+
             scores[c_id] = min(100.0, max(0.0, final_score))
             
         return scores

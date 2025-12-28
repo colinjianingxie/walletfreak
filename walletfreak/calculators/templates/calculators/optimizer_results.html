@@ -74,10 +74,10 @@
         <div class="net-lbl">NET VALUE</div>
         <div class="net-val">${{ result.net_value|floatformat:0 }}</div>
         
-        {% if result.card.apply_link or result.card.application_link %}
-            <a href="{{ result.card.apply_link|default:result.card.application_link }}" target="_blank" class="btn-apply-sm">
-                APPLY <span class="material-icons" style="font-size: 14px;">arrow_forward</span>
-            </a>
+        {% if result.card.id %}
+            <button onclick="openCardModal('{{ result.card.id }}')" class="btn-apply-sm" style="border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
+                VIEW AND APPLY <span class="material-icons" style="font-size: 14px;">arrow_forward</span>
+            </button>
         {% else %}
              <button disabled class="btn-apply-sm text-muted" style="border:none; bg:transparent;">NO LINK</button>
         {% endif %}
