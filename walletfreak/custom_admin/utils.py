@@ -184,3 +184,26 @@ Generate me the SAME format of JSON as presented in the sample.
 If there are no updates that you found for the card, feel free to return the ORIGINAL json file."""
 
         return prompt
+    
+    def generate_minimum_prompt(self, slug_id):
+        """Generate a minimal follow-up prompt for an existing card."""
+        card_file = os.path.join(self.cards_dir, f'{slug_id}.json')
+        
+        if not os.path.exists(card_file):
+            # If card doesn't exist, fall back to full prompt
+            return self.generate_prompt(slug_id)
+        
+        # Load the existing card JSON
+        with open(card_file, 'r', encoding='utf-8') as f:
+            card_json = json.dumps(json.load(f), indent=4)
+        
+        today = datetime.now().strftime('%Y-%m-%d')
+        
+        prompt = f"""Do the same for {slug_id}.json as of {today}. Here is the current JSON:
+
+{card_json}
+
+Remember: Do NOT change slug-id, CardName, or ImageURL. Return the full updated JSON."""
+
+        return prompt
+

@@ -1,0 +1,230 @@
+{
+    "Vendor": "Capital One",
+    "CardName": "Capital One Venture X Business",
+    "AnnualFee": 395,
+    "PointsValueCpp": 1.85,
+    "slug-id": "capital-one-venture-x-business",
+    "ImageURL": "/static/images/credit_cards/capital-one-venture-x-business.png",
+    "MinCreditScore": 740,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.capitalone.com/small-business/credit-cards/venture-x-business/",
+    "Is524": false,
+    "Benefits": [
+        {
+            "BenefitDescription": "$300 annual credit for bookings made through Capital One Business Travel",
+            "AdditionalDetails": "Available each cardmember year for flights, hotels, or car rentals",
+            "BenefitCategory": [
+                "Generic Travel Perks"
+            ],
+            "TimeCategory": "Annually (anniversary year)",
+            "DollarValue": 300,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Annual Travel Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 300.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "10,000 bonus miles every year, starting on your first anniversary",
+            "AdditionalDetails": "Worth at least $100 toward travel",
+            "BenefitCategory": [
+                "Anniversary Bonus"
+            ],
+            "TimeCategory": "Annually (anniversary year)",
+            "DollarValue": 185,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Anniversary Miles",
+            "BenefitType": "Bonus",
+            "NumericValue": 10000.0,
+            "NumericType": "Miles"
+        },
+        {
+            "BenefitDescription": "Unlimited access to Capital One Lounges and 1,300+ Priority Pass lounges",
+            "AdditionalDetails": "Includes access for the cardholder and 2 guests; note: guest policy updates starting Feb 1, 2026",
+            "BenefitCategory": [
+                "Generic Travel Perks"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 450,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Lounge Access",
+            "BenefitType": "Perk",
+            "NumericValue": 1.0,
+            "NumericType": "Lounge"
+        },
+        {
+            "BenefitDescription": "Up to $120 credit for Global Entry or TSA PreCheck®",
+            "AdditionalDetails": "Available every 4 years as a statement credit",
+            "BenefitCategory": [
+                "Generic Travel Perks"
+            ],
+            "TimeCategory": "Every 4 years",
+            "DollarValue": 120,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Global Entry/TSA Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 120.0,
+            "NumericType": "Cash"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 10,
+            "Currency": "miles",
+            "RateCategory": [
+                "Capital One Travel Hotels"
+            ],
+            "AdditionalDetails": "hotels booked through Capital One Business Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 10,
+            "Currency": "miles",
+            "RateCategory": [
+                "Capital One Travel Rental Cars"
+            ],
+            "AdditionalDetails": "rental cars booked through Capital One Business Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 5,
+            "Currency": "miles",
+            "RateCategory": [
+                "Capital One Travel Flights"
+            ],
+            "AdditionalDetails": "flights booked through Capital One Business Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 5,
+            "Currency": "miles",
+            "RateCategory": [
+                "Capital One Travel Vacation Rentals"
+            ],
+            "AdditionalDetails": "vacation rentals booked through Capital One Business Travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 5,
+            "Currency": "miles",
+            "RateCategory": [
+                "Capital One Entertainment"
+            ],
+            "AdditionalDetails": "tickets for sports, music, and events via Capital One Entertainment",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "miles",
+            "RateCategory": [
+                "All Purchases"
+            ],
+            "AdditionalDetails": "every purchase, everywhere",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-12-28",
+            "Terms": "Earn 200,000 miles after $30,000 spend in 3 months; earn an additional 200,000 miles after $150,000 total spend in 6 months",
+            "SignUpBonusValue": 400000,
+            "SignUpBonusType": "Miles",
+            "SpendAmount": 150000,
+            "SignupDurationMonths": 6
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Business Travel Portal",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "Never",
+                "Occasionally",
+                "Frequently"
+            ],
+            "Question": "How often does your business book travel (hotels, flights, cars) through a centralized travel portal?",
+            "BenefitCategory": "Generic Travel Perks",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Lounge Access",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you prioritize airport lounge access to stay productive during business trips?",
+            "BenefitCategory": "Generic Travel Perks",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "High Spending Bonus",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "Under $10k",
+                "$10k - $50k",
+                "Over $50k"
+            ],
+            "Question": "What is your approximate monthly business credit card spend?",
+            "BenefitCategory": "All Purchases",
+            "ChoiceWeight": [
+                0.2,
+                0.7,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "9.5/10. The ultimate engine for high-spending businesses. The current 400,000-mile bonus is the highest ever seen on this card, worth over $7,000 in travel if transferred. With the $300 travel credit and 10k anniversary bonus, the card effectively pays for itself, making the 2x catch-all rate and premium lounge access pure profit.",
+    "Categories": [
+        {
+            "CategoryName": "Airlines",
+            "Icon": "fa-solid fa-plane",
+            "CategoryNameDetailed": [
+                "Capital One Travel Flights"
+            ]
+        },
+        {
+            "CategoryName": "Hotels",
+            "Icon": "fa-solid fa-hotel",
+            "CategoryNameDetailed": [
+                "Capital One Travel Hotels",
+                "Capital One Travel Vacation Rentals"
+            ]
+        },
+        {
+            "CategoryName": "Transportation",
+            "Icon": "fa-solid fa-car-side",
+            "CategoryNameDetailed": [
+                "Capital One Travel Rental Cars"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "All Purchases",
+                "Generic Financial & Rewards"
+            ]
+        },
+        {
+            "CategoryName": "Entertainment",
+            "Icon": "fa-solid fa-ticket",
+            "CategoryNameDetailed": [
+                "Capital One Entertainment"
+            ]
+        }
+    ]
+}

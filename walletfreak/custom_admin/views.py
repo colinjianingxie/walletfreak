@@ -109,7 +109,14 @@ def admin_generate_prompt(request, card_id):
     from .utils import PromptGenerator
     generator = PromptGenerator()
     try:
-        prompt_text = generator.generate_prompt(slug)
+        # Check if minimum prompt is requested
+        is_minimum = request.GET.get('min', '').lower() in ('1', 'true', 'yes')
+        
+        if is_minimum:
+            prompt_text = generator.generate_minimum_prompt(slug)
+        else:
+            prompt_text = generator.generate_prompt(slug)
+            
         seed_command = f"python manage.py seed_db --cards={slug}"
         return JsonResponse({'prompt': prompt_text, 'seed_command': seed_command})
     except Exception as e:
