@@ -157,3 +157,105 @@ def admin_generate_bulk_prompt(request):
         
     except Exception as e:
          return JsonResponse({'error': str(e)}, status=500)
+
+@csrf_exempt
+@staff_member_required
+def admin_generate_new_prompt(request):
+    """
+    Generate AI prompt for a new card by slug-id.
+    Accepts POST with JSON body containing 'slug_id'.
+    """
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+        
+    try:
+        data = json.loads(request.body)
+        slug_id = data.get('slug_id', '').strip()
+        
+        if not slug_id:
+            return JsonResponse({'error': 'No slug-id provided'}, status=400)
+            
+        # Check permissions
+        uid = request.session.get('uid')
+        if not uid and request.user.is_authenticated:
+            uid = request.user.username
+            
+        if not uid:
+             return JsonResponse({'error': 'Unauthorized'}, status=403)
+             
+        user_profile = db.get_user_profile(uid)
+        email = user_profile.get('email', '').lower()
+        is_super = user_profile.get('is_super_staff', False)
+        
+        if email != 'colinjianingxie@gmail.com' or not is_super:
+            return JsonResponse({'error': 'Unauthorized: Restricted access'}, status=403)
+            
+        from .utils import PromptGenerator
+        generator = PromptGenerator()
+        prompt_text = generator.generate_prompt(slug_id)
+        
+        seed_command = f"python manage.py seed_db --cards={slug_id}"
+        
+        return JsonResponse({'prompt': prompt_text, 'seed_command': seed_command})
+        
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+@csrf_exempt
+@staff_member_required
+def admin_save_card_json(request):
+    """
+    Save card JSON data to a file.
+    Accepts POST with JSON body containing 'slug_id' and 'json_data'.
+    """
+    import os
+    
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+        
+    try:
+        data = json.loads(request.body)
+        slug_id = data.get('slug_id', '').strip()
+        json_data = data.get('json_data', '').strip()
+        
+        if not slug_id:
+            return JsonResponse({'error': 'No slug-id provided'}, status=400)
+        if not json_data:
+            return JsonResponse({'error': 'No JSON data provided'}, status=400)
+            
+        # Check permissions
+        uid = request.session.get('uid')
+        if not uid and request.user.is_authenticated:
+            uid = request.user.username
+            
+        if not uid:
+             return JsonResponse({'error': 'Unauthorized'}, status=403)
+             
+        user_profile = db.get_user_profile(uid)
+        email = user_profile.get('email', '').lower()
+        is_super = user_profile.get('is_super_staff', False)
+        
+        if email != 'colinjianingxie@gmail.com' or not is_super:
+            return JsonResponse({'error': 'Unauthorized: Restricted access'}, status=403)
+        
+        # Validate JSON
+        try:
+            parsed_json = json.loads(json_data)
+        except json.JSONDecodeError as e:
+            return JsonResponse({'error': f'Invalid JSON: {str(e)}'}, status=400)
+        
+        # Save to file
+        cards_dir = os.path.join(settings.BASE_DIR, 'walletfreak_credit_cards')
+        filepath = os.path.join(cards_dir, f'{slug_id}.json')
+        
+        with open(filepath, 'w', encoding='utf-8') as f:
+            json.dump(parsed_json, f, indent=4, ensure_ascii=False)
+        
+        return JsonResponse({
+            'success': True, 
+            'message': f'Saved to {slug_id}.json',
+            'filepath': filepath
+        })
+        
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)

@@ -33,7 +33,7 @@
                 "Generic Shopping",
                 "Generic Entertainment"
             ],
-            "TimeCategory": "Annually",
+            "TimeCategory": "Annually (calendar year)",
             "DollarValue": 200,
             "EnrollmentRequired": false,
             "EffectiveDate": "2025-07-28",
@@ -49,7 +49,7 @@
                 "Blacklane",
                 "Generic Transportation"
             ],
-            "TimeCategory": "Annually",
+            "TimeCategory": "Annually (calendar year)",
             "DollarValue": 200,
             "EnrollmentRequired": false,
             "EffectiveDate": "2025-07-28",
@@ -65,7 +65,7 @@
                 "Priority Pass",
                 "Lounge Access"
             ],
-            "TimeCategory": "Annually",
+            "TimeCategory": "Annually (calendar year)",
             "DollarValue": 469,
             "EnrollmentRequired": false,
             "EffectiveDate": "2025-07-28",
@@ -81,7 +81,7 @@
                 "Admirals Club",
                 "Lounge Access"
             ],
-            "TimeCategory": "Annually",
+            "TimeCategory": "Annually (calendar year)",
             "DollarValue": 300,
             "EnrollmentRequired": false,
             "EffectiveDate": "2025-07-28",
@@ -114,7 +114,7 @@
                 "Banking",
                 "Generic Financial & Rewards"
             ],
-            "TimeCategory": "Annually",
+            "TimeCategory": "Annually (calendar year)",
             "DollarValue": 145,
             "EnrollmentRequired": true,
             "EffectiveDate": "2025-07-28",

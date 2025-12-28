@@ -17,7 +17,7 @@
                 "Fee Waiver",
                 "Generic Financial & Rewards"
             ],
-            "TimeCategory": "Annually",
+            "TimeCategory": "Annually (calendar year)",
             "DollarValue": 150,
             "EnrollmentRequired": false,
             "EffectiveDate": "2025-12-07",

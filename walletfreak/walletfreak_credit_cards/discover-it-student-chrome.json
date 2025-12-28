@@ -17,7 +17,7 @@
                 "Rewards Bonus",
                 "Generic Financial & Rewards"
             ],
-            "TimeCategory": "Annually",
+            "TimeCategory": "Annually (calendar year)",
             "DollarValue": 20,
             "EnrollmentRequired": true,
             "EffectiveDate": "2025-12-24",

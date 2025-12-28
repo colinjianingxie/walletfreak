@@ -2,66 +2,132 @@
     "Vendor": "Chase",
     "CardName": "Aeroplan Credit Card",
     "AnnualFee": 95,
-    "PointsValueCpp": 1.3,
+    "PointsValueCpp": 1.4,
     "slug-id": "aeroplan-credit-card",
-    "ImageURL": "/static/images/credit_cards/aeroplan-credit-card.png",
+    "ImageURL": "/static/images/credit_cards/aeroplan-credit-card.jpg",
     "MinCreditScore": 670,
     "MaxCreditScore": 850,
-    "ApplicationLink": "https://creditcards.chase.com/a1/Aeroplan/75kplus25knaep",
+    "ApplicationLink": "https://creditcards.chase.com/travel-credit-cards/aircanada/aeroplan",
     "Is524": true,
     "Benefits": [
         {
-            "BenefitDescription": "Free first checked bag on Air Canada flights",
-            "AdditionalDetails": null,
+            "BenefitDescription": "$120 Global Entry, TSA PreCheck or NEXUS Credit",
+            "AdditionalDetails": "every 4 years",
             "BenefitCategory": [
-                "Air Canada",
-                "Generic Airlines"
-            ],
-            "TimeCategory": "Permanent",
-            "DollarValue": null,
-            "EnrollmentRequired": false,
-            "EffectiveDate": "2025-11-29",
-            "BenefitDescriptionShort": "Free Bag",
-            "BenefitType": "Perk",
-            "NumericValue": null,
-            "NumericType": null
-        },
-        {
-            "BenefitDescription": "Global Entry/TSA PreCheck credit",
-            "AdditionalDetails": null,
-            "BenefitCategory": [
-                "Travel Security",
-                "Global Entry",
-                "TSA PreCheck"
+                "Travel Security"
             ],
             "TimeCategory": "Every 4 years",
             "DollarValue": 120,
             "EnrollmentRequired": false,
-            "EffectiveDate": "2025-11-29",
-            "BenefitDescriptionShort": "TSA Credit",
+            "EffectiveDate": "2025-01-01",
+            "BenefitDescriptionShort": "Global Entry Credit",
             "BenefitType": "Credit",
             "NumericValue": 120.0,
             "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "Complimentary DashPass for 12 months",
+            "AdditionalDetails": "activate by 12/31/2027",
+            "BenefitCategory": [
+                "DoorDash",
+                "Generic Dining"
+            ],
+            "TimeCategory": "One Time",
+            "DollarValue": 120,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-01-01",
+            "BenefitDescriptionShort": "DashPass",
+            "BenefitType": "Credit",
+            "NumericValue": 120.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "Automatic Aeroplan 25K Elite Status",
+            "AdditionalDetails": "for the year opened and next; retain with $15,000 spend annually; changes effective 1/1/2026",
+            "BenefitCategory": [
+                "Generic Airlines"
+            ],
+            "TimeCategory": "Annually (calendar year)",
+            "DollarValue": 300,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-01-01",
+            "BenefitDescriptionShort": "Elite Status",
+            "BenefitType": "Perk",
+            "NumericValue": 300.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "Free first checked bag on Air Canada flights",
+            "AdditionalDetails": "for cardmember and up to 8 companions",
+            "BenefitCategory": [
+                "Generic Airlines"
+            ],
+            "TimeCategory": "Per Trip",
+            "DollarValue": 140,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-01-01",
+            "BenefitDescriptionShort": "Free Checked Bag",
+            "BenefitType": "Perk",
+            "NumericValue": 140.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "No foreign transaction fees",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Generic Travel Perks"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 75,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-01-01",
+            "BenefitDescriptionShort": "No FX Fees",
+            "BenefitType": "Perk",
+            "NumericValue": 75.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "10% bonus on Chase Ultimate Rewards transfers to Aeroplan",
+            "AdditionalDetails": "up to 25,000 bonus points per year on transfers of 50,000+ points",
+            "BenefitCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "TimeCategory": "Annually (calendar year)",
+            "DollarValue": 350,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-01-01",
+            "BenefitDescriptionShort": "Transfer Bonus",
+            "BenefitType": "Bonus",
+            "NumericValue": 25000.0,
+            "NumericType": "Points"
         }
     ],
     "EarningRates": [
         {
-            "EarningRate": 7,
+            "EarningRate": 3,
             "Currency": "points",
             "RateCategory": [
-                "Air Canada"
+                "Generic Groceries"
             ],
-            "AdditionalDetails": "total points",
+            "AdditionalDetails": "at grocery stores",
             "IsDefault": false
         },
         {
             "EarningRate": 3,
             "Currency": "points",
             "RateCategory": [
-                "Generic Dining",
-                "Generic Travel Perks"
+                "Generic Dining"
             ],
-            "AdditionalDetails": "dining & other travel",
+            "AdditionalDetails": "at restaurants, including takeout and eligible delivery services",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Airlines"
+            ],
+            "AdditionalDetails": "on purchases made directly with Air Canada",
             "IsDefault": false
         },
         {
@@ -70,30 +136,62 @@
             "RateCategory": [
                 "Generic Financial & Rewards"
             ],
-            "AdditionalDetails": "everything else",
+            "AdditionalDetails": "on all other purchases; plus 500 bonus points for every $2,000 spent in a calendar month, up to 1,500 points per month",
             "IsDefault": true
         }
     ],
     "SignUpBonuses": [
         {
-            "EffectiveDate": "2025-12-02",
-            "Terms": "Spend $4000 in 3 months + additional",
-            "SignUpBonusValue": 75000,
+            "EffectiveDate": "2025-12-28",
+            "Terms": "Spend $4,000 in 3 months for 75,000 points, plus spend a total of $20,000 in 12 months for 25,000 points",
+            "SignUpBonusValue": 100000,
             "SignUpBonusType": "Points",
-            "SpendAmount": 4000,
-            "SignupDurationMonths": 3
+            "SpendAmount": 20000,
+            "SignupDurationMonths": 12
         }
     ],
     "Questions": [
         {
-            "BenefitShortDescription": "Free Bag",
+            "BenefitShortDescription": "Global Entry Credit",
             "QuestionType": "multiple_choice",
             "ChoiceList": [
                 "No",
                 "Sometimes",
                 "Yes"
             ],
-            "Question": "Do you fly Air Canada and check bags for yourself or your travel companions?",
+            "Question": "Do you travel internationally or domestically enough to value expedited airport security and customs processing?",
+            "BenefitCategory": "Travel Security",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "DashPass",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you order food delivery or takeout frequently enough to benefit from reduced fees?",
+            "BenefitCategory": "Food Delivery",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Elite Status",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you fly with Air Canada or Star Alliance airlines often enough to appreciate priority boarding and potential upgrades?",
             "BenefitCategory": "Airline",
             "ChoiceWeight": [
                 0.0,
@@ -102,27 +200,61 @@
             ]
         },
         {
-            "BenefitShortDescription": "TSA Credit",
+            "BenefitShortDescription": "Free Checked Bag",
             "QuestionType": "multiple_choice",
             "ChoiceList": [
                 "No",
+                "Sometimes",
                 "Yes"
             ],
-            "Question": "Do you want a credit to cover the application fee for Global Entry or TSA PreCheck?",
-            "BenefitCategory": "Travel Security",
+            "Question": "When flying with Air Canada, do you typically check bags and travel with companions?",
+            "BenefitCategory": "Airline",
             "ChoiceWeight": [
                 0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "No FX Fees",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you make purchases in foreign currencies or travel abroad regularly?",
+            "BenefitCategory": "Travel Perks",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Transfer Bonus",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you have other Chase cards and plan to transfer points to Aeroplan for redemptions?",
+            "BenefitCategory": "Rewards",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
                 1.0
             ]
         }
     ],
-    "FreakVerdict": "3/10. Multiple tiers. Final portion locked behind a massive $20,000 total spend.",
+    "FreakVerdict": "8/10. Excellent for Air Canada loyalists with a strong tiered welcome bonus worth up to $1,400 and valuable elite status perks, though the benefits are niche if you don't fly with them often.",
     "Categories": [
         {
             "CategoryName": "Airlines",
             "Icon": "fa-solid fa-plane",
             "CategoryNameDetailed": [
-                "Air Canada"
+                "Generic Airlines"
             ]
         },
         {
@@ -133,10 +265,10 @@
             ]
         },
         {
-            "CategoryName": "Travel Perks",
-            "Icon": "fa-solid fa-passport",
+            "CategoryName": "Groceries",
+            "Icon": "fa-solid fa-cart-shopping",
             "CategoryNameDetailed": [
-                "Generic Travel Perks"
+                "Generic Groceries"
             ]
         },
         {

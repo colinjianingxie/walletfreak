@@ -26,6 +26,29 @@
         {% endif %}
     </div>
 
+    {% if is_prompt_admin %}
+    <div style="margin-top: 1.5rem; padding: 1.5rem; background: rgba(255,255,255,0.05); border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);">
+        <label style="display: block; margin-bottom: 0.5rem; color: rgba(255,255,255,0.8); font-weight: 600;">Generate Prompt for New Card</label>
+        <div style="display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1rem;">
+            <input type="text" id="new-slug-input" placeholder="Enter slug-id (e.g., chase-sapphire-reserve)"
+                   style="flex: 1; padding: 0.75rem 1rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.5rem; color: white; font-size: 0.9rem;">
+            <button type="button" id="btn-new-prompt" class="btn btn-primary" style="padding: 0.75rem 1.5rem; font-weight: 600;">
+                Generate
+            </button>
+        </div>
+        
+        <label style="display: block; margin-bottom: 0.5rem; color: rgba(255,255,255,0.6); font-weight: 600; font-size: 0.875rem;">Paste AI Result (JSON)</label>
+        <textarea id="new-card-result" placeholder="Paste the JSON response from the AI here..."
+                  style="width: 100%; height: 200px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.5rem; color: #e5e7eb; padding: 1rem; font-family: monospace; font-size: 0.875rem; margin-bottom: 0.75rem; resize: vertical;"></textarea>
+        <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+            <button type="button" id="btn-save-json" class="btn btn-primary" style="padding: 0.75rem 1.5rem; font-weight: 600; background: #10b981;">
+                Save JSON
+            </button>
+        </div>
+    </div>
+    {% endif %}
+
+
     <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
         <thead>
             <tr style="text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1);">
@@ -263,6 +286,127 @@
             setTimeout(() => {
                 btn.innerText = originalText;
             }, 2000);
+        }
+
+        // New Card Slug-ID Generation Logic
+        const newSlugInput = document.getElementById('new-slug-input');
+        const newPromptBtn = document.getElementById('btn-new-prompt');
+        
+        if (newPromptBtn) {
+            newPromptBtn.addEventListener('click', function() {
+                const slugId = newSlugInput.value.trim();
+                
+                if (!slugId) {
+                    alert('Please enter a slug-id');
+                    return;
+                }
+
+                const btn = this;
+                const originalText = btn.innerText;
+                btn.innerText = 'Generating...';
+                btn.disabled = true;
+
+                fetch('/custom-admin/cards/generate-new-prompt/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ slug_id: slugId })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(text => { throw new Error(text || response.statusText) });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        alert('Error: ' + data.error);
+                    } else {
+                        document.getElementById('prompt-output').value = data.prompt;
+                        document.getElementById('seed-command-output').value = data.seed_command || '';
+                        document.getElementById('ai-prompt-modal').style.display = 'flex';
+                    }
+                })
+                .catch(err => {
+                    console.error('Fetch error:', err);
+                    alert('Request failed: ' + err.message);
+                })
+                .finally(() => {
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                });
+            });
+
+            // Allow Enter key to trigger generation
+            newSlugInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    newPromptBtn.click();
+                }
+            });
+        }
+
+        // Save JSON Logic
+        const saveJsonBtn = document.getElementById('btn-save-json');
+        const newCardResult = document.getElementById('new-card-result');
+        
+        if (saveJsonBtn) {
+            saveJsonBtn.addEventListener('click', function() {
+                const slugId = newSlugInput.value.trim();
+                const jsonData = newCardResult.value.trim();
+                
+                if (!slugId) {
+                    alert('Please enter a slug-id first');
+                    return;
+                }
+                if (!jsonData) {
+                    alert('Please paste the JSON result first');
+                    return;
+                }
+
+                // Quick client-side JSON validation
+                try {
+                    JSON.parse(jsonData);
+                } catch (e) {
+                    alert('Invalid JSON: ' + e.message);
+                    return;
+                }
+
+                const btn = this;
+                const originalText = btn.innerText;
+                btn.innerText = 'Saving...';
+                btn.disabled = true;
+
+                fetch('/custom-admin/cards/save-card-json/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ slug_id: slugId, json_data: jsonData })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(text => { throw new Error(text || response.statusText) });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        alert('Error: ' + data.error);
+                    } else {
+                        alert('Success: ' + data.message);
+                        newCardResult.value = '';
+                    }
+                })
+                .catch(err => {
+                    console.error('Fetch error:', err);
+                    alert('Request failed: ' + err.message);
+                })
+                .finally(() => {
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                });
+            });
         }
     </script>
     {% endif %}

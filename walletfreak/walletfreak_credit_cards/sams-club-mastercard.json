@@ -1,6 +1,6 @@
 {
     "Vendor": "Synchrony",
-    "CardName": "Sam\u2019s Club Mastercard",
+    "CardName": "Sam’s Club Mastercard",
     "AnnualFee": 0,
     "PointsValueCpp": null,
     "slug-id": "sams-club-mastercard",
@@ -18,7 +18,7 @@
                 "Generic Transportation",
                 "Rewards Bonus"
             ],
-            "TimeCategory": "Annually",
+            "TimeCategory": "Annually (calendar year)",
             "DollarValue": 300,
             "EnrollmentRequired": false,
             "EffectiveDate": "2025-12-24",
