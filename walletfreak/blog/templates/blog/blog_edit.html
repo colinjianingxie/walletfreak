@@ -169,6 +169,11 @@
             </select>
         </div>
 
+        <div class="form-group" style="display: flex; align-items: center; gap: 0.75rem;">
+            <input type="checkbox" id="is_premium" name="is_premium" style="width: 1.25rem; height: 1.25rem;" {% if blog.is_premium %}checked{% endif %}>
+            <label class="form-label" for="is_premium" style="margin-bottom: 0;">Premium Article (Locked for free users)</label>
+        </div>
+
         <div style="display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;">
             <button type="submit" class="btn-primary">
                 <span style="display: flex; align-items: center; gap: 0.5rem;">

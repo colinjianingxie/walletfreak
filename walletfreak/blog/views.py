@@ -250,6 +250,26 @@ def blog_detail(request, slug):
     # Convert markdown to HTML
     md = markdown.Markdown(extensions=['extra', 'codehilite', 'fenced_code', 'tables'])
     html_content = mark_safe(md.convert(blog.get('content', '')))
+    
+    # Check for premium access
+    is_premium_post = blog.get('is_premium', False)
+    locked = False
+    
+    if is_premium_post:
+        # If user is editor/super staff, they can always see it (already checked via is_editor for unpublished)
+        # But here we want to check if they are premium OR staff
+        if is_editor:
+            # Editors can see everything
+            pass
+        elif uid and db.is_premium(uid):
+            # Premium users can see
+            pass
+        else:
+            # Locked for everyone else (including non-logged-in)
+            locked = True
+            # Don't show content
+            html_content = ""
+            
     blog['html_content'] = html_content
     
     # Get voting information (upvotes only)
@@ -305,7 +325,9 @@ def blog_detail(request, slug):
         'is_authenticated': bool(uid),
         'related_posts': related_posts,
         'comments': root_comments,
-        'total_comments': total_comments
+        'comments': root_comments,
+        'total_comments': total_comments,
+        'locked': locked
     })
 
 @require_POST
@@ -405,6 +427,7 @@ def blog_create(request):
         featured_image = request.POST.get('featured_image', '').strip()
         tags = request.POST.get('tags', '').strip()
         status = request.POST.get('status', 'draft')
+        is_premium = request.POST.get('is_premium') == 'on'
         
         # Validate required fields
         if not title or not content:
@@ -437,6 +460,7 @@ def blog_create(request):
             'status': status,
             'featured_image': featured_image,
             'tags': tags,
+            'is_premium': is_premium,
             'created_at': datetime.now(),
             'updated_at': datetime.now(),
         }
@@ -472,6 +496,7 @@ def blog_edit(request, slug):
         featured_image = request.POST.get('featured_image', '').strip()
         tags = request.POST.get('tags', '').strip()
         status = request.POST.get('status', 'draft')
+        is_premium = request.POST.get('is_premium') == 'on'
         
         # Validate required fields
         if not title or not content:
@@ -488,6 +513,7 @@ def blog_edit(request, slug):
             'featured_image': featured_image,
             'tags': tags,
             'status': status,
+            'is_premium': is_premium,
             'updated_at': datetime.now(),
         }
         

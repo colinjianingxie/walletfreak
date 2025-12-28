@@ -169,7 +169,26 @@
 
             <!-- Post Content -->
             <div class="post-content">
+                {% if locked %}
+                <div class="locked-content-message" style="background: #FFFBEB; border: 1px solid #FCD34D; border-radius: 12px; padding: 3rem 2rem; text-align: center; margin-bottom: 2rem;">
+                    <div style="width: 64px; height: 64px; background: #F59E0B; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                        <span class="material-icons" style="font-size: 32px; color: white;">lock</span>
+                    </div>
+                    <h2 style="color: #92400E; margin-bottom: 0.5rem; font-size: 1.5rem;">Locked behind Premium Subscription</h2>
+                    <p style="color: #B45309; max-width: 500px; margin: 0 auto 2rem;">
+                        This comprehensive guide is available exclusively to our Premium members. 
+                        Subscribe today to unlock this article and access our full library of expert credit card strategies.
+                    </p>
+                    <div style="display: flex; gap: 1rem; justify-content: center;">
+                        <a href="#" class="btn-primary" style="display: inline-block; background: #D97706; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; text-decoration: none;">Upgrade to Premium</a>
+                        {% if not is_authenticated %}
+                        <button onclick="showLoginModal()" style="background: white; border: 1px solid #D97706; color: #D97706; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer;">Log In</button>
+                        {% endif %}
+                    </div>
+                </div>
+                {% else %}
                 {{ blog.html_content }}
+                {% endif %}
             </div>
 
             <!-- Post Actions Footer -->

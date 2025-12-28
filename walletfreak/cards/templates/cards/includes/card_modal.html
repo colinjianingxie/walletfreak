@@ -278,8 +278,7 @@ function openCardModal(cardId) {
         visual.classList.add(imageClass);
     };
 
-    // Logic: Try local_image -> image_url -> default
-    // Logic: Try local_image -> heuristic local (slug+ext) -> image_url -> default
+    // Logic: Try remote URL (image_url/ImageURL) -> local_image -> heuristic local (slug+ext) -> default
     
     // Helper to try loading an image
     const tryLoadImage = (url, onSuccess, onError) => {
@@ -290,27 +289,18 @@ function openCardModal(cardId) {
         img.src = url;
     };
 
-    // Chain step 3: Try remote URL
-    const tryRemote = () => {
-        if (card.image_url) {
-            tryLoadImage(card.image_url, setBgImage, setDefaultVisual);
-        } else {
-            setDefaultVisual();
-        }
-    };
-
-    // Chain step 2: Heuristic search for local image
+    // Chain step 3: Heuristic search for local image
     const tryHeuristic = (index = 0) => {
         const extensions = ['png', 'PNG', 'jpg', 'JPG', 'jpeg', 'webp', 'WEBP', 'avif', 'AVIF'];
         if (index >= extensions.length) {
-            tryRemote();
+            setDefaultVisual();
             return;
         }
         
         // Use slug if available, else id (if it looks like a slug)
         // If id is numeric (mock data) and no slug, skip heuristic
         if ((typeof card.id === 'number' || !isNaN(card.id)) && !card.slug) {
-             tryRemote();
+             setDefaultVisual();
              return;
         }
         
@@ -320,17 +310,29 @@ function openCardModal(cardId) {
         tryLoadImage(path, setBgImage, () => tryHeuristic(index + 1));
     };
 
-    // Chain step 1: Check defined local_image
-    if (card.local_image) {
-        // Handle path with or without /static/ prefix
-        let localPath = card.local_image;
-        if (!localPath.startsWith('/static/') && !localPath.startsWith('http')) {
-             localPath = `/static/${localPath}`;
+    // Chain step 2: Check defined local_image
+    const tryLocalImage = () => {
+        if (card.local_image) {
+            // Handle path with or without /static/ prefix
+            let localPath = card.local_image;
+            if (!localPath.startsWith('/static/') && !localPath.startsWith('http')) {
+                 localPath = `/static/${localPath}`;
+            }
+            
+            tryLoadImage(localPath, setBgImage, () => tryHeuristic(0));
+        } else {
+            tryHeuristic(0);
         }
-        
-        tryLoadImage(localPath, setBgImage, () => tryHeuristic(0));
+    };
+
+    // Chain step 1: Check remote URL (Prioritized)
+    // Check both snake_case and CamelCase to be safe
+    const remoteUrl = card.image_url || card.ImageURL;
+    
+    if (remoteUrl) {
+        tryLoadImage(remoteUrl, setBgImage, tryLocalImage);
     } else {
-        tryHeuristic(0);
+        tryLocalImage();
     }
     
     // Stats
