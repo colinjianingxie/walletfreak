@@ -64,9 +64,15 @@
 
                             <button type="submit" class="btn-scan" id="scanBtn">
                                 <span class="btn-content">
-                                    <!-- Added inline style and !important to ensure functionality -->
-                                    <span class="material-icons spin d-none" id="btnSpinner" style="display: none !important;">sync</span>
-                                    <span class="material-icons" id="btnIcon">track_changes</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="target-icon" id="btnIcon" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <circle cx="12" cy="12" r="6"></circle>
+                                        <circle cx="12" cy="12" r="2"></circle>
+                                    </svg>
+                                    <!-- Loading spinner (hidden by default) -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="loader-icon spin" id="btnLoader" style="display: none;" aria-hidden="true">
+                                        <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+                                    </svg>
                                     <span class="btn-text">Scan ROI Leaderboard</span>
                                 </span>
                             </button>
@@ -85,13 +91,7 @@
         </div>
     </div>
     
-    <!-- Loading State (Hidden by default) -->
-    <div id="loadingState" class="container text-center py-5" style="display: none; margin-top: 150px;">
-        <div class="search-spinner">
-            <span class="material-icons search-icon">search</span>
-        </div>
-        <div class="loading-text">SCANNING ROI LEADERBOARD...</div>
-    </div>
+    <!-- Loading handled inline on the button itself -->
 
     <!-- Results Container -->
     <div id="resultsContainer" class="container mt-4 mb-5" style="display: none;">
@@ -411,6 +411,44 @@
     
     @keyframes spin { 100% { transform: rotate(360deg); } }
     .spin { animation: spin 1s linear infinite; }
+    
+    .target-icon {
+        width: 20px;
+        height: 20px;
+    }
+    .target-icon.spin {
+        animation: spin 1s linear infinite;
+    }
+    
+    .loader-icon {
+        width: 20px;
+        height: 20px;
+    }
+    
+    /* Loading Button */
+    .loading-scan-btn {
+        width: 100%;
+        max-width: 500px;
+        padding: 16px 24px;
+        background: #facc15; /* yellow-400 */
+        color: #0f172a; /* slate-900 */
+        border-radius: 16px; /* rounded-2xl */
+        font-family: 'Outfit', sans-serif;
+        font-weight: 900;
+        font-size: 1.125rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        cursor: default;
+        pointer-events: none;
+    }
+    .loading-scan-btn .target-icon {
+        width: 20px;
+        height: 20px;
+    }
 
     /* Mobile Responsive */
     @media (max-width: 992px) {
@@ -768,21 +806,16 @@ document.getElementById('optimizerForm').addEventListener('submit', function(e) 
     
     const form = this;
     const btn = document.getElementById('scanBtn');
-    const spinner = document.getElementById('btnSpinner');
+    const btnIcon = document.getElementById('btnIcon');
+    const btnLoader = document.getElementById('btnLoader');
     
-    // UI State: Loading
-    spinner.classList.remove('d-none');
-    spinner.style.display = 'inline-block'; // Or block/flex
-    spinner.style.setProperty('display', 'block', 'important');
+    // Add loading state to button
+    btn.disabled = true;
+    btnIcon.style.display = 'none';
+    btnLoader.style.display = 'inline-block';
     
-    // Show Full Page Loading Animation
+    // Hide previous results
     document.getElementById('resultsContainer').classList.add('d-none');
-    const loadingState = document.getElementById('loadingState');
-    loadingState.classList.remove('d-none');
-    loadingState.style.display = 'block'; // Force display
-    
-    // Smooth scroll
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     
     const formData = new FormData(form);
     
@@ -797,8 +830,10 @@ document.getElementById('optimizerForm').addEventListener('submit', function(e) 
     .then(data => {
         // UI State: Done
         setTimeout(() => {
-            loadingState.classList.add('d-none');
-            loadingState.style.display = 'none'; // Force hide
+            // Reset button state
+            btn.disabled = false;
+            btnIcon.style.display = 'inline-block';
+            btnLoader.style.display = 'none';
             
             // Populate card data for modal
             if (data.cards_data && Array.isArray(data.cards_data)) {
@@ -818,9 +853,6 @@ document.getElementById('optimizerForm').addEventListener('submit', function(e) 
             resultsContainer.classList.remove('d-none');
             resultsContainer.style.display = 'block'; // Remove inline display:none
             
-            spinner.classList.add('d-none');
-            spinner.style.removeProperty('display'); // Ensure inline style is removed
-            
             resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
             
         }, 1500); 
@@ -828,8 +860,9 @@ document.getElementById('optimizerForm').addEventListener('submit', function(e) 
     .catch(err => {
         console.error(err);
         alert('Error calculating results.');
-        spinner.classList.add('d-none');
-        spinner.style.removeProperty('display');
+        btn.disabled = false;
+        btnIcon.style.display = 'inline-block';
+        btnLoader.style.display = 'none';
     });
 });
 
