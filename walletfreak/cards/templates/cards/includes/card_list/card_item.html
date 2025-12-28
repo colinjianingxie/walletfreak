@@ -105,7 +105,7 @@
                                 </div>
                                 {% if user.is_authenticated and user_match_scores %}
                                     <div class="match-badge">
-                                        <span class="match-score">{{ user_match_scores|get_item:card.id|default:0 }}%</span>
+                                        <span class="match-score">{{ user_match_scores|get_item:card.id|default:0|floatformat:1 }}%</span>
                                         <span class="match-label">MATCH</span>
                                     </div>
                                 {% endif %}

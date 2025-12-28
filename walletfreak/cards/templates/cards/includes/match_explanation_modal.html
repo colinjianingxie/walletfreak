@@ -1,0 +1,76 @@
+
+<!-- Match Explanation Modal -->
+<div id="match-explanation-modal" class="modal" style="display: none;">
+    <div class="modal-content" style="max-width: 600px; padding: 2rem;">
+        <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <div>
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0; color: #1F2937;">How We Calculate Match Scores</h3>
+            </div>
+            <button onclick="closeMatchModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #94A3B8;">×</button>
+        </div>
+
+        <p style="color: #64748B; margin-top: -1rem; margin-bottom: 2rem; font-size: 0.95rem;">
+            Your personalized match score is calculated using a 4-dimensional algorithm designed to find cards that fit your spending habits, personality, and financial goals.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <!-- Dimension 1: Incremental Utility -->
+            <div style="display: flex; gap: 1rem;">
+                <div style="width: 48px; height: 48px; min-width: 48px; background: #EEF2FF; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                    <span class="material-icons" style="color: #4F46E5; font-size: 24px;">trending_up</span>
+                </div>
+                <div>
+                    <h4 style="margin: 0 0 0.25rem 0; font-size: 1.1rem; color: #1F2937;">Incremental Utility (45%)</h4>
+                    <p style="margin: 0; font-size: 0.9rem; color: #64748B; line-height: 1.5;">
+                        We analyze how much <strong>extra value</strong> this card adds compared to what you already have in your wallet. If a card earns 4x on dining but you already have a 4x card, it scores lower than a card that fills a gap.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Dimension 2: Personality Alignment -->
+            <div style="display: flex; gap: 1rem;">
+                <div style="width: 48px; height: 48px; min-width: 48px; background: #FEF3C7; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                    <span class="material-icons" style="color: #D97706; font-size: 24px;">psychology</span>
+                </div>
+                <div>
+                    <h4 style="margin: 0 0 0.25rem 0; font-size: 1.1rem; color: #1F2937;">Personality Alignment (35%)</h4>
+                    <p style="margin: 0; font-size: 0.9rem; color: #64748B; line-height: 1.5;">
+                        Scores how well the card fits your <strong>Financial Archetype</strong>. Does it match your preferred ecosystems (e.g., Apple, Travel) and strategy (e.g., Cash Back vs. Points)?
+                    </p>
+                </div>
+            </div>
+
+            <!-- Dimension 3: Sign-Up Bonus ROI -->
+            <div style="display: flex; gap: 1rem;">
+                <div style="width: 48px; height: 48px; min-width: 48px; background: #ECFDF5; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                    <span class="material-icons" style="color: #059669; font-size: 24px;">card_giftcard</span>
+                </div>
+                <div>
+                    <h4 style="margin: 0 0 0.25rem 0; font-size: 1.1rem; color: #1F2937;">Sign-Up Bonus ROI (15%)</h4>
+                    <p style="margin: 0; font-size: 0.9rem; color: #64748B; line-height: 1.5;">
+                        Measures the net value of the welcome offer (Bonus - Fee) relative to the spending required. High bonuses with low fees score highest.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Dimension 4: Fee & Strategy Affinity -->
+            <div style="display: flex; gap: 1rem;">
+                <div style="width: 48px; height: 48px; min-width: 48px; background: #F1F5F9; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                    <span class="material-icons" style="color: #475569; font-size: 24px;">account_balance_wallet</span>
+                </div>
+                <div>
+                    <h4 style="margin: 0 0 0.25rem 0; font-size: 1.1rem; color: #1F2937;">Fee & Strategy Affinity (5%)</h4>
+                    <p style="margin: 0; font-size: 0.9rem; color: #64748B; line-height: 1.5;">
+                        Checks if the card's annual fee aligns with your typical spending comfort zone. We penalize cards with fees significantly higher than your average.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #E2E8F0; text-align: center;">
+            <button onclick="closeMatchModal()" style="background: #0F172A; color: white; padding: 0.75rem 2rem; border-radius: 8px; border: none; font-weight: 600; cursor: pointer;">
+                Got it
+            </button>
+        </div>
+    </div>
+</div>

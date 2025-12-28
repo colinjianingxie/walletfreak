@@ -7,5 +7,10 @@
         </div>
         <p class="header-subtitle">
             Find the perfect addition to your wallet.
+            {% if request.user.is_authenticated %}
+            <span onclick="openMatchModal()" style="cursor: pointer; display: inline-flex; vertical-align: middle; margin-left: 4px; color: #94A3B8;">
+                <span class="material-icons" style="font-size: 18px;">info_outline</span>
+            </span>
+            {% endif %}
         </p>
     </div>
