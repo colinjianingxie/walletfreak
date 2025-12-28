@@ -2,31 +2,31 @@
 {% load static %}
 
 {% block extra_css %}
-<!-- Tailwind is assumed to be loaded globally or via base. The user provided utility classes so we rely on those. -->
+    <link rel="stylesheet" href="{% static 'css/calculators.css' %}">
 {% endblock %}
 
 {% block full_width_content %}
 <!-- We override full_width_content to replace the default container and use the user's layout -->
-<div class="max-w-7xl mx-auto p-6 md:p-10 space-y-12 pb-32 animate-in fade-in duration-500">
-    <header>
-        <h1 class="text-4xl font-black text-slate-900 tracking-tight mb-2">The Freak Lab</h1>
-        <p class="text-slate-500 text-lg font-medium">Precision tools for the rewards-obsessed.</p>
+<div class="lab-container">
+    <header class="lab-header">
+        <h1 class="lab-title">The Freak Lab</h1>
+        <p class="lab-subtitle">Precision tools for the rewards-obsessed.</p>
     </header>
     
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+    <div class="lab-grid">
         <!-- Worth It? Analyzer -->
-        <div class="flex flex-col h-full">
-            <a href="{% url 'worth_it_list' %}" class="group relative bg-white rounded-[2.5rem] p-1 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-indigo-100 transition-all text-left h-full block">
-                <div class="bg-white rounded-[2.4rem] p-8 h-full border border-slate-50 overflow-hidden relative flex flex-col justify-between">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calculator absolute -bottom-6 -right-6 w-32 h-32 text-slate-50 opacity-50 group-hover:text-indigo-50 transition-colors" aria-hidden="true"><rect width="16" height="20" x="4" y="2" rx="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line><line x1="16" x2="16" y1="14" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></svg>
+        <div class="tool-col">
+            <a href="{% url 'worth_it_list' %}" class="card-worth-it tool-card-link group">
+                <div class="tool-card-inner">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calculator bg-icon" aria-hidden="true"><rect width="16" height="20" x="4" y="2" rx="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line><line x1="16" x2="16" y1="14" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></svg>
                     <div>
-                        <div class="w-14 h-14 bg-indigo-600 text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-indigo-100">
+                        <div class="tool-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign w-8 h-8" aria-hidden="true"><line x1="12" x2="12" y1="2" y2="22"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                         </div>
-                        <h2 class="text-2xl font-black text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors">"Worth It?" Analyzer</h2>
-                        <p class="text-slate-500 font-medium leading-relaxed mb-8">Annual fee audit. Determine if your high-fee cards are actually profitable based on your real-world credit usage.</p>
+                        <h2 class="tool-name">"Worth It?" Analyzer</h2>
+                        <p class="tool-desc">Annual fee audit. Determine if your high-fee cards are actually profitable based on your real-world credit usage.</p>
                     </div>
-                    <div class="flex items-center gap-2 text-indigo-600 font-black text-sm uppercase tracking-widest">
+                    <div class="tool-action">
                         Open Tool 
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
                     </div>
@@ -35,60 +35,60 @@
         </div>
         
         <!-- Visual Column 1 -->
-        <div class="hidden lg:block">
-            <a href="{% url 'worth_it_list' %}" class="bg-slate-900 rounded-[2.5rem] p-8 h-full relative overflow-hidden flex flex-col justify-between border border-slate-800 shadow-2xl block hover:scale-[1.01] transition-transform duration-300">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500 rounded-full blur-[80px] opacity-20"></div>
-                <div class="flex items-center justify-between mb-6">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white">
+        <div class="visual-col">
+            <a href="{% url 'worth_it_list' %}" class="visual-card visual-amex">
+                <div class="glow"></div>
+                <div class="visual-header">
+                    <div class="badge">
+                        <div class="icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield w-5 h-5" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg>
                         </div>
-                        <div class="text-white font-bold text-sm">Amex Platinum Audit</div>
+                        <div class="title">Amex Platinum Audit</div>
                     </div>
-                    <div class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Strategy: Maximize Credits</div>
+                    <div class="sub">Strategy: Maximize Credits</div>
                 </div>
-                <div class="flex flex-col items-center">
-                    <div class="relative w-32 h-32 mb-6">
-                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                <div class="visual-middle">
+                    <div class="chart-container">
+                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100" style="width: 100%; height: 100%; transform: rotate(-90deg);">
                             <circle cx="50" cy="50" r="45" stroke="#1e293b" stroke-width="8" fill="none"></circle>
                             <circle cx="50" cy="50" r="45" stroke="#4f46e5" stroke-width="8" fill="none" stroke-dasharray="282.7" stroke-dashoffset="45" stroke-linecap="round"></circle>
                         </svg>
-                        <div class="absolute inset-0 flex flex-col items-center justify-center">
-                            <span class="text-2xl font-black text-white">84</span>
-                            <span class="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Score</span>
+                        <div class="chart-center-text">
+                            <span class="chart-score">84</span>
+                            <span class="chart-label">Score</span>
                         </div>
                     </div>
-                    <div class="text-center space-y-2">
-                        <div class="text-green-400 font-black text-xl">+$240.00 Net Profit</div>
-                        <p class="text-slate-400 text-xs font-medium">Extracting 134% value vs. fee.</p>
+                    <div class="visual-stats">
+                        <div class="profit">+$240.00 Net Profit</div>
+                        <p class="desc">Extracting 134% value vs. fee.</p>
                     </div>
                 </div>
-                <div class="mt-8 grid grid-cols-2 gap-3 w-full">
-                    <div class="bg-white/5 p-3 rounded-xl border border-white/10">
-                        <div class="text-[8px] font-bold text-slate-500 uppercase mb-1">Credits Used</div>
-                        <div class="text-white font-bold">$1,200</div>
+                <div class="visual-footer">
+                    <div class="stat-box">
+                        <div class="label">Credits Used</div>
+                        <div class="value">$1,200</div>
                     </div>
-                    <div class="bg-white/5 p-3 rounded-xl border border-white/10">
-                        <div class="text-[8px] font-bold text-slate-500 uppercase mb-1">Point Yield</div>
-                        <div class="text-white font-bold">$150</div>
+                    <div class="stat-box">
+                        <div class="label">Point Yield</div>
+                        <div class="value">$150</div>
                     </div>
                 </div>
             </a>
         </div>
 
         <!-- Single Swipe Tool -->
-        <div class="flex flex-col h-full">
-            <a href="{% url 'spend_it_input' %}" class="group relative bg-white rounded-[2.5rem] p-1 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-blue-100 transition-all text-left h-full block">
-                <div class="bg-white rounded-[2.4rem] p-8 h-full border border-slate-50 overflow-hidden relative flex flex-col justify-between">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart absolute -bottom-6 -right-6 w-32 h-32 text-slate-50 opacity-50 group-hover:text-blue-50 transition-colors" aria-hidden="true"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+        <div class="tool-col">
+            <a href="{% url 'spend_it_input' %}" class="card-swipe tool-card-link group">
+                <div class="tool-card-inner">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart bg-icon" aria-hidden="true"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
                     <div>
-                        <div class="w-14 h-14 bg-blue-600 text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                        <div class="tool-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart w-8 h-8" aria-hidden="true"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
                         </div>
-                        <h2 class="text-2xl font-black text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">Single Swipe Tool</h2>
-                        <p class="text-slate-500 font-medium leading-relaxed mb-8">Retailer-specific optimization. Find the perfect card for one specific store with merchant-level synergy logic.</p>
+                        <h2 class="tool-name">Single Swipe Tool</h2>
+                        <p class="tool-desc">Retailer-specific optimization. Find the perfect card for one specific store with merchant-level synergy logic.</p>
                     </div>
-                    <div class="flex items-center gap-2 text-blue-600 font-black text-sm uppercase tracking-widest">
+                    <div class="tool-action">
                         Optimize Swipe 
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
                     </div>
@@ -97,43 +97,43 @@
         </div>
         
         <!-- Visual Column 2 -->
-        <div class="hidden lg:block">
-            <a href="{% url 'spend_it_input' %}" class="bg-white rounded-[2.5rem] p-8 h-full relative overflow-hidden flex flex-col border border-slate-100 shadow-xl block hover:scale-[1.01] transition-transform duration-300">
-                <div class="bg-slate-50 -mx-8 -mt-8 p-6 border-b border-slate-100 mb-6">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-600">
+        <div class="visual-col">
+            <a href="{% url 'spend_it_input' %}" class="visual-card visual-merchant">
+                <div class="merch-header">
+                    <div class="merch-info">
+                        <div class="merch-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart w-6 h-6" aria-hidden="true"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
                         </div>
-                        <div>
-                            <div class="text-slate-900 font-black">Merchant: Trader Joes</div>
-                            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Spend Estimate: $200.00</div>
+                        <div class="merch-text">
+                            <div class="name">Merchant: Trader Joes</div>
+                            <div class="sub">Spend Estimate: $200.00</div>
                         </div>
                     </div>
                 </div>
-                <div class="space-y-4">
-                    <div class="p-4 rounded-2xl border flex flex-col gap-3 transition-all border-indigo-600 bg-indigo-50/50 shadow-sm">
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-5 rounded bg-yellow-400"></div>
-                                <span class="text-sm font-bold text-slate-800">Amex Gold</span>
+                <div class="merch-list">
+                    <div class="merch-item top">
+                        <div class="item-row">
+                            <div class="card-pill">
+                                <div class="card-color" style="background-color: #facc15;"></div>
+                                <span class="card-name-sm">Amex Gold</span>
                             </div>
-                            <span class="text-xs font-black px-2 py-0.5 rounded bg-indigo-600 text-white">4x</span>
+                            <span class="mult-badge high">4x</span>
                         </div>
-                        <p class="text-[10px] font-medium text-slate-500 leading-tight">Top Performer: Supermarkets</p>
+                        <p class="item-desc">Top Performer: Supermarkets</p>
                     </div>
-                    <div class="p-4 rounded-2xl border flex flex-col gap-3 transition-all border-slate-100">
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-5 rounded bg-slate-800"></div>
-                                <span class="text-sm font-bold text-slate-800">Venture X</span>
+                    <div class="merch-item">
+                        <div class="item-row">
+                            <div class="card-pill">
+                                <div class="card-color" style="background-color: #1e293b;"></div>
+                                <span class="card-name-sm">Venture X</span>
                             </div>
-                            <span class="text-xs font-black px-2 py-0.5 rounded bg-slate-100 text-slate-500">2x</span>
+                            <span class="mult-badge low">2x</span>
                         </div>
-                        <p class="text-[10px] font-medium text-slate-500 leading-tight">Runner-up: Catch-all</p>
+                        <p class="item-desc">Runner-up: Catch-all</p>
                     </div>
                 </div>
-                <div class="mt-auto pt-6 flex justify-center">
-                    <div class="px-4 py-2 bg-slate-900 text-white rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
+                <div class="merch-footer">
+                    <div class="optimize-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-3 h-3 text-yellow-400" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg> 
                         Optimize Next Swipe
                     </div>
@@ -142,18 +142,18 @@
         </div>
 
         <!-- SUB Optimizer -->
-        <div class="flex flex-col h-full">
-            <a href="{% url 'optimizer_input' %}" class="group relative bg-slate-900 rounded-[2.5rem] p-1 shadow-xl shadow-slate-900/20 hover:shadow-2xl transition-all text-left h-full block">
-                <div class="bg-slate-900 rounded-[2.4rem] p-8 h-full border border-slate-800 overflow-hidden relative flex flex-col justify-between">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap absolute -bottom-6 -right-6 w-32 h-32 text-slate-800 opacity-50 group-hover:text-yellow-900/30 transition-colors" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>
+        <div class="tool-col">
+            <a href="{% url 'optimizer_input' %}" class="card-sub tool-card-link group">
+                <div class="tool-card-inner">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap bg-icon" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>
                     <div>
-                        <div class="w-14 h-14 bg-yellow-400 text-slate-900 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                        <div class="tool-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up w-8 h-8" aria-hidden="true"><path d="M16 7h6v6"></path><path d="m22 7-8.5 8.5-5-5L2 17"></path></svg>
                         </div>
-                        <h2 class="text-2xl font-black text-white mb-3 group-hover:text-yellow-400 transition-colors">SUB Optimizer</h2>
-                        <p class="text-slate-400 font-medium leading-relaxed mb-8">Welcome offer math. Calculate the highest ROI for your upcoming period of high spend (Taxes, Reno, etc).</p>
+                        <h2 class="tool-name">SUB Optimizer</h2>
+                        <p class="tool-desc">Welcome offer math. Calculate the highest ROI for your upcoming period of high spend (Taxes, Reno, etc).</p>
                     </div>
-                    <div class="flex items-center gap-2 text-yellow-400 font-black text-sm uppercase tracking-widest">
+                    <div class="tool-action">
                         Analyze Bonuses 
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
                     </div>
@@ -162,53 +162,51 @@
         </div>
         
         <!-- Visual Column 3 -->
-        <div class="hidden lg:block">
-            <a href="{% url 'optimizer_input' %}" class="bg-slate-900 rounded-[2.5rem] p-8 h-full relative overflow-hidden flex flex-col border border-slate-800 shadow-xl block hover:scale-[1.01] transition-transform duration-300">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-yellow-400 rounded-full blur-[80px] opacity-10"></div>
-                <div class="flex items-center justify-between mb-8">
-                    <div class="flex gap-4">
-                        <div class="w-10 h-10 bg-yellow-400/20 rounded-xl flex items-center justify-center text-yellow-400">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-percent w-5 h-5" aria-hidden="true"><line x1="19" x2="5" y1="5" y2="19"></line><circle cx="6.5" cy="6.5" r="2.5"></circle><circle cx="17.5" cy="17.5" r="2.5"></circle></svg>
-                        </div>
-                        <div>
-                            <h4 class="text-white font-black text-sm">Strategy: Freak ROI</h4>
-                            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Target: $4,000 Spend</p>
-                        </div>
+        <div class="visual-col">
+            <a href="{% url 'optimizer_input' %}" class="visual-card visual-roi">
+                <div class="glow"></div>
+                <div class="roi-header">
+                    <div class="roi-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-percent w-5 h-5" aria-hidden="true"><line x1="19" x2="5" y1="5" y2="19"></line><circle cx="6.5" cy="6.5" r="2.5"></circle><circle cx="17.5" cy="17.5" r="2.5"></circle></svg>
+                    </div>
+                    <div>
+                        <h4 style="color: white; font-weight: 900; font-size: 0.875rem;">Strategy: Freak ROI</h4>
+                        <p style="text-transform: uppercase; font-size: 0.625rem; font-weight: 700; color: #64748b; letter-spacing: 0.1em;">Target: $4,000 Spend</p>
                     </div>
                 </div>
-                <div class="space-y-4">
-                    <div class="flex items-center gap-4 group">
-                        <div class="text-sm font-black text-slate-700">#1</div>
-                        <div class="flex-1 bg-white/5 p-4 rounded-2xl border border-white/10 flex justify-between items-center group-hover:bg-white/10 transition-all">
-                            <div>
-                                <div class="text-[9px] font-black text-yellow-400 uppercase tracking-tighter mb-1">Highest ROI</div>
-                                <div class="text-xs font-bold text-white">Sapphire Pref.</div>
+                <div class="roi-list">
+                    <div class="roi-item group">
+                        <div class="rank">#1</div>
+                        <div class="roi-card-box group-hover:bg-white/10">
+                            <div class="roi-meta">
+                                <div class="tag">Highest ROI</div>
+                                <div class="name">Sapphire Pref.</div>
                             </div>
-                            <div class="text-right">
-                                <div class="text-sm font-black text-green-400">18.7%</div>
-                                <div class="text-[8px] font-bold text-slate-500 uppercase tracking-widest">ROI %</div>
+                            <div class="roi-val">
+                                <div class="roi-pct">18.7%</div>
+                                <div class="roi-lbl">ROI %</div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex items-center gap-4 group">
-                        <div class="text-sm font-black text-slate-700">#2</div>
-                        <div class="flex-1 bg-white/5 p-4 rounded-2xl border border-white/10 flex justify-between items-center group-hover:bg-white/10 transition-all">
-                            <div>
-                                <div class="text-[9px] font-black text-yellow-400 uppercase tracking-tighter mb-1">Fee-Neutral</div>
-                                <div class="text-xs font-bold text-white">Venture X</div>
+                    <div class="roi-item group">
+                        <div class="rank">#2</div>
+                        <div class="roi-card-box group-hover:bg-white/10">
+                            <div class="roi-meta">
+                                <div class="tag">Fee-Neutral</div>
+                                <div class="name">Venture X</div>
                             </div>
-                            <div class="text-right">
-                                <div class="text-sm font-black text-green-400">15.0%</div>
-                                <div class="text-[8px] font-bold text-slate-500 uppercase tracking-widest">ROI %</div>
+                            <div class="roi-val">
+                                <div class="roi-pct">15.0%</div>
+                                <div class="roi-lbl">ROI %</div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="mt-auto pt-8 flex gap-2">
-                    <div class="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
-                        <div class="h-full bg-yellow-400 w-3/4"></div>
+                <div class="roi-footer">
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
                     </div>
-                    <div class="text-[9px] font-black text-slate-500 uppercase tracking-widest">ROI Scan</div>
+                    <div class="progress-label">ROI Scan</div>
                 </div>
             </a>
         </div>

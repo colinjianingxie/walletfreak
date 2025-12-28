@@ -1,0 +1,765 @@
+/* Calculators Index Page Styles - Replaces Tailwind */
+
+/* Container */
+.lab-container {
+    max-width: 80rem;
+    /* 7xl */
+    margin: 0 auto;
+    padding: 1.5rem;
+    padding-bottom: 8rem;
+    animation: fade-in 0.5s ease-out;
+}
+
+@media (min-width: 768px) {
+    .lab-container {
+        padding: 2.5rem;
+    }
+}
+
+/* Header */
+.lab-header {
+    margin-bottom: 3rem;
+}
+
+.lab-title {
+    font-size: 2.25rem;
+    font-weight: 900;
+    color: #0f172a;
+    /* slate-900 */
+    letter-spacing: -0.025em;
+    margin-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+    .lab-title {
+        font-size: 2.5rem;
+        /* 4xl usually, just keeping it responsive */
+    }
+}
+
+.lab-subtitle {
+    color: #64748b;
+    /* slate-500 */
+    font-size: 1.125rem;
+    /* lg */
+    font-weight: 500;
+}
+
+/* Grid Layout */
+.lab-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: stretch;
+}
+
+@media (min-width: 1024px) {
+    .lab-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Cards Common */
+.tool-col {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.tool-card-link {
+    display: block;
+    height: 100%;
+    text-decoration: none;
+    border-radius: 2.5rem;
+    padding: 0.25rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    /* shadow-xl */
+}
+
+.tool-card-inner {
+    border-radius: 2.4rem;
+    padding: 2rem;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    /* Important for padding */
+}
+
+.tool-icon-box {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.tool-name {
+    font-size: 1.5rem;
+    /* 2xl */
+    font-weight: 900;
+    margin-bottom: 0.75rem;
+    transition: color 0.3s;
+}
+
+.tool-desc {
+    font-weight: 500;
+    line-height: 1.625;
+    margin-bottom: 2rem;
+}
+
+.tool-action {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 900;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Worth It? Analyzer (Indigo) */
+.card-worth-it {
+    background-color: white;
+    box-shadow: 0 4px 6px -1px rgba(226, 232, 240, 0.5);
+    /* slate-200/50 */
+}
+
+.card-worth-it:hover {
+    box-shadow: 0 25px 50px -12px rgba(224, 231, 255, 1);
+    /* indigo-100ish */
+}
+
+.card-worth-it .tool-card-inner {
+    background-color: white;
+    border: 1px solid #f8fafc;
+    /* slate-50 */
+}
+
+.card-worth-it .bg-icon {
+    position: absolute;
+    bottom: -1.5rem;
+    right: -1.5rem;
+    width: 8rem;
+    height: 8rem;
+    color: #f8fafc;
+    /* slate-50 */
+    opacity: 0.5;
+    transition: color 0.3s;
+}
+
+.card-worth-it:hover .bg-icon {
+    color: #eef2ff;
+    /* indigo-50 */
+}
+
+.card-worth-it .tool-icon-box {
+    background-color: #4f46e5;
+    /* indigo-600 */
+    color: white;
+    box-shadow: 0 10px 15px -3px rgba(224, 231, 255, 1);
+    /* indigo-100 */
+}
+
+.card-worth-it .tool-name {
+    color: #0f172a;
+    /* slate-900 */
+}
+
+.card-worth-it:hover .tool-name {
+    color: #4f46e5;
+    /* indigo-600 */
+}
+
+.card-worth-it .tool-desc {
+    color: #64748b;
+    /* slate-500 */
+}
+
+.card-worth-it .tool-action {
+    color: #4f46e5;
+    /* indigo-600 */
+}
+
+/* Single Swipe Tool (Blue) */
+.card-swipe {
+    background-color: white;
+    box-shadow: 0 4px 6px -1px rgba(226, 232, 240, 0.5);
+}
+
+.card-swipe:hover {
+    box-shadow: 0 25px 50px -12px rgba(219, 234, 254, 1);
+    /* blue-100 */
+}
+
+.card-swipe .tool-card-inner {
+    background-color: white;
+    border: 1px solid #f8fafc;
+}
+
+.card-swipe .bg-icon {
+    position: absolute;
+    bottom: -1.5rem;
+    right: -1.5rem;
+    width: 8rem;
+    height: 8rem;
+    color: #f8fafc;
+    opacity: 0.5;
+    transition: color 0.3s;
+}
+
+.card-swipe:hover .bg-icon {
+    color: #eff6ff;
+    /* blue-50 */
+}
+
+.card-swipe .tool-icon-box {
+    background-color: #2563eb;
+    /* blue-600 */
+    color: white;
+}
+
+.card-swipe .tool-name {
+    color: #0f172a;
+}
+
+.card-swipe:hover .tool-name {
+    color: #2563eb;
+    /* blue-600 */
+}
+
+.card-swipe .tool-desc {
+    color: #64748b;
+}
+
+.card-swipe .tool-action {
+    color: #2563eb;
+}
+
+/* SUB Optimizer (Dark) */
+.card-sub {
+    background-color: #0f172a;
+    /* slate-900 */
+    box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.2);
+}
+
+.card-sub:hover {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.card-sub .tool-card-inner {
+    background-color: #0f172a;
+    border: 1px solid #1e293b;
+    /* slate-800 */
+}
+
+.card-sub .bg-icon {
+    position: absolute;
+    bottom: -1.5rem;
+    right: -1.5rem;
+    width: 8rem;
+    height: 8rem;
+    color: #1e293b;
+    opacity: 0.5;
+    transition: color 0.3s;
+}
+
+.card-sub:hover .bg-icon {
+    color: rgba(113, 63, 18, 0.3);
+    /* yellow-900/30 roughly */
+}
+
+.card-sub .tool-icon-box {
+    background-color: #facc15;
+    /* yellow-400 */
+    color: #0f172a;
+}
+
+.card-sub .tool-name {
+    color: white;
+}
+
+.card-sub:hover .tool-name {
+    color: #facc15;
+}
+
+.card-sub .tool-desc {
+    color: #94a3b8;
+    /* slate-400 */
+}
+
+.card-sub .tool-action {
+    color: #facc15;
+}
+
+
+/* Visual Columns (Hidden on Mobile) */
+.visual-col {
+    display: none;
+}
+
+@media (min-width: 1024px) {
+    .visual-col {
+        display: block;
+    }
+}
+
+.visual-card {
+    border-radius: 2.5rem;
+    padding: 2rem;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s;
+    box-sizing: border-box;
+    display: block;
+    /* anchor tag */
+    text-decoration: none;
+}
+
+.visual-card:hover {
+    transform: scale(1.01);
+}
+
+/* Visual 1: Amex Audit */
+.visual-amex {
+    background-color: #0f172a;
+    border: 1px solid #1e293b;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.visual-amex .glow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 8rem;
+    height: 8rem;
+    background-color: #6366f1;
+    /* indigo-500 */
+    border-radius: 9999px;
+    filter: blur(80px);
+    opacity: 0.2;
+}
+
+.visual-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.visual-header .badge {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.visual-header .icon-box {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: #4f46e5;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.visual-header .title {
+    color: white;
+    font-weight: 700;
+    font-size: 0.875rem;
+}
+
+.visual-header .sub {
+    font-size: 0.625rem;
+    /* 10px */
+    font-weight: 900;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+}
+
+.visual-middle {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart-container {
+    position: relative;
+    width: 8rem;
+    height: 8rem;
+    margin-bottom: 1.5rem;
+}
+
+.chart-center-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart-score {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: white;
+}
+
+.chart-label {
+    font-size: 0.5rem;
+    /* 8px */
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.visual-stats {
+    text-align: center;
+}
+
+.visual-stats .profit {
+    color: #4ade80;
+    /* green-400 */
+    font-weight: 900;
+    font-size: 1.25rem;
+}
+
+.visual-stats .desc {
+    color: #94a3b8;
+    /* slate-400 */
+    font-size: 0.75rem;
+    /* xs */
+    font-weight: 500;
+}
+
+.visual-footer {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.stat-box {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-box .label {
+    font-size: 0.5rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+}
+
+.stat-box .value {
+    color: white;
+    font-weight: 700;
+}
+
+/* Visual 2: Merchant */
+.visual-merchant {
+    background-color: white;
+    border: 1px solid #f1f5f9;
+    /* slate-100 */
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.merch-header {
+    background-color: #f8fafc;
+    /* slate-50 */
+    margin: -2rem -2rem 1.5rem -2rem;
+    /* negate padding */
+    padding: 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.merch-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.merch-icon {
+    width: 3rem;
+    height: 3rem;
+    background-color: #e0e7ff;
+    /* indigo-100 */
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4f46e5;
+}
+
+.merch-text .name {
+    color: #0f172a;
+    font-weight: 900;
+}
+
+.merch-text .sub {
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.merch-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.merch-item {
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid #f1f5f9;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.merch-item.top {
+    border-color: #4f46e5;
+    background-color: rgba(238, 242, 255, 0.5);
+    /* indigo-50/50 */
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.card-color {
+    width: 2rem;
+    height: 1.25rem;
+    border-radius: 0.25rem;
+}
+
+.card-name-sm {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.mult-badge {
+    font-size: 0.75rem;
+    font-weight: 900;
+    padding: 0.125rem 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.mult-badge.high {
+    background-color: #4f46e5;
+    color: white;
+}
+
+.mult-badge.low {
+    background-color: #f1f5f9;
+    color: #64748b;
+}
+
+.item-desc {
+    font-size: 0.625rem;
+    font-weight: 500;
+    color: #64748b;
+    line-height: 1.25;
+}
+
+.merch-footer {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.optimize-btn {
+    padding: 0.5rem 1rem;
+    background-color: #0f172a;
+    color: white;
+    border-radius: 9999px;
+    font-size: 0.625rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Visual 3: ROI */
+.visual-roi {
+    background-color: #0f172a;
+    border: 1px solid #1e293b;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.visual-roi .glow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 8rem;
+    height: 8rem;
+    background-color: #facc15;
+    /* yellow-400 */
+    border-radius: 9999px;
+    filter: blur(80px);
+    opacity: 0.1;
+}
+
+.roi-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.roi-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: rgba(250, 204, 21, 0.2);
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #facc15;
+}
+
+.roi-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.roi-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.rank {
+    font-size: 0.875rem;
+    font-weight: 900;
+    color: #334155;
+    /* slate-700 */
+}
+
+.roi-card-box {
+    flex: 1;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.roi-item:hover .roi-card-box {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.roi-meta .tag {
+    font-size: 0.56rem;
+    /* 9px */
+    font-weight: 900;
+    color: #facc15;
+    text-transform: uppercase;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.25rem;
+}
+
+.roi-meta .name {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: white;
+}
+
+.roi-val {
+    text-align: right;
+}
+
+.roi-pct {
+    font-size: 0.875rem;
+    font-weight: 900;
+    color: #4ade80;
+}
+
+.roi-lbl {
+    font-size: 0.5rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.roi-footer {
+    margin-top: auto;
+    padding-top: 2rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 0.5rem;
+    background-color: #1e293b;
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 75%;
+    background-color: #facc15;
+}
+
+.progress-label {
+    font-size: 0.56rem;
+    font-weight: 900;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Animations */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
