@@ -305,6 +305,7 @@ def optimizer_calculate(request):
         timeframe_months = 3
         
     mode = request.POST.get('mode', 'single') # 'single' or 'combo'
+    sort_by = request.POST.get('sort_by', 'recommended')
 
     # Get User Wallet (if authenticated)
     user_wallet_slugs = set()
@@ -320,7 +321,9 @@ def optimizer_calculate(request):
         planned_spend=spend,
         duration_months=timeframe_months,
         user_wallet_slugs=user_wallet_slugs,
-        mode=mode
+        mode=mode,
+        uid=uid if request.user.is_authenticated else None,
+        sort_by=sort_by
     )
     
     context = {

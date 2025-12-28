@@ -30,7 +30,7 @@
                     </div>
                     <h1 class="headline">Target your next big haul.</h1>
                     <p class="subheadline">
-                        Enter your planned spend to see which card's welcome offer provides the highest mathematical return.
+                        Enter your planned spend to see which card's welcome offer provides the highest mathematical return, incorporating your unique Match Score.
                     </p>
                 </div>
 
@@ -59,6 +59,35 @@
                                             <option value="6">6 Months</option>
                                         </select>
                                     </div>
+                                </div>
+                            </div>
+
+
+
+                            <!-- Calculation Strategy -->
+                            <div class="mb-4">
+                                <label class="form-label text-center" style="color: #94A3B8; text-transform: uppercase; letter-spacing: 0.1em; font-size: 10px; font-weight: 900; display: block; margin-bottom: 0.75rem;">Calculation Strategy</label>
+                                <div class="strategy-grid">
+                                    <!-- Option 1: Freak Rec -->
+                                    <input type="radio" name="sort_by" id="sortRecommended" value="recommended" class="strategy-input" checked>
+                                    <label for="sortRecommended" class="strategy-option">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="strategy-icon">
+                                            <line x1="19" x2="5" y1="5" y2="19"></line>
+                                            <circle cx="6.5" cy="6.5" r="2.5"></circle>
+                                            <circle cx="17.5" cy="17.5" r="2.5"></circle>
+                                        </svg>
+                                        Freak Score
+                                    </label>
+
+                                    <!-- Option 2: Pure Value -->
+                                    <input type="radio" name="sort_by" id="sortValue" value="value" class="strategy-input">
+                                    <label for="sortValue" class="strategy-option">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="strategy-icon">
+                                            <line x1="12" x2="12" y1="2" y2="22"></line>
+                                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                        </svg>
+                                        Pure Value
+                                    </label>
                                 </div>
                             </div>
 
@@ -129,10 +158,13 @@
                 </div>
                 
                 <div class="logic-block">
-                    <h4><span class="material-icons">leaderboard</span> Ranking Logic</h4>
+                    <h4><span class="material-icons">leaderboard</span> Ranking Logic: Freak Score (Default)</h4>
                     <p>
-                        Cards are ranked by highest **Net Value** (Total Profit). Ties are broken by **ROI** (Return on Spend). We prioritize putting the most money in your pocket over abstract efficiency.
+                        Our signature <strong>Freak Score</strong> combines pure profit with personal fit. We take the **Net Value** and strengthen it with your unique **Match Score** (based on your spending habits).
                     </p>
+                    <div class="formula">
+                        Net Value ($) + (Match Score × 2.0)
+                    </div>
                 </div>
             </div>
         </div>
@@ -318,7 +350,8 @@
 
     /* Form Section */
     .scanner-section {
-        background: #1E293B; /* Lighter Slate 800 */
+        background: rgba(255,255,255,0.05); /* Glass effect */
+        backdrop-filter: blur(12px);
         padding: 40px; 
         border-radius: 24px;
         border: 1px solid rgba(255,255,255,0.1); 
@@ -337,18 +370,18 @@
 
     /* Input Fields */
     .input-group-dark {
-        background: rgba(255, 255, 255, 0.1); /* Lighter background matching target */
-        border-radius: 16px; /* Slightly rounder */
+        background: rgba(255, 255, 255, 0.05); /* Lighter glass */
+        border-radius: 16px; 
         border: 1px solid rgba(255, 255, 255, 0.1);
         display: flex;
         align-items: center;
-        padding: 16px 20px; /* Chunkier padding */
+        padding: 16px 20px; 
         transition: all 0.2s;
     }
     .input-group-dark:focus-within {
-        border-color: #FCD34D; /* Amber focus */
-        box-shadow: 0 0 0 3px rgba(252, 211, 77, 0.2);
-        background: rgba(255, 255, 255, 0.15);
+        border-color: #FACC15; /* Yellow-400 */
+        box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.2);
+        background: rgba(255, 255, 255, 0.1);
     }
     
     .prefix {
@@ -376,19 +409,19 @@
     /* Scan Button */
     .btn-scan {
         width: 100%;
-        background: #FFD600; 
+        background: #FACC15; /* Yellow-400 */
         border: none;
-        border-radius: 12px;
-        padding: 18px;
-        color: #0F172A;
+        border-radius: 16px; /* Rounded 2xl equivalent */
+        padding: 20px;
+        color: #0F172A; /* Slate-900 */
         font-family: 'Outfit', sans-serif;
-        font-weight: 800;
-        font-size: 1.1rem;
+        font-weight: 900;
+        font-size: 1.125rem;
         display: flex;
         align-items: center;
         justify-content: center;
         transition: all 0.2s;
-        box-shadow: 0 0 20px rgba(255, 214, 0, 0.2);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); /* shadow-xl */
         position: relative;
         overflow: hidden;
         margin-top: 1.5rem;
@@ -396,7 +429,8 @@
     
     .btn-scan:hover {
         transform: translateY(-2px);
-        box-shadow: 0 0 30px rgba(255, 214, 0, 0.4);
+        background: #FFFFFF; /* Hover white as per snippet */
+        box-shadow: 0 25px 50px -12px rgba(250, 204, 21, 0.25);
     }
     
     .btn-scan:active {
@@ -794,6 +828,49 @@
 
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes scaleIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    /* Strategy Grid */
+    .strategy-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+    
+    .strategy-input {
+        display: none;
+    }
+    
+    .strategy-option {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 16px;
+        border-radius: 16px; /* rounded-2xl */
+        border: 2px solid rgba(255,255,255,0.1);
+        background: rgba(255,255,255,0.05); /* bg-white/5 */
+        color: #94A3B8; /* slate-400 */
+        font-family: 'Outfit', sans-serif;
+        font-weight: 700;
+        font-size: 0.875rem; /* text-sm */
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    
+    .strategy-option:hover {
+        background: rgba(255,255,255,0.1);
+    }
+    
+    .strategy-input:checked + .strategy-option {
+        background: #FACC15; /* yellow-400 */
+        border-color: #FACC15;
+        color: #0F172A; /* slate-900 */
+        box-shadow: 0 10px 15px -3px rgba(113, 63, 18, 0.2); /* shadow-yellow-900/20 approx */
+    }
+    
+    .strategy-icon {
+        width: 16px;
+        height: 16px;
+    }
 </style>
 
 <script>

@@ -36,12 +36,27 @@ class OptimizerService:
                 
         return rates
 
-    def calculate_recommendations(self, planned_spend, duration_months, user_wallet_slugs=None, mode='single'):
+    def calculate_recommendations(self, planned_spend, duration_months, user_wallet_slugs=None, mode='single', uid=None, sort_by='recommended'):
         """
         Core optimization logic.
         """
         if user_wallet_slugs is None:
             user_wallet_slugs = set()
+            
+        # Match Score Pre-Calculation
+        match_scores = {}
+        if uid:
+            # We need all_cards for the match score calculation
+            # db.get_cards() returns list of dicts. self.cards_map is id->dict.
+            # We can reconstruct the list or just call db.get_cards() again? 
+            # self.cards_map values are the cards.
+            all_cards_list = list(self.cards_map.values())
+            
+            user_personality = db.get_user_assigned_personality(uid)
+            # Need full card objects for user wallet
+            user_cards_full = db.get_user_cards(uid)
+            
+            match_scores = db.calculate_match_scores(user_personality, user_cards_full, all_cards_list)
             
         # Fixed date for simulation/optimization as per requirements
         today = date(2025, 12, 24)
@@ -123,6 +138,14 @@ class OptimizerService:
                 
             denom = req_spend if req_spend > 0 else 500.0
             marginal_density = (bonus_value - annual_fee) / denom + ongoing_rate_dollar
+            
+            # Match Score
+            # Use card ID for lookup since calculate_match_scores returns by ID
+            c_id = card_obj.get('id')
+            match_score = match_scores.get(c_id, 0.0)
+            
+            # Rank Score Formula: Net Value + (Match Score * 2.0)
+            rank_score = net_value + (match_score * 2.0)
 
             candidates.append({
                 'slug': slug,
@@ -135,14 +158,16 @@ class OptimizerService:
                 'req_spend': req_spend,
                 'req_months': req_months,
                 'annual_fee': annual_fee,
-                'bonus_text': f"{int(bonus_qty):,} {bonus_type}" if bonus_qty > 0 else "No Bonus"
+                'bonus_text': f"{int(bonus_qty):,} {bonus_type}" if bonus_qty > 0 else "No Bonus",
+                'match_score': match_score,
+                'rank_score': rank_score
             })
             
         # Optimization Algorithm
         if mode == 'combo':
             return self._optimize_combo(candidates, planned_spend, monthly_spend_capacity)
         else:
-            return self._optimize_single(candidates)
+            return self._optimize_single(candidates, sort_by)
 
     def _load_all_rates(self):
         """
@@ -157,20 +182,32 @@ class OptimizerService:
 
 
             
-    def _optimize_single(self, candidates):
-        # Sort by Net Value DESC, then ROI DESC
-        candidates.sort(key=lambda x: (x['net_value'], x['roi']), reverse=True)
+    def _optimize_single(self, candidates, sort_by='recommended'):
+        if sort_by == 'value':
+             # Sort by Net Value DESC
+            candidates.sort(key=lambda x: (x['net_value'], x['roi']), reverse=True)
+        else:
+            # Default: Recommended (Rank Score)
+            # Sort by Rank Score DESC, then Net Value DESC as tiebreaker
+            candidates.sort(key=lambda x: (x['rank_score'], x['net_value']), reverse=True)
+            
         return candidates[:10]
         
     def _optimize_combo(self, candidates, planned_spend, monthly_capacity):
-        # Sort by Marginal Density DESC
+        # Sort by Marginal Density DESC (still best for packing problem)
+        # But we could arguably consider rank_score here too?
+        # For now, let's keep density for the *selection* phase to maximize efficiency,
+        # but the request was "incorporate match score when ranking".
+        # The result of combo is a list.
+        # If we change the sort here, we change WHICH cards are picked.
+        # Let's keep the packer logic pure (Density) because "Match Score" is subjective utility,
+        # whereas fitting into a spend budget is mathematical constraint.
+        # However, we should display the match scores in the result.
+        
         candidates.sort(key=lambda x: x['marginal_density'], reverse=True)
         
         selected = []
         remaining_spend = planned_spend
-        # We need to track monthly utilization too strictly if we want to be perfect,
-        # but the prompt says "monthly_req <= monthly_spend_capacity" which is per-card check (already done in filter).
-        # "Ensure sum monthly_req <= monthly_spend_capacity" is Global constraint.
         
         current_monthly_load = 0.0
         
@@ -211,6 +248,12 @@ class OptimizerService:
             val = cand['bonus_value'] + total_earn - cand['annual_fee']
             cand['net_value'] = val # Update for display
             cand['roi'] = (val / allocated * 100) if allocated > 0 else 0
+            
+            # Update rank_score based on new net_value?
+            # Rank score = Net Value + (Match Score * 2)
+            # Match score doesn't change, but net_value did.
+            cand['rank_score'] = val + (cand.get('match_score', 0) * 2.0)
+            
             final_results.append(cand)
             
         return final_results
