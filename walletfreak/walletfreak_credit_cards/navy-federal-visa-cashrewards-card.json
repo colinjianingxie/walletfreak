@@ -1,0 +1,91 @@
+{
+    "Vendor": "Navy Federal Credit Union",
+    "CardName": "cashRewards Credit Card",
+    "AnnualFee": 0,
+    "PointsValueCpp": 1.0,
+    "slug-id": "navy-federal-visa-cashrewards-card",
+    "ImageURL": "/static/images/credit_cards/navy-federal-visa-cashrewards-card.jpeg",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.navyfederal.org/loans-cards/credit-cards/cash-rewards.html",
+    "Is524": false,
+    "Benefits": [
+        {
+            "BenefitDescription": "Cell Phone Protection",
+            "AdditionalDetails": "Up to $600 per claim if you pay your monthly bill with the card",
+            "BenefitCategory": [
+                "Phone Plans"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 600,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Phone Protection",
+            "BenefitType": "Perk",
+            "NumericValue": 600.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "Walmart+ $98 statement credit",
+            "AdditionalDetails": "One-time credit for annual membership",
+            "BenefitCategory": [
+                "Generic Shopping"
+            ],
+            "TimeCategory": "One Time",
+            "DollarValue": 98,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Walmart+ Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 98.0,
+            "NumericType": "Cash"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 1.75,
+            "Currency": "cash back",
+            "RateCategory": [
+                "All Purchases"
+            ],
+            "AdditionalDetails": "with direct deposit (1.5% without direct deposit)",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-12-28",
+            "Terms": "Spend $2,500 in 90 days",
+            "SignUpBonusValue": 250,
+            "SignUpBonusType": "Cash",
+            "SpendAmount": 2500,
+            "SignupDurationMonths": 3
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Flat Rate Cash Back",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Do you prefer a simple, flat-rate cash back percentage on every purchase?",
+            "BenefitCategory": "Financial",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "8/10. Extremely competitive flat-rate card, especially if you have direct deposit with Navy Federal. The $250 sign-up bonus is top-tier for a no-annual-fee card.",
+    "Categories": [
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "All Purchases"
+            ]
+        }
+    ]
+}

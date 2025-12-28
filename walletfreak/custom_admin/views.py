@@ -169,18 +169,24 @@ def admin_generate_bulk_prompt(request):
 @staff_member_required
 def admin_generate_new_prompt(request):
     """
-    Generate AI prompt for a new card by slug-id.
-    Accepts POST with JSON body containing 'slug_id'.
+    Generate AI prompt for new card(s) by slug-id.
+    Accepts POST with JSON body containing 'slug_id' (can be comma-separated).
     """
     if request.method != 'POST':
         return JsonResponse({'error': 'Method not allowed'}, status=405)
         
     try:
         data = json.loads(request.body)
-        slug_id = data.get('slug_id', '').strip()
+        slug_id_input = data.get('slug_id', '').strip()
         
-        if not slug_id:
+        if not slug_id_input:
             return JsonResponse({'error': 'No slug-id provided'}, status=400)
+        
+        # Parse comma-separated slugs
+        slug_ids = [s.strip() for s in slug_id_input.split(',') if s.strip()]
+        
+        if not slug_ids:
+            return JsonResponse({'error': 'No valid slug-ids provided'}, status=400)
             
         # Check permissions
         uid = request.session.get('uid')
@@ -199,11 +205,16 @@ def admin_generate_new_prompt(request):
             
         from .utils import PromptGenerator
         generator = PromptGenerator()
-        prompt_text = generator.generate_prompt(slug_id)
+        prompt_text = generator.generate_prompt(slug_ids)
         
-        seed_command = f"python manage.py seed_db --cards={slug_id}"
+        seed_command = f"python manage.py seed_db --cards={','.join(slug_ids)}"
         
-        return JsonResponse({'prompt': prompt_text, 'seed_command': seed_command})
+        return JsonResponse({
+            'prompt': prompt_text, 
+            'seed_command': seed_command,
+            'slug_ids': slug_ids,
+            'count': len(slug_ids)
+        })
         
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
@@ -212,8 +223,9 @@ def admin_generate_new_prompt(request):
 @staff_member_required
 def admin_save_card_json(request):
     """
-    Save card JSON data to a file.
-    Accepts POST with JSON body containing 'slug_id' and 'json_data'.
+    Save card JSON data to file(s).
+    Accepts POST with JSON body containing 'slug_id' (comma-separated) and 'json_data' (array of JSONs).
+    If multiple slug_ids, expects json_data to be a JSON array with matching count.
     """
     import os
     
@@ -222,13 +234,19 @@ def admin_save_card_json(request):
         
     try:
         data = json.loads(request.body)
-        slug_id = data.get('slug_id', '').strip()
+        slug_id_input = data.get('slug_id', '').strip()
         json_data = data.get('json_data', '').strip()
         
-        if not slug_id:
+        if not slug_id_input:
             return JsonResponse({'error': 'No slug-id provided'}, status=400)
         if not json_data:
             return JsonResponse({'error': 'No JSON data provided'}, status=400)
+        
+        # Parse comma-separated slugs
+        slug_ids = [s.strip() for s in slug_id_input.split(',') if s.strip()]
+        
+        if not slug_ids:
+            return JsonResponse({'error': 'No valid slug-ids provided'}, status=400)
             
         # Check permissions
         uid = request.session.get('uid')
@@ -245,24 +263,83 @@ def admin_save_card_json(request):
         if email != 'colinjianingxie@gmail.com' or not is_super:
             return JsonResponse({'error': 'Unauthorized: Restricted access'}, status=403)
         
-        # Validate JSON
-        try:
-            parsed_json = json.loads(json_data)
-        except json.JSONDecodeError as e:
-            return JsonResponse({'error': f'Invalid JSON: {str(e)}'}, status=400)
-        
-        # Save to file
         cards_dir = os.path.join(settings.BASE_DIR, 'walletfreak_credit_cards')
-        filepath = os.path.join(cards_dir, f'{slug_id}.json')
         
-        with open(filepath, 'w', encoding='utf-8') as f:
-            json.dump(parsed_json, f, indent=4, ensure_ascii=False)
-        
-        return JsonResponse({
-            'success': True, 
-            'message': f'Saved to {slug_id}.json',
-            'filepath': filepath
-        })
+        # Handle multiple slug-ids
+        if len(slug_ids) > 1:
+            # Expect json_data to be a JSON array
+            try:
+                parsed_jsons = json.loads(json_data)
+            except json.JSONDecodeError as e:
+                return JsonResponse({'error': f'Invalid JSON array: {str(e)}'}, status=400)
+            
+            if not isinstance(parsed_jsons, list):
+                return JsonResponse({
+                    'error': f'For {len(slug_ids)} slug-ids, expected a JSON array with {len(slug_ids)} objects. '
+                             f'Wrap your JSONs in square brackets: [{{...}}, {{...}}]'
+                }, status=400)
+            
+            if len(parsed_jsons) != len(slug_ids):
+                return JsonResponse({
+                    'error': f'Mismatch: {len(slug_ids)} slug-ids provided but {len(parsed_jsons)} JSON objects found. '
+                             f'Expected exactly {len(slug_ids)} JSON objects.'
+                }, status=400)
+            
+            # Validate each JSON object has the correct slug-id
+            saved_files = []
+            for i, (slug_id, card_json) in enumerate(zip(slug_ids, parsed_jsons)):
+                if not isinstance(card_json, dict):
+                    return JsonResponse({
+                        'error': f'Item {i+1} is not a valid JSON object'
+                    }, status=400)
+                
+                # Verify the slug-id in the JSON matches (if present)
+                json_slug = card_json.get('slug-id', '')
+                if json_slug and json_slug != slug_id:
+                    return JsonResponse({
+                        'error': f'JSON object {i+1} has slug-id "{json_slug}" but expected "{slug_id}"'
+                    }, status=400)
+                
+                filepath = os.path.join(cards_dir, f'{slug_id}.json')
+                with open(filepath, 'w', encoding='utf-8') as f:
+                    json.dump(card_json, f, indent=4, ensure_ascii=False)
+                saved_files.append(f'{slug_id}.json')
+            
+            files_list = ', '.join(saved_files)
+            return JsonResponse({
+                'success': True, 
+                'message': f'Saved {len(saved_files)} files: {files_list}',
+                'files': saved_files
+            })
+        else:
+            # Single slug-id - expect a single JSON object
+            slug_id = slug_ids[0]
+            try:
+                parsed_json = json.loads(json_data)
+            except json.JSONDecodeError as e:
+                return JsonResponse({'error': f'Invalid JSON: {str(e)}'}, status=400)
+            
+            # If it's a list with one item, unwrap it
+            if isinstance(parsed_json, list):
+                if len(parsed_json) == 1:
+                    parsed_json = parsed_json[0]
+                else:
+                    return JsonResponse({
+                        'error': f'For single slug-id, expected 1 JSON object but found array with {len(parsed_json)} items'
+                    }, status=400)
+            
+            if not isinstance(parsed_json, dict):
+                return JsonResponse({'error': 'Expected a JSON object'}, status=400)
+            
+            filepath = os.path.join(cards_dir, f'{slug_id}.json')
+            with open(filepath, 'w', encoding='utf-8') as f:
+                json.dump(parsed_json, f, indent=4, ensure_ascii=False)
+            
+            return JsonResponse({
+                'success': True, 
+                'message': f'Saved to {slug_id}.json',
+                'filepath': filepath
+            })
         
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)

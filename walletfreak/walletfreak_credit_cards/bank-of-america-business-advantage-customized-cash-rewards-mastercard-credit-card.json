@@ -1,0 +1,183 @@
+{
+    "Vendor": "Bank of America",
+    "CardName": "Bank of America Business Advantage Customized Cash Rewards Mastercard® credit card",
+    "AnnualFee": 0,
+    "PointsValueCpp": 1.0,
+    "slug-id": "bank-of-america-business-advantage-customized-cash-rewards-mastercard-credit-card",
+    "ImageURL": "/static/images/credit_cards/bank-of-america-business-advantage-customized-cash-rewards-mastercard-credit-card.png",
+    "MinCreditScore": 700,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.bankofamerica.com/smallbusiness/credit-cards/products/cash-rewards-business-credit-card/",
+    "Is524": false,
+    "Benefits": [
+        {
+            "BenefitDescription": "Preferred Rewards for Business bonus (up to 75% boost)",
+            "AdditionalDetails": "Get a 25% to 75% rewards bonus on every purchase if you have a business checking account and qualify for Preferred Rewards for Business.",
+            "BenefitCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": null,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Preferred Rewards Bonus",
+            "BenefitType": "Bonus",
+            "NumericValue": 75.0,
+            "NumericType": "Percent"
+        },
+        {
+            "BenefitDescription": "Travel Accident Insurance",
+            "AdditionalDetails": "Up to $100,000 in coverage for accidental death or dismemberment while traveling on common carriers.",
+            "BenefitCategory": [
+                "Generic Travel Perks"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Travel Insurance",
+            "BenefitType": "Perk",
+            "NumericValue": 100000.0,
+            "NumericType": "Cash"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 3,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Gas",
+                "EV Charging"
+            ],
+            "AdditionalDetails": "choice category (first $50,000 combined annual spend)",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Office Supplies"
+            ],
+            "AdditionalDetails": "choice category (first $50,000 combined annual spend)",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Airlines",
+                "Generic Hotels",
+                "Generic Transportation"
+            ],
+            "AdditionalDetails": "choice category (first $50,000 combined annual spend)",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Telecom",
+                "Phone Plans"
+            ],
+            "AdditionalDetails": "choice category (first $50,000 combined annual spend)",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Software"
+            ],
+            "AdditionalDetails": "choice category: Computer Services (first $50,000 combined annual spend)",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Dining"
+            ],
+            "AdditionalDetails": "dining (first $50,000 combined annual spend)",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "cash back",
+            "RateCategory": [
+                "All Purchases"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-12-28",
+            "Terms": "Spend $3,000 in 90 days",
+            "SignUpBonusValue": 300,
+            "SignUpBonusType": "Cash",
+            "SpendAmount": 3000,
+            "SignupDurationMonths": 3
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Preferred Rewards",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Do you maintain a high balance in Bank of America business checking or Merrill business investment accounts?",
+            "BenefitCategory": "Financial & Rewards",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Choice Category",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Is your business spending concentrated in a specific area like office supplies, gas, or consulting?",
+            "BenefitCategory": "Business & Tech",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "8.5/10. An elite choice for BofA ecosystem loyalists. If you hit Platinum Honors status, that 3% jumps to 5.25% cash back, which is unbeatable for a no-annual-fee business card.",
+    "Categories": [
+        {
+            "CategoryName": "Business & Tech",
+            "Icon": "fa-solid fa-laptop-code",
+            "CategoryNameDetailed": [
+                "Office Supplies",
+                "Software",
+                "Telecom",
+                "Phone Plans",
+                "Business Consulting"
+            ]
+        },
+        {
+            "CategoryName": "Transportation",
+            "Icon": "fa-solid fa-car-side",
+            "CategoryNameDetailed": [
+                "Gas",
+                "EV Charging",
+                "Generic Transportation"
+            ]
+        },
+        {
+            "CategoryName": "Dining & Delivery",
+            "Icon": "fa-solid fa-utensils",
+            "CategoryNameDetailed": [
+                "Generic Dining"
+            ]
+        }
+    ]
+}

@@ -3,6 +3,16 @@
         "name": "Luxury Jetsetter",
         "slug": "luxury-jetsetter",
         "tagline": "First-class treatment, Park Hyatt robes, 3+ cents per point redemptions",
+        "categories": [
+            "Amex Travel Flights",
+            "Amex Travel Hotels",
+            "Chase Travel Flights",
+            "Chase Travel Hotels",
+            "Generic Airlines",
+            "Generic Hotels",
+            "Generic Travel Perks",
+            "Global Entry"
+        ],
         "description": "You don’t just travel — you arrive. You want a full set of cards that handle high-end logistics, elite hotel treatment, and the finest dining, all while maintaining top-tier insurance.",
         "slots": [
             {
@@ -10,7 +20,9 @@
                 "description": "Transfer partners + God-tier travel protection.",
                 "cards": [
                     "chase-sapphire-reserve",
-                    "capital-one-venture-x-rewards-credit-card"
+                    "capital-one-venture-x-rewards-credit-card",
+                    "citi-strata-elite-card",
+                    "bank-of-america-premium-rewards-credit-card"
                 ]
             },
             {
@@ -18,7 +30,8 @@
                 "description": "4x on worldwide dining and high-end grocery spend plus premium dining credits.",
                 "cards": [
                     "american-express-gold-card",
-                    "marriott-bonvoy-brilliant-american-express-card"
+                    "marriott-bonvoy-brilliant-american-express-card",
+                    "wells-fargo-autograph-journey-card"
                 ]
             },
             {
@@ -26,7 +39,9 @@
                 "description": "Retail credits (Saks/Lululemon) and premium airport transfers.",
                 "cards": [
                     "american-express-platinum-card",
-                    "citi-strata-elite-card"
+                    "the-business-platinum-card-from-american-express",
+                    "us-bank-altitude-reserve-visa-infinite-card",
+                    "citi-aadvantage-executive-world-elite-mastercard"
                 ]
             },
             {
@@ -34,7 +49,8 @@
                 "description": "The cards that unlock the 'Park Hyatt' lifestyle.",
                 "cards": [
                     "the-world-of-hyatt-credit-card",
-                    "hilton-honors-aspire-card-from-american-express"
+                    "hilton-honors-aspire-card-from-american-express",
+                    "marriott-bonvoy-bevy-american-express-card"
                 ]
             }
         ],
@@ -53,6 +69,16 @@
         "name": "Wallet Freak",
         "slug": "wallet-freak",
         "tagline": "The Final Boss — Issuers Fear You",
+        "categories": [
+            "Rent",
+            "Hilton",
+            "Generic Dining",
+            "Generic Groceries",
+            "Rotating Categories",
+            "All Purchases",
+            "Capital One Travel Flights",
+            "Amex Travel Flights"
+        ],
         "description": "You run a precisely engineered collection based on the 'creator's wallet.' You hit every credit, use every lounge, and ensure every dollar spent on rent or dining is working toward a free flight.",
         "slots": [
             {
@@ -61,7 +87,8 @@
                 "cards": [
                     "capital-one-venture-x-rewards-credit-card",
                     "american-express-platinum-card",
-                    "citi-strata-elite-card"
+                    "citi-strata-premier-card",
+                    "chase-sapphire-reserve"
                 ]
             },
             {
@@ -69,22 +96,28 @@
                 "description": "The 'Double Play' for instant Diamond and Gold status plus high earn on hotel stays.",
                 "cards": [
                     "hilton-honors-aspire-card-from-american-express",
-                    "hilton-honors-american-express-surpass-card"
+                    "hilton-honors-american-express-surpass-card",
+                    "the-hilton-honors-american-express-business-card"
                 ]
             },
             {
                 "name": "Dining & Grocery Engine",
                 "description": "Maximum yield on every meal and grocery run.",
                 "cards": [
-                    "chase-sapphire-preferred-card",
-                    "capital-one-savor-cash-rewards-credit-card"
+                    "american-express-gold-card",
+                    "capital-one-savor-cash-rewards-credit-card",
+                    "chase-freedom-flex",
+                    "blue-cash-preferred-card-from-american-express"
                 ]
             },
             {
                 "name": "Rent & Everyday Protection",
                 "description": "Turning your mortgage/rent into points and protecting your hardware.",
                 "cards": [
-                    "bilt-mastercard"
+                    "bilt-mastercard",
+                    "wells-fargo-active-cash-card",
+                    "citi-double-cash-card",
+                    "chase-freedom-unlimited"
                 ]
             }
         ],
@@ -95,7 +128,7 @@
             },
             {
                 "title": "Dining Diversification",
-                "description": "Use SavorOne for 3% cash back on groceries and entertainment, and CSP for 3x on dining to feed into the Chase ecosystem."
+                "description": "Use Savor for 4% on entertainment and CSP for 3x on dining to feed into the Chase ecosystem."
             }
         ]
     },
@@ -103,6 +136,14 @@
         "name": "Points Strategist",
         "slug": "points-strategist",
         "tagline": "Transfer Partner Only — 5+ cpp or bust",
+        "categories": [
+            "Hyatt",
+            "Generic Airlines",
+            "Rotating Categories",
+            "Top Category",
+            "Choice Category",
+            "All Purchases"
+        ],
         "description": "You view points as a currency to be traded. You build a whole setup that feeds into transfer partners for international business and first class.",
         "slots": [
             {
@@ -110,7 +151,8 @@
                 "description": "The command centers for moving points to high-value partners like Hyatt, Flying Blue, and Virgin Atlantic.",
                 "cards": [
                     "ink-business-preferred-credit-card",
-                    "citi-strata-elite-card",
+                    "citi-strata-premier-card",
+                    "chase-sapphire-preferred-card",
                     "american-express-platinum-card"
                 ]
             },
@@ -121,7 +163,7 @@
                     "american-express-gold-card",
                     "chase-freedom-flex",
                     "american-express-business-gold-card",
-                    "citi-strata-premier-card"
+                    "discover-it-cash-back"
                 ]
             },
             {
@@ -129,8 +171,8 @@
                 "description": "Essential travel protections and a non-category points floor for 'everything else' spend.",
                 "cards": [
                     "capital-one-venture-x-rewards-credit-card",
-                    "chase-sapphire-preferred-card",
-                    "wells-fargo-autograph-card"
+                    "wells-fargo-autograph-journey-card",
+                    "blue-business-plus-credit-card-from-american-express"
                 ]
             },
             {
@@ -140,7 +182,7 @@
                     "citi-custom-cash-card",
                     "bilt-mastercard",
                     "ink-business-cash-credit-card",
-                    "chase-sapphire-reserve"
+                    "the-world-of-hyatt-credit-card"
                 ]
             }
         ],
@@ -159,6 +201,15 @@
         "name": "Business Powerhouse",
         "slug": "business-powerhouse",
         "tagline": "5x ads, 3x shipping — pure profit",
+        "categories": [
+            "Advertising",
+            "Shipping",
+            "Telecom",
+            "Software",
+            "Office Supplies",
+            "Business Consulting",
+            "Large Purchases"
+        ],
         "description": "Your business spend is massive. You need a setup that handles heavy operations and rewards you with first-class travel for the whole team.",
         "slots": [
             {
@@ -167,7 +218,8 @@
                 "cards": [
                     "american-express-business-gold-card",
                     "ink-business-preferred-credit-card",
-                    "ink-business-cash-credit-card"
+                    "ink-business-cash-credit-card",
+                    "world-of-hyatt-business-credit-card"
                 ]
             },
             {
@@ -175,9 +227,9 @@
                 "description": "Infrastructure support featuring SaaS credits (Dell, Adobe, Indeed) and unlimited premium lounge access for business travel.",
                 "cards": [
                     "the-business-platinum-card-from-american-express",
-                    "capital-one-venture-x-rewards-credit-card",
+                    "capital-one-venture-x-business",
                     "capital-one-spark-miles-for-business",
-                    "chase-sapphire-reserve"
+                    "citi-aadvantage-business-world-elite-mastercard"
                 ]
             },
             {
@@ -197,7 +249,7 @@
                     "ink-business-premier-credit-card",
                     "capital-one-spark-cash-plus",
                     "blue-business-plus-credit-card-from-american-express",
-                    "blue-business-cash-card-from-american-express"
+                    "the-plum-card-from-american-express"
                 ]
             }
         ],
@@ -216,6 +268,14 @@
         "name": "Cashback Pragmatist",
         "slug": "cashback-pragmatist",
         "tagline": "Points Are Cope. Cash Is King.",
+        "categories": [
+            "All Purchases",
+            "Top Category",
+            "Generic Groceries",
+            "Gas",
+            "Drugstores",
+            "Generic Financial & Rewards"
+        ],
         "description": "You want a simple, high-yield setup that puts actual dollars in your bank account. No transfer partners, no award charts, and no blackout dates—just cold, hard cash at the highest possible percentage.",
         "slots": [
             {
@@ -225,8 +285,7 @@
                     "wells-fargo-active-cash-card",
                     "citi-double-cash-card",
                     "us-bank-smartly-visa-signature-card",
-                    "santander-unlimited-cash-rewards-card",
-                    "apple-card"
+                    "santander-unlimited-cash-rewards-card"
                 ]
             },
             {
@@ -236,7 +295,7 @@
                     "citi-custom-cash-card",
                     "chase-freedom-flex",
                     "discover-it-cash-back",
-                    "ink-business-cash-credit-card"
+                    "bank-of-america-customized-cash-rewards-credit-card"
                 ]
             },
             {
@@ -275,15 +334,23 @@
         "name": "Foodie & Grocery King",
         "slug": "foodie-grocery-king",
         "tagline": "6% groceries + 4–6x dining or I starve",
+        "categories": [
+            "Generic Dining",
+            "Grubhub",
+            "Generic Groceries",
+            "Whole Foods",
+            "Citi Nights"
+        ],
         "description": "Your food bill is your largest expense. You need a setup that treats every grocery run and restaurant visit as a high-yield investment, maximizing every calorie with credits and multipliers.",
         "slots": [
             {
                 "name": "The Hub & Travel",
                 "description": "Premium travel for food-motivated trips. These cards provide access to exclusive dining reservations (Resy/Chase) and luxury travel credits.",
                 "cards": [
-                    "american-express-platinum-card",
                     "chase-sapphire-reserve",
-                    "citi-strata-elite-card"
+                    "citi-strata-elite-card",
+                    "american-express-platinum-card",
+                    "citi-aadvantage-executive-world-elite-mastercard"
                 ]
             },
             {
@@ -292,7 +359,8 @@
                 "cards": [
                     "blue-cash-preferred-card-from-american-express",
                     "capital-one-savor-cash-rewards-credit-card",
-                    "citi-custom-cash-card"
+                    "citi-custom-cash-card",
+                    "prime-visa"
                 ]
             },
             {
@@ -301,8 +369,8 @@
                 "cards": [
                     "american-express-gold-card",
                     "chase-sapphire-preferred-card",
-                    "us-bank-altitude-connect-visa-signature-card",
-                    "bilt-mastercard"
+                    "bilt-mastercard",
+                    "us-bank-altitude-connect-visa-signature-card"
                 ]
             }
         ],
@@ -321,6 +389,15 @@
         "name": "Family Freak",
         "slug": "family-freak",
         "tagline": "Groceries for an army, Disney bundle, Costco runs — all maxed",
+        "categories": [
+            "Wholesale Clubs",
+            "Costco",
+            "Disney",
+            "Generic Groceries",
+            "Streaming",
+            "Amazon",
+            "Drugstores"
+        ],
         "description": "You manage the household and the budget. You need a setup that handles high-volume spend at wholesale clubs, provides entertainment for the kids, and ensures top-tier protection for family vacations.",
         "slots": [
             {
@@ -328,9 +405,9 @@
                 "description": "The command center for family logistics. Includes priority lounge access for the whole crew and world-class travel insurance for peace of mind.",
                 "cards": [
                     "capital-one-venture-x-rewards-credit-card",
-                    "chase-sapphire-preferred-card",
                     "chase-sapphire-reserve",
-                    "citi-strata-premier-card"
+                    "citi-strata-premier-card",
+                    "bank-of-america-premium-rewards-credit-card"
                 ]
             },
             {
@@ -339,8 +416,7 @@
                 "cards": [
                     "blue-cash-preferred-card-from-american-express",
                     "prime-visa",
-                    "citi-strata-elite-card",
-                    "american-express-gold-card",
+                    "disney-premier-visa-card",
                     "blue-cash-everyday-card-from-american-express"
                 ]
             },
@@ -350,7 +426,7 @@
                 "cards": [
                     "costco-anywhere-visa-card-by-citi",
                     "sams-club-mastercard",
-                    "bank-of-america-customized-cash-rewards-credit-card-for-students",
+                    "bank-of-america-customized-cash-rewards-credit-card",
                     "chase-freedom-flex"
                 ]
             }
@@ -370,6 +446,15 @@
         "name": "Gas/EV Charging Freak",
         "slug": "gas-freak",
         "tagline": "5%+ on every gallon/kWh or civil unrest",
+        "categories": [
+            "Gas",
+            "EV Charging",
+            "Transit",
+            "Rental Cars",
+            "International Gas",
+            "Avis",
+            "Budget"
+        ],
         "description": "Your life happens on the road. You need a setup that handles gas, EV charging, transit, and roadside emergencies flawlessly while maximizing every mile driven.",
         "slots": [
             {
@@ -379,19 +464,17 @@
                     "sams-club-mastercard",
                     "citi-custom-cash-card",
                     "usaa-cashback-rewards-plus-american-express-card",
-                    "costco-anywhere-visa-card-by-citi",
-                    "us-bank-altitude-connect-visa-signature-card"
+                    "costco-anywhere-visa-card-by-citi"
                 ]
             },
             {
                 "name": "Lifestyle & Pitstops",
                 "description": "Credits and multipliers for the 'road warrior' lifestyle, covering morning coffee, quick bites, and transit costs.",
                 "cards": [
-                    "american-express-gold-card",
-                    "blue-cash-preferred-card-from-american-express",
                     "wells-fargo-autograph-card",
-                    "bilt-mastercard",
-                    "prime-visa"
+                    "blue-cash-preferred-card-from-american-express",
+                    "navy-federal-more-rewards-american-express-card",
+                    "american-express-gold-card"
                 ]
             },
             {
@@ -399,10 +482,9 @@
                 "description": "Lounge access for long-distance layovers and premium protection/dispatch services for peace of mind on the highway.",
                 "cards": [
                     "capital-one-venture-x-rewards-credit-card",
-                    "citi-strata-elite-card",
                     "chase-sapphire-reserve",
-                    "american-express-platinum-card",
-                    "huntington-voice-visa-card"
+                    "citi-aadvantage-executive-world-elite-mastercard",
+                    "american-express-platinum-card"
                 ]
             }
         ],
@@ -421,45 +503,52 @@
         "name": "Online Shopping Addict",
         "slug": "online-shopping-freak",
         "tagline": "10–20% back online or I’m not buying",
+        "categories": [
+            "Amazon",
+            "Best Buy",
+            "Lowe's",
+            "Mobile Wallet",
+            "Generic Shopping",
+            "Apple"
+        ],
         "description": "You click 'Buy Now' daily. Your setup is engineered to reward every Amazon box, retail portal, and PayPal checkout, stacking credits with multipliers for maximum digital yield.",
         "slots": [
             {
                 "name": "The Digital Hub",
-                "description": "The heavy hitters for rotating 5% categories and portal accelerators. Essential for maximizing PayPal quarters and high-volume online holiday spend.",
+                "description": "The heavy hitters for rotating 5% categories and portal accelerators. Essential for maximizing PayPal quarters.",
                 "cards": [
                     "chase-freedom-flex",
                     "discover-it-cash-back",
-                    "discover-it-student-cash-back",
-                    "ink-business-cash-credit-card"
+                    "ink-business-cash-credit-card",
+                    "discover-it-student-cash-back"
                 ]
             },
             {
                 "name": "The Amazon & Marketplace Core",
-                "description": "High-limit rewards for the world's largest retailer. Ensures you never earn just 1% on household essentials, groceries, or tech from the Amazon ecosystem.",
+                "description": "High-limit rewards for the world's largest retailer. Ensures you never earn just 1%.",
                 "cards": [
                     "prime-visa",
-                    "amazon-store-card",
-                    "amazon-prime-store-card"
+                    "amazon-prime-store-card",
+                    "amazon-store-card"
                 ]
             },
             {
                 "name": "Lifestyle & Retail Credits",
-                "description": "Cards that pay you to shop. These provide direct statement credits for Saks, Lululemon, Dell, and Best Buy, effectively funding your wardrobe and tech upgrades.",
+                "description": "Cards that pay you to shop. These provide direct statement credits for Saks, Lululemon, Dell, and Best Buy.",
                 "cards": [
                     "american-express-platinum-card",
-                    "citi-strata-elite-card",
-                    "best-buy-credit-card",
                     "the-business-platinum-card-from-american-express",
+                    "best-buy-credit-card",
                     "lowes-advantage-card"
                 ]
             },
             {
                 "name": "Shopping Specialists",
-                "description": "Surgical tools for niche sites and general online spend. Includes dedicated 3% online retail categories and mobile wallet accelerators.",
+                "description": "Surgical tools for niche sites and general online spend.",
                 "cards": [
                     "blue-cash-everyday-card-from-american-express",
-                    "bank-of-america-customized-cash-rewards-credit-card-for-students",
                     "apple-card",
+                    "bank-of-america-customized-cash-rewards-credit-card",
                     "citi-custom-cash-card"
                 ]
             }
@@ -471,7 +560,7 @@
             },
             {
                 "title": "The PayPal Key Strategy",
-                "description": "During the 5% PayPal quarters (Chase/Discover), route every possible digital bill and subscription through PayPal to hit the spending cap instantly."
+                "description": "During the 5% PayPal quarters (Chase/Discover), route every possible digital bill through PayPal to hit the cap instantly."
             }
         ]
     },
@@ -479,42 +568,43 @@
         "name": "Simple Minimalist",
         "slug": "simple-minimalist",
         "tagline": "One or Two Cards. Zero Drama. Maximum Peace.",
-        "description": "You want the highest return for the lowest effort. This setup focuses on 'set it and forget it' cards that offer high flat-rate rewards or broad everyday multipliers without the need for complex tracking or rotating activations.",
+        "categories": [
+            "All Purchases",
+            "Generic Dining",
+            "Generic Groceries",
+            "Generic Transportation"
+        ],
+        "description": "You want the highest return for the lowest effort. This setup focuses on 'set it and forget it' cards.",
         "slots": [
             {
                 "name": "The Everything Hub",
-                "description": "The 'Catch-All' core. These cards offer high flat-rate rewards on every single purchase so you never have to guess which card to pull out.",
+                "description": "The 'Catch-All' core. These cards offer high flat-rate rewards on every single purchase.",
                 "cards": [
                     "wells-fargo-active-cash-card",
                     "citi-double-cash-card",
                     "capital-one-venture-x-rewards-credit-card",
-                    "apple-card",
-                    "chase-freedom-unlimited",
-                    "capital-one-quicksilver-cash-rewards-credit-card",
-                    "santander-unlimited-cash-rewards-card"
+                    "chase-freedom-unlimited"
                 ]
             },
             {
                 "name": "Everyday Essentials",
-                "description": "The 'Support' layer. Pick one card here that covers your biggest recurring expense like rent, gas, or groceries to boost your baseline.",
+                "description": "The 'Support' layer. Pick one card here that covers your biggest recurring expense.",
                 "cards": [
                     "bilt-mastercard",
                     "wells-fargo-autograph-card",
-                    "prime-visa",
-                    "citi-custom-cash-card",
-                    "blue-cash-everyday-card-from-american-express",
-                    "costco-anywhere-visa-card-by-citi"
+                    "capital-one-savor-cash-rewards-credit-card",
+                    "blue-cash-everyday-card-from-american-express"
                 ]
             }
         ],
         "rules": [
             {
                 "title": "The Single-App Strategy",
-                "description": "Choose your hub card based on where you already bank (e.g., Chase, Wells Fargo, or Citi) to manage your finances in a single dashboard."
+                "description": "Choose your hub card based on where you already bank (e.g., Chase, Wells Fargo, or Citi)."
             },
             {
                 "title": "The Annual Fee Test",
-                "description": "Only keep cards with an annual fee if the credits are automated (like the Venture X travel credit); otherwise, stick to $0 fee cards for zero-maintenance rewards."
+                "description": "Only keep cards with an annual fee if the credits are automated; otherwise, stick to $0 fee cards."
             }
         ]
     },
@@ -522,11 +612,19 @@
         "name": "Yuppie Flexer",
         "slug": "yuppie",
         "tagline": "Heavy metal, Centurion access, bottle service energy",
-        "description": "You want a setup that looks as good as the rewards. You prioritize heavy metal cards, elite airport lounges, and lifestyle credits that fund high-end urban dining and fitness.",
+        "categories": [
+            "Generic Dining",
+            "Grubhub",
+            "Lyft",
+            "Generic Health & Wellness",
+            "Amex Travel Hotels",
+            "Citi Nights"
+        ],
+        "description": "You want a setup that looks as good as the rewards. You prioritize heavy metal cards and elite airport lounges.",
         "slots": [
             {
                 "name": "Urban Dining & Food",
-                "description": "Premium metal cards for high-end restaurants and delivery. These cards provide monthly Uber/Grubhub credits and exclusive table access.",
+                "description": "Premium metal cards for high-end restaurants and delivery.",
                 "cards": [
                     "american-express-gold-card",
                     "chase-sapphire-reserve",
@@ -536,33 +634,33 @@
             },
             {
                 "name": "Lifestyle & Flex",
-                "description": "The 'status' symbols. These offer luxury retail credits (Saks/Lululemon), Equinox fitness credits, and chauffeur/resort benefits.",
+                "description": "The 'status' symbols. These offer luxury retail credits and fitness benefits.",
                 "cards": [
                     "american-express-platinum-card",
                     "the-business-platinum-card-from-american-express",
-                    "hilton-honors-aspire-card-from-american-express"
+                    "hilton-honors-aspire-card-from-american-express",
+                    "citi-aadvantage-executive-world-elite-mastercard"
                 ]
             },
             {
                 "name": "Flex Specialists",
-                "description": "Cards with the best physical aesthetic and weight. These are sleek, minimalistic, and built to impress during day-to-day transactions.",
+                "description": "Cards with the best physical aesthetic and weight.",
                 "cards": [
                     "apple-card",
                     "bilt-mastercard",
-                    "prime-visa",
-                    "capital-one-venture-x-rewards-credit-card",
-                    "us-bank-altitude-reserve-visa-infinite-card"
+                    "us-bank-altitude-reserve-visa-infinite-card",
+                    "capital-one-venture-x-rewards-credit-card"
                 ]
             }
         ],
         "rules": [
             {
                 "title": "Lounge Hierarchy",
-                "description": "Always arrive early for Centurion Lounge or Sapphire Lounge access; Priority Pass is strictly for secondary layovers."
+                "description": "Always arrive early for Centurion Lounge or Sapphire Lounge access; Priority Pass is secondary."
             },
             {
                 "title": "Credit Flex",
-                "description": "Maximize the Saks and Lululemon retail credits quarterly to keep your wardrobe fresh without touching your bank account."
+                "description": "Maximize the Saks and Lululemon retail credits quarterly to keep your wardrobe fresh."
             }
         ]
     },
@@ -570,11 +668,19 @@
         "name": "Value Traveler",
         "slug": "value-traveler",
         "tagline": "Premium perks, net-negative annual fee, minimal effort",
-        "description": "You travel often but refuse to pay net fees. You need a setup where the credits fully pay for the annual fee (AF), providing free lounges, elite security credits, and premium insurance for essentially $0 out of pocket.",
+        "categories": [
+            "Generic Airlines",
+            "Generic Hotels",
+            "Global Entry",
+            "TSA PreCheck",
+            "Bank of America Travel Center",
+            "Generic Travel Perks"
+        ],
+        "description": "You travel often but refuse to pay net fees. You need a setup where the credits fully pay for the annual fee.",
         "slots": [
             {
                 "name": "The Net-Zero Hubs",
-                "description": "Premium travel hubs where the annual credits and anniversary bonuses are worth more than the fee itself.",
+                "description": "Premium travel hubs where credits are worth more than the fee.",
                 "cards": [
                     "capital-one-venture-x-rewards-credit-card",
                     "chase-sapphire-preferred-card",
@@ -584,7 +690,7 @@
             },
             {
                 "name": "Daily Value Earners",
-                "description": "No-AF multipliers that provide the highest baseline return for your everyday non-travel spending.",
+                "description": "No-AF multipliers for everyday non-travel spending.",
                 "cards": [
                     "wells-fargo-active-cash-card",
                     "citi-double-cash-card",
@@ -594,7 +700,7 @@
             },
             {
                 "name": "Security & International Utility",
-                "description": "Cards specifically chosen for TSA PreCheck/Global Entry credits and zero foreign transaction fees without the premium price tag.",
+                "description": "Cards specifically chosen for TSA Pre/Global Entry and zero FX fees.",
                 "cards": [
                     "us-bank-altitude-connect-visa-signature-card",
                     "citi-strata-premier-card",
@@ -604,7 +710,7 @@
             },
             {
                 "name": "Travel Value Specialists",
-                "description": "High-value specialty cards that offer anniversary free nights or unique transfer partners (like Bilt for rent).",
+                "description": "High-value specialty cards that offer anniversary free nights.",
                 "cards": [
                     "bilt-mastercard",
                     "united-explorer-card",
@@ -616,11 +722,11 @@
         "rules": [
             {
                 "title": "The Net-Zero Math",
-                "description": "Before opening a card, ensure the credits (Travel, Hotel, or Anniversary Points) equal or exceed the AF to keep your effective cost at $0."
+                "description": "Ensure the credits (Travel, Hotel, or Anniversary Points) equal or exceed the AF."
             },
             {
                 "title": "Foreign Fee Audit",
-                "description": "Never carry a card abroad that charges a 3% transaction fee; stick to the 'Security & Utility' slot for all international spend."
+                "description": "Never carry a card abroad that charges a 3% transaction fee."
             }
         ]
     },
@@ -628,11 +734,17 @@
         "name": "Category Hunter",
         "slug": "category-hunter",
         "tagline": "5% rotating categories = pure dopamine",
-        "description": "You live for quarterly activation day. You want a setup that hits 5-10% in a different category every three months, ensuring you never leave a single reward point on the table.",
+        "categories": [
+            "Rotating Categories",
+            "Top Category",
+            "Choice Category",
+            "Mobile Wallet"
+        ],
+        "description": "You live for quarterly activation day. You want a setup that hits 5-10% in a different category every three months.",
         "slots": [
             {
                 "name": "The Rotating Hub",
-                "description": "The heavy hitters for quarterly 5% categories. These cards define your spending strategy for three months at a time.",
+                "description": "The heavy hitters for quarterly 5% categories.",
                 "cards": [
                     "chase-freedom-flex",
                     "discover-it-cash-back",
@@ -642,45 +754,43 @@
             },
             {
                 "name": "The Custom Lock Core",
-                "description": "Permanent or semi-permanent high-yield categories that you choose or that adjust to your highest spend automatically.",
+                "description": "Permanent high-yield categories that adjust automatically.",
                 "cards": [
                     "citi-custom-cash-card",
-                    "bank-of-america-customized-cash-rewards-credit-card-for-students",
+                    "bank-of-america-customized-cash-rewards-credit-card",
                     "huntington-voice-visa-card",
                     "us-bank-smartly-visa-signature-card"
                 ]
             },
             {
                 "name": "Lifestyle & Utility Boosters",
-                "description": "Targeted multipliers for fixed high-spend areas like Gas, Amazon, Streaming, and Phone plans to ensure a high floor.",
+                "description": "Targeted multipliers for fixed high-spend areas like Gas or Phone plans.",
                 "cards": [
-                    "us-bank-altitude-connect-visa-signature-card",
                     "blue-cash-preferred-card-from-american-express",
                     "prime-visa",
                     "wells-fargo-autograph-card",
-                    "blue-cash-everyday-card-from-american-express"
+                    "us-bank-altitude-connect-visa-signature-card"
                 ]
             },
             {
                 "name": "Hunter Specialists",
-                "description": "Specialty tools for catching the 'overflow' spend, from mobile wallet purchases to rent and everyday catch-all spend.",
+                "description": "Specialty tools for catching the 'overflow' spend.",
                 "cards": [
                     "bilt-mastercard",
                     "apple-card",
-                    "wells-fargo-active-cash-card",
-                    "citi-double-cash-card",
-                    "us-bank-altitude-reserve-visa-infinite-card"
+                    "us-bank-altitude-reserve-visa-infinite-card",
+                    "wells-fargo-active-cash-card"
                 ]
             }
         ],
         "rules": [
             {
                 "title": "12:01 AM Activation",
-                "description": "Set a calendar alert to activate your quarterly categories the second they become available to avoid missing out on early-month spend."
+                "description": "Set a calendar alert to activate your quarterly categories immediately."
             },
             {
                 "title": "The Gift Card Hedge",
-                "description": "If you are nearing the end of a quarter and haven't hit the $1,500 spend cap, buy gift cards for Amazon or your local grocery store while the 5% is active to 'pre-pay' for future rewards."
+                "description": "Buy gift cards for future use if you haven't hit the spending cap by the end of the quarter."
             }
         ]
     },
@@ -688,11 +798,18 @@
         "name": "Student Starter",
         "slug": "student-starter",
         "tagline": "Build 800+ credit while eating out & Ubering",
-        "description": "You're building your future. You need a setup that costs $0 in annual fees but provides high-value perks like phone insurance, dining rewards, and automated credit tracking to build a top-tier score early.",
+        "categories": [
+            "Generic Dining",
+            "Generic Groceries",
+            "Phone Plans",
+            "Streaming",
+            "Generic Entertainment"
+        ],
+        "description": "You're building your future. You need a setup that costs $0 in annual fees.",
         "slots": [
             {
                 "name": "The Starter Hub",
-                "description": "Student-specific cards designed for easy approval with limited credit history, offering solid baseline rewards for those just starting out.",
+                "description": "Student-specific cards designed for easy approval.",
                 "cards": [
                     "discover-it-student-chrome",
                     "capital-one-quicksilver-student-cash-rewards-credit-card",
@@ -701,7 +818,7 @@
             },
             {
                 "name": "Food & Fun",
-                "description": "Maximum yield on the two biggest student expenses: eating out and entertainment. Includes high multipliers for streaming and delivery.",
+                "description": "Maximum yield on eating out and entertainment.",
                 "cards": [
                     "capital-one-savor-student-cash-rewards-credit-card",
                     "discover-it-student-cash-back",
@@ -710,10 +827,9 @@
             },
             {
                 "name": "Lifestyle & Protection",
-                "description": "Essential zero-fee utility. These cards provide a high 'catch-all' rate for textbooks/shopping and crucial cell phone protection.",
+                "description": "Essential zero-fee utility including cell phone protection.",
                 "cards": [
                     "bilt-mastercard",
-                    "wells-fargo-active-cash-card",
                     "wells-fargo-autograph-card",
                     "chase-freedom-unlimited",
                     "apple-card"
@@ -721,12 +837,11 @@
             },
             {
                 "name": "Credit Building Specialists",
-                "description": "The fallback options for those with no credit history or looking to rebuild. These focus on graduating to unsecured lines and improving scores.",
+                "description": "The fallback options for those with no credit history.",
                 "cards": [
                     "capital-one-platinum-secured-credit-card",
                     "discover-it-secured-credit-card",
                     "citi-secured-mastercard",
-                    "capital-one-quicksilver-secured-cash-rewards-credit-card",
                     "wells-fargo-reflect-secured-credit-card"
                 ]
             }
@@ -734,11 +849,11 @@
         "rules": [
             {
                 "title": "Pay in Full",
-                "description": "Never carry a balance; interest charges on student cards will instantly wipe out any rewards value you've earned."
+                "description": "Never carry a balance; interest charges wipe out any rewards value."
             },
             {
                 "title": "The GPA Bonus",
-                "description": "If using Discover, remember to claim your $20 statement credit each school year you maintain a GPA of 3.0 or higher."
+                "description": "Claim your $20 statement credit each school year you maintain a 3.0 GPA with Discover."
             }
         ]
     },
@@ -746,53 +861,62 @@
         "name": "Hotel Status Chaser",
         "slug": "hotel-status-chaser",
         "tagline": "Diamond/Platinum everywhere, free breakfast & upgrades",
-        "description": "You prioritize where you sleep. You want a setup that provides instant elite status across all major chains and rewards you with high multipliers for every night stayed, ensuring suite upgrades and free breakfast become your new baseline.",
+        "description": "You prioritize where you sleep. You want instant elite status across all major chains.",
         "slots": [
             {
                 "name": "The Hilton Core",
-                "description": "Instant Diamond or Gold status. These cards provide the highest multipliers for Hilton stays and annual resort credits to offset fees.",
+                "description": "Instant Diamond or Gold status.",
                 "cards": [
                     "hilton-honors-aspire-card-from-american-express",
-                    "hilton-honors-american-express-surpass-card"
+                    "hilton-honors-american-express-surpass-card",
+                    "the-hilton-honors-american-express-business-card"
                 ]
             },
             {
                 "name": "The Marriott Hub",
-                "description": "Cards that unlock Marriott Platinum or Gold status immediately, providing elite night credits to help you climb the loyalty ladder.",
+                "description": "Cards that unlock Marriott Platinum or Gold status immediately.",
                 "cards": [
                     "marriott-bonvoy-brilliant-american-express-card",
-                    "marriott-bonvoy-boundless-credit-card"
+                    "marriott-bonvoy-boundless-credit-card",
+                    "marriott-bonvoy-bevy-american-express-card"
                 ]
             },
             {
                 "name": "Hyatt & IHG Specialists",
-                "description": "The best cards for the 'loyalty sweet spots.' Includes Hyatt for outsized point value and IHG for the 'Fourth Night Free' on award stays.",
+                "description": "The best cards for the 'loyalty sweet spots.'",
                 "cards": [
                     "the-world-of-hyatt-credit-card",
                     "ihg-one-rewards-premier-credit-card",
                     "ihg-one-rewards-traveler-credit-card",
-                    "chase-sapphire-preferred-card"
+                    "world-of-hyatt-business-credit-card"
                 ]
             },
             {
                 "name": "Lifestyle & Luxury Portals",
-                "description": "Cards that fund on-property meals and provide access to luxury hotel collections like 'The Edit' or 'Fine Hotels + Resorts.'",
+                "description": "Cards that provide access to luxury hotel collections.",
                 "cards": [
                     "american-express-platinum-card",
                     "chase-sapphire-reserve",
-                    "american-express-gold-card",
-                    "citi-strata-elite-card"
+                    "citi-strata-elite-card",
+                    "chase-sapphire-preferred-card"
                 ]
             }
+        ],
+        "categories": [
+            "Hilton",
+            "Hyatt",
+            "IHG",
+            "Marriott",
+            "Generic Hotels"
         ],
         "rules": [
             {
                 "title": "Resort Credit Timing",
-                "description": "Use your Hilton resort credits semi-annually (Jan–Jun and Jul–Dec) to ensure you stay net-positive on the annual fee while enjoying on-property dining."
+                "description": "Use your Hilton resort credits semi-annually to ensure you stay net-positive."
             },
             {
                 "title": "The Hyatt Transfer Rule",
-                "description": "Always prioritize transferring Chase Ultimate Rewards points to Hyatt; the 2.0+ cpp value easily beats redeeming for other hotel chains or cash."
+                "description": "Always prioritize transferring Chase points to Hyatt; the value beats other chains."
             }
         ]
     },
@@ -800,55 +924,64 @@
         "name": "Airline Companion Pass Chaser",
         "slug": "airline-companion-chaser",
         "tagline": "Companion flies free, free bags, lounge access",
-        "description": "You travel with a partner. You need a setup that handles the logistics of 'two for one' travel, eliminates baggage fees, and provides airport lounge access to make the journey as rewarding as the destination.",
+        "description": "You travel with a partner. You need 'two for one' travel and airport lounge access.",
         "slots": [
             {
                 "name": "Companion Pass & Certificate Hubs",
-                "description": "The primary engines for 'Buy One Get One' travel. These cards offer annual companion certificates or the fastest path to the Southwest Companion Pass.",
+                "description": "The primary engines for 'Buy One Get One' travel.",
                 "cards": [
                     "southwest-rapid-rewards-priority-credit-card",
                     "delta-skymiles-platinum-american-express-card",
-                    "british-airways-visa-signature-card"
+                    "british-airways-visa-signature-card",
+                    "southwest-rapid-rewards-performance-business-credit-card"
                 ]
             },
             {
                 "name": "The United & Delta Core",
-                "description": "Cards specifically chosen for high-value domestic airline perks, including anniversary lounge passes and priority boarding to ensure a stress-free departure.",
+                "description": "Cards for domestic airline perks and priority boarding.",
                 "cards": [
                     "united-explorer-card",
                     "united-club-card",
-                    "delta-skymiles-reserve-american-express-card"
+                    "delta-skymiles-reserve-american-express-card",
+                    "delta-skymiles-gold-american-express-card"
                 ]
             },
             {
                 "name": "Airline & Logistics Specialists",
-                "description": "Cards that handle the 'invisible' costs of travel, providing free first and second checked bags and credits for Global Entry or TSA PreCheck.",
+                "description": "Cards that handle checked bags and Global Entry credits.",
                 "cards": [
                     "aeroplan-credit-card",
                     "united-quest-card",
-                    "bank-of-america-premium-rewards-credit-card"
+                    "bank-of-america-premium-rewards-credit-card",
+                    "citi-aadvantage-platinum-select-world-elite-mastercard"
                 ]
             },
             {
                 "name": "Lifestyle & Airport Dining",
-                "description": "Credits that fund the journey to and from the airport. Includes rideshare credits for Uber/Lyft and statement credits for airport dining or lounge snacks.",
+                "description": "Credits that fund the journey and lounge snacks.",
                 "cards": [
                     "american-express-gold-card",
                     "citi-strata-elite-card",
                     "chase-sapphire-reserve",
-                    "american-express-platinum-card",
-                    "wells-fargo-autograph-card"
+                    "american-express-platinum-card"
                 ]
             }
+        ],
+        "categories": [
+            "Southwest",
+            "Delta",
+            "United",
+            "British Airways",
+            "American Airlines"
         ],
         "rules": [
             {
                 "title": "Certificate Mandatory",
-                "description": "Never let your annual companion certificate or Southwest travel credit expire; these are the core value drivers that justify the annual fee."
+                "description": "Never let your annual companion certificate expire; it's the core value driver."
             },
             {
                 "title": "Free Bag Stack",
-                "description": "Always check a bag if the card provides it for free (and for your companion); it saves you the stress of fighting for overhead bin space."
+                "description": "Always check a bag if the card provides it for free to save overhead space."
             }
         ]
     }

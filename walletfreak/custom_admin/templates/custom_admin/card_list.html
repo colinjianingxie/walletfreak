@@ -28,9 +28,9 @@
 
     {% if is_prompt_admin %}
     <div style="margin-top: 1.5rem; padding: 1.5rem; background: rgba(255,255,255,0.05); border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);">
-        <label style="display: block; margin-bottom: 0.5rem; color: rgba(255,255,255,0.8); font-weight: 600;">Generate Prompt for New Card</label>
+        <label style="display: block; margin-bottom: 0.5rem; color: rgba(255,255,255,0.8); font-weight: 600;">Generate Prompt for New Card(s)</label>
         <div style="display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1rem;">
-            <input type="text" id="new-slug-input" placeholder="Enter slug-id (e.g., chase-sapphire-reserve)"
+            <input type="text" id="new-slug-input" placeholder="Enter slug-id(s) comma-separated (e.g., chase-sapphire-reserve, amex-gold-card)"
                    style="flex: 1; padding: 0.75rem 1rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.5rem; color: white; font-size: 0.9rem;">
             <button type="button" id="btn-new-prompt" class="btn btn-primary" style="padding: 0.75rem 1.5rem; font-weight: 600;">
                 Generate
@@ -38,7 +38,8 @@
         </div>
         
         <label style="display: block; margin-bottom: 0.5rem; color: rgba(255,255,255,0.6); font-weight: 600; font-size: 0.875rem;">Paste AI Result (JSON)</label>
-        <textarea id="new-card-result" placeholder="Paste the JSON response from the AI here..."
+        <p style="margin: 0 0 0.5rem 0; color: rgba(255,255,255,0.4); font-size: 0.75rem;">For multiple cards, paste as JSON array: [{...}, {...}, {...}]</p>
+        <textarea id="new-card-result" placeholder="Paste the JSON response from the AI here...&#10;&#10;For single card: paste the JSON object&#10;For multiple cards: paste a JSON array like [{&quot;slug-id&quot;: &quot;card1&quot;, ...}, {&quot;slug-id&quot;: &quot;card2&quot;, ...}]"
                   style="width: 100%; height: 200px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.5rem; color: #e5e7eb; padding: 1rem; font-family: monospace; font-size: 0.875rem; margin-bottom: 0.75rem; resize: vertical;"></textarea>
         <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
             <button type="button" id="btn-save-json" class="btn btn-primary" style="padding: 0.75rem 1.5rem; font-weight: 600; background: #10b981;">
@@ -402,10 +403,10 @@
         
         if (saveJsonBtn) {
             saveJsonBtn.addEventListener('click', function() {
-                const slugId = newSlugInput.value.trim();
+                const slugIdInput = newSlugInput.value.trim();
                 const jsonData = newCardResult.value.trim();
                 
-                if (!slugId) {
+                if (!slugIdInput) {
                     alert('Please enter a slug-id first');
                     return;
                 }
@@ -413,12 +414,32 @@
                     alert('Please paste the JSON result first');
                     return;
                 }
+                
+                // Parse slug-ids
+                const slugIds = slugIdInput.split(',').map(s => s.trim()).filter(s => s);
+                const numSlugs = slugIds.length;
 
                 // Quick client-side JSON validation
+                let parsedJson;
                 try {
-                    JSON.parse(jsonData);
+                    parsedJson = JSON.parse(jsonData);
                 } catch (e) {
                     alert('Invalid JSON: ' + e.message);
+                    return;
+                }
+                
+                // Validate structure matches expected count
+                if (numSlugs > 1) {
+                    if (!Array.isArray(parsedJson)) {
+                        alert(`For ${numSlugs} slug-ids, you need to provide a JSON array with ${numSlugs} objects.\n\nWrap your JSONs in square brackets: [{...}, {...}]`);
+                        return;
+                    }
+                    if (parsedJson.length !== numSlugs) {
+                        alert(`Mismatch: You provided ${numSlugs} slug-ids but the JSON array has ${parsedJson.length} objects.\n\nExpected exactly ${numSlugs} JSON objects.`);
+                        return;
+                    }
+                } else if (numSlugs === 1 && Array.isArray(parsedJson) && parsedJson.length !== 1) {
+                    alert(`For a single slug-id, expected 1 JSON object but found an array with ${parsedJson.length} items.`);
                     return;
                 }
 
@@ -432,7 +453,7 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ slug_id: slugId, json_data: jsonData })
+                    body: JSON.stringify({ slug_id: slugIdInput, json_data: jsonData })
                 })
                 .then(response => {
                     if (!response.ok) {

@@ -179,9 +179,9 @@ The freak verdicts are honest opinion on the card. Give a rating and generate an
 Categories are very important (especially in Rates and Benefits). Try to be specific in the Rates and Benefits category. Feel free to add to the CategoryNameDetailed if there are any additions to the Categories.
 
 ## Output
-Generate me the SAME format of JSON as presented in the sample.
+Generate me the SAME format of JSON as presented in the sample, one for each card requested.
 
-If there are no updates that you found for the card, feel free to return the ORIGINAL json file."""
+If there are no updates that you found for a card, feel free to return the ORIGINAL json file for that card."""
 
         return prompt
     

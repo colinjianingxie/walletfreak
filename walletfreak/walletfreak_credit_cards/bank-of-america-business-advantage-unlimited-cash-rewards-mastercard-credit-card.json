@@ -1,0 +1,92 @@
+{
+    "Vendor": "Bank of America",
+    "CardName": "Bank of America Business Advantage Unlimited Cash Rewards Mastercard® credit card",
+    "AnnualFee": 0,
+    "PointsValueCpp": 1.0,
+    "slug-id": "bank-of-america-business-advantage-unlimited-cash-rewards-mastercard-credit-card",
+    "ImageURL": "/static/images/credit_cards/bank-of-america-business-advantage-unlimited-cash-rewards-mastercard-credit-card.png",
+    "MinCreditScore": 700,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.bankofamerica.com/smallbusiness/credit-cards/products/unlimited-cash-rewards-business-credit-card/",
+    "Is524": false,
+    "Benefits": [
+        {
+            "BenefitDescription": "Unlimited Cash Back with no expiration",
+            "AdditionalDetails": "Rewards don't expire as long as your account remains open.",
+            "BenefitCategory": [
+                "All Purchases"
+            ],
+            "TimeCategory": "Permanent",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "No Expiration",
+            "BenefitType": "Perk",
+            "NumericValue": null,
+            "NumericType": "Perk"
+        },
+        {
+            "BenefitDescription": "Cash Flow Management",
+            "AdditionalDetails": "0% Intro APR on purchases for the first 9 billing cycles.",
+            "BenefitCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "TimeCategory": "First year",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Intro APR",
+            "BenefitType": "Credit",
+            "NumericValue": 9.0,
+            "NumericType": "Months"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 1.5,
+            "Currency": "cash back",
+            "RateCategory": [
+                "All Purchases"
+            ],
+            "AdditionalDetails": "every purchase, every day",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-12-28",
+            "Terms": "Spend $3,000 in 90 days",
+            "SignUpBonusValue": 300,
+            "SignUpBonusType": "Cash",
+            "SpendAmount": 3000,
+            "SignupDurationMonths": 3
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Simplicity",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Do you prefer earning a high flat rate on everything rather than tracking specific categories?",
+            "BenefitCategory": "Financial & Rewards",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "8/10. Simplicity is its greatest strength. For businesses with varied spending, an unlimited 1.5% back (potentially 2.62% with Preferred Rewards) on everything is arguably more valuable than specialized category cards.",
+    "Categories": [
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "All Purchases",
+                "Generic Financial & Rewards"
+            ]
+        }
+    ]
+}

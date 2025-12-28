@@ -1,0 +1,121 @@
+{
+    "Vendor": "Chase",
+    "CardName": "IHG One Rewards Premier Business Credit Card",
+    "AnnualFee": 99,
+    "PointsValueCpp": 0.5,
+    "slug-id": "ihg-one-rewards-premier-business-credit-card",
+    "ImageURL": "/static/images/credit_cards/ihg-one-rewards-premier-business-credit-card.webp",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.referyourchasecard.com/ihg/premierbusiness",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "Anniversary Free Night (up to 40,000 points)",
+            "AdditionalDetails": "Can add points to redeem for higher value nights",
+            "BenefitCategory": [
+                "IHG"
+            ],
+            "TimeCategory": "Annually (anniversary year)",
+            "DollarValue": 200,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Free Night",
+            "BenefitType": "Perk",
+            "NumericValue": 40000,
+            "NumericType": "Points"
+        },
+        {
+            "BenefitDescription": "Redeem 3 Nights, Get 4th Night Free",
+            "AdditionalDetails": "On award stays",
+            "BenefitCategory": [
+                "IHG"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 150,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "4th Night Free",
+            "BenefitType": "Perk",
+            "NumericValue": 1,
+            "NumericType": "FreeNight"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 10,
+            "Currency": "points",
+            "RateCategory": [
+                "IHG"
+            ],
+            "AdditionalDetails": "at IHG properties",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 5,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Airlines",
+                "Generic Hotels"
+            ],
+            "AdditionalDetails": "travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 5,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Dining"
+            ],
+            "AdditionalDetails": "dining",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "all other purchases",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-12-28",
+            "Terms": "Spend $3000 in 3 months",
+            "SignUpBonusValue": 140000,
+            "SignUpBonusType": "Points",
+            "SpendAmount": 3000,
+            "SignupDurationMonths": 3
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Award Stays",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "Never",
+                "Once a year",
+                "Multiple times"
+            ],
+            "Question": "Do you prefer redeeming points for long hotel stays (4+ nights)?",
+            "BenefitCategory": "Hotels",
+            "ChoiceWeight": [
+                0.0,
+                0.4,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "9/10. The 4th night free benefit alone makes this a must-have for IHG loyalists. The 140k bonus is a strong entry point.",
+    "Categories": [
+        {
+            "CategoryName": "Hotels",
+            "Icon": "fa-solid fa-hotel",
+            "CategoryNameDetailed": [
+                "IHG"
+            ]
+        }
+    ]
+}

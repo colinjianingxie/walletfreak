@@ -4,7 +4,7 @@
     "AnnualFee": 525,
     "PointsValueCpp": 1.2,
     "slug-id": "united-club-card",
-    "ImageURL": "/static/images/credit_cards/united-club-card.AVIF",
+    "ImageURL": "/static/images/credit_cards/united-club-card.avif",
     "MinCreditScore": 670,
     "MaxCreditScore": 850,
     "ApplicationLink": "https://creditcards.chase.com/rewards-credit-cards/united/club",

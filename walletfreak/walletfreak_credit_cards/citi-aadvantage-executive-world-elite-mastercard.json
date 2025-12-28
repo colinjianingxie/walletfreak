@@ -1,0 +1,271 @@
+{
+    "Vendor": "Citi",
+    "CardName": "Citi\u00ae / AAdvantage\u00ae Executive World Elite Mastercard\u00ae",
+    "AnnualFee": 595,
+    "PointsValueCpp": 1.4,
+    "slug-id": "citi-aadvantage-executive-world-elite-mastercard",
+    "ImageURL": "/static/images/credit_cards/citi-aadvantage-executive-world-elite-mastercard.webp",
+    "MinCreditScore": 700,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.citi.com/credit-cards/citi-aadvantage-executive-credit-card",
+    "Is524": false,
+    "Benefits": [
+        {
+            "BenefitDescription": "Complimentary Admirals Club\u00ae membership with guest privileges",
+            "AdditionalDetails": "Value of up to $850; primary cardmember and immediate family or up to 2 guests",
+            "BenefitCategory": [
+                "Admirals Club"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 850,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Admirals Club",
+            "BenefitType": "Perk",
+            "NumericValue": 1,
+            "NumericType": "Membership"
+        },
+        {
+            "BenefitDescription": "Up to $120 back on eligible Grubhub purchases",
+            "AdditionalDetails": "$10 monthly statement credit for Grubhub orders",
+            "BenefitCategory": [
+                "Grubhub",
+                "Generic Dining"
+            ],
+            "TimeCategory": "Monthly",
+            "DollarValue": 120,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Grubhub Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 10.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "Up to $120 back on eligible Lyft rides",
+            "AdditionalDetails": "$10 credit after taking 3 eligible rides in a calendar month",
+            "BenefitCategory": [
+                "Lyft"
+            ],
+            "TimeCategory": "Monthly",
+            "DollarValue": 120,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Lyft Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 10.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "Up to $120 back on eligible prepaid Avis\u00ae or Budget rentals",
+            "AdditionalDetails": "Statement credit for rentals booked directly on avis.com or budget.com",
+            "BenefitCategory": [
+                "Avis",
+                "Budget"
+            ],
+            "TimeCategory": "Annually (calendar year)",
+            "DollarValue": 120,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Rental Car Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 120.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "Global Entry\u00ae or TSA PreCheck\u00ae application fee credit",
+            "AdditionalDetails": "Reimbursement for application fee up to $120 every 4 years",
+            "BenefitCategory": [
+                "Global Entry"
+            ],
+            "TimeCategory": "Every 4 years",
+            "DollarValue": 30,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Global Entry Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 120.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "First checked bag free for you and up to 8 companions",
+            "AdditionalDetails": "On domestic American Airlines itineraries on the same reservation",
+            "BenefitCategory": [
+                "American Airlines"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 720,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Free Checked Bag",
+            "BenefitType": "Perk",
+            "NumericValue": 9,
+            "NumericType": "Perk"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 10,
+            "Currency": "miles",
+            "RateCategory": [
+                "American Airlines Hotels"
+            ],
+            "AdditionalDetails": "Hotels booked through aadvantagehotels.com",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 10,
+            "Currency": "miles",
+            "RateCategory": [
+                "American Airlines Rental Cars"
+            ],
+            "AdditionalDetails": "Car rentals booked through aadvantagecars.com",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 4,
+            "Currency": "miles",
+            "RateCategory": [
+                "American Airlines"
+            ],
+            "AdditionalDetails": "American Airlines purchases (5x after $150k spend in a calendar year)",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "miles",
+            "RateCategory": [
+                "All Purchases"
+            ],
+            "AdditionalDetails": "All other purchases",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-12-28",
+            "Terms": "Spend $7,000 in 3 months",
+            "SignUpBonusValue": 70000,
+            "SignUpBonusType": "Miles",
+            "SpendAmount": 7000,
+            "SignupDurationMonths": 3
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Admirals Club",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "Never",
+                "Occasionally",
+                "Monthly",
+                "Weekly"
+            ],
+            "Question": "How often do you visit airport lounges when flying?",
+            "BenefitCategory": "Travel Perks",
+            "ChoiceWeight": [
+                0.0,
+                0.3,
+                0.8,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "American Airlines Loyalty",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Is American Airlines your primary carrier for domestic travel?",
+            "BenefitCategory": "Airlines",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Food & Delivery",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Do you use food delivery services like Grubhub at least once a month?",
+            "BenefitCategory": "Dining & Delivery",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Rideshare Usage",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Do you use Lyft frequently for your commute or travel?",
+            "BenefitCategory": "Transportation",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "9/10. For the American Airlines loyalist, this card is nearly impossible to beat. The $595 annual fee is steep, but it includes an Admirals Club membership valued at $850. With the addition of $360 in total annual credits for Grubhub, Lyft, and Avis/Budget, the effective annual fee can actually be negative if you maximize the perks. The 70k signup bonus and 4x earning rate on AA flights make it a powerhouse for status seekers.",
+    "Categories": [
+        {
+            "CategoryName": "Airlines",
+            "Icon": "fa-solid fa-plane",
+            "CategoryNameDetailed": [
+                "American Airlines",
+                "Generic Airlines"
+            ]
+        },
+        {
+            "CategoryName": "Dining & Delivery",
+            "Icon": "fa-solid fa-utensils",
+            "CategoryNameDetailed": [
+                "Grubhub",
+                "Generic Dining"
+            ]
+        },
+        {
+            "CategoryName": "Hotels",
+            "Icon": "fa-solid fa-hotel",
+            "CategoryNameDetailed": [
+                "American Airlines Hotels",
+                "Generic Hotels"
+            ]
+        },
+        {
+            "CategoryName": "Transportation",
+            "Icon": "fa-solid fa-car-side",
+            "CategoryNameDetailed": [
+                "Lyft",
+                "Avis",
+                "Budget",
+                "American Airlines Rental Cars",
+                "Generic Transportation"
+            ]
+        },
+        {
+            "CategoryName": "Travel Perks",
+            "Icon": "fa-solid fa-passport",
+            "CategoryNameDetailed": [
+                "Admirals Club",
+                "Global Entry",
+                "Generic Travel Perks"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "All Purchases",
+                "Generic Financial & Rewards"
+            ]
+        }
+    ]
+}

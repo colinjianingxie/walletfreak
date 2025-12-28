@@ -1,0 +1,128 @@
+{
+    "Vendor": "Wells Fargo",
+    "CardName": "Wells Fargo Autograph Journey Card",
+    "AnnualFee": 95,
+    "PointsValueCpp": 1.0,
+    "slug-id": "wells-fargo-autograph-journey-card",
+    "ImageURL": "/static/images/credit_cards/wells-fargo-autograph-journey-card.png",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://creditcards.wellsfargo.com/autograph-journey-visa-credit-card/",
+    "Is524": false,
+    "Benefits": [
+        {
+            "BenefitDescription": "$50 Annual Airline Credit",
+            "AdditionalDetails": "With minimum $50 airline purchase",
+            "BenefitCategory": [
+                "Generic Airlines"
+            ],
+            "TimeCategory": "Annually (calendar year)",
+            "DollarValue": 50,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Airline Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 50,
+            "NumericType": "Cash"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 5,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Hotels"
+            ],
+            "AdditionalDetails": "Hotels",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 4,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Airlines"
+            ],
+            "AdditionalDetails": "Airlines",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Travel Perks"
+            ],
+            "AdditionalDetails": "Other travel",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Dining"
+            ],
+            "AdditionalDetails": "Restaurants",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "Everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-12-28",
+            "Terms": "Spend $4,000 in 3 months",
+            "SignUpBonusValue": 60000,
+            "SignUpBonusType": "Points",
+            "SpendAmount": 4000,
+            "SignupDurationMonths": 3
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Airline Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "None",
+                "1-2",
+                "3+"
+            ],
+            "Question": "How many flights do you book directly with an airline each year?",
+            "BenefitCategory": "Airlines",
+            "ChoiceWeight": [
+                0.0,
+                0.8,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "9/10. A travel powerhouse for a low fee. 5x on hotels and 4x on airlines (uncapped) is industry-leading for a $95 card. The $50 airline credit effectively brings the fee down to $45.",
+    "Categories": [
+        {
+            "CategoryName": "Hotels",
+            "Icon": "fa-solid fa-hotel",
+            "CategoryNameDetailed": [
+                "Generic Hotels"
+            ]
+        },
+        {
+            "CategoryName": "Airlines",
+            "Icon": "fa-solid fa-plane",
+            "CategoryNameDetailed": [
+                "Generic Airlines"
+            ]
+        },
+        {
+            "CategoryName": "Dining & Delivery",
+            "Icon": "fa-solid fa-utensils",
+            "CategoryNameDetailed": [
+                "Generic Dining"
+            ]
+        }
+    ]
+}

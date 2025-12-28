@@ -4,7 +4,7 @@
     "AnnualFee": 395,
     "PointsValueCpp": 1.85,
     "slug-id": "capital-one-venture-x-business",
-    "ImageURL": "/static/images/credit_cards/capital-one-venture-x-business.png",
+    "ImageURL": "/static/images/credit_cards/capital-one-venture-x-business.avif",
     "MinCreditScore": 740,
     "MaxCreditScore": 850,
     "ApplicationLink": "https://www.capitalone.com/small-business/credit-cards/venture-x-business/",
@@ -56,7 +56,7 @@
             "NumericType": "Lounge"
         },
         {
-            "BenefitDescription": "Up to $120 credit for Global Entry or TSA PreCheck®",
+            "BenefitDescription": "Up to $120 credit for Global Entry or TSA PreCheck\u00ae",
             "AdditionalDetails": "Available every 4 years as a statement credit",
             "BenefitCategory": [
                 "Generic Travel Perks"

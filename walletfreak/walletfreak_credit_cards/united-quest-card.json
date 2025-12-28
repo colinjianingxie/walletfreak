@@ -4,7 +4,7 @@
     "AnnualFee": 250,
     "PointsValueCpp": 1.2,
     "slug-id": "united-quest-card",
-    "ImageURL": "/static/images/credit_cards/united-quest-card.AVIF",
+    "ImageURL": "/static/images/credit_cards/united-quest-card.avif",
     "MinCreditScore": 670,
     "MaxCreditScore": 850,
     "ApplicationLink": "https://creditcards.chase.com/rewards-credit-cards/united/quest",

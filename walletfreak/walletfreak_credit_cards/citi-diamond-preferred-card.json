@@ -1,0 +1,82 @@
+{
+    "Vendor": "Citi",
+    "CardName": "Citi Diamond Preferred Card",
+    "AnnualFee": 0,
+    "PointsValueCpp": 0.0,
+    "slug-id": "citi-diamond-preferred-card",
+    "ImageURL": "/static/images/credit_cards/citi-diamond-preferred-card.png",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.citi.com/credit-cards/citi-diamond-preferred-credit-card",
+    "Is524": false,
+    "Benefits": [
+        {
+            "BenefitDescription": "0% Intro APR for 21 months on balance transfers",
+            "AdditionalDetails": "Transfers must be completed within 4 months of account opening",
+            "BenefitCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "TimeCategory": "Minimum 12 months",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "BT Intro APR",
+            "BenefitType": "Perk",
+            "NumericValue": 21,
+            "NumericType": "Months"
+        },
+        {
+            "BenefitDescription": "0% Intro APR for 12 months on purchases",
+            "AdditionalDetails": "From date of account opening",
+            "BenefitCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "TimeCategory": "First year",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Purchase Intro APR",
+            "BenefitType": "Perk",
+            "NumericValue": 12,
+            "NumericType": "Months"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 0,
+            "Currency": "cash back",
+            "RateCategory": [
+                "No Rewards"
+            ],
+            "AdditionalDetails": "This card does not earn rewards",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Balance Transfer",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Do you have high-interest credit card debt you want to pay down over nearly two years?",
+            "BenefitCategory": "Financial & Rewards",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "4/10. This is a debt-repayment tool, not a rewards card. Use it for the 21-month 0% APR on balance transfers, then put it in a drawer once you're debt-free.",
+    "Categories": [
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "No Rewards"
+            ]
+        }
+    ]
+}

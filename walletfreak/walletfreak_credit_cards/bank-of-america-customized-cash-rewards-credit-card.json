@@ -1,0 +1,183 @@
+{
+    "Vendor": "Bank of America",
+    "CardName": "Bank of America Customized Cash Rewards Credit Card",
+    "AnnualFee": 0,
+    "PointsValueCpp": 1.0,
+    "slug-id": "bank-of-america-customized-cash-rewards-credit-card",
+    "ImageURL": "/static/images/credit_cards/bank-of-america-customized-cash-rewards-credit-card.png",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/",
+    "Is524": false,
+    "Benefits": [
+        {
+            "BenefitDescription": "Preferred Rewards bonus: 25% to 75% more cash back",
+            "AdditionalDetails": "Requires qualifying Bank of America account balance; does not apply to first-year bonus",
+            "BenefitCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": null,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Preferred Rewards Boost",
+            "BenefitType": "Bonus",
+            "NumericValue": 75.0,
+            "NumericType": "Percent"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 6,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Choice Category"
+            ],
+            "AdditionalDetails": "choice category (gas/EV, online shopping, dining, travel, drugstores, home improvement) in first year, up to $2500 quarterly combined with 2% categories",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Choice Category"
+            ],
+            "AdditionalDetails": "choice category after first year, up to $2500 quarterly combined with 2% categories",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Groceries",
+                "Wholesale Clubs"
+            ],
+            "AdditionalDetails": "grocery stores and wholesale clubs, up to $2500 quarterly combined with 3%/6% category",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "all other purchases",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-12-28",
+            "Terms": "Spend $1000 in 90 days",
+            "SignUpBonusValue": 200,
+            "SignUpBonusType": "Cash",
+            "SpendAmount": 1000,
+            "SignupDurationMonths": 3
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Choice Category",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "Rarely",
+                "Occasionally",
+                "Frequently"
+            ],
+            "Question": "How often do you spend in categories like gas, dining, or online shopping?",
+            "BenefitCategory": "Shopping",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Groceries",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you regularly shop at grocery stores or wholesale clubs?",
+            "BenefitCategory": "Groceries",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Preferred Rewards",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Maybe",
+                "Yes"
+            ],
+            "Question": "Are you interested in banking with Bank of America for extra rewards?",
+            "BenefitCategory": "Financial",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "9/10. Flexible categories with a first-year boost make this a top no-fee cash back card. Preferred Rewards takes it to elite levels.",
+    "Categories": [
+        {
+            "CategoryName": "Groceries",
+            "Icon": "fa-solid fa-cart-shopping",
+            "CategoryNameDetailed": [
+                "Generic Groceries"
+            ]
+        },
+        {
+            "CategoryName": "Shopping",
+            "Icon": "fa-solid fa-bag-shopping",
+            "CategoryNameDetailed": [
+                "Generic Shopping",
+                "Wholesale Clubs"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards",
+                "Choice Category"
+            ]
+        },
+        {
+            "CategoryName": "Dining & Delivery",
+            "Icon": "fa-solid fa-utensils",
+            "CategoryNameDetailed": [
+                "Generic Dining"
+            ]
+        },
+        {
+            "CategoryName": "Transportation",
+            "Icon": "fa-solid fa-car-side",
+            "CategoryNameDetailed": [
+                "Gas",
+                "EV Charging"
+            ]
+        },
+        {
+            "CategoryName": "Travel Perks",
+            "Icon": "fa-solid fa-passport",
+            "CategoryNameDetailed": [
+                "Generic Travel Perks"
+            ]
+        },
+        {
+            "CategoryName": "Health & Wellness",
+            "Icon": "fa-solid fa-heart-pulse",
+            "CategoryNameDetailed": [
+                "Drugstores"
+            ]
+        }
+    ]
+}

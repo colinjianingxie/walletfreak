@@ -1,0 +1,139 @@
+{
+    "Vendor": "American Express",
+    "CardName": "Marriott Bonvoy Business American Express Card",
+    "AnnualFee": 125,
+    "PointsValueCpp": 0.8,
+    "slug-id": "marriott-bonvoy-business-american-express-card",
+    "ImageURL": "/static/images/credit_cards/marriott-bonvoy-business-american-express-card.avif",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/marriott-bonvoy-business/",
+    "Is524": false,
+    "Benefits": [
+        {
+            "BenefitDescription": "Annual Free Night Award (up to 35,000 points)",
+            "AdditionalDetails": "After account renewal",
+            "BenefitCategory": [
+                "Marriott"
+            ],
+            "TimeCategory": "Annually (anniversary year)",
+            "DollarValue": 250,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Free Night",
+            "BenefitType": "Perk",
+            "NumericValue": 35000,
+            "NumericType": "Points"
+        },
+        {
+            "BenefitDescription": "7% Room Rate Discount",
+            "AdditionalDetails": "Book direct with Amex Business rate",
+            "BenefitCategory": [
+                "Marriott"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Room Discount",
+            "BenefitType": "Perk",
+            "NumericValue": 7.0,
+            "NumericType": "Percent"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 6,
+            "Currency": "points",
+            "RateCategory": [
+                "Marriott"
+            ],
+            "AdditionalDetails": "Marriott properties",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 4,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Dining"
+            ],
+            "AdditionalDetails": "U.S. restaurants",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 4,
+            "Currency": "points",
+            "RateCategory": [
+                "Gas"
+            ],
+            "AdditionalDetails": "U.S. gas stations",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 4,
+            "Currency": "points",
+            "RateCategory": [
+                "Shipping"
+            ],
+            "AdditionalDetails": "U.S. shipping",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 4,
+            "Currency": "points",
+            "RateCategory": [
+                "Phone Plans"
+            ],
+            "AdditionalDetails": "U.S. wireless phone services",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "all other purchases",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-12-28",
+            "Terms": "Spend $9000 total in 6 months ($6k then $3k)",
+            "SignUpBonusValue": 125000,
+            "SignUpBonusType": "Points",
+            "SpendAmount": 9000,
+            "SignupDurationMonths": 6
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Business Shipping",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "None",
+                "Moderate",
+                "High"
+            ],
+            "Question": "Do you have recurring business expenses for shipping or phone plans?",
+            "BenefitCategory": "Business & Tech",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "9.5/10. One of the best Marriott cards. The 7% discount and the automatic free night make the $125 fee an absolute steal.",
+    "Categories": [
+        {
+            "CategoryName": "Business & Tech",
+            "Icon": "fa-solid fa-laptop-code",
+            "CategoryNameDetailed": [
+                "Shipping",
+                "Phone Plans"
+            ]
+        }
+    ]
+}

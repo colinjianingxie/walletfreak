@@ -1,0 +1,208 @@
+{
+    "Vendor": "Citi",
+    "CardName": "Citi\u00ae / AAdvantage Business\u2122 World Elite Mastercard\u00ae",
+    "AnnualFee": 99,
+    "PointsValueCpp": 1.5,
+    "slug-id": "citi-aadvantage-business-world-elite-mastercard",
+    "ImageURL": "/static/images/credit_cards/citi-aadvantage-business-world-elite-mastercard.webp",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://creditcards.aa.com/credit-cards/citi-business-card-american-airlines-direct/",
+    "Is524": false,
+    "Benefits": [
+        {
+            "BenefitDescription": "First checked bag free on domestic American Airlines itineraries for you and up to 4 companions",
+            "AdditionalDetails": "Must be on the same reservation; savings of up to $400 per round trip",
+            "BenefitCategory": [
+                "Generic Airlines"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 400,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Free Checked Bag",
+            "BenefitType": "Perk",
+            "NumericValue": 1,
+            "NumericType": "Perk"
+        },
+        {
+            "BenefitDescription": "American Airlines Companion Certificate for domestic travel",
+            "AdditionalDetails": "Earned after $30,000+ spend in a membership year and account renewal. Redeeming costs $99 plus taxes.",
+            "BenefitCategory": [
+                "Generic Airlines"
+            ],
+            "TimeCategory": "Annually (anniversary year)",
+            "DollarValue": 250,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Companion Certificate",
+            "BenefitType": "Perk",
+            "NumericValue": 1,
+            "NumericType": "Passes"
+        },
+        {
+            "BenefitDescription": "25% savings on American Airlines inflight food, beverage, and Wi-Fi purchases",
+            "AdditionalDetails": "Savings provided as a statement credit",
+            "BenefitCategory": [
+                "Generic Airlines"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Inflight Savings",
+            "BenefitType": "Credit",
+            "NumericValue": 25.0,
+            "NumericType": "Percent"
+        },
+        {
+            "BenefitDescription": "Preferred boarding on American Airlines flights",
+            "AdditionalDetails": "Group 5 boarding for the primary cardmember",
+            "BenefitCategory": [
+                "Generic Airlines"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Preferred Boarding",
+            "BenefitType": "Perk",
+            "NumericValue": 1,
+            "NumericType": "Perk"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 2,
+            "Currency": "miles",
+            "RateCategory": [
+                "Generic Airlines"
+            ],
+            "AdditionalDetails": "eligible American Airlines purchases",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "miles",
+            "RateCategory": [
+                "Gas"
+            ],
+            "AdditionalDetails": "gas stations",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "miles",
+            "RateCategory": [
+                "Rental Cars"
+            ],
+            "AdditionalDetails": "car rental merchants",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "miles",
+            "RateCategory": [
+                "Telecom"
+            ],
+            "AdditionalDetails": "telecommunications merchants, cable and satellite providers",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "miles",
+            "RateCategory": [
+                "All Purchases"
+            ],
+            "AdditionalDetails": "every other purchase",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-12-28",
+            "Terms": "Spend $4,000 in 4 months",
+            "SignUpBonusValue": 65000,
+            "SignUpBonusType": "Miles",
+            "SpendAmount": 4000,
+            "SignupDurationMonths": 4
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Checked Bags",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Do you or your employees frequently check bags on domestic American Airlines flights?",
+            "BenefitCategory": "Airlines",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Business Utilities",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "Low",
+                "High"
+            ],
+            "Question": "Is your monthly business spending on telecommunications and cable services significant?",
+            "BenefitCategory": "Business & Tech",
+            "ChoiceWeight": [
+                0.3,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Companion Travel",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Yes"
+            ],
+            "Question": "Would you value an annual domestic companion certificate to reduce travel costs for a second traveler?",
+            "BenefitCategory": "Airlines",
+            "ChoiceWeight": [
+                0.0,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "8/10. A solid workhorse for small business owners who fly American Airlines. The $99 annual fee is waived the first year, making the 65,000-mile bonus extremely lucrative. While the 2x categories are a bit dated (who spends heavily on cable but not shipping?), the free checked bag for up to 5 people effectively pays for the card in a single trip.",
+    "Categories": [
+        {
+            "CategoryName": "Airlines",
+            "Icon": "fa-solid fa-plane",
+            "CategoryNameDetailed": [
+                "Generic Airlines"
+            ]
+        },
+        {
+            "CategoryName": "Transportation",
+            "Icon": "fa-solid fa-car-side",
+            "CategoryNameDetailed": [
+                "Gas",
+                "Rental Cars"
+            ]
+        },
+        {
+            "CategoryName": "Business & Tech",
+            "Icon": "fa-solid fa-laptop-code",
+            "CategoryNameDetailed": [
+                "Telecom"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "All Purchases",
+                "Generic Financial & Rewards"
+            ]
+        }
+    ]
+}

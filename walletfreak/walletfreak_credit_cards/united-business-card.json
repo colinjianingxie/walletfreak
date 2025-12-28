@@ -1,0 +1,175 @@
+{
+    "Vendor": "Chase",
+    "CardName": "United Business Card",
+    "AnnualFee": 95,
+    "PointsValueCpp": 1.2,
+    "slug-id": "united-business-card",
+    "ImageURL": "/static/images/credit_cards/united-business-card.webp",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://creditcards.chase.com/business-credit-cards/united/united-business-card",
+    "Is524": true,
+    "Benefits": [
+        {
+            "BenefitDescription": "$100 Annual Rideshare Credit ($8/month Jan-Nov, $12 Dec)",
+            "AdditionalDetails": "Statement credit for rideshare purchases",
+            "BenefitCategory": [
+                "Generic Transportation"
+            ],
+            "TimeCategory": "Monthly",
+            "DollarValue": 100,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Rideshare Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 100,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$125 United Travel Credit after 5 flights of $100+",
+            "AdditionalDetails": "Purchase 5 United flights of $100 or more each anniversary year",
+            "BenefitCategory": [
+                "United"
+            ],
+            "TimeCategory": "Annually (anniversary year)",
+            "DollarValue": 125,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "United Travel Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 125,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "Two United Club one-time passes each year",
+            "AdditionalDetails": null,
+            "BenefitCategory": [
+                "Generic Travel Perks"
+            ],
+            "TimeCategory": "Annually (anniversary year)",
+            "DollarValue": 100,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "United Club Passes",
+            "BenefitType": "Perk",
+            "NumericValue": 2,
+            "NumericType": "Passes"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 2,
+            "Currency": "miles",
+            "RateCategory": [
+                "United"
+            ],
+            "AdditionalDetails": "United purchases",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "miles",
+            "RateCategory": [
+                "Generic Dining"
+            ],
+            "AdditionalDetails": "Restaurants and delivery",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "miles",
+            "RateCategory": [
+                "Gas"
+            ],
+            "AdditionalDetails": "Gas stations",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "miles",
+            "RateCategory": [
+                "Office Supplies"
+            ],
+            "AdditionalDetails": "Office supply stores",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "miles",
+            "RateCategory": [
+                "Generic Transportation"
+            ],
+            "AdditionalDetails": "Local transit and commuting",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "miles",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "Everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-12-28",
+            "Terms": "Spend $5,000 in 3 months",
+            "SignUpBonusValue": 75000,
+            "SignUpBonusType": "Miles",
+            "SpendAmount": 5000,
+            "SignupDurationMonths": 3
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Rideshare Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "Never",
+                "Monthly",
+                "Weekly"
+            ],
+            "Question": "How often do you use Uber or Lyft for commuting or travel?",
+            "BenefitCategory": "Transportation",
+            "ChoiceWeight": [
+                0.0,
+                0.7,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "8/10. An excellent business card for United loyalists. The $100 rideshare credit and $125 flight credit effectively wipe out the annual fee if you fly United a few times a year.",
+    "Categories": [
+        {
+            "CategoryName": "Airlines",
+            "Icon": "fa-solid fa-plane",
+            "CategoryNameDetailed": [
+                "United"
+            ]
+        },
+        {
+            "CategoryName": "Dining & Delivery",
+            "Icon": "fa-solid fa-utensils",
+            "CategoryNameDetailed": [
+                "Generic Dining"
+            ]
+        },
+        {
+            "CategoryName": "Transportation",
+            "Icon": "fa-solid fa-car-side",
+            "CategoryNameDetailed": [
+                "Gas",
+                "Generic Transportation"
+            ]
+        },
+        {
+            "CategoryName": "Business & Tech",
+            "Icon": "fa-solid fa-laptop-code",
+            "CategoryNameDetailed": [
+                "Office Supplies"
+            ]
+        }
+    ]
+}

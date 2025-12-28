@@ -1,0 +1,94 @@
+{
+    "Vendor": "Navy Federal Credit Union",
+    "CardName": "GO REWARDS\u00ae Credit Card",
+    "AnnualFee": 0,
+    "PointsValueCpp": 1.0,
+    "slug-id": "navy-federal-go-rewards-card",
+    "ImageURL": "/static/images/credit_cards/navy-federal-go-rewards-card.jpeg",
+    "MinCreditScore": 630,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.navyfederal.org/loans-cards/credit-cards/go-rewards.html",
+    "Is524": false,
+    "Benefits": [
+        {
+            "BenefitDescription": "0.99% introductory APR on purchases for the first 6 months",
+            "AdditionalDetails": "Valid for accounts opened by 1/01/2026",
+            "BenefitCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "TimeCategory": "First year",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Intro APR",
+            "BenefitType": "Perk",
+            "NumericValue": 6,
+            "NumericType": "Months"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 3,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Dining"
+            ],
+            "AdditionalDetails": "restaurants",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "points",
+            "RateCategory": [
+                "Gas"
+            ],
+            "AdditionalDetails": "gas stations",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "everything else",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Dining Rewards",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "Rarely",
+                "Occasionally",
+                "Daily"
+            ],
+            "Question": "How often do you eat out or order from restaurants?",
+            "BenefitCategory": "Dining",
+            "ChoiceWeight": [
+                0.0,
+                0.6,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "7/10. A solid no-annual-fee starter card for military members. While the 3x dining is good, the More Rewards card usually offers better value for the same fee.",
+    "Categories": [
+        {
+            "CategoryName": "Dining & Delivery",
+            "Icon": "fa-solid fa-utensils",
+            "CategoryNameDetailed": [
+                "Generic Dining"
+            ]
+        },
+        {
+            "CategoryName": "Transportation",
+            "Icon": "fa-solid fa-car-side",
+            "CategoryNameDetailed": [
+                "Gas"
+            ]
+        }
+    ]
+}

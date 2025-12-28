@@ -1,0 +1,94 @@
+{
+    "Vendor": "Navy Federal Credit Union",
+    "CardName": "Platinum Credit Card",
+    "AnnualFee": 0,
+    "PointsValueCpp": 1.0,
+    "slug-id": "navy-federal-credit-union-platinum-card",
+    "ImageURL": "/static/images/credit_cards/navy-federal-credit-union-platinum-card.jpeg",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.navyfederal.org/loans-cards/credit-cards/platinum.html",
+    "Is524": false,
+    "Benefits": [
+        {
+            "BenefitDescription": "Collision Damage Waiver for rental cars (secondary coverage)",
+            "AdditionalDetails": "Covers physical damage and theft for rentals of 15 days or less",
+            "BenefitCategory": [
+                "Generic Transportation"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 50,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "Rental Car Insurance",
+            "BenefitType": "Perk",
+            "NumericValue": 1.0,
+            "NumericType": "Perk"
+        },
+        {
+            "BenefitDescription": "No foreign transaction fees or balance transfer fees",
+            "AdditionalDetails": "Ideal for international travel or consolidating debt",
+            "BenefitCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "No Fees",
+            "BenefitType": "Perk",
+            "NumericValue": 0,
+            "NumericType": "Cash"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 0,
+            "Currency": "points",
+            "RateCategory": [
+                "No Rewards"
+            ],
+            "AdditionalDetails": "This card focuses on low interest rather than rewards",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-12-28",
+            "Terms": "0.99% intro APR on balance transfers for 12 months",
+            "SignUpBonusValue": 0,
+            "SignUpBonusType": "Points",
+            "SpendAmount": 0,
+            "SignupDurationMonths": 12
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "Low Interest",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you prioritize a low interest rate over earning rewards points?",
+            "BenefitCategory": "Financial",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "6/10. Only worth it if you plan to carry a balance. Since it offers zero rewards, you're effectively losing value on every purchase compared to the More Rewards or cashRewards cards.",
+    "Categories": [
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "No Rewards",
+                "Generic Financial & Rewards"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,142 @@
+{
+    "Vendor": "American Express",
+    "CardName": "Delta SkyMiles\u00ae Blue American Express Card",
+    "AnnualFee": 0,
+    "PointsValueCpp": 1.2,
+    "slug-id": "delta-skymiles-blue-american-express-card",
+    "ImageURL": "/static/images/credit_cards/delta-skymiles-blue-american-express-card.webp",
+    "MinCreditScore": 670,
+    "MaxCreditScore": 850,
+    "ApplicationLink": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-blue-american-express-card/",
+    "Is524": false,
+    "Benefits": [
+        {
+            "BenefitDescription": "20% savings on eligible in-flight Delta purchases",
+            "AdditionalDetails": "Includes food, beverages, and audio headsets; savings provided as a statement credit",
+            "BenefitCategory": [
+                "Delta"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "In-Flight Savings",
+            "BenefitType": "Credit",
+            "NumericValue": 20.0,
+            "NumericType": "Percent"
+        },
+        {
+            "BenefitDescription": "No Foreign Transaction Fees",
+            "AdditionalDetails": "Pay no extra fees for purchases made outside the U.S.",
+            "BenefitCategory": [
+                "Generic Travel Perks"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-12-28",
+            "BenefitDescriptionShort": "No Foreign Fees",
+            "BenefitType": "Perk",
+            "NumericValue": 0.0,
+            "NumericType": "Percent"
+        }
+    ],
+    "EarningRates": [
+        {
+            "EarningRate": 2,
+            "Currency": "miles",
+            "RateCategory": [
+                "Delta"
+            ],
+            "AdditionalDetails": "eligible purchases made directly with Delta",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 2,
+            "Currency": "miles",
+            "RateCategory": [
+                "Generic Dining"
+            ],
+            "AdditionalDetails": "at restaurants worldwide, plus takeout and delivery in the U.S.",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 1,
+            "Currency": "miles",
+            "RateCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "AdditionalDetails": "all other eligible purchases",
+            "IsDefault": true
+        }
+    ],
+    "SignUpBonuses": [
+        {
+            "EffectiveDate": "2025-12-28",
+            "Terms": "Spend $1,000 in 6 months",
+            "SignUpBonusValue": 10000,
+            "SignUpBonusType": "Miles",
+            "SpendAmount": 1000,
+            "SignupDurationMonths": 6
+        }
+    ],
+    "Questions": [
+        {
+            "BenefitShortDescription": "No Annual Fee",
+            "BenefitCategory": "Financial & Rewards",
+            "Question": "Is avoiding an annual fee your primary concern when choosing an airline card?",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Somewhat",
+                "Yes"
+            ],
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Dining Rewards",
+            "BenefitCategory": "Dining",
+            "Question": "Do you spend a significant amount at restaurants and on food delivery?",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Occasionally",
+                "Frequently"
+            ],
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "6/10. This is a basic 'starter' card for Delta fans. While it has no annual fee and earns double miles on dining, it lacks the signature travel perks like free checked bags that usually make airline cards worthwhile. It's best used as a downgrade option to keep your SkyMiles account active without a cost.",
+    "Categories": [
+        {
+            "CategoryName": "Airlines",
+            "Icon": "fa-solid fa-plane",
+            "CategoryNameDetailed": [
+                "Delta",
+                "Generic Airlines"
+            ]
+        },
+        {
+            "CategoryName": "Dining & Delivery",
+            "Icon": "fa-solid fa-utensils",
+            "CategoryNameDetailed": [
+                "Generic Dining"
+            ]
+        },
+        {
+            "CategoryName": "Financial & Rewards",
+            "Icon": "fa-solid fa-coins",
+            "CategoryNameDetailed": [
+                "Generic Financial & Rewards"
+            ]
+        }
+    ]
+}

@@ -11,105 +11,143 @@
     "Is524": false,
     "Benefits": [
         {
+            "BenefitDescription": "$120 Global Entry, TSA PreCheck or NEXUS Credit",
+            "AdditionalDetails": "every 4 years",
+            "BenefitCategory": [
+                "Travel Security"
+            ],
+            "TimeCategory": "Every 4 years",
+            "DollarValue": 120,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-01-01",
+            "BenefitDescriptionShort": "Global Entry Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 120.0,
+            "NumericType": "Cash"
+        },
+        {
             "BenefitDescription": "0% APR for 6 months with equal monthly payments",
             "AdditionalDetails": "On purchases of $50 to $599.99. Cannot be combined with 5% back rewards.",
-            "BenefitCategory": "Shopping",
-            "TimeCategory": null,
+            "BenefitCategory": [
+                "Generic Shopping"
+            ],
+            "TimeCategory": "Ongoing",
             "DollarValue": null,
             "EnrollmentRequired": false,
-            "EffectiveDate": null,
+            "EffectiveDate": "2025-01-01",
             "BenefitDescriptionShort": "6 month 0% financing",
             "BenefitType": "Financing",
-            "NumericValue": 6,
+            "NumericValue": 6.0,
             "NumericType": "Months"
         },
         {
             "BenefitDescription": "0% APR for 12 months with equal monthly payments",
             "AdditionalDetails": "On purchases of $600 or more. Cannot be combined with 5% back rewards.",
-            "BenefitCategory": "Shopping",
-            "TimeCategory": null,
+            "BenefitCategory": [
+                "Generic Shopping"
+            ],
+            "TimeCategory": "Ongoing",
             "DollarValue": null,
             "EnrollmentRequired": false,
-            "EffectiveDate": null,
+            "EffectiveDate": "2025-01-01",
             "BenefitDescriptionShort": "12 month 0% financing",
             "BenefitType": "Financing",
-            "NumericValue": 12,
+            "NumericValue": 12.0,
             "NumericType": "Months"
         },
         {
             "BenefitDescription": "0% APR for 24 months with equal monthly payments",
             "AdditionalDetails": "On select Amazon purchases. Cannot be combined with 5% back rewards.",
-            "BenefitCategory": "Shopping",
-            "TimeCategory": null,
+            "BenefitCategory": [
+                "Generic Shopping"
+            ],
+            "TimeCategory": "Ongoing",
             "DollarValue": null,
             "EnrollmentRequired": false,
-            "EffectiveDate": null,
+            "EffectiveDate": "2025-01-01",
             "BenefitDescriptionShort": "24 month 0% financing",
             "BenefitType": "Financing",
-            "NumericValue": 24,
+            "NumericValue": 24.0,
             "NumericType": "Months"
         },
         {
             "BenefitDescription": "No interest if paid in full within 6 months",
             "AdditionalDetails": "On purchases of $149 or more. Deferred interest: full interest charged if not paid in full. Ends February 16, 2026. Cannot be combined with 5% back rewards.",
-            "BenefitCategory": "Shopping",
-            "TimeCategory": null,
+            "BenefitCategory": [
+                "Generic Shopping"
+            ],
+            "TimeCategory": "Ongoing",
             "DollarValue": null,
             "EnrollmentRequired": false,
-            "EffectiveDate": null,
+            "EffectiveDate": "2025-01-01",
             "BenefitDescriptionShort": "6 month deferred interest",
             "BenefitType": "Deferred Interest",
-            "NumericValue": 6,
+            "NumericValue": 6.0,
             "NumericType": "Months"
         },
         {
             "BenefitDescription": "No interest if paid in full within 12 months",
             "AdditionalDetails": "On purchases of $599 or more. Deferred interest: full interest charged if not paid in full. Ends February 16, 2026. Cannot be combined with 5% back rewards.",
-            "BenefitCategory": "Shopping",
-            "TimeCategory": null,
+            "BenefitCategory": [
+                "Generic Shopping"
+            ],
+            "TimeCategory": "Ongoing",
             "DollarValue": null,
             "EnrollmentRequired": false,
-            "EffectiveDate": null,
+            "EffectiveDate": "2025-01-01",
             "BenefitDescriptionShort": "12 month deferred interest",
             "BenefitType": "Deferred Interest",
-            "NumericValue": 12,
+            "NumericValue": 12.0,
             "NumericType": "Months"
         },
         {
             "BenefitDescription": "No interest if paid in full within 24 months",
             "AdditionalDetails": "On select Amazon purchases. Deferred interest: full interest charged if not paid in full. Ends February 16, 2026. Cannot be combined with 5% back rewards.",
-            "BenefitCategory": "Shopping",
-            "TimeCategory": null,
+            "BenefitCategory": [
+                "Generic Shopping"
+            ],
+            "TimeCategory": "Ongoing",
             "DollarValue": null,
             "EnrollmentRequired": false,
-            "EffectiveDate": null,
+            "EffectiveDate": "2025-01-01",
             "BenefitDescriptionShort": "24 month deferred interest",
             "BenefitType": "Deferred Interest",
-            "NumericValue": 24,
+            "NumericValue": 24.0,
             "NumericType": "Months"
         },
         {
             "BenefitDescription": "Zero fraud liability",
             "AdditionalDetails": "You are not liable for unauthorized purchases.",
-            "BenefitCategory": "Protection",
-            "TimeCategory": null,
+            "BenefitCategory": [
+                "Generic Financial & Rewards"
+            ],
+            "TimeCategory": "Ongoing",
             "DollarValue": null,
             "EnrollmentRequired": false,
-            "EffectiveDate": null,
+            "EffectiveDate": "2025-01-01",
             "BenefitDescriptionShort": "Zero fraud liability",
-            "BenefitType": "Protection",
+            "BenefitType": "Perk",
             "NumericValue": null,
             "NumericType": null
         }
     ],
     "EarningRates": [
         {
+            "EarningRate": 3,
+            "Currency": "points",
+            "RateCategory": [
+                "Generic Groceries"
+            ],
+            "AdditionalDetails": "at grocery stores",
+            "IsDefault": false
+        },
+        {
             "EarningRate": 5,
             "Currency": "cash back",
             "RateCategory": [
                 "Amazon"
             ],
-            "AdditionalDetails": "with Prime",
+            "AdditionalDetails": "with Prime on eligible purchases at Amazon.com",
             "IsDefault": false
         },
         {
@@ -125,7 +163,7 @@
             "EarningRate": 5,
             "Currency": "cash back",
             "RateCategory": [
-                "Groceries"
+                "Generic Groceries"
             ],
             "AdditionalDetails": "with Prime, on Amazon Fresh",
             "IsDefault": false
@@ -143,7 +181,7 @@
             "EarningRate": 5,
             "Currency": "cash back",
             "RateCategory": [
-                "Entertainment"
+                "Generic Entertainment"
             ],
             "AdditionalDetails": "with Prime, on Kindle Unlimited",
             "IsDefault": false
@@ -152,32 +190,176 @@
             "EarningRate": 5,
             "Currency": "cash back",
             "RateCategory": [
-                "Business & Tech"
+                "Software"
             ],
             "AdditionalDetails": "with Prime, on Alexa Skills",
             "IsDefault": false
         },
         {
             "EarningRate": 0,
-            "Currency": null,
+            "Currency": "cash back",
             "RateCategory": [
                 "Generic Financial & Rewards"
             ],
-            "AdditionalDetails": "non-qualifying spend",
+            "AdditionalDetails": "on non-qualifying spend",
             "IsDefault": true
         }
     ],
     "SignUpBonuses": [
         {
-            "EffectiveDate": null,
-            "Terms": "Instantly upon approval with Prime",
+            "EffectiveDate": "2025-12-28",
+            "Terms": " $60 Amazon Gift Card instantly upon approval with Prime",
             "SignUpBonusValue": 60,
             "SignUpBonusType": "Cash",
             "SpendAmount": 0,
             "SignupDurationMonths": 0
         }
     ],
-    "Questions": [],
-    "FreakVerdict": "No Freak verdict for this card yet",
-    "Categories": []
+    "Questions": [
+        {
+            "BenefitShortDescription": "6 month 0% financing",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you make mid-sized purchases on Amazon that you would like to pay off over 6 months without interest?",
+            "BenefitCategory": "Shopping",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "12 month 0% financing",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you plan to finance larger Amazon purchases over 12 months interest-free?",
+            "BenefitCategory": "Shopping",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "24 month 0% financing",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Are you interested in extended financing for select high-value Amazon items over 24 months without interest?",
+            "BenefitCategory": "Shopping",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "6 month deferred interest",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you prefer flexible payment options for Amazon purchases around $149, paying in full within 6 months to avoid interest?",
+            "BenefitCategory": "Shopping",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "12 month deferred interest",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "For purchases over $599 on Amazon, would you benefit from a 12-month window to pay in full without interest?",
+            "BenefitCategory": "Shopping",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "24 month deferred interest",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you make select large Amazon purchases that you'd like to pay off over 24 months to avoid interest charges?",
+            "BenefitCategory": "Shopping",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "Zero fraud liability",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you value protection against unauthorized charges on your credit card?",
+            "BenefitCategory": "Protection",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        }
+    ],
+    "FreakVerdict": "7/10. A solid choice for Prime members who shop heavily on Amazon, offering 5% back and flexible financing options, but its usability is limited to Amazon ecosystem and the deferred interest promotions are ending soon.",
+    "Categories": [
+        {
+            "CategoryName": "Shopping",
+            "Icon": "fa-solid fa-bag-shopping",
+            "CategoryNameDetailed": [
+                "Amazon"
+            ]
+        },
+        {
+            "CategoryName": "Groceries",
+            "Icon": "fa-solid fa-cart-shopping",
+            "CategoryNameDetailed": [
+                "Generic Groceries",
+                "Whole Foods"
+            ]
+        },
+        {
+            "CategoryName": "Entertainment",
+            "Icon": "fa-solid fa-ticket",
+            "CategoryNameDetailed": [
+                "Generic Entertainment",
+                "Streaming"
+            ]
+        },
+        {
+            "CategoryName": "Business & Tech",
+            "Icon": "fa-solid fa-laptop-code",
+            "CategoryNameDetailed": [
+                "Software"
+            ]
+        }
+    ]
 }

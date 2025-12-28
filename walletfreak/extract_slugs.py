@@ -69,11 +69,46 @@ def extract_merged_categories():
     return result
 
 
-if __name__ == '__main__':
-    print("=== SLUGS ===")
-    for slug in extract_slugs():
-        print(slug)
+def extract_categories_per_slug():
+    """
+    Extract unique CategoryNameDetailed values for each card's slug-id.
+    Returns a dict mapping slug-id to a sorted list of CategoryNameDetailed values.
+    """
+    slug_categories = {}
     
-    print("\n=== MERGED CATEGORIES ===")
+    for filename in sorted(os.listdir(CARDS_DIR)):
+        if not filename.endswith('.json'):
+            continue
+        
+        slug = filename.replace('.json', '')
+        filepath = os.path.join(CARDS_DIR, filename)
+        
+        try:
+            with open(filepath, 'r') as f:
+                card_data = json.load(f)
+        except (json.JSONDecodeError, IOError) as e:
+            print(f"Warning: Could not parse {filename}: {e}")
+            continue
+        
+        # Collect all unique CategoryNameDetailed values for this card
+        detailed_set = set()
+        card_categories = card_data.get('Categories', [])
+        for cat in card_categories:
+            detailed = cat.get('CategoryNameDetailed', [])
+            for detail in detailed:
+                detailed_set.add(detail)
+        
+        slug_categories[slug] = sorted(detailed_set)
+    
+    return slug_categories
+
+
+if __name__ == '__main__':
+    print("=== MERGED CATEGORIES ===")
     merged_categories = extract_merged_categories()
     print(json.dumps(merged_categories, indent=4))
+    
+    print("\n=== CATEGORIES PER SLUG ===")
+    slug_categories = extract_categories_per_slug()
+    for slug, categories in slug_categories.items():
+        print(f"{slug}:[{', '.join(categories)}]")
