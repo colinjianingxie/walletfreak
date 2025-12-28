@@ -94,7 +94,7 @@ class Command(BaseCommand):
                         # Check usage
                         usage_data = u_card.get('benefit_usage', {})
                         # KEY FIX: Use benefit_{idx} to match dashboard/views.py
-                        usage_key = f"benefit_{idx}"
+                        usage_key = str(idx)
                         
                         b_usage = usage_data.get(usage_key, {})
                         
