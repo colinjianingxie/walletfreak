@@ -136,7 +136,18 @@ class BlogMixin:
                 blog_updates = prefs.get('blog_updates')
                 if blog_updates and isinstance(blog_updates, dict) and blog_updates.get('enabled'):
                     if email:
-                        emails_to_send.append(email)
+                        # Premium Logic:
+                        # If blog is premium -> only send to premium users
+                        # If blog is NOT premium -> send to all subscribers (premium & non-premium)
+                        is_blog_premium = blog_data.get('is_premium', False)
+                        is_user_premium = user_data.get('is_premium', False)
+                        
+                        if is_blog_premium:
+                            if is_user_premium:
+                                emails_to_send.append(email)
+                        else:
+                            # Not premium blog - send to everyone
+                            emails_to_send.append(email)
             
             if not emails_to_send:
                 print("No subscribers found.")
