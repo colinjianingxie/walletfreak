@@ -280,8 +280,6 @@ def optimizer_input(request):
     """
     Renders the SUB Optimizer input form.
     """
-    if not request.user.is_authenticated:
-        return redirect('calculators_index')
     return render(request, 'calculators/optimizer_input.html')
 
 
