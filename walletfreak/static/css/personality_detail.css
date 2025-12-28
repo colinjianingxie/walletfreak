@@ -372,11 +372,17 @@
         margin-right: auto !important;
         padding: 0.25rem;
         background: white;
-        border: 3px solid #3b82f6;
+        border: 3px solid transparent;
         border-radius: 32px;
         box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
         position: relative;
         /* Context for info button */
+        transition: border-color 0.2s ease;
+    }
+
+    .card-option.selected {
+        border-color: #3b82f6 !important;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
     }
 
     .card-info-btn {
