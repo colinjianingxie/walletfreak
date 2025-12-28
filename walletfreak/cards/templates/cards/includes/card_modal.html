@@ -327,9 +327,11 @@ function openCardModal(cardId) {
 
     // Chain step 1: Check remote URL (Prioritized)
     // Check both snake_case and CamelCase to be safe
-    const remoteUrl = card.image_url || card.ImageURL;
+    let remoteUrl = card.image_url || card.ImageURL;
     
+    // Fix: Strip absolute domain if present to avoid 404s on localhost
     if (remoteUrl) {
+        remoteUrl = remoteUrl.replace('https://www.walletfreak.com', '').replace('https://walletfreak.com', '');
         tryLoadImage(remoteUrl, setBgImage, tryLocalImage);
     } else {
         tryLocalImage();
