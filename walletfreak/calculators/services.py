@@ -534,36 +534,53 @@ class OptimizerService:
                         
                         if sib_rate > 0:
                             # Prioritize the sibling that gives the highest rate for this card
-                            # Or prioritize the one where it is an EQUAL PERFORMER?
-                            # Let's prioritize highest rate first.
                             if sib_rate > best_synergy_rate:
                                 best_synergy_rate = sib_rate
                                 
-                                # Default Styling
-                                label = "Solid Choice"
+                                # Check vs Max for this sibling category
+                                max_for_sib = max_rates_by_sibling.get(sibling, 0.0)
+                                is_tied_for_top = (sib_rate >= max_for_sib and max_for_sib > 0)
+                                
+                                # Calculate estimated value for this sibling at this rate
+                                if 'cash' in item['currency']:
+                                    sib_est_value = amount * (sib_rate / 100.0)
+                                else:
+                                    sib_est_value = (amount * sib_rate) * (item['cpp'] / 100.0)
+                                
+                                # Get the best wallet value (from the top card for the ORIGINAL category)
+                                best_wallet_value = max_val if wallet_recs else 0.0
+                                
+                                # Default: No label (will only show if meets criteria below)
+                                label = None
                                 color_class = "text-slate-700" 
                                 bg_class = "border-slate-100"
                                 text_class = "text-slate-500"
                                 
-                                # Check vs Max
-                                max_for_sib = max_rates_by_sibling.get(sibling, 0.0)
-                                is_tied_for_top = (sib_rate >= max_for_sib and max_for_sib > 0)
-                                
+                                # EQUAL PERFORMER: 
+                                # This card has a subcategory match (the sibling) AND 
+                                # ties for the highest rate in wallet for this sibling category
                                 if is_tied_for_top:
                                     label = "EQUAL PERFORMER"
                                     color_class = "text-indigo-600"
                                     bg_class = "border-indigo-100"
                                     text_class = "text-indigo-700"
-                                elif sib_rate >= 4.0:
+                                # POTENTIAL CANDIDATE:
+                                # A different subcategory (sibling) that yields equal or higher 
+                                # estimated value compared to the best wallet card's value
+                                # Also requires 4x+ points or high cash back rate
+                                elif sib_est_value >= best_wallet_value and (sib_rate >= 4.0 or ('cash' in item['currency'] and sib_rate >= 4.0)):
                                     label = "POTENTIAL CANDIDATE"
                                     color_class = "text-green-700" 
                                     bg_class = "border-green-100"
                                     text_class = "text-green-600"
-                                elif sib_rate >= 3.0:
-                                    label = "Top Performer"
-                                    color_class = "text-green-700"
-                                    bg_class = "border-green-100"
-                                    text_class = "text-green-600"
+                                # SOLID CHOICE:
+                                # Not Equal Performer or Potential Candidate, but 
+                                # estimated value is within 85% of the top value
+                                elif best_wallet_value > 0 and sib_est_value >= (best_wallet_value * 0.85):
+                                    label = "SOLID CHOICE"
+                                    color_class = "text-slate-700" 
+                                    bg_class = "border-slate-100"
+                                    text_class = "text-slate-500"
                                     
                                 # Description
                                 if 'cash' in item['currency']:
@@ -571,15 +588,17 @@ class OptimizerService:
                                 else:
                                     desc = f"Earns {sib_rate}x points on {sibling}."
                                     
-                                best_synergy = {
-                                    'name': sibling,
-                                    'rate': sib_rate,
-                                    'label': label,
-                                    'description': desc,
-                                    'color_class': color_class,
-                                    'bg_class': bg_class,
-                                    'text_class': text_class
-                                }
+                                # Only create synergy if card qualifies for a label
+                                if label:
+                                    best_synergy = {
+                                        'name': sibling,
+                                        'rate': sib_rate,
+                                        'label': label,
+                                        'description': desc,
+                                        'color_class': color_class,
+                                        'bg_class': bg_class,
+                                        'text_class': text_class
+                                    }
                     
                     item['synergy'] = best_synergy
 
