@@ -76,6 +76,7 @@ def firebase_login(request):
                 'last_name': last_name,
                 'username': username,
                 'is_super_staff': False,  # Default for new users
+                'is_premium': False,      # Default for new users
                 'created_at': firestore.SERVER_TIMESTAMP
             }
             db.create_user_profile(uid, user_data)

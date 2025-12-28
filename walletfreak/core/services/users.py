@@ -200,3 +200,11 @@ class UserMixin:
         if not user:
             return False
         return user.get('is_super_staff', False) or user.get('is_editor', False)
+
+    # Premium User Methods
+    def is_premium(self, uid):
+        user = self.get_user_profile(uid)
+        return user.get('is_premium', False) if user else False
+
+    def set_premium(self, uid, is_premium):
+        self.db.collection('users').document(uid).update({'is_premium': is_premium})
