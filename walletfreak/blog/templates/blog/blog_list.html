@@ -191,7 +191,7 @@
                                     {% if post.is_premium %}
                                     <div class="post-tldr" style="border-left-color: #F59E0B; background-color: #FEF3C7; color: #92400E;">
                                         <span class="tldr-label" style="background-color: #F59E0B; color: white;">PREMIUM</span>
-                                        <span class="tldr-text">This article is locked for premium subscribers.</span>
+                                        <span class="tldr-text">This article is only for premium subscribers.</span>
                                     </div>
                                     {% else %}
                                     <div class="post-tldr">
@@ -269,6 +269,26 @@
 
             <!-- Sidebar -->
             <div class="blog-sidebar">
+                {% if is_editor %}
+                <!-- Editor Tools -->
+                <div class="sidebar-card editor-card" style="border: 1px solid #E5E7EB;">
+                    <div class="card-header">
+                        <span class="material-icons" style="color: #4F46E5;">admin_panel_settings</span>
+                        <h4 style="color: #1F2937;">EDITOR TOOLS</h4>
+                    </div>
+                    <div style="padding: 0 1.5rem 1.5rem 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                        <a href="{% url 'blog_drafts' %}" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: #EEF2FF; color: #4F46E5; padding: 0.75rem; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s;">
+                            <span class="material-icons" style="font-size: 20px;">description</span>
+                            Manage Drafts
+                        </a>
+                        <a href="{% url 'blog_create' %}" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: #4F46E5; color: white; padding: 0.75rem; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s;">
+                            <span class="material-icons" style="font-size: 20px;">add</span>
+                            New Post
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+
                 <!-- Community Info -->
                 <div class="sidebar-card community-card">
                     <div class="community-header">

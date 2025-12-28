@@ -155,7 +155,7 @@
             </div>
 
             <!-- TL;DR Section -->
-            {% if blog.excerpt %}
+            {% if blog.excerpt and not locked %}
             <div class="tldr-section">
                 <div class="tldr-header">
                     <span class="material-icons">bolt</span>
