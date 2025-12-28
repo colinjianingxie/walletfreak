@@ -239,6 +239,30 @@ window.addEventListener('load', function () {
                     }
                 });
             }
+
+            // --- Swipe Logic ---
+            let touchStartX = 0;
+            let touchEndX = 0;
+            const swipeThreshold = 50; // Minimum distance for a swipe
+
+            slot.addEventListener('touchstart', function (e) {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            slot.addEventListener('touchend', function (e) {
+                touchEndX = e.changedTouches[0].screenX;
+                handleGesture(slotIndex);
+            }, { passive: true });
+
+            function handleGesture(slotIdx) {
+                if (touchEndX < touchStartX - swipeThreshold) {
+                    // Swiped Left -> Next Card
+                    changeCard(slotIdx, 1);
+                } else if (touchEndX > touchStartX + swipeThreshold) {
+                    // Swiped Right -> Previous Card
+                    changeCard(slotIdx, -1);
+                }
+            }
         }
     });
 });
