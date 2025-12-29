@@ -34,10 +34,13 @@
                 
                 <div class="modal-badges-row">
                     <!-- Match Badge (Re-added per design) -->
+                    <!-- Match Badge (Re-added per design) -->
+                    {% if request.user.is_authenticated %}
                     <div class="modal-badge match-badge-pill">
                         <span class="material-icons" style="font-size: 14px; color: #F59E0B;">star</span>
                         <span id="modal-match-score">98% Match</span>
                     </div>
+                    {% endif %}
 
                     <!-- Fee Badge -->
                     <div class="modal-badge fee-badge-pill">

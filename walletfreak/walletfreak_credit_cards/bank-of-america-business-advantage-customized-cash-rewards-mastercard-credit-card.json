@@ -49,7 +49,7 @@
                 "Gas",
                 "EV Charging"
             ],
-            "AdditionalDetails": "choice category (first $50,000 combined annual spend)",
+            "AdditionalDetails": "choice category: Gas & EV Charging (first $50,000 combined annual spend on choice + dining)",
             "IsDefault": false
         },
         {
@@ -58,18 +58,34 @@
             "RateCategory": [
                 "Office Supplies"
             ],
-            "AdditionalDetails": "choice category (first $50,000 combined annual spend)",
+            "AdditionalDetails": "choice category: Office Supply Stores (first $50,000 combined annual spend on choice + dining)",
             "IsDefault": false
         },
         {
             "EarningRate": 3,
             "Currency": "cash back",
             "RateCategory": [
-                "Generic Airlines",
-                "Generic Hotels",
+                "Generic Airlines"
+            ],
+            "AdditionalDetails": "choice category: Travel (first $50,000 combined annual spend on choice + dining)",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Generic Hotels"
+            ],
+            "AdditionalDetails": "choice category: Hotels (first $50,000 combined annual spend on choice + dining)",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "cash back",
+            "RateCategory": [
                 "Generic Transportation"
             ],
-            "AdditionalDetails": "choice category (first $50,000 combined annual spend)",
+            "AdditionalDetails": "choice category: Transportation (first $50,000 combined annual spend on choice + dining)",
             "IsDefault": false
         },
         {
@@ -79,7 +95,7 @@
                 "Telecom",
                 "Phone Plans"
             ],
-            "AdditionalDetails": "choice category (first $50,000 combined annual spend)",
+            "AdditionalDetails": "choice category: TV/Telecom & Wireless (first $50,000 combined annual spend on choice + dining)",
             "IsDefault": false
         },
         {
@@ -88,7 +104,16 @@
             "RateCategory": [
                 "Software"
             ],
-            "AdditionalDetails": "choice category: Computer Services (first $50,000 combined annual spend)",
+            "AdditionalDetails": "choice category: Computer Services (first $50,000 combined annual spend on choice + dining)",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 3,
+            "Currency": "cash back",
+            "RateCategory": [
+                "Business Consulting"
+            ],
+            "AdditionalDetails": "choice category: Business Consulting Services (first $50,000 combined annual spend on choice + dining)",
             "IsDefault": false
         },
         {
@@ -97,7 +122,7 @@
             "RateCategory": [
                 "Generic Dining"
             ],
-            "AdditionalDetails": "dining (first $50,000 combined annual spend)",
+            "AdditionalDetails": "automatic 2% rate (first $50,000 combined annual spend on choice + dining)",
             "IsDefault": false
         },
         {
@@ -106,7 +131,7 @@
             "RateCategory": [
                 "All Purchases"
             ],
-            "AdditionalDetails": "everything else",
+            "AdditionalDetails": "base rate for everything else",
             "IsDefault": true
         }
     ],
@@ -128,7 +153,7 @@
                 "No",
                 "Yes"
             ],
-            "Question": "Do you maintain a high balance in Bank of America business checking or Merrill business investment accounts?",
+            "Question": "Do you maintain a significant balance in Bank of America business checking or Merrill business investment accounts (over $20k)?",
             "BenefitCategory": "Financial & Rewards",
             "ChoiceWeight": [
                 0.0,
@@ -142,7 +167,7 @@
                 "No",
                 "Yes"
             ],
-            "Question": "Is your business spending concentrated in a specific area like office supplies, gas, or consulting?",
+            "Question": "Do you have high expenses in one specific area like travel, office supplies, or consulting services?",
             "BenefitCategory": "Business & Tech",
             "ChoiceWeight": [
                 0.0,
@@ -150,7 +175,7 @@
             ]
         }
     ],
-    "FreakVerdict": "8.5/10. An elite choice for BofA ecosystem loyalists. If you hit Platinum Honors status, that 3% jumps to 5.25% cash back, which is unbeatable for a no-annual-fee business card.",
+    "FreakVerdict": "8.7/10. This card remains a powerhouse for small businesses that can leverage the Bank of America Preferred Rewards for Business ecosystem. While the base 3% is solid, the potential for 5.25% cash back in a category of your choice makes it arguably the best no-annual-fee business card for targeted spending, provided you can park $100k in the BofA/Merrill ecosystem.",
     "Categories": [
         {
             "CategoryName": "Business & Tech",
@@ -177,6 +202,14 @@
             "Icon": "fa-solid fa-utensils",
             "CategoryNameDetailed": [
                 "Generic Dining"
+            ]
+        },
+        {
+            "CategoryName": "Travel Perks",
+            "Icon": "fa-solid fa-passport",
+            "CategoryNameDetailed": [
+                "Generic Airlines",
+                "Generic Hotels"
             ]
         }
     ]

@@ -14,7 +14,9 @@
                     <span class="sort-label">SORT BY</span>
                     <div class="sort-select-container">
                         <select id="sort-select" class="sort-select">
+                            {% if request.user.is_authenticated %}
                             <option value="match" {% if sort_by == 'match' %}selected{% endif %}>Match Score</option>
+                            {% endif %}
                             <option value="name" {% if sort_by == 'name' %}selected{% endif %}>Alphabetical</option>
                             <option value="fee_low" {% if sort_by == 'fee_low' %}selected{% endif %}>Lowest Fee</option>
                             <option value="fee_high" {% if sort_by == 'fee_high' %}selected{% endif %}>Highest Fee</option>

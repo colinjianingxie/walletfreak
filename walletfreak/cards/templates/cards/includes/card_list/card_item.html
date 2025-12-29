@@ -33,7 +33,7 @@
                                     data-card-id="{{ card.id }}"
                                     data-card-name="{{ card.name }}"
                                     data-card-issuer="{{ card.issuer }}"
-                                    data-card-color="url('{{ card.image_url }}')"
+                                    data-card-color="url('{% static card.local_image %}')"
                                     onmousedown="event.stopPropagation();"
                                 >
                                     <span class="material-icons">balance</span>

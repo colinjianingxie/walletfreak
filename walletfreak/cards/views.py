@@ -375,7 +375,9 @@ def card_list(request):
     max_fee_filter = request.GET.get('max_fee')
     search_query = request.GET.get('search', '').lower()
     wallet_filter = request.GET.get('wallet', '')  # 'in', 'out', or ''
-    sort_by = request.GET.get('sort', 'match')  # Default sort by match
+    # Default sort
+    default_sort = 'match' if request.user.is_authenticated else 'name'
+    sort_by = request.GET.get('sort', default_sort)
     
     filtered_cards = all_cards
     

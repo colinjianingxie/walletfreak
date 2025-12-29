@@ -472,14 +472,27 @@ function updateCompareBar() {
 
         selectedCards.forEach((card) => {
             const circle = document.createElement('div');
-            circle.style.width = '32px';
-            circle.style.height = '32px';
-            circle.style.borderRadius = '50%';
-            circle.style.background = card.color;
-            circle.style.border = '2px solid #0F172A';
-            circle.style.marginLeft = offset === 0 ? '0' : '-10px';
+            circle.style.width = '48px';
+            circle.style.height = '30px'; // Approx 1.6 ratio
+            circle.style.borderRadius = '4px';
+
+            // Handle image vs color
+            if (card.color && card.color.includes('url')) {
+                // If it's a URL, use background image
+                circle.style.background = card.color;
+                circle.style.backgroundSize = 'cover';
+                circle.style.backgroundPosition = 'center';
+            } else {
+                circle.style.background = card.color;
+            }
+
+            circle.style.border = '1px solid #E2E8F0';
+            circle.style.marginLeft = offset === 0 ? '0' : '-20px'; // More overlap for rectangles? Or less? 
+            // Rectangles are wider. -10px was for 32px circles.
+            // Let's try -15px overlap for 48px width.
             circle.style.position = 'relative';
             circle.style.zIndex = offset + 1;
+            circle.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
 
             // Optional: Tooltip
             circle.title = card.name;
