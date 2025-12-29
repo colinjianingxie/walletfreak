@@ -100,6 +100,18 @@ function saveAnniversaryDate() {
         return;
     }
 
+    // Validate that date is not in the future
+    if (date !== 'default') {
+        const selectedDate = new Date(date);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Reset time to compare dates only
+
+        if (selectedDate > today) {
+            showToast('Anniversary date cannot be in the future', 'error');
+            return;
+        }
+    }
+
     // Check if we are adding a new card
     if (currentAnniversaryCardId === 'ADD_NEW_CARD') {
         if (!selectedAddCard) return;

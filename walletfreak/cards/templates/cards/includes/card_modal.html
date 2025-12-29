@@ -790,6 +790,18 @@ function saveAnniversaryDate() {
         return;
     }
     
+    // Validate that date is not in the future
+    if (date !== 'default') {
+        const selectedDate = new Date(date);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Reset time to compare dates only
+        
+        if (selectedDate > today) {
+            alert('Anniversary date cannot be in the future');
+            return;
+        }
+    }
+    
     // Check if we should proceed with adding the card BEFORE closing the modal
     // because closing the modal clears the pendingCardForAdd flag
     if (pendingCardForAdd) {

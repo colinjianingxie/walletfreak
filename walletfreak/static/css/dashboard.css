@@ -169,6 +169,11 @@
         height: 200px !important;
     }
 
+    /* Add bottom spacing to My Stack on mobile (1 card height) */
+    #mobile-my-stack-screen>div:last-child {
+        padding-bottom: 6rem !important;
+    }
+
     /* Benefit & Anniversary Modal Mobile Fullscreen */
     #benefit-modal,
     #anniversary-modal,

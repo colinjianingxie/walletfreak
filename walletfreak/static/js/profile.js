@@ -155,6 +155,8 @@ async function submitChangeName() {
             showToast('Name updated successfully!');
             document.getElementById('profile-name-display').innerText = `${firstName} ${lastName}`;
             closeChangeNameModal();
+            // Refresh page to ensure all changes are reflected
+            setTimeout(() => location.reload(), 1000);
         } else {
             throw new Error(data.message || 'Failed to update name');
         }
@@ -206,6 +208,8 @@ async function submitChangeUsername() {
             showToast('Username updated successfully!');
             document.getElementById('profile-username-display').innerText = `@${username}`;
             closeChangeUsernameModal();
+            // Refresh page to ensure all changes are reflected
+            setTimeout(() => location.reload(), 1000);
         } else {
             throw new Error(data.message || 'Failed to update username');
         }
@@ -372,6 +376,9 @@ async function saveAllPreferences() {
             // Reset state
             captureInitialState();
             checkDirtyState(); // Will disable button
+
+            // Refresh page to ensure all changes are reflected
+            setTimeout(() => location.reload(), 1000);
 
         } else {
             throw new Error(data.message || 'Failed to save preferences');

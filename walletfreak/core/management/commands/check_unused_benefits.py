@@ -203,12 +203,8 @@ class Command(BaseCommand):
     def send_unused_credits_email(self, to_email, username, first_name, last_name, items):
         subject = "Your Credit Card Benefit Status Update"
         
-        # Determine Greeting
-        greeting_name = username
-        if first_name or last_name:
-            greeting_name = f"{first_name} {last_name}".strip()
-        
-        greeting = f"Hi {greeting_name},"
+        # Use username for greeting
+        greeting = f"Hi {username},"
         
         # Build HTML Table
         rows = ""
