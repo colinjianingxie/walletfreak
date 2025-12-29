@@ -1,5 +1,64 @@
+<style>
+/* Mobile Responsive Styles for Anniversary Modal */
+@media (max-width: 768px) {
+    /* When modal is shown, it uses display: flex via JS */
+    #anniversary-modal[style*="display: flex"] {
+        align-items: flex-start !important;
+        padding: 0 !important;
+        background: white !important;
+    }
+
+    #anniversary-modal .modal-content {
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100vh !important;
+        min-height: 100vh !important;
+        border-radius: 0 !important;
+        padding: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        box-shadow: none !important;
+    }
+
+    #anniversary-modal .modal-header {
+        padding: 1.5rem 1.5rem 1rem 1.5rem !important;
+        margin-bottom: 0 !important;
+        flex-shrink: 0;
+        border-bottom: 1px solid #E2E8F0;
+    }
+
+    #anniversary-modal .modal-header h3 {
+        font-size: 1.25rem !important;
+    }
+    
+    #anniversary-modal .modal-close {
+        padding: 0.5rem;
+    }
+
+    /* Scrollable middle section */
+    #anniversary-modal .modal-content > div:nth-child(2) {
+        padding: 1.5rem !important;
+        flex: 1 !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Fixed Footer */
+    #anniversary-modal .modal-content > div:last-child {
+        position: sticky;
+        bottom: 0;
+        background: white;
+        padding: 1rem 1.5rem 1.5rem 1.5rem !important;
+        border-top: 1px solid #E2E8F0;
+        flex-shrink: 0;
+        z-index: 10;
+        margin-top: auto;
+    }
+}
+</style>
 <!-- Anniversary Date Modal -->
-<div id="anniversary-modal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 2000; overflow-y: auto;">
+<div id="anniversary-modal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 2000; overflow-y: auto; align-items: center; justify-content: center;">
     <div class="modal-content" style="max-width: 450px; width: 90%; margin: 2rem auto; background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);">
         <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
             <div>

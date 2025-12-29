@@ -1,6 +1,72 @@
+<style>
+/* Mobile Responsive Styles for Edit Anniversary Modal */
+@media (max-width: 768px) {
+    /* When modal is shown, it uses display: flex via JS */
+    #edit-anniversary-modal[style*="display: flex"] {
+        align-items: flex-start !important;
+        padding: 0 !important;
+        background: white !important;
+    }
+
+    #edit-anniversary-modal .modal-content {
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100vh !important;
+        min-height: 100vh !important;
+        border-radius: 0 !important;
+        padding: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        box-shadow: none !important;
+    }
+
+    #edit-anniversary-modal .modal-header {
+        padding: 1.5rem 1.5rem 1rem 1.5rem !important;
+        margin-bottom: 0 !important;
+        flex-shrink: 0;
+        border-bottom: 1px solid #E2E8F0;
+    }
+
+    #edit-anniversary-modal .modal-header h3 {
+        font-size: 1.25rem !important;
+    }
+    
+    #edit-anniversary-modal .modal-close {
+        padding: 0.5rem;
+    }
+
+    /* Scrollable middle section - the div with flex: 1 */
+    #edit-anniversary-modal .modal-content > div:nth-child(2) {
+        padding: 1.5rem !important;
+        flex: 1 !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+        margin-bottom: 0 !important;
+    }
+
+    /* Hide the hidden input on mobile (no visual impact but cleaner) */
+    #edit-anniversary-modal .modal-content > input[type="hidden"] {
+        display: none;
+    }
+
+    /* Fixed Footer - the buttons container (last child) */
+    #edit-anniversary-modal .modal-content > div:last-child {
+        position: sticky;
+        bottom: 0;
+        background: white;
+        padding: 1rem 1.5rem 1.5rem 1.5rem !important;
+        border-top: 1px solid #E2E8F0;
+        flex-shrink: 0;
+        z-index: 10;
+        margin-top: 0 !important;
+    }
+}
+</style>
 <!-- Edit Anniversary Date Modal -->
-<div id="edit-anniversary-modal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1000; overflow-y: auto;">
+<div id="edit-anniversary-modal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1000; overflow-y: auto; align-items: center; justify-content: center;">
     <div class="modal-content" style="background: white; width: 90%; max-width: 450px; border-radius: 16px; padding: 2rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); margin: 2rem auto;">
+        <!-- Header Section -->
         <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
             <div>
                 <h3 style="font-size: 1.25rem; font-weight: 700; color: #1F2937; margin: 0 0 0.5rem 0;">Edit Anniversary Date</h3>
@@ -11,25 +77,29 @@
             </button>
         </div>
 
-        <!-- Warning Message -->
-        <div style="background: #FEF2F2; border-left: 4px solid #EF4444; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
-            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-                <span class="material-icons" style="font-size: 18px; color: #B91C1C;">warning</span>
-                <div style="font-weight: 700; color: #B91C1C; font-size: 0.875rem;">Warning</div>
+        <!-- Scrollable Content Section -->
+        <div style="flex: 1; overflow-y: auto;">
+            <!-- Warning Message -->
+            <div style="background: #FEF2F2; border-left: 4px solid #EF4444; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <span class="material-icons" style="font-size: 18px; color: #B91C1C;">warning</span>
+                    <div style="font-weight: 700; color: #B91C1C; font-size: 0.875rem;">Warning</div>
+                </div>
+                <div style="color: #7F1D1D; font-size: 0.875rem; line-height: 1.5;">
+                    Changing the anniversary date will <strong>reset the benefits</strong> for this card as everything will be re-calculated.
+                </div>
             </div>
-            <div style="color: #7F1D1D; font-size: 0.875rem; line-height: 1.4;">
-                Changing the anniversary date will <strong>reset the benefits</strong> for this card as everything will be re-calculated.
-            </div>
-        </div>
 
-        <!-- Date Input Container -->
-        <div style="margin-bottom: 2rem;">
-            <!-- Scrollable Content -->
-        <div style="flex: 1; overflow-y: auto; padding-right: 4px; padding-bottom: 2rem;">
             <!-- Date Input -->
             <div style="margin-bottom: 1.5rem;">
                 <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1F2937;">Anniversary Date</label>
-                <div style="font-size: 0.75rem; color: #64748B; margin-bottom: 0.5rem;">Best estimate if cannot find. The more accurate the anniversary, the better the tracking. <span style="display: flex; align-items: center; margin-top: 4px; color: #4B5563;"><span class="material-icons" style="font-size: 16px; margin-right: 4px; color: #F59E0B;">lightbulb</span>You can find your anniversary date by your earliest statement.</span></div>
+                <div style="font-size: 0.75rem; color: #64748B; margin-bottom: 0.75rem; line-height: 1.5;">
+                    Best estimate if cannot find. The more accurate the anniversary, the better the tracking.
+                    <span style="display: flex; align-items: center; margin-top: 0.5rem; color: #4B5563;">
+                        <span class="material-icons" style="font-size: 16px; margin-right: 4px; color: #F59E0B;">lightbulb</span>
+                        You can find your anniversary date by your earliest statement.
+                    </span>
+                </div>
                 
                 <input type="date" id="edit-anniversary-date-input" 
                        style="width: 100%; padding: 0.875rem 1rem; border: 2px solid #E5E7EB; border-radius: 10px; font-size: 1rem; font-weight: 600;">
@@ -48,26 +118,25 @@
                     I don't know my Anniversary
                 </button>
 
-                <p style="color: #64748B; font-size: 0.875rem; margin-top: 0.5rem;">This helps track which months/quarters are available for benefit tracking.</p>
+                <p style="color: #64748B; font-size: 0.875rem; margin-top: 0.75rem; line-height: 1.5;">This helps track which months/quarters are available for benefit tracking.</p>
             </div>
 
             <!-- Example -->
             <div style="background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
-                <div style="font-weight: 600; color: #92400E; margin-bottom: 0.25rem; font-size: 0.875rem;">💡 Example</div>
-                <div style="color: #78350F; font-size: 0.875rem;">If you got your card in October 2025, months before October will be grayed out.</div>
+                <div style="font-weight: 600; color: #92400E; margin-bottom: 0.5rem; font-size: 0.875rem;">💡 Example</div>
+                <div style="color: #78350F; font-size: 0.875rem; line-height: 1.5;">If you got your card in October 2025, months before October will be grayed out.</div>
             </div>
-        </div>
         </div>
 
         <!-- Hidden ID -->
         <input type="hidden" id="edit-anniversary-card-id">
 
-        <!-- Action Buttons -->
-        <div style="display: flex; gap: 1rem;">
-            <button onclick="closeEditAnniversaryModal()" style="flex: 1; background: white; color: #4B5563; border: 1px solid #D1D5DB; padding: 0.75rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s;">
+        <!-- Action Buttons (Fixed Footer) -->
+        <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
+            <button onclick="closeEditAnniversaryModal()" style="flex: 1; background: #F3F4F6; color: #64748B; border: none; padding: 0.875rem; border-radius: 10px; font-weight: 600; cursor: pointer;">
                 Cancel
             </button>
-            <button onclick="confirmAnniversaryUpdate()" style="flex: 1; background: #6366F1; color: white; border: none; padding: 0.75rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+            <button onclick="confirmAnniversaryUpdate()" style="flex: 1; background: #7C3AED; color: white; border: none; padding: 0.875rem; border-radius: 10px; font-weight: 600; cursor: pointer;">
                 Update Date
             </button>
         </div>
