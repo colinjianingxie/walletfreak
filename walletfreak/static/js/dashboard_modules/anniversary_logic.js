@@ -27,12 +27,23 @@ function openEditAnniversaryModal(event, userCardId, currentDate = null) {
 
     // Populate the date input
     const dateInput = document.getElementById('edit-anniversary-date-input');
+    const defaultDisplay = document.getElementById('edit-anniversary-default-display');
+    const unknownBtn = document.getElementById('btn-unknown-anniversary');
+
     if (dateInput) {
-        // If initialDate is 'None' or empty, default to today
-        if (!initialDate || initialDate === 'None' || initialDate === '') {
-            dateInput.value = new Date().toISOString().split('T')[0];
+        // If initialDate is 'default'
+        if (initialDate === 'default') {
+            setAnniversaryDefault();
         } else {
-            dateInput.value = initialDate;
+            // Check if initialDate is empty or 'None'
+            if (!initialDate || initialDate === 'None' || initialDate === '') {
+                // If no date, user can set one, or click I don't know
+                // Ideally default to today if they are setting a specific date
+                dateInput.value = new Date().toISOString().split('T')[0];
+            } else {
+                dateInput.value = initialDate;
+            }
+            clearAnniversaryDefault(); // Ensure default mode is off
         }
     }
 
@@ -41,6 +52,43 @@ function openEditAnniversaryModal(event, userCardId, currentDate = null) {
     if (modal) {
         modal.style.display = 'flex';
     }
+}
+
+function setAnniversaryDefault() {
+    const dateInput = document.getElementById('edit-anniversary-date-input');
+    const defaultDisplay = document.getElementById('edit-anniversary-default-display');
+    const unknownBtn = document.getElementById('btn-unknown-anniversary');
+    const dateText = document.getElementById('edit-anniversary-default-date-display-text');
+
+    if (dateInput) {
+        dateInput.value = ''; // Clear value
+        dateInput.style.display = 'none';
+        dateInput.required = false;
+    }
+    if (defaultDisplay) defaultDisplay.style.display = 'flex';
+    if (unknownBtn) unknownBtn.style.display = 'none';
+
+    // Set dynamic date text
+    if (dateText) {
+        const prevYear = new Date().getFullYear() - 1;
+        dateText.innerText = `1/1/${prevYear}`;
+    }
+}
+
+function clearAnniversaryDefault() {
+    const dateInput = document.getElementById('edit-anniversary-date-input');
+    const defaultDisplay = document.getElementById('edit-anniversary-default-display');
+    const unknownBtn = document.getElementById('btn-unknown-anniversary');
+
+    if (dateInput) {
+        dateInput.style.display = 'block';
+        // Set to today if empty
+        if (!dateInput.value) {
+            dateInput.value = new Date().toISOString().split('T')[0];
+        }
+    }
+    if (defaultDisplay) defaultDisplay.style.display = 'none';
+    if (unknownBtn) unknownBtn.style.display = 'flex';
 }
 
 function closeEditAnniversaryModal() {
@@ -55,17 +103,24 @@ function confirmAnniversaryUpdate() {
     if (!currentEditCardId) return;
 
     const dateInput = document.getElementById('edit-anniversary-date-input');
-    const newDate = dateInput.value;
+    const defaultDisplay = document.getElementById('edit-anniversary-default-display');
 
-    if (!newDate) {
-        alert("Please select a date.");
-        return;
-    }
+    let newDate = null;
 
-    // Validate date format
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(newDate)) {
-        alert("Invalid date format. Please use YYYY-MM-DD.");
-        return;
+    // Check if in "default" mode
+    if (defaultDisplay && defaultDisplay.style.display !== 'none') {
+        newDate = 'default';
+    } else {
+        newDate = dateInput.value;
+        if (!newDate) {
+            alert("Please select a date.");
+            return;
+        }
+        // Validate date format
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(newDate)) {
+            alert("Invalid date format. Please use YYYY-MM-DD.");
+            return;
+        }
     }
 
     updateAnniversaryDate(currentEditCardId, newDate);

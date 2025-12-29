@@ -67,8 +67,8 @@
             </div>
             
             <!-- Graph Icon -->
-            <div class="graph-icon-container" style="width: 48px; height: 48px; background: {% if net_performance < 0 %}rgba(249, 115, 22, 0.1){% else %}rgba(16, 185, 129, 0.1){% endif %}; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: {% if net_performance < 0 %}#F97316{% else %}#10B981{% endif %};">
-                <span class="material-icons" style="font-size: 24px;">show_chart</span>
+            <div class="graph-icon-container hide-on-375" style="width: 48px; height: 48px; background: {% if net_performance < 0 %}rgba(249, 115, 22, 0.1){% else %}rgba(16, 185, 129, 0.1){% endif %}; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: {% if net_performance < 0 %}#F97316{% else %}#10B981{% endif %};">
+                <span class="material-icons" style="font-size: 24px; {% if net_performance < 0 %}transform: scaleY(-1);{% endif %}">show_chart</span>
             </div>
         </div>
     </div>

@@ -129,10 +129,12 @@
                     <div style="margin-bottom: 1.5rem; background: #FFFFFF; padding-top: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #F3F4F6;">
                         <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; margin-bottom: 0.75rem; letter-spacing: 0.1em;">QUICK ADD</div>
                         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <button onclick="toggleMobileFilter('All')" id="filter-All" class="mobile-quick-add-btn active" style="background: #6366F1; color: white; border-color: #6366F1;">All</button>
                             <button onclick="toggleMobileFilter('Chase')" id="filter-Chase" class="mobile-quick-add-btn">Chase</button>
                             <button onclick="toggleMobileFilter('American Express')" id="filter-American Express" class="mobile-quick-add-btn">Amex</button>
                             <button onclick="toggleMobileFilter('Capital One')" id="filter-Capital One" class="mobile-quick-add-btn">Capital One</button>
                             <button onclick="toggleMobileFilter('Citi')" id="filter-Citi" class="mobile-quick-add-btn">Citi</button>
+                            <button onclick="toggleMobileFilter('Discover')" id="filter-Discover" class="mobile-quick-add-btn">Discover</button>
                         </div>
                     </div>
                     
@@ -224,10 +226,12 @@
                         <div style="margin-bottom: 1.5rem;">
                             <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 0.05em; margin-bottom: 0.75rem; text-transform: uppercase;">Quick Add</div>
                             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                                <button class="quick-add-btn" onclick="filterCards('Chase')">Chase</button>
-                                <button class="quick-add-btn" onclick="filterCards('Amex')">Amex</button>
-                                <button class="quick-add-btn" onclick="filterCards('Capital One')">Capital One</button>
-                                <button class="quick-add-btn" onclick="filterCards('Citi')">Citi</button>
+                                <button class="quick-add-btn active" id="desktop-filter-All" onclick="filterCards('All')">All</button>
+                                <button class="quick-add-btn" id="desktop-filter-Chase" onclick="filterCards('Chase')">Chase</button>
+                                <button class="quick-add-btn" id="desktop-filter-Amex" onclick="filterCards('Amex')">Amex</button>
+                                <button class="quick-add-btn" id="desktop-filter-Capital One" onclick="filterCards('Capital One')">Capital One</button>
+                                <button class="quick-add-btn" id="desktop-filter-Citi" onclick="filterCards('Citi')">Citi</button>
+                                <button class="quick-add-btn" id="desktop-filter-Discover" onclick="filterCards('Discover')">Discover</button>
                             </div>
                         </div>
                         

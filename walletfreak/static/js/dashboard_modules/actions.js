@@ -22,6 +22,10 @@ function addSelectedCard() {
     const defaultDate = `${currentYear}-${currentMonth}-01`;
 
     document.getElementById('anniversary-date-input').value = defaultDate;
+
+    // Reset default UI
+    if (typeof clearAnniversaryDefaultState === 'function') clearAnniversaryDefaultState();
+
     document.getElementById('anniversary-modal').style.display = 'flex';
 }
 
@@ -29,6 +33,15 @@ function openAnniversaryModal(cardId, cardName, currentDate) {
     currentAnniversaryCardId = cardId;
     document.getElementById('anniversary-card-name').textContent = cardName;
     document.getElementById('anniversary-date-input').value = currentDate || '';
+
+    // If currentDate is 'default', switch to default view? 
+    // Usually this modal is for adding, but if used for editing elsewhere, we should handle it
+    if (currentDate === 'default') {
+        if (typeof setAnniversaryDefaultState === 'function') setAnniversaryDefaultState();
+    } else {
+        if (typeof clearAnniversaryDefaultState === 'function') clearAnniversaryDefaultState();
+    }
+
     document.getElementById('anniversary-modal').style.display = 'flex';
 }
 
@@ -37,8 +50,51 @@ function closeAnniversaryModal() {
     currentAnniversaryCardId = null;
 }
 
+function setAnniversaryDefaultState() {
+    const dateInput = document.getElementById('anniversary-date-input');
+    const defaultDisplay = document.getElementById('anniversary-default-display');
+    const unknownBtn = document.getElementById('btn-unknown-add-anniversary');
+    const dateText = document.getElementById('anniversary-default-date-display-text');
+
+    if (dateInput) {
+        dateInput.value = ''; // Clear value
+        dateInput.style.display = 'none';
+        dateInput.required = false;
+    }
+    if (defaultDisplay) defaultDisplay.style.display = 'flex';
+    if (unknownBtn) unknownBtn.style.display = 'none';
+
+    // Set dynamic date text
+    if (dateText) {
+        const prevYear = new Date().getFullYear() - 1;
+        dateText.innerText = `1/1/${prevYear}`;
+    }
+}
+
+function clearAnniversaryDefaultState() {
+    const dateInput = document.getElementById('anniversary-date-input');
+    const defaultDisplay = document.getElementById('anniversary-default-display');
+    const unknownBtn = document.getElementById('btn-unknown-add-anniversary');
+
+    if (dateInput) {
+        dateInput.style.display = 'block';
+        if (!dateInput.value) {
+            // Default to today
+            dateInput.value = new Date().toISOString().split('T')[0];
+        }
+    }
+    if (defaultDisplay) defaultDisplay.style.display = 'none';
+    if (unknownBtn) unknownBtn.style.display = 'flex';
+}
+
 function saveAnniversaryDate() {
-    const date = document.getElementById('anniversary-date-input').value;
+    let date = document.getElementById('anniversary-date-input').value;
+    const defaultDisplay = document.getElementById('anniversary-default-display');
+
+    if (defaultDisplay && defaultDisplay.style.display !== 'none') {
+        date = 'default';
+    }
+
     if (!date) {
         showToast('Please select a date', 'error');
         return;

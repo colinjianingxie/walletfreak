@@ -127,31 +127,34 @@ function renderMobileCards(cards) {
 }
 
 // Track selected filters for mobile
-let selectedMobileFilters = new Set();
+let selectedMobileFilter = 'All'; // Changed from Set to single value for Radio behavior
 
 function toggleMobileFilter(issuer) {
     const btn = document.getElementById(`filter-${issuer}`);
 
-    if (selectedMobileFilters.has(issuer)) {
-        // Deselect current if clicked again (toggle off)
-        selectedMobileFilters.delete(issuer);
-        btn.style.background = 'white';
-        btn.style.color = '#64748B';
-        btn.style.borderColor = '#E2E8F0';
-    } else {
-        // Single Selection Mode: Clear all others first
-        selectedMobileFilters.forEach(existingIssuer => {
-            const existingBtn = document.getElementById(`filter-${existingIssuer}`);
-            if (existingBtn) {
-                existingBtn.style.background = 'white';
-                existingBtn.style.color = '#64748B';
-                existingBtn.style.borderColor = '#E2E8F0';
-            }
-        });
-        selectedMobileFilters.clear();
+    // If clicking same filter (and it's not All), do nothing or ensure it remains active ? 
+    // User requested "radio button" behavior. Usually radio buttons can't be deselected by clicking the active one, 
+    // you have to click another one. 'All' is the default 'none' state.
 
-        // Select new
-        selectedMobileFilters.add(issuer);
+    if (selectedMobileFilter === issuer) {
+        return; // Already selected
+    }
+
+    selectedMobileFilter = issuer;
+
+    // Update UI active state for ALL buttons
+    // Since we don't have a list of all possible issuers easily accessible without querySelectorAll, 
+    // let's just reset all '.mobile-quick-add-btn'
+    document.querySelectorAll('.mobile-quick-add-btn').forEach(b => {
+        b.classList.remove('active');
+        b.style.background = 'white';
+        b.style.color = '#64748B';
+        b.style.borderColor = '#E2E8F0';
+    });
+
+    // Activate current
+    if (btn) {
+        btn.classList.add('active');
         btn.style.background = '#6366F1';
         btn.style.color = 'white';
         btn.style.borderColor = '#6366F1';
@@ -167,18 +170,36 @@ function applyMobileFilters() {
         return;
     }
 
-    if (selectedMobileFilters.size === 0) {
-        // No filters selected, show all cards
-        renderMobileCards(availableCards);
-    } else {
-        // Filter cards based on selected issuers (OR logic)
-        const filtered = availableCards.filter(card => {
-            return Array.from(selectedMobileFilters).some(issuer => {
-                return card.issuer.includes(issuer);
-            });
-        });
-        renderMobileCards(filtered);
+    const searchInput = document.getElementById('mobile-card-search');
+    const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+
+    let filtered = availableCards;
+
+    // 1. Filter by Search Term
+    if (searchTerm) {
+        let term = searchTerm;
+        if (term === 'amex') term = 'american express';
+
+        filtered = filtered.filter(c =>
+            c.name.toLowerCase().includes(term) ||
+            c.issuer.toLowerCase().includes(term) ||
+            (term === 'amex' && c.issuer.toLowerCase().includes('american express'))
+        );
     }
+
+    // 2. Filter by Issuer (if not All)
+    if (selectedMobileFilter !== 'All') {
+        let issuer = selectedMobileFilter;
+        if (issuer === 'American Express') {
+            // Mapping check - HTML has "American Express" ID but simple text "Amex"
+            // The argument passed is 'American Express' from HTML for Amex button
+        }
+        // Handle Discover? The arg passed is 'Discover'
+
+        filtered = filtered.filter(c => c.issuer.includes(issuer));
+    }
+
+    renderMobileCards(filtered);
 }
 
 function filterMobileCards(issuer) {
@@ -442,25 +463,8 @@ function addMobileSelectedCard() {
 
 // Handle mobile search input
 function handleMobileSearch(searchTerm) {
-    if (typeof availableCards === 'undefined') {
-        console.log('availableCards not available for search:', searchTerm);
-        return;
-    }
-
-    let term = searchTerm.toLowerCase();
-
-    // Alias mapping
-    if (term === 'amex') {
-        term = 'american express';
-    }
-
-    const filtered = availableCards.filter(c =>
-        c.name.toLowerCase().includes(term) ||
-        c.issuer.toLowerCase().includes(term) ||
-        (term === 'amex' && c.issuer.toLowerCase().includes('american express'))
-    );
-
-    renderMobileCards(filtered);
+    // Just trigger the unified filter function
+    applyMobileFilters();
 }
 
 // Toggle function for mobile detail expansion

@@ -105,7 +105,14 @@ def dashboard(request):
             
             # Get card anniversary date (when user added the card)
             anniversary_date_str = card.get('anniversary_date', '')
-            if anniversary_date_str:
+            
+            # Special handling for "default"
+            # If user selected "I don't know", it's stored as "default"
+            # Interpret as Jan 1st of previous year
+            if anniversary_date_str == 'default':
+                 anniversary_month = 1
+                 anniversary_year = current_year - 1
+            elif anniversary_date_str:
                 try:
                     anniversary_date = datetime.strptime(anniversary_date_str, '%Y-%m-%d')
                     anniversary_month = anniversary_date.month
@@ -371,6 +378,11 @@ def dashboard(request):
             continue
 
         ann_date_str = card.get('anniversary_date')
+        
+        # Rule: "Ignore the 'default' keyword when doing 5/24 calculations"
+        if ann_date_str == 'default':
+            continue
+            
         if ann_date_str:
             try:
                 ann_date = datetime.strptime(ann_date_str, '%Y-%m-%d')

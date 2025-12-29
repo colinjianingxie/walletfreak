@@ -90,6 +90,10 @@ function resetCardPreview() {
     document.querySelectorAll('.card-result-item').forEach(el => el.classList.remove('selected'));
 }
 
+// State for desktop persistence
+let currentDesktopFilter = 'All';
+let currentDesktopSearch = '';
+
 function switchTab(view) {
     // Check if mobile
     if (window.innerWidth <= 768) {
@@ -114,7 +118,27 @@ function switchTab(view) {
         document.getElementById('content-stack').style.display = 'flex';
     } else {
         document.getElementById('content-add').style.display = 'block';
-        renderCardResults(availableCards);
+
+        // Restore state
+        const searchInput = document.getElementById('card-search-input');
+        if (searchInput) {
+            searchInput.value = currentDesktopSearch;
+        }
+
+        // Re-apply filter and search
+        if (currentDesktopFilter !== 'All' || currentDesktopSearch) {
+            // If we have a filter or search, apply it
+            if (currentDesktopFilter !== 'All') {
+                filterCards(currentDesktopFilter, false); // false to not clear search
+            } else {
+                // specific case: just search, filter is All
+                // trigger search event manually or just call a combined filter function
+                // simplified: just re-run the search handler logic
+                filterCards('All', false);
+            }
+        } else {
+            renderCardResults(availableCards);
+        }
     }
 }
 
@@ -221,7 +245,8 @@ function renderWalletStack() {
         if (query) {
             searchInput.dispatchEvent(new Event('input'));
         } else {
-            renderCardResults(availableCards);
+            // Apply current filter if any
+            filterCards(currentDesktopFilter, false);
         }
     }
 }
@@ -255,6 +280,14 @@ function renderCardResults(cards) {
         const div = document.createElement('div');
         div.className = 'card-result-item';
 
+        // Helper to find image URL (same as renderWalletStack)
+        const getCardImage = (c) => {
+            if (c.image_url && c.image_url.startsWith('http')) return c.image_url;
+            // Try to find in allCardsData (source of truth) if available, though 'card' here should be from availableCards
+            if (c.image_url) return c.image_url;
+            return '/static/images/card_placeholder.png';
+        };
+
         if (inWallet) {
             div.style.opacity = '0.6';
             div.style.cursor = 'default';
@@ -263,9 +296,12 @@ function renderCardResults(cards) {
 
             div.innerHTML = `
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <div style="font-weight: 700; color: #64748B; margin-bottom: 0.25rem;">${card.name}</div>
-                        <div style="font-size: 0.85rem; color: #94A3B8;">${card.issuer}</div>
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                         <img src="${getCardImage(card)}" style="width: 40px; height: auto; object-fit: contain; border-radius: 4px;" alt="${card.name}">
+                        <div>
+                            <div style="font-weight: 700; color: #64748B; margin-bottom: 0.125rem;">${card.name}</div>
+                            <div style="font-size: 0.85rem; color: #94A3B8;">${card.issuer}</div>
+                        </div>
                     </div>
                      <span style="font-size: 0.75rem; font-weight: 700; color: #64748B; background: #E2E8F0; padding: 0.25rem 0.5rem; border-radius: 4px;">In Wallet</span>
                 </div>
@@ -273,8 +309,13 @@ function renderCardResults(cards) {
         } else {
             div.onclick = () => selectCardForPreview(card, div);
             div.innerHTML = `
-                <div style="font-weight: 700; color: #1F2937; margin-bottom: 0.25rem;">${card.name}</div>
-                <div style="font-size: 0.85rem; color: #64748B;">${card.issuer}</div>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <img src="${getCardImage(card)}" style="width: 40px; height: auto; object-fit: contain; border-radius: 4px;" alt="${card.name}">
+                    <div>
+                        <div style="font-weight: 700; color: #1F2937; margin-bottom: 0.125rem;">${card.name}</div>
+                        <div style="font-size: 0.85rem; color: #64748B;">${card.issuer}</div>
+                    </div>
+                </div>
             `;
         }
 
@@ -495,26 +536,55 @@ function selectCardForPreview(card, element) {
     }
 }
 
-function filterCards(issuer) {
-    let searchIssuer = issuer;
-    if (issuer === 'Amex') {
-        searchIssuer = 'American Express';
+function filterCards(issuer, resetSearch = true) {
+    currentDesktopFilter = issuer;
+
+    // Update active state
+    document.querySelectorAll('.quick-add-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.id === `desktop-filter-${issuer}`) {
+            btn.classList.add('active');
+        }
+    });
+
+    // Clear search if requested
+    const searchInput = document.getElementById('card-search-input');
+    if (resetSearch && searchInput) {
+        searchInput.value = '';
+        currentDesktopSearch = '';
     }
-    const filtered = availableCards.filter(c => c.issuer.includes(searchIssuer));
+
+    // Apply combined filter: Search + Category
+    let filtered = availableCards;
+
+    // 1. Text Search (if any)
+    if (currentDesktopSearch) {
+        let term = currentDesktopSearch.toLowerCase();
+        if (term === 'amex') term = 'american express';
+
+        filtered = filtered.filter(c =>
+            c.name.toLowerCase().includes(term) || c.issuer.toLowerCase().includes(term) ||
+            (term === 'amex' && c.issuer.toLowerCase().includes('american express'))
+        );
+    }
+
+    // 2. Issuer Filter
+    if (issuer !== 'All') {
+        let searchIssuer = issuer;
+        if (issuer === 'Amex') {
+            searchIssuer = 'American Express';
+        }
+        filtered = filtered.filter(c => c.issuer.includes(searchIssuer));
+    }
+
     renderCardResults(filtered);
 }
 
 document.getElementById('card-search-input')?.addEventListener('input', (e) => {
     let term = e.target.value.toLowerCase();
+    currentDesktopSearch = term;
 
-    // Alias mapping
-    if (term === 'amex') {
-        term = 'american express';
-    }
-
-    const filtered = availableCards.filter(c =>
-        c.name.toLowerCase().includes(term) || c.issuer.toLowerCase().includes(term) ||
-        (term === 'amex' && c.issuer.toLowerCase().includes('american express'))
-    );
-    renderCardResults(filtered);
+    // We can rely on filterCards to do the combination logic, but we need to trigger it with current filter
+    // Pass false to not reset the search we just typed
+    filterCards(currentDesktopFilter, false);
 });

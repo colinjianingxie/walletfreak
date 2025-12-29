@@ -172,6 +172,7 @@
     /* Benefit & Anniversary Modal Mobile Fullscreen */
     #benefit-modal,
     #anniversary-modal,
+    #edit-anniversary-modal,
     #chase-524-modal {
         padding: 0 !important;
         align-items: flex-start !important;
@@ -179,12 +180,14 @@
 
     #benefit-modal .modal-content,
     #anniversary-modal .modal-content,
+    #edit-anniversary-modal .modal-content,
     #chase-524-modal .modal-content {
         width: 100% !important;
         height: 100% !important;
         max-width: 100% !important;
         max-height: 100% !important;
         border-radius: 0 !important;
+        margin: 0 !important;
         display: flex;
         flex-direction: column;
         overflow: hidden !important;
@@ -192,18 +195,28 @@
     }
 
     #benefit-modal .modal-content>div:last-child,
-    #anniversary-modal .modal-content>div:last-child,
+    #anniversary-modal .modal-content>div:nth-child(2),
+    #edit-anniversary-modal .modal-content>div:nth-child(2),
     #chase-524-modal .modal-content>div:last-child {
         flex: 1;
         overflow-y: auto;
     }
 
     /* Anniversary Modal Buttons - Vertical on Mobile */
-    #anniversary-modal .modal-content>div:last-child {
+    #anniversary-modal .modal-content>div:last-child,
+    #edit-anniversary-modal .modal-content>div:last-child {
         flex-direction: column !important;
+        padding: 1rem !important;
+        /* Fixed padding for footer */
+        border-top: 1px solid #F3F4F6;
+        background: white;
+        /* Ensure it's opaque */
+        flex: none !important;
+        /* Don't grow */
     }
 
-    #anniversary-modal .modal-content>div:last-child button {
+    #anniversary-modal .modal-content>div:last-child button,
+    #edit-anniversary-modal .modal-content>div:last-child button {
         width: 100% !important;
         flex: none !important;
     }
@@ -271,6 +284,12 @@
     border-color: #8B5CF6;
     color: #8B5CF6;
     background: #F5F3FF;
+}
+
+.quick-add-btn.active {
+    background: #6366F1;
+    color: white;
+    border-color: #6366F1;
 }
 
 .card-result-item {
@@ -497,5 +516,11 @@
 @media (max-width: 1200px) {
     .monthly-pills-grid {
         grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+@media (max-width: 375px) {
+    .hide-on-375 {
+        display: none !important;
     }
 }

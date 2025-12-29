@@ -1,6 +1,6 @@
 <!-- Edit Anniversary Date Modal -->
-<div id="edit-anniversary-modal" class="modal" style="display: none; align-items: center; justify-content: center; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1000;">
-    <div class="modal-content" style="background: white; width: 100%; max-width: 450px; border-radius: 16px; padding: 2rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);">
+<div id="edit-anniversary-modal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1000; overflow-y: auto;">
+    <div class="modal-content" style="background: white; width: 90%; max-width: 450px; border-radius: 16px; padding: 2rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); margin: 2rem auto;">
         <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
             <div>
                 <h3 style="font-size: 1.25rem; font-weight: 700; color: #1F2937; margin: 0 0 0.5rem 0;">Edit Anniversary Date</h3>
@@ -22,12 +22,41 @@
             </div>
         </div>
 
-        <!-- Date Input -->
+        <!-- Date Input Container -->
         <div style="margin-bottom: 2rem;">
-            <label for="edit-anniversary-date-input" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #374151; font-size: 0.9rem;">New Anniversary Date</label>
-            <div style="font-size: 0.75rem; color: #64748B; margin-bottom: 0.5rem; display: flex; align-items: center;"><span class="material-icons" style="font-size: 16px; margin-right: 4px; color: #F59E0B;">lightbulb</span>You can find your anniversary date by your earliest statement.</div>
-            <input type="date" id="edit-anniversary-date-input" 
-                   style="width: 100%; padding: 0.75rem 1rem; border: 1px solid #D1D5DB; border-radius: 8px; font-size: 1rem; color: #1F2937; outline: none; transition: border-color 0.2s; background: #F9FAFB;">
+            <!-- Scrollable Content -->
+        <div style="flex: 1; overflow-y: auto; padding-right: 4px; padding-bottom: 2rem;">
+            <!-- Date Input -->
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1F2937;">Anniversary Date</label>
+                <div style="font-size: 0.75rem; color: #64748B; margin-bottom: 0.5rem;">Best estimate if cannot find. The more accurate the anniversary, the better the tracking. <span style="display: flex; align-items: center; margin-top: 4px; color: #4B5563;"><span class="material-icons" style="font-size: 16px; margin-right: 4px; color: #F59E0B;">lightbulb</span>You can find your anniversary date by your earliest statement.</span></div>
+                
+                <input type="date" id="edit-anniversary-date-input" 
+                       style="width: 100%; padding: 0.875rem 1rem; border: 2px solid #E5E7EB; border-radius: 10px; font-size: 1rem; font-weight: 600;">
+
+                <!-- Default Display (Hidden by default) -->
+                <div id="edit-anniversary-default-display" style="display: none; align-items: center; gap: 0.5rem; padding: 0.75rem 1rem; background: #F3F4F6; border-radius: 8px; border: 1px dashed #9CA3AF; margin-top: 0.5rem;">
+                    <span class="material-icons" style="color: #6B7280;">event_busy</span>
+                    <span style="flex: 1; font-weight: 500; color: #374151;">Default (<span id="edit-anniversary-default-date-display-text">1/1/....</span>)</span>
+                    <button onclick="clearAnniversaryDefault()" style="background: none; border: none; cursor: pointer; color: #6B7280; display: flex; align-items: center;" title="Clear Default">
+                        <span class="material-icons" style="font-size: 18px;">close</span>
+                    </button>
+                </div>
+
+                <!-- "I don't know" Button -->
+                <button id="btn-unknown-anniversary" type="button" onclick="setAnniversaryDefault()" style="margin-top: 0.75rem; background: none; border: none; color: #6366F1; font-size: 0.875rem; font-weight: 500; cursor: pointer; padding: 0; display: flex; align-items: center; gap: 0.25rem;">
+                    I don't know my Anniversary
+                </button>
+
+                <p style="color: #64748B; font-size: 0.875rem; margin-top: 0.5rem;">This helps track which months/quarters are available for benefit tracking.</p>
+            </div>
+
+            <!-- Example -->
+            <div style="background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                <div style="font-weight: 600; color: #92400E; margin-bottom: 0.25rem; font-size: 0.875rem;">💡 Example</div>
+                <div style="color: #78350F; font-size: 0.875rem;">If you got your card in October 2025, months before October will be grayed out.</div>
+            </div>
+        </div>
         </div>
 
         <!-- Hidden ID -->
