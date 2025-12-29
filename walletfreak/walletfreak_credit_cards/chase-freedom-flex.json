@@ -27,7 +27,7 @@
             "NumericType": "Cash"
         },
         {
-            "BenefitDescription": "$40 annual DoorDash NR credit",
+            "BenefitDescription": "$40 annual DoorDash Non-Restaurant credit",
             "AdditionalDetails": null,
             "BenefitCategory": [
                 "DoorDash",
@@ -37,7 +37,7 @@
             "DollarValue": 40,
             "EnrollmentRequired": true,
             "EffectiveDate": "2025-12-24",
-            "BenefitDescriptionShort": "DoorDash NR Credit",
+            "BenefitDescriptionShort": "DoorDash Non-Restaurant Credit",
             "BenefitType": "Credit",
             "NumericValue": 40,
             "NumericType": "Cash"

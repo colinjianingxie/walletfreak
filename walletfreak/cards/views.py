@@ -440,6 +440,7 @@ def card_list(request):
         'total_cards': len(filtered_cards),
         'cards_json': cards_json,
         'wallet_card_ids': list(wallet_card_ids),  # Pass to JavaScript for button state
+        'wallet_card_names': [c.get('name') for c in user_cards] if request.user.is_authenticated else [],
         'issuers': issuers,
         'categories': all_categories,
         'selected_issuers': selected_issuers,

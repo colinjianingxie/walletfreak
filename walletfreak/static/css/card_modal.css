@@ -62,6 +62,11 @@
     margin: 0 !important;
 }
 
+.card-details-left .credit-card.card-in-wallet {
+    opacity: 0.8 !important;
+    filter: grayscale(30%) !important;
+}
+
 .card-details-left .credit-card-chip {
     width: 40px !important;
     height: 30px !important;

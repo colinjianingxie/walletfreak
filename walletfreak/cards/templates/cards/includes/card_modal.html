@@ -163,35 +163,54 @@
     </div>
 </div>
 
-<!-- Anniversary Date Modal (for adding cards from explore) -->
-<div id="anniversary-modal" class="modal" style="display: none;">
-    <div class="modal-content" style="max-width: 450px;">
+<!-- Anniversary Date Modal (Shared from Dashboard) -->
+<div id="anniversary-modal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 2000; overflow-y: auto;">
+    <div class="modal-content" style="max-width: 450px; width: 90%; margin: 2rem auto; background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);">
         <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
             <div>
                 <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 0.5rem 0;">Set Card Anniversary</h3>
                 <p style="color: #64748B; margin: 0; font-size: 0.875rem;">When did you get this card?</p>
             </div>
-            <button class="modal-close-desktop" onclick="closeAnniversaryModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #94A3B8;">×</button>
+            <button class="modal-close" onclick="closeAnniversaryModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #94A3B8;">×</button>
         </div>
 
-        <!-- Card Info -->
-        <div style="background: #F9FAFB; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
-            <div style="font-size: 0.75rem; font-weight: 700; color: #64748B; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.5rem;">CARD</div>
-            <div id="anniversary-card-name" style="font-weight: 700; font-size: 1.125rem; color: #1F2937;">Loading...</div>
-        </div>
+        <!-- Scrollable Content -->
+        <div style="flex: 1; overflow-y: auto; padding-right: 4px; padding-bottom: 2rem;">
+            <!-- Card Info -->
+            <div style="background: #F9FAFB; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
+                <div style="font-size: 0.75rem; font-weight: 700; color: #64748B; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.5rem;">CARD</div>
+                <div id="anniversary-card-name" style="font-weight: 700; font-size: 1.125rem; color: #1F2937;">Loading...</div>
+            </div>
 
-        <!-- Date Input -->
-        <div style="margin-bottom: 1.5rem;">
-            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1F2937;">Anniversary Date</label>
-            <input type="date" id="anniversary-date-input" 
-                   style="width: 100%; padding: 0.875rem 1rem; border: 2px solid #E5E7EB; border-radius: 10px; font-size: 1rem; font-weight: 600;">
-            <p style="color: #64748B; font-size: 0.875rem; margin-top: 0.5rem;">This helps track which months/quarters are available for benefit tracking.</p>
-        </div>
+            <!-- Date Input -->
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1F2937;">Anniversary Date</label>
+                <div style="font-size: 0.75rem; color: #64748B; margin-bottom: 0.5rem;">Best estimate if cannot find. The more accurate the anniversary, the better the tracking. <span style="display: flex; align-items: center; margin-top: 4px; color: #4B5563;"><span class="material-icons" style="font-size: 16px; margin-right: 4px; color: #F59E0B;">lightbulb</span>You can find your anniversary date by your earliest statement.</span></div>
+                
+                <input type="date" id="anniversary-date-input" 
+                       style="width: 100%; padding: 0.875rem 1rem; border: 2px solid #E5E7EB; border-radius: 10px; font-size: 1rem; font-weight: 600;">
 
-        <!-- Example -->
-        <div style="background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
-            <div style="font-weight: 600; color: #92400E; margin-bottom: 0.25rem; font-size: 0.875rem;">💡 Example</div>
-            <div style="color: #78350F; font-size: 0.875rem;">If you got your card in October 2025, months before October will be grayed out.</div>
+                <div id="anniversary-default-display" style="display: none; align-items: center; gap: 0.5rem; padding: 0.75rem 1rem; background: #F3F4F6; border-radius: 8px; border: 1px dashed #9CA3AF; margin-top: 0.5rem;">
+                    <span class="material-icons" style="color: #6B7280;">event_busy</span>
+                    <span style="flex: 1; font-weight: 500; color: #374151;">Default (<span id="anniversary-default-date-display-text">1/1/....</span>)</span>
+                    <button onclick="clearAnniversaryDefaultState()" style="background: none; border: none; cursor: pointer; color: #6B7280; display: flex; align-items: center;" title="Clear Default">
+                        <span class="material-icons" style="font-size: 18px;">close</span>
+                    </button>
+                </div>
+                
+                <!-- "I don't know" Button -->
+                <button id="btn-unknown-add-anniversary" type="button" onclick="setAnniversaryDefaultState()" style="margin-top: 0.75rem; background: none; border: none; color: #6366F1; font-size: 0.875rem; font-weight: 500; cursor: pointer; padding: 0; display: flex; align-items: center; gap: 0.25rem;">
+                    I don't know my Anniversary
+                </button>
+
+                <p style="color: #64748B; font-size: 0.875rem; margin-top: 0.5rem;">This helps track which months/quarters are available for benefit tracking.</p>
+            </div>
+
+            <!-- Example -->
+            <div style="background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                <div style="font-weight: 600; color: #92400E; margin-bottom: 0.25rem; font-size: 0.875rem;">💡 Example</div>
+                <div style="color: #78350F; font-size: 0.875rem;">If you got your card in October 2025, months before October will be grayed out.</div>
+            </div>
         </div>
 
         <!-- Action Buttons -->
@@ -436,8 +455,23 @@ function openCardModal(cardId) {
     // Check if card is already in wallet and update Add to Wallet button
     const addBtn = document.getElementById('modal-add-btn');
     const addBtnMobile = document.getElementById('modal-add-btn-mobile'); // Mobile btn
-    const isInWallet = typeof walletCardIds !== 'undefined' && walletCardIds.has(cardId);
     
+    // Robust check for ID in wallet (handle both string and int types)
+    // ALSO check by Name as a fallback for ID mismatches (e.g. slug vs int ID)
+    const walletCardNames = new Set({{ wallet_card_names|safe|default:'[]' }});
+    const cardName = card.name || document.getElementById('modal-card-name').textContent.trim();
+    
+    const isOwned = (typeof walletCardIds !== 'undefined' && 
+                    (walletCardIds.has(cardId) || walletCardIds.has(String(cardId)) || walletCardIds.has(Number(cardId)))) ||
+                    (walletCardNames.has(cardName));
+    
+    // Visual update for owned cards
+    if (isOwned) {
+        visual.classList.add('card-in-wallet');
+    } else {
+        visual.classList.remove('card-in-wallet');
+    }
+
     // Helper to update button state
     const updateAddBtn = (btn) => {
         if (!btn) return;
@@ -459,10 +493,7 @@ function openCardModal(cardId) {
             return;
         }
 
-        // Robust check for ID in wallet (handle both string and int types)
-        const isInWallet = typeof walletCardIds !== 'undefined' && (walletCardIds.has(cardId) || walletCardIds.has(String(cardId)) || walletCardIds.has(Number(cardId)));
-
-        if (isInWallet) {
+        if (isOwned) {
             btn.disabled = true;
             btn.innerHTML = 'Already in Wallet <span class="material-icons" style="font-size: 18px;">check_circle</span>';
             btn.style.background = '#94A3B8';
