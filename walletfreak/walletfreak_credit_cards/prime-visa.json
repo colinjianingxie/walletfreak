@@ -41,22 +41,6 @@
             "BenefitType": "Perk",
             "NumericValue": 150,
             "NumericType": "Cash"
-        },
-        {
-            "BenefitDescription": "No foreign transaction fees",
-            "AdditionalDetails": null,
-            "BenefitCategory": [
-                "Generic Travel Perks",
-                "Fee Waiver"
-            ],
-            "TimeCategory": "Ongoing",
-            "DollarValue": 50,
-            "EnrollmentRequired": false,
-            "EffectiveDate": "2025-12-24",
-            "BenefitDescriptionShort": "No FTF",
-            "BenefitType": "Waiver",
-            "NumericValue": 0,
-            "NumericType": "Percent"
         }
     ],
     "EarningRates": [

@@ -442,6 +442,12 @@ function openCardModal(cardId) {
     const updateAddBtn = (btn) => {
         if (!btn) return;
         
+        // Reset button state first
+        btn.disabled = false;
+        btn.style.background = '#0F172A';
+        btn.style.cursor = 'pointer';
+        btn.onclick = addToWalletFromModal;
+
         const isAuthenticated = {{ request.user.is_authenticated|yesno:"true,false" }};
         
         if (!isAuthenticated) {
@@ -452,6 +458,9 @@ function openCardModal(cardId) {
             btn.onclick = null;
             return;
         }
+
+        // Robust check for ID in wallet (handle both string and int types)
+        const isInWallet = typeof walletCardIds !== 'undefined' && (walletCardIds.has(cardId) || walletCardIds.has(String(cardId)) || walletCardIds.has(Number(cardId)));
 
         if (isInWallet) {
             btn.disabled = true;
@@ -699,7 +708,9 @@ function closeCardDetailsModal() {
     document.body.style.removeProperty('position');
     document.body.style.removeProperty('top');
     document.body.style.removeProperty('width');
-    window.scrollTo(0, scrollPosition);
+    if (scrollPosition) {
+        window.scrollTo(0, scrollPosition);
+    }
 }
 
 function switchCardTab(tabName) {
@@ -776,9 +787,27 @@ function proceedWithAddCard(anniversaryDate) {
     if (!currentModalCardId) return;
     
     const btn = document.getElementById('modal-add-btn');
-    const originalText = btn.innerHTML;
-    btn.disabled = true;
-    btn.innerHTML = 'Adding... <span class="material-icons" style="animation: spin 1s linear infinite;">hourglass_empty</span>';
+    // Also target mobile button
+    const btnMobile = document.getElementById('modal-add-btn-mobile');
+    
+    // Helper to update both buttons
+    const updateButtons = (html, disabled, bg) => {
+        if (btn) {
+            btn.innerHTML = html;
+            if (disabled !== null) btn.disabled = disabled;
+            if (bg) btn.style.background = bg;
+        }
+        if (btnMobile) {
+             btnMobile.innerHTML = html;
+             if (disabled !== null) btnMobile.disabled = disabled;
+             if (bg) btnMobile.style.background = bg;
+        }
+    };
+
+    const originalText = btn ? btn.innerHTML : 'Add to Wallet';
+    
+    // Show Loader
+    updateButtons('Adding... <span class="material-icons" style="animation: spin 1s linear infinite; font-size: 18px;">hourglass_empty</span>', true, '#6366F1');
     
     const form = document.createElement('form');
     form.method = 'POST';
@@ -818,31 +847,41 @@ function proceedWithAddCard(anniversaryDate) {
     .then(res => res.json())
     .then(data => {
         document.body.removeChild(form);
-        btn.disabled = false;
-        btn.innerHTML = originalText;
         
         if (data.success) {
-            // Show success state or reload
-            btn.innerHTML = 'Added! <span class="material-icons">check_circle</span>';
-            btn.style.background = '#10B981';
+            // Show success state
+            updateButtons('Added! <span class="material-icons" style="font-size: 18px;">check_circle</span>', true, '#10B981');
 
-            // Add card to walletCardIds set to update button state on reload
+            // Add card to walletCardIds set to update button state immediately
             if (typeof walletCardIds !== 'undefined') {
                 walletCardIds.add(currentModalCardId);
+                // Also update the global set if using numeric ID vs string ID mismatch
+                walletCardIds.add(String(currentModalCardId));
+                walletCardIds.add(Number(currentModalCardId)); 
             }
             
+            // Also notify any listeners (like the main page card list)
+            if (typeof updateWalletState === 'function') {
+                 // Creating a dummy set for now or triggering a refresh of the UI logic
+                 // Since updateWalletState usually takes a set of IDs, we can pass the updated global set
+                 if (typeof walletCardIds !== 'undefined') {
+                      updateWalletState(walletCardIds);
+                 }
+            }
+
+            // Close after delay
             setTimeout(() => {
                 closeCardDetailsModal();
-                window.location.reload();
-            }, 1000);
+            }, 1500);
         } else {
+             // Revert on error
+            updateButtons('Add to Wallet', false, '#0F172A');
             alert(data.error || 'Failed to add card');
         }
     })
     .catch(err => {
         if (document.body.contains(form)) document.body.removeChild(form);
-        btn.disabled = false;
-        btn.innerHTML = originalText;
+        updateButtons('Add to Wallet', false, '#0F172A');
         alert('Error adding card: ' + err.message);
     });
 }

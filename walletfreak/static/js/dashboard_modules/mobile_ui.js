@@ -68,7 +68,19 @@ function showMobileCardDetailScreen() {
 }
 
 function backToMobileSearch() {
-    showMobileAddNewScreen();
+    // Hide details screen
+    const detailScreen = document.getElementById('mobile-card-detail-screen');
+    if (detailScreen) {
+        detailScreen.classList.remove('active');
+        detailScreen.style.display = 'none';
+    }
+
+    // Show add new screen (without resetting filters)
+    const addNewScreen = document.getElementById('mobile-add-new-screen');
+    if (addNewScreen) {
+        addNewScreen.classList.add('active');
+        addNewScreen.style.display = 'flex';
+    }
 }
 
 // Mobile card loading and filtering
@@ -99,9 +111,12 @@ function renderMobileCards(cards) {
         cardElement.className = 'mobile-card-item';
 
         cardElement.innerHTML = `
-            <div>
-                <div class="card-name">${card.name}</div>
-                <div class="card-issuer">${card.issuer}</div>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <img src="${card.image_url || '/static/images/card_placeholder.png'}" style="width: 48px; height: auto; border-radius: 4px; object-fit: contain;" alt="${card.name}">
+                <div>
+                    <div class="card-name">${card.name}</div>
+                    <div class="card-issuer">${card.issuer}</div>
+                </div>
             </div>
             <span class="material-icons" style="color: #CBD5E1; font-size: 20px;">chevron_right</span>
         `;
@@ -118,13 +133,24 @@ function toggleMobileFilter(issuer) {
     const btn = document.getElementById(`filter-${issuer}`);
 
     if (selectedMobileFilters.has(issuer)) {
-        // Deselect
+        // Deselect current if clicked again (toggle off)
         selectedMobileFilters.delete(issuer);
         btn.style.background = 'white';
         btn.style.color = '#64748B';
         btn.style.borderColor = '#E2E8F0';
     } else {
-        // Select
+        // Single Selection Mode: Clear all others first
+        selectedMobileFilters.forEach(existingIssuer => {
+            const existingBtn = document.getElementById(`filter-${existingIssuer}`);
+            if (existingBtn) {
+                existingBtn.style.background = 'white';
+                existingBtn.style.color = '#64748B';
+                existingBtn.style.borderColor = '#E2E8F0';
+            }
+        });
+        selectedMobileFilters.clear();
+
+        // Select new
         selectedMobileFilters.add(issuer);
         btn.style.background = '#6366F1';
         btn.style.color = 'white';
