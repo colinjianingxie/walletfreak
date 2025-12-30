@@ -311,7 +311,7 @@ def dashboard(request):
                         'card_id': card['card_id'],  # Card slug for filtering
                         'card_name': card_details['name'],
                         'benefit_id': benefit_id,
-                        'benefit_name': benefit['description'][:50] + '...' if len(benefit['description']) > 50 else benefit['description'],
+                        'benefit_name': benefit['description'],
                         'amount': dollar_value,
                         'used': current_period_used,
                         'periods': periods,

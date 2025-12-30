@@ -1,14 +1,71 @@
-<!-- Benefit Usage Modal (Redesigned) -->
+<style>
+    /* Default (Desktop) */
+    .benefit-modal-close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        color: rgba(255,255,255,0.5);
+        background: rgba(255,255,255,0.1);
+        border: none;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 10;
+        transition: all 0.2s;
+    }
+    .benefit-modal-close:hover {
+        background: rgba(255,255,255,0.2);
+        color: white;
+    }
+    
+    .benefit-modal-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0 0 0.5rem 0;
+        color: white;
+        word-wrap: break-word; 
+        white-space: normal;
+        line-height: 1.2;
+    }
+
+    @media (max-width: 768px) {
+        .benefit-modal-close {
+            top: 1rem;
+            right: 1rem;
+            left: auto;
+            background-color: #000000 !important;
+            color: #ffffff !important;
+            opacity: 1;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .benefit-modal-header-content {
+            padding-top: 1.5rem; /* Make room for the top-left button */
+        }
+
+        .benefit-modal-title {
+            font-size: 1.25rem;
+        }
+    }
+</style>
 <div id="benefit-modal" class="modal" style="display: none; align-items: center; justify-content: center; padding: 1rem;">
     <div class="modal-content" style="width: 400px; max-width: 95vw; max-height: 85vh; display: flex; flex-direction: column; padding: 0; border-radius: 24px; overflow: hidden; background: white; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
         
         <!-- Header (Dark) -->
         <div style="background: #111827; padding: 1.5rem; color: white; position: relative;">
-            <button class="modal-close-btn" onclick="closeBenefitModal()" style="position: absolute; top: 1rem; right: 1rem; color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.1);">×</button>
+            <button class="benefit-modal-close" onclick="closeBenefitModal()">
+                <span class="material-icons" style="font-size: 20px;">close</span>
+            </button>
             
-            <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 0.5rem 0; color: white;" id="benefit-modal-title">Dining Credit</h3>
-            <div style="display: inline-block; background: rgba(255,255,255,0.15); padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.9);" id="benefit-modal-subtitle">
-                Gold Card
+            <div class="benefit-modal-header-content">
+                <h3 class="benefit-modal-title" id="benefit-modal-title">Dining Credit</h3>
+                <div style="display: inline-block; background: rgba(255,255,255,0.15); padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.9);" id="benefit-modal-subtitle">
+                    Gold Card
+                </div>
             </div>
         </div>
 
