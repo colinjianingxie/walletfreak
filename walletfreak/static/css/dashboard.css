@@ -188,15 +188,17 @@
     #edit-anniversary-modal .modal-content,
     #chase-524-modal .modal-content {
         width: 100% !important;
-        height: 100% !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        /* Use dynamic viewport height */
         max-width: 100% !important;
-        max-height: 100% !important;
+        max-height: 100vh !important;
+        max-height: 100dvh !important;
         border-radius: 0 !important;
         margin: 0 !important;
         display: flex;
         flex-direction: column;
         overflow: hidden !important;
-        /* Fix for scrolling behind header */
     }
 
     #benefit-modal .modal-content>div:last-child,
@@ -205,25 +207,30 @@
     #chase-524-modal .modal-content>div:last-child {
         flex: 1;
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        /* smooth scrolling */
     }
 
-    /* Anniversary Modal Buttons - Vertical on Mobile */
+    /* Anniversary Modal Buttons - Horizontal on Mobile */
     #anniversary-modal .modal-content>div:last-child,
     #edit-anniversary-modal .modal-content>div:last-child {
-        flex-direction: column !important;
-        padding: 1rem !important;
-        /* Fixed padding for footer */
+        flex-direction: row !important;
+        /* Force Row */
+        gap: 0.75rem !important;
+        padding: 1rem 1.5rem !important;
         border-top: 1px solid #F3F4F6;
         background: white;
-        /* Ensure it's opaque */
         flex: none !important;
-        /* Don't grow */
+        padding-bottom: max(1rem, env(safe-area-inset-bottom)) !important;
+        /* Handle iPhone Home Bar */
     }
 
     #anniversary-modal .modal-content>div:last-child button,
     #edit-anniversary-modal .modal-content>div:last-child button {
-        width: 100% !important;
-        flex: none !important;
+        width: auto !important;
+        /* Let them share space */
+        flex: 1 !important;
+        /* Equal width */
     }
 
     /* Chase 5/24 Modal Header Fix */
