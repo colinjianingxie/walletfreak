@@ -140,6 +140,20 @@ function saveAnniversaryDate() {
                     closeAnniversaryModal();
                     showToast('Card added to wallet!');
 
+                    // Optimistic update: Add to local state immediately
+                    if (selectedAddCard) {
+                        const newCard = {
+                            ...selectedAddCard,
+                            anniversary_date: date,
+                            id: data.new_card_id || selectedAddCard.id // Prefer returned ID if available, else static ID
+                        };
+                        // Avoid duplicates if user clicks wildly
+                        if (!walletCards.some(c => c.id === newCard.id)) {
+                            walletCards.push(newCard);
+                        }
+                        updateWalletUI();
+                    }
+
                     // Update Personality if returned
                     if (data.personality) {
                         updatePersonalityUI(data.personality.id, data.personality.match_score);
@@ -217,10 +231,12 @@ function saveAnniversaryDate() {
 
 // --- Remove Card Modal Logic ---
 let cardToRemoveForm = null;
+let cardToRemoveId = null;
 
-function openRemoveCardModal(e, form, cardName) {
+function openRemoveCardModal(e, form, cardName, cardId) {
     if (e) e.preventDefault();
     cardToRemoveForm = form;
+    cardToRemoveId = cardId;
 
     const nameSpan = document.getElementById('remove-card-name');
     if (nameSpan) nameSpan.textContent = cardName;
@@ -240,6 +256,7 @@ function closeRemoveCardModal() {
         // modal.classList.remove('active');
     }
     cardToRemoveForm = null;
+    cardToRemoveId = null;
 }
 
 async function confirmRemoveCard() {
@@ -283,20 +300,31 @@ async function executeRemoveCard(form) {
                     cardRow.style.opacity = '0';
                     cardRow.style.transform = 'translateX(20px)';
 
-                    // Optimistic UI: Update local state and re-render
                     setTimeout(() => {
-                        // Extract ID from action "/wallet/remove-card/XYZ/"
-                        const actionParts = form.action.split('/');
-                        const cardId = actionParts[actionParts.length - 2] || actionParts[actionParts.length - 1];
+                        // Use explicit ID if available, otherwise try parsing
+                        let cardId = cardToRemoveId;
+                        if (!cardId) {
+                            const actionParts = form.action.split('/');
+                            // Fallback logic
+                            cardId = actionParts[actionParts.length - 2] || actionParts[actionParts.length - 1];
+                        }
 
                         if (cardId) {
-                            walletCards = walletCards.filter(c => c.id !== cardId);
+                            // Ensure strict string comparison to avoid type issues
+                            walletCards = walletCards.filter(c => String(c.id) !== String(cardId));
                             updateWalletUI();
+
+                            // Also remove the element from DOM if updateWalletUI didn't do it (e.g. if ID mismatch)
+                            // But usually updateWalletUI re-renders everything.
                         } else {
-                            // Fallback if ID parse fails
+                            // Fallback if ID parse fails entirely
                             cardRow.remove();
-                            // update count manually if needed, or just let listener handle it
+                            // If we can't identify the card, we might have ghost UI state until refresh
+                            // But at least we removed the row.
                         }
+
+                        // Clear the global ID for safety
+                        cardToRemoveId = null;
                     }, 300);
 
                 } else {

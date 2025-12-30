@@ -169,7 +169,7 @@ function renderWalletStack() {
                     </button>
                 </div>
             </div>
-            <form method="POST" action="/wallet/remove-card/${card.id}/" style="margin: 0;" onsubmit="return openRemoveCardModal(event, this, '${card.name.replace(/'/g, "\\'")}');">
+            <form method="POST" action="/wallet/remove-card/${card.id}/" style="margin: 0;" onsubmit="return openRemoveCardModal(event, this, '${card.name.replace(/'/g, "\\'")}', '${card.id}');">
                 <input type="hidden" name="csrfmiddlewaretoken" value="${document.querySelector('[name=csrfmiddlewaretoken]').value}">
                 <button type="submit" style="background: none; border: none; color: #CBD5E1; cursor: pointer; padding: 0.5rem;" title="Remove Card">
                     <span class="material-icons" style="font-size: 1.5rem;">delete_outline</span>
@@ -197,7 +197,7 @@ function renderWalletStack() {
             <div style="margin-left: auto; display: flex; align-items: center; gap: 1rem;">
                 <span style="background: #DCFCE7; color: #16A34A; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 99px;">Active</span>
                 
-                <form method="POST" action="/wallet/remove-card/${card.id}/" style="margin: 0;" onsubmit="return openRemoveCardModal(event, this, '${card.name.replace(/'/g, "\\'")}');">
+                <form method="POST" action="/wallet/remove-card/${card.id}/" style="margin: 0;" onsubmit="return openRemoveCardModal(event, this, '${card.name.replace(/'/g, "\\'")}', '${card.id}');">
                     <input type="hidden" name="csrfmiddlewaretoken" value="${document.querySelector('[name=csrfmiddlewaretoken]').value}">
                     <button type="submit" class="btn-delete-card" style="background: none; border: none; cursor: pointer; color: #E2E8F0; padding: 0.5rem; transition: color 0.2s;" onmouseover="this.style.color='#EF4444'" onmouseout="this.style.color='#E2E8F0'" title="Remove Card">
                         <span class="material-icons" style="font-size: 20px;">delete_outline</span>
