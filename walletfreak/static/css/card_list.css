@@ -1333,6 +1333,10 @@ input[type=range]::-moz-range-thumb {
         grid-template-columns: 1fr !important;
     }
 
+    .main-content-wrapper {
+        padding: 0;
+    }
+
     .category-pills-container {
         flex-wrap: nowrap;
         overflow-x: auto;
