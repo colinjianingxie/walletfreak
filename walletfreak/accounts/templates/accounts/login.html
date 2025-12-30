@@ -217,6 +217,11 @@
         const email = document.getElementById('loginEmail').value;
         const password = document.getElementById('loginPassword').value;
         const errorDiv = document.getElementById('login-error');
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="loader"></span> Accessing Wallet...';
 
         try {
             const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
@@ -226,6 +231,9 @@
                 errorDiv.textContent = 'Please verify your email before signing in. Check your inbox for the verification link.';
                 errorDiv.style.display = 'block';
                 await firebase.auth().signOut();
+                
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
                 return;
             }
 
@@ -257,6 +265,9 @@
             
             errorDiv.textContent = errorMessage;
             errorDiv.style.display = 'block';
+
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
         }
     });
 

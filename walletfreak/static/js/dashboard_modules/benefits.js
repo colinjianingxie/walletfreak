@@ -235,6 +235,7 @@ function updateBenefitModalUI() {
     // Update Mark as Full / Reset Button
     const markBtn = document.getElementById('mark-full-btn');
     const resetBtn = document.getElementById('reset-benefit-btn');
+    const markFullDateBtn = document.getElementById('mark-full-date-btn'); // New
 
     if (markBtn && resetBtn) {
         // Reset base styles
@@ -245,6 +246,7 @@ function updateBenefitModalUI() {
         if (isDisabled) {
             markBtn.style.display = 'none';
             resetBtn.style.display = 'none';
+            if (markFullDateBtn) markFullDateBtn.style.display = 'none';
         } else if (period.status === 'full') {
             // Show Reset Button
             markBtn.style.display = 'none';
@@ -254,9 +256,65 @@ function updateBenefitModalUI() {
             resetBtn.style.display = 'none';
             markBtn.style.display = 'flex';
 
-            markBtn.innerHTML = `Mark <span style="margin: 0 0.25rem;">${period.label}</span> as Full`;
+            const remainingForPeriod = maxVal - usedVal;
+            markBtn.innerHTML = `Mark <span style="margin: 0 0.25rem;">${period.label}</span> as Full ($${remainingForPeriod})`;
             markBtn.disabled = false;
             markBtn.style.opacity = '1';
+        }
+    }
+
+    // Logic for "Mark Full To Date"
+    // Calculate total needed to max out all periods from start up to CURRENT index (inclusive) OR current date match?
+    // User said "up to this date". Usually this implies up to the current month/period the user is viewing, OR up to "today".
+    // Let's assume up to "Today" (Current real time) or up to the currently selected period? 
+    // "if today's date is July 14th ... mark all the benefits full up to July".
+    // So distinct from the "selected" period navigation. It should probably find the index of the "current" period (based on date)
+    // and sum everything before it.
+
+    // Find index of the "current" period (the one active in time)
+    // We have `period.is_current` in the template but not explicitly in the JS object unless we passed it.
+    // However, we passed `currentBenefitPeriods`. Let's assume the backend flag `is_current` might be present or we infer.
+    // Actually, looking at `dashboard.html`, we might not have `is_current` in the parsed JSON unless we added it.
+    // Let's check `_section_action.html` line 55: `{{ benefit.periods|json_script:benefit.script_id }}`.
+    // The period object from backend has `is_current`.
+
+    if (markFullDateBtn) {
+        let totalToMark = 0;
+        let countToMark = 0;
+        let hasPastDefaults = false;
+
+        // Find the "current" period index
+        let realCurrentIndex = currentBenefitPeriods.findIndex(p => p.is_current);
+        // If no "current" flag found (maybe old data), try to match label or default to last? 
+        // If not found, fallback to all? Safer to assume 0 or look for it.
+        // If -1, maybe all are past or future? 
+        // Let's assume if we can't find 'is_current', we disable this feature or show nothing.
+
+        if (realCurrentIndex !== -1) {
+            // Iterate from 0 to realCurrentIndex
+            for (let i = 0; i <= realCurrentIndex; i++) {
+                const p = currentBenefitPeriods[i];
+                // Check availability
+                // Ensure we respect server-side "is_available" flag (e.g. for Anniversary timing)
+                if (p.max_value > 0 && p.is_available !== false) {
+                    const pUsed = p.used || 0;
+
+                    if (p.status !== 'full') {
+                        const needed = p.max_value - pUsed;
+                        if (needed > 0) {
+                            totalToMark += needed;
+                            countToMark++;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (countToMark > 0) {
+            markFullDateBtn.style.display = 'flex';
+            document.getElementById('mark-full-date-amount').textContent = `($${totalToMark})`;
+        } else {
+            markFullDateBtn.style.display = 'none';
         }
     }
 
@@ -588,6 +646,8 @@ function resetBenefit() {
         btn.disabled = true;
     }
 
+
+
     const formData = new FormData();
     formData.append('amount', 0);
     formData.append('period_key', period.key);
@@ -646,4 +706,114 @@ function resetBenefit() {
                 btn.disabled = false;
             }
         });
+}
+
+// New function for bulk update
+async function markFullToDate() {
+    const btn = document.getElementById('mark-full-date-btn');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<span class="loader"></span> Marking...';
+    btn.disabled = true;
+
+    // Identify periods to update
+    const realCurrentIndex = currentBenefitPeriods.findIndex(p => p.is_current);
+    if (realCurrentIndex === -1) {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        return;
+    }
+
+    const periodsToUpdate = [];
+    let totalAdded = 0;
+
+    for (let i = 0; i <= realCurrentIndex; i++) {
+        const p = currentBenefitPeriods[i];
+        if (p.max_value > 0 && p.is_available !== false && p.status !== 'full') {
+            const needed = p.max_value - (p.used || 0);
+            if (needed > 0) {
+                periodsToUpdate.push({
+                    key: p.key,
+                    amount: p.max_value // target max
+                });
+                totalAdded += needed;
+            }
+        }
+    }
+
+    if (periodsToUpdate.length === 0) {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        return;
+    }
+
+    // Process them sequentially
+    let errorCount = 0;
+
+    const updates = periodsToUpdate.map(p => {
+        const formData = new FormData();
+        formData.append('amount', p.amount);
+        formData.append('period_key', p.key);
+        formData.append('is_full', 'true');
+        formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+
+        return fetch(`/wallet/update-benefit/${currentBenefitData.cardId}/${currentBenefitData.benefitId}/`, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        }).then(res => {
+            if (!res.ok) throw new Error('Update failed');
+            return res.json();
+        }).then(data => {
+            if (data.success) {
+                // Update local model
+                const period = currentBenefitPeriods.find(per => per.key === p.key);
+                if (period) {
+                    period.status = 'full';
+                    period.is_full = true;
+                }
+            } else {
+                throw new Error(data.error);
+            }
+        }).catch(err => {
+            console.error(err);
+            errorCount++;
+        });
+    });
+
+    try {
+        await Promise.all(updates);
+
+        if (errorCount === 0) {
+            if (typeof showToast === 'function') showToast('All benefits marked full!');
+
+            // Update ytdUsed
+            currentBenefitData.ytdUsed = (currentBenefitData.ytdUsed || 0) + totalAdded;
+
+            // Persist script
+            if (currentBenefitData.scriptId && document.getElementById(currentBenefitData.scriptId)) {
+                document.getElementById(currentBenefitData.scriptId).textContent = JSON.stringify(currentBenefitPeriods);
+            }
+
+            // Refresh dashboard
+            refreshDashboardBenefits();
+
+            // Update Modal UI
+            updateBenefitModalUI();
+        } else {
+            alert(`Completed with ${errorCount} errors. Please check connection.`);
+            // Still try update UI
+            updateBenefitModalUI();
+        }
+
+    } catch (e) {
+        alert("Critical error during update.");
+    } finally {
+        if (btn) {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+    }
 }

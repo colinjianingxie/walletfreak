@@ -138,7 +138,7 @@
 
     <!-- How It Works Modal -->
     <div id="howItWorksModal" class="custom-modal-overlay" style="display: none;">
-        <div class="custom-modal">
+        <div class="custom-modal" style="display: flex; flex-direction: column; max-height: 90vh;">
             <div class="modal-header">
                 <h3 class="text-white">The Logic Behind The Rank</h3>
                 <button type="button" class="btn-close-modal" id="closeModalBtn">
@@ -175,6 +175,9 @@
                         Net Value ($) + (Match Score × 2.0)
                     </div>
                 </div>
+            </div>
+            <div class="modal-footer mobile-only-footer">
+                <button type="button" class="btn-close-footer" id="closeModalFooterBtn">Close</button>
             </div>
         </div>
     </div>
@@ -798,6 +801,38 @@
     
     .modal-body {
         padding: 32px 24px;
+        overflow-y: auto; /* Enable scrolling */
+    }
+
+    /* Fixed Footer for Mobile */
+    .modal-footer {
+        padding: 16px 24px;
+        border-top: 1px solid rgba(255,255,255,0.05);
+        background: #1E293B; /* Match modal bg */
+        display: none;
+    }
+    
+    .btn-close-footer {
+        width: 100%;
+        padding: 16px;
+        border-radius: 16px;
+        background: #334155;
+        color: white;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 700;
+        font-size: 1rem;
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .btn-close-footer:hover {
+        background: #475569;
+    }
+
+    @media (max-width: 992px) {
+        .mobile-only-footer {
+            display: block;
+        }
     }
     
     .logic-block {
@@ -956,6 +991,7 @@ document.getElementById('optimizerForm').addEventListener('submit', function(e) 
 const modal = document.getElementById('howItWorksModal');
 const btn = document.getElementById('howItWorksBtn');
 const closeBtn = document.getElementById('closeModalBtn');
+const closeFooterBtn = document.getElementById('closeModalFooterBtn');
 
 btn.addEventListener('click', () => {
     modal.style.display = 'flex';
@@ -968,6 +1004,7 @@ const closeModal = () => {
 };
 
 closeBtn.addEventListener('click', closeModal);
+if (closeFooterBtn) closeFooterBtn.addEventListener('click', closeModal);
 
 modal.addEventListener('click', (e) => {
     if (e.target === modal) {

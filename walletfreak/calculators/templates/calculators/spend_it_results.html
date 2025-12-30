@@ -608,22 +608,50 @@
         box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         max-width: 28rem;
         width: 100%;
-        padding: 1.5rem;
+        max-height: 85vh; /* New: Limit height */
+        display: flex;    /* New: Flex layout */
+        flex-direction: column;
         position: relative;
         overflow: hidden;
+        padding: 0; /* REMOVED padding from here, moved to inner */
+    }
+    
+    /* New Header Wrapper */
+    .info-modal-header {
+        padding: 1.5rem 1.5rem 0.5rem 1.5rem; 
+        flex-shrink: 0;
+        position: relative;
     }
     
     .info-close {
         position: absolute; top: 0; right: 0; padding: 1rem;
         color: #94A3B8; background: none; border: none; cursor: pointer;
+        z-index: 10;
     }
     .info-close:hover { color: #475569; }
 
     .info-title {
         font-size: 1.125rem; font-weight: 900; color: #0F172A;
-        margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;
+        /* margin-bottom: 1rem; REMOVED, handled by padding */
+        display: flex; align-items: center; gap: 0.5rem;
     }
     
+    /* New Scrollable Body */
+    .info-modal-body {
+        padding: 0.5rem 1.5rem 1.5rem 1.5rem;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+
+    /* New Footer */
+    .info-modal-footer {
+        padding: 1rem 1.5rem;
+        border-top: 1px solid #F1F5F9;
+        text-align: center;
+        flex-shrink: 0;
+        background-color: white;
+    }
+
     .info-box {
         padding: 1rem; border-radius: 0.75rem; margin-bottom: 1rem;
         border: 1px solid transparent;
@@ -930,39 +958,42 @@
 <!-- Info Modal -->
 <div id="synergyInfoModal" class="hidden" onclick="if(event.target === this) this.classList.add('hidden')">
     <div class="info-modal-content">
-        <button onclick="document.getElementById('synergyInfoModal').classList.add('hidden')" class="info-close">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x w-5 h-5"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg>
-        </button>
+        <div class="info-modal-header">
+            <button onclick="document.getElementById('synergyInfoModal').classList.add('hidden')" class="info-close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x w-5 h-5"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg>
+            </button>
+            <h3 class="info-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-indigo-500"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z"/></svg>
+                Synergy Labels
+            </h3>
+        </div>
         
-        <h3 class="info-title">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-indigo-500"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z"/></svg>
-            Synergy Labels
-        </h3>
-        
-        <div class="space-y-4">
-            <div class="info-box bg-indigo-50 border-indigo-100">
-                <div class="info-box-title text-indigo-700">Equal Performer</div>
-                <p class="info-box-text text-indigo-900">
-                    This card matches the <strong>highest earning rate</strong> in your wallet for this sibling subcategory within the same parent category. It's safe to use without missing out on points.
-                </p>
-            </div>
-            
-            <div class="info-box bg-green-50 border-green-100">
-                <div class="info-box-title text-green-700">Potential Candidate</div>
-                <p class="info-box-text text-green-900">
-                    A different subcategory under the same parent category yields <strong>equal or higher estimated value</strong> (4x+ points or top-tier cash back). Worth considering for similar purchases.
-                </p>
-            </div>
+        <div class="info-modal-body">
+            <div class="space-y-4">
+                <div class="info-box bg-indigo-50 border-indigo-100">
+                    <div class="info-box-title text-indigo-700">Equal Performer</div>
+                    <p class="info-box-text text-indigo-900">
+                        This card matches the <strong>highest earning rate</strong> in your wallet for this sibling subcategory within the same parent category. It's safe to use without missing out on points.
+                    </p>
+                </div>
+                
+                <div class="info-box bg-green-50 border-green-100">
+                    <div class="info-box-title text-green-700">Potential Candidate</div>
+                    <p class="info-box-text text-green-900">
+                        A different subcategory under the same parent category yields <strong>equal or higher estimated value</strong> (4x+ points or top-tier cash back). Worth considering for similar purchases.
+                    </p>
+                </div>
 
-            <div class="info-box bg-slate-50 border-slate-100">
-                <div class="info-box-title text-slate-500">Solid Choice</div>
-                <p class="info-box-text text-slate-500">
-                    This card earns within <strong>85% of your top card's value</strong> for this sibling category, though you have better options available.
-                </p>
+                <div class="info-box bg-slate-50 border-slate-100">
+                    <div class="info-box-title text-slate-500">Solid Choice</div>
+                    <p class="info-box-text text-slate-500">
+                        This card earns within <strong>85% of your top card's value</strong> for this sibling category, though you have better options available.
+                    </p>
+                </div>
             </div>
         </div>
         
-        <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #F1F5F9; text-align: center;">
+        <div class="info-modal-footer">
             <button onclick="document.getElementById('synergyInfoModal').classList.add('hidden')" style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.1em; background: none; border: none; cursor: pointer;">
                 Close
             </button>
