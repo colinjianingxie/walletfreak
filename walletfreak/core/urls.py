@@ -11,4 +11,7 @@ urlpatterns = [
     # Cron Jobs
     path('cron/email-notifications/', views.run_notification_cron, name='cron_email'),
     path('cron/email-cleanup/', views.run_cleanup_cron, name='cron_cleanup'),
+    
+    # Pricing
+    path('pricing/', views.pricing, name='pricing'),
 ]

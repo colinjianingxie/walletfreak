@@ -191,6 +191,17 @@ def blog_list(request):
         prefs = db.get_user_notification_preferences(uid)
         is_subscribed = prefs.get('blog_updates', {}).get('enabled', False)
 
+    # Check if user is premium
+    user_is_premium = False
+    if request.session.get('uid'):
+        user_is_premium = db.is_premium(request.session.get('uid'))
+        
+    # Also treat superusers/editors as premium for viewing purposes if needed, 
+    # but sticking to strict premium check or editor check.
+    # Usually editors should see everything.
+    if is_editor:
+        user_is_premium = True
+
     return render(request, 'blog/blog_list.html', {
         'blogs': blogs,
         'is_editor': is_editor,
@@ -202,7 +213,8 @@ def blog_list(request):
         'top_contributors': top_contributors,
         'now': datetime.now(),
         'total_users': total_users,
-        'is_subscribed': is_subscribed
+        'is_subscribed': is_subscribed,
+        'user_is_premium': user_is_premium
     })
 
 @login_required

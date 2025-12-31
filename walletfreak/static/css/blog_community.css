@@ -288,14 +288,6 @@
 }
 
 @media (max-width: 768px) {
-    .desktop-tags {
-        display: none !important;
-    }
-
-    .mobile-tags {
-        display: flex !important;
-    }
-
     .post-header {
         align-items: center;
     }

@@ -177,3 +177,9 @@ def run_cleanup_cron(request):
         return JsonResponse({'status': 'success', 'output': out.getvalue()})
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+
+def pricing(request):
+    context = {
+        'firebase_config': settings.FIREBASE_CLIENT_CONFIG,
+    }
+    return render(request, 'core/pricing.html', context)
