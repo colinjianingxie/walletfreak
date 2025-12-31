@@ -46,6 +46,14 @@
                     <span class="material-icons" style="font-size: 1rem;">edit</span>
                 </button>
             </div>
+            
+            {% if user_is_premium %}
+            <div class="badge badge-purple personality-badge" style="background: #F59E0B; color: white;">
+                <span class="material-icons" style="font-size: 16px;">auto_awesome</span>
+                WALLET FREAK PREMIUM
+            </div>
+            {% endif %}
+
             <div class="badge badge-purple personality-badge">
                 <span class="material-icons" style="font-size: 16px;">psychology</span>
                 {{ matched_personality.name|default:"Wallet Freak"|upper }}

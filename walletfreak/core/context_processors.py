@@ -20,7 +20,6 @@ def wallet_status(request):
                 user_profile = request.user_profile
             else:
                 # Fallback if middleware didn't run (e.g. tests)
-                from .services import db
                 user_profile = db.get_user_profile(uid)
 
             try:
@@ -55,8 +54,16 @@ def wallet_status(request):
             except Exception:
                 pass
             
+    # Check premium status
+    is_premium = False
+    if request.user.is_authenticated:
+        uid = request.session.get('uid')
+        if uid:
+            is_premium = db.is_premium(uid)
+
     return {
         'wallet_count': wallet_count,
         'user_profile': user_profile,
-        'assigned_personality': assigned_personality
+        'assigned_personality': assigned_personality,
+        'user_is_premium': is_premium
     }
