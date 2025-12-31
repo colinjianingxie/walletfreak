@@ -1,3 +1,4 @@
+{% load static %}
 <!-- Dashboard Header -->
 <div style="margin-bottom: 2.5rem;">
     <!-- Greeting Section -->
@@ -7,7 +8,7 @@
             {% if user_profile.photo_url %}
             <img src="{{ user_profile.photo_url }}" alt="Profile" style="width: 100%; height: 100%; object-fit: cover;">
             {% else %}
-            <span class="material-icons" style="font-size: 32px;">flight</span>
+            <img src="{% static 'images/personalities/' %}{{ assigned_personality.slug|default:'student-starter' }}.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover;">
             {% endif %}
         </div>
         <div>

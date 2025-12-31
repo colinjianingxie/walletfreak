@@ -96,13 +96,7 @@
             {% if blog.featured_image %}
             <div class="featured-image" style="position: relative; overflow: hidden; border-radius: 16px;">
                 <img src="{{ blog.featured_image }}" alt="{{ blog.title }}" style="width: 100%; height: auto; display: block;">
-                {% if locked %}
-                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center;">
-                    <div style="width: 80px; height: 80px; background: #FFFBEB; border-radius: 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 2px solid #F59E0B;">
-                        <span class="material-icons" style="font-size: 40px; color: #F59E0B;">lock_outline</span>
-                    </div>
-                </div>
-                {% endif %}
+
             </div>
             {% endif %}
 

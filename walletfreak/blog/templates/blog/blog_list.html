@@ -213,11 +213,7 @@
                             {% if post.featured_image %}
                             <div class="post-image" style="position: relative;">
                                 <img src="{{ post.featured_image }}" alt="{{ post.title }}">
-                                {% if post.is_premium and not user_is_premium %}
-                                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px);">
-                                    <span class="material-icons" style="color: white; font-size: 32px; background: rgba(0,0,0,0.5); padding: 8px; border-radius: 50%;">lock</span>
-                                </div>
-                                {% endif %}
+
                             </div>
                             {% endif %}
                         </div>

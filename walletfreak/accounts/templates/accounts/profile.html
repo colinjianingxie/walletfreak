@@ -21,9 +21,7 @@
                 {% if user_profile.photo_url %}
                     <img src="{{ user_profile.photo_url }}" alt="Profile" class="avatar-img" id="profile-avatar-display">
                 {% else %}
-                    <div class="avatar-placeholder" id="profile-avatar-placeholder">
-                        {{ user.first_name|first|default:user.username|first|upper|default:"✈️" }}
-                    </div>
+                    <img src="{% static 'images/personalities/' %}{{ assigned_personality.slug|default:'student-starter' }}.png" alt="Profile" class="avatar-img" id="profile-avatar-display">
                 {% endif %}
             </div>
             <!-- Edit Overlay -->
