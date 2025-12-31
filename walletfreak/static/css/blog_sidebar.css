@@ -1,0 +1,146 @@
+/* Filter Sidebar Styles */
+.sidebar-filter-card {
+    background: white;
+    border-radius: 24px;
+    padding: 1.5rem;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+}
+
+.filter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.filter-header h3 {
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: #111827;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.clear-filters {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #4F46E5;
+    text-decoration: none;
+
+}
+
+.clear-filters:hover {
+    text-decoration: underline;
+}
+
+.filter-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.filter-section {
+    margin-bottom: 0;
+}
+
+.filter-title {
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #9CA3AF;
+    margin-bottom: 0.75rem;
+}
+
+.filter-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.filter-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.375rem 0.75rem;
+    background: #F8FAFC;
+    border: 1px solid #F1F5F9;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #64748B;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    background: #F1F5F9;
+    border-color: #E2E8F0;
+    color: #475569;
+}
+
+.filter-btn.active {
+    background: #4F46E5;
+    border-color: #4F46E5;
+    color: white;
+}
+
+/* Inner Circle Promo */
+.inner-circle-card {
+    background: #0F172A;
+    border-radius: 24px;
+    padding: 2rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.inner-circle-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 120px;
+    background: #4F46E5;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.3;
+    z-index: 1;
+}
+
+.inner-circle-content {
+    position: relative;
+    z-index: 2;
+}
+
+.inner-circle-icon {
+    color: #FBBF24;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.inner-circle-btn {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background: #FBBF24;
+    color: #0F172A;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    margin-top: 1.5rem;
+    transition: all 0.2s;
+}
+
+.inner-circle-btn:hover {
+    background: white;
+}

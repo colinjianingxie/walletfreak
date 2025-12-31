@@ -156,6 +156,18 @@
         </div>
 
         <div class="form-group">
+            <label class="form-label" for="vendor">Vendor (Optional)</label>
+            <div class="select-wrapper">
+                <select id="vendor" name="vendor" class="form-select">
+                    <option value="">Select Vendor</option>
+                    {% for v in vendors %}
+                    <option value="{{ v }}" {% if blog.vendor == v %}selected{% endif %}>{{ v }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
             <label class="form-label" for="tags">Tags</label>
             <input type="text" id="tags" name="tags" class="form-input" value="{{ blog.tags }}" placeholder="credit cards, rewards, travel (comma-separated)">
         </div>
@@ -166,6 +178,25 @@
                 <option value="draft" {% if blog.status == 'draft' %}selected{% endif %}>Draft</option>
                 <option value="published" {% if blog.status == 'published' %}selected{% endif %}>Published</option>
                 <option value="archived" {% if blog.status == 'archived' %}selected{% endif %}>Archived</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="experience_level">Experience Level *</label>
+            <select id="experience_level" name="experience_level" class="form-select" required>
+                <option value="beginner" {% if blog.experience_level == 'beginner' %}selected{% endif %}>Beginner</option>
+                <option value="intermediate" {% if blog.experience_level == 'intermediate' %}selected{% endif %}>Intermediate</option>
+                <option value="advanced" {% if blog.experience_level == 'advanced' %}selected{% endif %}>Advanced</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="read_time">Read Time *</label>
+            <select id="read_time" name="read_time" class="form-select" required>
+                <option value="short" {% if blog.read_time == 'short' %}selected{% endif %}>Short (&lt; 3m)</option>
+                <option value="medium" {% if blog.read_time == 'medium' %}selected{% endif %}>Medium (3-7m)</option>
+                <option value="long" {% if blog.read_time == 'long' %}selected{% endif %}>Long (7m+)</option>
+                <option value="video" {% if blog.read_time == 'video' %}selected{% endif %}>Video Only</option>
             </select>
         </div>
 

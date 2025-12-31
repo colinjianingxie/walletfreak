@@ -33,6 +33,23 @@ class Blog(models.Model):
     # SEO and metadata
     featured_image = models.URLField(blank=True)
     tags = models.CharField(max_length=500, blank=True, help_text="Comma-separated tags")
+
+    # New Metadata Fields
+    READ_TIME_CHOICES = [
+        ('short', 'Short (< 3m)'),
+        ('medium', 'Medium (3-7m)'),
+        ('long', 'Long (7m+)'),
+        ('video', 'Video Only'),
+    ]
+    EXPERIENCE_LEVEL_CHOICES = [
+        ('beginner', 'Beginner'),
+        ('intermediate', 'Intermediate'),
+        ('advanced', 'Advanced'),
+        ('whale', 'Whale'),
+    ]
+
+    read_time = models.CharField(max_length=20, choices=READ_TIME_CHOICES, default='medium')
+    experience_level = models.CharField(max_length=20, choices=EXPERIENCE_LEVEL_CHOICES, default='intermediate')
     
     class Meta:
         ordering = ['-created_at']

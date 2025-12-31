@@ -10,13 +10,57 @@ from datetime import datetime
 import markdown
 from .models import Blog, Vote
 
+import ast
+from core.utils import get_all_card_vendors
+
+def parse_tags_helper(tags):
+    if not tags:
+        return []
+    
+    parsed_tags = []
+    if isinstance(tags, str):
+        if tags.startswith('[') and tags.endswith(']'):
+            try:
+                loaded = ast.literal_eval(tags)
+                if isinstance(loaded, list):
+                    parsed_tags = [str(t).lower().strip() for t in loaded]
+                else:
+                    parsed_tags = [tags.lower().strip()]
+            except:
+                 parsed_tags = [t.lower().strip() for t in tags.split(',') if t.strip()]
+        else:
+             parsed_tags = [t.lower().strip() for t in tags.split(',') if t.strip()]
+    elif isinstance(tags, list):
+         # Check for single stringified list in list
+         if len(tags) == 1 and isinstance(tags[0], str) and tags[0].startswith('[') and tags[0].endswith(']'):
+             try:
+                loaded = ast.literal_eval(tags[0])
+                if isinstance(loaded, list):
+                    parsed_tags = [str(t).lower().strip() for t in loaded]
+                else:
+                     parsed_tags = [str(t).lower().strip() for t in tags]
+             except:
+                 parsed_tags = [str(t).lower().strip() for t in tags]
+         else:
+             parsed_tags = [str(t).lower().strip() for t in tags]
+    return parsed_tags
+
 def blog_list(request):
     """Display list of published blogs with search and filtering"""
     # Get filter parameters
     category = request.GET.get('category')
     search_query = request.GET.get('q')
+    
+    # New Filter Parameters
+    ecosystem_filter = request.GET.get('ecosystem')
+    content_type_filter = request.GET.get('content_type') # Maps to tags
+    experience_filter = request.GET.get('experience') # Maps to experience_level
+    read_time_filter = request.GET.get('read_time') # Maps to read_time
+    
     uid = request.session.get('uid')
     
+
+
     # Handle saved posts category
     if category == 'Saved':
         if not uid:
@@ -30,8 +74,15 @@ def blog_list(request):
         # Get all published blogs
         blogs = db.get_blogs(status='published')
         
-        # Filter by category if specified
-        if category and category != 'All':
+        # Apply Filters
+        
+        # 1. Category / Content Type Filter (Legacy & New)
+        # Combine category (legacy from navbar) and content_type (new sidebar)
+        # If both present, specific content_type takes precedence or we treat 'category' as a pre-filter.
+        # Let's treat them as logical AND if both exist, but usually UI uses one.
+        
+        target_tags = []
+        if category and category not in ['All', 'Saved', 'Premium']:
             # Map plural categories to singular tags where necessary
             tag_mapping = {
                 'reviews': 'review',
@@ -40,26 +91,73 @@ def blog_list(request):
                 'news': 'news',
                 'strategy': 'strategy'
             }
+            target_tags.append(tag_mapping.get(category.lower(), category.lower()))
             
-            target_tag = tag_mapping.get(category.lower(), category.lower())
+        if content_type_filter:
+            target_tags.append(content_type_filter.lower())
             
+        if target_tags:
             filtered_blogs = []
             for b in blogs:
                 tags = b.get('tags')
                 if not tags:
                     continue
                 
-                if isinstance(tags, list):
-                    # Check if target tag matches any tag in the list (case-insensitive)
-                    if any(target_tag == str(t).lower() for t in tags):
-                        filtered_blogs.append(b)
-                else:
-                    # Check if target tag is in the string tag
-                    if target_tag in str(tags).lower():
-                        filtered_blogs.append(b)
+                # Check if matches ALL target tags (logical AND) or ANY?
+                # Usually category click is "Show me Reviews". Sidebar filter "News" should narrow it? or Replace?
+                # Sidebar UI suggests toggles. Let's do ANY match within the set of tags provided if multiple?
+                # But here we are building a list of required tags.
+                # Let's say if you selected 'Review' and 'News', it must have BOTH? Or Either?
+                # UI implies single selection per group mostly.
+                # Let's enforce that the blog must match the selected tag.
+                
+                blog_tags_list = parse_tags_helper(tags)
+                     
+                # Check if ALL target tags are present (narrowing down)
+                if all(t in blog_tags_list for t in target_tags):
+                    filtered_blogs.append(b)
             blogs = filtered_blogs
-    
-    # Filter by search query if specified
+            
+        # 2. Premium Filter
+        if category == 'Premium':
+            blogs = [b for b in blogs if b.get('is_premium')]
+            
+        # 3. Ecosystem Filter (Match any vendor in article content/tags? Or manual tagging?)
+        # User request: "For Ecosystem, pull out all of the unique vendors on the credit cards and display them there."
+        # Does this mean we filter blogs that mention them? Or blogs tagged with them?
+        # Assuming blogs are tagged with vendors (e.g. 'Amex', 'Chase'). 
+        # So check if 'ecosystem_filter' (e.g. 'Amex') is in blog tags or title/content?
+
+        # Filters (Multi-select)
+        ecosystem_filters = request.GET.getlist('ecosystem')
+        tag_filters = request.GET.getlist('tag')
+        experience_filters = request.GET.getlist('experience_level')
+        read_time_filters = request.GET.getlist('read_time')
+
+        # Apply Multi-select Filters (AND across categories, OR within category)
+        if ecosystem_filters:
+            # Filter: Keep blog if its vendor is in the list
+            blogs = [b for b in blogs if b.get('vendor') in ecosystem_filters]
+            
+        if tag_filters:
+            # Filter: Keep blog if ANY of its tags match the selected tags
+            filtered_blogs = []
+            for b in blogs:
+                b_tags = b.get('tags', '')
+                parsed_tags = parse_tags_helper(b_tags)
+                # Check intersection
+                if any(t in tag_filters for t in parsed_tags):
+                    filtered_blogs.append(b)
+            blogs = filtered_blogs
+            
+        if experience_filters:
+            blogs = [b for b in blogs if b.get('experience_level') in experience_filters]
+            
+        if read_time_filters:
+            blogs = [b for b in blogs if b.get('read_time') in read_time_filters]
+            
+    # Search Filter (applied after all other filters)
+    # Search Filter (applied after all other filters)
     if search_query and category != 'Saved':
         query = search_query.lower()
         filtered_blogs = []
@@ -73,16 +171,19 @@ def blog_list(request):
             if query in b.get('excerpt', '').lower():
                 filtered_blogs.append(b)
                 continue
-                
+            
+            # Check content
+            if query in b.get('content', '').lower():
+                filtered_blogs.append(b)
+                continue
+
             # Check tags
             tags = b.get('tags')
             if tags:
-                if isinstance(tags, list):
-                    if any(query in str(t).lower() for t in tags):
-                        filtered_blogs.append(b)
-                else:
-                    if query in str(tags).lower():
-                        filtered_blogs.append(b)
+                parsed = parse_tags_helper(tags)
+                if any(query in t.lower() for t in parsed):
+                    filtered_blogs.append(b)
+                    continue
         blogs = filtered_blogs
     
     # Check if user is an editor
@@ -95,6 +196,46 @@ def blog_list(request):
     if uid:
         user_saved_posts = db.get_user_saved_post_ids(uid)
     
+    # Prepare Data for Sidebar
+    
+    # 1. Ecosystem (Vendors)
+    # Get all vendors actually used in published blogs
+    unique_vendors = set()
+    all_published_blogs_filter = db.get_blogs(status='published')
+    for b in all_published_blogs_filter:
+        v = b.get('vendor')
+        if v:
+            unique_vendors.add(v)
+    unique_vendors = sorted(list(unique_vendors))
+    
+    # 2. Content Type (Tags)
+    # Collect all unique tags from published blogs
+    all_tags = set()
+    # Reuse the list we just fetched
+    for b in all_published_blogs_filter:
+        t = b.get('tags')
+        if t:
+            # Use the helper to get clean tags
+            parsed = parse_tags_helper(t)
+            for tag in parsed:
+                all_tags.add(tag)
+    
+    sorted_tags = sorted(list(all_tags))
+    
+    # 3. Static Choices
+    experience_levels = [
+        ('beginner', 'Beginner'),
+        ('intermediate', 'Intermediate'),
+        ('advanced', 'Advanced'),
+    ]
+    
+    read_times = [
+        ('short', 'Short (< 3m)'),
+        ('medium', 'Medium (3-7m)'),
+        ('long', 'Long (7m+)'),
+        ('video', 'Video Only'),
+    ]
+
     # Add vote counts and user votes to each blog
     for blog in blogs:
         blog_id = blog.get('id')
@@ -112,32 +253,8 @@ def blog_list(request):
             # Normalize tags to list for template
             tags = blog.get('tags')
             if tags:
-                if isinstance(tags, str):
-                    # Check if it's a string representation of a list
-                    if tags.startswith('[') and tags.endswith(']'):
-                        try:
-                            import ast
-                            tags_list = ast.literal_eval(tags)
-                            if isinstance(tags_list, list):
-                                blog['tags'] = tags_list
-                            else:
-                                blog['tags'] = [t.strip() for t in tags.split(',') if t.strip()]
-                        except:
-                             blog['tags'] = [t.strip() for t in tags.split(',') if t.strip()]
-                    else:
-                        blog['tags'] = [t.strip() for t in tags.split(',') if t.strip()]
-                elif isinstance(tags, list):
-                    # Check if it's a list containing a single string representation
-                    if len(tags) == 1 and isinstance(tags[0], str) and tags[0].startswith('[') and tags[0].endswith(']'):
-                         try:
-                            import ast
-                            inner_list = ast.literal_eval(tags[0])
-                            if isinstance(inner_list, list):
-                                blog['tags'] = inner_list
-                         except:
-                            pass
-
-    
+                blog['tags'] = parse_tags_helper(tags)
+                            
     # Get trending posts (top 3 most upvoted published posts)
     trending_posts = []
     top_contributors = []
@@ -202,7 +319,7 @@ def blog_list(request):
     if is_editor:
         user_is_premium = True
 
-    return render(request, 'blog/blog_list.html', {
+    context = {
         'blogs': blogs,
         'is_editor': is_editor,
         'current_category': category,
@@ -214,8 +331,24 @@ def blog_list(request):
         'now': datetime.now(),
         'total_users': total_users,
         'is_subscribed': is_subscribed,
-        'user_is_premium': user_is_premium
-    })
+        'user_is_premium': user_is_premium,
+        # Sidebar Context
+        'ecosystem_vendors': unique_vendors,
+        'tags': sorted_tags,
+        'experience_levels': experience_levels,
+        'read_times': read_times,
+        'active_filters': {
+            'ecosystem': ecosystem_filter,
+            'content_type': content_type_filter,
+            'experience': experience_filter,
+            'read_time': read_time_filter,
+        }
+    }
+
+    if request.headers.get('HX-Request') or request.headers.get('Hx-Request'):
+        return render(request, 'blog/partials/blog_list_results.html', context)
+
+    return render(request, 'blog/blog_list.html', context)
 
 @login_required
 def blog_drafts(request):
@@ -239,6 +372,10 @@ def blog_detail(request, slug):
     blog = db.get_blog_by_slug(slug)
     if not blog:
         raise Http404("Post not found")
+    
+    # Parse tags robustly
+    if blog.get('tags'):
+        blog['tags'] = parse_tags_helper(blog['tags'])
     
     # Check if user is an editor (can view drafts)
     is_editor = False
@@ -441,11 +578,23 @@ def blog_create(request):
         status = request.POST.get('status', 'draft')
         is_premium = request.POST.get('is_premium') == 'on'
         
+        # New Metadata Fields
+        read_time = request.POST.get('read_time', 'medium')
+        experience_level = request.POST.get('experience_level', 'intermediate')
+        vendor = request.POST.get('vendor', '')
+        
         # Validate required fields
+        error = None
         if not title or not content:
+            error = 'Title and content are required'
+        elif not tags:
+             error = 'At least one tag is required (Content Type)'
+             
+        if error:
             return render(request, 'blog/blog_create.html', {
-                'error': 'Title and content are required',
-                'form_data': request.POST
+                'error': error,
+                'form_data': request.POST,
+                'vendors': vendors
             })
         
         # Generate slug from title
@@ -473,6 +622,9 @@ def blog_create(request):
             'featured_image': featured_image,
             'tags': tags,
             'is_premium': is_premium,
+            'read_time': read_time,
+            'experience_level': experience_level,
+            'vendor': vendor,
             'created_at': datetime.now(),
             'updated_at': datetime.now(),
         }
@@ -486,7 +638,8 @@ def blog_create(request):
         
         return redirect('blog_detail', slug=slug)
     
-    return render(request, 'blog/blog_create.html')
+    vendors = get_all_card_vendors()
+    return render(request, 'blog/blog_create.html', {'vendors': vendors})
 
 @login_required
 def blog_edit(request, slug):
@@ -499,6 +652,8 @@ def blog_edit(request, slug):
     blog = db.get_blog_by_slug(slug)
     if not blog:
         raise Http404("Post not found")
+        
+    vendors = get_all_card_vendors()
     
     if request.method == 'POST':
         # Get form data
@@ -510,11 +665,23 @@ def blog_edit(request, slug):
         status = request.POST.get('status', 'draft')
         is_premium = request.POST.get('is_premium') == 'on'
         
+        # New Metadata Fields
+        read_time = request.POST.get('read_time', 'medium')
+        experience_level = request.POST.get('experience_level', 'intermediate')
+        vendor = request.POST.get('vendor', '')
+        
         # Validate required fields
+        error = None
         if not title or not content:
+            error = 'Title and content are required'
+        elif not tags:
+             error = 'At least one tag is required (Content Type)'
+             
+        if error:
             return render(request, 'blog/blog_edit.html', {
                 'blog': blog,
-                'error': 'Title and content are required'
+                'error': error,
+                'vendors': vendors
             })
         
         # Prepare update data
@@ -526,6 +693,9 @@ def blog_edit(request, slug):
             'tags': tags,
             'status': status,
             'is_premium': is_premium,
+            'read_time': read_time,
+            'experience_level': experience_level,
+            'vendor': vendor,
             'updated_at': datetime.now(),
         }
         
@@ -548,7 +718,7 @@ def blog_edit(request, slug):
         
         return redirect('blog_detail', slug=slug)
     
-    return render(request, 'blog/blog_edit.html', {'blog': blog})
+    return render(request, 'blog/blog_edit.html', {'blog': blog, 'vendors': vendors})
 
 @login_required
 @require_POST

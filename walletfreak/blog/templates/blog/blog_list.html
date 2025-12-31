@@ -1,814 +1,115 @@
 {% extends 'base.html' %}
 {% load static %}
-{% csrf_token %}
+{% load blog_extras %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/blog_community.css' %}">
-<style>
-    /* Small screen optimization (iPhone SE, etc.) */
-    @media (max-width: 400px) {
-        .action-text,
-        .action-count {
-            display: none !important;
-        }
-        
-        .action-group {
-            justify-content: space-between;
-            width: 100%;
-            gap: 0.25rem;
-        }
-        
-        .action-btn {
-            padding: 0.5rem;
-            gap: 0.25rem;
-        }
-        
-        .action-btn .material-icons {
-            font-size: 22px;
-        }
-    }
-    
-    /* Toast Notifications */
-    .toast-container {
-        position: fixed;
-        bottom: 24px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 10000;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        pointer-events: none;
-    }
-    
-    .toast {
-        background: #333;
-        color: white;
-        padding: 12px 24px;
-        border-radius: 50px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-weight: 500;
-        opacity: 0;
-        transform: translateY(20px);
-        transition: all 0.3s ease;
-        pointer-events: auto;
-    }
-    
-    .toast.show {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    
-    .toast.success { background: #10B981; }
-    .toast.error { background: #EF4444; }
-    .toast.info { background: #3B82F6; }
-    
-    /* Category Badges */
-    .post-category {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-        background: transparent !important;
-        padding: 0 !important;
-    }
-    
-    .category-badge {
-        background: #eef2ff;
-        color: #4f46e5;
-        font-size: 11px;
-        font-weight: 700;
-        padding: 4px 8px;
-        border-radius: 4px;
-        letter-spacing: 0.5px;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'css/blog_redesign.css' %}">
 {% endblock %}
 
-{% block main_style %}background: #F8F9FA; min-height: 100vh; padding: 0;{% endblock %}
+{% block content %}
+<div class="blog-layout">
+    
+    <!-- Header -->
+    <header class="blog-header">
+        <h1 class="blog-page-title">The Ledger</h1>
+        <p class="blog-page-subtitle">Proprietary strategies and card intelligence.</p>
+    </header>
 
-{% block full_width_content %}
-<div class="blog-container">
-    <!-- Header with Search -->
-    <div class="blog-header">
-        <div class="container">
-            <div class="header-content">
-                <div class="search-wrapper">
-                    <span class="search-icon material-icons">search</span>
-                    <form action="." method="GET" style="width: 100%;">
-                        {% if current_category and current_category != 'All' %}
-                        <input type="hidden" name="category" value="{{ current_category }}">
-                        {% endif %}
-                        <input type="text" name="q" placeholder="Search the community..." value="{{ search_query|default:'' }}" class="search-input">
-                    </form>
-                </div>
-                
-                <!-- Category Tabs -->
-                <div class="category-tabs">
-                    <a href="?category=All" class="category-tab {% if not current_category or current_category == 'All' %}active{% endif %}">All</a>
-                    <a href="?category=Reviews" class="category-tab {% if current_category == 'Reviews' %}active{% endif %}">Reviews</a>
-                    <a href="?category=Guides" class="category-tab {% if current_category == 'Guides' %}active{% endif %}">Guides</a>
-                    <a href="?category=Tips" class="category-tab {% if current_category == 'Tips' %}active{% endif %}">Tips</a>
-                    <a href="?category=News" class="category-tab {% if current_category == 'News' %}active{% endif %}">News</a>
-                    <a href="?category=Strategy" class="category-tab {% if current_category == 'Strategy' %}active{% endif %}">Strategy</a>
-                    <a href="?category=Saved" class="category-tab {% if current_category == 'Saved' %}active{% endif %}">Saved</a>
-                </div>
-            </div>
-            
-            <!-- Mobile Category Tabs (shown only on mobile, right below search) -->
-            <div class="mobile-category-tabs">
-                <a href="?category=All" class="mobile-tab {% if not current_category or current_category == 'All' %}active{% endif %}">All</a>
-                <a href="?category=Reviews" class="mobile-tab {% if current_category == 'Reviews' %}active{% endif %}">Reviews</a>
-                <a href="?category=Guides" class="mobile-tab {% if current_category == 'Guides' %}active{% endif %}">Guides</a>
-                <a href="?category=Tips" class="mobile-tab {% if current_category == 'Tips' %}active{% endif %}">Tips</a>
-                <a href="?category=News" class="mobile-tab {% if current_category == 'News' %}active{% endif %}">News</a>
-                <a href="?category=Strategy" class="mobile-tab {% if current_category == 'Strategy' %}active{% endif %}">Strategy</a>
-                <a href="?category=Saved" class="mobile-tab {% if current_category == 'Saved' %}active{% endif %}">Saved</a>
-            </div>
+    <!-- Mobile Controls (Search & Chips) -->
+    <div class="mobile-controls">
+        <div class="search-wrapper">
+             <span class="material-icons search-icon">search</span>
+             <input type="text" 
+                    name="q" 
+                    class="search-input" 
+                    placeholder="Search ledger..." 
+                    value="{{ search_query|default:'' }}"
+                    hx-get="{% url 'blog_list' %}" 
+                    hx-trigger="keyup changed delay:500ms" 
+                    hx-target="#blog-grid-container" 
+                    hx-select="#blog-grid"
+                    hx-push-url="true">
+        </div>
+        <!-- Mobile Chips (Simplified horizontal scroll) -->
+        <div class="filter-chips" style="flex-wrap: nowrap; overflow-x: auto; padding-bottom: 5px;">
+            {% for vendor in ecosystem_vendors|slice:":6" %}
+            <a href="?{% toggle_url 'ecosystem' vendor %}" 
+               class="filter-chip {% if vendor in active_filters.ecosystem %}active{% endif %}"
+               hx-get="?{% toggle_url 'ecosystem' vendor %}"
+               hx-target="#blog-grid-container"
+               hx-push-url="true"
+               style="white-space: nowrap;">
+               {{ vendor }}
+            </a>
+            {% endfor %}
         </div>
     </div>
-
-    <!-- Main Content -->
-    <div class="container">
-        <div class="blog-layout">
-            <!-- Posts Feed -->
-            <div class="posts-feed">
-                {% for post in blogs %}
-                <article class="post-card" data-href="{% url 'blog_detail' post.slug %}" data-slug="{{ post.slug }}" data-id="{{ post.id }}">
-                    <!-- Post Vote Section -->
-                    <div class="post-vote" onclick="event.stopPropagation();">
-                        {% if is_authenticated %}
-                        <button class="vote-btn upvote {% if post.user_vote == 'upvote' %}active{% endif %}"
-                                data-slug="{{ post.slug }}" data-vote-type="upvote">
-                            <span class="material-icons">local_fire_department</span>
-                        </button>
-                        <span class="vote-count" style="{% if post.user_vote != 'upvote' %}color: #ccc;{% endif %}">{{ post.upvote_count|default:0 }}</span>
-                        {% else %}
-                        <button class="vote-btn upvote" onclick="showLoginModal()">
-                            <span class="material-icons">local_fire_department</span>
-                        </button>
-                        <span class="vote-count" style="{% if post.user_vote != 'upvote' %}color: #ccc;{% endif %}">{{ post.upvote_count|default:0 }}</span>
-                        {% endif %}
-                    </div>
-
-                    <!-- Post Main Content -->
-                    <div class="post-main">
-                        <!-- Post Header -->
-                        <div class="post-header">
-                            <div class="post-author">
-                                <div class="author-avatar">
-                                    {% if post.author_avatar %}
-                                    <img src="{{ post.author_avatar }}" alt="{{ post.author_username }}">
-                                    {% else %}
-                                    <span class="material-icons">person</span>
-                                    {% endif %}
-                                </div>
-                                <div class="author-info">
-                                    <span class="author-name">@{{ post.author_username|default:"Unknown" }}</span>
-                                    <span class="post-time">{{ post.published_at|timesince }} ago &bull; {{ post.view_count|default:0 }} views</span>
-                                </div>
-                            </div>
-                            <div class="post-category">
-                                {% for tag in post.tags %}
-                                    {% if post.is_premium %}
-                                    <span class="category-badge" style="background: #FFFBEB; color: #F59E0B; display: inline-flex; align-items: center; gap: 4px;">
-                                        <span class="material-icons" style="font-size: 14px;">emoji_events</span> {{ tag|upper }}
-                                    </span>
-                                    {% else %}
-                                    <span class="category-badge">{{ tag|upper }}</span>
-                                    {% endif %}
-                                {% empty %}
-                                    <span class="category-badge">UNCATEGORIZED</span>
-                                {% endfor %}
-                            </div>
-                        </div>
-
-                        <!-- Post Content -->
-                        <div class="post-content">
-                            <div class="post-text">
-                                <h2 class="post-title">
-                                    {{ post.title }}
-                                </h2>
-                                
-                                <!-- TL;DR Section -->
-                                {% if post.excerpt %}
-                                    {% if post.is_premium and not user_is_premium %}
-                                    <div class="post-tldr" style="border-left: none; background-color: #FFFBEB; padding: 1rem; border-radius: 8px; display: flex; align-items: center; justify-content: flex-start;">
-                                        <a href="/pricing" class="action-btn" style="background-color: #F59E0B; color: white; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.9rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: background-color 0.2s;">
-                                            <span class="material-icons" style="font-size: 18px;">lock_open</span>
-                                            Get Premium
-                                        </a>
-                                    </div>
-                                    {% else %}
-                                    <div class="post-tldr">
-                                        <span class="tldr-label">TL;DR</span>
-                                        <span class="tldr-text">{{ post.excerpt }}</span>
-                                    </div>
-                                    {% endif %}
-                                {% endif %}
-                            </div>
-                            
-                            {% if post.featured_image %}
-                            <div class="post-image" style="position: relative;">
-                                <img src="{{ post.featured_image }}" alt="{{ post.title }}">
-
-                            </div>
-                            {% endif %}
-                        </div>
-
-
-
-                        <!-- Post Actions -->
-                        <div class="post-actions" onclick="event.stopPropagation();">
-                            <div class="action-group">
-                                <!-- Mobile-style voting button -->
-                                {% if is_authenticated %}
-                                <button class="action-btn mobile-vote-btn {% if post.user_vote == 'upvote' %}active{% endif %}"
-                                        data-slug="{{ post.slug }}" data-vote-type="upvote">
-                                    <span class="material-icons" style="{% if not post.upvote_count or post.upvote_count == 0 %}color: #ccc;{% endif %}">local_fire_department</span>
-                                    <span class="action-count" style="{% if post.user_vote != 'upvote' %}color: #ccc;{% endif %}">{{ post.upvote_count|default:0 }}</span>
-                                </button>
-                                {% else %}
-                                <button class="action-btn mobile-vote-btn" onclick="showLoginModal()">
-                                    <span class="material-icons" style="{% if not post.upvote_count or post.upvote_count == 0 %}color: #ccc;{% endif %}">local_fire_department</span>
-                                    <span class="action-count" style="color: #ccc;">{{ post.upvote_count|default:0 }}</span>
-                                </button>
-                                {% endif %}
-                                
-                                <button class="action-btn comment-btn">
-                                    <span class="material-icons">chat_bubble_outline</span>
-                                    <span class="action-count">{{ post.comment_count|default:0 }}</span>
-                                    <span class="action-text">Comments</span>
-                                </button>
-                                <button class="action-btn share-btn">
-                                    <span class="material-icons">share</span>
-                                    <span class="action-text">Share</span>
-                                </button>
-                                <button class="action-btn save-btn" data-slug="{{ post.slug }}" data-id="{{ post.id }}">
-                                    <span class="material-icons">bookmark_border</span>
-                                    <span class="action-text">Save</span>
-                                </button>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </article>
-                {% empty %}
-                <div class="empty-state">
-                    <span class="material-icons">article</span>
-                    <h3>No posts found</h3>
-                    <p>Try adjusting your search or category filter.</p>
-                </div>
-                {% endfor %}
-            </div>
-
-            <!-- Sidebar -->
-            <div class="blog-sidebar">
-                {% if is_editor %}
-                <!-- Editor Tools -->
-                <div class="sidebar-card editor-card" style="border: 1px solid #E5E7EB;">
-                    <div class="card-header">
-                        <span class="material-icons" style="color: #4F46E5;">admin_panel_settings</span>
-                        <h4 style="color: #1F2937;">EDITOR TOOLS</h4>
-                    </div>
-                    <div style="padding: 0 1.5rem 1.5rem 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
-                        <a href="{% url 'blog_drafts' %}" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: #EEF2FF; color: #4F46E5; padding: 0.75rem; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s;">
-                            <span class="material-icons" style="font-size: 20px;">description</span>
-                            Manage Drafts
-                        </a>
-                        <a href="{% url 'blog_create' %}" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: #4F46E5; color: white; padding: 0.75rem; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s;">
-                            <span class="material-icons" style="font-size: 20px;">add</span>
-                            New Post
-                        </a>
-                    </div>
-                </div>
-                {% endif %}
-
-                <!-- Community Info -->
-                <div class="sidebar-card community-card">
-                    <div class="community-header">
-                        <div class="community-icon">
-                            <span class="material-icons">bolt</span>
-                        </div>
-                        <div class="community-info">
-                            <h3>The Ledger</h3>
-                            <span class="community-status">
-                                <span class="status-dot"></span>
-                                {{ total_users|default:0 }} Subscribers
-                            </span>
-                        </div>
-                    </div>
-                    <p class="community-description">
-                        The unofficial official headquarters for credit card optimizers, point hoarders, and spreadsheet enthusiasts.
-                    </p>
-                    
-                    {% if is_authenticated %}
-                        {% if is_subscribed %}
-                        <button class="join-btn subscribed" disabled style="background: #ccc; cursor: default;">Subscribed</button>
-                        {% else %}
-                        <button class="join-btn" onclick="showSubscribeModal()">Join Community</button>
-                        {% endif %}
-                    {% else %}
-                        <button class="join-btn" onclick="showLoginModal()">Join Community</button>
-                    {% endif %}
-                </div>
-
-                <!-- Trending Topics -->
-                <div class="sidebar-card trending-card">
-                    <div class="card-header">
-                        <span class="material-icons">local_fire_department</span>
-                        <h4>TRENDING TOPICS</h4>
-                    </div>
-                    <div class="trending-list">
-                        {% for post in trending_posts %}
-                        <div class="trending-item">
-                            <span class="trending-rank">{{ forloop.counter }}</span>
-                            <div class="trending-content">
-                                <a href="{% url 'blog_detail' post.slug %}" class="trending-title">{{ post.title }}</a>
-                                <span class="trending-score">{{ post.upvote_count|default:0 }} upvote{{ post.upvote_count|pluralize }}</span>
-                            </div>
-                        </div>
-                        {% empty %}
-                        <div class="trending-item">
-                            <span class="trending-rank">1</span>
-                            <div class="trending-content">
-                                <span class="trending-title">No trending posts yet</span>
-                                <span class="trending-score">Start voting!</span>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <!-- Top Contributors -->
-                <div class="sidebar-card contributors-card">
-                    <div class="card-header">
-                        <span class="material-icons">emoji_events</span>
-                        <h4>TOP CONTRIBUTORS</h4>
-                    </div>
-                    <div class="contributors-list">
-                        {% for contributor in top_contributors %}
-                        <div class="contributor-item">
-                            <div class="contributor-avatar">
-                                <span class="material-icons">person</span>
-                            </div>
-                            <span class="contributor-name">@{{ contributor.username }}</span>
-                            <span class="contributor-points">{{ contributor.post_count }} post{{ contributor.post_count|pluralize }}</span>
-                        </div>
-                        {% empty %}
-                        <div class="contributor-item">
-                            <div class="contributor-avatar">
-                                <span class="material-icons">person</span>
-                            </div>
-                            <span class="contributor-name">No contributors yet</span>
-                            <span class="contributor-points">Start writing!</span>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Loading Modal for Voting -->
-
-{% if is_editor %}
-<!-- Floating Action Button for Editors -->
-<a href="{% url 'blog_create' %}" class="fab">
-    <span class="material-icons">add</span>
-</a>
-{% endif %}
-
-<!-- Toast Container -->
-<div class="toast-container" id="toast-container"></div>
-
-<script>
-// Toast System
-function showToast(message, type = 'info') {
-    const container = document.getElementById('toast-container');
-    if (!container) return;
     
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    
-    let icon = 'info';
-    if (type === 'success') icon = 'check_circle';
-    if (type === 'error') icon = 'error';
-    
-    toast.innerHTML = `
-        <span class="material-icons toast-icon">${icon}</span>
-        <span>${message}</span>
-    `;
-    
-    container.appendChild(toast);
-    
-    requestAnimationFrame(() => {
-        toast.classList.add('show');
-    });
-    
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => {
-            toast.remove();
-        }, 300);
-    }, 3000);
-}
-
-// Add interactivity for post actions
-document.addEventListener('DOMContentLoaded', function() {
-    const currentUid = '{{ request.session.uid|default:"" }}';
-
-    // Initial pass: Set vote states from LocalStorage
-    document.querySelectorAll('.post-card').forEach(card => {
-        const blogId = card.getAttribute('data-id');
-        if (blogId) {
-            const hasVoted = localStorage.getItem(`vote_blog_${blogId}`) === 'true';
-            if (hasVoted) {
-                const upvoteBtn = card.querySelector('.vote-btn.upvote');
-                const mobileUpvoteBtn = card.querySelector('.mobile-vote-btn');
-                const voteCount = card.querySelector('.vote-count');
-                const mobileCount = card.querySelector('.mobile-vote-btn .action-count');
-                const mobileIcon = mobileUpvoteBtn ? mobileUpvoteBtn.querySelector('.material-icons') : null;
-
-                if (upvoteBtn) upvoteBtn.classList.add('active');
-                if (mobileUpvoteBtn) mobileUpvoteBtn.classList.add('active');
-                if (voteCount) voteCount.style.color = '';
-                if (mobileCount) mobileCount.style.color = '';
-                if (mobileIcon) mobileIcon.style.color = '';
-            }
-        }
-    });
-
-    // Make post cards clickable
-    document.querySelectorAll('.post-card').forEach(card => {
-        card.addEventListener('click', function() {
-            const href = this.getAttribute('data-href');
-            if (href) {
-                window.location.href = href;
-            }
-        });
-
-        // Real-time vote listener
-        const blogId = card.getAttribute('data-id');
+    <div class="blog-layout-grid">
         
-        if (blogId) {
-            db.collection('blogs').doc(blogId).onSnapshot((doc) => {
-                if (doc.exists) {
-                    const data = doc.data();
-                    const count = data.upvote_count || 0;
-                    
-                    // Update counts (desktop and mobile)
-                    const voteCount = card.querySelector('.vote-count');
-                    const mobileVoteCount = card.querySelector('.mobile-vote-btn .action-count');
-                    
-                    const mobileVoteBtn = card.querySelector('.mobile-vote-btn');
-                    const mobileIcon = mobileVoteBtn ? mobileVoteBtn.querySelector('.material-icons') : null;
-                    
-                    if (voteCount) voteCount.textContent = count;
-                    if (mobileVoteCount) mobileVoteCount.textContent = count;
-                    
-                    // Check local state again to ensure style consistency
-                    const hasVoted = localStorage.getItem(`vote_blog_${blogId}`) === 'true';
-                    
-                    // Update mobile icon color
-                    if (mobileIcon) {
-                        if (count === 0 && !hasVoted) {
-                            mobileIcon.style.color = '#ccc';
-                        } else {
-                            mobileIcon.style.color = ''; 
-                        }
-                    }
-                    
-                    if (voteCount) {
-                         voteCount.style.color = hasVoted || count > 0 ? '' : '#ccc';
-                    }
-                    if (mobileVoteCount) {
-                         mobileVoteCount.style.color = hasVoted || count > 0 ? '' : '#ccc';
-                    }
-                }
-            });
-        }
-    });
+        <!-- Sidebar -->
+        <aside class="blog-sidebar-col">
+            <div id="blog-sidebar">
+                {% include "blog/partials/sidebar.html" %}
+            </div>
 
-    // Real-time Saved Posts Listener
-    if (currentUid) {
-        db.collection('users').doc(currentUid).collection('saved_posts').onSnapshot((snapshot) => {
-            const savedPostIds = new Set();
-            snapshot.forEach(doc => {
-                savedPostIds.add(doc.id);
-            });
-            
-            document.querySelectorAll('.post-card').forEach(card => {
-                const postId = card.getAttribute('data-id');
-                const btn = card.querySelector('.save-btn');
-                
-                if (btn && postId) {
-                    const icon = btn.querySelector('.material-icons');
-                    const text = btn.querySelector('.action-text');
-                    
-                    if (savedPostIds.has(postId)) {
-                        btn.classList.add('active');
-                        if (icon) icon.textContent = 'bookmark';
-                        if (text) text.textContent = 'Saved';
-                    } else {
-                        btn.classList.remove('active');
-                        if (icon) icon.textContent = 'bookmark_border';
-                        if (text) text.textContent = 'Save';
-                    }
-                }
-            });
-        });
-    }
-
-    // Vote buttons (both desktop and mobile)
-    document.querySelectorAll('.vote-btn, .mobile-vote-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.stopPropagation(); // Prevent card click
-            
-            {% if is_authenticated %}
-            const card = this.closest('.post-card');
-            const blogId = card.getAttribute('data-id');
-            const slug = this.getAttribute('data-slug');
-            const voteType = this.getAttribute('data-vote-type');
-            
-            if (!slug || !voteType) return;
-            
-            const storageKey = `vote_blog_${blogId}`;
-            let hasVoted = localStorage.getItem(storageKey) === 'true';
-            
-            // Determine action
-            const action = hasVoted ? 'remove' : 'add';
-            
-            // Optimistic Toggle
-            hasVoted = !hasVoted;
-            localStorage.setItem(storageKey, hasVoted);
-            
-            // Create a set of buttons for this card to update all of them
-            const cardButtons = card.querySelectorAll('.vote-btn, .mobile-vote-btn');
-            
-            cardButtons.forEach(b => {
-                if (hasVoted) b.classList.add('active');
-                else b.classList.remove('active');
-            });
-            
-            // Fetch logic
-            function getCookie(name) {
-                let cookieValue = null;
-                if (document.cookie && document.cookie !== '') {
-                    const cookies = document.cookie.split(';');
-                    for (let i = 0; i < cookies.length; i++) {
-                        const cookie = cookies[i].trim();
-                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                            break;
-                        }
-                    }
-                }
-                return cookieValue;
-            }
-            
-            const csrftoken = getCookie('csrftoken') || document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
-            
-            fetch(`/blog/${slug}/vote/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'X-CSRFToken': csrftoken
-                },
-                body: `vote_type=${voteType}&action=${action}`,
-                credentials: 'same-origin'
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (!data.success) {
-                    showToast(data.error || 'Vote failed', 'error');
-                    // Revert
-                    hasVoted = !hasVoted;
-                    localStorage.setItem(storageKey, hasVoted);
-                    cardButtons.forEach(b => {
-                        if (hasVoted) b.classList.add('active');
-                        else b.classList.remove('active');
-                    });
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showToast('An error occurred while voting', 'error');
-                // Revert
-                hasVoted = !hasVoted;
-                localStorage.setItem(storageKey, hasVoted);
-                cardButtons.forEach(b => {
-                    if (hasVoted) b.classList.add('active');
-                    else b.classList.remove('active');
-                });
-            });
-            {% else %}
-            showLoginModal();
+            <!-- Admin Actions (Editors Only) -->
+            {% if is_editor %}
+            <div class="inner-circle-promo" style="background: white; border: 1px solid #e2e8f0; margin-top: 2rem;">
+                <div class="promo-content">
+                    <span class="material-icons crown-icon" style="color: #6366F1; background: rgba(99, 102, 241, 0.1);">edit_note</span>
+                    <h4 class="promo-title">Editor Console</h4>
+                    <p class="promo-text">Manage the ledger and drafts.</p>
+                    <div style="display: flex; gap: 0.5rem; margin-top: 1rem; width: 100%;">
+                        <a href="{% url 'blog_create' %}" class="promo-btn" style="text-align: center; flex: 1; justify-content: center;">Create</a>
+                        <a href="{% url 'blog_drafts' %}" class="promo-btn" style="text-align: center; flex: 1; justify-content: center; background: white; color: #0F172A; border: 1px solid #e2e8f0;">Drafts</a>
+                    </div>
+                </div>
+            </div>
             {% endif %}
-        });
-    });
 
-
-    // Save buttons
-    document.querySelectorAll('.save-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.stopPropagation(); // Prevent card click
-            
-            {% if not is_authenticated %}
-            showLoginModal();
-            return;
+            <!-- Inner Circle Promo (Non-Premium Only) -->
+            {% if not user_is_premium %}
+            <div class="inner-circle-promo" style="background: white; border: 1px solid #e2e8f0; margin-top: 2rem;">
+                <div class="promo-content">
+                    <span class="material-icons crown-icon">emoji_events</span>
+                    <h4 class="promo-title">The Inner Circle</h4>
+                    <p class="promo-text">Access restricted churning paths and data-points.</p>
+                    <button class="promo-btn">Go Premium</button>
+                </div>
+            </div>
             {% endif %}
+        </aside>
+        
+        <!-- Main Content -->
+        <div class="blog-main-col" id="blog-grid-container">
+             <!-- Desktop Search Implementation -->
+             <style>
+                 @media(min-width: 1024px) { .desktop-search { display: block !important; } }
+             </style>
+             <div class="desktop-search" style="margin-bottom: 2rem;">
+                 <div class="search-wrapper">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon" aria-hidden="true"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
+                     <input type="text" 
+                            name="q" 
+                            class="search-input" 
+                            placeholder="Search the ledger..." 
+                            value="{{ search_query|default:'' }}"
+                            hx-get="{% url 'blog_list' %}" 
+                            hx-trigger="keyup changed delay:500ms" 
+                            hx-target="#blog-grid-container" 
+                            hx-push-url="true"> 
+                 </div>
+            </div>
             
-            const slug = this.getAttribute('data-slug');
-            const isCurrentlySaved = this.classList.contains('active');
-            
-            // Optimistically update UI
-            // The snapshot listener will also fire, but let's toggle now for instant feedback
-            this.classList.toggle('active');
-            const icon = this.querySelector('.material-icons');
-            const text = this.querySelector('.action-text');
-            
-            if (this.classList.contains('active')) {
-                if(icon) icon.textContent = 'bookmark';
-                if(text) text.textContent = 'Saved';
-                showToast('Article saved to your library', 'success');
-            } else {
-                if(icon) icon.textContent = 'bookmark_border';
-                if(text) text.textContent = 'Save';
-                showToast('Article removed from library', 'info');
-            }
-            
-            // Make API call
-            const url = isCurrentlySaved ? `/blog/${slug}/unsave/` : `/blog/${slug}/save/`;
-            
-            function getCookie(name) {
-                let cookieValue = null;
-                if (document.cookie && document.cookie !== '') {
-                    const cookies = document.cookie.split(';');
-                    for (let i = 0; i < cookies.length; i++) {
-                        const cookie = cookies[i].trim();
-                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                            break;
-                        }
-                    }
-                }
-                return cookieValue;
-            }
-            
-            const csrftoken = getCookie('csrftoken') || document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
-            
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': csrftoken,
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                credentials: 'same-origin'
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (!data.success) {
-                    // Revert UI changes if API call failed
-                    this.classList.toggle('active');
-                    showToast(data.error || 'Failed to save', 'error');
-                }
-            })
-            .catch(error => {
-                // Revert UI changes if request failed
-                this.classList.toggle('active');
-                showToast('Connection error', 'error');
-            });
-        });
-    });
-
-    // Share buttons
-    document.querySelectorAll('.share-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.stopPropagation(); // Prevent card click
-            
-            const postCard = this.closest('.post-card');
-            const postTitle = postCard.querySelector('.post-title').textContent;
-            const postUrl = window.location.origin + postCard.getAttribute('data-href');
-            
-            if (navigator.share) {
-                navigator.share({
-                    title: postTitle,
-                    url: postUrl
-                });
-            } else {
-                // Fallback: copy to clipboard
-                navigator.clipboard.writeText(postUrl).then(() => {
-                    showToast('Link copied to clipboard', 'success');
-                }).catch(err => {
-                    console.error('Failed to copy: ', err);
-                    showToast('Failed to copy link', 'error');
-                });
-            }
-        });
-    });
-
-    // Comment buttons
-    document.querySelectorAll('.comment-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.stopPropagation(); // Prevent card click
-            // Navigate to post detail page and scroll to comments
-            const postCard = this.closest('.post-card');
-            const href = postCard.getAttribute('data-href');
-            if (href) {
-                window.location.href = href + '#comments';
-            }
-        });
-    });
-});
-</script>
-
-<!-- Subscribe Confirmation Modal -->
-<div id="subscribeModal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; justify-content: center; align-items: center;">
-    <div class="modal-content" style="background: white; padding: 2rem; border-radius: 12px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
-        <h3 style="margin-top: 0; margin-bottom: 1rem; color: #1a1a1a;">Join The Ledger?</h3>
-        <p style="color: #666; margin-bottom: 2rem; line-height: 1.5;">Subscribe to blog updates and newsletters using your registered email.</p>
-        <div style="display: flex; gap: 1rem; justify-content: center;">
-            <button onclick="closeSubscribeModal()" style="padding: 0.75rem 1.5rem; border: 1px solid #ddd; background: white; border-radius: 8px; cursor: pointer; font-weight: 500; color: #666;">Cancel</button>
-            <button onclick="confirmSubscribe()" style="padding: 0.75rem 1.5rem; border: none; background: #6366F1; color: white; border-radius: 8px; cursor: pointer; font-weight: 500;">Confirm</button>
+            <!-- Active Filters -->
+            <div id="active-filters-bar">
+                {% include "blog/partials/active_filters.html" %}
+            </div>
+            <!-- Results -->
+            {% include "blog/partials/blog_list_results.html" %}
         </div>
+        
     </div>
 </div>
-
-<script>
-function showSubscribeModal() {
-    document.getElementById('subscribeModal').style.display = 'flex';
-}
-
-function closeSubscribeModal() {
-    document.getElementById('subscribeModal').style.display = 'none';
-}
-
-function confirmSubscribe() {
-    // Find the button inside .community-card to update it
-    const btn = document.querySelector('.community-card .join-btn');
-    const originalText = btn ? btn.innerText : 'Join Community';
-    if (btn) btn.innerText = 'Joining...';
-    
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-    const csrftoken = getCookie('csrftoken') || document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
-
-    fetch('{% url "subscribe_to_blog" %}', {
-        method: 'POST',
-        headers: {
-            'X-CSRFToken': csrftoken,
-            'Content-Type': 'application/json'
-        },
-        mode: 'same-origin'
-    })
-    .then(response => response.json())
-    .then(data => {
-        closeSubscribeModal();
-        if (data.success) {
-            // Update button
-            if (btn) {
-                btn.innerText = 'Subscribed';
-                btn.style.background = '#ccc';
-                btn.style.cursor = 'default';
-                btn.disabled = true;
-                btn.classList.add('subscribed');
-                btn.onclick = null;
-            }
-            showToast('Successfully subscribed!', 'success');
-        } else {
-            showToast('Error subscribing: ' + (data.error || 'Unknown error'), 'error');
-            if (btn) btn.innerText = originalText;
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showToast('Connection error', 'error');
-        if (btn) btn.innerText = originalText;
-        closeSubscribeModal();
-    });
-}
-
-// Close modal when clicking outside
-document.getElementById('subscribeModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeSubscribeModal();
-    }
-});
-</script>
 {% endblock %}
