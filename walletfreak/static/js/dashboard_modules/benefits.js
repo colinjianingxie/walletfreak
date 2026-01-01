@@ -199,6 +199,12 @@ function updateBenefitModalUI() {
         usedVal = maxVal;
     }
 
+    // Helper: Round up to 2 decimal places
+    const fmt = (num) => {
+        if (num === undefined || num === null) return '0';
+        return (Math.ceil(num * 100) / 100);
+    };
+
     // Check if period is disabled (max value 0)
     const isDisabled = (maxVal === 0);
 
@@ -210,12 +216,12 @@ function updateBenefitModalUI() {
     document.getElementById('benefit-period-label').textContent = period.label;
 
     // Update Values
-    document.getElementById('benefit-current-used-display').textContent = `$${usedVal}`;
+    document.getElementById('benefit-current-used-display').textContent = `$${fmt(usedVal)}`;
 
     if (isDisabled) {
         document.getElementById('benefit-total-value-display').innerHTML = '<span style="color: #9CA3AF; font-size: 0.8em; font-weight: 600;">DISABLED</span>';
     } else {
-        document.getElementById('benefit-total-value-display').textContent = `$${maxVal}`;
+        document.getElementById('benefit-total-value-display').textContent = `$${fmt(maxVal)}`;
     }
 
     updateProgress(usedVal, maxVal);
@@ -224,18 +230,20 @@ function updateBenefitModalUI() {
     const input = document.getElementById('benefit-amount-input');
 
     input.value = '';
+    const remainingForPeriod = Math.max(0, maxVal - usedVal);
+
     if (isDisabled) {
         input.disabled = true;
         input.placeholder = "Benefit Disabled";
     } else {
         input.disabled = false;
-        input.placeholder = `Remaining: $${maxVal - usedVal}`;
+        input.placeholder = `Remaining: $${fmt(remainingForPeriod)}`;
     }
 
     // Update Mark as Full / Reset Button
     const markBtn = document.getElementById('mark-full-btn');
     const resetBtn = document.getElementById('reset-benefit-btn');
-    const markFullDateBtn = document.getElementById('mark-full-date-btn'); // New
+    const markFullDateBtn = document.getElementById('mark-full-date-btn');
 
     if (markBtn && resetBtn) {
         // Reset base styles
@@ -256,28 +264,13 @@ function updateBenefitModalUI() {
             resetBtn.style.display = 'none';
             markBtn.style.display = 'flex';
 
-            const remainingForPeriod = maxVal - usedVal;
-            markBtn.innerHTML = `Mark <span style="margin: 0 0.25rem;">${period.label}</span> as Full ($${remainingForPeriod})`;
+            markBtn.innerHTML = `Mark <span style="margin: 0 0.25rem;">${period.label}</span> as Full ($${fmt(remainingForPeriod)})`;
             markBtn.disabled = false;
             markBtn.style.opacity = '1';
         }
     }
 
     // Logic for "Mark Full To Date"
-    // Calculate total needed to max out all periods from start up to CURRENT index (inclusive) OR current date match?
-    // User said "up to this date". Usually this implies up to the current month/period the user is viewing, OR up to "today".
-    // Let's assume up to "Today" (Current real time) or up to the currently selected period? 
-    // "if today's date is July 14th ... mark all the benefits full up to July".
-    // So distinct from the "selected" period navigation. It should probably find the index of the "current" period (based on date)
-    // and sum everything before it.
-
-    // Find index of the "current" period (the one active in time)
-    // We have `period.is_current` in the template but not explicitly in the JS object unless we passed it.
-    // However, we passed `currentBenefitPeriods`. Let's assume the backend flag `is_current` might be present or we infer.
-    // Actually, looking at `dashboard.html`, we might not have `is_current` in the parsed JSON unless we added it.
-    // Let's check `_section_action.html` line 55: `{{ benefit.periods|json_script:benefit.script_id }}`.
-    // The period object from backend has `is_current`.
-
     if (markFullDateBtn) {
         let totalToMark = 0;
         let countToMark = 0;
@@ -298,7 +291,9 @@ function updateBenefitModalUI() {
                         const pUsed = p.used || 0;
 
                         if (p.status !== 'full') {
-                            const needed = p.max_value - pUsed;
+                            // Calculate proper max and needed
+                            const pMax = (p.max_value !== undefined) ? p.max_value : currentBenefitData.amount;
+                            const needed = Math.max(0, pMax - pUsed);
                             if (needed > 0) {
                                 totalToMark += needed;
                                 countToMark++;
@@ -308,9 +303,14 @@ function updateBenefitModalUI() {
                 }
             }
 
-            if (countToMark > 0) {
+            // Show only if there is amount to mark AND it's different (greater) than the current single period mark amount
+            // Or if we are viewing a past period?
+            // "if the Mark as Full and Mark Full To Date values are the same, do not show the Mark Full to Date"
+            // Usually Mark Full To Date is >= Mark Current.
+            // If they are equal (within small float margin), hide it.
+            if (countToMark > 0 && Math.abs(totalToMark - remainingForPeriod) > 0.01) {
                 markFullDateBtn.style.display = 'flex';
-                document.getElementById('mark-full-date-amount').textContent = `($${totalToMark})`;
+                document.getElementById('mark-full-date-amount').textContent = `($${fmt(totalToMark)})`;
             } else {
                 markFullDateBtn.style.display = 'none';
             }
@@ -332,7 +332,6 @@ function updateBenefitModalUI() {
     const ignoreBtn = document.getElementById('benefit-ignore-btn');
     const logBtn = document.getElementById('btn-log-usage');
 
-    // Force disable log button if disabled
     if (isDisabled && logBtn) {
         logBtn.disabled = true;
         logBtn.style.opacity = '0.5';
@@ -346,7 +345,7 @@ function updateBenefitModalUI() {
             ignoreBtn.style.display = 'inline-block';
             ignoreBtn.disabled = false;
 
-            // Disable inputs (override disabled state from above if needed, but they are compatible)
+            // Disable inputs
             if (input) {
                 input.disabled = true;
                 input.placeholder = 'Ignored';
@@ -366,36 +365,18 @@ function updateBenefitModalUI() {
 
         } else {
             // ACTIVE STATE
-            // Ensure input state respects isDisabled
             if (input && !isDisabled) input.disabled = false;
 
             if (logBtn) {
-                // Default to disabled because input is cleared on open
-                logBtn.disabled = true; // Always start disabled until input
+                logBtn.disabled = true;
                 logBtn.style.opacity = '0.5';
             }
 
-            // Lock Ignore if usage exists
-            // Check TOTAL YTD usage or current period usage? The requirement says:
-            // "If the user has logged any value for their benefit, they cannot ignore the benefit."
-            // This implies strict "any value".
-
-            // Check all periods for usage just to be safe, or rely on ytdUsed.
-            // ytdUsed should sum everything.
-            let hasUsage = (currentBenefitData.ytdUsed > 0);
-
-            // Double check current period used just in case
-            if ((currentBenefitPeriods[currentPeriodIndex].used || 0) > 0) hasUsage = true;
-
-            if (hasUsage) {
-                // Has usage -> Hide ignore button (cannot ignore)
-                ignoreBtn.style.display = 'none';
-            } else {
-                ignoreBtn.textContent = 'Ignore Benefit';
-                ignoreBtn.style.color = '#94A3B8';
-                ignoreBtn.style.display = 'inline-block';
-                ignoreBtn.disabled = false;
-            }
+            // ALLOW Ignore even if usage exists (User Request)
+            ignoreBtn.textContent = 'Ignore Benefit';
+            ignoreBtn.style.color = '#94A3B8';
+            ignoreBtn.style.display = 'inline-block';
+            ignoreBtn.disabled = false;
         }
     }
 }
@@ -628,9 +609,18 @@ function toggleIgnoreBenefit() {
             'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
         }
     })
-        .then(response => {
-            if (!response.ok) throw new Error('Network response was not ok');
-            return response.json();
+        .then(async response => {
+            let data;
+            try {
+                data = await response.json();
+            } catch (e) {
+                data = null;
+            }
+
+            if (!response.ok) {
+                throw new Error((data && data.error) || 'Network response was not ok (' + response.status + ')');
+            }
+            return data;
         })
         .then(async data => {
             if (data.success) {
@@ -642,16 +632,9 @@ function toggleIgnoreBenefit() {
                     if (typeof showToast === 'function') showToast('Benefit ignored!');
                     closeBenefitModal();
                 } else {
-                    // Being Unignored -> Keep Modal Open
+                    // Being Unignored -> Close Modal
                     if (typeof showToast === 'function') showToast('Benefit unignored!');
-
-                    // Update local state to reflect change in UI
-                    currentBenefitData.isIgnored = false;
-                    updateBenefitModalUI();
-
-                    // Reset button
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
+                    closeBenefitModal();
                 }
             } else {
                 alert('Error: ' + (data.error || 'Unknown error'));

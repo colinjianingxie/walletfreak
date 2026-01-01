@@ -260,11 +260,70 @@ def dashboard(request):
                             q_status = 'full' if (q_data.get('is_full') or p_used >= q_max) else ('partial' if p_used > 0 else 'empty')
                             periods.append({'label': f'Q{q}', 'key': q_key, 'status': q_status, 'is_current': q == curr_q, 'max_value': q_max, 'is_available': q_available, 'used': p_used})
                             
-                            ytd_used += p_used
-                            
                             if q == curr_q:
                                 current_period_status = q_status
                                 current_period_used = p_used
+
+                    elif 'every 4 years' in frequency.lower():
+                        # Every 4 Years (e.g. Global Entry)
+                        # Anchor to Card Anniversary Year to create fixed 4-year blocks
+                        # 1. Determine local "annual" start year (same as Anniversary logic)
+                        if anniversary_month:
+                             this_year_anniv = datetime(current_year, anniversary_month, anniversary_date.day if anniversary_date_str else 1)
+                             if datetime.now() < this_year_anniv:
+                                 annual_start_year = current_year - 1
+                             else:
+                                 annual_start_year = current_year
+                        else:
+                             # Calendar year fallback for start
+                             annual_start_year = current_year
+                        
+                        # 2. Align to 4-year blocks from Card Open Year
+                        # If anniversary_year (card open year) is available, use it. Else default to some Mod 4 basis (e.g. 2020)
+                        base_year = anniversary_year if anniversary_year else 2020
+                        
+                        years_diff = annual_start_year - base_year
+                        # Ensure positive diff or handle negative
+                        # (annual_start - base) // 4 returns floor, works for negative too
+                        block_idx = (annual_start_year - base_year) // 4
+                        
+                        block_start_year = base_year + (block_idx * 4)
+                        block_end_year = block_start_year + 4
+                        
+                        period_key = f"{block_start_year}_{block_end_year}"
+                        
+                        # Reset Date
+                        if anniversary_month:
+                             reset_date_obj = datetime(block_end_year, anniversary_month, anniversary_date.day if anniversary_date_str else 1)
+                             reset_date_str = reset_date_obj.strftime('%b %d, %Y')
+                        else:
+                             reset_date_str = f"Dec 31, {block_end_year}" # Fallback
+                             
+                        # Period Data
+                        has_periods_data = bool(benefit_usage_data.get('periods'))
+                        p_data = benefit_usage_data.get('periods', {}).get(period_key, {})
+                        
+                        if has_periods_data:
+                            p_used = p_data.get('used', 0)
+                        else:
+                            p_used = p_data.get('used', 0)
+
+                        p_full = p_data.get('is_full', False)
+                        
+                        status = 'full' if (p_full or p_used >= dollar_value) else ('partial' if p_used > 0 else 'empty')
+                        periods.append({
+                            'label': f"{block_start_year}-{block_end_year}",
+                            'key': period_key, 
+                            'status': status, 
+                            'is_current': True, 
+                            'max_value': dollar_value, 
+                            'used': p_used,
+                            'reset_date': reset_date_str
+                        })
+                        
+                        current_period_status = status
+                        current_period_used = p_used
+                        ytd_used = p_used
 
                     else:
                         # Annual / Permanent
@@ -366,6 +425,37 @@ def dashboard(request):
                         else:
                             period_end = datetime(current_year, 12, 31, 23, 59, 59)
                         days_until_expiration = (period_end - now).days
+                    elif 'every 4 years' in frequency.lower():
+                        # Every 4 Years Expiration
+                         if anniversary_month:
+                             this_year_anniv = datetime(current_year, anniversary_month, anniversary_date.day if anniversary_date_str else 1)
+                             if datetime.now() < this_year_anniv:
+                                 annual_start_year = current_year - 1
+                             else:
+                                 annual_start_year = current_year
+                         else:
+                             annual_start_year = current_year
+                        
+                         base_year = anniversary_year if anniversary_year else 2020
+                         block_idx = (annual_start_year - base_year) // 4
+                         block_start_year = base_year + (block_idx * 4)
+                         block_end_year = block_start_year + 4
+                         
+                         if anniversary_month:
+                             reset_date_obj = datetime(block_end_year, anniversary_month, anniversary_date.day if anniversary_date_str else 1)
+                             # End of day before reset? Or Reset Date is expiration? 
+                             # Expiration is usually end of previous period.
+                             # If reset is Jan 1 2026, period ends Dec 31 2025? 
+                             # Or strict exact time? 
+                             # Using standard period_end logic: End of 'block_end_year' ? No.
+                             # It resets ON `reset_date_obj`. So expiration is that date or day before?
+                             # In Annual logic: `period_end` is the Anniversary Day.
+                             period_end = datetime(block_end_year, anniversary_month, anniversary_date.day if anniversary_date_str else 1, 23, 59, 59)
+                         else:
+                             period_end = datetime(block_end_year, 12, 31, 23, 59, 59)
+                         
+                         days_until_expiration = (period_end - now).days
+
                     else:
                         # Annual - end of year or anniversary date
                         if 'anniversary' in frequency.lower() and anniversary_month:
@@ -407,6 +497,26 @@ def dashboard(request):
                             elif 'semi-annually' in frequency.lower():
                                 h_start_month = 1 if current_month <= 6 else 7
                                 period_start_date = datetime(current_year, h_start_month, 1)
+                            elif 'every 4 years' in frequency.lower():
+                                # Every 4 Years Reset Logic
+                                if anniversary_month:
+                                     this_year_anniv = datetime(current_year, anniversary_month, anniversary_date.day if anniversary_date_str else 1)
+                                     if datetime.now() < this_year_anniv:
+                                         annual_start_year = current_year - 1
+                                     else:
+                                         annual_start_year = current_year
+                                else:
+                                     annual_start_year = current_year
+                                
+                                base_year = anniversary_year if anniversary_year else 2020
+                                block_idx = (annual_start_year - base_year) // 4
+                                block_start_year = base_year + (block_idx * 4)
+                                
+                                if anniversary_month:
+                                    period_start_date = datetime(block_start_year, anniversary_month, anniversary_date.day if anniversary_date_str else 1)
+                                else:
+                                    period_start_date = datetime(block_start_year, 1, 1)
+
                             elif 'anniversary' in frequency.lower():
                                 # Use the start year calculated in the Annual/Anniversary block logic
                                 # We need to reuse that logic or re-calculate.
@@ -816,46 +926,9 @@ def toggle_benefit_ignore_status(request, user_card_id, benefit_id):
     try:
         is_ignored = request.POST.get('is_ignored') == 'true'
         
-        # Validation: Cannot ignore if usage > 0
-        if is_ignored:
-            # Check current usage
-            # We need to fetch the current state to verify
-            cards = db.get_user_cards(uid) # This gets all cards
-            # Filter for specific card
-            target_card = next((c for c in cards if c.get('id') == user_card_id), None)
-            
-            if target_card:
-                benefit_usage = target_card.get('benefit_usage', {}).get(benefit_id, {})
-                
-                # Check if any usage exists
-                # 'used' legacy field or iterating periods
-                legacy_used = benefit_usage.get('used', 0)
-                periods = benefit_usage.get('periods', {})
-                
-                total_used = legacy_used
-                for p_key, p_val in periods.items():
-                    total_used += p_val.get('used', 0)
-                    
-                # Note: This is a loose check. Ideally we check if `total_used > 0`.
-                # However, our data model might double count if we sum legacy + periods.
-                # But if either is > 0, it's used.
-                
-                # Actually, wait. 
-                # If we have periods, `used` might be just the current period.
-                # Let's check strict "has any value logged".
-                has_usage = False
-                if benefit_usage.get('used', 0) > 0:
-                    has_usage = True
-                
-                if not has_usage:
-                    for p in periods.values():
-                        if p.get('used', 0) > 0:
-                            has_usage = True
-                            break
-                            
-                if has_usage:
-                     return JsonResponse({'success': False, 'error': 'Cannot ignore a benefit with logged usage'}, status=400)
-
+        # We allow users to ignore benefits even if they have usage history.
+        # The 'Ignore' feature is for hiding it from the main views for the current period.
+        
         db.toggle_benefit_ignore(uid, user_card_id, benefit_id, is_ignored)
         return JsonResponse({'success': True})
     except Exception as e:
