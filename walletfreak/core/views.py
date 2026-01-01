@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
+from django.core.cache import cache
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
@@ -39,18 +40,24 @@ def home(request):
         return redirect('dashboard')
 
     # Fetch personalities for the landing page
-    personalities = []
-    try:
-        personalities = db.get_personalities()
-    except Exception as e:
-        print(f"Warning: Failed to fetch personalities: {e}")
+    personalities = cache.get('home_personalities')
+    if not personalities:
+        try:
+            personalities = db.get_personalities()
+            cache.set('home_personalities', personalities, 60 * 60)  # Cache for 1 hr
+        except Exception as e:
+            print(f"Warning: Failed to fetch personalities: {e}")
+            personalities = []
         
     # Fetch published blog posts for the landing page
-    blog_posts = []
-    try:
-        blog_posts = db.get_blogs(status='published', limit=3)  # Get latest 3 published blog posts
-    except Exception as e:
-        print(f"Warning: Failed to fetch blog posts: {e}")
+    blog_posts = cache.get('home_latest_blog_posts')
+    if not blog_posts:
+        try:
+            blog_posts = db.get_blogs(status='published', limit=3)  # Get latest 3 published blog posts
+            cache.set('home_latest_blog_posts', blog_posts, 60 * 60) # Cache for 1 hr
+        except Exception as e:
+            print(f"Warning: Failed to fetch blog posts: {e}")
+            blog_posts = []
         
     context = {
         'firebase_config': settings.FIREBASE_CLIENT_CONFIG,
