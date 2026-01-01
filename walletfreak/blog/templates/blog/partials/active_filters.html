@@ -1,9 +1,23 @@
 {% load blog_extras %}
 <!-- Active Filters -->
-{% if active_filters.ecosystem or active_filters.tag or active_filters.experience_level or active_filters.read_time %}
+{% if active_filters.saved or active_filters.ecosystem or active_filters.tag or active_filters.experience_level or active_filters.read_time %}
 <div class="active-filters-bar">
     <span class="active-label">Active:</span>
     
+    {% with is_saved=active_filters.saved %}
+    {% if is_saved %}
+    <a href="?saved=" 
+       class="active-chip"
+       hx-get="?saved="
+       hx-target="#blog-grid-container"
+       hx-indicator="#blog-grid-container"
+       hx-push-url="true">
+        Saved
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chip-remove-icon"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </a>
+    {% endif %}
+    {% endwith %}
+
     {% for vendor in active_filters.ecosystem %}
     <a href="?{% toggle_url 'ecosystem' vendor %}" 
        class="active-chip"

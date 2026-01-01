@@ -7,6 +7,23 @@
     </h3>
     </div>
 
+    <!-- General -->
+    <div class="filter-group">
+        <div class="filter-group-title">General</div>
+        <div class="filter-chips">
+            {% with is_saved=active_filters.saved %}
+            <a href="?{% if is_saved %}saved={% else %}saved=on{% endif %}"
+               class="filter-chip {% if is_saved %}active{% endif %}"
+               hx-get="?{% if is_saved %}saved={% else %}saved=on{% endif %}"
+               hx-target="#blog-grid-container"
+               hx-indicator="#blog-grid-container"
+               hx-push-url="true">
+                Saved
+            </a>
+            {% endwith %}
+        </div>
+    </div>
+
     <!-- Ecosystem -->
     <div class="filter-group">
         <div class="filter-group-title">Ecosystem</div>

@@ -147,5 +147,62 @@
         // Auto-apply the reset (triggers HTMX request)
         htmx.trigger(form, 'submit');
     }
+
+    // Workaround for CSRF token in JS
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    async function toggleBlogBookmark(e, slug, btn) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const icon = btn.querySelector('.material-icons');
+        const isSaved = icon.textContent.trim() === 'bookmark';
+        const action = isSaved ? 'unsave' : 'save';
+        const url = `/blog/${slug}/${action}/`;
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({})
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success) {
+                    // Toggle Icon
+                    icon.textContent = isSaved ? 'bookmark_border' : 'bookmark';
+                    // Toggle Color
+                    btn.style.color = isSaved ? '#94A3B8' : 'var(--primary)'; // Reset to gray or set to primary
+                } else {
+                    console.error('Action failed:', data.error);
+                    if (data.error === 'Not authenticated') {
+                         showLoginModal(); // Assuming this global function exists/works
+                    }
+                }
+            } else {
+                console.error('Server error');
+            }
+        } catch (error) {
+            console.error('Network error:', error);
+        }
+    }
 </script>
 {% endblock %}

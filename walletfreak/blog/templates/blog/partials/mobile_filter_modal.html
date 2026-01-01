@@ -20,6 +20,20 @@
             <!-- Scrollable Body -->
             <div class="modal-body">
                 
+                <!-- General -->
+                <div class="filter-section">
+                    <div class="section-title-row">
+                        <span class="material-icons section-icon">sort</span>
+                        <h3 class="section-title">GENERAL</h3>
+                    </div>
+                    <div class="filter-grid">
+                        <label class="filter-option-card">
+                            <input type="checkbox" name="saved" value="on" {% if active_filters.saved %}checked{% endif %}>
+                            <span class="option-label">Saved</span>
+                        </label>
+                    </div>
+                </div>
+
                 <!-- Ecosystem -->
                 <div class="filter-section">
                     <div class="section-title-row">

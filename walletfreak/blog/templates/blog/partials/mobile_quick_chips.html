@@ -1,5 +1,15 @@
 {% load blog_extras %}
 <div id="mobile-quick-chips" class="filter-chips mobile-chips">
+    {% with is_saved=active_filters.saved %}
+    <a href="?{% if is_saved %}saved={% else %}saved=on{% endif %}" 
+       class="filter-chip pill-chip {% if is_saved %}active{% endif %}"
+       hx-get="?{% if is_saved %}saved={% else %}saved=on{% endif %}"
+       hx-target="#blog-grid-container"
+       hx-indicator="#blog-grid-container"
+       hx-push-url="true">
+       Saved
+    </a>
+    {% endwith %}
     {% for vendor in ecosystem_vendors|slice:":6" %}
     <a href="?{% toggle_url 'ecosystem' vendor %}" 
        class="filter-chip pill-chip {% if vendor in active_filters.ecosystem %}active{% endif %}"

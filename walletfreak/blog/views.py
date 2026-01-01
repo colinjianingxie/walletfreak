@@ -59,10 +59,24 @@ def blog_list(request):
     
     uid = request.session.get('uid')
     
-
-
-    # Handle saved posts category
-    if category == 'Saved':
+    # Get user's saved post IDs for UI state and filtering
+    user_saved_posts = []
+    if uid:
+        user_saved_posts = db.get_user_saved_post_ids(uid)
+    
+    # Saved Filter (New General Filter)
+    saved_filter = request.GET.get('saved')
+    
+    # Default blogs query
+    # Default blogs query
+    if saved_filter:
+        if not uid:
+             blogs = []
+        else:
+             # Pre-filter to only saved posts
+             blogs = db.get_blogs(status='published') 
+             blogs = [b for b in blogs if b.get('id') in user_saved_posts]
+    elif category == 'Saved':
         if not uid:
             # If user is not logged in, show empty list
             blogs = []
@@ -75,12 +89,6 @@ def blog_list(request):
         blogs = db.get_blogs(status='published')
         
         # Apply Filters
-        
-        # 1. Category / Content Type Filter (Legacy & New)
-        # Combine category (legacy from navbar) and content_type (new sidebar)
-        # If both present, specific content_type takes precedence or we treat 'category' as a pre-filter.
-        # Let's treat them as logical AND if both exist, but usually UI uses one.
-        
         target_tags = []
         if category and category not in ['All', 'Saved', 'Premium']:
             # Map plural categories to singular tags where necessary
@@ -164,10 +172,7 @@ def blog_list(request):
     if uid:
         is_editor = db.can_manage_blogs(uid)
     
-    # Get user's saved post IDs for UI state
-    user_saved_posts = []
-    if uid:
-        user_saved_posts = db.get_user_saved_post_ids(uid)
+    # user_saved_posts moved to top
     
     # Prepare Data for Sidebar
     
@@ -315,6 +320,7 @@ def blog_list(request):
             'tag': tag_filters,
             'experience_level': experience_filters,
             'read_time': read_time_filters,
+            'saved': saved_filter,
         }
     }
 
