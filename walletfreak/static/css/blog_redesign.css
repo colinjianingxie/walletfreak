@@ -671,11 +671,35 @@
     position: absolute;
     inset: 0;
     display: flex;
+    align-items: flex-end;
+    /* Move to bottom */
+    justify-content: flex-start;
+    /* Move to left */
+    padding: 0.75rem;
+    pointer-events: none;
+    /* Allow clicks to pass through to the link, unless the badge itself is clickable? */
+}
+
+/* Specific style for the button-like badge */
+.get-premium-badge {
+    background: #F59E0B;
+    /* Amber-500 */
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    font-weight: 700;
+    font-size: 0.875rem;
+    display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 0.375rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    pointer-events: auto;
+    /* Make the button clickable if needed, though the whole card is a link */
+    z-index: 10;
 }
 
 .lock-badge-inner {
+    /* Keeping legacy styles just in case, but unused for new badge */
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(4px);
     padding: 0.75rem;

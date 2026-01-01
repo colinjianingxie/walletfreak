@@ -92,10 +92,11 @@
                         <div class="blog-image-placeholder"></div>
                         {% endif %}
 
-                        {% if blog.is_premium and not is_authenticated and not is_editor %}
+                        {% if blog.is_premium and not user_is_premium and not is_editor %}
                         <div class="premium-lock-badge">
-                            <div class="lock-badge-inner">
-                                <span class="material-icons" style="color: #F59E0B;">lock</span>
+                            <div class="get-premium-badge">
+                                <span class="material-icons" style="font-size: 14px;">lock</span>
+                                Get Premium
                             </div>
                         </div>
                         {% endif %}
