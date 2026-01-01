@@ -281,40 +281,50 @@ function updateBenefitModalUI() {
     if (markFullDateBtn) {
         let totalToMark = 0;
         let countToMark = 0;
-        let hasPastDefaults = false;
 
-        // Find the "current" period index
-        let realCurrentIndex = currentBenefitPeriods.findIndex(p => p.is_current);
-        // If no "current" flag found (maybe old data), try to match label or default to last? 
-        // If not found, fallback to all? Safer to assume 0 or look for it.
-        // If -1, maybe all are past or future? 
-        // Let's assume if we can't find 'is_current', we disable this feature or show nothing.
+        // Hide if Ignored
+        if (currentBenefitData.isIgnored) {
+            markFullDateBtn.style.display = 'none';
+        } else {
+            // Find the "current" period index
+            let realCurrentIndex = currentBenefitPeriods.findIndex(p => p.is_current);
 
-        if (realCurrentIndex !== -1) {
-            // Iterate from 0 to realCurrentIndex
-            for (let i = 0; i <= realCurrentIndex; i++) {
-                const p = currentBenefitPeriods[i];
-                // Check availability
-                // Ensure we respect server-side "is_available" flag (e.g. for Anniversary timing)
-                if (p.max_value > 0 && p.is_available !== false) {
-                    const pUsed = p.used || 0;
+            if (realCurrentIndex !== -1) {
+                // Iterate from 0 to realCurrentIndex
+                for (let i = 0; i <= realCurrentIndex; i++) {
+                    const p = currentBenefitPeriods[i];
+                    // Check availability
+                    if (p.max_value > 0 && p.is_available !== false) {
+                        const pUsed = p.used || 0;
 
-                    if (p.status !== 'full') {
-                        const needed = p.max_value - pUsed;
-                        if (needed > 0) {
-                            totalToMark += needed;
-                            countToMark++;
+                        if (p.status !== 'full') {
+                            const needed = p.max_value - pUsed;
+                            if (needed > 0) {
+                                totalToMark += needed;
+                                countToMark++;
+                            }
                         }
                     }
                 }
             }
-        }
 
-        if (countToMark > 0) {
-            markFullDateBtn.style.display = 'flex';
-            document.getElementById('mark-full-date-amount').textContent = `($${totalToMark})`;
+            if (countToMark > 0) {
+                markFullDateBtn.style.display = 'flex';
+                document.getElementById('mark-full-date-amount').textContent = `($${totalToMark})`;
+            } else {
+                markFullDateBtn.style.display = 'none';
+            }
+        }
+    }
+
+    // Display Reset Date if available
+    const resetDateEl = document.getElementById('benefit-reset-date-display');
+    if (resetDateEl) {
+        if (period.reset_date) {
+            resetDateEl.textContent = `Resets: ${period.reset_date}`;
+            resetDateEl.style.display = 'block';
         } else {
-            markFullDateBtn.style.display = 'none';
+            resetDateEl.style.display = 'none';
         }
     }
 
@@ -365,11 +375,19 @@ function updateBenefitModalUI() {
                 logBtn.style.opacity = '0.5';
             }
 
-            // If disabled, we might want to hide ignore button? Or keep it?
-            // "Disabled" usually means it doesn't apply. Ignoring it is moot.
-            // But let's keep it visible just in case they want to ignore it for some reason.
+            // Lock Ignore if usage exists
+            // Check TOTAL YTD usage or current period usage? The requirement says:
+            // "If the user has logged any value for their benefit, they cannot ignore the benefit."
+            // This implies strict "any value".
 
-            if (currentBenefitData.ytdUsed && currentBenefitData.ytdUsed > 0) {
+            // Check all periods for usage just to be safe, or rely on ytdUsed.
+            // ytdUsed should sum everything.
+            let hasUsage = (currentBenefitData.ytdUsed > 0);
+
+            // Double check current period used just in case
+            if ((currentBenefitPeriods[currentPeriodIndex].used || 0) > 0) hasUsage = true;
+
+            if (hasUsage) {
                 // Has usage -> Hide ignore button (cannot ignore)
                 ignoreBtn.style.display = 'none';
             } else {
@@ -581,6 +599,19 @@ function toggleIgnoreBenefit() {
     const originalText = btn.innerHTML;
     const isIgnored = currentBenefitData.isIgnored;
     const newIgnoredState = !isIgnored;
+
+    if (newIgnoredState) {
+        // Attempting to Ignore
+        // Double check usage
+        let hasUsage = (currentBenefitData.ytdUsed > 0);
+        // Also check current period used just in case
+        if ((currentBenefitPeriods[currentPeriodIndex].used || 0) > 0) hasUsage = true;
+
+        if (hasUsage) {
+            alert("Cannot ignore a benefit that has logged usage.");
+            return;
+        }
+    }
 
     btn.innerHTML = '<span class="loader"></span> processing...';
     btn.disabled = true;

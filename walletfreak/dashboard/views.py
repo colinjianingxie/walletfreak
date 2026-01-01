@@ -236,27 +236,108 @@ def dashboard(request):
                                 q_available = q <= curr_q
                             else:
                                 q_available = q >= anniversary_q and q <= curr_q
-                            q_data = benefit_usage_data.get('periods', {}).get(q_key, {})
-                            q_status = 'full' if (q_data.get('is_full') or q_data.get('used', 0) >= q_max) else ('partial' if q_data.get('used', 0) > 0 else 'empty')
-                            periods.append({'label': f'Q{q}', 'key': q_key, 'status': q_status, 'is_current': q == curr_q, 'max_value': q_max, 'is_available': q_available, 'used': q_data.get('used', 0)})
                             
-                            ytd_used += q_data.get('used', 0)
+                            # FALLBACK LOGIC FIX:
+                            # Only use legacy 'used' if the ENTIRE 'periods' dictionary is missing/empty in benefit_usage.
+                            # If 'periods' exists (even if this specific key is missing), it means we are on the new system => 0 usage.
+                            has_periods_data = bool(benefit_usage_data.get('periods'))
+                            q_data = benefit_usage_data.get('periods', {}).get(q_key, {})
+                            
+                            if has_periods_data:
+                                p_used = q_data.get('used', 0)
+                            else:
+                                # Start fresh for new periods if no period data exists at all? 
+                                # Actually, if NO period data exists, it might be an old benefit. 
+                                # But if we are generating keys for 2026 and legacy was 2025, we shouldn't use legacy.
+                                # Legacy 'used' was total-to-date.
+                                # If we are in a new time period (year/month), we generally shouldn't use legacy unless we know it applies.
+                                # Safer: Only use legacy if we can't determine period split? 
+                                # For Quarterly/Monthly, we generally shouldn't rely on global 'used' for specific chunks unless we know.
+                                # Let's assume 0 if no specific period data, UNLESS it's the very first time migration?
+                                # No, for reset logic, 0 is correct for new periods.
+                                p_used = q_data.get('used', 0)
+
+                            q_status = 'full' if (q_data.get('is_full') or p_used >= q_max) else ('partial' if p_used > 0 else 'empty')
+                            periods.append({'label': f'Q{q}', 'key': q_key, 'status': q_status, 'is_current': q == curr_q, 'max_value': q_max, 'is_available': q_available, 'used': p_used})
+                            
+                            ytd_used += p_used
                             
                             if q == curr_q:
                                 current_period_status = q_status
-                                current_period_used = q_data.get('used', 0)
+                                current_period_used = p_used
 
                     else:
                         # Annual / Permanent
-                        period_key = f"{current_year}"
+                        # Logic for Anniversary Date vs Calendar Year
+                        reset_date_str = None
+                        
+                        if 'anniversary' in frequency.lower():
+                            # Determine start year of the current anniversary period
+                            # If today is BEFORE the anniversary date in current year, the period started last year.
+                            # If today is AFTER (or ON) the anniversary date, the period started this year.
+                            
+                            # Need accurate comparison including DAY
+                            now_date = datetime.now()
+                            this_year_anniv = datetime(current_year, anniversary_month, anniversary_date.day if anniversary_date_str else 1)
+                            
+                            if now_date < this_year_anniv:
+                                # We are in the period starting last year
+                                start_year = current_year - 1
+                                end_year = current_year
+                            else:
+                                # We are in the period starting this year
+                                start_year = current_year
+                                end_year = current_year + 1
+                                
+                            period_key = f"{start_year}"
+                            
+                            # Calculate reset date (Anniversary date of end_year)
+                            reset_date_obj = datetime(end_year, anniversary_month, anniversary_date.day if anniversary_date_str else 1)
+                            reset_date_str = reset_date_obj.strftime('%b %d, %Y')
+                            
+                        else:
+                            # Calendar Year
+                            period_key = f"{current_year}"
+                            reset_date_str = f"Dec 31, {current_year}"
+                        
+                        
+                        # FALLBACK LOGIC FIX:
+                        has_periods_data = bool(benefit_usage_data.get('periods'))
                         p_data = benefit_usage_data.get('periods', {}).get(period_key, {})
-                        # Fallback to legacy 'used' if period data missing
-                        legacy_used = benefit_usage_data.get('used', 0)
-                        p_used = p_data.get('used', legacy_used)
+                        
+                        if has_periods_data:
+                            p_used = p_data.get('used', 0)
+                        else:
+                            # Only fallback to legacy if NO period data exists at all AND we are likely in the first period?
+                            # If it's a new year/period key, we definitely don't want legacy.
+                            # Check if period_key matches current era? 
+                            # If we have NO keys, maybe migration. 
+                            # But if the benefit is "Annual", legacy `used` applies to "current annual".
+                            # If `period_key` is new (e.g. 2026), legacy (from 2025) should NOT apply.
+                            # So strictly: 0.
+                            p_used = p_data.get('used', 0)
+                            
+                            # EXCEPTION: If the user NEVER had period keys (pure legacy) and this is their first view?
+                            # We might lose data. 
+                            # But legacy `used` was cumulative? Or annual? 
+                            # Usually annual. 
+                            # If we assume migration happened properly, we're good. 
+                            # If not, we might hide old data. 
+                            # However, for the BUG "reset didn't happen", force 0 for new keys is the fix.
+                            pass
+
                         p_full = p_data.get('is_full', False)
                         
                         status = 'full' if (p_full or p_used >= dollar_value) else ('partial' if p_used > 0 else 'empty')
-                        periods.append({'label': str(current_year), 'key': period_key, 'status': status, 'is_current': True, 'max_value': dollar_value, 'used': p_used})
+                        periods.append({
+                            'label': str(period_key.split('_')[0]) if '_' in period_key else str(current_year), # Label: '2025' or '2026'
+                            'key': period_key, 
+                            'status': status, 
+                            'is_current': True, 
+                            'max_value': dollar_value, 
+                            'used': p_used,
+                            'reset_date': reset_date_str
+                        })
                         
                         current_period_status = status
                         current_period_used = p_used
@@ -288,23 +369,94 @@ def dashboard(request):
                     else:
                         # Annual - end of year or anniversary date
                         if 'anniversary' in frequency.lower() and anniversary_month:
-                            # Use anniversary date as expiration
-                            # If we're past this year's anniversary, next expiration is next year
-                            if current_month > anniversary_month or (current_month == anniversary_month and now.day > anniversary_date.day if anniversary_date_str else False):
-                                next_anniversary_year = current_year + 1
+                            # Logic must match the period loop logic to ensure consistency
+                            # 1. Determine START YEAR of current period
+                            this_year_anniv = datetime(current_year, anniversary_month, anniversary_date.day if anniversary_date_str else 1)
+                            if now < this_year_anniv:
+                                start_year = current_year - 1
                             else:
-                                next_anniversary_year = current_year
-                            last_day = monthrange(next_anniversary_year, anniversary_month)[1]
-                            # Use actual anniversary day if available
+                                start_year = current_year
+                            
+                            # 2. Expiration is Anniversary Date of NEXT year (Start Year + 1)
+                            exp_year = start_year + 1
+                            
+                            last_day = monthrange(exp_year, anniversary_month)[1]
                             anniversary_day = anniversary_date.day if anniversary_date_str else last_day
-                            period_end = datetime(next_anniversary_year, anniversary_month, min(anniversary_day, last_day), 23, 59, 59)
+                            period_end = datetime(exp_year, anniversary_month, min(anniversary_day, last_day), 23, 59, 59)
                         else:
                             # Calendar year - Dec 31
                             period_end = datetime(current_year, 12, 31, 23, 59, 59)
                         days_until_expiration = (period_end - now).days
                     
-                    # Check if ignored
+                    
+                    # --- IGNORE RESET LOGIC ---
+                    # Check if ignored status is stale (from a previous period)
                     is_ignored = benefit_usage_data.get('is_ignored', False)
+                    if is_ignored:
+                        last_updated = benefit_usage_data.get('last_updated')
+                        
+                        # Calculate Period Start Date for comparison
+                        period_start_date = None
+                        try:
+                            if 'monthly' in frequency.lower():
+                                period_start_date = datetime(current_year, current_month, 1)
+                            elif 'quarterly' in frequency.lower():
+                                curr_q = (current_month - 1) // 3 + 1
+                                q_start_month = (curr_q - 1) * 3 + 1
+                                period_start_date = datetime(current_year, q_start_month, 1)
+                            elif 'semi-annually' in frequency.lower():
+                                h_start_month = 1 if current_month <= 6 else 7
+                                period_start_date = datetime(current_year, h_start_month, 1)
+                            elif 'anniversary' in frequency.lower():
+                                # Use the start year calculated in the Annual/Anniversary block logic
+                                # We need to reuse that logic or re-calculate.
+                                # Re-calculating for safety as variables might not be in scope if not Annual loop (though variable scoping in python loop is usually fine, 'start_year' is inside 'else' block)
+                                
+                                # Simplified Anniversary Start Calculation:
+                                if anniversary_month:
+                                    this_year_anniv = datetime(current_year, anniversary_month, anniversary_date.day if anniversary_date_str else 1)
+                                    if datetime.now() < this_year_anniv:
+                                        p_start_year = current_year - 1
+                                    else:
+                                        p_start_year = current_year
+                                    period_start_date = datetime(p_start_year, anniversary_month, anniversary_date.day if anniversary_date_str else 1)
+                                else:
+                                    period_start_date = datetime(current_year, 1, 1)
+                            else:
+                                # Annual (Calendar)
+                                period_start_date = datetime(current_year, 1, 1)
+                                
+                            # Compare
+                            if period_start_date:
+                                # Ensure last_updated is naive / comparable
+                                if last_updated:
+                                    # Handle string timestamp if that occurs?
+                                    if isinstance(last_updated, str):
+                                        # Parse? Assume datetime for now as Firestore returns datetime
+                                        try:
+                                             # Attempt naive parse if ISO format
+                                             # But usually it's a DatetimeWithNanoseconds
+                                             pass
+                                        except:
+                                            pass
+                                    
+                                    # If timezone aware, convert to naive or convert period_start to aware
+                                    if hasattr(last_updated, 'tzinfo') and last_updated.tzinfo:
+                                        # Convert to naive local (simple strip)
+                                        last_updated_naive = last_updated.replace(tzinfo=None)
+                                    else:
+                                        last_updated_naive = last_updated
+                                        
+                                    if last_updated_naive < period_start_date:
+                                        is_ignored = False # RESET
+                                else:
+                                    # No timestamp -> likely legacy ignore or error
+                                    # Reset to be safe, so user can re-ignore if they want
+                                    is_ignored = False
+                        except Exception as e:
+                            print(f"Error checking ignore reset for benefit {idx}: {e}")
+                            # Fallback: keep is_ignored as is
+                    
                     
                     benefit_obj = {
                         'user_card_id': card['id'],  # Firestore document ID for user_cards subcollection
@@ -320,7 +472,8 @@ def dashboard(request):
                         'script_id': f"{card['card_id']}_{benefit_id}",  # Unique ID for DOM elements
                         'days_until_expiration': days_until_expiration,
                         'is_ignored': is_ignored,
-                        'ytd_used': ytd_used
+                        'ytd_used': ytd_used,
+                        'additional_details': benefit.get('additional_details')
                     }
                     
                     all_benefits.append(benefit_obj)
