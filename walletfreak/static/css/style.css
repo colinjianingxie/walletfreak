@@ -184,12 +184,13 @@ p {
     color: var(--primary);
 }
 
-.nav-items a.active {
-    color: #2563EB;
-    background-color: #DBEAFE;
+.nav-links .nav-items a.active {
+    color: #2563EB !important;
+    background-color: #DBEAFE !important;
     font-weight: 700;
     border-radius: 9999px;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.5rem !important;
+    display: inline-block;
 }
 
 /* Buttons */
