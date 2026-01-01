@@ -7,21 +7,26 @@
     </h3>
     </div>
 
-    <!-- General -->
-    <div class="filter-group">
-        <div class="filter-group-title">General</div>
-        <div class="filter-chips">
-            {% with is_saved=active_filters.saved %}
-            <a href="?{% if is_saved %}saved={% else %}saved=on{% endif %}"
-               class="filter-chip {% if is_saved %}active{% endif %}"
-               hx-get="?{% if is_saved %}saved={% else %}saved=on{% endif %}"
-               hx-target="#blog-grid-container"
-               hx-indicator="#blog-grid-container"
-               hx-push-url="true">
-                Saved
-            </a>
-            {% endwith %}
+    <!-- Saved Toggle -->
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #F1F5F9;">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="{% if active_filters.saved %}#F59E0B{% else %}none{% endif %}" stroke="{% if active_filters.saved %}#F59E0B{% else %}currentColor{% endif %}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #94A3B8;"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+            <span class="sidebar-title" style="margin: 0; font-size: 1rem;">Saved Posts</span>
         </div>
+        
+        {% with is_saved=active_filters.saved %}
+        <label class="toggle-switch" style="position: relative; display: inline-block; width: 50px; height: 26px; margin: 0;">
+            <input type="checkbox" 
+                   name="saved" 
+                   {% if is_saved %}checked{% endif %}
+                   hx-get="?{% if is_saved %}saved={% else %}saved=on{% endif %}"
+                   hx-target="#blog-grid-container"
+                   hx-indicator="#blog-grid-container"
+                   hx-push-url="true"
+                   hx-trigger="change">
+            <span class="toggle-slider"></span>
+        </label>
+        {% endwith %}
     </div>
 
     <!-- Ecosystem -->

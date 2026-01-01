@@ -42,8 +42,8 @@
                 {% endif %}
                 <a href="{% url 'card_list' %}" data-nav="explore">Explore</a>
                 <a href="{% url 'calculators_index' %}" data-nav="calculators">Calculators</a>
-                <a href="{% url 'personality_list' %}" data-nav="personalities">Personalities</a>
-                <a href="{% url 'blog_list' %}" data-nav="blog">Blog</a>
+                <a href="{% url 'personality_list' %}" data-nav="personalities">Freaks</a>
+                <a href="{% url 'blog_list' %}" data-nav="blog">Ledger</a>
                 <a href="{% url 'contact' %}" data-nav="contact">Contact</a>
                 
                 {% if not user_is_premium %}
@@ -331,17 +331,18 @@
             let activeNav = '';
 
             // Determine which navigation item should be active based on current path
+            // Determine which navigation item should be active based on current path
             if (currentPath === '/' || currentPath.startsWith('/wallet')) {
                 activeNav = 'wallet';
             } else if (currentPath.startsWith('/features')) {
                 activeNav = 'features';
-            } else if (currentPath.startsWith('/cards') || currentPath.startsWith('/explore')) {
+            } else if (currentPath.startsWith('/cards') || currentPath.toLowerCase().includes('explore')) {
                 activeNav = 'explore';
             } else if (currentPath.startsWith('/calculators')) {
                 activeNav = 'calculators';
-            } else if (currentPath.startsWith('/personalities')) {
+            } else if (currentPath.startsWith('/personalities') || currentPath.toLowerCase().includes('freaks')) {
                 activeNav = 'personalities';
-            } else if (currentPath.startsWith('/blog')) {
+            } else if (currentPath.startsWith('/blog') || currentPath.toLowerCase().includes('ledger')) {
                 activeNav = 'blog';
             } else if (currentPath.startsWith('/contact')) {
                 activeNav = 'contact';
