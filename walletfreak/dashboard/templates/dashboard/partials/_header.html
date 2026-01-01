@@ -4,7 +4,7 @@
     <!-- Greeting Section -->
     <div style="display: flex; align-items: center; gap: 1.5rem;">
         <div
-            style="width: 60px; height: 60px; background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.75rem; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25); overflow: hidden;">
+            style="width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; overflow: hidden;">
             {% if user_profile.photo_url %}
             <img src="{{ user_profile.photo_url }}" alt="Profile" style="width: 100%; height: 100%; object-fit: cover;">
             {% else %}

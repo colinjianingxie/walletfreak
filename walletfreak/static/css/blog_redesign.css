@@ -458,6 +458,10 @@
     /* text-orange-500 */
 }
 
+.vote-btn.active {
+    color: #F97316;
+}
+
 .vote-count {
     font-size: 0.75rem;
     /* text-xs */

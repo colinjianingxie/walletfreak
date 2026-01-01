@@ -806,9 +806,9 @@ def unsave_post(request, slug):
 
 @require_POST
 def vote_blog(request, slug):
-    """Vote on a blog post (authenticated users only)"""
+    """Vote on a blog post (toggle upvote)"""
     try:
-        # Check authentication
+        # Check authentication for AJAX requests
         uid = request.session.get('uid')
         if not uid:
             return JsonResponse({'success': False, 'error': 'Not authenticated'}, status=401)
@@ -820,31 +820,28 @@ def vote_blog(request, slug):
         
         blog_id = blog['id']
         
-        # Get action (add/remove) - Default to 'add' if not specified for backward compat (though risks double count)
-        action = request.POST.get('action', 'add')
-        vote_type = request.POST.get('vote_type', 'upvote')
+        # Check current vote status
+        current_vote = db.get_user_vote_on_blog(uid, blog_id)
         
-        if vote_type != 'upvote':
-             return JsonResponse({'success': False, 'error': 'Only upvotes are allowed'}, status=400)
-
-        if action == 'remove':
+        if current_vote == 'upvote':
+            # Remove vote
             success = db.remove_user_vote_on_blog(uid, blog_id)
-            new_vote = None
+            action = 'removed'
         else:
-            success = db.add_user_vote_on_blog(uid, blog_id, vote_type)
-            new_vote = 'upvote'
-        
-        if success:
-            # Get updated vote count (upvotes only)
-            upvote_count = db.get_blog_vote_count(blog_id, 'upvote')
+            # Add upvote
+            success = db.add_user_vote_on_blog(uid, blog_id, 'upvote')
+            action = 'added'
             
+        if success:
+            # Get updated count
+            new_count = db.get_blog_vote_count(blog_id, 'upvote')
             return JsonResponse({
-                'success': True,
-                'user_vote': new_vote,
-                'upvote_count': upvote_count
+                'success': True, 
+                'action': action,
+                'new_count': new_count
             })
         else:
-            return JsonResponse({'success': False, 'error': 'Failed to process vote'}, status=500)
+            return JsonResponse({'success': False, 'error': 'Failed to update vote'}, status=500)
             
     except Exception as e:
         print(f"Error in vote_blog: {e}")
