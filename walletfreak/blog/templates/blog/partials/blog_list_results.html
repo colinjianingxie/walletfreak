@@ -1,4 +1,9 @@
 {% load static %}
+<!-- Loading Indicator Overlay (Restored on swap) -->
+<div class="blog-loading-overlay htmx-indicator">
+    <div class="loading-spinner"></div>
+</div>
+
 {% if blogs %}
 <div class="blog-grid" id="blog-grid">
     {% for blog in blogs %}
@@ -98,14 +103,14 @@
 {% else %}
 <div class="empty-state">
     <div class="empty-icon-wrapper">
-        <span class="material-icons empty-icon">sentiment_dissatisfied</span>
+        <span class="material-icons empty-icon">search_off</span>
     </div>
-    <h3>No updates found</h3>
-    <p>Try adjusting your filters or search query.</p>
-    <button class="clear-filters-btn" onclick="window.location.href='{% url 'blog_list' %}'">Clear Filters</button>
+    <h3 class="empty-title">No matching updates</h3>
+    <p class="empty-text">We couldn't find any posts matching your criteria.</p>
 </div>
 {% endif %}
 
+{% if request.headers.HX_Request %}
 <div id="blog-sidebar" hx-swap-oob="true">
     {% include "blog/partials/sidebar.html" %}
 </div>
@@ -113,3 +118,16 @@
 <div id="active-filters-bar" hx-swap-oob="true">
     {% include "blog/partials/active_filters.html" %}
 </div>
+
+<div id="mobile-active-filters" hx-swap-oob="true">
+    {% include "blog/partials/active_filters.html" %}
+</div>
+
+<div id="mobile-quick-chips" hx-swap-oob="true">
+    {% include "blog/partials/mobile_quick_chips.html" %}
+</div>
+
+<div id="mobile-filter-modal-container" hx-swap-oob="innerHTML">
+    {% include "blog/partials/mobile_filter_modal.html" %}
+</div>
+{% endif %}

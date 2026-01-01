@@ -1,0 +1,102 @@
+{% load blog_extras %}
+<!-- Mobile Filter Modal -->
+<div id="mobile-filter-modal" class="mobile-filter-modal hidden">
+    <div class="modal-content-wrapper">
+        <form id="mobile-filter-form" hx-get="{% url 'blog_list' %}" hx-target="#blog-grid-container" hx-push-url="true" hx-indicator="#blog-grid-container">
+            <!-- Header -->
+            <div class="modal-header">
+                <div>
+                    <h2 class="modal-title">Filters</h2>
+                    <p class="modal-subtitle">REFINE YOUR INTELLIGENCE FEED</p>
+                </div>
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <button type="button" class="reset-btn" onclick="resetMobileFilters()">RESET</button>
+                    <button type="button" class="close-btn" onclick="toggleMobileModal()">
+                        <span class="material-icons">close</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Scrollable Body -->
+            <div class="modal-body">
+                
+                <!-- Ecosystem -->
+                <div class="filter-section">
+                    <div class="section-title-row">
+                        <span class="material-icons section-icon">sell</span>
+                        <h3 class="section-title">ECOSYSTEM</h3>
+                    </div>
+                    <div class="filter-grid">
+                        {% for vendor in ecosystem_vendors %}
+                        <label class="filter-option-card">
+                            <input type="checkbox" name="ecosystem" value="{{ vendor }}" {% if vendor in active_filters.ecosystem %}checked{% endif %}>
+                            <span class="option-label">{{ vendor }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Content Type -->
+                <div class="filter-section">
+                    <div class="section-title-row">
+                        <span class="material-icons section-icon">label</span>
+                        <h3 class="section-title">CONTENT TYPE</h3>
+                    </div>
+                    <div class="filter-grid">
+                        {% for t in tags %}
+                        <label class="filter-option-card">
+                            <input type="checkbox" name="tag" value="{{ t }}" {% if t in active_filters.tag %}checked{% endif %}>
+                            <span class="option-label">{{ t }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Experience Level -->
+                <div class="filter-section">
+                    <div class="section-title-row">
+                        <span class="material-icons section-icon">school</span>
+                        <h3 class="section-title">LEVEL</h3>
+                    </div>
+                    <div class="filter-grid">
+                        {% for val, label in experience_levels %}
+                        <label class="filter-option-card">
+                            <input type="checkbox" name="experience_level" value="{{ val }}" {% if val in active_filters.experience_level %}checked{% endif %}>
+                            <span class="option-label">{{ label }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Read Time -->
+                <div class="filter-section">
+                    <div class="section-title-row">
+                        <span class="material-icons section-icon">schedule</span>
+                        <h3 class="section-title">DURATION</h3>
+                    </div>
+                    <div class="filter-grid">
+                        {% for val, label in read_times %}
+                        <label class="filter-option-card">
+                            <input type="checkbox" name="read_time" value="{{ val }}" {% if val in active_filters.read_time %}checked{% endif %}>
+                            <span class="option-label">{{ label }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Spacer for fixed footer -->
+                <div style="height: 100px;"></div>
+            </div>
+
+            <!-- Sticky Footer -->
+            <div class="modal-footer">
+                <button type="submit" class="apply-btn" onclick="toggleMobileModal()">Apply Filters</button>
+            </div>
+            
+            <!-- Close Button (Absolute Top Center - draggable handle style) -->
+            <div class="modal-handle" onclick="toggleMobileModal()"></div>
+        </form>
+    </div>
+</div>
+
+

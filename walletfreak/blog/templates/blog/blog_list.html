@@ -10,94 +10,92 @@
 <div class="blog-layout">
     
     <!-- Header -->
-    <header class="blog-header">
+    <header class="blog-header" style="padding-bottom: 0; margin-bottom: 0.5rem;">
         <h1 class="blog-page-title">The Ledger</h1>
         <p class="blog-page-subtitle">Proprietary strategies and card intelligence.</p>
     </header>
 
-    <!-- Mobile Controls (Search & Chips) -->
+     <!-- Mobile Controls (Search & Chips) -->
     <div class="mobile-controls">
-        <div class="search-wrapper">
-             <span class="material-icons search-icon">search</span>
-             <input type="text" 
-                    name="q" 
-                    class="search-input" 
-                    placeholder="Search ledger..." 
-                    value="{{ search_query|default:'' }}"
-                    hx-get="{% url 'blog_list' %}" 
-                    hx-trigger="keyup changed delay:500ms" 
-                    hx-target="#blog-grid-container" 
-                    hx-select="#blog-grid"
-                    hx-push-url="true">
+        <div class="mobile-search-row">
+            <div class="search-wrapper mobile-search-wrapper">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon" aria-hidden="true"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
+                 <input type="text" 
+                        name="q" 
+                        class="search-input" 
+                        placeholder="Search ledger..." 
+                        value="{{ search_query|default:'' }}"
+                        hx-get="{% url 'blog_list' %}" 
+                        hx-trigger="keyup changed delay:500ms" 
+                        hx-target="#blog-grid-container" 
+                        hx-indicator="#blog-grid-container"
+                        hx-push-url="true">
+            </div>
+            <button class="mobile-filter-btn" onclick="toggleMobileModal()">
+                <span class="material-icons">tune</span>
+            </button>
         </div>
-        <!-- Mobile Chips (Simplified horizontal scroll) -->
-        <div class="filter-chips" style="flex-wrap: nowrap; overflow-x: auto; padding-bottom: 5px;">
-            {% for vendor in ecosystem_vendors|slice:":6" %}
-            <a href="?{% toggle_url 'ecosystem' vendor %}" 
-               class="filter-chip {% if vendor in active_filters.ecosystem %}active{% endif %}"
-               hx-get="?{% toggle_url 'ecosystem' vendor %}"
-               hx-target="#blog-grid-container"
-               hx-push-url="true"
-               style="white-space: nowrap;">
-               {{ vendor }}
-            </a>
-            {% endfor %}
+        
+        {% include "blog/partials/mobile_quick_chips.html" %}
+
+        <!-- Mobile Active Filters (OOB Swapped) -->
+        <div id="mobile-active-filters">
+            {% include "blog/partials/active_filters.html" %}
         </div>
     </div>
-    
-    <div class="blog-layout-grid">
-        
-        <!-- Sidebar -->
-        <aside class="blog-sidebar-col">
-            <div id="blog-sidebar">
-                {% include "blog/partials/sidebar.html" %}
-            </div>
-
-            <!-- Admin Actions (Editors Only) -->
-            {% if is_editor %}
-            <div class="inner-circle-promo" style="background: white; border: 1px solid #e2e8f0; margin-top: 2rem;">
-                <div class="promo-content">
-                    <span class="material-icons crown-icon" style="color: #6366F1; background: rgba(99, 102, 241, 0.1);">edit_note</span>
-                    <h4 class="promo-title">Editor Console</h4>
-                    <p class="promo-text">Manage the ledger and drafts.</p>
-                    <div style="display: flex; gap: 0.5rem; margin-top: 1rem; width: 100%;">
-                        <a href="{% url 'blog_create' %}" class="promo-btn" style="text-align: center; flex: 1; justify-content: center;">Create</a>
-                        <a href="{% url 'blog_drafts' %}" class="promo-btn" style="text-align: center; flex: 1; justify-content: center; background: white; color: #0F172A; border: 1px solid #e2e8f0;">Drafts</a>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
-
-            <!-- Inner Circle Promo (Non-Premium Only) -->
-            {% if not user_is_premium %}
-            <div class="inner-circle-promo" style="background: white; border: 1px solid #e2e8f0; margin-top: 2rem;">
-                <div class="promo-content">
-                    <span class="material-icons crown-icon">emoji_events</span>
-                    <h4 class="promo-title">The Inner Circle</h4>
-                    <p class="promo-text">Access restricted churning paths and data-points.</p>
-                    <button class="promo-btn">Go Premium</button>
-                </div>
-            </div>
-            {% endif %}
-        </aside>
-        
-        <!-- Main Content -->
-        <div class="blog-main-col" id="blog-grid-container">
-             <!-- Desktop Search Implementation -->
-             <style>
-                 @media(min-width: 1024px) { .desktop-search { display: block !important; } }
-             </style>
-             <div class="desktop-search" style="margin-bottom: 2rem;">
-                 <div class="search-wrapper">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon" aria-hidden="true"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
-                     <input type="text" 
-                            name="q" 
-                            class="search-input" 
-                            placeholder="Search the ledger..." 
-                            value="{{ search_query|default:'' }}"
-                            hx-get="{% url 'blog_list' %}" 
-                            hx-trigger="keyup changed delay:500ms" 
-                            hx-target="#blog-grid-container" 
+     
+     <div class="blog-layout-grid">
+         
+         <!-- Sidebar -->
+         <aside class="blog-sidebar-col">
+             <div id="blog-sidebar">
+                 {% include "blog/partials/sidebar.html" %}
+             </div>
+ 
+             <!-- Admin Actions (Editors Only) -->
+             {% if is_editor %}
+             <div class="inner-circle-promo" style="background: white; border: 1px solid #e2e8f0; margin-top: 2rem;">
+                 <div class="promo-content">
+                     <span class="material-icons crown-icon" style="color: #6366F1; background: rgba(99, 102, 241, 0.1);">edit_note</span>
+                     <h4 class="promo-title">Editor Console</h4>
+                     <p class="promo-text">Manage the ledger and drafts.</p>
+                     <div style="display: flex; gap: 0.5rem; margin-top: 1rem; width: 100%;">
+                         <a href="{% url 'blog_create' %}" class="promo-btn" style="text-align: center; flex: 1; justify-content: center;">Create</a>
+                         <a href="{% url 'blog_drafts' %}" class="promo-btn" style="text-align: center; flex: 1; justify-content: center; background: white; color: #0F172A; border: 1px solid #e2e8f0;">Drafts</a>
+                     </div>
+                 </div>
+             </div>
+             {% endif %}
+ 
+             <!-- Inner Circle Promo (Non-Premium Only) -->
+             {% if not user_is_premium %}
+             <div class="inner-circle-promo" style="background: white; border: 1px solid #e2e8f0; margin-top: 2rem;">
+                 <div class="promo-content">
+                     <span class="material-icons crown-icon">emoji_events</span>
+                     <h4 class="promo-title">The Inner Circle</h4>
+                     <p class="promo-text">Access restricted churning paths and data-points.</p>
+                     <button class="promo-btn">Go Premium</button>
+                 </div>
+             </div>
+             {% endif %}
+         </aside>
+         
+         <!-- Main Content -->
+         <!-- Main Content -->
+         <div class="blog-main-col">
+              <!-- Desktop Search Implementation -->
+              <div class="desktop-search" style="margin-bottom: 2rem;">
+                  <div class="search-wrapper">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon" aria-hidden="true"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
+                      <input type="text" 
+                             name="q" 
+                             class="search-input" 
+                             placeholder="Search the ledger..." 
+                             value="{{ search_query|default:'' }}"
+                             hx-get="{% url 'blog_list' %}" 
+                             hx-trigger="keyup changed delay:500ms" 
+                             hx-target="#blog-grid-container" 
+                             hx-indicator="#blog-grid-container" 
                             hx-push-url="true"> 
                  </div>
             </div>
@@ -106,10 +104,48 @@
             <div id="active-filters-bar">
                 {% include "blog/partials/active_filters.html" %}
             </div>
-            <!-- Results -->
-            {% include "blog/partials/blog_list_results.html" %}
+            <!-- Blog Grid (HTMX Target) -->
+            <div id="blog-grid-container" class="relative min-h-[500px]">
+                
+                {% include "blog/partials/blog_list_results.html" %}
+            </div>
         </div>
         
     </div>
 </div>
+<div id="mobile-filter-modal-container">
+    {% include "blog/partials/mobile_filter_modal.html" %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Mobile Filter Modal Logic
+    function toggleMobileModal() {
+        const modal = document.getElementById('mobile-filter-modal');
+        if (!modal) {
+            console.error('Mobile filter modal not found');
+            return;
+        }
+        modal.classList.toggle('hidden');
+        if (!modal.classList.contains('hidden')) {
+            document.body.style.overflow = 'hidden'; 
+        } else {
+            document.body.style.overflow = '';
+        }
+    }
+
+    function resetMobileFilters() {
+        const form = document.getElementById('mobile-filter-form');
+        if (!form) return;
+        const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(cb => cb.checked = false);
+        
+        // Close modal immediately so user sees loading state
+        toggleMobileModal();
+
+        // Auto-apply the reset (triggers HTMX request)
+        htmx.trigger(form, 'submit');
+    }
+</script>
 {% endblock %}

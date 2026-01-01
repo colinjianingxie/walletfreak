@@ -52,10 +52,10 @@ def blog_list(request):
     search_query = request.GET.get('q')
     
     # New Filter Parameters
-    ecosystem_filter = request.GET.get('ecosystem')
-    content_type_filter = request.GET.get('content_type') # Maps to tags
-    experience_filter = request.GET.get('experience') # Maps to experience_level
-    read_time_filter = request.GET.get('read_time') # Maps to read_time
+    ecosystem_filters = request.GET.getlist('ecosystem')
+    tag_filters = request.GET.getlist('tag')
+    experience_filters = request.GET.getlist('experience_level')
+    read_time_filters = request.GET.getlist('read_time')
     
     uid = request.session.get('uid')
     
@@ -93,8 +93,8 @@ def blog_list(request):
             }
             target_tags.append(tag_mapping.get(category.lower(), category.lower()))
             
-        if content_type_filter:
-            target_tags.append(content_type_filter.lower())
+        if tag_filters:
+            target_tags.extend([t.lower() for t in tag_filters])
             
         if target_tags:
             filtered_blogs = []
@@ -103,56 +103,29 @@ def blog_list(request):
                 if not tags:
                     continue
                 
-                # Check if matches ALL target tags (logical AND) or ANY?
-                # Usually category click is "Show me Reviews". Sidebar filter "News" should narrow it? or Replace?
-                # Sidebar UI suggests toggles. Let's do ANY match within the set of tags provided if multiple?
-                # But here we are building a list of required tags.
-                # Let's say if you selected 'Review' and 'News', it must have BOTH? Or Either?
-                # UI implies single selection per group mostly.
-                # Let's enforce that the blog must match the selected tag.
-                
                 blog_tags_list = parse_tags_helper(tags)
                      
-                # Check if ALL target tags are present (narrowing down)
-                if all(t in blog_tags_list for t in target_tags):
-                    filtered_blogs.append(b)
+                # OR logic: if any of the target tags are in blog tags
+                # Use intersection
+                if any(t in blog_tags_list for t in target_tags):
+                     filtered_blogs.append(b)
             blogs = filtered_blogs
-            
+
         # 2. Premium Filter
         if category == 'Premium':
             blogs = [b for b in blogs if b.get('is_premium')]
-            
-        # 3. Ecosystem Filter (Match any vendor in article content/tags? Or manual tagging?)
-        # User request: "For Ecosystem, pull out all of the unique vendors on the credit cards and display them there."
-        # Does this mean we filter blogs that mention them? Or blogs tagged with them?
-        # Assuming blogs are tagged with vendors (e.g. 'Amex', 'Chase'). 
-        # So check if 'ecosystem_filter' (e.g. 'Amex') is in blog tags or title/content?
 
-        # Filters (Multi-select)
-        ecosystem_filters = request.GET.getlist('ecosystem')
-        tag_filters = request.GET.getlist('tag')
-        experience_filters = request.GET.getlist('experience_level')
-        read_time_filters = request.GET.getlist('read_time')
-
-        # Apply Multi-select Filters (AND across categories, OR within category)
+        # Apply Multi-select Filters
+        
+        # Ecosystem
         if ecosystem_filters:
-            # Filter: Keep blog if its vendor is in the list
-            blogs = [b for b in blogs if b.get('vendor') in ecosystem_filters]
+             blogs = [b for b in blogs if b.get('vendor') in ecosystem_filters]
             
-        if tag_filters:
-            # Filter: Keep blog if ANY of its tags match the selected tags
-            filtered_blogs = []
-            for b in blogs:
-                b_tags = b.get('tags', '')
-                parsed_tags = parse_tags_helper(b_tags)
-                # Check intersection
-                if any(t in tag_filters for t in parsed_tags):
-                    filtered_blogs.append(b)
-            blogs = filtered_blogs
-            
+        # Experience Level
         if experience_filters:
             blogs = [b for b in blogs if b.get('experience_level') in experience_filters]
             
+        # Read Time
         if read_time_filters:
             blogs = [b for b in blogs if b.get('read_time') in read_time_filters]
             
@@ -245,8 +218,8 @@ def blog_list(request):
             blog['downvote_count'] = blog.get('downvote_count', 0)
             blog['total_score'] = blog['upvote_count'] - blog['downvote_count']
             
-            if uid:
-                blog['user_vote'] = db.get_user_vote_on_blog(uid, blog_id)
+            if uid and uid in blog.get('users_upvoted', []):
+                blog['user_vote'] = 'upvote'
             else:
                 blog['user_vote'] = None
                 
@@ -338,10 +311,10 @@ def blog_list(request):
         'experience_levels': experience_levels,
         'read_times': read_times,
         'active_filters': {
-            'ecosystem': ecosystem_filter,
-            'content_type': content_type_filter,
-            'experience': experience_filter,
-            'read_time': read_time_filter,
+            'ecosystem': ecosystem_filters,
+            'tag': tag_filters,
+            'experience_level': experience_filters,
+            'read_time': read_time_filters,
         }
     }
 

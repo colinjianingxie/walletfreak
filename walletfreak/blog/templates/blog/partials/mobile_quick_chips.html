@@ -1,0 +1,16 @@
+{% load blog_extras %}
+<div id="mobile-quick-chips" class="filter-chips mobile-chips">
+    {% for vendor in ecosystem_vendors|slice:":6" %}
+    <a href="?{% toggle_url 'ecosystem' vendor %}" 
+       class="filter-chip pill-chip {% if vendor in active_filters.ecosystem %}active{% endif %}"
+       hx-get="?{% toggle_url 'ecosystem' vendor %}"
+       hx-target="#blog-grid-container"
+       hx-indicator="#blog-grid-container"
+       hx-push-url="true">
+       {{ vendor }}
+    </a>
+    {% endfor %}
+    <button class="filter-chip pill-chip more-chip" onclick="toggleMobileModal()">
+        More <span class="material-icons" style="font-size: 14px;">expand_more</span>
+    </button>
+</div>

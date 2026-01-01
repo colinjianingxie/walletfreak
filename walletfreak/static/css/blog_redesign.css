@@ -68,8 +68,8 @@
 .mobile-controls {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
     display: none;
     /* Default hidden, show on mobile via media query if needed or class toggles */
 }
@@ -95,7 +95,7 @@
 .search-icon {
     position: absolute;
     left: 1rem;
-    top: 50%;
+    top: 40%;
     transform: translateY(-50%);
     width: 1.25rem;
     height: 1.25rem;
@@ -696,4 +696,497 @@
 
 .share-btn:hover {
     color: #4F46E5;
+}
+
+/* HTMX Loading Indicators */
+.htmx-indicator {
+    opacity: 0;
+    transition: opacity 200ms ease-in;
+}
+
+.htmx-request .htmx-indicator {
+    opacity: 1;
+}
+
+.htmx-request.htmx-indicator {
+    opacity: 1;
+}
+
+/* Loading overlay for the grid container */
+.blog-loading-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(1px);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.5rem;
+    pointer-events: none;
+    /* Let clicks pass through if needed, though usually we want to block interaction */
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 3px solid #E2E8F0;
+    border-top-color: #4F46E5;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* When the grid is refreshing, dim it slightly */
+#blog-grid-container.htmx-request {
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    pointer-events: none;
+}
+
+/* Empty State Styles */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
+    background: white;
+    border-radius: 1.5rem;
+    border: 1px dashed #E2E8F0;
+    margin-top: 1rem;
+}
+
+.empty-icon-wrapper {
+    width: 4rem;
+    height: 4rem;
+    background: #F1F5F9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.empty-icon {
+    font-size: 2rem;
+    color: #94A3B8;
+    /* Slate-400 */
+}
+
+.empty-title {
+    font-size: 1.125rem;
+    font-weight: 900;
+    color: #0F172A;
+    /* Slate-900 */
+    margin-bottom: 0.5rem;
+}
+
+.empty-text {
+    font-size: 0.875rem;
+    color: #64748B;
+    /* Slate-500 */
+    max-width: 20rem;
+    line-height: 1.5;
+}
+
+/* Desktop Search Visibility */
+.desktop-search {
+    display: none;
+}
+
+@media (min-width: 1024px) {
+    .desktop-search {
+        display: block;
+    }
+}
+
+/* Mobile Filter Modal Styles */
+.mobile-filter-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.6);
+    /* Backdrop */
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    /* Bottom sheet on very small? No, full screen better */
+}
+
+.mobile-filter-modal.hidden {
+    display: none;
+}
+
+.modal-content-wrapper {
+    width: 100%;
+    height: 100%;
+    /* Full screen */
+    background: #FFFFFF;
+    border-radius: 0;
+    /* Remove radius */
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 0;
+    animation: slideUp 0.3s ease-out;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #64748B;
+    cursor: pointer;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.close-btn:hover {
+    background: #F1F5F9;
+    color: #0F172A;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+/* Ensure form takes full height for flex layout */
+#mobile-filter-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Modal Header */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+    border-bottom: 1px solid #F1F5F9;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0F172A;
+    margin: 0;
+    line-height: 1;
+}
+
+.modal-subtitle {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #94A3B8;
+    margin-top: 0.25rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.reset-btn {
+    background: #F1F5F9;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #64748B;
+    cursor: pointer;
+}
+
+/* Modal Body */
+.modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+}
+
+.filter-section {
+    margin-bottom: 2rem;
+}
+
+.section-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.section-icon {
+    font-size: 1.25rem;
+    color: #CBD5E1;
+}
+
+.section-title {
+    font-size: 0.875rem;
+    font-weight: 800;
+    color: #0F172A;
+    margin: 0;
+    letter-spacing: 0.05em;
+}
+
+/* Filter Grid (2 columns) */
+.filter-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.filter-option-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.filter-option-card input {
+    position: absolute;
+    opacity: 0;
+}
+
+.option-label {
+    display: block;
+    padding: 0.75rem 1rem;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #475569;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.filter-option-card input:checked+.option-label {
+    background: #4F46E5;
+    /* Indigo */
+    color: white;
+    border-color: #4F46E5;
+    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
+}
+
+/* Footer */
+.modal-footer {
+    padding: 1rem 1.5rem;
+    background: white;
+    border-top: 1px solid #F1F5F9;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+}
+
+.apply-btn {
+    width: 100%;
+    background: #0F172A;
+    /* Slate 900 */
+    color: white;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+}
+
+.modal-handle {
+    position: absolute;
+    top: 0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3rem;
+    height: 0.25rem;
+    background: #E2E8F0;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+/* Mobile Header Redesign */
+.mobile-search-row {
+    display: flex;
+    gap: 0.75rem;
+    align-items: stretch;
+    /* Ensure equal height */
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    /* Reduced from 1rem */
+}
+
+.mobile-search-wrapper {
+    flex: 1;
+    display: flex;
+}
+
+.mobile-search-wrapper .search-input {
+    height: 3rem;
+    /* Explicit height to match button */
+    padding-top: 0;
+    padding-bottom: 0;
+    display: flex;
+    align-items: center;
+}
+
+.mobile-filter-btn {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0F172A;
+    color: white;
+    border-radius: 0.75rem;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.mobile-chips {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+    /* Reduced padding */
+    /* Hide scrollbar */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    margin-top: 0;
+}
+
+.mobile-chips::-webkit-scrollbar {
+    display: none;
+}
+
+.pill-chip {
+    background: white !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 2rem !important;
+    padding: 0.5rem 1rem !important;
+    /* Keep as is, looks standard */
+    font-weight: 600 !important;
+    color: #475569 !important;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.5rem;
+    /* Fixed height for consistency */
+}
+
+.pill-chip.active {
+    background: #4F46E5 !important;
+    color: white !important;
+    border-color: #4F46E5 !important;
+}
+
+.more-chip {
+    background: #F8FAFC !important;
+    color: #4F46E5 !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 2rem !important;
+    padding: 0.5rem 1rem !important;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    cursor: pointer;
+}
+
+/* Active Filters Section (Mobile & Desktop Shared/Overrides) */
+#mobile-active-filters {
+    display: block;
+    /* Ensure visibility */
+    margin-bottom: 0.5rem;
+}
+
+#mobile-active-filters .active-filters-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.active-label {
+    font-size: 0.625rem;
+    font-weight: 900;
+    color: #94A3B8;
+    /* Slate 400 */
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-right: 0.25rem;
+}
+
+.active-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: #EEF2FF;
+    /* Indigo 50 */
+    color: #4F46E5;
+    /* Indigo 600 */
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.375rem 0.75rem;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.active-chip:hover {
+    background: #E0E7FF;
+    /* Indigo 100 */
+}
+
+.chip-remove-icon {
+    width: 0.75rem;
+    height: 0.75rem;
+    stroke-width: 3;
+    opacity: 0.7;
+}
+
+.clear-active-btn {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #94A3B8;
+    text-decoration: none;
+    margin-left: 0.25rem;
+}
+
+.clear-active-btn:hover {
+    color: #64748B;
+    text-decoration: underline;
+}
+
+/* Deduplicate Active Filters */
+@media (max-width: 1023px) {
+
+    /* Hide the desktop active filters bar on mobile */
+    #active-filters-bar {
+        display: none !important;
+    }
+}
+
+@media (min-width: 1024px) {
+
+    /* Ensure mobile container is hidden (it's inside .mobile-controls which is hidden, but just to be safe) */
+    #mobile-active-filters {
+        display: none !important;
+    }
 }
