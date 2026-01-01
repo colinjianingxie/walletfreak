@@ -186,8 +186,10 @@ p {
 
 .nav-items a.active {
     color: #2563EB;
-    background-color: #DBEAFE;
+    background-color: #eff6ff;
     font-weight: 700;
+    border-radius: 9999px;
+    padding: 0.5rem 1rem;
 }
 
 /* Buttons */
