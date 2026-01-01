@@ -208,3 +208,17 @@ class UserMixin:
 
     def set_premium(self, uid, is_premium):
         self.db.collection('users').document(uid).update({'is_premium': is_premium})
+
+    def update_user_subscription(self, uid, data):
+        """Update user subscription details"""
+        self.db.collection('users').document(uid).set(data, merge=True)
+
+    def get_uid_by_stripe_customer_id(self, customer_id):
+        """Find user by Stripe Customer ID"""
+        users_ref = self.db.collection('users')
+        query = users_ref.where('stripe_customer_id', '==', customer_id).limit(1)
+        docs = list(query.stream())
+        if docs:
+            return docs[0].id
+        return None
+

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div style="min-height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 2rem;">
+    <div style="max-width: 500px;">
+        <div style="width: 80px; height: 80px; background: #ECFDF5; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
+            <span class="material-icons" style="font-size: 40px; color: #10B981;">check_circle</span>
+        </div>
+        
+        <h1 style="font-size: 2.5rem; font-weight: 800; color: var(--dark); margin-bottom: 1rem;">Welcome to the Club!</h1>
+        <p style="font-size: 1.125rem; color: var(--text-muted); margin-bottom: 2rem;">
+            Your subscription was successful. You now have full access to all Premium features.
+        </p>
+        
+        <a href="/wallet/" class="btn btn-primary" style="padding: 0.75rem 2rem; font-size: 1.1rem; border-radius: 9999px;">
+            Go to My Wallet
+        </a>
+    </div>
+</div>
+{% endblock %}

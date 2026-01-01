@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+    .pricing-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 4rem 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .pricing-header h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, #6366F1 0%, #A855F7 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .pricing-header p {
+        font-size: 1.25rem;
+        color: var(--text-muted);
+        max-width: 600px;
+        margin-bottom: 3rem;
+    }
+
+    .pricing-card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 3rem;
+        max-width: 450px;
+        width: 100%;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+
+    .pricing-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .popular-badge {
+        position: absolute;
+        top: 20px;
+        right: -35px;
+        background: #F59E0B;
+        color: white;
+        padding: 0.25rem 3rem;
+        transform: rotate(45deg);
+        font-size: 0.875rem;
+        font-weight: 700;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .price-display {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        gap: 0.25rem;
+        margin-bottom: 2rem;
+    }
+
+    .price-currency {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--dark);
+    }
+
+    .price-amount {
+        font-size: 4rem;
+        font-weight: 800;
+        color: var(--dark);
+        line-height: 1;
+    }
+
+    .price-period {
+        font-size: 1.125rem;
+        color: var(--text-muted);
+    }
+
+    .features-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 2.5rem 0;
+        text-align: left;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        color: var(--dark);
+        font-size: 1.1rem;
+    }
+
+    .feature-icon {
+        color: #10B981;
+        background: #ECFDF5;
+        padding: 0.25rem;
+        border-radius: 50%;
+        font-size: 1.25rem;
+    }
+
+    .subscribe-btn {
+        width: 100%;
+        padding: 1rem;
+        background: linear-gradient(135deg, #6366F1 0%, #A855F7 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.125rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: opacity 0.2s;
+        box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.4);
+    }
+
+    .subscribe-btn:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+    }
+
+    .already-premium {
+        background: #ECFDF5;
+        color: #059669;
+        cursor: default;
+        box-shadow: none;
+    }
+
+    .already-premium:hover {
+        opacity: 1;
+        transform: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="pricing-container">
+    <div class="pricing-header">
+        <h1>Unlock Your Full Potential</h1>
+        <p>Get access to advanced reward optimization engines, exclusive content, and premium features.</p>
+    </div>
+
+    <div class="pricing-card">
+        <div class="popular-badge">POPULAR</div>
+        
+        <div class="price-display">
+            <span class="price-currency">$</span>
+            <span class="price-amount">4.99</span>
+            <span class="price-period">/mo</span>
+        </div>
+
+        <ul class="features-list">
+            <li class="feature-item">
+                <span class="material-icons feature-icon">check</span>
+                <span>Unlimited Wallet Optimization</span>
+            </li>
+            <li class="feature-item">
+                <span class="material-icons feature-icon">check</span>
+                <span>Exclusive "Inner Circle" Content</span>
+            </li>
+            <li class="feature-item">
+                <span class="material-icons feature-icon">check</span>
+                <span>Advanced Churning Strategies</span>
+            </li>
+            <li class="feature-item">
+                <span class="material-icons feature-icon">check</span>
+                <span>Priority Support</span>
+            </li>
+            <li class="feature-item">
+                <span class="material-icons feature-icon">check</span>
+                <span>Premium "Wallet Freak" Badge</span>
+            </li>
+        </ul>
+
+        {% if is_premium %}
+            <button class="subscribe-btn already-premium" disabled>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                    <span class="material-icons">verified</span>
+                    You are already Premium
+                </div>
+            </button>
+        {% else %}
+            <form action="{% url 'create_checkout_session' %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="subscribe-btn">
+                    Get Premium Now
+                </button>
+            </form>
+            <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--text-muted);">
+                Secure payment via Stripe. Cancel anytime.
+            </p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

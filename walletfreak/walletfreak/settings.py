@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'custom_admin',
     'firestore',
     'calculators',
+    'subscriptions',
 ]
 
 MIDDLEWARE = [
@@ -209,6 +210,7 @@ FIREBASE_CLIENT_CONFIG = {
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/wallet/'
 
+
 # Email Backend (SMTP for Production/Real Testing)
 # Note: Primary email sending is handled via Firestore Trigger Extension
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -218,4 +220,12 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER or 'notifications@walletfreak.com'
+
+
+# Stripe Configuration
+STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY')
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
+STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET')
+STRIPE_PRICE_ID = os.environ.get('STRIPE_PRICE_ID')
+
 

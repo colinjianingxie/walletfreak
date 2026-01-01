@@ -32,6 +32,7 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('calculators/', include('calculators.urls')),
     path('custom-admin/', include('custom_admin.urls')),
+    path('subscriptions/', include('subscriptions.urls')),
 ]
 
 from django.conf import settings
