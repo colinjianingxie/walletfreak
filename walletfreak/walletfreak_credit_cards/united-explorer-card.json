@@ -72,7 +72,7 @@
             "EnrollmentRequired": false,
             "EffectiveDate": "2025-11-29",
             "BenefitDescriptionShort": "TSA Credit",
-            "BenefitType": "Credit",
+            "BenefitType": "Security",
             "NumericValue": 120.0,
             "NumericType": "Cash"
         },

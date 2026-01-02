@@ -103,7 +103,7 @@
             "EnrollmentRequired": false,
             "EffectiveDate": "2025-07-28",
             "BenefitDescriptionShort": "Security Program",
-            "BenefitType": "Credit",
+            "BenefitType": "Security",
             "NumericValue": 120.0,
             "NumericType": "Cash"
         },
@@ -119,7 +119,7 @@
             "EnrollmentRequired": true,
             "EffectiveDate": "2025-07-28",
             "BenefitDescriptionShort": "Citigold Credit",
-            "BenefitType": "Credit",
+            "BenefitType": "Perk",
             "NumericValue": 145.0,
             "NumericType": "Cash"
         },
@@ -135,7 +135,7 @@
             "EnrollmentRequired": true,
             "EffectiveDate": "2025-07-28",
             "BenefitDescriptionShort": "Private Client Credit",
-            "BenefitType": "Credit",
+            "BenefitType": "Perk",
             "NumericValue": 595.0,
             "NumericType": "Cash"
         },

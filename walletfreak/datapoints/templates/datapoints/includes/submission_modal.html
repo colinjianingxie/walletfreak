@@ -1,0 +1,173 @@
+<div id="submit-modal" class="dp-modal-overlay">
+    <div class="dp-modal-container">
+        <div class="dp-modal-header">
+            <div>
+                <h2 class="dp-modal-title">Submit Data Point</h2>
+                <!-- Stepper Mockup -->
+                <div style="display: flex; gap: 0.25rem; margin-top: 0.25rem;">
+                    <div style="height: 0.25rem; width: 1.5rem; border-radius: 999px; background-color: #4f46e5;"></div>
+                    <div style="height: 0.25rem; width: 1.5rem; border-radius: 999px; background-color: #e2e8f0;"></div>
+                </div>
+            </div>
+            <button onclick="closeModal('submit-modal')" class="dp-modal-close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.25rem; height: 1.25rem;">
+                    <path d="M18 6 6 18"></path>
+                    <path d="m6 6 12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="dp-modal-body">
+            <form id="dp-submit-form" onsubmit="submitDatapoint(event)">
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div>
+                        <label style="display: block; font-size: 0.625rem; font-weight: 900; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">1. Choose Card</label>
+                        <select name="card_slug" required class="dp-select" style="width: 100%;" id="card_select">
+                            <option value="">Select a Card...</option>
+                            {% for card in submission_cards %}
+                            <option value="{{ card.slug }}" data-name="{{ card.name }}">{{ card.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="hidden" name="card_name" id="card_name_input">
+                    </div>
+                
+                    <div>
+                        <label style="display: block; font-size: 0.625rem; font-weight: 900; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">2. Benefit</label>
+                        <select name="benefit_name" required class="dp-select" style="width: 100%;" id="benefit_select" disabled>
+                            <option value="">Select a Card First...</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label style="display: block; font-size: 0.625rem; font-weight: 900; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">3. Status</label>
+                        <div style="display: flex; gap: 1rem;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                <input type="radio" name="status" value="Success" checked>
+                                <span class="dp-status-badge dp-status-success">Success</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                <input type="radio" name="status" value="Failed">
+                                <span class="dp-status-badge dp-status-failed">Failed</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label style="display: block; font-size: 0.625rem; font-weight: 900; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">4. Details</label>
+                        <textarea name="content" required placeholder="Describe your experience..." class="dp-search-input" style="padding-left: 1rem; min-height: 100px; resize: vertical;"></textarea>
+                    </div>
+
+                    <button type="submit" class="dp-submit-btn">Submit Data Point</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Store benefits data safely in a script tag -->
+{{ submission_cards|json_script:"submission-cards-data" }}
+
+<script>
+    const cardSelect = document.getElementById('card_select');
+    const benefitSelect = document.getElementById('benefit_select');
+    const cardNameInput = document.getElementById('card_name_input');
+    
+    // Parse the JSON data from the template
+    // Note: Since 'submission_cards' contains complex objects (timestamps etc), JSON serialization might fail if not handled in view.
+    // However, Django's json_script does basic serialization. If 'db.get_cards()' returns pure dicts with primitives it works.
+    // But Firestore timestamps won't serialize automatically. 
+    // SAFEST APPROACH: Build a simple JS object with just what we need right here in the template.
+    
+    const cardBenefitsMap = {
+        {% for card in submission_cards %}
+        "{{ card.slug }}": [
+            {% for benefit in card.benefits %}
+            {
+                "name": "{{ benefit.short_description|default:benefit.description|escapejs }}",
+                "details": "{{ benefit.additional_details|default:''|escapejs }}",
+                "value": "{{ benefit.numeric_value|default:0 }}",
+                "type": "{{ benefit.numeric_type|default:''|escapejs }}",
+                "benefit_type": "{{ benefit.benefit_type|default:''|escapejs }}"
+            },
+            {% endfor %}
+        ],
+        {% endfor %}
+    };
+
+    cardSelect.addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        const slug = this.value;
+        
+        // Update Card Name Hidden Input
+        cardNameInput.value = selectedOption.getAttribute('data-name');
+        
+        // Update Benefits Dropdown
+        benefitSelect.innerHTML = '<option value="">Select a Benefit...</option>';
+        
+        if (slug && cardBenefitsMap[slug]) {
+            benefitSelect.disabled = false;
+            
+            // Filter for Credit type only
+            const credits = cardBenefitsMap[slug].filter(b => b.benefit_type === 'Credit');
+            
+            credits.forEach(bnf => {
+                const opt = document.createElement('option');
+                opt.value = bnf.name;
+                
+                // Format: Benefit Name (Additional Details) - $Value or - Value Type
+                let label = bnf.name;
+                
+                // Add valid, non-empty specific string "None" check just in case backend data is messy
+                if (bnf.details && bnf.details !== 'None' && bnf.details.trim() !== '') {
+                    label += ` (${bnf.details})`;
+                }
+                
+                const val = parseFloat(bnf.value);
+                if (val > 0) {
+                    if (bnf.type === 'Cash') {
+                        label += ` - $${val}`; // Assuming logic for int/float formatting if needed, typically int for credits
+                    } else if (bnf.type) {
+                        label += ` - ${val} ${bnf.type}`;
+                    }
+                }
+                
+                // Truncate if too long?
+                if (label.length > 100) label = label.substring(0, 100) + '...';
+                
+                opt.textContent = label;
+                benefitSelect.appendChild(opt);
+            });
+            
+            // Add "Other" option at the end
+            const otherOpt = document.createElement('option');
+            otherOpt.value = "Other";
+            otherOpt.textContent = "Other";
+            benefitSelect.appendChild(otherOpt);
+            
+        } else {
+            benefitSelect.disabled = true;
+            benefitSelect.innerHTML = '<option value="">Select a Card First...</option>';
+        }
+    });
+
+    function submitDatapoint(e) {
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form);
+
+        fetch('{% url "submit_datapoint" %}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                window.location.reload();
+            } else {
+                alert('Error submitting: ' + JSON.stringify(data.errors || data.error));
+            }
+        });
+    }
+</script>

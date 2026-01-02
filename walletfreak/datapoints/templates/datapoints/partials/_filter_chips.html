@@ -1,0 +1,66 @@
+            <!-- Card Filter Row -->
+            <div class="dp-filter-section">
+                <div class="dp-filter-label-row">
+                    <div class="dp-filter-icon-box dark">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 0.875rem; height: 0.875rem;">
+                            <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+                            <line x1="2" x2="22" y1="10" y2="10"></line>
+                        </svg>
+                    </div>
+                    <span class="dp-filter-label-text">Select Card</span>
+                </div>
+                <div class="dp-filter-chips-scroll">
+                    <a href="?{% if current_sort %}sort={{ current_sort }}{% endif %}" 
+                       hx-get="?{% if current_sort %}sort={{ current_sort }}{% endif %}"
+                       hx-target="#dp-feed-container"
+                       hx-indicator="#dp-feed-container"
+                       hx-push-url="true"
+                       class="dp-filter-chip {% if not current_filter_card %}active{% else %}inactive{% endif %}">
+                        All Cards
+                    </a>
+                    {% for card_opt in cards|slice:":5" %}
+                    <a href="?card={{ card_opt.slug }}&{% if current_sort %}sort={{ current_sort }}{% endif %}" 
+                       hx-get="?card={{ card_opt.slug }}&{% if current_sort %}sort={{ current_sort }}{% endif %}"
+                       hx-target="#dp-feed-container"
+                       hx-indicator="#dp-feed-container"
+                       hx-push-url="true"
+                       class="dp-filter-chip {% if current_filter_card == card_opt.slug %}active{% else %}inactive{% endif %}">
+                        {{ card_opt.name }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Benefit Filter Row (Conditional) -->
+            {% if current_filter_card and selected_card_benefits %}
+            <div class="dp-filter-section"> <!-- Removed animate-slide-in -->
+                <div class="dp-filter-label-row">
+                    <div class="dp-filter-icon-box indigo">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 0.875rem; height: 0.875rem;" fill="currentColor">
+                            <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path>
+                        </svg>
+                    </div>
+                    <span class="dp-filter-label-text">Select Benefit</span>
+                </div>
+                <div class="dp-filter-chips-wrap">
+                    <a href="?card={{ current_filter_card }}&{% if current_sort %}sort={{ current_sort }}{% endif %}" 
+                       hx-get="?card={{ current_filter_card }}&{% if current_sort %}sort={{ current_sort }}{% endif %}"
+                       hx-target="#dp-feed-container"
+                       hx-indicator="#dp-feed-container"
+                       hx-push-url="true"
+                       class="dp-filter-chip {% if not current_filter_benefit %}active{% else %}inactive bg-indigo-50 text-indigo-700 border-indigo-200 hover:border-indigo-300{% endif %}">
+                        All Perks
+                    </a>
+                    {% for benefit in selected_card_benefits %}
+                    <a href="?card={{ current_filter_card }}&benefit={{ benefit }}&{% if current_sort %}sort={{ current_sort }}{% endif %}" 
+                       hx-get="?card={{ current_filter_card }}&benefit={{ benefit }}&{% if current_sort %}sort={{ current_sort }}{% endif %}"
+                       hx-target="#dp-feed-container"
+                       hx-indicator="#dp-feed-container"
+                       hx-push-url="true"
+                       class="dp-filter-chip {% if current_filter_benefit == benefit %}active{% else %}inactive{% endif %}">
+                        {{ benefit }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}

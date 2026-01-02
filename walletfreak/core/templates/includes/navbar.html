@@ -44,6 +44,7 @@
                 <a href="{% url 'calculators_index' %}" data-nav="calculators">Calculators</a>
                 <a href="{% url 'personality_list' %}" data-nav="personalities">Freaks</a>
                 <a href="{% url 'blog_list' %}" data-nav="blog">Ledger</a>
+                <a href="{% url 'datapoint_list' %}" data-nav="datapoints">Data Points</a>
                 <a href="{% url 'contact' %}" data-nav="contact">Contact</a>
                 
                 {% if not user_is_premium %}
@@ -245,6 +246,17 @@
                 <span class="mobile-menu-text">Blog</span>
             </a>
 
+            <a href="{% url 'datapoint_list' %}" class="mobile-menu-item" data-nav="datapoints">
+                <div class="mobile-menu-icon">
+                    <span class="material-icons">hub</span>
+                </div>
+                <span class="mobile-menu-text">Data Points</span>
+            </a>
+
+
+
+
+
             <a href="{% url 'contact' %}" class="mobile-menu-item" data-nav="contact">
                 <div class="mobile-menu-icon">
                     <span class="material-icons">mail</span>
@@ -290,6 +302,17 @@
                 </div>
                 <span class="mobile-menu-text">Blog</span>
             </a>
+
+            <a href="{% url 'datapoint_list' %}" class="mobile-menu-item" data-nav="datapoints">
+                <div class="mobile-menu-icon">
+                    <span class="material-icons">hub</span>
+                </div>
+                <span class="mobile-menu-text">Data Points</span>
+            </a>
+
+
+
+
 
             <a href="{% url 'contact' %}" class="mobile-menu-item" data-nav="contact">
                 <div class="mobile-menu-icon">
@@ -344,6 +367,8 @@
                 activeNav = 'personalities';
             } else if (currentPath.startsWith('/blog') || currentPath.toLowerCase().includes('ledger')) {
                 activeNav = 'blog';
+            } else if (currentPath.startsWith('/datapoints')) {
+                activeNav = 'datapoints';
             } else if (currentPath.startsWith('/contact')) {
                 activeNav = 'contact';
             }
@@ -400,6 +425,10 @@
                             case 'blog':
                                 icon.style.background = '#FFF7ED';
                                 icon.style.color = '#EA580C';
+                                break;
+                            case 'datapoints':
+                                icon.style.background = '#F0F9FF';
+                                icon.style.color = '#0284C7';
                                 break;
                             case 'contact':
                                 icon.style.background = '#EFF6FF';
