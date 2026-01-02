@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'custom_admin',
     'firestore',
     'calculators',
+    'datapoints',
 ]
 
 MIDDLEWARE = [

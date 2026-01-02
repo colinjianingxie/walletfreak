@@ -21,7 +21,7 @@
             "EnrollmentRequired": false,
             "EffectiveDate": "2025-01-01",
             "BenefitDescriptionShort": "Global Entry Credit",
-            "BenefitType": "Credit",
+            "BenefitType": "Security",
             "NumericValue": 120.0,
             "NumericType": "Cash"
         },

@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/datapoints.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="dp-container">
+    <!-- Header -->
+    <header class="dp-header">
+        <div>
+            <h1 class="dp-title">Community Intelligence</h1>
+            <p class="dp-subtitle">Real-world benefit triggers and DP timings.</p>
+        </div>
+        <button onclick="openModal('submit-modal')" class="dp-submit-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1rem; height: 1rem;">
+                <path d="M5 12h14"></path>
+                <path d="M12 5v14"></path>
+            </svg>
+            Submit DP
+        </button>
+    </header>
+
+    <!-- Controls -->
+    <div class="dp-controls">
+        <form method="get" id="dp-filter-form" class="dp-filter-container">
+            <!-- Top Row: Search and Sort -->
+            <div class="dp-filter-row">
+                <div class="dp-search-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dp-search-icon">
+                        <path d="m21 21-4.34-4.34"></path>
+                        <circle cx="11" cy="11" r="8"></circle>
+                    </svg>
+                    <input type="text" name="search" placeholder="Search content..." class="dp-search-input" 
+                           value="{{ request.GET.search|default:'' }}"
+                           hx-get="{% url 'datapoint_list' %}"
+                           hx-trigger="keyup changed delay:500ms"
+                           hx-target="#dp-feed-container"
+                           hx-indicator="#dp-feed-container"
+                           hx-include="[name='card'], [name='benefit'], [name='sort']"
+                           hx-push-url="true">
+                    
+                    <!-- Preserve hidden inputs for filters if needed, but we use links for chips -->
+                    {% if current_filter_card %}<input type="hidden" name="card" value="{{ current_filter_card }}">{% endif %}
+                    {% if current_filter_benefit %}<input type="hidden" name="benefit" value="{{ current_filter_benefit }}">{% endif %}
+                </div>
+                <div class="dp-select-wrapper">
+                    <select name="sort" class="dp-select" 
+                            hx-get="{% url 'datapoint_list' %}"
+                            hx-target="#dp-feed-container"
+                            hx-indicator="#dp-feed-container"
+                            hx-include="[name='search'], [name='card'], [name='benefit']"
+                            hx-push-url="true">
+                        <option value="newest" {% if current_sort == 'newest' %}selected{% endif %}>Recent</option>
+                        <option value="oldest" {% if current_sort == 'oldest' %}selected{% endif %}>Oldest</option>
+                        <option value="popular" {% if current_sort == 'popular' %}selected{% endif %}>Popular</option>
+                    </select>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dp-select-icon">
+                        <path d="m6 9 6 6 6-6"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="dp-filter-divider"></div>
+
+            <!-- Filter Chips Section (OOB Target) -->
+            <div id="dp-filter-chips-section">
+                {% include 'datapoints/partials/_filter_chips.html' %}
+            </div>
+        </form>
+    </div>
+
+    <!-- Feed -->
+    <div id="dp-feed-container" class="dp-feed">
+        {% include 'datapoints/partials/_feed.html' %}
+    </div>
+</div>
+
+{% include 'datapoints/includes/submission_modal.html' %}
+<!-- Wallet Modal is loaded via JS or hidden structure populated by JS -->
+<div id="wallet-modal" class="dp-modal-overlay">
+    <div class="dp-modal-container dp-wallet-modal">
+        <div class="dp-modal-header">
+            <div class="dp-wallet-header-info">
+                <div class="dp-wallet-icon-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.25rem; height: 1.25rem;">
+                        <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+                        <line x1="2" x2="22" y1="10" y2="10"></line>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="dp-modal-title" id="wallet-username">Username's Stack</h2>
+                    <p class="dp-subtitle" style="font-size: 0.625rem; text-transform: uppercase;">Active Inventory</p>
+                </div>
+            </div>
+            <button onclick="closeModal('wallet-modal')" class="dp-modal-close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.25rem; height: 1.25rem;">
+                    <path d="M18 6 6 18"></path>
+                    <path d="m6 6 12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="dp-wallet-list" id="wallet-cards-container">
+            <!-- Cards populated here -->
+            <div style="text-align: center; padding: 2rem; color: #94a3b8;">Loading wallet...</div>
+        </div>
+        <div style="padding: 1.5rem; background-color: #f8fafc; border-top: 1px solid #f1f5f9;">
+            <button onclick="closeModal('wallet-modal')" class="dp-submit-btn">Dismiss</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('dp-form');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const btn = document.querySelector('.dp-submit-btn'); // Note: Make sure retrieval is correct relative to form if multiple
+                // Actually the submit button is likely inside the form or modal.
+                // Let's assume there's one submit button in the modal or form.
+                // Better selector:
+                const submitBtn = form.querySelector('button[type="submit"]') || document.querySelector('#submit-modal .dp-submit-btn');
+                
+                if (!submitBtn) return;
+
+                const originalText = submitBtn.innerHTML;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = 'Submitting...'; 
+                
+                fetch("{% url 'submit_datapoint' %}", {
+                    method: 'POST',
+                    body: new FormData(this),
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        closeModal('submit-modal');
+                        window.location.reload();
+                    } else {
+                        alert('Error submitting datapoint');
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalText;
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('Error submitting datapoint');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                });
+            });
+        }
+    });
+
+    function openModal(id) {
+        document.getElementById(id).classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function voteDatapoint(btn, id) {
+        fetch(`/datapoints/vote/${id}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                btn.querySelector('.vote-count').textContent = data.count;
+                btn.classList.toggle('liked', data.voted);
+            } else {
+                if (data.status === 403 || data.error === 'Invalid method') { 
+                    alert('Please log in to vote.');
+                }
+            }
+        });
+    }
+
+    function openWalletModal(displayHandle, uid) {
+        const modalTitle = document.getElementById('wallet-username');
+        const container = document.getElementById('wallet-cards-container');
+        
+        modalTitle.textContent = `@${displayHandle || 'anonymous'}'s Stack`;
+        container.innerHTML = '<div style="text-align: center; padding: 2rem; color: #94a3b8;">Loading wallet...</div>';
+        
+        openModal('wallet-modal');
+
+        // Fetch wallet using the UID (which is dp.user.username in the link)
+        fetch(`/datapoints/user/${uid}/wallet/`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.cards.length > 0) {
+                    container.innerHTML = data.cards.map(card => `
+                        <div class="dp-wallet-card-item" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; border-bottom: 1px solid #f1f5f9;">
+                            <img src="${card.image_url}" style="width: 48px; border-radius: 4px; object-fit: contain;">
+                            <div style="font-weight: 500; font-size: 0.875rem;">${card.name}</div>
+                        </div>
+                    `).join('');
+                } else {
+                    container.innerHTML = '<div style="text-align: center; padding: 2rem; color: #94a3b8;">This wallet is empty or private.</div>';
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                container.innerHTML = '<div style="text-align: center; padding: 2rem; color: #ef4444;">Failed to load wallet.</div>';
+            });
+    }
+</script>
+{% endblock %}
