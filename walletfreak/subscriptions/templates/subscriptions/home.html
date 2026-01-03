@@ -1,0 +1,40 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1>Upgrade to Premium</h1>
+            <p class="lead">Unlock exclusive features and advanced calculators.</p>
+            
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h2 class="card-title">Wallet Freak Premium</h2>
+                    <p class="display-4">$4.99<span class="text-muted">/mo</span></p>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Advanced Credit Card Calculators</li>
+                        <li>Unlimited Data Points</li>
+                        <li>Priority Support</li>
+                        <li>Ad-free Experience</li>
+                    </ul>
+                    
+                    {% if subscription and subscription.status == 'active' %}
+                        <div class="alert alert-success">
+                            You are already subscribed!
+                            <br>
+                            <small>Manage your subscription in the <a href="{% url 'profile' %}">Profile</a> settings.</small>
+                        </div>
+                    {% else %}
+                        <form action="{% url 'create_checkout_session' %}" method="POST">
+                            {% csrf_token %}
+                            <!-- Add any hidden inputs for priceId if needed, or handle in backend -->
+                            <button type="submit" class="btn btn-lg btn-primary btn-block">Subscribe Now</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}

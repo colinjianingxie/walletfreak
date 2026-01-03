@@ -208,3 +208,21 @@ class UserMixin:
 
     def set_premium(self, uid, is_premium):
         self.db.collection('users').document(uid).update({'is_premium': is_premium})
+
+    def update_user_subscription(self, uid, is_premium, status, subscription_id=None, current_period_end=None):
+        """
+        Update comprehensive subscription details in Firestore.
+        """
+        data = {
+            'is_premium': is_premium,
+            'subscription_status': status,
+            'updated_at': firestore.SERVER_TIMESTAMP
+        }
+        
+        if subscription_id:
+            data['stripe_subscription_id'] = subscription_id
+            
+        if current_period_end:
+            data['subscription_period_end'] = current_period_end
+            
+        self.db.collection('users').document(uid).set(data, merge=True)
