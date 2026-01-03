@@ -22,7 +22,8 @@
     .dashboard-top-grid {
         grid-template-columns: 1fr !important;
         gap: 1rem !important;
-        padding: 0 1rem;
+        padding: 0 !important;
+        /* Remove extra padding to align with header */
     }
 
     .dashboard-top-grid>div:first-child {
@@ -35,21 +36,73 @@
         min-height: auto !important;
     }
 
+    /* Ensure Vertical Stack layout on mobile */
     #annual-value-card .value-row {
-        flex-direction: column;
-        gap: 1.5rem;
+        flex-direction: column !important;
+        /* Stack vertically */
+        gap: 2rem !important;
+        /* More breathing room */
+        align-items: center !important;
+        /* Center the columns */
     }
 
-    #annual-value-card .vertical-divider {
+    /* Reset widths and Center inner content */
+    #annual-value-card .value-row>div:not(.vertical-divider) {
         width: 100% !important;
-        height: 1px !important;
-        margin: 0 !important;
+        flex: none !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        /* Center children */
     }
 
+    /* Hide vertical divider */
+    #annual-value-card .vertical-divider {
+        display: none !important;
+    }
+
+    /* Revert font sizes */
     #total-value-display,
     #total-annual-fee-display {
-        font-size: 2rem !important;
+        font-size: 3rem !important;
+        /* Large and bold */
+        margin-bottom: 0.5rem !important;
+        justify-content: center !important;
+        /* Center the flex content of the value */
+        width: 100% !important;
     }
+
+    /* Center and Style Labels */
+    #annual-value-card .value-row>div>div:first-child {
+        font-size: 0.875rem !important;
+        white-space: normal !important;
+        overflow: visible !important;
+        margin-bottom: 0.5rem !important;
+        justify-content: center !important;
+        /* Center the flex content of label */
+        width: 100% !important;
+    }
+
+    /* Adjust sub-stats */
+    #credits-used-display,
+    #annual-value-card .value-row .material-icons+span {
+        font-size: 0.875rem !important;
+    }
+
+    /* Sub-stat container pill */
+    #annual-value-card .value-row>div>div:last-child {
+        padding: 6px 12px !important;
+        margin: 0 auto !important;
+        /* Center block element if needed */
+    }
+}
+
+/* Prevent scrolling when modal is open */
+body.modal-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
 }
 
 @media (max-width: 360px) {
