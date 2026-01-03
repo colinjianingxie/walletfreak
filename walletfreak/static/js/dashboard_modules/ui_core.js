@@ -279,78 +279,35 @@ function calculateAvailablePotential(benefit, anniversaryDateStr) {
         const defaultMonthlyVal = val / 12;
         // Check each month 1-12
         for (let m = 1; m <= 12; m++) {
-            let isAvailable = false;
-            // Available if: anniversary year < current year (all months up to current)
-            // OR (same year AND month >= anniversary_month AND month <= current_month)
-            if (annYear < currentYear) {
-                isAvailable = m <= currentMonth;
-            } else if (annYear === currentYear) {
-                isAvailable = (m >= annMonth && m <= currentMonth);
-            }
-
-            if (isAvailable) {
-                const pKey = `${currentYear}_${m.toString().padStart(2, '0')}`;
-                // Use override if exists and not null/undefined
-                const pVal = (periodValues[pKey] !== undefined) ? parseFloat(periodValues[pKey]) : defaultMonthlyVal;
-                available += pVal;
-            }
+            // User Request: Sum all possible credits for the whole year
+            const pKey = `${currentYear}_${m.toString().padStart(2, '0')}`;
+            const pVal = (periodValues[pKey] !== undefined) ? parseFloat(periodValues[pKey]) : defaultMonthlyVal;
+            available += pVal;
         }
 
     } else if (lowerFreq.includes('quarterly')) {
         const defaultQVal = val / 4;
-        const currentQ = Math.floor((currentMonth - 1) / 3) + 1;
-        const annQ = Math.floor((annMonth - 1) / 3) + 1;
-
         for (let q = 1; q <= 4; q++) {
-            let isAvailable = false;
-            if (annYear < currentYear) {
-                isAvailable = q <= currentQ;
-            } else if (annYear === currentYear) {
-                isAvailable = (q >= annQ && q <= currentQ);
-            }
-
-            if (isAvailable) {
-                const pKey = `${currentYear}_Q${q}`;
-                const pVal = (periodValues[pKey] !== undefined) ? parseFloat(periodValues[pKey]) : defaultQVal;
-                available += pVal;
-            }
+            const pKey = `${currentYear}_Q${q}`;
+            const pVal = (periodValues[pKey] !== undefined) ? parseFloat(periodValues[pKey]) : defaultQVal;
+            available += pVal;
         }
 
     } else if (lowerFreq.includes('semi-annually')) {
         const defaultHVal = val / 2;
 
-        // H1 check
-        let h1Available = false;
-        if (annYear < currentYear) {
-            h1Available = currentMonth >= 1; // Always available if year passed? logic says m <= current
-        } else if (annYear === currentYear) {
-            // Available if ann in H1 and we are past start
-            h1Available = (annMonth <= 6 && currentMonth >= 1);
-        }
-        // Only count if H1 is current or passed
-        if (h1Available && currentMonth >= 1) {
-            const pKey = `${currentYear}_H1`;
-            const pVal = (periodValues[pKey] !== undefined) ? parseFloat(periodValues[pKey]) : defaultHVal;
-            available += pVal;
-        }
+        // H1
+        const pKeyH1 = `${currentYear}_H1`;
+        const pValH1 = (periodValues[pKeyH1] !== undefined) ? parseFloat(periodValues[pKeyH1]) : defaultHVal;
+        available += pValH1;
 
-        // H2 check
-        let h2Available = false;
-        if (annYear < currentYear) {
-            h2Available = currentMonth >= 7;
-        } else if (annYear === currentYear) {
-            // (ann<=6 and curr>=7) OR (ann>=7 and curr >= ann)
-            h2Available = (annMonth <= 6 && currentMonth >= 7) || (annMonth >= 7 && currentMonth >= annMonth);
-        }
-        if (h2Available) {
-            const pKey = `${currentYear}_H2`;
-            const pVal = (periodValues[pKey] !== undefined) ? parseFloat(periodValues[pKey]) : defaultHVal;
-            available += pVal;
-        }
+        // H2
+        const pKeyH2 = `${currentYear}_H2`;
+        const pValH2 = (periodValues[pKeyH2] !== undefined) ? parseFloat(periodValues[pKeyH2]) : defaultHVal;
+        available += pValH2;
 
     } else {
         // Annual / Ongoing - assume full value available if card is active
-        // Check for yearly override?
         const pKey = `${currentYear}`;
         const pVal = (periodValues[pKey] !== undefined) ? parseFloat(periodValues[pKey]) : val;
         available = pVal;

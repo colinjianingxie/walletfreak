@@ -76,6 +76,11 @@
     white-space: nowrap;
 }
 
+.filter-pill-text {
+    color: #4B5563;
+    transition: color 0.2s;
+}
+
 .filter-pill:hover {
     background: #F9FAFB;
     border-color: #D1D5DB;
@@ -85,6 +90,10 @@
     background: #1F2937;
     color: white;
     border-color: #1F2937;
+}
+
+.filter-pill.active .filter-pill-text {
+    color: white !important;
 }
 
 .dot {

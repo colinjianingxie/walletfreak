@@ -1,15 +1,27 @@
+{% load card_extras %}
 <!-- Filter Pills Section -->
 <div id="card-filters-container" style="margin-bottom: 2rem; overflow-x: auto; padding-bottom: 0.5rem;">
     <div style="display: flex; gap: 0.75rem;" id="card-filters">
-        <button class="filter-pill active" onclick="filterBenefits('all')">
+        <button class="filter-pill active" onclick="filterBenefits('all')" data-card-id="all">
             <span class="material-icons" style="font-size: 16px;">filter_list</span>
             All Cards
         </button>
         {% for card in active_cards %}
-        <button class="filter-pill" onclick="filterBenefits('{{ card.card_id }}')">
-            <span class="dot" style="background: {% if 'platinum' in card.name|lower %}#E5E7EB{% elif 'gold' in card.name|lower %}#FCD34D{% elif 'sapphire' in card.name|lower %}#3B82F6{% else %}#9CA3AF{% endif %};"></span>
-            {{ card.name }}
+        {% if card.card_id in visible_filter_card_ids %}
+        <button class="filter-pill group" 
+                onclick="filterBenefits('{{ card.card_id }}')"
+                data-card-id="{{ card.card_id }}"
+                style="display: flex; align-items: center; gap: 0.5rem; transition: transform 0.2s;"
+                onmouseover="this.style.transform='scale(1.05)'"
+                onmouseout="this.style.transform='scale(1)'">
+            <div style="position: relative; width: 32px; height: 20px; border-radius: 4px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                <img src="{% get_card_image_url card.card_id %}" 
+                     style="width: 100%; height: 100%; object-fit: cover;"
+                     alt="{{ card.name }}">
+            </div>
+            <span class="filter-pill-text" style="font-size: 0.875rem; font-weight: 700;">{{ card.name }}</span>
         </button>
+        {% endif %}
         {% endfor %}
     </div>
 </div>

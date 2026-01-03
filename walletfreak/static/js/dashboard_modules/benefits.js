@@ -97,26 +97,57 @@ async function refreshDashboardBenefits() {
     // Creating new Filter Pills
     const filterContainer = document.getElementById('card-filters');
     if (filterContainer) {
-        // Keep "All Cards"
-        const allBtn = filterContainer.querySelector('button:first-child');
-        filterContainer.innerHTML = '';
-        if (allBtn) filterContainer.appendChild(allBtn);
-
-        walletCards.forEach(card => {
-            const btn = document.createElement('button');
-            btn.className = 'filter-pill';
-            btn.setAttribute('onclick', `filterBenefits('${card.card_id}')`);
-
-            // color dot logic
-            let dotColor = '#9CA3AF';
-            const name = card.name.toLowerCase();
-            if (name.includes('platinum')) dotColor = '#E5E7EB';
-            else if (name.includes('gold')) dotColor = '#FCD34D';
-            else if (name.includes('sapphire')) dotColor = '#3B82F6';
-
-            btn.innerHTML = `<span class="dot" style="background: ${dotColor};"></span> ${card.name}`;
-            filterContainer.appendChild(btn);
+        // Collect all card IDs present in benefit cards currently on page
+        const benefitCards = document.querySelectorAll('.benefit-card');
+        const presentCardIds = new Set();
+        benefitCards.forEach(card => {
+            const cid = card.getAttribute('data-card-id');
+            if (cid) presentCardIds.add(cid);
         });
+
+        filterContainer.innerHTML = '';
+
+        // Always add 'All' button
+        const allBtn = document.createElement('button');
+        allBtn.className = 'filter-pill active';
+        allBtn.setAttribute('onclick', "filterBenefits('all')");
+        allBtn.setAttribute('data-card-id', 'all');
+        allBtn.innerText = 'All Cards';
+        filterContainer.appendChild(allBtn);
+
+        // Add buttons only for cards that have visible benefits
+        walletCards.forEach(card => {
+            if (presentCardIds.has(card.card_id)) {
+                const btn = document.createElement('button');
+                btn.className = 'filter-pill';
+                btn.setAttribute('onclick', `filterBenefits('${card.card_id}')`);
+                btn.setAttribute('data-card-id', card.card_id);
+
+                // Construct the inner HTML to match the server-side template
+                const innerHTML = `
+                    <div style="position: relative; width: 32px; height: 20px; border-radius: 4px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                        <img src="${card.image_url || '/static/img/card_placeholder.png'}" 
+                             style="width: 100%; height: 100%; object-fit: cover;"
+                             alt="${card.name}">
+                    </div>
+                    <span class="filter-pill-text" style="font-size: 0.875rem; font-weight: 700;">${card.name}</span>
+                `;
+                btn.innerHTML = innerHTML;
+
+                // Add classes for styling
+                btn.style.display = 'flex';
+                btn.style.alignItems = 'center';
+                btn.style.gap = '0.5rem';
+                btn.style.transition = 'transform 0.2s';
+                btn.onmouseover = function () { this.style.transform = 'scale(1.05)'; };
+                btn.onmouseout = function () { this.style.transform = 'scale(1)'; };
+
+                filterContainer.appendChild(btn);
+            }
+        });
+
+        // Sync visibility final check (redundant but safe)
+        syncFilterVisibility();
     }
 
     // Issues: The benefit cards themselves won't appear until refresh because they are server-rendered.
@@ -129,10 +160,9 @@ function filterBenefits(cardId) {
     // Update active pill state
     const pills = document.querySelectorAll('.filter-pill');
     pills.forEach(pill => {
-        // Check if the onclick attribute contains the cardId
-        // We use a loose check because 'all' is a keyword
-        const onclickAttr = pill.getAttribute('onclick');
-        if (onclickAttr.includes(`'${cardId}'`)) {
+        // Use robust data attribute check
+        const pillCardId = pill.getAttribute('data-card-id');
+        if (pillCardId === cardId) {
             pill.classList.add('active');
         } else {
             pill.classList.remove('active');
@@ -154,6 +184,37 @@ function filterBenefits(cardId) {
         }
     });
 }
+
+/**
+ * Hides filter pills for cards that are NOT present in the current view (i.e. have no active benefits displayed)
+ */
+function syncFilterVisibility() {
+    const pills = document.querySelectorAll('.filter-pill');
+    const benefitCards = document.querySelectorAll('.benefit-card');
+
+    // Collect all card IDs present in benefit cards
+    const presentCardIds = new Set();
+    benefitCards.forEach(card => {
+        const cid = card.getAttribute('data-card-id');
+        if (cid) presentCardIds.add(cid);
+    });
+
+    pills.forEach(pill => {
+        const pillId = pill.getAttribute('data-card-id');
+        if (pillId === 'all') return; // Always show 'All'
+
+        if (presentCardIds.has(pillId)) {
+            pill.style.display = 'inline-flex'; // or whatever the default flex display is
+        } else {
+            pill.style.display = 'none';
+        }
+    });
+}
+
+// Ensure we run this on load too
+document.addEventListener('DOMContentLoaded', () => {
+    syncFilterVisibility();
+});
 
 // --- Benefit Modal Logic ---
 let currentBenefitData = {};

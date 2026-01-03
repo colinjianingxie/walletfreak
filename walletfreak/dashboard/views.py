@@ -600,8 +600,8 @@ def dashboard(request):
                         # Calculate available potential value based on periods
                         benefit_potential = 0
                         for p in periods:
-                            if p.get('is_available', True): # Default to True if not specified (e.g. Annual)
-                                benefit_potential += p.get('max_value', 0)
+                            # Sum all periods to get Full Year Potential (User Request: "all possible credits for the whole year")
+                            benefit_potential += p.get('max_value', 0)
                         
                         total_potential_value += benefit_potential
 
@@ -663,6 +663,11 @@ def dashboard(request):
         print(f"Error fetching user profile: {e}")
         user_data = {}
 
+    # Calculate visible filter card IDs (cards that have at least one benefit shown)
+    visible_filter_card_ids = set()
+    for benefit in action_needed_benefits + maxed_out_benefits + ignored_benefits:
+        visible_filter_card_ids.add(benefit.get('card_id'))
+        
     context = {
         'user_profile': {
             'photo_url': user_data.get('photo_url') or request.session.get('user_photo'),
@@ -683,6 +688,9 @@ def dashboard(request):
         'action_needed_benefits': action_needed_benefits,
         'maxed_out_benefits': maxed_out_benefits,
         'ignored_benefits': ignored_benefits,
+        
+        # UI Helpers
+        'visible_filter_card_ids': visible_filter_card_ids,
         
         # 5/24 Status
         'chase_524_count': chase_524_count,

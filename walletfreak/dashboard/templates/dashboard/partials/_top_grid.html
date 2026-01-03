@@ -14,7 +14,7 @@
                     YTD Total Rewards
                 </div>
                 <div id="ytd-rewards-display" style="font-size: 2.5rem; font-weight: 800; line-height: 1; margin-bottom: 0.75rem; min-height: 40px; display: flex; align-items: center;">
-                    <div class="loader" style="width: 24px; height: 24px; border-width: 3px;"></div>
+                    ${{ total_potential_value|default:0|floatformat:0 }}<span style="font-size: 1.25rem; font-weight: 500; opacity: 0.5;">{{ total_potential_value|floatformat:2|slice:"-3:" }}</span>
                 </div>
                 
                 <!-- Credits Used Sub-stat -->

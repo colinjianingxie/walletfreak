@@ -36,19 +36,19 @@
         <div class="nav-links desktop-only" id="nav-links">
             <div class="nav-items">
                 {% if user.is_authenticated %}
-                <a href="{% url 'dashboard' %}" data-nav="wallet">Wallet</a>
+                <a href="{% url 'dashboard' %}" data-nav="wallet" class="{% if request.path == '/' or '/wallet' in request.path %}active{% endif %}">Wallet</a>
                 {% else %}
-                <a href="{% url 'features' %}" data-nav="features">Features</a>
+                <a href="{% url 'features' %}" data-nav="features" class="{% if '/features' in request.path %}active{% endif %}">Features</a>
                 {% endif %}
-                <a href="{% url 'card_list' %}" data-nav="explore">Explore</a>
-                <a href="{% url 'calculators_index' %}" data-nav="calculators">Calculators</a>
-                <a href="{% url 'personality_list' %}" data-nav="personalities">Freaks</a>
-                <a href="{% url 'blog_list' %}" data-nav="blog">Ledger</a>
-                <a href="{% url 'datapoint_list' %}" data-nav="datapoints">Data Points</a>
-                <a href="{% url 'contact' %}" data-nav="contact">Contact</a>
+                <a href="{% url 'card_list' %}" data-nav="explore" class="{% if '/cards' in request.path or '/explore' in request.path %}active{% endif %}">Explore</a>
+                <a href="{% url 'calculators_index' %}" data-nav="calculators" class="{% if '/calculators' in request.path %}active{% endif %}">Calculators</a>
+                <a href="{% url 'personality_list' %}" data-nav="personalities" class="{% if '/personalities' in request.path or '/freaks' in request.path %}active{% endif %}">Freaks</a>
+                <a href="{% url 'blog_list' %}" data-nav="blog" class="{% if '/blog' in request.path or '/ledger' in request.path %}active{% endif %}">Ledger</a>
+                <a href="{% url 'datapoint_list' %}" data-nav="datapoints" class="{% if '/datapoints' in request.path %}active{% endif %}">Data Points</a>
+                <a href="{% url 'contact' %}" data-nav="contact" class="{% if '/contact' in request.path %}active{% endif %}">Contact</a>
                 
                 {% if not user_is_premium %}
-                <a href="{% url 'pricing' %}" data-nav="pricing" style="color: #F59E0B; font-weight: 600;">Premium</a>
+                <a href="{% url 'pricing' %}" data-nav="pricing" style="color: #F59E0B; font-weight: 600;" class="{% if '/pricing' in request.path %}active{% endif %}">Premium</a>
                 {% endif %}
             </div>
 
@@ -210,115 +210,118 @@
                 </a>
             </div>
 
-            <a href="{% url 'dashboard' %}" class="mobile-menu-item" data-nav="wallet">
-                <div class="mobile-menu-icon">
+            <a href="{% url 'dashboard' %}" class="mobile-menu-item {% if request.path == '/' or '/wallet' in request.path %}active{% endif %}" data-nav="wallet">
+                <div class="mobile-menu-icon" style="{% if request.path == '/' or '/wallet' in request.path %}background: #2563EB; color: white;{% endif %}">
                     <span class="material-icons">account_balance_wallet</span>
                 </div>
                 <span class="mobile-menu-text">Wallet</span>
-                <span class="mobile-menu-indicator"></span>
+                <span class="mobile-menu-indicator" style="{% if request.path == '/' or '/wallet' in request.path %}display: block;{% endif %}"></span>
             </a>
 
-            <a href="{% url 'card_list' %}" class="mobile-menu-item" data-nav="explore">
-                <div class="mobile-menu-icon">
+            <a href="{% url 'card_list' %}" class="mobile-menu-item {% if '/cards' in request.path or '/explore' in request.path %}active{% endif %}" data-nav="explore">
+                <div class="mobile-menu-icon" style="{% if '/cards' in request.path or '/explore' in request.path %}background: #EFF6FF; color: #2563EB;{% endif %}">
                     <span class="material-icons">explore</span>
                 </div>
                 <span class="mobile-menu-text">Explore Cards</span>
+                <span class="mobile-menu-indicator" style="{% if '/cards' in request.path or '/explore' in request.path %}display: block;{% endif %}"></span>
             </a>
 
-            <a href="{% url 'calculators_index' %}" class="mobile-menu-item" data-nav="calculators">
-                <div class="mobile-menu-icon">
+            <a href="{% url 'calculators_index' %}" class="mobile-menu-item {% if '/calculators' in request.path %}active{% endif %}" data-nav="calculators">
+                <div class="mobile-menu-icon" style="{% if '/calculators' in request.path %}background: #EEF2FF; color: #4F46E5;{% endif %}">
                     <span class="material-icons">calculate</span>
                 </div>
                 <span class="mobile-menu-text">Calculators</span>
+                <span class="mobile-menu-indicator" style="{% if '/calculators' in request.path %}display: block;{% endif %}"></span>
             </a>
 
-            <a href="{% url 'personality_list' %}" class="mobile-menu-item" data-nav="personalities">
-                <div class="mobile-menu-icon">
+            <a href="{% url 'personality_list' %}" class="mobile-menu-item {% if '/personalities' in request.path or '/freaks' in request.path %}active{% endif %}" data-nav="personalities">
+                <div class="mobile-menu-icon" style="{% if '/personalities' in request.path or '/freaks' in request.path %}background: #FAF5FF; color: #A855F7;{% endif %}">
                     <span class="material-icons">auto_awesome</span>
                 </div>
                 <span class="mobile-menu-text">Personalities</span>
+                <span class="mobile-menu-indicator" style="{% if '/personalities' in request.path or '/freaks' in request.path %}display: block;{% endif %}"></span>
             </a>
 
-            <a href="{% url 'blog_list' %}" class="mobile-menu-item" data-nav="blog">
-                <div class="mobile-menu-icon">
+            <a href="{% url 'blog_list' %}" class="mobile-menu-item {% if '/blog' in request.path or '/ledger' in request.path %}active{% endif %}" data-nav="blog">
+                <div class="mobile-menu-icon" style="{% if '/blog' in request.path or '/ledger' in request.path %}background: #FFF7ED; color: #EA580C;{% endif %}">
                     <span class="material-icons">menu_book</span>
                 </div>
                 <span class="mobile-menu-text">Blog</span>
+                <span class="mobile-menu-indicator" style="{% if '/blog' in request.path or '/ledger' in request.path %}display: block;{% endif %}"></span>
             </a>
 
-            <a href="{% url 'datapoint_list' %}" class="mobile-menu-item" data-nav="datapoints">
-                <div class="mobile-menu-icon">
+            <a href="{% url 'datapoint_list' %}" class="mobile-menu-item {% if '/datapoints' in request.path %}active{% endif %}" data-nav="datapoints">
+                <div class="mobile-menu-icon" style="{% if '/datapoints' in request.path %}background: #F0F9FF; color: #0284C7;{% endif %}">
                     <span class="material-icons">hub</span>
                 </div>
                 <span class="mobile-menu-text">Data Points</span>
+                <span class="mobile-menu-indicator" style="{% if '/datapoints' in request.path %}display: block;{% endif %}"></span>
             </a>
 
-
-
-
-
-            <a href="{% url 'contact' %}" class="mobile-menu-item" data-nav="contact">
-                <div class="mobile-menu-icon">
+            <a href="{% url 'contact' %}" class="mobile-menu-item {% if '/contact' in request.path %}active{% endif %}" data-nav="contact">
+                <div class="mobile-menu-icon" style="{% if '/contact' in request.path %}background: #EFF6FF; color: #2563EB;{% endif %}">
                     <span class="material-icons">mail</span>
                 </div>
                 <span class="mobile-menu-text">Contact</span>
+                <span class="mobile-menu-indicator" style="{% if '/contact' in request.path %}display: block;{% endif %}"></span>
             </a>
-
-
 
             {% else %}
             <!-- Logged Out State -->
-            <a href="{% url 'features' %}" class="mobile-menu-item" data-nav="features">
-                <div class="mobile-menu-icon">
+            <a href="{% url 'features' %}" class="mobile-menu-item {% if '/features' in request.path %}active{% endif %}" data-nav="features">
+                <div class="mobile-menu-icon" style="{% if '/features' in request.path %}background: #F0FDF4; color: #16A34A;{% endif %}">
                     <span class="material-icons">layers</span>
                 </div>
                 <span class="mobile-menu-text">Features</span>
+                <span class="mobile-menu-indicator" style="{% if '/features' in request.path %}display: block;{% endif %}"></span>
             </a>
 
-            <a href="{% url 'card_list' %}" class="mobile-menu-item" data-nav="explore">
-                <div class="mobile-menu-icon">
+            <a href="{% url 'card_list' %}" class="mobile-menu-item {% if '/cards' in request.path or '/explore' in request.path %}active{% endif %}" data-nav="explore">
+                <div class="mobile-menu-icon" style="{% if '/cards' in request.path or '/explore' in request.path %}background: #EFF6FF; color: #2563EB;{% endif %}">
                     <span class="material-icons">explore</span>
                 </div>
                 <span class="mobile-menu-text">Explore Cards</span>
+                <span class="mobile-menu-indicator" style="{% if '/cards' in request.path or '/explore' in request.path %}display: block;{% endif %}"></span>
             </a>
 
-            <a href="{% url 'calculators_index' %}" class="mobile-menu-item" data-nav="calculators">
-                <div class="mobile-menu-icon">
+            <a href="{% url 'calculators_index' %}" class="mobile-menu-item {% if '/calculators' in request.path %}active{% endif %}" data-nav="calculators">
+                <div class="mobile-menu-icon" style="{% if '/calculators' in request.path %}background: #EEF2FF; color: #4F46E5;{% endif %}">
                     <span class="material-icons">calculate</span>
                 </div>
                 <span class="mobile-menu-text">Calculators</span>
+                <span class="mobile-menu-indicator" style="{% if '/calculators' in request.path %}display: block;{% endif %}"></span>
             </a>
 
-            <a href="{% url 'personality_list' %}" class="mobile-menu-item" data-nav="personalities">
-                <div class="mobile-menu-icon">
+            <a href="{% url 'personality_list' %}" class="mobile-menu-item {% if '/personalities' in request.path or '/freaks' in request.path %}active{% endif %}" data-nav="personalities">
+                <div class="mobile-menu-icon" style="{% if '/personalities' in request.path or '/freaks' in request.path %}background: #FAF5FF; color: #A855F7;{% endif %}">
                     <span class="material-icons">auto_awesome</span>
                 </div>
                 <span class="mobile-menu-text">Personalities</span>
+                <span class="mobile-menu-indicator" style="{% if '/personalities' in request.path or '/freaks' in request.path %}display: block;{% endif %}"></span>
             </a>
 
-            <a href="{% url 'blog_list' %}" class="mobile-menu-item" data-nav="blog">
-                <div class="mobile-menu-icon">
+            <a href="{% url 'blog_list' %}" class="mobile-menu-item {% if '/blog' in request.path or '/ledger' in request.path %}active{% endif %}" data-nav="blog">
+                <div class="mobile-menu-icon" style="{% if '/blog' in request.path or '/ledger' in request.path %}background: #FFF7ED; color: #EA580C;{% endif %}">
                     <span class="material-icons">menu_book</span>
                 </div>
                 <span class="mobile-menu-text">Blog</span>
+                <span class="mobile-menu-indicator" style="{% if '/blog' in request.path or '/ledger' in request.path %}display: block;{% endif %}"></span>
             </a>
 
-            <a href="{% url 'datapoint_list' %}" class="mobile-menu-item" data-nav="datapoints">
-                <div class="mobile-menu-icon">
+            <a href="{% url 'datapoint_list' %}" class="mobile-menu-item {% if '/datapoints' in request.path %}active{% endif %}" data-nav="datapoints">
+                <div class="mobile-menu-icon" style="{% if '/datapoints' in request.path %}background: #F0F9FF; color: #0284C7;{% endif %}">
                     <span class="material-icons">hub</span>
                 </div>
                 <span class="mobile-menu-text">Data Points</span>
+                <span class="mobile-menu-indicator" style="{% if '/datapoints' in request.path %}display: block;{% endif %}"></span>
             </a>
 
-
-
-
-
-            <a href="{% url 'contact' %}" class="mobile-menu-item" data-nav="contact">
-                <div class="mobile-menu-icon">
+            <a href="{% url 'contact' %}" class="mobile-menu-item {% if '/contact' in request.path %}active{% endif %}" data-nav="contact">
+                <div class="mobile-menu-icon" style="{% if '/contact' in request.path %}background: #EFF6FF; color: #2563EB;{% endif %}">
                     <span class="material-icons">mail</span>
                 </div>
                 <span class="mobile-menu-text">Contact</span>
+                <span class="mobile-menu-indicator" style="{% if '/contact' in request.path %}display: block;{% endif %}"></span>
             </a>
             {% endif %}
         </div>
@@ -348,108 +351,10 @@
             });
         }
 
-        // Function to set active navigation state
-        function setActiveNavigation() {
-            const currentPath = window.location.pathname;
-            let activeNav = '';
 
-            // Determine which navigation item should be active based on current path
-            // Determine which navigation item should be active based on current path
-            if (currentPath === '/' || currentPath.startsWith('/wallet')) {
-                activeNav = 'wallet';
-            } else if (currentPath.startsWith('/features')) {
-                activeNav = 'features';
-            } else if (currentPath.startsWith('/cards') || currentPath.toLowerCase().includes('explore')) {
-                activeNav = 'explore';
-            } else if (currentPath.startsWith('/calculators')) {
-                activeNav = 'calculators';
-            } else if (currentPath.startsWith('/personalities') || currentPath.toLowerCase().includes('freaks')) {
-                activeNav = 'personalities';
-            } else if (currentPath.startsWith('/blog') || currentPath.toLowerCase().includes('ledger')) {
-                activeNav = 'blog';
-            } else if (currentPath.startsWith('/datapoints')) {
-                activeNav = 'datapoints';
-            } else if (currentPath.startsWith('/contact')) {
-                activeNav = 'contact';
-            }
-
-            // Remove active class from all navigation items
-            document.querySelectorAll('[data-nav]').forEach(item => {
-                item.classList.remove('active');
-                
-                // Reset mobile menu icon styles
-                const icon = item.querySelector('.mobile-menu-icon');
-                if (icon) {
-                    // Reset to default styles
-                    icon.style.background = '#F8FAFC';
-                    icon.style.color = '#64748B';
-                }
-                
-                // Hide mobile menu indicator
-                const indicator = item.querySelector('.mobile-menu-indicator');
-                if (indicator) {
-                    indicator.style.display = 'none';
-                }
-            });
-
-            // Set active state for current navigation item
-            if (activeNav) {
-                const activeItems = document.querySelectorAll(`[data-nav="${activeNav}"]`);
-                activeItems.forEach(item => {
-                    item.classList.add('active');
-                    
-                    // Set mobile menu icon active styles
-                    const icon = item.querySelector('.mobile-menu-icon');
-                    if (icon) {
-                        switch(activeNav) {
-                            case 'wallet':
-                                icon.style.background = '#2563EB';
-                                icon.style.color = 'white';
-                                break;
-                            case 'features':
-                                icon.style.background = '#F0FDF4';
-                                icon.style.color = '#16A34A';
-                                break;
-                            case 'explore':
-                                icon.style.background = '#EFF6FF';
-                                icon.style.color = '#2563EB';
-                                break;
-                            case 'calculators':
-                                icon.style.background = '#EEF2FF';
-                                icon.style.color = '#4F46E5';
-                                break;
-                            case 'personalities':
-                                icon.style.background = '#FAF5FF';
-                                icon.style.color = '#A855F7';
-                                break;
-                            case 'blog':
-                                icon.style.background = '#FFF7ED';
-                                icon.style.color = '#EA580C';
-                                break;
-                            case 'datapoints':
-                                icon.style.background = '#F0F9FF';
-                                icon.style.color = '#0284C7';
-                                break;
-                            case 'contact':
-                                icon.style.background = '#EFF6FF';
-                                icon.style.color = '#2563EB';
-                                break;
-                        }
-                    }
-                    
-                    // Show mobile menu indicator for active item
-                    const indicator = item.querySelector('.mobile-menu-indicator');
-                    if (indicator) {
-                        indicator.style.display = 'block';
-                    }
-                });
-            }
-        }
 
         // Mobile menu toggle logic
         document.addEventListener('DOMContentLoaded', function () {
-            // Set active navigation on page load
-            setActiveNavigation();
             
             const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
             const mobileMenuClose = document.getElementById('mobile-menu-close');
