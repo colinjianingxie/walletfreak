@@ -132,6 +132,8 @@ DATABASES = {
         ssl_require=True if os.environ.get('DATABASE_URL') else False
     )
 }
+if os.environ.get('DATABASE_URL'):
+    print(f"✅ Configuring Database from URL: {os.environ.get('DATABASE_URL').split('@')[1] if '@' in os.environ.get('DATABASE_URL') else 'INVALID_URL'}")
 
 
 # Password validation
