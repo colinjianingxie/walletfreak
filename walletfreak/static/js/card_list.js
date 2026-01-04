@@ -250,6 +250,9 @@ function filterCards() {
         }
     });
 
+    // Update Button State
+    updateMobileButtonState();
+
     // Store for pagination
     currentMatchingCards = matchingCards;
 
@@ -350,6 +353,9 @@ function openFilters() {
     if (compareBar && window.innerWidth <= 768) {
         compareBar.style.display = 'none';
     }
+
+    // Update button text on open
+    updateMobileButtonState();
 }
 
 function closeFilters() {
@@ -397,6 +403,8 @@ function handleResize() {
         if (sortContainer && wrapper && !sortContainer.contains(wrapper)) {
             sortContainer.appendChild(wrapper);
         }
+        // Auto-close mobile filters if open when resizing to desktop
+        closeFilters();
     }
 }
 
@@ -601,4 +609,32 @@ function handleCardClick(cardId) {
 
     // In GRID view, the whole card is clickable.
     openCardModal(cardId);
+}
+
+// Mobile Filter Button Logic
+function checkFilterDirty() {
+    const minFee = minFeeSlider ? parseInt(minFeeSlider.value) : 0;
+    const maxFee = maxFeeSlider ? parseInt(maxFeeSlider.value) : 1000;
+    const selectedIssuers = Array.from(issuerFilters).filter(f => f.checked).length;
+    const query = searchInput ? searchInput.value : '';
+    const hasCategory = activeCategory !== '';
+
+    if (minFee !== 0) return true;
+    if (maxFee !== 1000) return true;
+    if (selectedIssuers > 0) return true;
+    if (query !== '') return true;
+    if (hasCategory) return true;
+
+    return false;
+}
+
+function updateMobileButtonState() {
+    const btn = document.querySelector('.mobile-show-results-btn');
+    if (!btn) return;
+
+    if (checkFilterDirty()) {
+        btn.textContent = 'Apply Results';
+    } else {
+        btn.textContent = 'Close';
+    }
 }
