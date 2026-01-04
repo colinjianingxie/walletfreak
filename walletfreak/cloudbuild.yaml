@@ -18,11 +18,11 @@ steps:
       - '-e'
       - 'DJANGO_SETTINGS_MODULE=walletfreak.settings'
       - '-e'
-      - 'DATABASE_URL=postgres://django_user:New2007%40rbin@127.0.0.1:5432/walletfreak'
+      - 'DATABASE_URL=postgres://django_user:New2007%40rbin@/walletfreak?host=/cloudsql/walletfreak-cc:us-central1:walletfreak-prod'
       - '--'
-      - 'python'
-      - 'manage.py'
-      - 'migrate'
+      - 'bash'
+      - '-c'
+      - 'ls -la /cloudsql/walletfreak-cc:us-central1:walletfreak-prod && python manage.py migrate'
 
   # Deploy container to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
