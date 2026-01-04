@@ -204,17 +204,16 @@ class UserMixin:
     # Premium User Methods
     def is_premium(self, uid):
         user = self.get_user_profile(uid)
-        return user.get('is_premium', False) if user else False
+        if not user:
+            return False
+        status = user.get('subscription_status', 'inactive')
+        return status in ['active', 'trialing']
 
-    def set_premium(self, uid, is_premium):
-        self.db.collection('users').document(uid).update({'is_premium': is_premium})
-
-    def update_user_subscription(self, uid, is_premium, status, subscription_id=None, current_period_end=None):
+    def update_user_subscription(self, uid, status, subscription_id=None, current_period_end=None):
         """
         Update comprehensive subscription details in Firestore.
         """
         data = {
-            'is_premium': is_premium,
             'subscription_status': status,
             'updated_at': firestore.SERVER_TIMESTAMP
         }

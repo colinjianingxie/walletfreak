@@ -223,8 +223,21 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER or 'notifications@walletfreak.com'
 
 
 # Stripe Configuration
-STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY')
-STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
-STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET')
+# Stripe Configuration
+# Check if live mode is enabled (default to False)
+STRIPE_LIVE_MODE = os.environ.get('STRIPE_LIVE_MODE', 'False').lower() == 'true'
+
+if STRIPE_LIVE_MODE:
+    STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_LIVE_PUBLIC_KEY') or os.environ.get('STRIPE_PUBLIC_KEY')
+    STRIPE_SECRET_KEY = os.environ.get('STRIPE_LIVE_SECRET_KEY') or os.environ.get('STRIPE_SECRET_KEY')
+    STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_LIVE_WEBHOOK_SECRET') or os.environ.get('STRIPE_WEBHOOK_SECRET')
+    STRIPE_PRICE_MONTHLY = os.environ.get('STRIPE_LIVE_PRICE_MONTHLY') or os.environ.get('STRIPE_PRICE_MONTHLY')
+    STRIPE_PRICE_YEARLY = os.environ.get('STRIPE_LIVE_PRICE_YEARLY') or os.environ.get('STRIPE_PRICE_YEARLY')
+else:
+    STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_TEST_PUBLIC_KEY') or os.environ.get('STRIPE_PUBLIC_KEY')
+    STRIPE_SECRET_KEY = os.environ.get('STRIPE_TEST_SECRET_KEY') or os.environ.get('STRIPE_SECRET_KEY')
+    STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_TEST_WEBHOOK_SECRET') or os.environ.get('STRIPE_WEBHOOK_SECRET')
+    STRIPE_PRICE_MONTHLY = os.environ.get('STRIPE_TEST_PRICE_MONTHLY') or os.environ.get('STRIPE_PRICE_MONTHLY')
+    STRIPE_PRICE_YEARLY = os.environ.get('STRIPE_TEST_PRICE_YEARLY') or os.environ.get('STRIPE_PRICE_YEARLY')
 
 

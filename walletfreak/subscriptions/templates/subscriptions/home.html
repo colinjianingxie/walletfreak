@@ -1,38 +1,77 @@
-{% extends "core/base.html" %}
+{% extends "base.html" %}
 
 {% block content %}
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-8 text-center">
+        <div class="col-md-10 text-center">
             <h1>Upgrade to Premium</h1>
             <p class="lead">Unlock exclusive features and advanced calculators.</p>
             
-            <div class="card mt-4">
-                <div class="card-body">
-                    <h2 class="card-title">Wallet Freak Premium</h2>
-                    <p class="display-4">$4.99<span class="text-muted">/mo</span></p>
-                    <ul class="list-unstyled mt-3 mb-4">
-                        <li>Advanced Credit Card Calculators</li>
-                        <li>Unlimited Data Points</li>
-                        <li>Priority Support</li>
-                        <li>Ad-free Experience</li>
-                    </ul>
-                    
-                    {% if subscription and subscription.status == 'active' %}
-                        <div class="alert alert-success">
-                            You are already subscribed!
-                            <br>
-                            <small>Manage your subscription in the <a href="{% url 'profile' %}">Profile</a> settings.</small>
-                        </div>
-                    {% else %}
-                        <form action="{% url 'create_checkout_session' %}" method="POST">
-                            {% csrf_token %}
-                            <!-- Add any hidden inputs for priceId if needed, or handle in backend -->
-                            <button type="submit" class="btn btn-lg btn-primary btn-block">Subscribe Now</button>
-                        </form>
-                    {% endif %}
+            {% if subscription and subscription.status == 'active' %}
+                <div class="alert alert-success mt-4">
+                    <h3>You are already subscribed!</h3>
+                    <p>Manage your subscription in the <a href="{% url 'profile' %}">Profile</a> settings.</p>
                 </div>
-            </div>
+            {% else %}
+                <div class="row justify-content-center mt-4">
+                    <!-- Monthly Plan -->
+                    <div class="col-md-5 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body d-flex flex-column">
+                                <h3 class="card-title">Monthly</h3>
+                                <div class="my-3">
+                                    <span class="display-4">$4.99</span><span class="text-muted">/mo</span>
+                                </div>
+                                <ul class="list-unstyled mb-4 flex-grow-1">
+                                    <li class="mb-2">✓ Advanced Credit Card Calculators</li>
+                                    <li class="mb-2">✓ Unlimited Data Points</li>
+                                    <li class="mb-2">✓ Priority Support</li>
+                                    <li class="mb-2">✓ Ad-free Experience</li>
+                                </ul>
+                                {% if user.is_authenticated %}
+                                    <form action="{% url 'create_checkout_session' %}" method="POST" target="_blank">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="priceId" value="{{ price_monthly }}">
+                                        <button type="submit" class="btn btn-lg btn-outline-primary btn-block w-100">Subscribe Monthly</button>
+                                    </form>
+                                {% else %}
+                                    <a href="{% url 'login' %}?next={% url 'subscription_home' %}" class="btn btn-lg btn-outline-primary btn-block w-100">Login to Subscribe</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Yearly Plan -->
+                    <div class="col-md-5 mb-4">
+                        <div class="card h-100 shadow border-primary">
+                            <div class="card-header bg-primary text-white text-uppercase font-weight-bold py-2">
+                                Best Value
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <h3 class="card-title mt-2">Yearly</h3>
+                                <div class="my-3">
+                                    <span class="display-4">$49.99</span><span class="text-muted">/yr</span>
+                                </div>
+                                <p class="text-success font-weight-bold">Save ~17% (2 months free)</p>
+                                <ul class="list-unstyled mb-4 flex-grow-1">
+                                    <li class="mb-2">✓ All Monthly Features</li>
+                                    <li class="mb-2">✓ <strong>Early Access</strong> to New Tools</li>
+                                    <li class="mb-2">✓ Exclusive Yearly Badge</li>
+                                </ul>
+                                {% if user.is_authenticated %}
+                                    <form action="{% url 'create_checkout_session' %}" method="POST" target="_blank">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="priceId" value="{{ price_yearly }}">
+                                        <button type="submit" class="btn btn-lg btn-primary btn-block w-100">Subscribe Yearly</button>
+                                    </form>
+                                {% else %}
+                                    <a href="{% url 'login' %}?next={% url 'subscription_home' %}" class="btn btn-lg btn-primary btn-block w-100">Login to Subscribe</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
             
         </div>
     </div>

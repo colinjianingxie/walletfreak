@@ -16,16 +16,19 @@ logger = logging.getLogger(__name__)
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
-@login_required
 def subscription_home(request):
-    try:
-        subscription = request.user.subscription
-    except Subscription.DoesNotExist:
-        subscription = None
+    subscription = None
+    if request.user.is_authenticated:
+        try:
+            subscription = request.user.subscription
+        except Subscription.DoesNotExist:
+            subscription = None
 
     return render(request, 'subscriptions/home.html', {
         'stripe_public_key': settings.STRIPE_PUBLIC_KEY,
-        'subscription': subscription
+        'subscription': subscription,
+        'price_monthly': settings.STRIPE_PRICE_MONTHLY,
+        'price_yearly': settings.STRIPE_PRICE_YEARLY,
     })
 
 @login_required
@@ -54,30 +57,59 @@ def create_checkout_session(request):
             stripe_customer.stripe_customer_id = customer.id
             stripe_customer.save()
 
-        # You should replace this with your actual Price ID from Stripe Dashboard
-        # For now, we'll assume it's passed or hardcoded. 
-        # Ideally, use an environment variable or a constant.
-        PRICE_ID = 'price_1Qhk... (replace me)' # TODO: User needs to put their price ID here
+        # Define valid price IDs
+        PRICE_MONTHLY = settings.STRIPE_PRICE_MONTHLY
+        PRICE_YEARLY = settings.STRIPE_PRICE_YEARLY
         
-        # If user passed a price_id (e.g. from frontend hidden input)
+        # Default to monthly if not specified or invalid
         requested_price_id = request.POST.get('priceId')
-        if requested_price_id:
-            PRICE_ID = requested_price_id
+        if requested_price_id not in [PRICE_MONTHLY, PRICE_YEARLY]:
+            requested_price_id = PRICE_MONTHLY
 
-        checkout_session = stripe.checkout.Session.create(
-            customer=stripe_customer.stripe_customer_id,
-            payment_method_types=['card'],
-            line_items=[
-                {
-                    'price': PRICE_ID,
-                    'quantity': 1,
-                },
-            ],
-            mode='subscription',
-            success_url=request.build_absolute_uri('/subscriptions/success/'),
-            cancel_url=request.build_absolute_uri('/subscriptions/cancel/'),
-            client_reference_id=str(request.user.id),
-        )
+        try:
+            checkout_session = stripe.checkout.Session.create(
+                customer=stripe_customer.stripe_customer_id,
+                payment_method_types=['card'],
+                line_items=[
+                    {
+                        'price': requested_price_id,
+                        'quantity': 1,
+                    },
+                ],
+                mode='subscription',
+                success_url=request.build_absolute_uri('/subscriptions/success/'),
+                cancel_url=request.build_absolute_uri('/subscriptions/cancel/'),
+                client_reference_id=str(request.user.id),
+            )
+        except stripe.error.InvalidRequestError as e:
+            if "No such customer" in str(e):
+                logger.warning(f"Stripe Customer {stripe_customer.stripe_customer_id} not found. Re-creating...")
+                # Re-create customer in current environment
+                customer = stripe.Customer.create(
+                    email=request.user.email,
+                    metadata={'user_id': request.user.id}
+                )
+                stripe_customer.stripe_customer_id = customer.id
+                stripe_customer.save()
+                
+                # Retry creating session with new customer ID
+                checkout_session = stripe.checkout.Session.create(
+                    customer=stripe_customer.stripe_customer_id,
+                    payment_method_types=['card'],
+                    line_items=[
+                        {
+                            'price': requested_price_id,
+                            'quantity': 1,
+                        },
+                    ],
+                    mode='subscription',
+                    success_url=request.build_absolute_uri('/subscriptions/success/'),
+                    cancel_url=request.build_absolute_uri('/subscriptions/cancel/'),
+                    client_reference_id=str(request.user.id),
+                )
+            else:
+                raise e
+
         return redirect(checkout_session.url, code=303)
     except Exception as e:
         logger.error(f"Error creating checkout session: {e}")
@@ -144,6 +176,13 @@ def handle_checkout_session(session):
                     'status': 'active', # We assume active on success
                 }
             )
+            
+            # Sync with Firestore to ensure immediate premium access
+            db.update_user_subscription(
+                user.username,
+                'active',
+                subscription_id=stripe_subscription_id
+            )
         except User.DoesNotExist:
             logger.error(f"User with ID {client_reference_id} not found during webhook processing.")
 
@@ -172,10 +211,8 @@ def handle_subscription_updated(stripe_sub):
         
         # Sync with Firestore
         # user.username is the UID
-        is_premium = status in ['active', 'trialing']
         db.update_user_subscription(
             user.username, 
-            is_premium, 
             status, 
             subscription_id=stripe_sub.get('id'),
             current_period_end=current_period_end
@@ -204,7 +241,6 @@ def handle_subscription_deleted(stripe_sub):
         # Sync with Firestore
         db.update_user_subscription(
             user.username, 
-            False, 
             'canceled'
         )
     except StripeCustomer.DoesNotExist:

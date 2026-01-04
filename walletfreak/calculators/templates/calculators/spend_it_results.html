@@ -94,7 +94,7 @@
     /* Result Card */
     .result-card {
         background-color: white;
-        border-radius: 1.5rem; /* rounded-[2.5rem] in tailwind -> 2.5rem, adjusted to 1.5 for consistency */
+        border-radius: 1.5rem;
         border: 1px solid transparent;
         transition: all 0.2s;
         display: flex;
@@ -385,7 +385,7 @@
         .synergy-label { margin-bottom: 0 !important; white-space: nowrap; }
         .synergy-desc { text-align: right; }
     }
-    /* Dynamic Tailwind utility mapping for synergy BG/Color */
+    /* Synergy BG/Color Mappings */
     .bg-indigo-50 { background-color: #EEF2FF !important; }
     .border-indigo-100 { border-color: #E0E7FF !important; }
     .text-indigo-700 { color: #4338CA !important; }
@@ -660,6 +660,39 @@
     
     .info-box-title { font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem; }
     .info-box-text { font-size: 0.875rem; line-height: 1.5; color: rgba(15, 23, 42, 0.8); }
+    /* Utility replacements */
+    .w-3 { width: 0.75rem; }
+    .h-3 { height: 0.75rem; }
+    .w-3\.5 { width: 0.875rem; }
+    .h-3\.5 { height: 0.875rem; }
+    .w-4 { width: 1rem; }
+    .h-4 { height: 1rem; }
+    .w-6 { width: 1.5rem; }
+    .h-6 { height: 1.5rem; }
+    .text-slate-300 { color: #cbd5e1; }
+
+    /* Shine Animation */
+    @keyframes shimmer {
+        100% { transform: translateX(-100%); }
+    }
+    
+    .shine-effect {
+        position: absolute;
+        top: 0;
+        right: -100%;
+        width: 200%;
+        height: 100%;
+        background: linear-gradient(to left, transparent, rgba(255,255,255,0.4), transparent);
+        transform: skewX(12deg);
+        opacity: 0;
+        z-index: 20;
+        pointer-events: none;
+    }
+    
+    .group:hover .shine-effect {
+        opacity: 1;
+        animation: shimmer 1s;
+    }
 </style>
 
 <div class="results-grid">
@@ -708,7 +741,7 @@
                                         </div>
                                     {% endif %}
                                     <!-- Shine effect -->
-                                    <div class="absolute top-0 -right-full w-[200%] h-full bg-gradient-to-l from-transparent via-white/40 to-transparent skew-x-12 opacity-0 group-hover:animate-shimmer z-20"></div>
+                                    <div class="shine-effect"></div>
                                  </div>
                             </div>
                             

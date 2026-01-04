@@ -48,7 +48,7 @@
                 <a href="{% url 'contact' %}" data-nav="contact" class="{% if '/contact' in request.path %}active{% endif %}">Contact</a>
                 
                 {% if not user_is_premium %}
-                <a href="{% url 'pricing' %}" data-nav="pricing" style="color: #F59E0B; font-weight: 600;" class="{% if '/pricing' in request.path %}active{% endif %}">Premium</a>
+                <a href="{% url 'pricing' %}" data-nav="pricing" class="nav-item-premium {% if '/pricing' in request.path %}active{% endif %}">Premium</a>
                 {% endif %}
             </div>
 
