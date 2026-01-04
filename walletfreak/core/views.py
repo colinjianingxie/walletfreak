@@ -188,5 +188,21 @@ def run_cleanup_cron(request):
 def pricing(request):
     context = {
         'firebase_config': settings.FIREBASE_CLIENT_CONFIG,
+        'price_monthly': settings.STRIPE_PRICE_MONTHLY,
+        'price_yearly': settings.STRIPE_PRICE_YEARLY,
     }
     return render(request, 'core/pricing.html', context)
+
+
+def privacy_policy(request):
+    context = {
+         'firebase_config': settings.FIREBASE_CLIENT_CONFIG,
+    }
+    return render(request, 'core/privacy_policy.html', context)
+
+
+def terms_of_service(request):
+    context = {
+         'firebase_config': settings.FIREBASE_CLIENT_CONFIG,
+    }
+    return render(request, 'core/terms_of_service.html', context)

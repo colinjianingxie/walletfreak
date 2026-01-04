@@ -246,6 +246,21 @@ a.btn-login {
     opacity: 0.9;
 }
 
+/* Premium Nav Item */
+.nav-links .nav-items a.nav-item-premium {
+    color: #F59E0B;
+    font-weight: 600;
+}
+
+.nav-links .nav-items a.nav-item-premium:hover {
+    color: #D97706;
+}
+
+.nav-links .nav-items a.nav-item-premium.active {
+    color: #D97706 !important;
+    background-color: #FFF7ED !important;
+}
+
 
 
 .btn-primary:hover {

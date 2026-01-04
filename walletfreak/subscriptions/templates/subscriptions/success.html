@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5 text-center">
+    <h1 class="display-4 text-success">Thank You!</h1>
+    <p class="lead">Your subscription to Wallet Freak Premium is now active.</p>
+    <hr class="my-4">
+    <p>You now have access to all premium features.</p>
+    <a class="btn btn-primary btn-lg" href="{% url 'dashboard' %}" role="button">Go to Dashboard</a>
+</div>
+{% endblock %}

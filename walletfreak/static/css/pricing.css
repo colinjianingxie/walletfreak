@@ -1,0 +1,333 @@
+/* Pricing Page Styles */
+
+.pricing-main {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    flex: 1;
+}
+
+.pricing-container {
+    max-width: 72rem;
+    /* 6xl */
+    margin: 0 auto;
+    padding: 1.5rem;
+    padding-bottom: 8rem;
+}
+
+@media (min-width: 768px) {
+    .pricing-container {
+        padding: 2.5rem;
+        padding-bottom: 8rem;
+    }
+}
+
+.pricing-content-wrapper {
+    animation: fadeIn 500ms ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header */
+.pricing-header {
+    text-align: center;
+    max-width: 42rem;
+    margin: 0 auto 4rem auto;
+}
+
+.pricing-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #fffbeb;
+    /* amber-50 */
+    color: #b45309;
+    /* amber-700 */
+    padding: 0.375rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+}
+
+.pricing-badge svg {
+    width: 1rem;
+    height: 1rem;
+    fill: #f59e0b;
+    /* amber-500 */
+}
+
+.pricing-title {
+    font-size: 2.25rem;
+    /* 4xl */
+    font-weight: 900;
+    color: #0f172a;
+    /* slate-900 */
+    letter-spacing: -0.025em;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+}
+
+@media (min-width: 768px) {
+    .pricing-title {
+        font-size: 3.75rem;
+        /* 6xl */
+    }
+}
+
+.pricing-subtitle {
+    color: #64748b;
+    /* slate-500 */
+    font-size: 1.125rem;
+    /* lg */
+    font-weight: 500;
+    line-height: 1.625;
+    margin: 0;
+}
+
+/* Grid */
+.pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 56rem;
+    /* 4xl */
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .pricing-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Cards */
+.pricing-card {
+    border-radius: 2.5rem;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s;
+}
+
+/* Monthly Card (White) */
+.pricing-card-monthly {
+    background-color: white;
+    border: 1px solid #f1f5f9;
+    /* slate-100 */
+    box-shadow: 0 20px 25px -5px rgba(226, 232, 240, 0.5), 0 8px 10px -6px rgba(226, 232, 240, 0.5);
+}
+
+.pricing-card-monthly:hover {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Yearly Card (Dark) */
+.pricing-card-yearly {
+    background-color: #0f172a;
+    /* slate-900 */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    position: relative;
+    overflow: hidden;
+}
+
+.best-value-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #fbbf24;
+    /* amber-400 */
+    color: #0f172a;
+    /* slate-900 */
+    font-size: 0.625rem;
+    /* 10px */
+    font-weight: 900;
+    padding: 0.5rem 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transform: rotate(45deg) translate(24px, 8px);
+    z-index: 20;
+}
+
+.glow-effect {
+    position: absolute;
+    bottom: -5rem;
+    right: -5rem;
+    width: 16rem;
+    height: 16rem;
+    background-color: #4f46e5;
+    border-radius: 9999px;
+    filter: blur(100px);
+    opacity: 0.2;
+}
+
+/* Card Content */
+.card-header {
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    /* xl */
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+}
+
+.pricing-card-monthly .card-title {
+    color: #0f172a;
+}
+
+.pricing-card-yearly .card-title {
+    color: white;
+}
+
+.price-container {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+}
+
+.price-amount {
+    font-size: 2.25rem;
+    /* 4xl */
+    font-weight: 900;
+}
+
+.pricing-card-monthly .price-amount {
+    color: #0f172a;
+}
+
+.pricing-card-yearly .price-amount {
+    color: white;
+}
+
+.price-period {
+    font-weight: 700;
+}
+
+.pricing-card-monthly .price-period {
+    color: #94a3b8;
+}
+
+.pricing-card-yearly .price-period {
+    color: #64748b;
+}
+
+.yearly-savings {
+    color: #fbbf24;
+    /* amber-400 */
+    font-size: 0.75rem;
+    /* xs */
+    font-weight: 700;
+    margin-top: 0.5rem;
+    display: block;
+}
+
+/* Feature List */
+.feature-list {
+    margin-bottom: 2.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+    z-index: 10;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.check-icon-circle {
+    width: 1.25rem;
+    height: 1.25rem;
+    background-color: rgba(34, 197, 94, 0.1);
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.check-icon-circle svg {
+    width: 0.75rem;
+    height: 0.75rem;
+    color: #22c55e;
+}
+
+.feature-text {
+    font-size: 0.875rem;
+    /* sm */
+    font-weight: 500;
+}
+
+.pricing-card-monthly .feature-text {
+    color: #1e293b;
+}
+
+/* slate-800 approx */
+.pricing-card-yearly .feature-text {
+    color: #cbd5e1;
+}
+
+/* slate-300 */
+
+/* Buttons */
+.pricing-btn {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 1rem;
+    font-weight: 900;
+    font-size: 1.125rem;
+    /* lg */
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 10;
+}
+
+.btn-monthly {
+    background-color: #0f172a;
+    /* slate-900 */
+    color: white;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-monthly:hover {
+    background-color: #4f46e5;
+    /* indigo-600 */
+}
+
+.btn-yearly {
+    background-color: #fbbf24;
+    /* amber-400 */
+    color: #0f172a;
+    /* slate-900 */
+    box-shadow: 0 20px 25px -5px rgba(120, 53, 15, 0.2);
+    /* amber-900/20 */
+}
+
+.btn-yearly:hover {
+    background-color: white;
+}
+
+.space-y-16>*+* {
+    margin-top: 4rem;
+}
