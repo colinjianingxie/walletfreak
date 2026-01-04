@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/card_list.css' %}?v=1.7">
+<link rel="stylesheet" href="{% static 'css/card_list.css' %}?v=1.8">
 <link rel="stylesheet" href="{% static 'css/card_modal.css' %}">
 {% endblock %}
 
@@ -99,7 +99,7 @@ const userPersonality = {{ user_personality_json|safe|default:'null' }};
 const currentUserUid = "{{ request.session.uid }}";
 
 </script>
-<script src="{% static 'js/card_list.js' %}?v=1.1"></script>
+<script src="{% static 'js/card_list.js' %}?v=1.7"></script>
 
 
 {% endblock %}

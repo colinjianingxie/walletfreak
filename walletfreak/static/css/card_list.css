@@ -303,6 +303,27 @@ input[type=range]::-moz-range-thumb {
     border: none;
     outline: none;
     box-shadow: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.range-input:focus,
+.range-input:active {
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+
+.range-input::-webkit-slider-thumb:focus,
+.range-input::-webkit-slider-thumb:active {
+    outline: none;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    /* Keep shadow but remove default outlines */
+}
+
+.range-input::-moz-range-thumb:focus,
+.range-input::-moz-range-thumb:active {
+    outline: none;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
 }
 
 .range-labels {

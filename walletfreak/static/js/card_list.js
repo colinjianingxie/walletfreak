@@ -213,9 +213,13 @@ function resetFilters() {
 if (searchInput) searchInput.addEventListener('input', filterCards);
 if (sortSelect) {
     sortSelect.addEventListener('change', () => {
+        // Update URL without reload
         const url = new URL(window.location);
         url.searchParams.set('sort', sortSelect.value);
-        window.location.href = url.toString();
+        window.history.replaceState({}, '', url);
+
+        // Client-side sort
+        filterCards();
     });
 }
 
@@ -250,6 +254,32 @@ function filterCards() {
         }
     });
 
+    // Client-side Sort
+    if (sortSelect) {
+        const sortValue = sortSelect.value;
+        matchingCards.sort((a, b) => {
+            if (sortValue === 'match') {
+                // Default to 0 if not present
+                const scoreA = parseFloat(a.dataset.matchScore) || 0;
+                const scoreB = parseFloat(b.dataset.matchScore) || 0;
+                return scoreB - scoreA; // Descending
+            } else if (sortValue === 'fee_low') {
+                const feeA = parseInt(a.dataset.fee) || 0;
+                const feeB = parseInt(b.dataset.fee) || 0;
+                return feeA - feeB; // Ascending
+            } else if (sortValue === 'fee_high') {
+                const feeA = parseInt(a.dataset.fee) || 0;
+                const feeB = parseInt(b.dataset.fee) || 0;
+                return feeB - feeA; // Descending
+            } else if (sortValue === 'name') {
+                const nameA = a.dataset.name || '';
+                const nameB = b.dataset.name || '';
+                return nameA.localeCompare(nameB);
+            }
+            return 0;
+        });
+    }
+
     // Update Button State
     updateMobileButtonState();
 
@@ -264,7 +294,21 @@ function filterCards() {
     // Reset pagination
     currentlyShowing = cardsPerPage;
 
-    // Show cards
+    // Re-order DOM elements to reflect sort
+    const container = document.getElementById('cards-grid'); // Works for both, but scroll container for list view?
+    // Actually in list view, they are inside #cards-scroll-container -> .main-grid (which is #cards-grid)
+    // Wait, let's check HTML structure. 
+    // #cards-grid is the container for both views usually?
+    // In card_list.html: <div id="cards-grid" class="view-grid ...">
+    if (cardsGrid) {
+        // Appending moves them to the end, effectively reordering if we do it for all matches
+        // But we have non-matches too. We should probably re-append ALL cards? 
+        // No, currentMatchingCards contains the sorted filtered list.
+        // We should append them in order.
+        currentMatchingCards.forEach(card => cardsGrid.appendChild(card));
+    }
+
+    // Show cards (Pagination logic)
     exploreCards.forEach(card => card.style.display = 'none'); // Hide all first
 
     currentMatchingCards.forEach((card, index) => {
@@ -336,6 +380,13 @@ window.addEventListener('DOMContentLoaded', () => {
     // Move sort to mobile container if needed
     handleResize();
     window.addEventListener('resize', handleResize);
+
+    // Initialize Sort from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const sortParam = urlParams.get('sort');
+    if (sortParam && sortSelect) {
+        sortSelect.value = sortParam;
+    }
 
     // Initialize View
     toggleView(currentView);
