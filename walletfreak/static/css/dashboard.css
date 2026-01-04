@@ -40,20 +40,28 @@
     #annual-value-card .value-row {
         flex-direction: column !important;
         /* Stack vertically */
-        gap: 2rem !important;
-        /* More breathing room */
-        align-items: center !important;
-        /* Center the columns */
+        gap: 0 !important;
+        /* Remove gap, use padding/border instead */
+        align-items: flex-start !important;
+        /* Left align */
     }
 
     /* Reset widths and Center inner content */
+    /* Reset widths and Left align inner content */
     #annual-value-card .value-row>div:not(.vertical-divider) {
         width: 100% !important;
         flex: none !important;
         display: flex !important;
         flex-direction: column !important;
-        align-items: center !important;
-        /* Center children */
+        align-items: flex-start !important;
+        /* Left align children */
+    }
+
+    /* Add separator to first section (YTD Rewards) */
+    #annual-value-card .value-row>div:first-child {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 1.5rem;
+        margin-bottom: 1.5rem;
     }
 
     /* Hide vertical divider */
@@ -67,19 +75,19 @@
         font-size: 3rem !important;
         /* Large and bold */
         margin-bottom: 0.5rem !important;
-        justify-content: center !important;
-        /* Center the flex content of the value */
+        justify-content: flex-start !important;
+        /* Left align value */
         width: 100% !important;
     }
 
-    /* Center and Style Labels */
+    /* Left align Labels */
     #annual-value-card .value-row>div>div:first-child {
         font-size: 0.875rem !important;
         white-space: normal !important;
         overflow: visible !important;
         margin-bottom: 0.5rem !important;
-        justify-content: center !important;
-        /* Center the flex content of label */
+        justify-content: flex-start !important;
+        /* Left align label */
         width: 100% !important;
     }
 
@@ -89,11 +97,11 @@
         font-size: 0.875rem !important;
     }
 
-    /* Sub-stat container pill */
+    /* Sub-stat container pill - Left align */
     #annual-value-card .value-row>div>div:last-child {
         padding: 6px 12px !important;
-        margin: 0 auto !important;
-        /* Center block element if needed */
+        margin: 0 !important;
+        /* Remove auto margin to keep left */
     }
 }
 
