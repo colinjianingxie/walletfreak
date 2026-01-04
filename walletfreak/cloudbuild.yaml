@@ -23,7 +23,7 @@ steps:
       - 'managed'
       - '--allow-unauthenticated'
       - '--set-env-vars'
-      - 'DJANGO_SETTINGS_MODULE=walletfreak.settings,CRON_SECRET=c2dcb5e2f6838f81956c531aee5570e2,DATABASE_URL=postgres://django_user:New2007%40rbin@//cloudsql/walletfreak-cc:us-central1:walletfreak-prod/walletfreak'
+      - 'DJANGO_SETTINGS_MODULE=walletfreak.settings,CRON_SECRET=c2dcb5e2f6838f81956c531aee5570e2,DATABASE_URL=postgres://django_user:New2007%40rbin@/walletfreak?host=/cloudsql/walletfreak-cc:us-central1:walletfreak-prod'
 
 images:
   - 'gcr.io/$PROJECT_ID/walletfreak'
