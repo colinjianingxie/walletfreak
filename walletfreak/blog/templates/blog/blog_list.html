@@ -69,7 +69,7 @@
              {% endif %}
  
              <!-- Inner Circle Promo (Non-Premium Only) -->
-             {% if not user_is_premium %}
+             {% if not user_is_premium and not is_editor %}
              <div class="inner-circle-promo" style="background: white; border: 1px solid #e2e8f0; margin-top: 2rem;">
                  <div class="promo-content">
                      <span class="material-icons crown-icon">emoji_events</span>

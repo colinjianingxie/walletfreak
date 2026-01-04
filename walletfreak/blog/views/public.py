@@ -275,8 +275,8 @@ def blog_list(request):
     # Also treat superusers/editors as premium for viewing purposes if needed, 
     # but sticking to strict premium check or editor check.
     # Usually editors should see everything.
-    if is_editor:
-        user_is_premium = True
+    # Editors can access locked content, but that logic is handled in specific views or property checks.
+    # We do NOT want to override user_is_premium here because it hides the "Premium" nav link.
 
     context = {
         'blogs': blogs,
