@@ -113,7 +113,7 @@ body.modal-open {
     height: 100%;
 }
 
-@media (max-width: 360px) {
+@media (max-width: 420px) {
 
     #net-performance-badge,
     .graph-icon-container {
@@ -624,7 +624,7 @@ body.modal-open {
     margin-top: 0.5rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 450px) {
     .user-badges-container {
         flex-direction: column !important;
         align-items: flex-start !important;
