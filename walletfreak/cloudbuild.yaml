@@ -15,14 +15,14 @@ steps:
       - 'gcr.io/$PROJECT_ID/walletfreak'
       - '-s'
       - 'walletfreak-cc:us-central1:walletfreak-prod'
+      - '-e'
+      - 'DJANGO_SETTINGS_MODULE=walletfreak.settings'
+      - '-e'
+      - 'DATABASE_URL=postgres://django_user:New2007%40rbin@127.0.0.1:5432/walletfreak'
       - '--'
       - 'python'
       - 'manage.py'
       - 'migrate'
-    env:
-      - 'DJANGO_SETTINGS_MODULE=walletfreak.settings'
-      # Use TCP (127.0.0.1) for migrations via exec-wrapper proxy
-      - 'DATABASE_URL=postgres://django_user:New2007%40rbin@127.0.0.1:5432/walletfreak'
 
   # Deploy container to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'

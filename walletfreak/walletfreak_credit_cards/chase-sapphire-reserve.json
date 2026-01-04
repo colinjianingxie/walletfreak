@@ -7,7 +7,7 @@
     "ImageURL": "/static/images/credit_cards/chase-sapphire-reserve.jpg",
     "MinCreditScore": 740,
     "MaxCreditScore": 850,
-    "ApplicationLink": "https://secure.chase.com/web/oao/application/card?sourceCode=HWHN&action=guest#/origination/cardDetails/index/index;cellCode=61DS;combo=Y",
+    "ApplicationLink": "https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve",
     "Is524": true,
     "Benefits": [
         {
@@ -27,17 +27,32 @@
         },
         {
             "BenefitDescription": "$500 The Edit by Chase Travel hotel credit",
-            "AdditionalDetails": "$250 semi-annually on prepaid 2-night stays",
+            "AdditionalDetails": "up to $500 annually, max $250 per transaction on prepaid 2-night stays",
             "BenefitCategory": [
                 "Chase Travel Hotels"
             ],
-            "TimeCategory": "Semi-annually",
+            "TimeCategory": "Annually (calendar year)",
             "DollarValue": 500,
             "EnrollmentRequired": false,
-            "EffectiveDate": "2025-11-29",
+            "EffectiveDate": "2026-01-01",
             "BenefitDescriptionShort": "The Edit Hotel Credit",
             "BenefitType": "Credit",
             "NumericValue": 500.0,
+            "NumericType": "Cash"
+        },
+        {
+            "BenefitDescription": "$250 additional Chase Travel hotel credit",
+            "AdditionalDetails": "for prepaid 2-night stays at select brands (IHG, Omni, Virgin Hotels, etc.) through Dec 31, 2026",
+            "BenefitCategory": [
+                "Chase Travel Hotels"
+            ],
+            "TimeCategory": "One Time",
+            "DollarValue": 250,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2026-01-01",
+            "BenefitDescriptionShort": "Additional Hotel Credit",
+            "BenefitType": "Credit",
+            "NumericValue": 250.0,
             "NumericType": "Cash"
         },
         {
@@ -75,8 +90,23 @@
             "NumericType": "Lounge"
         },
         {
+            "BenefitDescription": "Air Canada lounge access",
+            "AdditionalDetails": "complimentary for cardmember +1 guest on Star Alliance flights",
+            "BenefitCategory": [
+                "Lounge Access"
+            ],
+            "TimeCategory": "Ongoing",
+            "DollarValue": 0,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "Air Canada Lounges",
+            "BenefitType": "Perk",
+            "NumericValue": 3,
+            "NumericType": "Lounge"
+        },
+        {
             "BenefitDescription": "DoorDash credits",
-            "AdditionalDetails": "monthly promos totaling $300 per year",
+            "AdditionalDetails": "monthly promos totaling $300 per year through Dec 31, 2027",
             "BenefitCategory": [
                 "DoorDash",
                 "Generic Dining"
@@ -91,16 +121,31 @@
             "NumericType": "Cash"
         },
         {
+            "BenefitDescription": "Complimentary DashPass membership",
+            "AdditionalDetails": "12 months, $0 delivery fees on DoorDash/Caviar, activate by Dec 31, 2027",
+            "BenefitCategory": [
+                "DoorDash"
+            ],
+            "TimeCategory": "Minimum 12 months",
+            "DollarValue": 120,
+            "EnrollmentRequired": true,
+            "EffectiveDate": "2025-11-29",
+            "BenefitDescriptionShort": "DashPass",
+            "BenefitType": "Perk",
+            "NumericValue": 120.0,
+            "NumericType": "Cash"
+        },
+        {
             "BenefitDescription": "StubHub & viagogo credits",
-            "AdditionalDetails": "entertainment credits totaling $300 per year",
+            "AdditionalDetails": "up to $300 in credits ($150 per half-year) through Dec 31, 2027",
             "BenefitCategory": [
                 "StubHub",
                 "viagogo",
                 "Generic Entertainment"
             ],
-            "TimeCategory": "Monthly",
+            "TimeCategory": "Semi-annually",
             "DollarValue": 300,
-            "EnrollmentRequired": false,
+            "EnrollmentRequired": true,
             "EffectiveDate": "2025-11-29",
             "BenefitDescriptionShort": "Entertainment Credit",
             "BenefitType": "Credit",
@@ -109,7 +154,7 @@
         },
         {
             "BenefitDescription": "Lyft credits",
-            "AdditionalDetails": "credits totaling $120 per year plus bonus points",
+            "AdditionalDetails": "credits totaling $120 per year ($10/month) through Sep 30, 2027 plus bonus points",
             "BenefitCategory": [
                 "Lyft",
                 "Generic Transportation"
@@ -125,14 +170,14 @@
         },
         {
             "BenefitDescription": "Peloton credits",
-            "AdditionalDetails": "credits totaling $120 per year plus bonus points",
+            "AdditionalDetails": "credits totaling $120 per year ($10/month) through Dec 31, 2027 plus bonus points",
             "BenefitCategory": [
                 "Peloton",
                 "Generic Health & Wellness"
             ],
             "TimeCategory": "Monthly",
             "DollarValue": 120,
-            "EnrollmentRequired": false,
+            "EnrollmentRequired": true,
             "EffectiveDate": "2025-11-29",
             "BenefitDescriptionShort": "Peloton Credit",
             "BenefitType": "Credit",
@@ -141,7 +186,7 @@
         },
         {
             "BenefitDescription": "Complimentary IHG One Rewards Platinum Elite status",
-            "AdditionalDetails": null,
+            "AdditionalDetails": "through Dec 31, 2027",
             "BenefitCategory": [
                 "IHG",
                 "Generic Hotels",
@@ -149,7 +194,7 @@
             ],
             "TimeCategory": "Ongoing",
             "DollarValue": null,
-            "EnrollmentRequired": false,
+            "EnrollmentRequired": true,
             "EffectiveDate": "2025-11-29",
             "BenefitDescriptionShort": "IHG Platinum Status",
             "BenefitType": "Status",
@@ -158,51 +203,34 @@
         },
         {
             "BenefitDescription": "Sapphire Reserve Exclusive Tables dining benefits",
-            "AdditionalDetails": "exclusive dining access and credits",
+            "AdditionalDetails": "exclusive dining access and up to $300 in credits ($150 per half-year) through Jun 30, 2026",
             "BenefitCategory": [
                 "Generic Dining"
             ],
-            "TimeCategory": "Ongoing",
-            "DollarValue": null,
-            "EnrollmentRequired": false,
+            "TimeCategory": "Semi-annually",
+            "DollarValue": 300,
+            "EnrollmentRequired": true,
             "EffectiveDate": "2025-11-29",
             "BenefitDescriptionShort": "Exclusive Tables",
-            "BenefitType": "Perk",
-            "NumericValue": 1,
-            "NumericType": "Perk"
+            "BenefitType": "Credit",
+            "NumericValue": 300.0,
+            "NumericType": "Cash"
         },
         {
             "BenefitDescription": "Complimentary Apple TV+ and Music",
-            "AdditionalDetails": null,
+            "AdditionalDetails": "through Jun 22, 2027",
             "BenefitCategory": [
                 "Apple TV+",
                 "Apple Music",
                 "Generic Entertainment"
             ],
             "TimeCategory": "Annually (calendar year)",
-            "DollarValue": 250,
+            "DollarValue": 288,
             "EnrollmentRequired": true,
             "EffectiveDate": "2025-12-24",
             "BenefitDescriptionShort": "Apple TV+ & Music",
             "BenefitType": "Perk",
-            "NumericValue": 250,
-            "NumericType": "Cash"
-        },
-        {
-            "BenefitDescription": "$300 StubHub and viagogo credit",
-            "AdditionalDetails": null,
-            "BenefitCategory": [
-                "StubHub",
-                "viagogo",
-                "Generic Entertainment"
-            ],
-            "TimeCategory": "Semi-annually",
-            "DollarValue": 300,
-            "EnrollmentRequired": false,
-            "EffectiveDate": "2025-12-24",
-            "BenefitDescriptionShort": "StubHub Credit",
-            "BenefitType": "Credit",
-            "NumericValue": 300,
+            "NumericValue": 288,
             "NumericType": "Cash"
         }
     ],
@@ -271,6 +299,24 @@
             "IsDefault": false
         },
         {
+            "EarningRate": 5,
+            "Currency": "points",
+            "RateCategory": [
+                "Lyft"
+            ],
+            "AdditionalDetails": "on Lyft rides through Sep 30, 2027",
+            "IsDefault": false
+        },
+        {
+            "EarningRate": 10,
+            "Currency": "points",
+            "RateCategory": [
+                "Peloton"
+            ],
+            "AdditionalDetails": "on Peloton equipment and accessories over $150 through Dec 31, 2027",
+            "IsDefault": false
+        },
+        {
             "EarningRate": 1,
             "Currency": "points",
             "RateCategory": [
@@ -281,14 +327,6 @@
         }
     ],
     "SignUpBonuses": [
-        {
-            "EffectiveDate": "2025-08-21",
-            "Terms": "Spend $6000 in 3 months",
-            "SignUpBonusValue": 125000,
-            "SignUpBonusType": "Points",
-            "SpendAmount": 6000,
-            "SignupDurationMonths": 3
-        },
         {
             "EffectiveDate": "2025-08-21",
             "Terms": "Spend $6000 in 3 months",
@@ -332,6 +370,22 @@
             ]
         },
         {
+            "BenefitShortDescription": "Additional Hotel Credit",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you plan to book prepaid hotel stays through Chase Travel at select brands like IHG or Omni?",
+            "BenefitCategory": "Hotel",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
             "BenefitShortDescription": "Trusted Traveler Credit",
             "QuestionType": "multiple_choice",
             "ChoiceList": [
@@ -353,7 +407,7 @@
                 "Sometimes",
                 "Yes"
             ],
-            "Question": "Do you value having unlimited access to airport lounges for food and quiet workspace?",
+            "Question": "Do you value having unlimited access to airport lounges, including Air Canada lounges, for food and quiet workspace?",
             "BenefitCategory": "Lounge",
             "ChoiceWeight": [
                 0.0,
@@ -370,6 +424,22 @@
                 "Yes"
             ],
             "Question": "Do you regularly use food delivery and value up to $300 in annual credits?",
+            "BenefitCategory": "Delivery",
+            "ChoiceWeight": [
+                0.0,
+                0.5,
+                1.0
+            ]
+        },
+        {
+            "BenefitShortDescription": "DashPass",
+            "QuestionType": "multiple_choice",
+            "ChoiceList": [
+                "No",
+                "Sometimes",
+                "Yes"
+            ],
+            "Question": "Do you use DoorDash or Caviar frequently and want free delivery for a year?",
             "BenefitCategory": "Delivery",
             "ChoiceWeight": [
                 0.0,
@@ -447,7 +517,7 @@
                 "Sometimes",
                 "Yes"
             ],
-            "Question": "Do you enjoy having special access to sought-after restaurant reservations?",
+            "Question": "Do you enjoy having special access to sought-after restaurant reservations and earning credits on dining?",
             "BenefitCategory": "Dining",
             "ChoiceWeight": [
                 0.0,
@@ -470,25 +540,9 @@
                 0.5,
                 1.0
             ]
-        },
-        {
-            "BenefitShortDescription": "StubHub Credit",
-            "QuestionType": "multiple_choice",
-            "ChoiceList": [
-                "No",
-                "Sometimes",
-                "Yes"
-            ],
-            "Question": "Do you buy tickets for live events and want up to $300 in annual credits?",
-            "BenefitCategory": "Entertainment",
-            "ChoiceWeight": [
-                0.0,
-                0.5,
-                1.0
-            ]
         }
     ],
-    "FreakVerdict": "10/10. Heavy hitter but straightforward. $6,000 spend in 3 months for a massive 125k points. No shenanigans.",
+    "FreakVerdict": "10/10. Continues to dominate as a premium travel card with the addition of a $250 hotel credit for 2026 and easier-to-use Edit credits. The 125k signup bonus after $6k spend remains a strong entry point, with perks easily justifying the fee for frequent travelers.",
     "Categories": [
         {
             "CategoryName": "Airlines",
@@ -518,7 +572,8 @@
             "Icon": "fa-solid fa-car-side",
             "CategoryNameDetailed": [
                 "Generic Transportation",
-                "Chase Travel Rental Cars"
+                "Chase Travel Rental Cars",
+                "Lyft"
             ]
         },
         {
@@ -526,6 +581,14 @@
             "Icon": "fa-solid fa-coins",
             "CategoryNameDetailed": [
                 "Generic Financial & Rewards"
+            ]
+        },
+        {
+            "CategoryName": "Health & Wellness",
+            "Icon": "fa-solid fa-heart-pulse",
+            "CategoryNameDetailed": [
+                "Peloton",
+                "Generic Health & Wellness"
             ]
         }
     ]
