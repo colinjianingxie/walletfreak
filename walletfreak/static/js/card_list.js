@@ -213,9 +213,13 @@ function resetFilters() {
 if (searchInput) searchInput.addEventListener('input', filterCards);
 if (sortSelect) {
     sortSelect.addEventListener('change', () => {
+        // Update URL without reload
         const url = new URL(window.location);
         url.searchParams.set('sort', sortSelect.value);
-        window.location.href = url.toString();
+        window.history.replaceState({}, '', url);
+
+        // Client-side sort
+        filterCards();
     });
 }
 
@@ -250,6 +254,35 @@ function filterCards() {
         }
     });
 
+    // Client-side Sort
+    if (sortSelect) {
+        const sortValue = sortSelect.value;
+        matchingCards.sort((a, b) => {
+            if (sortValue === 'match') {
+                // Default to 0 if not present
+                const scoreA = parseFloat(a.dataset.matchScore) || 0;
+                const scoreB = parseFloat(b.dataset.matchScore) || 0;
+                return scoreB - scoreA; // Descending
+            } else if (sortValue === 'fee_low') {
+                const feeA = parseInt(a.dataset.fee) || 0;
+                const feeB = parseInt(b.dataset.fee) || 0;
+                return feeA - feeB; // Ascending
+            } else if (sortValue === 'fee_high') {
+                const feeA = parseInt(a.dataset.fee) || 0;
+                const feeB = parseInt(b.dataset.fee) || 0;
+                return feeB - feeA; // Descending
+            } else if (sortValue === 'name') {
+                const nameA = a.dataset.name || '';
+                const nameB = b.dataset.name || '';
+                return nameA.localeCompare(nameB);
+            }
+            return 0;
+        });
+    }
+
+    // Update Button State
+    updateMobileButtonState();
+
     // Store for pagination
     currentMatchingCards = matchingCards;
 
@@ -261,7 +294,21 @@ function filterCards() {
     // Reset pagination
     currentlyShowing = cardsPerPage;
 
-    // Show cards
+    // Re-order DOM elements to reflect sort
+    const container = document.getElementById('cards-grid'); // Works for both, but scroll container for list view?
+    // Actually in list view, they are inside #cards-scroll-container -> .main-grid (which is #cards-grid)
+    // Wait, let's check HTML structure. 
+    // #cards-grid is the container for both views usually?
+    // In card_list.html: <div id="cards-grid" class="view-grid ...">
+    if (cardsGrid) {
+        // Appending moves them to the end, effectively reordering if we do it for all matches
+        // But we have non-matches too. We should probably re-append ALL cards? 
+        // No, currentMatchingCards contains the sorted filtered list.
+        // We should append them in order.
+        currentMatchingCards.forEach(card => cardsGrid.appendChild(card));
+    }
+
+    // Show cards (Pagination logic)
     exploreCards.forEach(card => card.style.display = 'none'); // Hide all first
 
     currentMatchingCards.forEach((card, index) => {
@@ -334,6 +381,13 @@ window.addEventListener('DOMContentLoaded', () => {
     handleResize();
     window.addEventListener('resize', handleResize);
 
+    // Initialize Sort from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const sortParam = urlParams.get('sort');
+    if (sortParam && sortSelect) {
+        sortSelect.value = sortParam;
+    }
+
     // Initialize View
     toggleView(currentView);
     filterCards();
@@ -350,6 +404,9 @@ function openFilters() {
     if (compareBar && window.innerWidth <= 768) {
         compareBar.style.display = 'none';
     }
+
+    // Update button text on open
+    updateMobileButtonState();
 }
 
 function closeFilters() {
@@ -397,6 +454,8 @@ function handleResize() {
         if (sortContainer && wrapper && !sortContainer.contains(wrapper)) {
             sortContainer.appendChild(wrapper);
         }
+        // Auto-close mobile filters if open when resizing to desktop
+        closeFilters();
     }
 }
 
@@ -601,4 +660,32 @@ function handleCardClick(cardId) {
 
     // In GRID view, the whole card is clickable.
     openCardModal(cardId);
+}
+
+// Mobile Filter Button Logic
+function checkFilterDirty() {
+    const minFee = minFeeSlider ? parseInt(minFeeSlider.value) : 0;
+    const maxFee = maxFeeSlider ? parseInt(maxFeeSlider.value) : 1000;
+    const selectedIssuers = Array.from(issuerFilters).filter(f => f.checked).length;
+    const query = searchInput ? searchInput.value : '';
+    const hasCategory = activeCategory !== '';
+
+    if (minFee !== 0) return true;
+    if (maxFee !== 1000) return true;
+    if (selectedIssuers > 0) return true;
+    if (query !== '') return true;
+    if (hasCategory) return true;
+
+    return false;
+}
+
+function updateMobileButtonState() {
+    const btn = document.querySelector('.mobile-show-results-btn');
+    if (!btn) return;
+
+    if (checkFilterDirty()) {
+        btn.textContent = 'Apply Results';
+    } else {
+        btn.textContent = 'Close';
+    }
 }

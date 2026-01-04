@@ -219,7 +219,7 @@ input[type=range]::-moz-range-thumb {
     gap: 3rem;
 }
 
-.mobile-sidebar-header {
+.mobile-filter-header {
     display: none;
     justify-content: space-between;
     align-items: center;
@@ -303,18 +303,47 @@ input[type=range]::-moz-range-thumb {
     border: none;
     outline: none;
     box-shadow: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.range-input:focus,
+.range-input:active {
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+
+.range-input::-webkit-slider-thumb:focus,
+.range-input::-webkit-slider-thumb:active {
+    outline: none;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    /* Keep shadow but remove default outlines */
+}
+
+.range-input::-moz-range-thumb:focus,
+.range-input::-moz-range-thumb:active {
+    outline: none;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
 }
 
 .range-labels {
     display: flex;
     justify-content: space-between;
-    margin: 0 -10px;
+    margin: 0;
 }
 
 .range-label-text {
     font-size: 0.75rem;
     color: #94A3B8;
     font-weight: 500;
+}
+
+.range-label-text:first-child {
+    /* transform: translateX(0); default */
+}
+
+.range-label-text:last-child {
+    /* transform: translateX(0); default */
 }
 
 /* Checkbox Group */
@@ -1182,6 +1211,7 @@ input[type=range]::-moz-range-thumb {
         box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: column;
+        overflow-x: hidden;
     }
 
     .filters-sidebar.active {
@@ -1190,6 +1220,24 @@ input[type=range]::-moz-range-thumb {
 
     .mobile-filter-header {
         display: flex !important;
+        flex-shrink: 0;
+        width: 100%;
+        position: relative;
+        z-index: 50;
+        background: white;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #F1F5F9;
+        margin-bottom: 1rem;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .filters-scroll-content {
+        margin: 0 !important;
+        padding: 0 1.5rem !important;
+        width: 100%;
+        overflow-x: hidden;
+        box-sizing: border-box;
     }
 
     .mobile-apply-btn {

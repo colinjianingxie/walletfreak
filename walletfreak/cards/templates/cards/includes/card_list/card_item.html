@@ -6,6 +6,7 @@
                         data-issuer="{{ card.issuer|default:''|strip|lower }}"
                         data-categories="{{ card.categories|join:','|lower }}"
                         data-fee="{{ card.annual_fee|default:0 }}"
+                        data-match-score="{{ user_match_scores|get_item:card.id|default:0 }}"
                         onclick="handleCardClick('{{ card.id }}')"
                     >
                         <!-- List View Checkbox -->

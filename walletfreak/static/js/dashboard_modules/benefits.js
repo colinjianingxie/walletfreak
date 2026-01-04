@@ -248,6 +248,7 @@ function openBenefitModal(cardId, benefitId, benefitName, amount, used, frequenc
 
     updateBenefitModalUI();
     document.getElementById('benefit-modal').style.display = 'flex';
+    document.body.classList.add('modal-open');
 }
 
 function updateBenefitModalUI() {
@@ -452,6 +453,7 @@ function navigatePeriod(direction) {
 
 function closeBenefitModal() {
     document.getElementById('benefit-modal').style.display = 'none';
+    document.body.classList.remove('modal-open');
     currentBenefitData = {};
     currentBenefitPeriods = [];
 }
