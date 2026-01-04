@@ -8,6 +8,21 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/walletfreak']
 
+  # Run database migrations
+  - name: 'gcr.io/google-appengine/exec-wrapper'
+    args:
+      - '-i'
+      - 'gcr.io/$PROJECT_ID/walletfreak'
+      - '-s'
+      - 'walletfreak-cc:us-central1:walletfreak-prod'
+      - '--'
+      - 'python'
+      - 'manage.py'
+      - 'migrate'
+    env:
+      - 'DJANGO_SETTINGS_MODULE=walletfreak.settings'
+      - 'DATABASE_URL=postgres://django_user:New2007%40rbin@/walletfreak?host=/cloudsql/walletfreak-cc:us-central1:walletfreak-prod'
+
   # Deploy container to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
