@@ -37,10 +37,7 @@ steps:
       - 'us-central1'
       - '--platform'
       - 'managed'
-      - '--allow-unauthenticated'
-      - '--set-env-vars'
-      - 'DJANGO_SETTINGS_MODULE=walletfreak.settings,CRON_SECRET=c2dcb5e2f6838f81956c531aee5570e2,DATABASE_URL=postgres://django_user:New2007%40rbin@/walletfreak?host=/cloudsql/walletfreak-cc:us-central1:walletfreak-prod,DJANGO_DEBUG=True'
-      - '--add-cloudsql-instances'
+      - 'DJANGO_SETTINGS_MODULE=walletfreak.settings,CRON_SECRET=${_CRON_SECRET},DATABASE_URL=postgres://django_user:New2007%40rbin@/walletfreak?host=/cloudsql/walletfreak-cc:us-central1:walletfreak-prod,DJANGO_DEBUG=True,STRIPE_LIVE_MODE=${_STRIPE_LIVE_MODE},STRIPE_TEST_PUBLIC_KEY=${_STRIPE_TEST_PUBLIC_KEY},STRIPE_TEST_SECRET_KEY=${_STRIPE_TEST_SECRET_KEY},STRIPE_TEST_PRICE_MONTHLY=${_STRIPE_TEST_PRICE_MONTHLY},STRIPE_TEST_PRICE_YEARLY=${_STRIPE_TEST_PRICE_YEARLY},STRIPE_LIVE_PUBLIC_KEY=${_STRIPE_LIVE_PUBLIC_KEY},STRIPE_LIVE_SECRET_KEY=${_STRIPE_LIVE_SECRET_KEY},STRIPE_WEBHOOK_SECRET=${_STRIPE_WEBHOOK_SECRET}'
       - 'walletfreak-cc:us-central1:walletfreak-prod'
 
 images:

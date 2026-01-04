@@ -36,9 +36,16 @@ def create_checkout_session(request):
         return JsonResponse({'error': 'Invalid request method'}, status=405)
         
     try:
+        # Debug Logging for API Key issue
+        if not stripe.api_key:
+            logger.warning("Stripe API key was MISSING. Setting it now.")
+            stripe.api_key = settings.STRIPE_SECRET_KEY
+        else:
+             logger.info(f"Stripe API key present: {stripe.api_key[:4]}...")
+
         # Get or create Stripe Customer
         stripe_customer, created = StripeCustomer.objects.get_or_create(user=request.user)
-        
+
         if created:
             # Create customer in Stripe
             customer = stripe.Customer.create(
