@@ -14,7 +14,6 @@ from core.services import db
 logger = logging.getLogger(__name__)
 
 
-stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def subscription_home(request):
     subscription = None
