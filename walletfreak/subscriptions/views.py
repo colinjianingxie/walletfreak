@@ -115,6 +115,33 @@ def create_checkout_session(request):
         logger.error(f"Error creating checkout session: {e}")
         return JsonResponse({'error': str(e)}, status=500)
 
+@login_required
+def create_portal_session(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+        
+    try:
+        # Get Stripe Customer
+        stripe_customer = StripeCustomer.objects.get(user=request.user)
+        
+        # Determine return URL (profile page)
+        return_url = request.build_absolute_uri('/accounts/profile/')
+        
+        portal_session = stripe.billing_portal.Session.create(
+            customer=stripe_customer.stripe_customer_id,
+            return_url=return_url,
+        )
+        
+        return redirect(portal_session.url, code=303)
+    except StripeCustomer.DoesNotExist:
+        # If no stripe customer, they likely aren't subscribed or it's an error
+        # Redirect to pricing?
+        logger.warning(f"User {request.user.id} attempted to access portal without Stripe Customer ID.")
+        return redirect('subscription_home')
+    except Exception as e:
+        logger.error(f"Error creating portal session: {e}")
+        return JsonResponse({'error': str(e)}, status=500)
+
 @csrf_exempt
 def stripe_webhook(request):
     payload = request.body
