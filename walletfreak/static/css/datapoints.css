@@ -382,6 +382,43 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
+    position: relative;
+    min-height: 200px;
+}
+
+.dp-loading-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    border-radius: 1rem;
+    backdrop-filter: blur(2px);
+}
+
+.dp-feed.htmx-request .dp-loading-overlay {
+    display: flex;
+}
+
+.dp-loading-spinner {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 3px solid #e2e8f0;
+    border-top: 3px solid #4f46e5;
+    border-radius: 50%;
+    animation: dp-spin 1s linear infinite;
+}
+
+@keyframes dp-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .dp-card {
@@ -654,10 +691,36 @@
 
 .dp-like-btn:hover,
 .dp-like-btn.liked {
-    color: #4f46e5;
+    color: #16a34a;
+    /* green-600 */
 }
 
 .dp-like-btn:active svg {
+    transform: scale(1.25);
+    transition: transform 0.1s;
+}
+
+.dp-outdated-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    color: #94a3b8;
+    font-weight: 700;
+    font-size: 0.75rem;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: color 0.15s;
+}
+
+.dp-outdated-btn:hover,
+.dp-outdated-btn.outdated {
+    color: #dc2626;
+    /* red-600 */
+}
+
+.dp-outdated-btn:active svg {
     transform: scale(1.25);
     transition: transform 0.1s;
 }
@@ -690,9 +753,10 @@
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 50;
     display: none;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     padding: 1rem;
+    padding-top: 5rem;
 }
 
 .dp-modal-overlay.active {
@@ -869,4 +933,36 @@
     opacity: 0.9;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     margin-top: auto;
+}
+
+/* Mobile Full Screen Modal */
+@media (max-width: 768px) {
+    .dp-modal-overlay {
+        padding: 0;
+    }
+
+    .dp-modal-container {
+        max-width: 100%;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .dp-modal-header {
+        flex-shrink: 0;
+        position: sticky;
+        top: 0;
+        background-color: white;
+        /* Ensure visible background */
+        z-index: 10;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .dp-modal-body {
+        flex: 1;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
 }

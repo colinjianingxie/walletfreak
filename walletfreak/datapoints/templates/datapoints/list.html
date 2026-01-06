@@ -14,7 +14,8 @@
             <h1 class="dp-title">Community Intelligence</h1>
             <p class="dp-subtitle">Real-world benefit triggers and DP timings.</p>
         </div>
-        <button onclick="openModal('submit-modal')" class="dp-submit-btn">
+
+        <button onclick="openSubmissionModal()" class="dp-submit-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1rem; height: 1rem;">
                 <path d="M5 12h14"></path>
                 <path d="M12 5v14"></path>
@@ -179,11 +180,75 @@
         .then(res => res.json())
         .then(data => {
             if (data.success) {
-                btn.querySelector('.vote-count').textContent = data.count;
+                // Update this button (Upvote)
+                btn.querySelector('.vote-count').textContent = data.upvote_count;
                 btn.classList.toggle('liked', data.voted);
+                
+                // Update Last Verified Label
+                if (data.last_verified_str) {
+                    const container = btn.parentElement;
+                    let label = container.querySelector('.last-verified-label');
+                    if (!label) {
+                        // Create if doesn't exist (though it should from template)
+                        label = document.createElement('span');
+                        label.className = 'last-verified-label';
+                        label.style.cssText = 'font-size: 0.65rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 1px;';
+                        container.appendChild(label);
+                    }
+                    // For now, if we just voted, we update it.
+                    // If we unvoted, we generally don't revert the timestamp because someone else might have voted?
+                    // But here last_verified_str is returned only if updated_verified is true.
+                    label.textContent = `Last verified ${data.last_verified_str}`;
+                }
+
+                // Update sibling Outdated button
+                const footer = btn.closest('.dp-actions-footer');
+                const outdatedBtn = footer.querySelector('.dp-discuss-link');
+                if (outdatedBtn) {
+                     outdatedBtn.querySelector('.outdated-count').textContent = data.outdated_count;
+                     if (data.marked_outdated !== undefined) {
+                         outdatedBtn.classList.toggle('outdated', data.marked_outdated);
+                     } else {
+                         if (data.voted) outdatedBtn.classList.remove('outdated');
+                     }
+                }
             } else {
                 if (data.status === 403 || data.error === 'Invalid method') { 
                     alert('Please log in to vote.');
+                }
+            }
+        });
+    }
+
+    function markOutdated(btn, id) {
+        fetch(`/datapoints/outdated/${id}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                // Update this button (Outdated)
+                btn.querySelector('.outdated-count').textContent = data.outdated_count;
+                btn.classList.toggle('outdated', data.marked);
+                
+                // Update sibling Upvote button
+                const footer = btn.closest('.dp-actions-footer');
+                const upvoteBtn = footer.querySelector('.dp-like-btn');
+                if (upvoteBtn) {
+                    upvoteBtn.querySelector('.vote-count').textContent = data.upvote_count;
+                    if (data.voted !== undefined) {
+                        upvoteBtn.classList.toggle('liked', data.voted);
+                    } else {
+                        if (data.marked) upvoteBtn.classList.remove('liked');
+                    }
+                }
+            } else {
+                if (data.status === 403 || data.error === 'Invalid method') { 
+                    alert('Please log in to mark as outdated.');
                 }
             }
         });

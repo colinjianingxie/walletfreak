@@ -3,11 +3,6 @@
         <div class="dp-modal-header">
             <div>
                 <h2 class="dp-modal-title">Submit Data Point</h2>
-                <!-- Stepper Mockup -->
-                <div style="display: flex; gap: 0.25rem; margin-top: 0.25rem;">
-                    <div style="height: 0.25rem; width: 1.5rem; border-radius: 999px; background-color: #4f46e5;"></div>
-                    <div style="height: 0.25rem; width: 1.5rem; border-radius: 999px; background-color: #e2e8f0;"></div>
-                </div>
             </div>
             <button onclick="closeModal('submit-modal')" class="dp-modal-close">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.25rem; height: 1.25rem;">
@@ -41,13 +36,26 @@
                         <label style="display: block; font-size: 0.625rem; font-weight: 900; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">3. Status</label>
                         <div style="display: flex; gap: 1rem;">
                             <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                                <input type="radio" name="status" value="Success" checked>
+                                <input type="radio" name="status" value="Success" checked onchange="toggleDateFields()">
                                 <span class="dp-status-badge dp-status-success">Success</span>
                             </label>
                             <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                                <input type="radio" name="status" value="Failed">
+                                <input type="radio" name="status" value="Failed" onchange="toggleDateFields()">
                                 <span class="dp-status-badge dp-status-failed">Failed</span>
                             </label>
+                        </div>
+                    </div>
+
+                    <div id="date-fields-container">
+                         <div style="display: flex; gap: 1rem;">
+                            <div style="flex: 1;">
+                                <label style="display: block; font-size: 0.625rem; font-weight: 900; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;">Transaction Date</label>
+                                <input type="date" name="transaction_date" class="dp-select" style="width: 100%;">
+                            </div>
+                            <div style="flex: 1;" id="cleared-date-wrapper">
+                                <label style="display: block; font-size: 0.625rem; font-weight: 900; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;">Cleared Date</label>
+                                <input type="date" name="cleared_date" class="dp-select" style="width: 100%;">
+                            </div>
                         </div>
                     </div>
 
@@ -55,9 +63,13 @@
                         <label style="display: block; font-size: 0.625rem; font-weight: 900; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">4. Details</label>
                         <textarea name="content" required placeholder="Describe your experience..." class="dp-search-input" style="padding-left: 1rem; min-height: 100px; resize: vertical;"></textarea>
                     </div>
-
-                    <button type="submit" class="dp-submit-btn">Submit Data Point</button>
+                    
+                    <input type="hidden" name="edit_datapoint_id" id="edit_datapoint_id">
+                    <button type="submit" class="dp-submit-btn" id="modal-submit-btn">Submit Data Point</button>
                 </div>
+                <button type="button" onclick="closeModal('submit-modal')" style="width: 100%; margin-top: 0.75rem; background: none; border: none; font-weight: 700; color: #94a3b8; cursor: pointer; padding: 0.5rem;">
+                    Cancel
+                </button>
             </form>
         </div>
     </div>
@@ -70,13 +82,56 @@
     const cardSelect = document.getElementById('card_select');
     const benefitSelect = document.getElementById('benefit_select');
     const cardNameInput = document.getElementById('card_name_input');
+    const clearedDateWrapper = document.getElementById('cleared-date-wrapper');
+    const modalTitle = document.querySelector('.dp-modal-title');
+    const modalSubmitBtn = document.getElementById('modal-submit-btn');
+    const editIdInput = document.getElementById('edit_datapoint_id');
+    const form = document.getElementById('dp-submit-form');
+    
+    function toggleDateFields() {
+        const status = document.querySelector('input[name="status"]:checked').value;
+        if (status === 'Failed') {
+            clearedDateWrapper.style.display = 'none';
+        } else {
+            clearedDateWrapper.style.display = 'block';
+        }
+    }
+    
+    const transactionDateInput = form.querySelector('input[name="transaction_date"]');
+    const clearedDateInput = form.querySelector('input[name="cleared_date"]');
+
+    function setMaxDate() {
+        const today = new Date().toISOString().split('T')[0];
+        transactionDateInput.setAttribute('max', today);
+        clearedDateInput.setAttribute('max', today);
+    }
+    
+    // Validate dates
+    function validateDates() {
+        const tVal = transactionDateInput.value;
+        const cVal = clearedDateInput.value;
+        
+        if (tVal) {
+             // Cleared date cannot be before transaction date
+             clearedDateInput.setAttribute('min', tVal);
+        }
+        
+        if (tVal && cVal) {
+            if (cVal < tVal) {
+                // If cleared is before transaction (legacy or user error), reset cleared
+                clearedDateInput.value = '';
+            }
+        }
+    }
+    
+    transactionDateInput.addEventListener('change', validateDates);
+    clearedDateInput.addEventListener('change', validateDates);
+
+    // Initialize state
+    setMaxDate();
+    toggleDateFields();
     
     // Parse the JSON data from the template
-    // Note: Since 'submission_cards' contains complex objects (timestamps etc), JSON serialization might fail if not handled in view.
-    // However, Django's json_script does basic serialization. If 'db.get_cards()' returns pure dicts with primitives it works.
-    // But Firestore timestamps won't serialize automatically. 
-    // SAFEST APPROACH: Build a simple JS object with just what we need right here in the template.
-    
     const cardBenefitsMap = {
         {% for card in submission_cards %}
         "{{ card.slug }}": [
@@ -113,10 +168,7 @@
                 const opt = document.createElement('option');
                 opt.value = bnf.name;
                 
-                // Format: Benefit Name (Additional Details) - $Value or - Value Type
                 let label = bnf.name;
-                
-                // Add valid, non-empty specific string "None" check just in case backend data is messy
                 if (bnf.details && bnf.details !== 'None' && bnf.details.trim() !== '') {
                     label += ` (${bnf.details})`;
                 }
@@ -124,20 +176,18 @@
                 const val = parseFloat(bnf.value);
                 if (val > 0) {
                     if (bnf.type === 'Cash') {
-                        label += ` - $${val}`; // Assuming logic for int/float formatting if needed, typically int for credits
+                        label += ` - $${val}`; 
                     } else if (bnf.type) {
                         label += ` - ${val} ${bnf.type}`;
                     }
                 }
                 
-                // Truncate if too long?
                 if (label.length > 100) label = label.substring(0, 100) + '...';
                 
                 opt.textContent = label;
                 benefitSelect.appendChild(opt);
             });
             
-            // Add "Other" option at the end
             const otherOpt = document.createElement('option');
             otherOpt.value = "Other";
             otherOpt.textContent = "Other";
@@ -151,10 +201,15 @@
 
     function submitDatapoint(e) {
         e.preventDefault();
-        const form = e.target;
         const formData = new FormData(form);
+        const editId = editIdInput.value;
+        
+        let url = '{% url "submit_datapoint" %}';
+        if (editId) {
+            url = `/datapoints/edit/${editId}/`;
+        }
 
-        fetch('{% url "submit_datapoint" %}', {
+        fetch(url, {
             method: 'POST',
             body: formData,
             headers: {
@@ -170,4 +225,100 @@
             }
         });
     }
+    
+    function openSubmissionModal() {
+        // Reset form fully for new entry
+        form.reset();
+        editIdInput.value = '';
+        modalTitle.innerText = "Submit Data Point";
+        modalSubmitBtn.innerText = "Submit Data Point";
+        
+        // Re-enable validation/listeners state
+        cardSelect.disabled = false;
+        benefitSelect.disabled = true; // wait for card selection
+        benefitSelect.innerHTML = '<option value="">Select a Card First...</option>';
+        cardNameInput.value = '';
+        toggleDateFields();
+        setMaxDate();
+        
+        document.getElementById('submit-modal').classList.add('active');
+    }
+
+    function openEditModal(datapointId) {
+        // Reset form
+        form.reset();
+        editIdInput.value = datapointId;
+        modalTitle.innerText = "Edit Data Point";
+        modalSubmitBtn.innerText = "Save Changes";
+        
+        // Disable card/benefit selection as they shouldn't change
+        cardSelect.disabled = true;
+        benefitSelect.disabled = true;
+        
+        // Show modal immediately
+        document.getElementById('submit-modal').classList.add('active');
+        
+        // Fetch data
+        fetch(`/datapoints/get/${datapointId}/`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    const dp = data.datapoint;
+                    
+                    form.querySelector('textarea[name="content"]').value = dp.content;
+                    
+                    if (dp.transaction_date) form.querySelector('input[name="transaction_date"]').value = dp.transaction_date;
+                    if (dp.cleared_date) form.querySelector('input[name="cleared_date"]').value = dp.cleared_date;
+                    
+                    const statusRadios = form.querySelectorAll('input[name="status"]');
+                    statusRadios.forEach(r => {
+                        if (r.value === dp.status) r.checked = true;
+                    });
+                    toggleDateFields();
+                    
+                    // Handle Dropdowns
+                    // We need to enable them briefly to set values if logic depends on it, 
+                    // though purely setting value works on disabled too.
+                    // But cardSelect change listener needs to fire.
+                    cardSelect.disabled = false;
+                    
+                    if (dp.card_slug) {
+                        cardSelect.value = dp.card_slug;
+                        // Trigger change to populate benefits
+                        cardSelect.dispatchEvent(new Event('change'));
+                        
+                        if (dp.benefit_name) {
+                            benefitSelect.value = dp.benefit_name;
+                        }
+                    }
+                    
+                    // Now disable them to prevent editing
+                    cardSelect.disabled = true;
+                    benefitSelect.disabled = true;
+
+                } else {
+                    alert("Error loading data point");
+                    closeModal('submit-modal');
+                }
+            });
+    }
+    
+    // reset modal on close
+    const originalCloseModal = window.closeModal;
+    window.closeModal = function(id) {
+        if (id === 'submit-modal') {
+             // Reset UI state
+             setTimeout(() => {
+                 editIdInput.value = '';
+                 modalTitle.innerText = "Submit Data Point";
+                 modalSubmitBtn.innerText = "Submit Data Point";
+                 cardSelect.disabled = false;
+                 benefitSelect.disabled = true;
+                 form.reset();
+                 toggleDateFields();
+             }, 300); // after transition
+        }
+        // Call global close (if exists, or reimplement)
+        document.getElementById(id).classList.remove('active');
+    };
 </script>

@@ -47,7 +47,7 @@ def datapoint_list(request):
         
         # Keep card_images for all JUST IN CASE there's a race condition or mismatch,
         # but displaying filter options should be restricted.
-        card_images = {c['slug']: c.get('image_url') for c in all_cards}
+        card_images = {c.get('slug', c.get('id')): c.get('image_url') for c in all_cards}
         
         # Filter the 'all_cards' variable passed to template for options
         active_cards_list = [c for c in all_cards if c.get('slug') in active_slugs]
@@ -96,31 +96,75 @@ def datapoint_list(request):
         # Filter cards for the modal
         submission_cards = [c for c in all_cards if c.get('slug') in TARGET_SLUGS]
         # Sort properly? Maybe by name
-        submission_cards.sort(key=lambda x: x.get('name', ''))
-        
-    except:
+    except Exception as e:
+        print(f"Error fetching cards: {e}")
         all_cards = []
         active_cards_list = []
         submission_cards = []
         card_images = {}
-    
+        
+    # Robustly build card images map using both ID and Slug as keys
+    for c in all_cards:
+        img = c.get('image_url')
+        if img:
+            if c.get('id'): card_images[c.get('id')] = img
+            if c.get('slug'): card_images[c.get('slug')] = img
+
     # Convert to DataPoint proxy objects for template compatibility
     datapoints = []
-    for data in raw_datapoints:
+    missing_user_indices = []
+    missing_user_ids = []
+    
+    current_uid = request.user.username if request.user.is_authenticated else None
+
+    for i, data in enumerate(raw_datapoints):
         dp = DataPoint()
         dp.id = data.get('id')
         dp.user_id = data.get('user_id')
-        dp.user_display_name = data.get('user_display_name')
+        
+        # Check if display name is missing or effectively anonymous
+        # If it's stored as 'anonymous' but we have a user_id, let's try to resolve it
+        stored_name = data.get('user_display_name')
+        if (not stored_name or stored_name == 'anonymous') and dp.user_id:
+             missing_user_indices.append(i)
+             missing_user_ids.append(dp.user_id)
+        
+        dp.user_display_name = stored_name
         dp.card_slug = data.get('card_slug')
+        dp.card_image_url = card_images.get(dp.card_slug)
         dp.card_name = data.get('card_name')
         dp.benefit_name = data.get('benefit_name')
         dp.status = data.get('status')
         dp.content = data.get('content')
         dp.date_posted = data.get('date_posted')
+        upvoted_by = data.get('upvoted_by') or []
+        outdated_by = data.get('outdated_by') or []
+        
         dp.upvote_count = data.get('upvote_count', 0)
-        dp.upvoted_by_json = json.dumps(data.get('upvoted_by', []))
-        dp.card_image_url = card_images.get(dp.card_slug)
+        
+        dp.outdated_count = data.get('outdated_count', 0)
+        dp.last_verified = data.get('last_verified')
+        
+        # Determine voting state for current user
+        dp.is_liked = current_uid in upvoted_by if current_uid else False
+        dp.is_outdated = current_uid in outdated_by if current_uid else False
+        
         datapoints.append(dp)
+
+    # Backfill missing usernames
+    if missing_user_ids:
+        try:
+            users_map = db.get_users_by_ids(missing_user_ids)
+            for idx in missing_user_indices:
+                dp = datapoints[idx]
+                user_data = users_map.get(dp.user_id)
+                if user_data:
+                    # Prefer username/display name
+                    dp.user_display_name = user_data.get('username') or user_data.get('name') or 'anonymous'
+        except Exception as e:
+            print(f"Error backfilling usernames: {e}")
+
+
 
     context = {
         'datapoints': datapoints,
@@ -168,7 +212,44 @@ def vote_datapoint(request, pk):
         result = db.vote_datapoint(pk, uid)
         
         if result['success']:
-            return JsonResponse({'success': True, 'voted': result['voted'], 'count': result['count']})
+            response_data = {
+                'success': True, 
+                'voted': result['voted'], 
+                'upvote_count': result['upvote_count'],
+                'marked_outdated': result['marked_outdated'],
+                'outdated_count': result['outdated_count']
+            }
+            
+            if result.get('updated_verified'):
+                # Since we used SERVER_TIMESTAMP, we can't get it back immediately from write result easily
+                # without re-fetching.
+                # For UI responsiveness, let's return current time formatted.
+                from django.utils import timezone
+                response_data['last_verified_str'] = timezone.now().strftime('%b %d, %Y') # Simplified format for now?
+                # Actually, naturaltime is used in templates usually.
+                # Let's just return a standard ISO timestamp or similar that JS can parse or simple text.
+                response_data['last_verified_timestamp'] = timezone.now().isoformat()
+                
+            return JsonResponse(response_data)
+        else:
+             return JsonResponse({'success': False, 'error': result.get('error', 'Unknown error')}, status=500)
+             
+    return JsonResponse({'success': False, 'error': 'Invalid method'}, status=405)
+
+@login_required
+def mark_outdated_datapoint(request, pk):
+    if request.method == 'POST':
+        uid = request.user.username
+        result = db.mark_outdated(pk, uid)
+        
+        if result['success']:
+            return JsonResponse({
+                'success': True, 
+                'marked': result['marked_outdated'], 
+                'outdated_count': result['outdated_count'],
+                'voted': result['voted'],
+                'upvote_count': result['upvote_count']
+            })
         else:
              return JsonResponse({'success': False, 'error': result.get('error', 'Unknown error')}, status=500)
              
@@ -196,3 +277,83 @@ def get_user_wallet(request, uid):
     except Exception as e:
         print(f"Error fetching user wallet for {uid}: {e}")
         return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
+@login_required
+def get_datapoint(request, pk):
+    """
+    Get details of a datapoint for editing.
+    """
+    try:
+        # We need a get_single_datapoint method or reuse filter
+        # Reusing get_datapoints is inefficient but works if we filter by ID? 
+        # No, query doesn't support ID filter easily in mixin.
+        # Let's use direct DB access or add method to mixin.
+        # Direct access via db.db.collection... is accessible since db is FirestoreService.
+        
+        doc = db.db.collection('datapoints').document(pk).get()
+        if not doc.exists:
+            return JsonResponse({'success': False, 'error': 'Not found'}, status=404)
+            
+        data = doc.to_dict()
+        data['id'] = doc.id
+        
+        # Check permission
+        uid = request.user.username
+        if data.get('user_id') != uid:
+             return JsonResponse({'success': False, 'error': 'Permission denied'}, status=403)
+             
+        # Prepare date strings YYYY-MM-DD
+        t_date = data.get('transaction_date')
+        if hasattr(t_date, 'strftime'):
+            t_date = t_date.strftime('%Y-%m-%d')
+            
+        c_date = data.get('cleared_date')
+        if hasattr(c_date, 'strftime'):
+            c_date = c_date.strftime('%Y-%m-%d')
+
+        # Return fields needed for edit
+        return JsonResponse({
+            'success': True,
+            'datapoint': {
+                'id': data['id'],
+                'content': data.get('content'),
+                'status': data.get('status'),
+                'transaction_date': t_date,
+                'cleared_date': c_date,
+                'card_name': data.get('card_name'),
+                'card_slug': data.get('card_slug'),
+                'benefit_name': data.get('benefit_name')
+            }
+        })
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
+@login_required
+def edit_datapoint(request, pk):
+    if request.method == 'POST':
+        form = DataPointForm(request.POST)
+        # Validate only relevant fields? 
+        # The form makes card_slug/name/benefit required.
+        # We should create a mutable copy of POST and mock missing fields or use a different form.
+        # Or just allow them to remain empty if we make form looser.
+        # But we made them required=True (default).
+        # Let's fill them with dummy data since we ignore them in update.
+        
+        post_data = request.POST.copy()
+        post_data.setdefault('card_slug', 'dummy')
+        post_data.setdefault('card_name', 'dummy')
+        post_data.setdefault('benefit_name', 'dummy')
+        
+        form = DataPointForm(post_data)
+        
+        if form.is_valid():
+            uid = request.user.username
+            result = db.update_datapoint(pk, uid, form.cleaned_data)
+            
+            if result['success']:
+                return JsonResponse({'success': True})
+            else:
+                return JsonResponse(result, status=500)
+        else:
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+    return JsonResponse({'success': False, 'error': 'Invalid method'}, status=405)

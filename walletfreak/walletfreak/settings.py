@@ -124,17 +124,26 @@ WSGI_APPLICATION = 'walletfreak.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-import dj_database_url
-
+# [ACTIVE] SQLite3 Configuration
 DATABASES = {
-    'default': dj_database_url.config(
-        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
-        conn_max_age=600,
-        ssl_require=False
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
-if os.environ.get('DATABASE_URL'):
-    print(f"✅ Configuring Database from URL: {os.environ.get('DATABASE_URL').split('@')[1] if '@' in os.environ.get('DATABASE_URL') else 'INVALID_URL'}")
+
+# [BACKUP] Cloud SQL Configuration (Commented out)
+# import dj_database_url
+# 
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
+#         conn_max_age=600,
+#         ssl_require=False
+#     )
+# }
+# if os.environ.get('DATABASE_URL'):
+#     print(f"✅ Configuring Database from URL: {os.environ.get('DATABASE_URL').split('@')[1] if '@' in os.environ.get('DATABASE_URL') else 'INVALID_URL'}")
 
 
 # Password validation

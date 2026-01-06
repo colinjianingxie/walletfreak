@@ -7,3 +7,5 @@ class DataPointForm(forms.Form):
     benefit_name = forms.CharField(max_length=200)
     status = forms.ChoiceField(choices=[('Success', 'Success'), ('Failed', 'Failed')])
     content = forms.CharField(widget=forms.Textarea)
+    transaction_date = forms.DateField(required=False)
+    cleared_date = forms.DateField(required=False)
