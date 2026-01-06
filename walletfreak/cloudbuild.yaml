@@ -8,22 +8,6 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/walletfreak']
 
-  # Run database migrations
-  - name: 'gcr.io/google-appengine/exec-wrapper'
-    args:
-      - '-i'
-      - 'gcr.io/$PROJECT_ID/walletfreak'
-      - '-s'
-      - 'walletfreak-cc:us-central1:walletfreak-prod'
-      - '-e'
-      - 'DJANGO_SETTINGS_MODULE=walletfreak.settings'
-      - '-e'
-      - 'DATABASE_URL=postgres://django_user:New2007%40rbin@/walletfreak?host=/cloudsql/walletfreak-cc:us-central1:walletfreak-prod'
-      - '--'
-      - 'bash'
-      - '-c'
-      - 'ls -la /cloudsql/walletfreak-cc:us-central1:walletfreak-prod && python manage.py migrate'
-
   # Deploy container to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
@@ -38,10 +22,7 @@ steps:
       - '--platform'
       - 'managed'
       - '--set-env-vars'
-      - 'DJANGO_SETTINGS_MODULE=walletfreak.settings,CRON_SECRET=${_CRON_SECRET},DATABASE_URL=postgres://django_user:New2007%40rbin@/walletfreak?host=/cloudsql/walletfreak-cc:us-central1:walletfreak-prod,DJANGO_DEBUG=True,STRIPE_LIVE_MODE=${_STRIPE_LIVE_MODE},STRIPE_TEST_PUBLIC_KEY=${_STRIPE_TEST_PUBLIC_KEY},STRIPE_TEST_SECRET_KEY=${_STRIPE_TEST_SECRET_KEY},STRIPE_TEST_PRICE_MONTHLY=${_STRIPE_TEST_PRICE_MONTHLY},STRIPE_TEST_PRICE_YEARLY=${_STRIPE_TEST_PRICE_YEARLY},STRIPE_LIVE_PUBLIC_KEY=${_STRIPE_LIVE_PUBLIC_KEY},STRIPE_LIVE_SECRET_KEY=${_STRIPE_LIVE_SECRET_KEY},STRIPE_WEBHOOK_SECRET=${_STRIPE_WEBHOOK_SECRET}'
-      - '--add-cloudsql-instances'
-      - 'walletfreak-cc:us-central1:walletfreak-prod'
-
+      - 'DJANGO_SETTINGS_MODULE=walletfreak.settings,CRON_SECRET=${_CRON_SECRET},DJANGO_DEBUG=True,STRIPE_LIVE_MODE=${_STRIPE_LIVE_MODE},STRIPE_TEST_PUBLIC_KEY=${_STRIPE_TEST_PUBLIC_KEY},STRIPE_TEST_SECRET_KEY=${_STRIPE_TEST_SECRET_KEY},STRIPE_TEST_PRICE_MONTHLY=${_STRIPE_TEST_PRICE_MONTHLY},STRIPE_TEST_PRICE_YEARLY=${_STRIPE_TEST_PRICE_YEARLY},STRIPE_LIVE_PUBLIC_KEY=${_STRIPE_LIVE_PUBLIC_KEY},STRIPE_LIVE_SECRET_KEY=${_STRIPE_LIVE_SECRET_KEY},STRIPE_WEBHOOK_SECRET=${_STRIPE_WEBHOOK_SECRET}'
 images:
   - 'gcr.io/$PROJECT_ID/walletfreak'
 
