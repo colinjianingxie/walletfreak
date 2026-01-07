@@ -966,3 +966,20 @@
         overscroll-behavior: contain;
     }
 }
+
+.dp-radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.dp-radio-label input[type="radio"] {
+    margin: 0;
+    /* Ensure no default margin throws off alignment */
+    width: 1rem;
+    height: 1rem;
+    /* Standardize size */
+    accent-color: #4f46e5;
+    /* optional: match theme */
+}
