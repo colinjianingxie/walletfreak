@@ -59,6 +59,26 @@ class Blog(models.Model):
     def __str__(self):
         return self.title
     
+    def to_dict(self):
+        """Convert to dictionary for Firestore sync"""
+        data = {
+            'title': self.title,
+            'slug': self.slug,
+            'content': self.content,
+            'excerpt': self.excerpt,
+            'author_uid': self.author_uid,
+            'author_name': self.author_name,
+            'status': self.status,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+            'published_at': self.published_at,
+            'featured_image': self.featured_image,
+            'tags': self.tags,
+            'read_time': self.read_time,
+            'experience_level': self.experience_level,
+        }
+        return data
+    
     def save(self, *args, **kwargs):
         # Auto-set published_at when status changes to published
         if self.status == 'published' and not self.published_at:

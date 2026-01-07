@@ -5,6 +5,7 @@ from .personalities import PersonalityMixin
 from .blogs import BlogMixin
 from .notifications import NotificationMixin
 from .datapoints import DataPointMixin
+from .subscriptions import SubscriptionMixin
 
 class FirestoreService(
     UserMixin,
@@ -13,6 +14,7 @@ class FirestoreService(
     BlogMixin,
     NotificationMixin,
     DataPointMixin,
+    SubscriptionMixin,
     BaseFirestoreService
 ):
     """
