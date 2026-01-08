@@ -1,6 +1,6 @@
 {
     "Vendor": "Bank of America",
-    "CardName": "Bank of America Business Advantage Customized Cash Rewards Mastercard® credit card",
+    "CardName": "Bank of America Business Advantage Customized Cash Rewards Mastercard\u00ae credit card",
     "AnnualFee": 0,
     "PointsValueCpp": 1.0,
     "slug-id": "bank-of-america-business-advantage-customized-cash-rewards-mastercard-credit-card",
@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Preferred Rewards Bonus",
             "BenefitType": "Bonus",
             "NumericValue": 75.0,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "preferred-rewards-bonus"
         },
         {
             "BenefitDescription": "Travel Accident Insurance",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Travel Insurance",
             "BenefitType": "Perk",
             "NumericValue": 100000.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "travel-insurance"
         }
     ],
     "EarningRates": [

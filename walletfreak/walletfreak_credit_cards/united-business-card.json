@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Rideshare Credit",
             "BenefitType": "Credit",
             "NumericValue": 100,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "rideshare-credit"
         },
         {
             "BenefitDescription": "$125 United Travel Credit after 5 flights of $100+",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "United Travel Credit",
             "BenefitType": "Credit",
             "NumericValue": 125,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "united-travel-credit"
         },
         {
             "BenefitDescription": "Two United Club one-time passes each year",
@@ -53,7 +55,8 @@
             "BenefitDescriptionShort": "United Club Passes",
             "BenefitType": "Perk",
             "NumericValue": 2,
-            "NumericType": "Passes"
+            "NumericType": "Passes",
+            "BenefitId": "united-club-passes"
         }
     ],
     "EarningRates": [

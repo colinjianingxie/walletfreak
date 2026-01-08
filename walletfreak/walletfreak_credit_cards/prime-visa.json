@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Grubhub+ Membership",
             "BenefitType": "Perk",
             "NumericValue": 120,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "grubhub-membership"
         },
         {
             "BenefitDescription": "$150 Instant Amazon Gift Card",
@@ -40,7 +41,8 @@
             "BenefitDescriptionShort": "Gift Card",
             "BenefitType": "Perk",
             "NumericValue": 150,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "gift-card"
         }
     ],
     "EarningRates": [

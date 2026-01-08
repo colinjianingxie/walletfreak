@@ -25,7 +25,8 @@
             "BenefitDescriptionShort": "Primary Coverage",
             "BenefitType": "Protection",
             "NumericValue": 0,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "primary-coverage"
         }
     ],
     "EarningRates": [

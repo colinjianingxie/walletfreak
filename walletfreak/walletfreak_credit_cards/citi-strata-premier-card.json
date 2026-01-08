@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Hotel Savings",
             "BenefitType": "Credit",
             "NumericValue": 100.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "hotel-savings"
         }
     ],
     "EarningRates": [

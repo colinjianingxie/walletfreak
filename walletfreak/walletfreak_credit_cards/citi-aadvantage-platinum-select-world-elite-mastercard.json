@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Free Bag",
             "BenefitType": "Perk",
             "NumericValue": 1,
-            "NumericType": "Passes"
+            "NumericType": "Passes",
+            "BenefitId": "free-bag"
         },
         {
             "BenefitDescription": "$125 American Airlines Flight Discount",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Flight Discount",
             "BenefitType": "Credit",
             "NumericValue": 125,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "flight-discount"
         },
         {
             "BenefitDescription": "Preferred Boarding",
@@ -53,7 +55,8 @@
             "BenefitDescriptionShort": "Preferred Boarding",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": "Upgrade"
+            "NumericType": "Upgrade",
+            "BenefitId": "preferred-boarding"
         }
     ],
     "EarningRates": [

@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Disney Store Discount",
             "BenefitType": "Perk",
             "NumericValue": 10.0,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "disney-store-discount"
         },
         {
             "BenefitDescription": "0% promo APR for 6 months on select Disney vacation packages",
@@ -39,7 +40,8 @@
             "BenefitDescriptionShort": "Vacation Financing",
             "BenefitType": "Perk",
             "NumericValue": 6.0,
-            "NumericType": "Months"
+            "NumericType": "Months",
+            "BenefitId": "vacation-financing"
         }
     ],
     "EarningRates": [

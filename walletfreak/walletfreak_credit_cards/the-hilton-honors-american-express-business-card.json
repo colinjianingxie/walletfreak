@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Hilton Credit",
             "BenefitType": "Credit",
             "NumericValue": 240.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "hilton-credit"
         },
         {
             "BenefitDescription": "Complimentary Hilton Honors Gold Status",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Gold Status",
             "BenefitType": "Perk",
             "NumericValue": 1.0,
-            "NumericType": "Membership"
+            "NumericType": "Membership",
+            "BenefitId": "gold-status"
         }
     ],
     "EarningRates": [

@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Premium Companion Cert",
             "BenefitType": "Perk",
             "NumericValue": 1.0,
-            "NumericType": "Passes"
+            "NumericType": "Passes",
+            "BenefitId": "premium-companion-cert"
         },
         {
             "BenefitDescription": "Delta Sky Club Access",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Sky Club Access",
             "BenefitType": "Perk",
             "NumericValue": 15.0,
-            "NumericType": "Lounge"
+            "NumericType": "Lounge",
+            "BenefitId": "sky-club-access"
         },
         {
             "BenefitDescription": "$240 Resy Credit",
@@ -53,7 +55,8 @@
             "BenefitDescriptionShort": "Resy Credit",
             "BenefitType": "Credit",
             "NumericValue": 20.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "resy-credit"
         },
         {
             "BenefitDescription": "$250 Delta Stays credit",
@@ -68,7 +71,8 @@
             "BenefitDescriptionShort": "Delta Stays Credit",
             "BenefitType": "Credit",
             "NumericValue": 250.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "delta-stays-credit"
         },
         {
             "BenefitDescription": "MQD Boost ($1 for $10)",
@@ -83,7 +87,8 @@
             "BenefitDescriptionShort": "MQD Boost",
             "BenefitType": "Bonus",
             "NumericValue": 0.1,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "mqd-boost"
         }
     ],
     "EarningRates": [

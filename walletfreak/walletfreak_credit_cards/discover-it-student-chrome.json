@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Good Grade Bonus",
             "BenefitType": "Bonus",
             "NumericValue": 20,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "good-grade-bonus"
         }
     ],
     "EarningRates": [

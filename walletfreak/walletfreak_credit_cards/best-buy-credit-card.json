@@ -25,7 +25,8 @@
             "BenefitDescriptionShort": "Special Financing",
             "BenefitType": "Perk",
             "NumericValue": 0,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "special-financing"
         }
     ],
     "EarningRates": [

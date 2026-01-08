@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Daily Cash",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "daily-cash"
         },
         {
             "BenefitDescription": "High-Yield Savings Account access",
@@ -40,7 +41,8 @@
             "BenefitDescriptionShort": "HYSA Access",
             "BenefitType": "Perk",
             "NumericValue": 0,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "hysa-access"
         },
         {
             "BenefitDescription": "Apple Card Monthly Installments",
@@ -57,7 +59,8 @@
             "BenefitDescriptionShort": "0% Financing",
             "BenefitType": "Perk",
             "NumericValue": 0,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "0-financing"
         }
     ],
     "EarningRates": [

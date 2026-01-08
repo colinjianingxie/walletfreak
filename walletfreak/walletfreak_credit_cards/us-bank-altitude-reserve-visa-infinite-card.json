@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Travel & Dining Credit",
             "BenefitType": "Credit",
             "NumericValue": 325.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "travel-dining-credit"
         },
         {
             "BenefitDescription": "12 Priority Pass visits per year",
@@ -40,7 +41,8 @@
             "BenefitDescriptionShort": "Priority Pass",
             "BenefitType": "Access",
             "NumericValue": 12.0,
-            "NumericType": "Lounge"
+            "NumericType": "Lounge",
+            "BenefitId": "priority-pass"
         },
         {
             "BenefitDescription": "Global Entry/TSA PreCheck credit",
@@ -57,7 +59,8 @@
             "BenefitDescriptionShort": "TSA Credit",
             "BenefitType": "Security",
             "NumericValue": 100.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "tsa-credit"
         }
     ],
     "EarningRates": [

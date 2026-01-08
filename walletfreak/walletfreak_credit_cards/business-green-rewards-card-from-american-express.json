@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Points Transfer",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": "Perk"
+            "NumericType": "Perk",
+            "BenefitId": "points-transfer"
         }
     ],
     "EarningRates": [

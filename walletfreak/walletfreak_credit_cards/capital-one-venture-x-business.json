@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Annual Travel Credit",
             "BenefitType": "Credit",
             "NumericValue": 300.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "annual-travel-credit"
         },
         {
             "BenefitDescription": "10,000 bonus miles every year, starting on your first anniversary",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Anniversary Miles",
             "BenefitType": "Bonus",
             "NumericValue": 10000.0,
-            "NumericType": "Miles"
+            "NumericType": "Miles",
+            "BenefitId": "anniversary-miles"
         },
         {
             "BenefitDescription": "Unlimited access to Capital One Lounges and 1,300+ Priority Pass lounges",
@@ -53,7 +55,8 @@
             "BenefitDescriptionShort": "Lounge Access",
             "BenefitType": "Perk",
             "NumericValue": 1.0,
-            "NumericType": "Lounge"
+            "NumericType": "Lounge",
+            "BenefitId": "lounge-access"
         },
         {
             "BenefitDescription": "Up to $120 credit for Global Entry or TSA PreCheck\u00ae",
@@ -68,7 +71,8 @@
             "BenefitDescriptionShort": "Global Entry/TSA Credit",
             "BenefitType": "Security",
             "NumericValue": 120.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "global-entrytsa-credit"
         }
     ],
     "EarningRates": [

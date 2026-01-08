@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Phone Protection",
             "BenefitType": "Perk",
             "NumericValue": 600.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "phone-protection"
         },
         {
             "BenefitDescription": "Walmart+ $98 statement credit",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Walmart+ Credit",
             "BenefitType": "Credit",
             "NumericValue": 98.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "walmart-credit"
         }
     ],
     "EarningRates": [

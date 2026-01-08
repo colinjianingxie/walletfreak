@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Gold Status",
             "BenefitType": "Perk",
             "NumericValue": 1,
-            "NumericType": "Membership"
+            "NumericType": "Membership",
+            "BenefitId": "gold-status"
         },
         {
             "BenefitDescription": "1,000 Bonus Points per paid stay",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Stay Bonus",
             "BenefitType": "Bonus",
             "NumericValue": 1000,
-            "NumericType": "Points"
+            "NumericType": "Points",
+            "BenefitId": "stay-bonus"
         }
     ],
     "EarningRates": [

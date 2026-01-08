@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Disney Credit",
             "BenefitType": "Credit",
             "NumericValue": 120.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "disney-credit"
         }
     ],
     "EarningRates": [

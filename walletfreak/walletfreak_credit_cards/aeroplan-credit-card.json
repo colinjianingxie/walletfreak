@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Global Entry Credit",
             "BenefitType": "Security",
             "NumericValue": 120.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "global-entry-credit"
         },
         {
             "BenefitDescription": "Complimentary DashPass for 12 months",
@@ -39,7 +40,8 @@
             "BenefitDescriptionShort": "DashPass",
             "BenefitType": "Credit",
             "NumericValue": 120.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "dashpass"
         },
         {
             "BenefitDescription": "Automatic Aeroplan 25K Elite Status",
@@ -54,7 +56,8 @@
             "BenefitDescriptionShort": "Elite Status",
             "BenefitType": "Perk",
             "NumericValue": 300.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "elite-status"
         },
         {
             "BenefitDescription": "Free first checked bag on Air Canada flights",
@@ -69,7 +72,8 @@
             "BenefitDescriptionShort": "Free Checked Bag",
             "BenefitType": "Perk",
             "NumericValue": 140.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "free-checked-bag"
         },
         {
             "BenefitDescription": "No foreign transaction fees",
@@ -84,7 +88,8 @@
             "BenefitDescriptionShort": "No FX Fees",
             "BenefitType": "Perk",
             "NumericValue": 75.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "no-fx-fees"
         },
         {
             "BenefitDescription": "10% bonus on Chase Ultimate Rewards transfers to Aeroplan",
@@ -99,7 +104,8 @@
             "BenefitDescriptionShort": "Transfer Bonus",
             "BenefitType": "Bonus",
             "NumericValue": 25000.0,
-            "NumericType": "Points"
+            "NumericType": "Points",
+            "BenefitId": "transfer-bonus"
         }
     ],
     "EarningRates": [

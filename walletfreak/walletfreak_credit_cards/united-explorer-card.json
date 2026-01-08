@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Free Bag",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "free-bag"
         },
         {
             "BenefitDescription": "Priority boarding on United flights",
@@ -40,7 +41,8 @@
             "BenefitDescriptionShort": "Priority Boarding",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "priority-boarding"
         },
         {
             "BenefitDescription": "2 United Club one-time passes each cardmember anniversary",
@@ -56,7 +58,8 @@
             "BenefitDescriptionShort": "Club Passes",
             "BenefitType": "Perk",
             "NumericValue": 2.0,
-            "NumericType": "Lounge"
+            "NumericType": "Lounge",
+            "BenefitId": "club-passes"
         },
         {
             "BenefitDescription": "Global Entry/TSA PreCheck/NEXUS fee credit",
@@ -74,7 +77,8 @@
             "BenefitDescriptionShort": "TSA Credit",
             "BenefitType": "Security",
             "NumericValue": 120.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "tsa-credit"
         },
         {
             "BenefitDescription": "25% back on United inflight & Club premium drink purchases",
@@ -90,7 +94,8 @@
             "BenefitDescriptionShort": "Inflight Savings",
             "BenefitType": "Savings",
             "NumericValue": 25.0,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "inflight-savings"
         }
     ],
     "EarningRates": [

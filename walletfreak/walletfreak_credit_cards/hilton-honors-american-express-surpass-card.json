@@ -25,7 +25,8 @@
             "BenefitDescriptionShort": "Gold Status",
             "BenefitType": "Status",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "gold-status"
         },
         {
             "BenefitDescription": "$200 Hilton credit",
@@ -41,7 +42,8 @@
             "BenefitDescriptionShort": "Hilton Credit",
             "BenefitType": "Credit",
             "NumericValue": 200.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "hilton-credit"
         },
         {
             "BenefitDescription": "Free Night Reward after $15,000 spend in calendar year",
@@ -57,7 +59,8 @@
             "BenefitDescriptionShort": "Free Night",
             "BenefitType": "Perk",
             "NumericValue": 1,
-            "NumericType": "FreeNight"
+            "NumericType": "FreeNight",
+            "BenefitId": "free-night"
         }
     ],
     "EarningRates": [

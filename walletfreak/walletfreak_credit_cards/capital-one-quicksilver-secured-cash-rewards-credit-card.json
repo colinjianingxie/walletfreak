@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Credit Review",
             "BenefitType": "Perk",
             "NumericValue": 0,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "credit-review"
         }
     ],
     "EarningRates": [

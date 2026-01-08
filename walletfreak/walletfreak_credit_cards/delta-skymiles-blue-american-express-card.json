@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "In-Flight Savings",
             "BenefitType": "Credit",
             "NumericValue": 20.0,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "in-flight-savings"
         },
         {
             "BenefitDescription": "No Foreign Transaction Fees",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "No Foreign Fees",
             "BenefitType": "Perk",
             "NumericValue": 0.0,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "no-foreign-fees"
         }
     ],
     "EarningRates": [

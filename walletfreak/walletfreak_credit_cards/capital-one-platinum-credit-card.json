@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Credit Line Increase",
             "BenefitType": "Upgrade",
             "NumericValue": 6.0,
-            "NumericType": "Months"
+            "NumericType": "Months",
+            "BenefitId": "credit-line-increase"
         },
         {
             "BenefitDescription": "No foreign transaction fees",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "No Foreign Fees",
             "BenefitType": "Perk",
             "NumericValue": 0.0,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "no-foreign-fees"
         },
         {
             "BenefitDescription": "$0 Fraud Liability for unauthorized charges",
@@ -53,7 +55,8 @@
             "BenefitDescriptionShort": "Fraud Liability",
             "BenefitType": "Perk",
             "NumericValue": 0.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "fraud-liability"
         },
         {
             "BenefitDescription": "Free access to CreditWise credit monitoring",
@@ -68,7 +71,8 @@
             "BenefitDescriptionShort": "Credit Monitoring",
             "BenefitType": "Membership",
             "NumericValue": 1.0,
-            "NumericType": "Membership"
+            "NumericType": "Membership",
+            "BenefitId": "credit-monitoring"
         }
     ],
     "EarningRates": [

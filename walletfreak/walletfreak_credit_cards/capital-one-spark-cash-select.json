@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Fraud Liability",
             "BenefitType": "Perk",
             "NumericValue": 0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "fraud-liability"
         },
         {
             "BenefitDescription": "Free employee cards with individual spending limits",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Employee Cards",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": "Perk"
+            "NumericType": "Perk",
+            "BenefitId": "employee-cards"
         }
     ],
     "EarningRates": [

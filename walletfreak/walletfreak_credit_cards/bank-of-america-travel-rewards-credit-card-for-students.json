@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "No Foreign Fees",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": "Perk"
+            "NumericType": "Perk",
+            "BenefitId": "no-foreign-fees"
         },
         {
             "BenefitDescription": "Preferred Rewards bonus: 25% to 75% more points on purchases",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Preferred Rewards Boost",
             "BenefitType": "Bonus",
             "NumericValue": 75.0,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "preferred-rewards-boost"
         }
     ],
     "EarningRates": [

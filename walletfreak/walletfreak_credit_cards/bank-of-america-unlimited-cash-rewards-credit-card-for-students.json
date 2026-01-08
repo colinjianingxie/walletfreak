@@ -1,6 +1,6 @@
 {
     "Vendor": "Bank of America",
-    "CardName": "Bank of America® Unlimited Cash Rewards credit card for Students",
+    "CardName": "Bank of America\u00ae Unlimited Cash Rewards credit card for Students",
     "AnnualFee": 0,
     "PointsValueCpp": 1.0,
     "slug-id": "bank-of-america-unlimited-cash-rewards-credit-card-for-students",
@@ -23,10 +23,11 @@
             "BenefitDescriptionShort": "Intro APR",
             "BenefitType": "Perk",
             "NumericValue": 15.0,
-            "NumericType": "Months"
+            "NumericType": "Months",
+            "BenefitId": "intro-apr"
         },
         {
-            "BenefitDescription": "Bank of America Preferred Rewards® 25%-75% bonus",
+            "BenefitDescription": "Bank of America Preferred Rewards\u00ae 25%-75% bonus",
             "AdditionalDetails": "Get a 25% to 75% rewards bonus on every purchase if you have a qualifying Bank of America checking or savings account",
             "BenefitCategory": [
                 "Generic Financial & Rewards"
@@ -38,10 +39,11 @@
             "BenefitDescriptionShort": "Preferred Rewards Bonus",
             "BenefitType": "Bonus",
             "NumericValue": 25.0,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "preferred-rewards-bonus"
         },
         {
-            "BenefitDescription": "Free FICO® Score access",
+            "BenefitDescription": "Free FICO\u00ae Score access",
             "AdditionalDetails": "Updated monthly for free through the Mobile Banking app or Online Banking",
             "BenefitCategory": [
                 "Generic Financial & Rewards"
@@ -53,7 +55,8 @@
             "BenefitDescriptionShort": "Free FICO Score",
             "BenefitType": "Perk",
             "NumericValue": 1.0,
-            "NumericType": "Perk"
+            "NumericType": "Perk",
+            "BenefitId": "free-fico-score"
         }
     ],
     "EarningRates": [

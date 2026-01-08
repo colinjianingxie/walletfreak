@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Hyatt Credit",
             "BenefitType": "Credit",
             "NumericValue": 100,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "hyatt-credit"
         },
         {
             "BenefitDescription": "Discoverist status for you and 5 employees",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Discoverist Status",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": "Membership"
+            "NumericType": "Membership",
+            "BenefitId": "discoverist-status"
         }
     ],
     "EarningRates": [

@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Reward Certificate",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "reward-certificate"
         }
     ],
     "EarningRates": [

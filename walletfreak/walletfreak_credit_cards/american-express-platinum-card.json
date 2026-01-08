@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Airline Credit",
             "BenefitType": "Credit",
             "NumericValue": 200.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "airline-credit"
         },
         {
             "BenefitDescription": "$600 Hotel Credit on prepaid Fine Hotels + Resorts or The Hotel Collection",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Hotel Credit",
             "BenefitType": "Credit",
             "NumericValue": 600.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "hotel-credit"
         },
         {
             "BenefitDescription": "$209 CLEAR Plus Credit",
@@ -54,7 +56,8 @@
             "BenefitDescriptionShort": "CLEAR Credit",
             "BenefitType": "Credit",
             "NumericValue": 209.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "clear-credit"
         },
         {
             "BenefitDescription": "$200 Uber Cash",
@@ -71,7 +74,8 @@
             "BenefitDescriptionShort": "Uber Cash",
             "BenefitType": "Credit",
             "NumericValue": 200.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "uber-cash"
         },
         {
             "BenefitDescription": "$300 Digital Entertainment Credit",
@@ -86,7 +90,8 @@
             "BenefitDescriptionShort": "Entertainment Credit",
             "BenefitType": "Credit",
             "NumericValue": 300.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "entertainment-credit"
         },
         {
             "BenefitDescription": "$400 Resy Credit",
@@ -102,7 +107,8 @@
             "BenefitDescriptionShort": "Resy Credit",
             "BenefitType": "Credit",
             "NumericValue": 400.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "resy-credit"
         },
         {
             "BenefitDescription": "$300 lululemon Credit",
@@ -119,7 +125,8 @@
             "BenefitDescriptionShort": "lululemon Credit",
             "BenefitType": "Credit",
             "NumericValue": 300.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "lululemon-credit"
         },
         {
             "BenefitDescription": "$155 Walmart+ monthly membership credit",
@@ -135,7 +142,8 @@
             "BenefitDescriptionShort": "Walmart+ Credit",
             "BenefitType": "Credit",
             "NumericValue": 155.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "walmart-credit"
         },
         {
             "BenefitDescription": "$100 Saks Fifth Avenue credit",
@@ -151,7 +159,8 @@
             "BenefitDescriptionShort": "Saks Credit",
             "BenefitType": "Credit",
             "NumericValue": 100.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "saks-credit"
         },
         {
             "BenefitDescription": "$300 Equinox Credit",
@@ -167,7 +176,8 @@
             "BenefitDescriptionShort": "Equinox Credit",
             "BenefitType": "Credit",
             "NumericValue": 300.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "equinox-credit"
         },
         {
             "BenefitDescription": "$200 Oura Ring Credit",
@@ -183,7 +193,8 @@
             "BenefitDescriptionShort": "Oura Credit",
             "BenefitType": "Credit",
             "NumericValue": 200.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "oura-credit"
         }
     ],
     "EarningRates": [

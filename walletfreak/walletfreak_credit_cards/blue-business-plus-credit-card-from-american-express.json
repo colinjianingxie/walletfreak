@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "No FTF",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "no-ftf"
         },
         {
             "BenefitDescription": "Free additional employee cards",
@@ -40,7 +41,8 @@
             "BenefitDescriptionShort": "Free Employee Cards",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "free-employee-cards"
         },
         {
             "BenefitDescription": "Expanded Buying Power",
@@ -56,7 +58,8 @@
             "BenefitDescriptionShort": "Buying Power",
             "BenefitType": "Perk",
             "NumericValue": 0,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "buying-power"
         }
     ],
     "EarningRates": [

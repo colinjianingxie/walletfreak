@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Rewards Boost",
             "BenefitType": "Bonus",
             "NumericValue": 75,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "rewards-boost"
         },
         {
             "BenefitDescription": "$100 annual airline incidental credit",
@@ -39,7 +40,8 @@
             "BenefitDescriptionShort": "Airline Credit",
             "BenefitType": "Credit",
             "NumericValue": 100.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "airline-credit"
         },
         {
             "BenefitDescription": "Up to $100 Global Entry/TSA PreCheck credit",
@@ -56,7 +58,8 @@
             "BenefitDescriptionShort": "TSA Credit",
             "BenefitType": "Security",
             "NumericValue": 100.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "tsa-credit"
         }
     ],
     "EarningRates": [

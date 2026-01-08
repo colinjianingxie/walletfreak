@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Silver Status",
             "BenefitType": "Perk",
             "NumericValue": 1.0,
-            "NumericType": "Membership"
+            "NumericType": "Membership",
+            "BenefitId": "silver-status"
         }
     ],
     "EarningRates": [

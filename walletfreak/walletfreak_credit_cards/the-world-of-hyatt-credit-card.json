@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Free Night",
             "BenefitType": "Perk",
             "NumericValue": 1,
-            "NumericType": "FreeNight"
+            "NumericType": "FreeNight",
+            "BenefitId": "free-night"
         },
         {
             "BenefitDescription": "Additional Free Night Award after $15,000 spend annually",
@@ -40,7 +41,8 @@
             "BenefitDescriptionShort": "Spend Free Night",
             "BenefitType": "Perk",
             "NumericValue": 1,
-            "NumericType": "FreeNight"
+            "NumericType": "FreeNight",
+            "BenefitId": "spend-free-night"
         },
         {
             "BenefitDescription": "Discoverist status",
@@ -57,7 +59,8 @@
             "BenefitDescriptionShort": "Discoverist Status",
             "BenefitType": "Status",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "discoverist-status"
         }
     ],
     "EarningRates": [

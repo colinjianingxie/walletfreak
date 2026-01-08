@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Companion Certificate",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "companion-certificate"
         },
         {
             "BenefitDescription": "Global Entry/TSA PreCheck credit",
@@ -41,7 +42,8 @@
             "BenefitDescriptionShort": "TSA Credit",
             "BenefitType": "Security",
             "NumericValue": 120.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "tsa-credit"
         },
         {
             "BenefitDescription": "$120 Resy Credit",
@@ -57,7 +59,8 @@
             "BenefitDescriptionShort": "Resy Credit",
             "BenefitType": "Credit",
             "NumericValue": 120,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "resy-credit"
         },
         {
             "BenefitDescription": "$120 Rideshare Credit",
@@ -72,7 +75,8 @@
             "BenefitDescriptionShort": "Rideshare Credit",
             "BenefitType": "Credit",
             "NumericValue": 120,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "rideshare-credit"
         },
         {
             "BenefitDescription": "$150 Delta Stays Credit",
@@ -88,7 +92,8 @@
             "BenefitDescriptionShort": "Delta Stays Credit",
             "BenefitType": "Credit",
             "NumericValue": 150,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "delta-stays-credit"
         }
     ],
     "EarningRates": [

@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Business Preferred Rewards",
             "BenefitType": "Bonus",
             "NumericValue": 75.0,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "business-preferred-rewards"
         },
         {
             "BenefitDescription": "Overdraft protection when linked to BoA business checking",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Overdraft Protection",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": "Perk"
+            "NumericType": "Perk",
+            "BenefitId": "overdraft-protection"
         }
     ],
     "EarningRates": [

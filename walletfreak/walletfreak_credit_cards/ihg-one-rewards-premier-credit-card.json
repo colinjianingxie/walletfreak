@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Free Night",
             "BenefitType": "Free Night",
             "NumericValue": 1,
-            "NumericType": "FreeNight"
+            "NumericType": "FreeNight",
+            "BenefitId": "free-night"
         },
         {
             "BenefitDescription": "$100 statement credit + 10,000 points after $20,000 spend annually",
@@ -40,7 +41,8 @@
             "BenefitDescriptionShort": "Spend Bonus",
             "BenefitType": "Bonus",
             "NumericValue": 10000,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "spend-bonus"
         },
         {
             "BenefitDescription": "Global Entry/TSA PreCheck credit",
@@ -57,7 +59,8 @@
             "BenefitDescriptionShort": "TSA Credit",
             "BenefitType": "Security",
             "NumericValue": 120.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "tsa-credit"
         },
         {
             "BenefitDescription": "Platinum Elite status",
@@ -74,7 +77,8 @@
             "BenefitDescriptionShort": "Platinum Status",
             "BenefitType": "Status",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "platinum-status"
         }
     ],
     "EarningRates": [

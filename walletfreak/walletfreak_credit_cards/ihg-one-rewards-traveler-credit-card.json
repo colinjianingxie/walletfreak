@@ -25,7 +25,8 @@
             "BenefitDescriptionShort": "Silver Status",
             "BenefitType": "Status",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "silver-status"
         },
         {
             "BenefitDescription": "Fourth Reward Night Free on award stays",
@@ -41,7 +42,8 @@
             "BenefitDescriptionShort": "Fourth Night Free",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "fourth-night-free"
         }
     ],
     "EarningRates": [

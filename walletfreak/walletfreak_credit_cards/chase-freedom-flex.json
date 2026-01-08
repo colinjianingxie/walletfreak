@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "DashPass",
             "BenefitType": "Perk",
             "NumericValue": 120,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "dashpass"
         },
         {
             "BenefitDescription": "$40 annual DoorDash Non-Restaurant credit",
@@ -40,7 +41,8 @@
             "BenefitDescriptionShort": "DoorDash Non-Restaurant Credit",
             "BenefitType": "Credit",
             "NumericValue": 40,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "doordash-non-restaurant-credit"
         }
     ],
     "EarningRates": [

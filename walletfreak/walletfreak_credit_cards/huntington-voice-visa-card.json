@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "No Penalty APR",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "no-penalty-apr"
         },
         {
             "BenefitDescription": "Roadside Dispatch",
@@ -40,7 +41,8 @@
             "BenefitDescriptionShort": "Roadside Dispatch",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "roadside-dispatch"
         }
     ],
     "EarningRates": [

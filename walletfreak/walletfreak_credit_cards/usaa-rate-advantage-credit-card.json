@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Low APR",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": "Perk"
+            "NumericType": "Perk",
+            "BenefitId": "low-apr"
         }
     ],
     "EarningRates": [

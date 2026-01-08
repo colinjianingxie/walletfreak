@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "APR Reduction",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "apr-reduction"
         }
     ],
     "EarningRates": [

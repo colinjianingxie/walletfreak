@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Free FICO Score",
             "BenefitType": "Perk",
             "NumericValue": 10,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "free-fico-score"
         }
     ],
     "EarningRates": [

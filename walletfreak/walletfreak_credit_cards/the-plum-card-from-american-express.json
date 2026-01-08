@@ -1,6 +1,6 @@
 {
     "Vendor": "American Express",
-    "CardName": "The Plum Card® from American Express",
+    "CardName": "The Plum Card\u00ae from American Express",
     "AnnualFee": 250,
     "PointsValueCpp": 1.0,
     "slug-id": "the-plum-card-from-american-express",
@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Early Pay Discount",
             "BenefitType": "Perk",
             "NumericValue": 1.5,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "early-pay-discount"
         },
         {
             "BenefitDescription": "Take up to 60 days to pay without interest",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Extra Days to Pay",
             "BenefitType": "Perk",
             "NumericValue": 60.0,
-            "NumericType": "Days"
+            "NumericType": "Days",
+            "BenefitId": "extra-days-to-pay"
         }
     ],
     "EarningRates": [

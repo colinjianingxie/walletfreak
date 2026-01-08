@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "BT Intro APR",
             "BenefitType": "Perk",
             "NumericValue": 21,
-            "NumericType": "Months"
+            "NumericType": "Months",
+            "BenefitId": "bt-intro-apr"
         },
         {
             "BenefitDescription": "0% Intro APR for 12 months on purchases",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Purchase Intro APR",
             "BenefitType": "Perk",
             "NumericValue": 12,
-            "NumericType": "Months"
+            "NumericType": "Months",
+            "BenefitId": "purchase-intro-apr"
         }
     ],
     "EarningRates": [

@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Walmart+ Credit",
             "BenefitType": "Credit",
             "NumericValue": 98.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "walmart-credit"
         },
         {
             "BenefitDescription": "Amex Offers access",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Amex Offers",
             "BenefitType": "Perk",
             "NumericValue": 1.0,
-            "NumericType": "Perk"
+            "NumericType": "Perk",
+            "BenefitId": "amex-offers"
         }
     ],
     "EarningRates": [

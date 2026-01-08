@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Free Night",
             "BenefitType": "Perk",
             "NumericValue": 35000,
-            "NumericType": "Points"
+            "NumericType": "Points",
+            "BenefitId": "free-night"
         },
         {
             "BenefitDescription": "7% Room Rate Discount",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Room Discount",
             "BenefitType": "Perk",
             "NumericValue": 7.0,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "room-discount"
         }
     ],
     "EarningRates": [

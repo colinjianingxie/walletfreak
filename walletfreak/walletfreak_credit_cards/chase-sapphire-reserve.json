@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Travel Credit",
             "BenefitType": "Credit",
             "NumericValue": 300.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "travel-credit"
         },
         {
             "BenefitDescription": "$500 The Edit by Chase Travel hotel credit",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "The Edit Hotel Credit",
             "BenefitType": "Credit",
             "NumericValue": 500.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "the-edit-hotel-credit"
         },
         {
             "BenefitDescription": "$250 additional Chase Travel hotel credit",
@@ -53,7 +55,8 @@
             "BenefitDescriptionShort": "Additional Hotel Credit",
             "BenefitType": "Credit",
             "NumericValue": 250.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "additional-hotel-credit"
         },
         {
             "BenefitDescription": "Global Entry / TSA PreCheck / NEXUS fee credit",
@@ -71,7 +74,8 @@
             "BenefitDescriptionShort": "Trusted Traveler Credit",
             "BenefitType": "Security",
             "NumericValue": 120.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "trusted-traveler-credit"
         },
         {
             "BenefitDescription": "Priority Pass Select airport lounge membership",
@@ -87,7 +91,8 @@
             "BenefitDescriptionShort": "Priority Pass",
             "BenefitType": "Perk",
             "NumericValue": 3,
-            "NumericType": "Lounge"
+            "NumericType": "Lounge",
+            "BenefitId": "priority-pass"
         },
         {
             "BenefitDescription": "Air Canada lounge access",
@@ -102,7 +107,8 @@
             "BenefitDescriptionShort": "Air Canada Lounges",
             "BenefitType": "Perk",
             "NumericValue": 3,
-            "NumericType": "Lounge"
+            "NumericType": "Lounge",
+            "BenefitId": "air-canada-lounges"
         },
         {
             "BenefitDescription": "DoorDash credits",
@@ -118,7 +124,8 @@
             "BenefitDescriptionShort": "DoorDash Credit",
             "BenefitType": "Credit",
             "NumericValue": 300.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "doordash-credit"
         },
         {
             "BenefitDescription": "Complimentary DashPass membership",
@@ -133,7 +140,8 @@
             "BenefitDescriptionShort": "DashPass",
             "BenefitType": "Perk",
             "NumericValue": 120.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "dashpass"
         },
         {
             "BenefitDescription": "StubHub & viagogo credits",
@@ -150,7 +158,8 @@
             "BenefitDescriptionShort": "Entertainment Credit",
             "BenefitType": "Credit",
             "NumericValue": 300.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "entertainment-credit"
         },
         {
             "BenefitDescription": "Lyft credits",
@@ -166,7 +175,8 @@
             "BenefitDescriptionShort": "Lyft Credit",
             "BenefitType": "Credit",
             "NumericValue": 120.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "lyft-credit"
         },
         {
             "BenefitDescription": "Peloton credits",
@@ -182,7 +192,8 @@
             "BenefitDescriptionShort": "Peloton Credit",
             "BenefitType": "Credit",
             "NumericValue": 120.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "peloton-credit"
         },
         {
             "BenefitDescription": "Complimentary IHG One Rewards Platinum Elite status",
@@ -199,7 +210,8 @@
             "BenefitDescriptionShort": "IHG Platinum Status",
             "BenefitType": "Status",
             "NumericValue": 1,
-            "NumericType": "Upgrade"
+            "NumericType": "Upgrade",
+            "BenefitId": "ihg-platinum-status"
         },
         {
             "BenefitDescription": "Sapphire Reserve Exclusive Tables dining benefits",
@@ -214,7 +226,8 @@
             "BenefitDescriptionShort": "Exclusive Tables",
             "BenefitType": "Credit",
             "NumericValue": 300.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "exclusive-tables"
         },
         {
             "BenefitDescription": "Complimentary Apple TV+ and Music",
@@ -231,7 +244,8 @@
             "BenefitDescriptionShort": "Apple TV+ & Music",
             "BenefitType": "Perk",
             "NumericValue": 288,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "apple-tv-music"
         }
     ],
     "EarningRates": [

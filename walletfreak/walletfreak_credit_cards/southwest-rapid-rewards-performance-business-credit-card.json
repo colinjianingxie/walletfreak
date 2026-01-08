@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Anniversary Points",
             "BenefitType": "Bonus",
             "NumericValue": 9000.0,
-            "NumericType": "Points"
+            "NumericType": "Points",
+            "BenefitId": "anniversary-points"
         },
         {
             "BenefitDescription": "4 Upgraded Boardings per year when available",
@@ -39,7 +40,8 @@
             "BenefitDescriptionShort": "Upgraded Boardings",
             "BenefitType": "Perk",
             "NumericValue": 4.0,
-            "NumericType": "Passes"
+            "NumericType": "Passes",
+            "BenefitId": "upgraded-boardings"
         },
         {
             "BenefitDescription": "Up to $120 Global Entry, TSA PreCheck, or NEXUS fee credit",
@@ -55,7 +57,8 @@
             "BenefitDescriptionShort": "TSA/GE/NEXUS Credit",
             "BenefitType": "Security",
             "NumericValue": 120.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "tsagenexus-credit"
         }
     ],
     "EarningRates": [

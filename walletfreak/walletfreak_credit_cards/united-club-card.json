@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Club Membership",
             "BenefitType": "Access",
             "NumericValue": 3,
-            "NumericType": "Lounge"
+            "NumericType": "Lounge",
+            "BenefitId": "club-membership"
         },
         {
             "BenefitDescription": "Free first & second checked bag on United flights",
@@ -40,7 +41,8 @@
             "BenefitDescriptionShort": "Free Bags",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "free-bags"
         }
     ],
     "EarningRates": [

@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Airline Fee Credit",
             "BenefitType": "Credit",
             "NumericValue": 200.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "airline-fee-credit"
         },
         {
             "BenefitDescription": "$400 Dell Technologies Credit",
@@ -39,7 +40,8 @@
             "BenefitDescriptionShort": "Dell Credit",
             "BenefitType": "Credit",
             "NumericValue": 400.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "dell-credit"
         },
         {
             "BenefitDescription": "$360 Indeed Credit",
@@ -55,7 +57,8 @@
             "BenefitDescriptionShort": "Indeed Credit",
             "BenefitType": "Credit",
             "NumericValue": 360.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "indeed-credit"
         },
         {
             "BenefitDescription": "$150 Adobe Annual Credit",
@@ -72,7 +75,8 @@
             "BenefitDescriptionShort": "Adobe Credit",
             "BenefitType": "Credit",
             "NumericValue": 150.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "adobe-credit"
         },
         {
             "BenefitDescription": "$120 Wireless Telephone Credit",
@@ -88,7 +92,8 @@
             "BenefitDescriptionShort": "Wireless Credit",
             "BenefitType": "Credit",
             "NumericValue": 120.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "wireless-credit"
         },
         {
             "BenefitDescription": "$189 CLEAR Plus Credit",
@@ -104,7 +109,8 @@
             "BenefitDescriptionShort": "CLEAR Credit",
             "BenefitType": "Credit",
             "NumericValue": 189.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "clear-credit"
         },
         {
             "BenefitDescription": "$155 Walmart+ monthly membership credit",
@@ -120,7 +126,8 @@
             "BenefitDescriptionShort": "Walmart+ Credit",
             "BenefitType": "Credit",
             "NumericValue": 155.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "walmart-credit"
         },
         {
             "BenefitDescription": "Lounge access Centurion/Priority/Delta",
@@ -137,7 +144,8 @@
             "BenefitDescriptionShort": "Global Lounge Access",
             "BenefitType": "Access",
             "NumericValue": 3,
-            "NumericType": "Lounge"
+            "NumericType": "Lounge",
+            "BenefitId": "global-lounge-access"
         }
     ],
     "EarningRates": [

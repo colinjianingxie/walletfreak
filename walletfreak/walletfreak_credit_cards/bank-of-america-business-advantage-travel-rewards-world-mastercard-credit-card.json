@@ -1,6 +1,6 @@
 {
     "Vendor": "Bank of America",
-    "CardName": "Bank of America Business Advantage Travel Rewards World Mastercard® credit card",
+    "CardName": "Bank of America Business Advantage Travel Rewards World Mastercard\u00ae credit card",
     "AnnualFee": 0,
     "PointsValueCpp": 1.0,
     "slug-id": "bank-of-america-business-advantage-travel-rewards-world-mastercard-credit-card",
@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "No Foreign Fees",
             "BenefitType": "Perk",
             "NumericValue": 0.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "no-foreign-fees"
         },
         {
             "BenefitDescription": "Lost Luggage Assistance",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Luggage Help",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": "Perk"
+            "NumericType": "Perk",
+            "BenefitId": "luggage-help"
         }
     ],
     "EarningRates": [

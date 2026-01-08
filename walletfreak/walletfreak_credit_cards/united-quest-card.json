@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Free Bags",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "free-bags"
         },
         {
             "BenefitDescription": "$125 annual United purchase credit",
@@ -40,7 +41,8 @@
             "BenefitDescriptionShort": "United Credit",
             "BenefitType": "Credit",
             "NumericValue": 125.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "united-credit"
         },
         {
             "BenefitDescription": "Up to 10,000-mile award flight discount",
@@ -56,7 +58,8 @@
             "BenefitDescriptionShort": "Award Discount",
             "BenefitType": "Bonus",
             "NumericValue": 20000,
-            "NumericType": "Miles"
+            "NumericType": "Miles",
+            "BenefitId": "award-discount"
         }
     ],
     "EarningRates": [

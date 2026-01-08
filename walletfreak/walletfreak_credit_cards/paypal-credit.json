@@ -25,7 +25,8 @@
             "BenefitDescriptionShort": "Promotional Financing",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "promotional-financing"
         }
     ],
     "EarningRates": [

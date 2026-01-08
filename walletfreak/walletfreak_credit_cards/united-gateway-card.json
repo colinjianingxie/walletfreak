@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Inflight Discount",
             "BenefitType": "Credit",
             "NumericValue": 25,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "inflight-discount"
         }
     ],
     "EarningRates": [

@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "DashPass",
             "BenefitType": "Perk",
             "NumericValue": 120,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "dashpass"
         },
         {
             "BenefitDescription": "Up to $10 quarterly DoorDash non-restaurant credit",
@@ -40,7 +41,8 @@
             "BenefitDescriptionShort": "DoorDash NR Credit",
             "BenefitType": "Credit",
             "NumericValue": 40.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "doordash-nr-credit"
         },
         {
             "BenefitDescription": "Cell phone protection",
@@ -56,7 +58,8 @@
             "BenefitDescriptionShort": "Cell Phone Protection",
             "BenefitType": "Protection",
             "NumericValue": 1000,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "cell-phone-protection"
         },
         {
             "BenefitDescription": "Primary auto rental collision damage waiver",
@@ -73,7 +76,8 @@
             "BenefitDescriptionShort": "Primary Rental Coverage",
             "BenefitType": "Protection",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "primary-rental-coverage"
         },
         {
             "BenefitDescription": "No foreign transaction fees",
@@ -89,7 +93,8 @@
             "BenefitDescriptionShort": "No FTF",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "no-ftf"
         }
     ],
     "EarningRates": [

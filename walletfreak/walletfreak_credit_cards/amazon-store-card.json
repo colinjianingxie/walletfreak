@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "6 month 0% financing",
             "BenefitType": "Financing",
             "NumericValue": 6.0,
-            "NumericType": "Months"
+            "NumericType": "Months",
+            "BenefitId": "6-month-0-financing"
         },
         {
             "BenefitDescription": "0% APR for 12 months with equal monthly payments",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "12 month 0% financing",
             "BenefitType": "Financing",
             "NumericValue": 12.0,
-            "NumericType": "Months"
+            "NumericType": "Months",
+            "BenefitId": "12-month-0-financing"
         },
         {
             "BenefitDescription": "0% APR for 24 months with equal monthly payments",
@@ -53,7 +55,8 @@
             "BenefitDescriptionShort": "24 month 0% financing",
             "BenefitType": "Financing",
             "NumericValue": 24.0,
-            "NumericType": "Months"
+            "NumericType": "Months",
+            "BenefitId": "24-month-0-financing"
         },
         {
             "BenefitDescription": "No interest if paid in full within 6 months",
@@ -68,7 +71,8 @@
             "BenefitDescriptionShort": "6 month deferred interest",
             "BenefitType": "Deferred Interest",
             "NumericValue": 6.0,
-            "NumericType": "Months"
+            "NumericType": "Months",
+            "BenefitId": "6-month-deferred-interest"
         },
         {
             "BenefitDescription": "No interest if paid in full within 12 months",
@@ -83,7 +87,8 @@
             "BenefitDescriptionShort": "12 month deferred interest",
             "BenefitType": "Deferred Interest",
             "NumericValue": 12.0,
-            "NumericType": "Months"
+            "NumericType": "Months",
+            "BenefitId": "12-month-deferred-interest"
         },
         {
             "BenefitDescription": "No interest if paid in full within 24 months",
@@ -98,7 +103,8 @@
             "BenefitDescriptionShort": "24 month deferred interest",
             "BenefitType": "Deferred Interest",
             "NumericValue": 24.0,
-            "NumericType": "Months"
+            "NumericType": "Months",
+            "BenefitId": "24-month-deferred-interest"
         },
         {
             "BenefitDescription": "Zero fraud liability",
@@ -113,7 +119,8 @@
             "BenefitDescriptionShort": "Zero fraud liability",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "zero-fraud-liability"
         }
     ],
     "EarningRates": [

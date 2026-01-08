@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Travel Together",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "travel-together"
         }
     ],
     "EarningRates": [

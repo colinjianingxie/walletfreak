@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Airline Credit",
             "BenefitType": "Credit",
             "NumericValue": 50,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "airline-credit"
         }
     ],
     "EarningRates": [

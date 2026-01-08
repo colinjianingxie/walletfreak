@@ -25,7 +25,8 @@
             "BenefitDescriptionShort": "TSA/Global Entry Credit",
             "BenefitType": "Security",
             "NumericValue": 120.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "tsaglobal-entry-credit"
         },
         {
             "BenefitDescription": "Hertz Five Star elite status",
@@ -42,7 +43,8 @@
             "BenefitDescriptionShort": "Hertz Status",
             "BenefitType": "Status",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "hertz-status"
         }
     ],
     "EarningRates": [

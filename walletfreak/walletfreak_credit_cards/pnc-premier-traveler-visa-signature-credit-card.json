@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "No FTF",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "no-ftf"
         },
         {
             "BenefitDescription": "Visa Signature Luxury Hotel benefits",
@@ -39,7 +40,8 @@
             "BenefitDescriptionShort": "Luxury Hotel Perks",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "luxury-hotel-perks"
         }
     ],
     "EarningRates": [

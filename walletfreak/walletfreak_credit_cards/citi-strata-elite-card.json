@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Hotel Credit",
             "BenefitType": "Credit",
             "NumericValue": 300.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "hotel-credit"
         },
         {
             "BenefitDescription": "$200 Lifestyle Splurge including Best Buy",
@@ -40,7 +41,8 @@
             "BenefitDescriptionShort": "Splurge Credit",
             "BenefitType": "Credit",
             "NumericValue": 200.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "splurge-credit"
         },
         {
             "BenefitDescription": "$200 Blacklane Ride Credit",
@@ -56,7 +58,8 @@
             "BenefitDescriptionShort": "Blacklane Credit",
             "BenefitType": "Credit",
             "NumericValue": 200.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "blacklane-credit"
         },
         {
             "BenefitDescription": "Priority Pass Lounge Membership",
@@ -72,7 +75,8 @@
             "BenefitDescriptionShort": "Priority Pass",
             "BenefitType": "Membership",
             "NumericValue": 1.0,
-            "NumericType": "Membership"
+            "NumericType": "Membership",
+            "BenefitId": "priority-pass"
         },
         {
             "BenefitDescription": "4 Admirals Club Passes per year",
@@ -88,7 +92,8 @@
             "BenefitDescriptionShort": "Admirals Club Passes",
             "BenefitType": "Access",
             "NumericValue": 4.0,
-            "NumericType": "Passes"
+            "NumericType": "Passes",
+            "BenefitId": "admirals-club-passes"
         },
         {
             "BenefitDescription": "Global Entry / TSA PreCheck Credit",
@@ -105,7 +110,8 @@
             "BenefitDescriptionShort": "Security Program",
             "BenefitType": "Security",
             "NumericValue": 120.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "security-program"
         },
         {
             "BenefitDescription": "Citigold Relationship Credit",
@@ -121,7 +127,8 @@
             "BenefitDescriptionShort": "Citigold Credit",
             "BenefitType": "Perk",
             "NumericValue": 145.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "citigold-credit"
         },
         {
             "BenefitDescription": "Citigold Private Client Credit",
@@ -137,7 +144,8 @@
             "BenefitDescriptionShort": "Private Client Credit",
             "BenefitType": "Perk",
             "NumericValue": 595.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "private-client-credit"
         },
         {
             "BenefitDescription": "Travel Insurance Coverage",
@@ -153,7 +161,8 @@
             "BenefitDescriptionShort": "Protection",
             "BenefitType": "Insurance",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "protection"
         },
         {
             "BenefitDescription": "No Foreign Transaction Fees",
@@ -169,7 +178,8 @@
             "BenefitDescriptionShort": "No Foreign Fees",
             "BenefitType": "Waiver",
             "NumericValue": 0.0,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "no-foreign-fees"
         },
         {
             "BenefitDescription": "Death & Co Cocktail Tutorials",
@@ -185,7 +195,8 @@
             "BenefitDescriptionShort": "Mixology Classes",
             "BenefitType": "Perk",
             "NumericValue": 50,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "mixology-classes"
         }
     ],
     "EarningRates": [

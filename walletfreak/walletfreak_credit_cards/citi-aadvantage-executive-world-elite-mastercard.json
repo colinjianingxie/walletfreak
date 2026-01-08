@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Admirals Club",
             "BenefitType": "Perk",
             "NumericValue": 1,
-            "NumericType": "Membership"
+            "NumericType": "Membership",
+            "BenefitId": "admirals-club"
         },
         {
             "BenefitDescription": "Up to $120 back on eligible Grubhub purchases",
@@ -39,7 +40,8 @@
             "BenefitDescriptionShort": "Grubhub Credit",
             "BenefitType": "Credit",
             "NumericValue": 10.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "grubhub-credit"
         },
         {
             "BenefitDescription": "Up to $120 back on eligible Lyft rides",
@@ -54,7 +56,8 @@
             "BenefitDescriptionShort": "Lyft Credit",
             "BenefitType": "Credit",
             "NumericValue": 10.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "lyft-credit"
         },
         {
             "BenefitDescription": "Up to $120 back on eligible prepaid Avis\u00ae or Budget rentals",
@@ -70,7 +73,8 @@
             "BenefitDescriptionShort": "Rental Car Credit",
             "BenefitType": "Credit",
             "NumericValue": 120.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "rental-car-credit"
         },
         {
             "BenefitDescription": "Global Entry\u00ae or TSA PreCheck\u00ae application fee credit",
@@ -85,7 +89,8 @@
             "BenefitDescriptionShort": "Global Entry Credit",
             "BenefitType": "Security",
             "NumericValue": 120.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "global-entry-credit"
         },
         {
             "BenefitDescription": "First checked bag free for you and up to 8 companions",
@@ -100,7 +105,8 @@
             "BenefitDescriptionShort": "Free Checked Bag",
             "BenefitType": "Perk",
             "NumericValue": 9,
-            "NumericType": "Perk"
+            "NumericType": "Perk",
+            "BenefitId": "free-checked-bag"
         }
     ],
     "EarningRates": [

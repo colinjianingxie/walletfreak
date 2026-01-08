@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Fee Waiver",
             "BenefitType": "Credit",
             "NumericValue": 150.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "fee-waiver"
         }
     ],
     "EarningRates": [

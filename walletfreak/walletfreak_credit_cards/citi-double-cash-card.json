@@ -25,7 +25,8 @@
             "BenefitDescriptionShort": "Fraud Protection",
             "BenefitType": "Protection",
             "NumericValue": 0,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "fraud-protection"
         },
         {
             "BenefitDescription": "Citi Entertainment",
@@ -40,7 +41,8 @@
             "BenefitDescriptionShort": "Presale Access",
             "BenefitType": "Perk",
             "NumericValue": 0,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "presale-access"
         }
     ],
     "EarningRates": [

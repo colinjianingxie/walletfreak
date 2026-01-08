@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Companion Certificate",
             "BenefitType": "Perk",
             "NumericValue": 1.0,
-            "NumericType": "Passes"
+            "NumericType": "Passes",
+            "BenefitId": "companion-certificate"
         },
         {
             "BenefitDescription": "$200 Delta Stays credit",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Delta Stays Credit",
             "BenefitType": "Credit",
             "NumericValue": 200.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "delta-stays-credit"
         },
         {
             "BenefitDescription": "$120 Resy Credit",
@@ -53,7 +55,8 @@
             "BenefitDescriptionShort": "Resy Credit",
             "BenefitType": "Credit",
             "NumericValue": 10.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "resy-credit"
         },
         {
             "BenefitDescription": "$120 Rideshare Credit",
@@ -68,7 +71,8 @@
             "BenefitDescriptionShort": "Rideshare Credit",
             "BenefitType": "Credit",
             "NumericValue": 10.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "rideshare-credit"
         },
         {
             "BenefitDescription": "2,500 MQD Headstart",
@@ -83,7 +87,8 @@
             "BenefitDescriptionShort": "MQD Headstart",
             "BenefitType": "Bonus",
             "NumericValue": 2500.0,
-            "NumericType": "Points"
+            "NumericType": "Points",
+            "BenefitId": "mqd-headstart"
         }
     ],
     "EarningRates": [

@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Flexible Bonus",
             "BenefitType": "Bonus",
             "NumericValue": 3,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "flexible-bonus"
         },
         {
             "BenefitDescription": "Preferred Rewards Eligibility",
@@ -40,7 +41,8 @@
             "BenefitDescriptionShort": "Preferred Rewards",
             "BenefitType": "Bonus",
             "NumericValue": 0,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "preferred-rewards"
         }
     ],
     "EarningRates": [

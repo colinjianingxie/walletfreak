@@ -25,7 +25,8 @@
             "BenefitDescriptionShort": "Platinum Status",
             "BenefitType": "Status",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "platinum-status"
         },
         {
             "BenefitDescription": "$300 Marriott dining statement credit",
@@ -42,7 +43,8 @@
             "BenefitDescriptionShort": "Marriott Dining",
             "BenefitType": "Credit",
             "NumericValue": 300.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "marriott-dining"
         },
         {
             "BenefitDescription": "85,000-point Free Night Award annually after renewal",
@@ -58,7 +60,8 @@
             "BenefitDescriptionShort": "Free Night",
             "BenefitType": "Free Night",
             "NumericValue": 1,
-            "NumericType": "FreeNight"
+            "NumericType": "FreeNight",
+            "BenefitId": "free-night"
         }
     ],
     "EarningRates": [

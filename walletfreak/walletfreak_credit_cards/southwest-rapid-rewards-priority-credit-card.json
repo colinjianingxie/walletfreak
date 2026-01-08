@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Anniversary Points",
             "BenefitType": "Bonus",
             "NumericValue": 7500,
-            "NumericType": "Points"
+            "NumericType": "Points",
+            "BenefitId": "anniversary-points"
         },
         {
             "BenefitDescription": "$75 annual Southwest travel credit",
@@ -40,7 +41,8 @@
             "BenefitDescriptionShort": "Southwest Credit",
             "BenefitType": "Credit",
             "NumericValue": 75.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "southwest-credit"
         },
         {
             "BenefitDescription": "4 Upgraded Boardings per year",
@@ -56,7 +58,8 @@
             "BenefitDescriptionShort": "Upgraded Boardings",
             "BenefitType": "Perk",
             "NumericValue": 4,
-            "NumericType": "Upgrade"
+            "NumericType": "Upgrade",
+            "BenefitId": "upgraded-boardings"
         },
         {
             "BenefitDescription": "25% back on inflight purchases",
@@ -72,7 +75,8 @@
             "BenefitDescriptionShort": "Inflight Savings",
             "BenefitType": "Savings",
             "NumericValue": 25.0,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "inflight-savings"
         }
     ],
     "EarningRates": [

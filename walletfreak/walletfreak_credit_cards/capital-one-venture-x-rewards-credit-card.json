@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Travel Credit",
             "BenefitType": "Credit",
             "NumericValue": 300.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "travel-credit"
         },
         {
             "BenefitDescription": "10,000 anniversary bonus miles each account anniversary",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Anniversary Miles",
             "BenefitType": "Bonus",
             "NumericValue": 10000,
-            "NumericType": "Miles"
+            "NumericType": "Miles",
+            "BenefitId": "anniversary-miles"
         },
         {
             "BenefitDescription": "Unlimited Capital One Lounge & Priority Pass lounge access",
@@ -54,7 +56,8 @@
             "BenefitDescriptionShort": "Lounge Access",
             "BenefitType": "Access",
             "NumericValue": 3,
-            "NumericType": "Lounge"
+            "NumericType": "Lounge",
+            "BenefitId": "lounge-access"
         },
         {
             "BenefitDescription": "Global Entry or TSA PreCheck application fee credit",
@@ -71,7 +74,8 @@
             "BenefitDescriptionShort": "TSA Credit",
             "BenefitType": "Security",
             "NumericValue": 120.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "tsa-credit"
         },
         {
             "BenefitDescription": "Hertz President's Circle elite status",
@@ -88,7 +92,8 @@
             "BenefitDescriptionShort": "Hertz Status",
             "BenefitType": "Status",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "hertz-status"
         },
         {
             "BenefitDescription": "Complimentary PRIOR travel subscription",
@@ -104,7 +109,8 @@
             "BenefitDescriptionShort": "PRIOR Subscription",
             "BenefitType": "Perk",
             "NumericValue": 149,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "prior-subscription"
         }
     ],
     "EarningRates": [

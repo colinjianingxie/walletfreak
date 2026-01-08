@@ -1,6 +1,6 @@
 {
     "Vendor": "Synchrony",
-    "CardName": "Sam’s Club Mastercard",
+    "CardName": "Sam\u2019s Club Mastercard",
     "AnnualFee": 0,
     "PointsValueCpp": null,
     "slug-id": "sams-club-mastercard",
@@ -25,7 +25,8 @@
             "BenefitDescriptionShort": "Gas Rewards",
             "BenefitType": "Bonus",
             "NumericValue": 5,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "gas-rewards"
         }
     ],
     "EarningRates": [

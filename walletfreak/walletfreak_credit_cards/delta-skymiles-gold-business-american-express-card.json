@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Delta Stays Credit",
             "BenefitType": "Credit",
             "NumericValue": 150.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "delta-stays-credit"
         },
         {
             "BenefitDescription": "First checked bag free on Delta flights",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Free Checked Bag",
             "BenefitType": "Perk",
             "NumericValue": 70.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "free-checked-bag"
         },
         {
             "BenefitDescription": "15% discount on Delta award travel",
@@ -53,7 +55,8 @@
             "BenefitDescriptionShort": "TakeOff 15",
             "BenefitType": "Perk",
             "NumericValue": 15.0,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "takeoff-15"
         },
         {
             "BenefitDescription": "$200 Delta Flight Credit",
@@ -68,7 +71,8 @@
             "BenefitDescriptionShort": "Flight Credit",
             "BenefitType": "Credit",
             "NumericValue": 200.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "flight-credit"
         }
     ],
     "EarningRates": [

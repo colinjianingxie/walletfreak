@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "No FTF",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "no-ftf"
         },
         {
             "BenefitDescription": "Ability to transfer miles to partners",
@@ -39,7 +40,8 @@
             "BenefitDescriptionShort": "Miles Transfer",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "miles-transfer"
         },
         {
             "BenefitDescription": "Complimentary Hertz Five Star\u00ae status",
@@ -56,7 +58,8 @@
             "BenefitDescriptionShort": "Hertz Status",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "hertz-status"
         }
     ],
     "EarningRates": [

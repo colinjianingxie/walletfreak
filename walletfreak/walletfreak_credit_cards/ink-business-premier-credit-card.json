@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Cell Phone Protection",
             "BenefitType": "Protection",
             "NumericValue": 1000,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "cell-phone-protection"
         }
     ],
     "EarningRates": [

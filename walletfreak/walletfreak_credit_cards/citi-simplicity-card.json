@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "No Fees",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "no-fees"
         }
     ],
     "EarningRates": [

@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "CLEAR Credit",
             "BenefitType": "Credit",
             "NumericValue": 189.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "clear-credit"
         },
         {
             "BenefitDescription": "$100 LoungeBuddy credit",
@@ -40,7 +41,8 @@
             "BenefitDescriptionShort": "LoungeBuddy Credit",
             "BenefitType": "Credit",
             "NumericValue": 100.0,
-            "NumericType": "Lounge"
+            "NumericType": "Lounge",
+            "BenefitId": "loungebuddy-credit"
         }
     ],
     "EarningRates": [

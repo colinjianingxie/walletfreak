@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "In-flight Savings",
             "BenefitType": "Perk",
             "NumericValue": 25.0,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "in-flight-savings"
         },
         {
             "BenefitDescription": "Earn 1 Loyalty Point for every 1 eligible AAdvantage mile earned from purchases",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Loyalty Points",
             "BenefitType": "Perk",
             "NumericValue": 1.0,
-            "NumericType": "Points"
+            "NumericType": "Points",
+            "BenefitId": "loyalty-points"
         }
     ],
     "EarningRates": [

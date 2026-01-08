@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Free Night",
             "BenefitType": "Perk",
             "NumericValue": 40000,
-            "NumericType": "Points"
+            "NumericType": "Points",
+            "BenefitId": "free-night"
         },
         {
             "BenefitDescription": "Redeem 3 Nights, Get 4th Night Free",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "4th Night Free",
             "BenefitType": "Perk",
             "NumericValue": 1,
-            "NumericType": "FreeNight"
+            "NumericType": "FreeNight",
+            "BenefitId": "4th-night-free"
         }
     ],
     "EarningRates": [

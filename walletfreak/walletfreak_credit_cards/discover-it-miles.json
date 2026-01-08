@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "No FTF",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "no-ftf"
         },
         {
             "BenefitDescription": "Free FICO\u00ae Credit Scorecard access",
@@ -40,7 +41,8 @@
             "BenefitDescriptionShort": "Free FICO Score",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "free-fico-score"
         }
     ],
     "EarningRates": [

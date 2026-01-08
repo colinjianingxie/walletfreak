@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Hotel Credit",
             "BenefitType": "Credit",
             "NumericValue": 50.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "hotel-credit"
         },
         {
             "BenefitDescription": "10% anniversary points bonus based on total purchases in prior account anniversary year",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Anniversary Bonus",
             "BenefitType": "Bonus",
             "NumericValue": 10.0,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "anniversary-bonus"
         },
         {
             "BenefitDescription": "Complimentary DashPass membership",
@@ -54,7 +56,8 @@
             "BenefitDescriptionShort": "DashPass",
             "BenefitType": "Perk",
             "NumericValue": 120,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "dashpass"
         }
     ],
     "EarningRates": [

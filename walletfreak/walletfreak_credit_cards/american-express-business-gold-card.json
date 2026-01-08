@@ -26,7 +26,8 @@
             "BenefitDescriptionShort": "Flexible Business Credit",
             "BenefitType": "Credit",
             "NumericValue": 240.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "flexible-business-credit"
         },
         {
             "BenefitDescription": "$155 Walmart+ Monthly Membership Credit",
@@ -42,7 +43,8 @@
             "BenefitDescriptionShort": "Walmart+ Credit",
             "BenefitType": "Credit",
             "NumericValue": 155.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "walmart-credit"
         },
         {
             "BenefitDescription": "$150 Squarespace Annual Credit",
@@ -58,7 +60,8 @@
             "BenefitDescriptionShort": "Squarespace Credit",
             "BenefitType": "Credit",
             "NumericValue": 150.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "squarespace-credit"
         },
         {
             "BenefitDescription": "Cell Phone Protection",
@@ -74,7 +77,8 @@
             "BenefitDescriptionShort": "Cell Phone Protection",
             "BenefitType": "Perk",
             "NumericValue": 1600.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "cell-phone-protection"
         },
         {
             "BenefitDescription": "No foreign transaction fees",
@@ -89,7 +93,8 @@
             "BenefitDescriptionShort": "No FX Fees",
             "BenefitType": "Perk",
             "NumericValue": 75.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "no-fx-fees"
         },
         {
             "BenefitDescription": "Purchase Protection",
@@ -104,7 +109,8 @@
             "BenefitDescriptionShort": "Purchase Protection",
             "BenefitType": "Perk",
             "NumericValue": 1000.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "purchase-protection"
         },
         {
             "BenefitDescription": "Extended Warranty",
@@ -119,7 +125,8 @@
             "BenefitDescriptionShort": "Extended Warranty",
             "BenefitType": "Perk",
             "NumericValue": 1.0,
-            "NumericType": "Perk"
+            "NumericType": "Perk",
+            "BenefitId": "extended-warranty"
         },
         {
             "BenefitDescription": "Car Rental Loss and Damage Insurance",
@@ -134,7 +141,8 @@
             "BenefitDescriptionShort": "Car Rental Insurance",
             "BenefitType": "Perk",
             "NumericValue": 50000.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "car-rental-insurance"
         },
         {
             "BenefitDescription": "Baggage Insurance Plan",
@@ -149,7 +157,8 @@
             "BenefitDescriptionShort": "Baggage Insurance",
             "BenefitType": "Perk",
             "NumericValue": 1750.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "baggage-insurance"
         },
         {
             "BenefitDescription": "Trip Delay Insurance",
@@ -164,7 +173,8 @@
             "BenefitDescriptionShort": "Trip Delay Insurance",
             "BenefitType": "Perk",
             "NumericValue": 300.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "trip-delay-insurance"
         }
     ],
     "EarningRates": [

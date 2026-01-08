@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Spending Tools",
             "BenefitType": "Perk",
             "NumericValue": 0,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "spending-tools"
         },
         {
             "BenefitDescription": "PNC Cash Rewards Bonus",
@@ -40,7 +41,8 @@
             "BenefitDescriptionShort": "Account Bonus",
             "BenefitType": "Bonus",
             "NumericValue": 0,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "account-bonus"
         }
     ],
     "EarningRates": [

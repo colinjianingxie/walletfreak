@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Intro APR",
             "BenefitType": "Perk",
             "NumericValue": 6,
-            "NumericType": "Months"
+            "NumericType": "Months",
+            "BenefitId": "intro-apr"
         }
     ],
     "EarningRates": [

@@ -25,7 +25,8 @@
             "BenefitDescriptionShort": "Uber Cash",
             "BenefitType": "Credit",
             "NumericValue": 120.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "uber-cash"
         },
         {
             "BenefitDescription": "$120 Dining Credit",
@@ -41,7 +42,8 @@
             "BenefitDescriptionShort": "Dining Credit",
             "BenefitType": "Credit",
             "NumericValue": 120.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "dining-credit"
         },
         {
             "BenefitDescription": "$100 Resy Credit",
@@ -57,7 +59,8 @@
             "BenefitDescriptionShort": "Resy Credit",
             "BenefitType": "Credit",
             "NumericValue": 100.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "resy-credit"
         },
         {
             "BenefitDescription": "$84 Dunkin' Credit",
@@ -73,7 +76,8 @@
             "BenefitDescriptionShort": "Dunkin Credit",
             "BenefitType": "Credit",
             "NumericValue": 84.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "dunkin-credit"
         },
         {
             "BenefitDescription": "$100 Hotel Collection Credit on qualifying 2-night minimum stays via Amex Travel",
@@ -88,7 +92,8 @@
             "BenefitDescriptionShort": "Hotel Credit",
             "BenefitType": "Credit",
             "NumericValue": 100.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "hotel-credit"
         }
     ],
     "EarningRates": [

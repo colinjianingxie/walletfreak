@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Free Checked Bag",
             "BenefitType": "Perk",
             "NumericValue": 1,
-            "NumericType": "Perk"
+            "NumericType": "Perk",
+            "BenefitId": "free-checked-bag"
         },
         {
             "BenefitDescription": "American Airlines Companion Certificate for domestic travel",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Companion Certificate",
             "BenefitType": "Perk",
             "NumericValue": 1,
-            "NumericType": "Passes"
+            "NumericType": "Passes",
+            "BenefitId": "companion-certificate"
         },
         {
             "BenefitDescription": "25% savings on American Airlines inflight food, beverage, and Wi-Fi purchases",
@@ -53,7 +55,8 @@
             "BenefitDescriptionShort": "Inflight Savings",
             "BenefitType": "Credit",
             "NumericValue": 25.0,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "inflight-savings"
         },
         {
             "BenefitDescription": "Preferred boarding on American Airlines flights",
@@ -68,7 +71,8 @@
             "BenefitDescriptionShort": "Preferred Boarding",
             "BenefitType": "Perk",
             "NumericValue": 1,
-            "NumericType": "Perk"
+            "NumericType": "Perk",
+            "BenefitId": "preferred-boarding"
         }
     ],
     "EarningRates": [

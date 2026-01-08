@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "TakeOff 15",
             "BenefitType": "Perk",
             "NumericValue": 15.0,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "takeoff-15"
         },
         {
             "BenefitDescription": "First Checked Bag Free",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "Free Checked Bag",
             "BenefitType": "Perk",
             "NumericValue": 1.0,
-            "NumericType": "Passes"
+            "NumericType": "Passes",
+            "BenefitId": "free-checked-bag"
         },
         {
             "BenefitDescription": "$100 Delta Stays Credit",
@@ -53,7 +55,8 @@
             "BenefitDescriptionShort": "Delta Stays Credit",
             "BenefitType": "Credit",
             "NumericValue": 100.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "delta-stays-credit"
         },
         {
             "BenefitDescription": "$200 Delta Flight Credit",
@@ -68,7 +71,8 @@
             "BenefitDescriptionShort": "Flight Credit",
             "BenefitType": "Bonus",
             "NumericValue": 200.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "flight-credit"
         },
         {
             "BenefitDescription": "Priority Boarding",
@@ -83,7 +87,8 @@
             "BenefitDescriptionShort": "Priority Boarding",
             "BenefitType": "Perk",
             "NumericValue": 1.0,
-            "NumericType": "Perk"
+            "NumericType": "Perk",
+            "BenefitId": "priority-boarding"
         }
     ],
     "EarningRates": [

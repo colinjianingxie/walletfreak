@@ -24,7 +24,8 @@
             "BenefitDescriptionShort": "Companion Certificate",
             "BenefitType": "Perk",
             "NumericValue": null,
-            "NumericType": null
+            "NumericType": null,
+            "BenefitId": "companion-certificate"
         },
         {
             "BenefitDescription": "Delta Sky Club access",
@@ -40,7 +41,8 @@
             "BenefitDescriptionShort": "Sky Club Access",
             "BenefitType": "Access",
             "NumericValue": 15.0,
-            "NumericType": "Lounge"
+            "NumericType": "Lounge",
+            "BenefitId": "sky-club-access"
         }
     ],
     "EarningRates": [

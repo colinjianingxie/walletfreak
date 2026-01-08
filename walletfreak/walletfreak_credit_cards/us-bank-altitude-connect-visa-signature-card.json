@@ -25,7 +25,8 @@
             "BenefitDescriptionShort": "TSA Credit",
             "BenefitType": "Security",
             "NumericValue": 100.0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "tsa-credit"
         },
         {
             "BenefitDescription": "4 Priority Pass Select visits per year",
@@ -41,7 +42,8 @@
             "BenefitDescriptionShort": "Priority Pass",
             "BenefitType": "Access",
             "NumericValue": 4.0,
-            "NumericType": "Lounge"
+            "NumericType": "Lounge",
+            "BenefitId": "priority-pass"
         },
         {
             "BenefitDescription": "GigSky Global Mobile Data eSIM",
@@ -57,7 +59,8 @@
             "BenefitDescriptionShort": "GigSky Global Data",
             "BenefitType": "Perk",
             "NumericValue": 50,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "gigsky-global-data"
         },
         {
             "BenefitDescription": "SmartDelay Lounge Access",
@@ -73,7 +76,8 @@
             "BenefitDescriptionShort": "SmartDelay",
             "BenefitType": "Access",
             "NumericValue": 1,
-            "NumericType": "Lounge"
+            "NumericType": "Lounge",
+            "BenefitId": "smartdelay"
         }
     ],
     "EarningRates": [

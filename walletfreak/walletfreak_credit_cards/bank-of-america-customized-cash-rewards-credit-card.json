@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Preferred Rewards Boost",
             "BenefitType": "Bonus",
             "NumericValue": 75.0,
-            "NumericType": "Percent"
+            "NumericType": "Percent",
+            "BenefitId": "preferred-rewards-boost"
         }
     ],
     "EarningRates": [

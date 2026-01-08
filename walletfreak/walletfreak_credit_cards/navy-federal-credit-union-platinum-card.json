@@ -23,7 +23,8 @@
             "BenefitDescriptionShort": "Rental Car Insurance",
             "BenefitType": "Perk",
             "NumericValue": 1.0,
-            "NumericType": "Perk"
+            "NumericType": "Perk",
+            "BenefitId": "rental-car-insurance"
         },
         {
             "BenefitDescription": "No foreign transaction fees or balance transfer fees",
@@ -38,7 +39,8 @@
             "BenefitDescriptionShort": "No Fees",
             "BenefitType": "Perk",
             "NumericValue": 0,
-            "NumericType": "Cash"
+            "NumericType": "Cash",
+            "BenefitId": "no-fees"
         }
     ],
     "EarningRates": [
