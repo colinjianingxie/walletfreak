@@ -78,6 +78,7 @@ def process_json_card(data):
             'period_values': period_values,
             'enrollment_required': str(b.get('EnrollmentRequired', 'False')).lower() == 'true' if isinstance(b.get('EnrollmentRequired'), str) else bool(b.get('EnrollmentRequired')),
             'effective_date': b.get('EffectiveDate'),
+            'benefit_id': b.get('BenefitId'),
             'short_description': b.get('BenefitDescriptionShort') or b.get('BenefitDescription'),
             'benefit_type': b.get('BenefitType'),
             'numeric_value': float(b.get('NumericValue')) if is_float(b.get('NumericValue')) else None,

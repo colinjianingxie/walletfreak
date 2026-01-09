@@ -773,6 +773,9 @@
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     overflow: hidden;
     animation: zoomIn 0.2s ease-out;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
 }
 
 @keyframes fadeIn {
@@ -829,6 +832,7 @@
 
 .dp-modal-body {
     padding: 1.5rem 2.5rem;
+    overflow-y: auto;
 }
 
 /* Wallet Modal Specifics */

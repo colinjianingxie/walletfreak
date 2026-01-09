@@ -28,6 +28,23 @@
             "BenefitId": "free-night"
         },
         {
+            "BenefitDescription": "Free Night Award each cardmember anniversary",
+            "AdditionalDetails": "up to 50,000 points",
+            "BenefitCategory": [
+                "Marriott",
+                "Generic Hotels"
+            ],
+            "TimeCategory": "Annually (anniversary year)",
+            "DollarValue": null,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2026-01-01",
+            "BenefitDescriptionShort": "Free Night",
+            "BenefitType": "Free Night",
+            "NumericValue": 1,
+            "NumericType": "FreeNight",
+            "BenefitId": "free-night"
+        },
+        {
             "BenefitDescription": "15 Elite Night Credits annually",
             "AdditionalDetails": null,
             "BenefitCategory": [
@@ -163,7 +180,7 @@
                 "No",
                 "Yes"
             ],
-            "Question": "Are you interested in receiving complimentary hotel stays at Marriott properties?",
+            "Question": "Do you enjoy staying at hotels and value perks like free nights?",
             "BenefitCategory": "Hotel",
             "ChoiceWeight": [
                 0.0,
@@ -177,7 +194,7 @@
                 "No",
                 "Yes"
             ],
-            "Question": "Do you value hotel elite status benefits such as priority check-in, late checkout, and bonus points on stays?",
+            "Question": "Are you interested in hotel loyalty programs that offer enhanced experiences like upgrades and bonus rewards?",
             "BenefitCategory": "Hotel Status",
             "ChoiceWeight": [
                 0.0,
@@ -191,7 +208,7 @@
                 "No",
                 "Yes"
             ],
-            "Question": "Would you utilize statement credits for airline purchases?",
+            "Question": "Do you frequently make purchases related to air travel and appreciate rebates on those expenses?",
             "BenefitCategory": "Travel Perks",
             "ChoiceWeight": [
                 0.0,
@@ -199,7 +216,7 @@
             ]
         }
     ],
-    "FreakVerdict": "7/10. Great limited-time sign-up offer with 5 free nights worth up to 250k points, plus temporary airline credits in 2026 offset the fee nicely. Solid for occasional Marriott stays but earning rates are average outside hotels.",
+    "FreakVerdict": "8/10. The upgraded free night award to 50k points boosts value significantly, paired with the limited-time 2026 airline credits and strong sign-up offer of 5 free nights. Excellent for Marriott loyalists, though earning rates remain middling outside of hotels.",
     "Categories": [
         {
             "CategoryName": "Hotels",

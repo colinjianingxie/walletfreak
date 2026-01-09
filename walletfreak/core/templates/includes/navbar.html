@@ -36,7 +36,7 @@
         <div class="nav-links desktop-only" id="nav-links">
             <div class="nav-items">
                 {% if user.is_authenticated %}
-                <a href="{% url 'dashboard' %}" data-nav="wallet" class="{% if request.path == '/' or '/wallet' in request.path %}active{% endif %}">Wallet</a>
+                <a href="{% url 'dashboard' %}" data-nav="wallet" class="{% if request.path == '/' or '/wallet/' in request.path %}active{% endif %}">Wallet</a>
                 {% else %}
                 <a href="{% url 'features' %}" data-nav="features" class="{% if '/features' in request.path %}active{% endif %}">Features</a>
                 {% endif %}
@@ -210,12 +210,12 @@
                 </a>
             </div>
 
-            <a href="{% url 'dashboard' %}" class="mobile-menu-item {% if request.path == '/' or '/wallet' in request.path %}active{% endif %}" data-nav="wallet">
-                <div class="mobile-menu-icon" style="{% if request.path == '/' or '/wallet' in request.path %}background: #2563EB; color: white;{% endif %}">
+            <a href="{% url 'dashboard' %}" class="mobile-menu-item {% if request.path == '/' or '/wallet/' in request.path %}active{% endif %}" data-nav="wallet">
+                <div class="mobile-menu-icon" style="{% if request.path == '/' or '/wallet/' in request.path %}background: #2563EB; color: white;{% endif %}">
                     <span class="material-icons">account_balance_wallet</span>
                 </div>
                 <span class="mobile-menu-text">Wallet</span>
-                <span class="mobile-menu-indicator" style="{% if request.path == '/' or '/wallet' in request.path %}display: block;{% endif %}"></span>
+                <span class="mobile-menu-indicator" style="{% if request.path == '/' or '/wallet/' in request.path %}display: block;{% endif %}"></span>
             </a>
 
             <a href="{% url 'card_list' %}" class="mobile-menu-item {% if '/cards' in request.path or '/explore' in request.path %}active{% endif %}" data-nav="explore">

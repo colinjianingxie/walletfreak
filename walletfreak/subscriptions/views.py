@@ -77,7 +77,7 @@ def create_checkout_session(request):
                     },
                 ],
                 mode='subscription',
-                success_url=request.build_absolute_uri('/subscriptions/success/'),
+                success_url=request.build_absolute_uri('/subscriptions/success/') + '?session_id={CHECKOUT_SESSION_ID}',
                 cancel_url=request.build_absolute_uri('/subscriptions/cancel/'),
                 # Use UID as reference, not volatile SQLite ID
                 client_reference_id=uid,
@@ -104,7 +104,7 @@ def create_checkout_session(request):
                         },
                     ],
                     mode='subscription',
-                    success_url=request.build_absolute_uri('/subscriptions/success/'),
+                    success_url=request.build_absolute_uri('/subscriptions/success/') + '?session_id={CHECKOUT_SESSION_ID}',
                     cancel_url=request.build_absolute_uri('/subscriptions/cancel/'),
                     client_reference_id=uid,
                 )
@@ -273,6 +273,16 @@ def handle_subscription_deleted(stripe_sub):
 
 @login_required
 def success(request):
+    session_id = request.GET.get('session_id')
+    if session_id:
+        try:
+            # Retrieve the session from Stripe to verify
+            # Using defaults allows us to call handle_checkout_session regardless
+            session = stripe.checkout.Session.retrieve(session_id)
+            handle_checkout_session(session)
+        except Exception as e:
+            logger.error(f"Error validating session on success page: {e}")
+            
     return render(request, 'subscriptions/success.html')
 
 @login_required

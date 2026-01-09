@@ -183,8 +183,17 @@ class Command(BaseCommand):
                 b_path = f'credit_cards/{slug}/benefits'
                 delete_subcollection(b_path)
                 for i, b in enumerate(benefits):
-                    b_id = str(i)
-                    db.create_document(b_path, b, doc_id=b_id)
+                    b_id = b.get('benefit_id')
+                    eff_date = b.get('effective_date')
+                    if not b_id:
+                         b_id = str(i)
+                    
+                    # Versioning: if effective_date exists, append it to make ID unique per version
+                    doc_id = b_id
+                    if eff_date:
+                        doc_id = f"{b_id}_{eff_date}"
+
+                    db.create_document(b_path, b, doc_id=doc_id)
                 seeded_types.append(f'{len(benefits)} benefits')
             
             # Earning Rates

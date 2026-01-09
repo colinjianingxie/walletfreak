@@ -103,11 +103,12 @@ class CardMixin:
         except Exception as e:
             print(f"Error fetching card_questions collection group: {e}")
 
-        # 6. Process Bonuses and Questions per card
+        # 6. Process Bonuses, Questions, and Benefits per card
         for card in cards_map.values():
             raw_bonuses = card.pop('_raw_bonuses')
             card['sign_up_bonus'] = self._process_signup_bonuses(raw_bonuses)
             card['card_questions'] = self._process_card_questions(card.get('card_questions', []))
+            card['benefits'] = self._process_benefits(card.get('benefits', []))
 
         result = list(cards_map.values())
         
@@ -198,7 +199,65 @@ class CardMixin:
             }
             processed.append(item)
             
+
         return processed
+
+    def _process_benefits(self, benefits):
+        """
+        Resolves versioned benefits.
+        Returns the latest active version of each benefit_id.
+        """
+        if not benefits:
+            return []
+            
+        from datetime import datetime
+        today_str = datetime.now().strftime('%Y-%m-%d')
+        
+        # Group by benefit_id
+        grouped = {}
+        legacy_items = []
+        
+        for b in benefits:
+            b_id = b.get('benefit_id')
+            if not b_id:
+                legacy_items.append(b)
+                continue
+                
+            if b_id not in grouped:
+                grouped[b_id] = []
+            grouped[b_id].append(b)
+            
+        resolved = []
+        
+        for b_id, versions in grouped.items():
+            # Filter valid dates <= today
+            valid_versions = []
+            future_versions = [] # Optional: could show "Coming Soon"
+            
+            for v in versions:
+                eff = v.get('effective_date')
+                # If no effective date, assume valid/legacy
+                if not eff:
+                    valid_versions.append(v)
+                    continue
+                    
+                if eff <= today_str:
+                    valid_versions.append(v)
+                else:
+                    future_versions.append(v)
+            
+            # Pick latest valid
+            if valid_versions:
+                # Sort descending by date (None counts as very old, or handle separately?)
+                # If date is string YYYY-MM-DD, default sort string works
+                valid_versions.sort(key=lambda x: x.get('effective_date') or '0000-00-00', reverse=True)
+                resolved.append(valid_versions[0])
+            elif future_versions:
+                # No active version? Maybe show the future one?
+                # For now, let's skip to avoid showing things not yet valid.
+                pass
+                
+        return resolved + legacy_items
 
     def _enrich_card_with_subcollections(self, card_id, card_data):
         """
@@ -211,7 +270,7 @@ class CardMixin:
             
             # 1. Benefits
             benefits = [{**doc.to_dict(), 'id': doc.id} for doc in card_ref.collection('benefits').stream()]
-            card_data['benefits'] = benefits
+            card_data['benefits'] = self._process_benefits(benefits)
             
             # 2. Earning Rates
             earning_rates = [{**doc.to_dict(), 'id': doc.id} for doc in card_ref.collection('earning_rates').stream()]
