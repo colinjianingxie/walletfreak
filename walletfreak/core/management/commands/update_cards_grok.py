@@ -52,6 +52,7 @@ class Command(BaseCommand):
                 
                 slug = current_data.get('slug-id')
                 name = current_data.get('CardName')
+                apply_url = current_data.get('ApplicationLink')
                 
                 self.stdout.write(f"Updating {name} ({slug})...")
                 
@@ -59,7 +60,7 @@ class Command(BaseCommand):
                 prompt = self.construction_prompt(current_data)
                 
                 # Call API
-                new_data = self.call_grok_api(api_key, prompt)
+                new_data = self.call_grok_api(api_key, prompt, apply_url)
                 
                 if new_data:
                     # Validate
@@ -93,7 +94,7 @@ class Command(BaseCommand):
 
     def validate_json(self, data, expected_slug):
         required_keys = [
-            "Vendor", "CardName", "slug-id", "ImageURL", "Benefits", 
+            "Vendor", "CardName", "slug-id", "ImageURL", "Benefits", "PointsValueCpp", "ApplicationLink",
             "EarningRates", "SignUpBonuses", "Questions", "FreakVerdict", "Categories"
         ]
         
@@ -106,12 +107,34 @@ class Command(BaseCommand):
              
         return True, None
 
-    def call_grok_api(self, api_key, prompt):
+    def call_grok_api(self, api_key, prompt, apply_url=None):
+        from urllib.parse import urlparse
+        
         url = "https://api.x.ai/v1/chat/completions"
         headers = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {api_key}"
         }
+        
+        # Build search sources
+        sources = []
+        if apply_url:
+            # Extract domain/base URL (e.g., bankofamerica.com)
+            parsed = urlparse(apply_url)
+            domain = parsed.netloc
+            # Strip www. if present for allowed_websites
+            if domain.startswith("www."):
+                domain = domain[4:]
+            
+            sources.append({
+                "type": "web",
+                "country": "US",
+                "allowed_websites": [domain]
+            })
+        else:
+            # Fallback if no URL
+            sources.append("web")
+            
         data = {
             "messages": [
                 {
@@ -123,9 +146,15 @@ class Command(BaseCommand):
                     "content": prompt
                 }
             ],
-            "model": "grok-4-latest",
+            "model": "grok-4",
             "stream": False,
-            "temperature": 0
+            "temperature": 0.2,
+            "search_parameters": {
+                "mode": "on",
+                "sources": sources,
+                "return_citations": False,
+                "max_search_results": 10
+            }
         }
         
         try:
