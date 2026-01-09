@@ -240,7 +240,8 @@ Keep the old benefit object exactly as is in the list, so we retain history. Onl
 Be as accurate and up-to-date as possible with these earning rates. IsDefault represents the "everything else" spend (default spending rate). There should only be 1 IsDefault for each card. If there is 1 rate for multiple services like: 3x points for Disney streaming, online groceries, restaurants -> separate it out into three items: one row for 3x Disney streaming, one row for 3x online groceries, one row for restaurants. The categories should be specific, but not too specific. For example, the respective categories would then be: ["Disney"], ["Online Groceries"] (because there can be online and regular), and ["Generic Dining"] as restaurants is very generic.
 
 ## Sign Up Bonus
-The signup bonus needs to be up to date. Give me a new EffectiveDate (if the sign up bonus has changed).
+The signup bonus needs to be up to date and accurate. If the signup bonus has not changed, do not make any changes to the current sign up bonus. Look up the sign up bonus as of {today} ET.
+IMPORTANT: Do not search anywhere else except for the original vendor's site. For example, if it's an American Express Gold Card, retrieve the sign up bonus from looking at the American Express Gold Card Application page.
 
 ## Questions
 The credit card questions are questions based off of the benefits. These are used to help gauge whether the card is a good fit. Rather than asking direct questions on whether they will use the benefit, be a bit more "generic" with the questions to gauge user interest. The weights will ultimately determine how much the user values the benefit (1.0 is max).

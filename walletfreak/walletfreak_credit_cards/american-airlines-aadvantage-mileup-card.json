@@ -80,6 +80,14 @@
             "SignUpBonusType": "Miles",
             "SpendAmount": 1000,
             "SignupDurationMonths": 3
+        },
+        {
+            "EffectiveDate": "2026-01-01",
+            "Terms": "Spend $500 in 3 months",
+            "SignUpBonusValue": 15000,
+            "SignUpBonusType": "Miles",
+            "SpendAmount": 500,
+            "SignupDurationMonths": 3
         }
     ],
     "Questions": [

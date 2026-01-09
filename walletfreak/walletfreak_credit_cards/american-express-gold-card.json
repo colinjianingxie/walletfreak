@@ -29,6 +29,24 @@
             "BenefitId": "uber-cash"
         },
         {
+            "BenefitDescription": "$150 Uber Cash for U.S. rides & Uber Eats",
+            "AdditionalDetails": "$12.50 monthly",
+            "BenefitCategory": [
+                "Uber",
+                "Generic Transportation",
+                "Generic Dining"
+            ],
+            "TimeCategory": "Monthly",
+            "DollarValue": 150,
+            "EnrollmentRequired": false,
+            "EffectiveDate": "2026-01-01",
+            "BenefitDescriptionShort": "Uber Cash",
+            "BenefitType": "Credit",
+            "NumericValue": 150.0,
+            "NumericType": "Cash",
+            "BenefitId": "uber-cash"
+        },
+        {
             "BenefitDescription": "$120 Dining Credit",
             "AdditionalDetails": "$10 monthly at Grubhub The Cheesecake Factory Goldbelly Wine.com Five Guys",
             "BenefitCategory": [
@@ -151,14 +169,6 @@
             "SignUpBonusType": "Points",
             "SpendAmount": 6000,
             "SignupDurationMonths": 6
-        },
-        {
-            "EffectiveDate": "2026-01-01",
-            "Terms": "Spend $6000 in 6 months",
-            "SignUpBonusValue": 90000,
-            "SignUpBonusType": "Points",
-            "SpendAmount": 6000,
-            "SignupDurationMonths": 6
         }
     ],
     "Questions": [
@@ -243,7 +253,7 @@
             ]
         }
     ],
-    "FreakVerdict": "9/10. Still a strong everyday earner with valuable credits, but the bonus dipped slightly amid rising competition from other premium cards.",
+    "FreakVerdict": "8.5/10. Remains a top pick for dining and grocery spenders with enhanced Uber credits, but the slightly reduced welcome offer and static annual fee make it feel a tad less exciting in a competitive market.",
     "Categories": [
         {
             "CategoryName": "Airlines",

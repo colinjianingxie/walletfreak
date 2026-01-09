@@ -151,7 +151,7 @@ def admin_run_grok_update(request, card_id):
         # Capture stdout to return as message
         f = io.StringIO()
         with redirect_stdout(f):
-            call_command('update_cards_grok', cards=card_id, auto_seed=True)
+            call_command('update_cards_grok', cards=card_id, auto_seed=False)
         
         output = f.getvalue()
         return JsonResponse({'success': True, 'message': output})
