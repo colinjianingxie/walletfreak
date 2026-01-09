@@ -151,6 +151,14 @@
             "SignUpBonusType": "Points",
             "SpendAmount": 6000,
             "SignupDurationMonths": 6
+        },
+        {
+            "EffectiveDate": "2026-01-01",
+            "Terms": "Spend $6000 in 6 months",
+            "SignUpBonusValue": 90000,
+            "SignUpBonusType": "Points",
+            "SpendAmount": 6000,
+            "SignupDurationMonths": 6
         }
     ],
     "Questions": [
@@ -235,7 +243,7 @@
             ]
         }
     ],
-    "FreakVerdict": "10/10. High spend but flat 100k points. Amex keeps it simple.",
+    "FreakVerdict": "9/10. Still a strong everyday earner with valuable credits, but the bonus dipped slightly amid rising competition from other premium cards.",
     "Categories": [
         {
             "CategoryName": "Airlines",

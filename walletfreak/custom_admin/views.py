@@ -122,6 +122,42 @@ def admin_generate_prompt(request, card_id):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
+@staff_member_required
+def admin_run_grok_update(request, card_id):
+    """
+    Run the Grok update command + seed_db for a specific card.
+    """
+    # 1. Check User Email & Super Staff Status
+    uid = request.session.get('uid')
+    if not uid and request.user.is_authenticated:
+        uid = request.user.username
+        
+    if not uid:
+        return JsonResponse({'error': 'Unauthorized'}, status=403)
+        
+    user_profile = db.get_user_profile(uid)
+    email = user_profile.get('email', '').lower()
+    is_super = user_profile.get('is_super_staff', False)
+    
+    if email != 'colinjianingxie@gmail.com' or not is_super:
+        return JsonResponse({'error': 'Unauthorized: Restricted access'}, status=403)
+        
+    # 2. Run Command
+    from django.core.management import call_command
+    import io
+    from contextlib import redirect_stdout
+    
+    try:
+        # Capture stdout to return as message
+        f = io.StringIO()
+        with redirect_stdout(f):
+            call_command('update_cards_grok', cards=card_id, auto_seed=True)
+        
+        output = f.getvalue()
+        return JsonResponse({'success': True, 'message': output})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
 @csrf_exempt
 @staff_member_required
 def admin_generate_bulk_prompt(request):
