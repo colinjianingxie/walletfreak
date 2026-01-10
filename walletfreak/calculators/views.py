@@ -35,7 +35,7 @@ def worth_it_list(request):
     # Filter for cards with annual fee > 0 AND at least one benefit with dollar_value > 0
     af_cards = []
     for c in all_cards:
-        if c.get('annual_fee', 0) > 0:
+        if (c.get('annual_fee') or 0) > 0:
             # Check for benefits with dollar value
             has_benefits = False
             for b in c.get('benefits', []):
@@ -47,7 +47,7 @@ def worth_it_list(request):
                 af_cards.append(c)
 
     # Sort by Annual Fee desc
-    af_cards.sort(key=lambda x: x.get('annual_fee', 0), reverse=True)
+    af_cards.sort(key=lambda x: x.get('annual_fee') or 0, reverse=True)
 
     return render(request, 'calculators/worth_it_list.html', {
         'cards': af_cards

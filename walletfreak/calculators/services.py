@@ -23,7 +23,7 @@ class OptimizerService:
             for r in card.get('earning_rates', []):
                 if r.get('is_default'):
                     rates[slug] = {
-                        'rate': r.get('rate', 0.0),
+                        'rate': float(r.get('multiplier') or r.get('rate') or 0.0),
                         'currency': r.get('currency', 'points')
                     }
                     found_default = True
@@ -127,7 +127,7 @@ class OptimizerService:
             
             # annual_fee is inside card_obj.get('annual_fee') 
             # In parse_updates it's stored as int on root.
-            annual_fee = float(card_obj.get('annual_fee', 0))
+            annual_fee = float(card_obj.get('annual_fee') or 0)
             net_value = total_value - annual_fee
             
             # ROI
@@ -323,8 +323,8 @@ class OptimizerService:
                     for c_str in cat_list:
                         # Exact match or case-insensitive? Strict for now.
                         if c_str.lower() == specific_category.lower():
-                            if r['rate'] > best_rate:
-                                best_rate = r['rate']
+                            if float(r.get('multiplier') or r.get('rate') or 0.0) > best_rate:
+                                best_rate = float(r.get('multiplier') or r.get('rate') or 0.0)
                                 best_rate_data = r
                                 match_type = 'Specific'
                                 # Found specific match, keep looking? 
@@ -350,8 +350,8 @@ class OptimizerService:
                         
                     for c_str in cat_list:
                         if c_str.lower() == parent_category.lower():
-                             if r['rate'] > parent_best_rate:
-                                 parent_best_rate = r['rate']
+                             if float(r.get('multiplier') or r.get('rate') or 0.0) > parent_best_rate:
+                                 parent_best_rate = float(r.get('multiplier') or r.get('rate') or 0.0)
                                  parent_match_data = r
                 
                 if parent_match_data:
@@ -373,8 +373,8 @@ class OptimizerService:
                     if 'All Purchases' in cat_data: is_all_purchases = True
                     
                 if is_base or is_all_purchases:
-                    if r['rate'] > default_best_rate:
-                        default_best_rate = r['rate']
+                    if float(r.get('multiplier') or r.get('rate') or 0.0) > default_best_rate:
+                        default_best_rate = float(r.get('multiplier') or r.get('rate') or 0.0)
                         default_match_data = r
             
             return default_best_rate, default_match_data, 'Default'
@@ -544,8 +544,8 @@ class OptimizerService:
                             
                             for c in cat_list:
                                 if c.lower() == sibling.lower():
-                                    if r['rate'] > sib_rate:
-                                        sib_rate = r['rate']
+                                    if float(r.get('multiplier') or r.get('rate') or 0.0) > sib_rate:
+                                        sib_rate = float(r.get('multiplier') or r.get('rate') or 0.0)
                         
                         if sib_rate > max_rates_by_sibling[sibling]:
                             max_rates_by_sibling[sibling] = sib_rate
@@ -572,8 +572,8 @@ class OptimizerService:
                                 cat_list = cat_data if isinstance(cat_data, list) else [str(cat_data)]
                             for c in cat_list:
                                 if c.lower() == sibling.lower():
-                                    if r['rate'] > sib_rate:
-                                        sib_rate = r['rate']
+                                    if float(r.get('multiplier') or r.get('rate') or 0.0) > sib_rate:
+                                        sib_rate = float(r.get('multiplier') or r.get('rate') or 0.0)
                         
                         if sib_rate > 0:
                             # Prioritize the sibling that gives the highest rate for this card

@@ -31,8 +31,8 @@
     </div>
 
     <!-- Questionnaire Form -->
-    <div class="container" style="max-width: 800px;">
-        <form method="post" action="{% url 'worth_it_calculate' card.slug %}" id="auditForm">
+    <div class="container" style="max-width: 800px; margin: 0 auto;">
+        <form method="post" action="{% url 'worth_it_calculate' card.id %}" id="auditForm">
             {% csrf_token %}
             
             {% for benefit in benefits %}

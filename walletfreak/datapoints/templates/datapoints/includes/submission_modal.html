@@ -30,6 +30,7 @@
                         <select name="benefit_name" required class="dp-select" style="width: 100%;" id="benefit_select" disabled>
                             <option value="">Select a Card First...</option>
                         </select>
+                         <input type="hidden" name="benefit_id" id="benefit_id_input">
                     </div>
 
                     <div>
@@ -79,60 +80,76 @@
 {{ submission_cards|json_script:"submission-cards-data" }}
 
 <script>
-    const cardSelect = document.getElementById('card_select');
-    const benefitSelect = document.getElementById('benefit_select');
-    const cardNameInput = document.getElementById('card_name_input');
-    const clearedDateWrapper = document.getElementById('cleared-date-wrapper');
-    const modalTitle = document.querySelector('.dp-modal-title');
-    const modalSubmitBtn = document.getElementById('modal-submit-btn');
-    const editIdInput = document.getElementById('edit_datapoint_id');
-    const form = document.getElementById('dp-submit-form');
-    
-    function toggleDateFields() {
-        const status = document.querySelector('input[name="status"]:checked').value;
-        if (status === 'Failed') {
-            clearedDateWrapper.style.display = 'none';
-        } else {
-            clearedDateWrapper.style.display = 'block';
+(function() {
+    var cardSelect, benefitSelect, cardNameInput, clearedDateWrapper, modalTitle, modalSubmitBtn, editIdInput, benefitIdInput, form, transactionDateInput, clearedDateInput;
+
+    function initElements() {
+        cardSelect = document.getElementById('card_select');
+        benefitSelect = document.getElementById('benefit_select');
+        cardNameInput = document.getElementById('card_name_input');
+        clearedDateWrapper = document.getElementById('cleared-date-wrapper');
+        modalTitle = document.querySelector('.dp-modal-title');
+        modalSubmitBtn = document.getElementById('modal-submit-btn');
+        editIdInput = document.getElementById('edit_datapoint_id');
+        benefitIdInput = document.getElementById('benefit_id_input');
+        form = document.getElementById('dp-submit-form');
+        
+        if (form) {
+            transactionDateInput = form.querySelector('input[name="transaction_date"]');
+            clearedDateInput = form.querySelector('input[name="cleared_date"]');
         }
     }
     
-    const transactionDateInput = form.querySelector('input[name="transaction_date"]');
-    const clearedDateInput = form.querySelector('input[name="cleared_date"]');
-
+    initElements();
+    
+    // Make these globally available for inline event handlers (onchange="toggleDateFields()")
+    window.toggleDateFields = function() {
+        if (!clearedDateWrapper) { 
+            clearedDateWrapper = document.getElementById('cleared-date-wrapper');
+            if(!clearedDateWrapper) return;
+        }
+        var statusInput = document.querySelector('input[name="status"]:checked');
+        if (statusInput) {
+            var status = statusInput.value;
+            if (status === 'Failed') {
+                clearedDateWrapper.style.display = 'none';
+            } else {
+                clearedDateWrapper.style.display = 'block';
+            }
+        }
+    };
+    
     function setMaxDate() {
-        const today = new Date().toISOString().split('T')[0];
-        transactionDateInput.setAttribute('max', today);
-        clearedDateInput.setAttribute('max', today);
+        if (transactionDateInput && clearedDateInput) {
+            var today = new Date().toISOString().split('T')[0];
+            transactionDateInput.setAttribute('max', today);
+            clearedDateInput.setAttribute('max', today);
+        }
     }
     
-    // Validate dates
     function validateDates() {
-        const tVal = transactionDateInput.value;
-        const cVal = clearedDateInput.value;
+        if (!transactionDateInput || !clearedDateInput) return;
+        var tVal = transactionDateInput.value;
+        var cVal = clearedDateInput.value;
         
         if (tVal) {
-             // Cleared date cannot be before transaction date
              clearedDateInput.setAttribute('min', tVal);
         }
         
         if (tVal && cVal) {
             if (cVal < tVal) {
-                // If cleared is before transaction (legacy or user error), reset cleared
                 clearedDateInput.value = '';
             }
         }
     }
     
-    transactionDateInput.addEventListener('change', validateDates);
-    clearedDateInput.addEventListener('change', validateDates);
+    if (transactionDateInput) transactionDateInput.addEventListener('change', validateDates);
+    if (clearedDateInput) clearedDateInput.addEventListener('change', validateDates);
 
-    // Initialize state
     setMaxDate();
-    toggleDateFields();
+    window.toggleDateFields(); // Call it once
     
-    // Parse the JSON data from the template
-    const cardBenefitsMap = {
+    var cardBenefitsMap = {
         {% for card in submission_cards %}
         "{{ card.slug }}": [
             {% for benefit in card.benefits %}
@@ -141,72 +158,88 @@
                 "details": "{{ benefit.additional_details|default:''|escapejs }}",
                 "value": "{{ benefit.numeric_value|default:0 }}",
                 "type": "{{ benefit.numeric_type|default:''|escapejs }}",
-                "benefit_type": "{{ benefit.benefit_type|default:''|escapejs }}"
+                "benefit_type": "{{ benefit.benefit_type|default:''|escapejs }}",
+                "id": "{{ benefit.id|escapejs }}"
             },
             {% endfor %}
         ],
         {% endfor %}
     };
 
-    cardSelect.addEventListener('change', function() {
-        const selectedOption = this.options[this.selectedIndex];
-        const slug = this.value;
-        
-        // Update Card Name Hidden Input
-        cardNameInput.value = selectedOption.getAttribute('data-name');
-        
-        // Update Benefits Dropdown
-        benefitSelect.innerHTML = '<option value="">Select a Benefit...</option>';
-        
-        if (slug && cardBenefitsMap[slug]) {
-            benefitSelect.disabled = false;
+    if (cardSelect) {
+        cardSelect.addEventListener('change', function() {
+            var selectedOption = this.options[this.selectedIndex];
+            var slug = this.value;
             
-            // Filter for Credit type only
-            const credits = cardBenefitsMap[slug].filter(b => b.benefit_type === 'Credit');
+            if (cardNameInput) cardNameInput.value = selectedOption.getAttribute('data-name');
             
-            credits.forEach(bnf => {
-                const opt = document.createElement('option');
-                opt.value = bnf.name;
+            if (benefitSelect) {
+                benefitSelect.innerHTML = '<option value="">Select a Benefit...</option>';
+                benefitSelect.disabled = false;
+            }
+            if (benefitIdInput) benefitIdInput.value = '';
+            
+            if (slug && cardBenefitsMap[slug] && benefitSelect) {
+                var credits = cardBenefitsMap[slug].filter(function(b) { return b.benefit_type === 'Credit'; });
                 
-                let label = bnf.name;
-                if (bnf.details && bnf.details !== 'None' && bnf.details.trim() !== '') {
-                    label += ` (${bnf.details})`;
-                }
-                
-                const val = parseFloat(bnf.value);
-                if (val > 0) {
-                    if (bnf.type === 'Cash') {
-                        label += ` - $${val}`; 
-                    } else if (bnf.type) {
-                        label += ` - ${val} ${bnf.type}`;
+                credits.forEach(function(bnf) {
+                    var opt = document.createElement('option');
+                    opt.value = bnf.name;
+                    opt.setAttribute('data-id', bnf.id || '');
+                    
+                    var label = bnf.name;
+                    if (bnf.details && bnf.details !== 'None' && bnf.details.trim() !== '') {
+                        label += ' (' + bnf.details + ')';
                     }
-                }
+                    
+                    var val = parseFloat(bnf.value);
+                    if (val > 0) {
+                        if (bnf.type === 'Cash') {
+                            label += ' - $' + val; 
+                        } else if (bnf.type) {
+                            label += ' - ' + val + ' ' + bnf.type;
+                        }
+                    }
+                    
+                    if (label.length > 100) label = label.substring(0, 100) + '...';
+                    
+                    opt.textContent = label;
+                    benefitSelect.appendChild(opt);
+                });
                 
-                if (label.length > 100) label = label.substring(0, 100) + '...';
+                var otherOpt = document.createElement('option');
+                otherOpt.value = "Other";
+                otherOpt.textContent = "Other";
+                benefitSelect.appendChild(otherOpt);
                 
-                opt.textContent = label;
-                benefitSelect.appendChild(opt);
-            });
-            
-            const otherOpt = document.createElement('option');
-            otherOpt.value = "Other";
-            otherOpt.textContent = "Other";
-            benefitSelect.appendChild(otherOpt);
-            
-        } else {
-            benefitSelect.disabled = true;
-            benefitSelect.innerHTML = '<option value="">Select a Card First...</option>';
-        }
-    });
+            } else if (benefitSelect) {
+                benefitSelect.disabled = true;
+                benefitSelect.innerHTML = '<option value="">Select a Card First...</option>';
+            }
+        });
+    }
 
-    function submitDatapoint(e) {
+    if (benefitSelect) {
+        benefitSelect.addEventListener('change', function() {
+            var selectedOption = this.options[this.selectedIndex];
+            var bId = selectedOption.getAttribute('data-id');
+            if (benefitIdInput) benefitIdInput.value = bId || '';
+        });
+    }
+
+    window.submitDatapoint = function(e) {
         e.preventDefault();
-        const formData = new FormData(form);
-        const editId = editIdInput.value;
+        // Lazy init
+        if (!form) initElements();
         
-        let url = '{% url "submit_datapoint" %}';
+        if (!form || !editIdInput) return; 
+
+        var formData = new FormData(form);
+        var editId = editIdInput.value;
+        
+        var url = '{% url "submit_datapoint" %}';
         if (editId) {
-            url = `/datapoints/edit/${editId}/`;
+            url = '/datapoints/edit/' + editId + '/';
         }
 
         fetch(url, {
@@ -216,109 +249,111 @@
                 'X-CSRFToken': '{{ csrf_token }}'
             }
         })
-        .then(res => res.json())
-        .then(data => {
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
             if (data.success) {
                 window.location.reload();
             } else {
                 alert('Error submitting: ' + JSON.stringify(data.errors || data.error));
             }
         });
-    }
+    };
     
-    function openSubmissionModal() {
-        // Reset form fully for new entry
+    window.openSubmissionModal = function() {
+        initElements();
+        if (!form) return;
+
         form.reset();
-        editIdInput.value = '';
-        modalTitle.innerText = "Submit Data Point";
-        modalSubmitBtn.innerText = "Submit Data Point";
+        if (editIdInput) editIdInput.value = '';
+        if (modalTitle) modalTitle.innerText = "Submit Data Point";
+        if (modalSubmitBtn) modalSubmitBtn.innerText = "Submit Data Point";
         
-        // Re-enable validation/listeners state
-        cardSelect.disabled = false;
-        benefitSelect.disabled = true; // wait for card selection
-        benefitSelect.innerHTML = '<option value="">Select a Card First...</option>';
-        cardNameInput.value = '';
-        toggleDateFields();
+        if (cardSelect) cardSelect.disabled = false;
+        if (benefitSelect) {
+            benefitSelect.disabled = true; 
+            benefitSelect.innerHTML = '<option value="">Select a Card First...</option>';
+        }
+        if (cardNameInput) cardNameInput.value = '';
+        if (benefitIdInput) benefitIdInput.value = '';
+        window.toggleDateFields();
         setMaxDate();
         
-        document.getElementById('submit-modal').classList.add('active');
-    }
+        var modal = document.getElementById('submit-modal');
+        if (modal) modal.classList.add('active');
+    };
 
-    function openEditModal(datapointId) {
-        // Reset form
+    window.openEditModal = function(datapointId) {
+        initElements();
+        if (!form) return;
+
         form.reset();
-        editIdInput.value = datapointId;
-        modalTitle.innerText = "Edit Data Point";
-        modalSubmitBtn.innerText = "Save Changes";
+        if (editIdInput) editIdInput.value = datapointId;
+        if (modalTitle) modalTitle.innerText = "Edit Data Point";
+        if (modalSubmitBtn) modalSubmitBtn.innerText = "Save Changes";
         
-        // Disable card/benefit selection as they shouldn't change
-        cardSelect.disabled = true;
-        benefitSelect.disabled = true;
+        if (cardSelect) cardSelect.disabled = true;
+        if (benefitSelect) benefitSelect.disabled = true;
         
-        // Show modal immediately
-        document.getElementById('submit-modal').classList.add('active');
+        var modal = document.getElementById('submit-modal');
+        if (modal) modal.classList.add('active');
         
-        // Fetch data
-        fetch(`/datapoints/get/${datapointId}/`)
-            .then(res => res.json())
-            .then(data => {
+        fetch('/datapoints/get/' + datapointId + '/')
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
                 if (data.success) {
-                    const dp = data.datapoint;
+                    var dp = data.datapoint;
                     
-                    form.querySelector('textarea[name="content"]').value = dp.content;
+                    var contentArea = form.querySelector('textarea[name="content"]');
+                    if (contentArea) contentArea.value = dp.content;
                     
-                    if (dp.transaction_date) form.querySelector('input[name="transaction_date"]').value = dp.transaction_date;
-                    if (dp.cleared_date) form.querySelector('input[name="cleared_date"]').value = dp.cleared_date;
+                    if (dp.transaction_date && transactionDateInput) transactionDateInput.value = dp.transaction_date;
+                    if (dp.cleared_date && clearedDateInput) clearedDateInput.value = dp.cleared_date;
                     
-                    const statusRadios = form.querySelectorAll('input[name="status"]');
-                    statusRadios.forEach(r => {
+                    var statusRadios = form.querySelectorAll('input[name="status"]');
+                    statusRadios.forEach(function(r) {
                         if (r.value === dp.status) r.checked = true;
                     });
-                    toggleDateFields();
+                    window.toggleDateFields();
                     
-                    // Handle Dropdowns
-                    // We need to enable them briefly to set values if logic depends on it, 
-                    // though purely setting value works on disabled too.
-                    // But cardSelect change listener needs to fire.
-                    cardSelect.disabled = false;
-                    
-                    if (dp.card_slug) {
-                        cardSelect.value = dp.card_slug;
-                        // Trigger change to populate benefits
-                        cardSelect.dispatchEvent(new Event('change'));
-                        
-                        if (dp.benefit_name) {
-                            benefitSelect.value = dp.benefit_name;
+                    if (cardSelect) {
+                        cardSelect.disabled = false;
+                        if (dp.card_slug) {
+                            cardSelect.value = dp.card_slug;
+                            cardSelect.dispatchEvent(new Event('change'));
+                            
+                            if (dp.benefit_name && benefitSelect) {
+                                benefitSelect.value = dp.benefit_name;
+                            }
                         }
+                        cardSelect.disabled = true;
                     }
-                    
-                    // Now disable them to prevent editing
-                    cardSelect.disabled = true;
-                    benefitSelect.disabled = true;
+                    if (benefitSelect) benefitSelect.disabled = true;
 
                 } else {
                     alert("Error loading data point");
-                    closeModal('submit-modal');
+                    var modal = document.getElementById('submit-modal');
+                    if (modal) modal.classList.remove('active');
                 }
             });
-    }
+    };
     
-    // reset modal on close
-    const originalCloseModal = window.closeModal;
+    var origClose = window.closeModal;
     window.closeModal = function(id) {
         if (id === 'submit-modal') {
-             // Reset UI state
-             setTimeout(() => {
-                 editIdInput.value = '';
-                 modalTitle.innerText = "Submit Data Point";
-                 modalSubmitBtn.innerText = "Submit Data Point";
-                 cardSelect.disabled = false;
-                 benefitSelect.disabled = true;
-                 form.reset();
-                 toggleDateFields();
-             }, 300); // after transition
+             setTimeout(function() {
+                 if (editIdInput) editIdInput.value = '';
+                 if (modalTitle) modalTitle.innerText = "Submit Data Point";
+                 if (modalSubmitBtn) modalSubmitBtn.innerText = "Submit Data Point";
+                 if (cardSelect) cardSelect.disabled = false;
+                 if (benefitSelect) benefitSelect.disabled = true;
+                 if (form) form.reset();
+                 window.toggleDateFields();
+             }, 300);
         }
-        // Call global close (if exists, or reimplement)
-        document.getElementById(id).classList.remove('active');
+        var el = document.getElementById(id);
+        if (el) el.classList.remove('active');
+        if (document.body) document.body.style.overflow = '';
     };
+
+})();
 </script>

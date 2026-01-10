@@ -61,8 +61,8 @@ function markAsFull() {
                 // Refresh dashboard to update top stats
                 refreshDashboardBenefits();
 
-                // Update UI to show reset button
-                updateBenefitModalUI();
+                // Close modal on success
+                closeBenefitModal();
             } else {
                 alert('Error: ' + (data.error || 'Unknown error'));
                 btn.innerHTML = originalText;
@@ -135,19 +135,11 @@ function saveBenefitUsage() {
                     document.getElementById(currentBenefitData.scriptId).textContent = JSON.stringify(currentBenefitPeriods);
                 }
 
-                // Update UI (keep modal open)
-                updateBenefitModalUI();
-
                 // Refresh dashboard to update top stats
                 refreshDashboardBenefits();
 
-                // Clear input (if modal wasn't closed)
-                input.value = '';
-
-                // Enable button (but keep disabled until new input)
-                btn.innerHTML = originalText;
-                btn.disabled = true;
-                btn.style.opacity = '0.5';
+                // Close modal on success
+                closeBenefitModal();
 
             } else {
                 alert('Error: ' + (data.error || 'Unknown error'));
@@ -420,8 +412,8 @@ async function markFullToDate() {
             // Refresh dashboard
             refreshDashboardBenefits();
 
-            // Update Modal UI
-            updateBenefitModalUI();
+            // Close modal on success
+            closeBenefitModal();
         } else {
             alert(`Completed with ${errorCount} errors. Please check connection.`);
             // Still try update UI

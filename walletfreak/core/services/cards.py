@@ -39,6 +39,11 @@ class CardMixin:
         
         if not cards_map:
             return []
+
+        # Ensure slug is present
+        for c in cards_map.values():
+            if 'slug' not in c:
+                c['slug'] = c['id']
             
         # Initialize subcollection containers
         for c in cards_map.values():
@@ -101,6 +106,7 @@ class CardMixin:
                     
                     data = snap.to_dict()
                     data['id'] = snap.id
+                    data['slug'] = snap.id # Ensure slug is present as it is used in views
                     parent_coll = snap.reference.parent
                     card_id = parent_coll.parent.id
                     type_name = parent_coll.id # 'benefits' or 'earning_rates'
@@ -177,7 +183,7 @@ class CardMixin:
         valid_bonuses = []
         default_bonus = None
         for b in bonuses:
-            b_date = b.get('date') or b.get('id')
+            b_date = b.get('date') or b.get('effective_date') or b.get('id')
             if b_date == 'default' or b.get('id') == 'default':
                 default_bonus = b
             else:
@@ -214,12 +220,12 @@ class CardMixin:
             except (ValueError, SyntaxError):
                 choice_weights = []
             item = {
-                'short_desc': q.get('BenefitShortDescription', ''),
-                'question_type': q.get('QuestionType', 'yes_no'),
-                'choices': choice_list,
-                'weights': choice_weights,
-                'question': q.get('Question', ''),
-                'category': q.get('BenefitCategory', ''),
+                'short_desc': q.get('short_desc') or q.get('BenefitShortDescription', ''),
+                'question_type': q.get('question_type') or q.get('QuestionType', 'yes_no'),
+                'choices': q.get('choices') or choice_list,
+                'weights': q.get('weights') or choice_weights,
+                'question': q.get('question') or q.get('Question', ''),
+                'category': q.get('benefit_category') or q.get('BenefitCategory', ''),
                 'id': q.get('id')
             }
             processed.append(item)
