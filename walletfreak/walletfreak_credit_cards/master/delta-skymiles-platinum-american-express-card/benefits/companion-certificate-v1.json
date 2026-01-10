@@ -1,0 +1,22 @@
+{
+    "BenefitId": "companion-certificate",
+    "benefit_id": "companion-certificate",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Companion Certificate",
+    "description": "Annual Companion Certificate",
+    "additional_details": "Main Cabin domestic/round-trip",
+    "benefit_category": [
+        "Delta",
+        "Generic Airlines"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

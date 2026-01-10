@@ -1,0 +1,15 @@
+{
+    "question_id": "q-9",
+    "short_desc": "Peloton Credit",
+    "question": "Is a premium fitness subscription like Peloton a priority for your health routine?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Fitness"
+}

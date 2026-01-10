@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Flexible Business Credit",
+    "question": "Do you spend at least $20 per month on shipping, food delivery, or office supplies for your business?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Business Expenses"
+}

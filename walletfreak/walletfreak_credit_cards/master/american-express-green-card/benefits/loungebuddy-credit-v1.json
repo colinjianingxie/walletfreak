@@ -1,0 +1,22 @@
+{
+    "BenefitId": "loungebuddy-credit",
+    "benefit_id": "loungebuddy-credit",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "LoungeBuddy Credit",
+    "description": "$100 LoungeBuddy credit",
+    "additional_details": null,
+    "benefit_category": [
+        "LoungeBuddy",
+        "Lounge Access"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 100.0,
+    "numeric_type": "Lounge",
+    "dollar_value": 100,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

@@ -1,0 +1,15 @@
+{
+    "question_id": "q-1",
+    "short_desc": "TSA Credit",
+    "question": "Do you want an easy way to cover the cost of Global Entry or TSA PreCheck?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Travel Security"
+}

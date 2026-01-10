@@ -1,0 +1,22 @@
+{
+    "BenefitId": "upgraded-boardings",
+    "benefit_id": "upgraded-boardings",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Upgraded Boardings",
+    "description": "4 Upgraded Boardings per year",
+    "additional_details": "when available",
+    "benefit_category": [
+        "Southwest",
+        "Generic Airlines"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 4,
+    "numeric_type": "Upgrade",
+    "dollar_value": null,
+    "time_category": "Per year",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

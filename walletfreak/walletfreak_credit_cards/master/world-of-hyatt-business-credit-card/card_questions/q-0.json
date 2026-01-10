@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Hyatt Credit",
+    "question": "How often do you stay at Hyatt properties for business?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Never",
+        "1-2 times",
+        "3+ times"
+    ],
+    "weights": [
+        0.0,
+        0.8,
+        1.0
+    ],
+    "benefit_category": "Hotels"
+}

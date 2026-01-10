@@ -1,0 +1,21 @@
+{
+    "BenefitId": "hotel-credit",
+    "benefit_id": "hotel-credit",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Hotel Credit",
+    "description": "$100 Hotel Collection Credit on qualifying 2-night minimum stays via Amex Travel",
+    "additional_details": null,
+    "benefit_category": [
+        "Generic Hotels"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 100.0,
+    "numeric_type": "Cash",
+    "dollar_value": 100,
+    "time_category": "Per qualifying stay",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

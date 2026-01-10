@@ -1,0 +1,23 @@
+{
+    "BenefitId": "global-lounge-access",
+    "benefit_id": "global-lounge-access",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Global Lounge Access",
+    "description": "Lounge access Centurion/Priority/Delta",
+    "additional_details": null,
+    "benefit_category": [
+        "Lounge Access",
+        "Priority Pass",
+        "Delta"
+    ],
+    "benefit_type": "Access",
+    "numeric_value": 3,
+    "numeric_type": "Lounge",
+    "dollar_value": null,
+    "time_category": "Permanent",
+    "enrollment_required": true,
+    "effective_date": "2025-12-07"
+}

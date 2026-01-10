@@ -1,0 +1,22 @@
+{
+    "BenefitId": "silver-elite",
+    "benefit_id": "silver-elite",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Silver Elite",
+    "description": "Automatic Silver Elite Status annually",
+    "additional_details": null,
+    "benefit_category": [
+        "Marriott",
+        "Status"
+    ],
+    "benefit_type": "Status",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Annually (anniversary year)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "DashPass",
+    "question": "Do you order food delivery or takeout frequently enough to benefit from reduced fees?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Food Delivery"
+}

@@ -1,0 +1,21 @@
+{
+    "BenefitId": "walmart-credit",
+    "benefit_id": "walmart-credit",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Walmart+ Credit",
+    "description": "One-time $98 statement credit for an annual Walmart+ membership",
+    "additional_details": "Must pay $49 or more for the annual membership with your card",
+    "benefit_category": [
+        "Generic Shopping"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 98.0,
+    "numeric_type": "Cash",
+    "dollar_value": 98,
+    "time_category": "One Time",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

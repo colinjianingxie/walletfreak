@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Resort Credit",
+    "question": "Do you typically visit Hilton Resorts where you can use up to $400 in annual credits ($200 semi-annually) for dining, spa, or activities?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Once a year",
+        "Twice+ a year"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Hotel"
+}

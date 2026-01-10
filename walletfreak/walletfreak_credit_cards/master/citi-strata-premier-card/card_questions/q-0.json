@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Hotel Savings",
+    "question": "Do you book single hotel stays over $500 that could benefit from a $100 annual discount?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Once a year",
+        "Twice+"
+    ],
+    "weights": [
+        0.0,
+        0.7,
+        1.0
+    ],
+    "benefit_category": "Hotel"
+}

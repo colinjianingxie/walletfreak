@@ -1,0 +1,15 @@
+{
+    "rate_id": "hotels",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 5,
+    "category": [
+        "Generic Hotels",
+        "Rental Cars"
+    ],
+    "currency": "points",
+    "additional_details": "through Altitude Rewards",
+    "is_default": false
+}

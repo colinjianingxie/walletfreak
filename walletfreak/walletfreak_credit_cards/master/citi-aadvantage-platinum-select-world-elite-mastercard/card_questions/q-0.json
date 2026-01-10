@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Checked Bag",
+    "question": "How often do you fly American Airlines and check a bag?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Never",
+        "Sometimes",
+        "Often"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Airlines"
+}

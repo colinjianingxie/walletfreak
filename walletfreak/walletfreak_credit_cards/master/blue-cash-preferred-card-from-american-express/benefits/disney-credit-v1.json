@@ -1,0 +1,22 @@
+{
+    "BenefitId": "disney-credit",
+    "benefit_id": "disney-credit",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Disney Credit",
+    "description": "$120 Disney Bundle Credit",
+    "additional_details": "$10 monthly for enrolled bundle subscription",
+    "benefit_category": [
+        "Disney",
+        "Generic Entertainment"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 120.0,
+    "numeric_type": "Cash",
+    "dollar_value": 120,
+    "time_category": "Monthly",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

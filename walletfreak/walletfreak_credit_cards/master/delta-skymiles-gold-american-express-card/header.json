@@ -1,0 +1,31 @@
+{
+    "slug-id": "delta-skymiles-gold-american-express-card",
+    "name": "Delta SkyMiles\u00ae Gold American Express Card",
+    "image_url": "/static/images/credit_cards/delta-skymiles-gold-american-express-card.jpeg",
+    "issuer": "American Express",
+    "annual_fee": 150,
+    "application_link": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-gold-american-express-card/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "8.5/10. The Delta Gold Amex is the sweet spot for the occasional Delta traveler. Between the free checked bag savings and the 15% discount on award flights, the $150 annual fee pays for itself in just one or two trips. The added $100 hotel credit makes it even easier to justify the cost.",
+    "points_value_cpp": 1.2,
+    "active_indices": {
+        "benefits": [
+            "takeoff-15-v1",
+            "free-checked-bag-v1",
+            "delta-stays-credit-v1",
+            "flight-credit-v1",
+            "priority-boarding-v1"
+        ],
+        "earning_rates": [
+            "delta-v1",
+            "dining-v1",
+            "groceries-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

@@ -1,0 +1,26 @@
+{
+    "slug-id": "bank-of-america-customized-cash-rewards-credit-card",
+    "name": "Bank of America Customized Cash Rewards Credit Card",
+    "image_url": "/static/images/credit_cards/bank-of-america-customized-cash-rewards-credit-card.png",
+    "issuer": "Bank of America",
+    "annual_fee": 0,
+    "application_link": "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "9/10. Flexible categories with a first-year boost make this a top no-fee cash back card. Preferred Rewards takes it to elite levels.",
+    "points_value_cpp": 1.0,
+    "active_indices": {
+        "benefits": [
+            "preferred-rewards-boost-v1"
+        ],
+        "earning_rates": [
+            "choice-category-v1",
+            "groceries-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

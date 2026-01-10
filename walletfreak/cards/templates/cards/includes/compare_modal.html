@@ -282,7 +282,10 @@ function openCompareModal() {
     `;
     
     cards.forEach(card => {
-        const rates = extractEarningRates(card.benefits) || [];
+        let rates = card.earning_rates || [];
+        if (!rates.length) {
+             rates = extractEarningRates(card.benefits) || [];
+        }
         const topRates = rates.sort((a, b) => (b.value || 0) - (a.value || 0)).slice(0, 3);
         
         const cardRow = document.createElement('div');

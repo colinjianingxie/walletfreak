@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Phone Protection",
+    "question": "Would you like up to $600 in coverage for your cell phone just for paying your monthly bill?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Cell Phone Protection"
+}

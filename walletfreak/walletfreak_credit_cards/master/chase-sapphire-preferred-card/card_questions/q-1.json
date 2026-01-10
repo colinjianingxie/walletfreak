@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Anniversary Bonus",
+    "question": "Do you value an annual anniversary bonus to boost your travel rewards balance?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Anniversary Bonus"
+}

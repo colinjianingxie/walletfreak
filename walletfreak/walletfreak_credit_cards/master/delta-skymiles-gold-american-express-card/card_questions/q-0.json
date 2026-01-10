@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Checked Bags",
+    "question": "Do you typically check at least one bag when flying with Delta?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Occasionally",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Airlines"
+}

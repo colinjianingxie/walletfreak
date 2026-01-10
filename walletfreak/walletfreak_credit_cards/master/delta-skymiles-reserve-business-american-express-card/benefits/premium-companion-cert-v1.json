@@ -1,0 +1,21 @@
+{
+    "BenefitId": "premium-companion-cert",
+    "benefit_id": "premium-companion-cert",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Premium Companion Cert",
+    "description": "Premium Companion Certificate",
+    "additional_details": "First Class, Comfort+, or Main Cabin domestic/Intl (select) round-trip upon renewal",
+    "benefit_category": [
+        "Delta"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 1.0,
+    "numeric_type": "Passes",
+    "dollar_value": 600,
+    "time_category": "Annually (anniversary year)",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

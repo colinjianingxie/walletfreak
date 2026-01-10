@@ -1,0 +1,22 @@
+{
+    "BenefitId": "fee-waiver",
+    "benefit_id": "fee-waiver",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Fee Waiver",
+    "description": "Annual fee refunded with $150k spend",
+    "additional_details": null,
+    "benefit_category": [
+        "Fee Waiver",
+        "Generic Financial & Rewards"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 150.0,
+    "numeric_type": "Cash",
+    "dollar_value": 150,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2025-12-07"
+}

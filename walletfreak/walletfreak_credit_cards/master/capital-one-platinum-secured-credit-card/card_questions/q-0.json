@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Credit Building",
+    "question": "Is building or repairing your credit history your primary goal for a new card?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Somewhat",
+        "Highly"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Credit Building"
+}

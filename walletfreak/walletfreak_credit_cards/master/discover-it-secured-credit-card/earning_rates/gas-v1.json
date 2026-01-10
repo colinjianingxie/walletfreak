@@ -1,0 +1,15 @@
+{
+    "rate_id": "gas",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": [
+        "Gas",
+        "Generic Dining"
+    ],
+    "currency": "cash back",
+    "additional_details": "gas & dining",
+    "is_default": false
+}

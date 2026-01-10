@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Primary Coverage",
+    "question": "Do you rent cars for business and want the peace of mind of primary insurance coverage?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Rental Cars"
+}

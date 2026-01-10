@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Airline Credit",
+    "question": "Do you spend $100 annually on airline fees and want a statement credit?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Airline"
+}

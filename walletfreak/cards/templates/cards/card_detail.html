@@ -15,12 +15,23 @@
             <div>
                 <h3>Rewards Structure</h3>
                 <ul class="rewards-list">
-                    {% if card.rewards_structure.details %}
-                    <div class="rewards-detail-text">{{ card.rewards_structure.details }}</div>
-                    {% else %}
-                    {% for key, value in card.rewards_structure.items %}
-                    <li class="rewards-list-item"><strong>{{ value }}</strong> on {{ key }}</li>
-                    {% endfor %}
+                    {% if card.rewards_structure %}
+                        {% if card.rewards_structure.details %}
+                        <div class="rewards-detail-text">{{ card.rewards_structure.details }}</div>
+                        {% else %}
+                        {% for key, value in card.rewards_structure.items %}
+                        <li class="rewards-list-item"><strong>{{ value }}</strong> on {{ key }}</li>
+                        {% endfor %}
+                        {% endif %}
+                    {% elif card.earning_rates %}
+                        {% for rate in card.earning_rates %}
+                        <li class="rewards-list-item">
+                            <strong>
+                                {% if rate.currency == 'cash' or rate.currency == 'Cashback' %}{{ rate.rate }}%{% else %}{{ rate.rate }}x{% endif %}
+                            </strong> 
+                            on {{ rate.category|join:", " }}
+                        </li>
+                        {% endfor %}
                     {% endif %}
                 </ul>
             </div>

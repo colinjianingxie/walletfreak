@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "CLEAR Credit",
+    "question": "Do you want to breeze through airport security with a $189 CLEAR Plus credit?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Travel Security"
+}

@@ -1,0 +1,17 @@
+{
+    "question_id": "q-9",
+    "short_desc": "Equinox Credit",
+    "question": "Is a premium high-end gym membership like Equinox a priority for your health routine?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Fitness"
+}

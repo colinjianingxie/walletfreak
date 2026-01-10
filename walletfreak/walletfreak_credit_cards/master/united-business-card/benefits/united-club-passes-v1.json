@@ -1,0 +1,21 @@
+{
+    "BenefitId": "united-club-passes",
+    "benefit_id": "united-club-passes",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "United Club Passes",
+    "description": "Two United Club one-time passes each year",
+    "additional_details": null,
+    "benefit_category": [
+        "Generic Travel Perks"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 2,
+    "numeric_type": "Passes",
+    "dollar_value": 100,
+    "time_category": "Annually (anniversary year)",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

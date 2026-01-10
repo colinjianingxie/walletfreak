@@ -1,0 +1,17 @@
+{
+    "question_id": "q-7",
+    "short_desc": "Cell Phone Protection",
+    "question": "Do you value up to $800 per claim in cell phone protection with a $50 deductible?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Somewhat",
+        "Highly"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Insurance"
+}

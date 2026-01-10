@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Simplicity",
+    "question": "Do you prefer earning a high flat rate on everything rather than tracking specific categories?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Financial & Rewards"
+}

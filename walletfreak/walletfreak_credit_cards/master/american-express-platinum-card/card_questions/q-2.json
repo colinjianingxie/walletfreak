@@ -1,0 +1,17 @@
+{
+    "question_id": "q-2",
+    "short_desc": "CLEAR Credit",
+    "question": "Do you want to skip the identity check line at major airport security checkpoints with biometric verification?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Travel Security"
+}

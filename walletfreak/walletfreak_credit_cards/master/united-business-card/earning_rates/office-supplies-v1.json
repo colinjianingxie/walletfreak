@@ -1,0 +1,14 @@
+{
+    "rate_id": "office-supplies",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": [
+        "Office Supplies"
+    ],
+    "currency": "miles",
+    "additional_details": "Office supply stores",
+    "is_default": false
+}

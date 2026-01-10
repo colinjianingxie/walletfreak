@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Good Grade Bonus",
+    "question": "Are you a student who maintains a 3.0+ GPA and wants to be rewarded for it?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Rewards Bonus"
+}

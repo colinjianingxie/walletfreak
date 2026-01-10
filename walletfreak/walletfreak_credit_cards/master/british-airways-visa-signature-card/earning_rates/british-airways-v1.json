@@ -1,0 +1,17 @@
+{
+    "rate_id": "british-airways",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "British Airways",
+        "Aer Lingus",
+        "Iberia",
+        "LEVEL"
+    ],
+    "currency": "points",
+    "additional_details": null,
+    "is_default": false
+}

@@ -1,0 +1,17 @@
+{
+    "question_id": "q-3",
+    "short_desc": "Cell Phone Protection",
+    "question": "Do you pay your business cell phone bill with a credit card and value protection against damage or theft?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Business & Tech"
+}

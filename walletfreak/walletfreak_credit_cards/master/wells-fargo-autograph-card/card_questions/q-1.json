@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Cell Phone Protection",
+    "question": "Do you value having up to $600 in phone protection just by paying your bill?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Somewhat",
+        "Highly"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Protection"
+}

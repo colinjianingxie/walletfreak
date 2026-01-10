@@ -1,0 +1,21 @@
+{
+    "BenefitId": "free-fico-score",
+    "benefit_id": "free-fico-score",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Free FICO Score",
+    "description": "Free FICO\u00ae Score access",
+    "additional_details": "Updated monthly for free through the Mobile Banking app or Online Banking",
+    "benefit_category": [
+        "Generic Financial & Rewards"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 1.0,
+    "numeric_type": "Perk",
+    "dollar_value": null,
+    "time_category": "Monthly",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

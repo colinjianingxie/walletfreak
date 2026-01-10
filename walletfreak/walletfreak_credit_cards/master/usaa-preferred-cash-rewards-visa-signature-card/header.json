@@ -1,0 +1,20 @@
+{
+    "slug-id": "usaa-preferred-cash-rewards-visa-signature-card",
+    "name": "USAA Preferred Cash Rewards Visa Signature Card",
+    "image_url": "/static/images/credit_cards/usaa-preferred-cash-rewards-visa-signature-card.png",
+    "issuer": "USAA",
+    "annual_fee": null,
+    "application_link": "https://www.usaa.com/banking/credit-cards/preferred-cash-rewards-visa-signature-card",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "No Freak verdict for this card yet",
+    "points_value_cpp": null,
+    "active_indices": {
+        "benefits": [],
+        "earning_rates": [
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": []
+    }
+}

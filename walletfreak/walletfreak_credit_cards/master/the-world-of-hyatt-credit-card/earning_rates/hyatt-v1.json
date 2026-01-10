@@ -1,0 +1,14 @@
+{
+    "rate_id": "hyatt",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 9,
+    "category": [
+        "Hyatt"
+    ],
+    "currency": "points",
+    "additional_details": "total points at Hyatt properties",
+    "is_default": false
+}

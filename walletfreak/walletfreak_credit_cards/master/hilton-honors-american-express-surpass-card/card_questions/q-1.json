@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Hilton Credit",
+    "question": "Do you stay at Hilton properties and want $200 in annual credits?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Hotel"
+}

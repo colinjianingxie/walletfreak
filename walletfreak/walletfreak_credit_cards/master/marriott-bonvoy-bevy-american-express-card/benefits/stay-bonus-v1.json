@@ -1,0 +1,21 @@
+{
+    "BenefitId": "stay-bonus",
+    "benefit_id": "stay-bonus",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Stay Bonus",
+    "description": "1,000 Bonus Points per paid stay",
+    "additional_details": "Direct bookings only",
+    "benefit_category": [
+        "Marriott"
+    ],
+    "benefit_type": "Bonus",
+    "numeric_value": 1000,
+    "numeric_type": "Points",
+    "dollar_value": 8,
+    "time_category": "Per qualifying stay",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

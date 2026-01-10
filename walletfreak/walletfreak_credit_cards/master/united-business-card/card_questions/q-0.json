@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Rideshare Credit",
+    "question": "How often do you use Uber or Lyft for commuting or travel?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Never",
+        "Monthly",
+        "Weekly"
+    ],
+    "weights": [
+        0.0,
+        0.7,
+        1.0
+    ],
+    "benefit_category": "Transportation"
+}

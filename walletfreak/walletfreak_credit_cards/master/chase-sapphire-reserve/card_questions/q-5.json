@@ -1,0 +1,17 @@
+{
+    "question_id": "q-5",
+    "short_desc": "DoorDash Credit",
+    "question": "Do you regularly use food delivery and value up to $300 in annual credits?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Delivery"
+}

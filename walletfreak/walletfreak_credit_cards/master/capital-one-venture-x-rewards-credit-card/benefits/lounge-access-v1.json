@@ -1,0 +1,22 @@
+{
+    "BenefitId": "lounge-access",
+    "benefit_id": "lounge-access",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Lounge Access",
+    "description": "Unlimited Capital One Lounge & Priority Pass lounge access",
+    "additional_details": "+2 guests free",
+    "benefit_category": [
+        "Lounge Access",
+        "Priority Pass"
+    ],
+    "benefit_type": "Access",
+    "numeric_value": 3,
+    "numeric_type": "Lounge",
+    "dollar_value": null,
+    "time_category": "Permanent",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

@@ -1,0 +1,31 @@
+{
+    "slug-id": "delta-skymiles-gold-business-american-express-card",
+    "name": "Delta SkyMiles\u00ae Gold Business American Express Card",
+    "image_url": "/static/images/credit_cards/delta-skymiles-gold-business-american-express-card.avif",
+    "issuer": "American Express",
+    "annual_fee": 150,
+    "application_link": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/delta-skymiles-gold-business-card/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "7/10. A solid 'foot in the door' card for Delta business travelers. The 15% award discount and $150 hotel credit effectively negate the annual fee, but the earning rates are lackluster for non-Delta spend.",
+    "points_value_cpp": 1.2,
+    "active_indices": {
+        "benefits": [
+            "delta-stays-credit-v1",
+            "free-checked-bag-v1",
+            "takeoff-15-v1",
+            "flight-credit-v1"
+        ],
+        "earning_rates": [
+            "delta-v1",
+            "dining-v1",
+            "shipping-v1",
+            "advertising-v1",
+            "all-purchases-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Anniversary Points",
+    "question": "Do you value receiving 7,500 bonus points every year to use toward Southwest flights?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Anniversary Bonus"
+}

@@ -1,0 +1,33 @@
+{
+    "slug-id": "hilton-honors-aspire-card-from-american-express",
+    "name": "Hilton Honors Aspire Card from American Express",
+    "image_url": "/static/images/credit_cards/hilton-honors-aspire-card-from-american-express.jpeg",
+    "issuer": "American Express",
+    "annual_fee": 550,
+    "application_link": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-aspire/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "10/10. Flat 175k points for $6k spend.",
+    "points_value_cpp": 0.5,
+    "active_indices": {
+        "benefits": [
+            "diamond-status-v1",
+            "resort-credit-v1",
+            "flight-credit-v1",
+            "free-night-v1",
+            "clear-plus-credit-v1",
+            "national-executive-status-v1",
+            "property-credit-v1",
+            "cell-phone-protection-v1"
+        ],
+        "earning_rates": [
+            "hilton-v1",
+            "dining-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

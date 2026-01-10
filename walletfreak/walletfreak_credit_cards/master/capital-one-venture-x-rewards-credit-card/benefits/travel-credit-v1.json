@@ -1,0 +1,21 @@
+{
+    "BenefitId": "travel-credit",
+    "benefit_id": "travel-credit",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Travel Credit",
+    "description": "$300 annual travel credit for bookings through Capital One Travel",
+    "additional_details": null,
+    "benefit_category": [
+        "Generic Travel Perks"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 300.0,
+    "numeric_type": "Cash",
+    "dollar_value": 300,
+    "time_category": "Annually (anniversary year)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

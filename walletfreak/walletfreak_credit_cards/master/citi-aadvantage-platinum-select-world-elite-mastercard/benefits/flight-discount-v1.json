@@ -1,0 +1,21 @@
+{
+    "BenefitId": "flight-discount",
+    "benefit_id": "flight-discount",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Flight Discount",
+    "description": "$125 American Airlines Flight Discount",
+    "additional_details": "After you spend $20,000+ and renew the card",
+    "benefit_category": [
+        "American Airlines"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 125,
+    "numeric_type": "Cash",
+    "dollar_value": 125,
+    "time_category": "Annually (anniversary year)",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

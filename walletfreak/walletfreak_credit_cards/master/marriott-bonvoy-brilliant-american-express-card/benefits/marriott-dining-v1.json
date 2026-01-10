@@ -1,0 +1,23 @@
+{
+    "BenefitId": "marriott-dining",
+    "benefit_id": "marriott-dining",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Marriott Dining",
+    "description": "$300 Marriott dining statement credit",
+    "additional_details": "up to $25 monthly",
+    "benefit_category": [
+        "Marriott",
+        "Generic Dining",
+        "Generic Hotels"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 300.0,
+    "numeric_type": "Cash",
+    "dollar_value": 300,
+    "time_category": "Monthly",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Global Entry Credit",
+    "question": "Do you travel internationally or domestically enough to value expedited airport security and customs processing?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Travel Security"
+}

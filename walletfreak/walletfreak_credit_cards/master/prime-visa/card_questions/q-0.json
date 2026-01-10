@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Grubhub+ Membership",
+    "question": "Do you want a free year of delivery membership for your favorite local restaurants?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Food Delivery"
+}

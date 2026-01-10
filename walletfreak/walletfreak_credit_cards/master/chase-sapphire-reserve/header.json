@@ -1,0 +1,46 @@
+{
+    "slug-id": "chase-sapphire-reserve",
+    "name": "Chase Sapphire Reserve",
+    "image_url": "/static/images/credit_cards/chase-sapphire-reserve.jpg",
+    "issuer": "Chase",
+    "annual_fee": 795,
+    "application_link": "https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve",
+    "min_credit_score": 740,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "10/10. Continues to dominate as a premium travel card with the addition of a $250 hotel credit for 2026 and easier-to-use Edit credits. The 125k signup bonus after $6k spend remains a strong entry point, with perks easily justifying the fee for frequent travelers.",
+    "points_value_cpp": 1.5,
+    "active_indices": {
+        "benefits": [
+            "travel-credit-v1",
+            "the-edit-hotel-credit-v1",
+            "additional-hotel-credit-v1",
+            "trusted-traveler-credit-v1",
+            "priority-pass-v1",
+            "air-canada-lounges-v1",
+            "doordash-credit-v1",
+            "dashpass-v1",
+            "entertainment-credit-v1",
+            "lyft-credit-v1",
+            "peloton-credit-v1",
+            "ihg-platinum-status-v1",
+            "exclusive-tables-v1",
+            "apple-tv-music-v1"
+        ],
+        "earning_rates": [
+            "chase-travel-hotels-v1",
+            "chase-travel-rental-cars-v1",
+            "chase-travel-flights-v1",
+            "airlines-v1",
+            "hotels-v1",
+            "dining-v1",
+            "transportation-v1",
+            "lyft-v1",
+            "peloton-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

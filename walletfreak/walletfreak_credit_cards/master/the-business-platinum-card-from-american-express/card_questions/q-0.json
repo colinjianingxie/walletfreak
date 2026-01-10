@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Airline Fee Credit",
+    "question": "Do you fly enough for business to utilize $200 in credits for incidental fees?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Airline"
+}

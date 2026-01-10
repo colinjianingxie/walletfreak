@@ -1,0 +1,17 @@
+{
+    "question_id": "q-4",
+    "short_desc": "Delta Stays Credit",
+    "question": "How likely are you to book a hotel through Delta's portal to use a $150 statement credit?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Hotel"
+}

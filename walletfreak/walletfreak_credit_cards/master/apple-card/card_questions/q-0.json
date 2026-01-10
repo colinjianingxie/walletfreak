@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Daily Cash",
+    "question": "Do you want your cash back rewards deposited daily into a savings account?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Savings Interest"
+}

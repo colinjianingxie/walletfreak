@@ -1,0 +1,22 @@
+{
+    "BenefitId": "award-discount",
+    "benefit_id": "award-discount",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Award Discount",
+    "description": "Up to 10,000-mile award flight discount",
+    "additional_details": "twice per year",
+    "benefit_category": [
+        "United",
+        "Generic Airlines"
+    ],
+    "benefit_type": "Bonus",
+    "numeric_value": 20000,
+    "numeric_type": "Miles",
+    "dollar_value": null,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

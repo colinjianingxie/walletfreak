@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Roadside Dispatch",
+    "question": "Do you value having 24/7 access to emergency roadside services?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Roadside Assistance"
+}

@@ -1,0 +1,21 @@
+{
+    "BenefitId": "no-foreign-fees",
+    "benefit_id": "no-foreign-fees",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "No Foreign Fees",
+    "description": "No Foreign Transaction Fees",
+    "additional_details": "No extra fees on international purchases, ideal for global business travel.",
+    "benefit_category": [
+        "Generic Travel Perks"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 0.0,
+    "numeric_type": "Cash",
+    "dollar_value": null,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

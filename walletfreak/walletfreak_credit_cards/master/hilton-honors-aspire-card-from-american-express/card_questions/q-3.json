@@ -1,0 +1,15 @@
+{
+    "question_id": "q-3",
+    "short_desc": "Free Night",
+    "question": "Would you use a \"Free Night Reward\" at a high-end Hilton property that would otherwise cost hundreds of dollars?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Hotel"
+}

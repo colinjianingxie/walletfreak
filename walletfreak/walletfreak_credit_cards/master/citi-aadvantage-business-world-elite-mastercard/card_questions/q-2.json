@@ -1,0 +1,15 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Companion Travel",
+    "question": "Would you value an annual domestic companion certificate to reduce travel costs for a second traveler?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Airlines"
+}

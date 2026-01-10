@@ -1,0 +1,24 @@
+{
+    "slug-id": "sams-club-mastercard",
+    "name": "Sam\u2019s Club Mastercard",
+    "image_url": "/static/images/credit_cards/sams-club-mastercard.png",
+    "issuer": "Synchrony",
+    "annual_fee": 0,
+    "application_link": "https://www.samsclub.com/credit",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "No Freak verdict for this card yet",
+    "points_value_cpp": null,
+    "active_indices": {
+        "benefits": [
+            "gas-rewards-v1"
+        ],
+        "earning_rates": [
+            "transportation-v1",
+            "dining-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": []
+    }
+}

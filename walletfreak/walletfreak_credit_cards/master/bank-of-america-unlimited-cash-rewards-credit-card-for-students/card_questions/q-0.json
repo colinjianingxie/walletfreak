@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Flat Rate Rewards",
+    "question": "Do you prefer earning a steady, high cash back rate on every purchase without tracking categories?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "All Purchases"
+}

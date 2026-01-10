@@ -1,0 +1,15 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Free Employee Cards",
+    "question": "Do you need to issue additional cards to employees at no extra cost?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Business Management"
+}

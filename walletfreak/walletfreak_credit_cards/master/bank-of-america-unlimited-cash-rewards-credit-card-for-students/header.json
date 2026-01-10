@@ -1,0 +1,26 @@
+{
+    "slug-id": "bank-of-america-unlimited-cash-rewards-credit-card-for-students",
+    "name": "Bank of America\u00ae Unlimited Cash Rewards credit card for Students",
+    "image_url": "/static/images/credit_cards/bank-of-america-unlimited-cash-rewards-credit-card-for-students.png",
+    "issuer": "Bank of America",
+    "annual_fee": 0,
+    "application_link": "https://www.bankofamerica.com/credit-cards/products/unlimited-cash-back-student-credit-card/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "9/10. This is arguably the strongest flat-rate card for students. The 2% first-year boost is excellent, and the $200 sign-up bonus is unusually high for a student-tier card. While you need 'Good' credit to qualify, the potential for up to 2.62% cash back through Preferred Rewards makes it a card you can keep long after graduation.",
+    "points_value_cpp": 1.0,
+    "active_indices": {
+        "benefits": [
+            "intro-apr-v1",
+            "preferred-rewards-bonus-v1",
+            "free-fico-score-v1"
+        ],
+        "earning_rates": [
+            "all-purchases-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

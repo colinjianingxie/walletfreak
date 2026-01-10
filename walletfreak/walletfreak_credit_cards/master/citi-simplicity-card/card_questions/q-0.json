@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "No Fees",
+    "question": "Is having no late fees or penalty rates a priority for your financial peace of mind?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Card Protection"
+}

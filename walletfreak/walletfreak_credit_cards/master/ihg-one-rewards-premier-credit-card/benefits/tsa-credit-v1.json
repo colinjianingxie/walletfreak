@@ -1,0 +1,23 @@
+{
+    "BenefitId": "tsa-credit",
+    "benefit_id": "tsa-credit",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "TSA Credit",
+    "description": "Global Entry/TSA PreCheck credit",
+    "additional_details": null,
+    "benefit_category": [
+        "Travel Security",
+        "Global Entry",
+        "TSA PreCheck"
+    ],
+    "benefit_type": "Security",
+    "numeric_value": 120.0,
+    "numeric_type": "Cash",
+    "dollar_value": 120,
+    "time_category": "Every 4 years",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

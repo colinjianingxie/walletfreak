@@ -1,0 +1,15 @@
+{
+    "rate_id": "telecom",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Telecom",
+        "Phone Plans"
+    ],
+    "currency": "cash back",
+    "additional_details": "choice category: TV/Telecom & Wireless (first $50,000 combined annual spend on choice + dining)",
+    "is_default": false
+}

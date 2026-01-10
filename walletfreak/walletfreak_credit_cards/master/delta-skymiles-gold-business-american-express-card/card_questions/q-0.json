@@ -1,0 +1,19 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Free Checked Bag",
+    "question": "How many times a year do you check bags when flying Delta?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Never",
+        "1-2 times",
+        "3-5 times",
+        "6+ times"
+    ],
+    "weights": [
+        0.0,
+        0.4,
+        0.8,
+        1.0
+    ],
+    "benefit_category": "Travel Perks"
+}

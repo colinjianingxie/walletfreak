@@ -1,0 +1,23 @@
+{
+    "BenefitId": "splurge-credit",
+    "benefit_id": "splurge-credit",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Splurge Credit",
+    "description": "$200 Lifestyle Splurge including Best Buy",
+    "additional_details": null,
+    "benefit_category": [
+        "Best Buy",
+        "Generic Shopping",
+        "Generic Entertainment"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 200.0,
+    "numeric_type": "Cash",
+    "dollar_value": 200,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2025-07-28"
+}

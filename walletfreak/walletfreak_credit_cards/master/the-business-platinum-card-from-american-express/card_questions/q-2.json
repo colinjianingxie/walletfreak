@@ -1,0 +1,17 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Indeed Credit",
+    "question": "Do you need to post job listings or use recruitment tools to hire for your business?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Hiring"
+}

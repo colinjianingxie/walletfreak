@@ -1,0 +1,15 @@
+{
+    "question_id": "q-1",
+    "short_desc": "LoungeBuddy Credit",
+    "question": "Do you like the flexibility of choosing different airport lounges and paying with a $100 credit?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Lounge Access"
+}

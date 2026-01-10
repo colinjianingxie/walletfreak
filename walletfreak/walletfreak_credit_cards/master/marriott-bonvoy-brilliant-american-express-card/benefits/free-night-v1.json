@@ -1,0 +1,22 @@
+{
+    "BenefitId": "free-night",
+    "benefit_id": "free-night",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Free Night",
+    "description": "85,000-point Free Night Award annually after renewal",
+    "additional_details": null,
+    "benefit_category": [
+        "Marriott",
+        "Generic Hotels"
+    ],
+    "benefit_type": "Free Night",
+    "numeric_value": 1,
+    "numeric_type": "FreeNight",
+    "dollar_value": null,
+    "time_category": "Annually (anniversary year)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

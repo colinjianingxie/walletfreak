@@ -1,0 +1,16 @@
+{
+    "rate_id": "advertising",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Advertising",
+        "Shipping",
+        "Telecom"
+    ],
+    "currency": "points",
+    "additional_details": "business bonus categories",
+    "is_default": false
+}

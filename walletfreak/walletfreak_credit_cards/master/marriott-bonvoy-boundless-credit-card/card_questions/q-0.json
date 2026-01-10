@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Free Night",
+    "question": "Do you enjoy staying at hotels and value perks like free nights?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Hotel"
+}

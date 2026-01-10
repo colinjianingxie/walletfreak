@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Preferred Rewards",
+    "question": "Do you have bank balances that could qualify you for higher reward rates?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Rewards Bonus"
+}

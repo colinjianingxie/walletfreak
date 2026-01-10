@@ -1,0 +1,17 @@
+{
+    "question_id": "q-8",
+    "short_desc": "Lyft Credit",
+    "question": "Do you use Lyft for commuting or travel and want to earn bonus points and statement credits?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Rideshare"
+}

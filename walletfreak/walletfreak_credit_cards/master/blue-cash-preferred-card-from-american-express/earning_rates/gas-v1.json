@@ -1,0 +1,15 @@
+{
+    "rate_id": "gas",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Gas",
+        "Transit"
+    ],
+    "currency": "cash back",
+    "additional_details": "U.S. gas stations & transit",
+    "is_default": false
+}

@@ -1,0 +1,16 @@
+{
+    "rate_id": "dining",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": [
+        "Generic Dining",
+        "Generic Travel Perks",
+        "Streaming"
+    ],
+    "currency": "miles",
+    "additional_details": "dining, streaming, travel",
+    "is_default": false
+}

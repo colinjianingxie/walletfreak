@@ -1,0 +1,28 @@
+{
+    "slug-id": "marriott-bonvoy-bevy-american-express-card",
+    "name": "Marriott Bonvoy Bevy American Express Card",
+    "image_url": "/static/images/credit_cards/marriott-bonvoy-bevy-american-express-card.webp",
+    "issuer": "American Express",
+    "annual_fee": 250,
+    "application_link": "https://www.americanexpress.com/us/credit-cards/card/marriott-bonvoy-bevy/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "6/10. Awkward middle child. The lack of an automatic free night (requires $15k spend) makes the $250 fee hard to swallow compared to the Boundless or Business versions.",
+    "points_value_cpp": 0.8,
+    "active_indices": {
+        "benefits": [
+            "gold-status-v1",
+            "stay-bonus-v1"
+        ],
+        "earning_rates": [
+            "marriott-v1",
+            "dining-v1",
+            "groceries-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "rate_id": "citi-travel-attractions",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 10,
+    "category": [
+        "Citi Travel Attractions"
+    ],
+    "currency": "points",
+    "additional_details": "attractions through Citi Travel",
+    "is_default": false
+}

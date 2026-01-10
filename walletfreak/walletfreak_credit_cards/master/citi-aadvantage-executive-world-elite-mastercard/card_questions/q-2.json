@@ -1,0 +1,15 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Food & Delivery",
+    "question": "Do you use food delivery services like Grubhub at least once a month?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Dining & Delivery"
+}

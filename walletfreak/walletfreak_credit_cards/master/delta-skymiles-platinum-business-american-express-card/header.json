@@ -1,0 +1,33 @@
+{
+    "slug-id": "delta-skymiles-platinum-business-american-express-card",
+    "name": "Delta SkyMiles\u00ae Platinum Business American Express Card",
+    "image_url": "/static/images/credit_cards/delta-skymiles-platinum-business-american-express-card.avif",
+    "issuer": "American Express",
+    "annual_fee": 350,
+    "application_link": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/delta-skymiles-platinum-business-card/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "8/10. The ultimate mid-tier business tool. The MQD Headstart and 1.5x boost on large purchases make status chasing significantly easier for small business owners.",
+    "points_value_cpp": 1.2,
+    "active_indices": {
+        "benefits": [
+            "companion-certificate-v1",
+            "delta-stays-credit-v1",
+            "resy-credit-v1",
+            "rideshare-credit-v1",
+            "mqd-headstart-v1"
+        ],
+        "earning_rates": [
+            "delta-v1",
+            "hotels-v1",
+            "transit-v1",
+            "shipping-v1",
+            "large-purchases-v1",
+            "all-purchases-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

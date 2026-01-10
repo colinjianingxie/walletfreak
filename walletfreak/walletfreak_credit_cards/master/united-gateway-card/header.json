@@ -1,0 +1,27 @@
+{
+    "slug-id": "united-gateway-card",
+    "name": "United Gateway Card",
+    "image_url": "/static/images/credit_cards/united-gateway-card.png",
+    "issuer": "Chase",
+    "annual_fee": 0,
+    "application_link": "https://creditcards.chase.com/travel-credit-cards/united/united-gateway",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "6/10. A solid no-annual-fee option for occasional United flyers. It keeps your miles from expiring but lacks major perks like free bags.",
+    "points_value_cpp": 1.2,
+    "active_indices": {
+        "benefits": [
+            "inflight-discount-v1"
+        ],
+        "earning_rates": [
+            "united-v1",
+            "gas-v1",
+            "transportation-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "question_id": "q-6",
+    "short_desc": "Property Credit",
+    "question": "Do you stay at Waldorf Astoria or Conrad hotels and want a $100 credit for a 2-night stay?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Hotel"
+}

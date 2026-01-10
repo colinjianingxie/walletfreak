@@ -1,0 +1,21 @@
+{
+    "BenefitId": "presale-access",
+    "benefit_id": "presale-access",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Presale Access",
+    "description": "Citi Entertainment",
+    "additional_details": null,
+    "benefit_category": [
+        "Generic Entertainment"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 0,
+    "numeric_type": null,
+    "dollar_value": 0,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2025-12-24"
+}

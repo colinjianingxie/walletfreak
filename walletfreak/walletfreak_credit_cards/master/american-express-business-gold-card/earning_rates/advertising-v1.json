@@ -1,0 +1,19 @@
+{
+    "rate_id": "advertising",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 4,
+    "category": [
+        "Advertising",
+        "Software",
+        "Generic Dining",
+        "Gas",
+        "Transit",
+        "Phone Plans"
+    ],
+    "currency": "points",
+    "additional_details": "on the top 2 categories each billing cycle from 6 eligible U.S. categories, up to $150,000 per calendar year",
+    "is_default": false
+}

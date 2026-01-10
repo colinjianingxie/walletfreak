@@ -1,0 +1,23 @@
+{
+    "BenefitId": "primary-coverage",
+    "benefit_id": "primary-coverage",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Primary Coverage",
+    "description": "Primary Rental Coverage",
+    "additional_details": null,
+    "benefit_category": [
+        "Rental Cars",
+        "Rental Coverage",
+        "Generic Protection"
+    ],
+    "benefit_type": "Protection",
+    "numeric_value": 0,
+    "numeric_type": null,
+    "dollar_value": 0,
+    "time_category": "Per Claim",
+    "enrollment_required": false,
+    "effective_date": "2025-12-24"
+}

@@ -1,0 +1,15 @@
+{
+    "rate_id": "hotels",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 5,
+    "category": [
+        "Generic Hotels",
+        "Generic Airlines"
+    ],
+    "currency": "points",
+    "additional_details": "prepaid travel",
+    "is_default": false
+}

@@ -1,0 +1,17 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Travel Spending",
+    "question": "Do you frequently book travel through online portals?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Yes",
+        "No",
+        "Sometimes"
+    ],
+    "weights": [
+        1.0,
+        0.0,
+        0.5
+    ],
+    "benefit_category": "Travel"
+}

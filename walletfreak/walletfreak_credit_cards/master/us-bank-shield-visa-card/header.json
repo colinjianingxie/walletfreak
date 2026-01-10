@@ -1,0 +1,22 @@
+{
+    "slug-id": "us-bank-shield-visa-card",
+    "name": "U.S. Bank Shield\u2122 Visa Card",
+    "image_url": "/static/images/credit_cards/us-bank-shield-visa-card.png",
+    "issuer": "U.S. Bank",
+    "annual_fee": 0,
+    "application_link": "https://applications.usbank.com/oad/termsSimpleApply.controller?locationCode=8069&offerId=7HDBW6317B&sourceCode=86798",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "No Freak verdict for this card yet",
+    "points_value_cpp": null,
+    "active_indices": {
+        "benefits": [
+            "phone-protection-v1"
+        ],
+        "earning_rates": [
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": []
+    }
+}

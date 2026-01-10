@@ -1,0 +1,22 @@
+{
+    "BenefitId": "united-credit",
+    "benefit_id": "united-credit",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "United Credit",
+    "description": "$125 annual United purchase credit",
+    "additional_details": null,
+    "benefit_category": [
+        "United",
+        "Generic Airlines"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 125.0,
+    "numeric_type": "Cash",
+    "dollar_value": 125,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

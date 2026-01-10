@@ -1,0 +1,22 @@
+{
+    "BenefitId": "grubhub-membership",
+    "benefit_id": "grubhub-membership",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Grubhub+ Membership",
+    "description": "Complimentary Grubhub+ membership",
+    "additional_details": null,
+    "benefit_category": [
+        "Grubhub",
+        "Generic Dining"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 120,
+    "numeric_type": "Cash",
+    "dollar_value": 120,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": true,
+    "effective_date": "2025-12-24"
+}

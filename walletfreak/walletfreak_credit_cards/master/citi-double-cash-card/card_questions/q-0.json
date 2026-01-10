@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Fraud Protection",
+    "question": "Is having protection against unauthorized charges a top priority for you?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Somewhat",
+        "Highly"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Card Protection"
+}

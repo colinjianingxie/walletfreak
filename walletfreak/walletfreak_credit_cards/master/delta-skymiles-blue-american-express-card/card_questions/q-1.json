@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Dining Rewards",
+    "question": "Do you spend a significant amount at restaurants and on food delivery?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Occasionally",
+        "Frequently"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Dining"
+}

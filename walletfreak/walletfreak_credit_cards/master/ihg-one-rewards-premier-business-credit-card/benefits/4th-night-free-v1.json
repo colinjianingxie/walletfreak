@@ -1,0 +1,21 @@
+{
+    "BenefitId": "4th-night-free",
+    "benefit_id": "4th-night-free",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "4th Night Free",
+    "description": "Redeem 3 Nights, Get 4th Night Free",
+    "additional_details": "On award stays",
+    "benefit_category": [
+        "IHG"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 1,
+    "numeric_type": "FreeNight",
+    "dollar_value": 150,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

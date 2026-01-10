@@ -1,0 +1,21 @@
+{
+    "BenefitId": "global-entrytsa-credit",
+    "benefit_id": "global-entrytsa-credit",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Global Entry/TSA Credit",
+    "description": "Up to $120 credit for Global Entry or TSA PreCheck\u00ae",
+    "additional_details": "Available every 4 years as a statement credit",
+    "benefit_category": [
+        "Generic Travel Perks"
+    ],
+    "benefit_type": "Security",
+    "numeric_value": 120.0,
+    "numeric_type": "Cash",
+    "dollar_value": 120,
+    "time_category": "Every 4 years",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

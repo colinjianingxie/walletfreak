@@ -1,0 +1,17 @@
+{
+    "question_id": "q-7",
+    "short_desc": "Global Lounge Access",
+    "question": "How often do you travel for business and value high-end airport lounge access?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Never",
+        "Occasionally",
+        "Often"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Lounge Access"
+}

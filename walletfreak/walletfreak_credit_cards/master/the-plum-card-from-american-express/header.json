@@ -1,0 +1,25 @@
+{
+    "slug-id": "the-plum-card-from-american-express",
+    "name": "The Plum Card\u00ae from American Express",
+    "image_url": "/static/images/credit_cards/the-plum-card-from-american-express.png",
+    "issuer": "American Express",
+    "annual_fee": 250,
+    "application_link": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/plum-card/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "6/10. A niche tool for cash-flow heavy businesses. While the 1.5% discount is okay, other cards offer 2% cash back without the 10-day payment requirement. Only worth it if you actually use the 60-day window.",
+    "points_value_cpp": 1.0,
+    "active_indices": {
+        "benefits": [
+            "early-pay-discount-v1",
+            "extra-days-to-pay-v1"
+        ],
+        "earning_rates": [
+            "all-purchases-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

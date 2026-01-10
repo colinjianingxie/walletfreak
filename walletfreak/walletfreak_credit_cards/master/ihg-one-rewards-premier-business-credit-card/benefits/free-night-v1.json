@@ -1,0 +1,21 @@
+{
+    "BenefitId": "free-night",
+    "benefit_id": "free-night",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Free Night",
+    "description": "Anniversary Free Night (up to 40,000 points)",
+    "additional_details": "Can add points to redeem for higher value nights",
+    "benefit_category": [
+        "IHG"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 40000,
+    "numeric_type": "Points",
+    "dollar_value": 200,
+    "time_category": "Annually (anniversary year)",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

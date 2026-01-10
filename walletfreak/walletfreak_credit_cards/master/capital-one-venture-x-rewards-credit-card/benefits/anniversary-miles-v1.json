@@ -1,0 +1,21 @@
+{
+    "BenefitId": "anniversary-miles",
+    "benefit_id": "anniversary-miles",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Anniversary Miles",
+    "description": "10,000 anniversary bonus miles each account anniversary",
+    "additional_details": null,
+    "benefit_category": [
+        "Anniversary Bonus"
+    ],
+    "benefit_type": "Bonus",
+    "numeric_value": 10000,
+    "numeric_type": "Miles",
+    "dollar_value": 100,
+    "time_category": "Annually (anniversary year)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

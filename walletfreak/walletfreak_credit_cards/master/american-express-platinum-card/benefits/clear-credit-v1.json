@@ -1,0 +1,22 @@
+{
+    "BenefitId": "clear-credit",
+    "benefit_id": "clear-credit",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "CLEAR Credit",
+    "description": "$209 CLEAR Plus Credit",
+    "additional_details": null,
+    "benefit_category": [
+        "CLEAR",
+        "Travel Security"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 209.0,
+    "numeric_type": "Cash",
+    "dollar_value": 209,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": true,
+    "effective_date": "2025-11-29"
+}

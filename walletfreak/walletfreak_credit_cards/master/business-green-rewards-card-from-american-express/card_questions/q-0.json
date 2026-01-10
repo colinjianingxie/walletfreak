@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Amex Travel Bonus",
+    "question": "How often do you book travel through portals like Amex Travel?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Rarely",
+        "Occasionally",
+        "Frequently"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Travel"
+}

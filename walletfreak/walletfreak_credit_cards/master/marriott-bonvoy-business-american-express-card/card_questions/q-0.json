@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Business Shipping",
+    "question": "Do you have recurring business expenses for shipping or phone plans?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "None",
+        "Moderate",
+        "High"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Business & Tech"
+}

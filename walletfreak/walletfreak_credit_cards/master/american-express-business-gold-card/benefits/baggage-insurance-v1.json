@@ -1,0 +1,21 @@
+{
+    "BenefitId": "baggage-insurance",
+    "benefit_id": "baggage-insurance",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Baggage Insurance",
+    "description": "Baggage Insurance Plan",
+    "additional_details": "up to $1,250 for carry-on, $500 for checked per person",
+    "benefit_category": [
+        "Generic Travel Perks"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 1750.0,
+    "numeric_type": "Cash",
+    "dollar_value": 1750,
+    "time_category": "Per Trip",
+    "enrollment_required": false,
+    "effective_date": "2025-01-01"
+}

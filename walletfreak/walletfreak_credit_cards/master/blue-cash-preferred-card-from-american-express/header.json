@@ -1,0 +1,27 @@
+{
+    "slug-id": "blue-cash-preferred-card-from-american-express",
+    "name": "Blue Cash Preferred Card from American Express",
+    "image_url": "/static/images/credit_cards/blue-cash-preferred-card-from-american-express.png",
+    "issuer": "American Express",
+    "annual_fee": 95,
+    "application_link": "https://www.americanexpress.com/us/credit-cards/card/blue-cash-preferred/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "10/10. Flat $250 for $3k spend. Simple cash back.",
+    "points_value_cpp": null,
+    "active_indices": {
+        "benefits": [
+            "disney-credit-v1"
+        ],
+        "earning_rates": [
+            "groceries-v1",
+            "streaming-v1",
+            "gas-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

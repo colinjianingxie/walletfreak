@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Cash Back on Purchases",
+    "question": "What is your business's annual spending level?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Low",
+        "Medium",
+        "High"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Business"
+}

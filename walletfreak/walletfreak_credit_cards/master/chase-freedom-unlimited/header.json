@@ -1,0 +1,29 @@
+{
+    "slug-id": "chase-freedom-unlimited",
+    "name": "Chase Freedom Unlimited",
+    "image_url": "/static/images/credit_cards/chase-freedom-unlimited.jpg",
+    "issuer": "Chase",
+    "annual_fee": 0,
+    "application_link": "https://secure.chase.com/web/oao/application/card?sourceCode=HZCH&action=guest#/origination/cardDetails/index/index;cellCode=61DS;combo=Y",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "10/10. Extremely low barrier to entry. Simple $500 spend for a quick $200 back.",
+    "points_value_cpp": null,
+    "active_indices": {
+        "benefits": [
+            "dashpass-v1",
+            "doordash-nr-credit-v1"
+        ],
+        "earning_rates": [
+            "chase-travel-flights-v1",
+            "chase-travel-hotels-v1",
+            "chase-travel-rental-cars-v1",
+            "dining-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

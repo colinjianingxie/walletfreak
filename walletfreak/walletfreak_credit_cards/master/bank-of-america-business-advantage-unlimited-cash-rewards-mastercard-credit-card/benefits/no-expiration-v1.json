@@ -1,0 +1,21 @@
+{
+    "BenefitId": "no-expiration",
+    "benefit_id": "no-expiration",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "No Expiration",
+    "description": "Unlimited Cash Back with no expiration",
+    "additional_details": "Rewards don't expire as long as your account remains open.",
+    "benefit_category": [
+        "All Purchases"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": null,
+    "numeric_type": "Perk",
+    "dollar_value": null,
+    "time_category": "Permanent",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Hotel Credit",
+    "question": "How likely are you to book a 2-night luxury stay through a premium hotel collection to get on-property credits?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Hotel"
+}

@@ -1,0 +1,17 @@
+{
+    "question_id": "q-3",
+    "short_desc": "Platinum Status",
+    "question": "Do you stay at IHG hotels often enough to value room upgrades and early check-in?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Hotel Status"
+}

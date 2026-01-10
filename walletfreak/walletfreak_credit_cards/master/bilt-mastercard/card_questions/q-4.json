@@ -1,0 +1,17 @@
+{
+    "question_id": "q-4",
+    "short_desc": "Rent Day Bonus",
+    "question": "Do you value earning double points on all non-rent purchases on the 1st of every month?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Rewards Bonus"
+}

@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Award Stays",
+    "question": "Do you prefer redeeming points for long hotel stays (4+ nights)?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Never",
+        "Once a year",
+        "Multiple times"
+    ],
+    "weights": [
+        0.0,
+        0.4,
+        1.0
+    ],
+    "benefit_category": "Hotels"
+}

@@ -1,0 +1,14 @@
+{
+    "rate_id": "capital-one-travel-rental-cars",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 10,
+    "category": [
+        "Capital One Travel Rental Cars"
+    ],
+    "currency": "miles",
+    "additional_details": "rental cars booked through Capital One Business Travel",
+    "is_default": false
+}

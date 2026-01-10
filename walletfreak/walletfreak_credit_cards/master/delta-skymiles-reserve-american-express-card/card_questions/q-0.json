@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Companion Certificate",
+    "question": "Do you want a \"buy one, get one\" certificate for First Class or Comfort+ seats once a year?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Airline"
+}

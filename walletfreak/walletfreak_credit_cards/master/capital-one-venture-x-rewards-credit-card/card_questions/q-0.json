@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Travel Credit",
+    "question": "Do you spend at least $300 annually on travel and feel comfortable booking through a bank's travel portal?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Maybe",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Travel"
+}

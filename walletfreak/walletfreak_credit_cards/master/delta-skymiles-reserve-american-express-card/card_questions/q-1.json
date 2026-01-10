@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Sky Club Access",
+    "question": "Are you a loyal Delta flyer who values having a dedicated quiet workspace at their airport hubs?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Rarely",
+        "Occasionally",
+        "Often"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Lounge Access"
+}

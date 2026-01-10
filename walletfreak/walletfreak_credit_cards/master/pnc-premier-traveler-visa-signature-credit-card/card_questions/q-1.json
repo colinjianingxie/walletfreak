@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Luxury Hotel Collection Benefits",
+    "question": "Do you enjoy perks like room upgrades and food credits when staying at luxury hotels?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Hotel"
+}

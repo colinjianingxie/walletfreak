@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Diamond Status",
+    "question": "How often do you stay at Hilton properties and value perks like executive lounge access and suite upgrades?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Rarely",
+        "Occasionally",
+        "Always"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Hotel Status"
+}

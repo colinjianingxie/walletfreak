@@ -1,0 +1,17 @@
+{
+    "rate_id": "airlines",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Generic Airlines",
+        "Gas",
+        "Generic Dining",
+        "Generic Groceries"
+    ],
+    "currency": "points",
+    "additional_details": "Air, Gas, Dining, Groceries",
+    "is_default": false
+}

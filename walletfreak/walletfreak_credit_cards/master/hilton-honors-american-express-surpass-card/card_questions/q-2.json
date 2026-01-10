@@ -1,0 +1,15 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Free Night",
+    "question": "Can you spend $15,000 a year on one card to earn a free night at a Hilton hotel?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Hotel"
+}

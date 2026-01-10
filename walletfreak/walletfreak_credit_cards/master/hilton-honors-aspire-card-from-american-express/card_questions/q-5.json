@@ -1,0 +1,17 @@
+{
+    "question_id": "q-5",
+    "short_desc": "National Executive Status",
+    "question": "Do you rent cars from National and value executive status for faster service and upgrades?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Car Rental"
+}

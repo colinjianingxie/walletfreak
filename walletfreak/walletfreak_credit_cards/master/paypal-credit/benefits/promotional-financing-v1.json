@@ -1,0 +1,23 @@
+{
+    "BenefitId": "promotional-financing",
+    "benefit_id": "promotional-financing",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Promotional Financing",
+    "description": "Promotional financing offers on PayPal purchases",
+    "additional_details": null,
+    "benefit_category": [
+        "PayPal",
+        "Generic Shopping",
+        "Generic Shopping"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Permanent",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

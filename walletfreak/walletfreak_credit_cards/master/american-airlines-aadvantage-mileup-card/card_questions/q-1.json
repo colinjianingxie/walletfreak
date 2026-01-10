@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "AA Loyalty",
+    "question": "How often do you fly with American Airlines?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Never",
+        "Occasionally",
+        "Frequently"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Airlines"
+}

@@ -1,0 +1,15 @@
+{
+    "question_id": "q-6",
+    "short_desc": "Citigold Credit",
+    "question": "Are you a Citigold client who can qualify for a $145 annual credit?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Banking"
+}

@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Business Travel Portal",
+    "question": "How often does your business book travel (hotels, flights, cars) through a centralized travel portal?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Never",
+        "Occasionally",
+        "Frequently"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Generic Travel Perks"
+}

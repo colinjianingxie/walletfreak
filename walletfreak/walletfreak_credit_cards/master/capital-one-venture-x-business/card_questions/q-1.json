@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Lounge Access",
+    "question": "Do you prioritize airport lounge access to stay productive during business trips?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Generic Travel Perks"
+}

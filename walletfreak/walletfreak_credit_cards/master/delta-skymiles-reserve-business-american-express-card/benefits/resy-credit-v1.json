@@ -1,0 +1,21 @@
+{
+    "BenefitId": "resy-credit",
+    "benefit_id": "resy-credit",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Resy Credit",
+    "description": "$240 Resy Credit",
+    "additional_details": "$20 per month for enrolled U.S. Resy restaurants",
+    "benefit_category": [
+        "Generic Dining"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 20.0,
+    "numeric_type": "Cash",
+    "dollar_value": 240,
+    "time_category": "Monthly",
+    "enrollment_required": true,
+    "effective_date": "2025-12-28"
+}

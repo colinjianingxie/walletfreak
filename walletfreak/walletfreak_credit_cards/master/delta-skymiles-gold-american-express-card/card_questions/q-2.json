@@ -1,0 +1,15 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Hotel Bookings",
+    "question": "Are you comfortable booking at least one hotel stay per year through the Delta Stays portal?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Hotel"
+}

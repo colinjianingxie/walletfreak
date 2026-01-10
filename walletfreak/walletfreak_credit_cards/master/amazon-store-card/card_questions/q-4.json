@@ -1,0 +1,17 @@
+{
+    "question_id": "q-4",
+    "short_desc": "12 month deferred interest",
+    "question": "For purchases over $599 on Amazon, would you benefit from a 12-month window to pay in full without interest?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Shopping"
+}

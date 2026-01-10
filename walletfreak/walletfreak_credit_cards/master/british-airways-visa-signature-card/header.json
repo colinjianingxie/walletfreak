@@ -1,0 +1,26 @@
+{
+    "slug-id": "british-airways-visa-signature-card",
+    "name": "British Airways Visa Signature Card",
+    "image_url": "/static/images/credit_cards/british-airways-visa-signature-card.png",
+    "issuer": "Chase",
+    "annual_fee": 95,
+    "application_link": "https://creditcards.chase.com/rewards-credit-cards/british-airways-visa",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "5/10. Tiered spend that jumps from $5k to $20k to unlock full value.",
+    "points_value_cpp": 1.3,
+    "active_indices": {
+        "benefits": [
+            "travel-together-v1"
+        ],
+        "earning_rates": [
+            "british-airways-v1",
+            "hotels-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "BenefitId": "gift-card",
+    "benefit_id": "gift-card",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Gift Card",
+    "description": "$150 Instant Amazon Gift Card",
+    "additional_details": null,
+    "benefit_category": [
+        "Amazon",
+        "Generic Shopping"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 150,
+    "numeric_type": "Cash",
+    "dollar_value": 150,
+    "time_category": "One Time",
+    "enrollment_required": false,
+    "effective_date": "2025-12-24"
+}

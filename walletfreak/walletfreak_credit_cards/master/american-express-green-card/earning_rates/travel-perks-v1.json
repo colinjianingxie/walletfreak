@@ -1,0 +1,16 @@
+{
+    "rate_id": "travel-perks",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Generic Travel Perks",
+        "Transit",
+        "Generic Dining"
+    ],
+    "currency": "points",
+    "additional_details": "transit, restaurants, travel",
+    "is_default": false
+}

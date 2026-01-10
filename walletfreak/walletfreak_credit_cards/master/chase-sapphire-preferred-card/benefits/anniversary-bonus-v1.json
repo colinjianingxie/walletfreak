@@ -1,0 +1,21 @@
+{
+    "BenefitId": "anniversary-bonus",
+    "benefit_id": "anniversary-bonus",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Anniversary Bonus",
+    "description": "10% anniversary points bonus based on total purchases in prior account anniversary year",
+    "additional_details": null,
+    "benefit_category": [
+        "Anniversary Bonus"
+    ],
+    "benefit_type": "Bonus",
+    "numeric_value": 10.0,
+    "numeric_type": "Percent",
+    "dollar_value": null,
+    "time_category": "Annually (anniversary year)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

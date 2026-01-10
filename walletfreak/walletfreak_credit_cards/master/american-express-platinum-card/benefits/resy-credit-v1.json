@@ -1,0 +1,22 @@
+{
+    "BenefitId": "resy-credit",
+    "benefit_id": "resy-credit",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Resy Credit",
+    "description": "$400 Resy Credit",
+    "additional_details": "$100 quarterly",
+    "benefit_category": [
+        "Resy",
+        "Generic Dining"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 400.0,
+    "numeric_type": "Cash",
+    "dollar_value": 400,
+    "time_category": "Quarterly",
+    "enrollment_required": true,
+    "effective_date": "2025-11-29"
+}

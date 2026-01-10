@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "No Penalty APR",
+    "question": "Is having a card that doesn't increase your rate for a late payment important to you?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Financial Protection"
+}

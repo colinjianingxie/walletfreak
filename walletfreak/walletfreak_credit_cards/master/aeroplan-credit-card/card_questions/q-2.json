@@ -1,0 +1,17 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Elite Status",
+    "question": "Do you fly with Air Canada or Star Alliance airlines often enough to appreciate priority boarding and potential upgrades?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Airline"
+}

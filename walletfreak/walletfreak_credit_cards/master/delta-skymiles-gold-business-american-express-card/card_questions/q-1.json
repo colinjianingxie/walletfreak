@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Delta Stays Credit",
+    "question": "Do you book at least one hotel stay per year through airline or travel portals?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Maybe",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Hotels"
+}

@@ -1,0 +1,15 @@
+{
+    "rate_id": "dining",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Generic Dining",
+        "Drugstores"
+    ],
+    "currency": "cash back",
+    "additional_details": "dining (incl. takeout/delivery) & drugstores",
+    "is_default": false
+}

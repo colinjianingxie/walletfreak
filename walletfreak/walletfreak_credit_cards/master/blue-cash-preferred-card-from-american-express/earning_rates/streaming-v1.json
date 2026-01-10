@@ -1,0 +1,14 @@
+{
+    "rate_id": "streaming",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 6,
+    "category": [
+        "Streaming"
+    ],
+    "currency": "cash back",
+    "additional_details": "select U.S. streaming subscriptions",
+    "is_default": false
+}

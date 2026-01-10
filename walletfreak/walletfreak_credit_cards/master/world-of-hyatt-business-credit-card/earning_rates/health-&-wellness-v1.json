@@ -1,0 +1,14 @@
+{
+    "rate_id": "health-&-wellness",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": [
+        "Generic Health & Wellness"
+    ],
+    "currency": "points",
+    "additional_details": "Fitness club and gym memberships",
+    "is_default": false
+}

@@ -1,0 +1,22 @@
+{
+    "BenefitId": "hilton-credit",
+    "benefit_id": "hilton-credit",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Hilton Credit",
+    "description": "$200 Hilton credit",
+    "additional_details": "$50 quarterly",
+    "benefit_category": [
+        "Hilton",
+        "Generic Hotels"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 200.0,
+    "numeric_type": "Cash",
+    "dollar_value": 200,
+    "time_category": "Quarterly",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

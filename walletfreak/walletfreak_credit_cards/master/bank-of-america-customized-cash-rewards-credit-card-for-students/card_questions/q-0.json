@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Flexible Bonus",
+    "question": "Do you want to choose which category (Online Shopping, Dining, Gas) earns you 3% back?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Rewards Bonus"
+}

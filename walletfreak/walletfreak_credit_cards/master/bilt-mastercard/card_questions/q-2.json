@@ -1,0 +1,15 @@
+{
+    "question_id": "q-2",
+    "short_desc": "No FTF",
+    "question": "Do you travel outside the U.S. and want to avoid the typical 3% fee on every purchase?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Travel"
+}

@@ -1,0 +1,25 @@
+{
+    "slug-id": "penfed-pathfinder-rewards-visa-signature-card",
+    "name": "PenFed Pathfinder Rewards Visa Signature Card",
+    "image_url": "/static/images/credit_cards/penfed-pathfinder-rewards-visa-signature-card.jpg",
+    "issuer": "PenFed",
+    "annual_fee": 95,
+    "application_link": "https://www.penfed.org/content/penfed/en/penfedroot/credit-cards/pathfinder-rewards-visa.html",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "0/10. No welcome bonus in current public offers.",
+    "points_value_cpp": 1.0,
+    "active_indices": {
+        "benefits": [
+            "airline-credit-v1"
+        ],
+        "earning_rates": [
+            "travel-perks-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

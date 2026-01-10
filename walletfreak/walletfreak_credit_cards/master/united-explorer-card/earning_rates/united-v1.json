@@ -1,0 +1,16 @@
+{
+    "rate_id": "united",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": [
+        "United",
+        "Generic Dining",
+        "Generic Hotels"
+    ],
+    "currency": "miles",
+    "additional_details": "United, dining, direct hotels",
+    "is_default": false
+}

@@ -1,0 +1,35 @@
+{
+    "slug-id": "american-express-business-gold-card",
+    "name": "American Express Business Gold Card",
+    "image_url": "/static/images/credit_cards/american-express-business-gold-card.png",
+    "issuer": "American Express",
+    "annual_fee": 375,
+    "application_link": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-gold-card-amex/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "9/10. Strong earning rates in business categories with valuable credits that can offset the fee, plus a solid 100k welcome bonus, making it great for small business owners with varied spending.",
+    "points_value_cpp": 1.0,
+    "active_indices": {
+        "benefits": [
+            "flexible-business-credit-v1",
+            "walmart-credit-v1",
+            "squarespace-credit-v1",
+            "cell-phone-protection-v1",
+            "no-fx-fees-v1",
+            "purchase-protection-v1",
+            "extended-warranty-v1",
+            "car-rental-insurance-v1",
+            "baggage-insurance-v1",
+            "trip-delay-insurance-v1"
+        ],
+        "earning_rates": [
+            "advertising-v1",
+            "amex-travel-flights-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Balance Transfer",
+    "question": "Do you have high-interest credit card debt you want to pay down over nearly two years?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Financial & Rewards"
+}

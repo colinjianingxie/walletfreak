@@ -1,0 +1,22 @@
+{
+    "BenefitId": "doordash-non-restaurant-credit",
+    "benefit_id": "doordash-non-restaurant-credit",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "DoorDash Non-Restaurant Credit",
+    "description": "$40 annual DoorDash Non-Restaurant credit",
+    "additional_details": null,
+    "benefit_category": [
+        "DoorDash",
+        "Generic Dining"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 40,
+    "numeric_type": "Cash",
+    "dollar_value": 40,
+    "time_category": "Quarterly",
+    "enrollment_required": true,
+    "effective_date": "2025-12-24"
+}

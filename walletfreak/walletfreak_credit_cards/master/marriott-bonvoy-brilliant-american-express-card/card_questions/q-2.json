@@ -1,0 +1,15 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Free Night",
+    "question": "Would you use an annual 85,000-point free night at premium hotels like Ritz-Carlton or St. Regis?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Hotel"
+}

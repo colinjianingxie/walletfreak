@@ -1,0 +1,21 @@
+{
+    "BenefitId": "airline-credit",
+    "benefit_id": "airline-credit",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Airline Credit",
+    "description": "$100 annual airline incidental credit",
+    "additional_details": null,
+    "benefit_category": [
+        "Generic Airlines"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 100.0,
+    "numeric_type": "Cash",
+    "dollar_value": 100,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

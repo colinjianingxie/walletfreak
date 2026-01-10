@@ -1,0 +1,21 @@
+{
+    "BenefitId": "companion-certificate",
+    "benefit_id": "companion-certificate",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Companion Certificate",
+    "description": "American Airlines Companion Certificate for domestic travel",
+    "additional_details": "Earned after $30,000+ spend in a membership year and account renewal. Redeeming costs $99 plus taxes.",
+    "benefit_category": [
+        "Generic Airlines"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 1,
+    "numeric_type": "Passes",
+    "dollar_value": 250,
+    "time_category": "Annually (anniversary year)",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

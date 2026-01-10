@@ -1,0 +1,23 @@
+{
+    "BenefitId": "primary-rental-coverage",
+    "benefit_id": "primary-rental-coverage",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Primary Rental Coverage",
+    "description": "Primary auto rental collision damage waiver",
+    "additional_details": null,
+    "benefit_category": [
+        "Rental Cars",
+        "Rental Coverage",
+        "Generic Protection"
+    ],
+    "benefit_type": "Protection",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Per Claim",
+    "enrollment_required": false,
+    "effective_date": "2025-12-07"
+}

@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Free Night",
+    "question": "Would you use an annual free night at an IHG hotel worth up to 40,000 points?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Hotel"
+}

@@ -1,0 +1,15 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Elite Credits",
+    "question": "Are you interested in hotel loyalty programs that offer enhanced experiences like upgrades and bonus rewards?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Hotel Status"
+}

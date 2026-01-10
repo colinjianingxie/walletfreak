@@ -1,0 +1,21 @@
+{
+    "BenefitId": "no-fees",
+    "benefit_id": "no-fees",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "No Fees",
+    "description": "No foreign transaction fees or balance transfer fees",
+    "additional_details": "Ideal for international travel or consolidating debt",
+    "benefit_category": [
+        "Generic Financial & Rewards"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 0,
+    "numeric_type": "Cash",
+    "dollar_value": null,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

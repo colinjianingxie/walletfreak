@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Premium Companion Cert",
+    "question": "Do you fly with a companion in premium cabins at least once a year?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes, in Economy",
+        "Yes, in First/Comfort+"
+    ],
+    "weights": [
+        0.0,
+        0.4,
+        1.0
+    ],
+    "benefit_category": "Airlines"
+}

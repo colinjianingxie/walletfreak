@@ -1,0 +1,28 @@
+{
+    "slug-id": "ink-business-premier-credit-card",
+    "name": "Ink Business Premier Credit Card",
+    "image_url": "/static/images/credit_cards/ink-business-premier-credit-card.webp",
+    "issuer": "Chase",
+    "annual_fee": 195,
+    "application_link": "https://creditcards.chase.com/ink-business-credit-cards/premier",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "10/10. Flat $1,000 for $10k spend.",
+    "points_value_cpp": null,
+    "active_indices": {
+        "benefits": [
+            "cell-phone-protection-v1"
+        ],
+        "earning_rates": [
+            "chase-travel-flights-v1",
+            "chase-travel-hotels-v1",
+            "chase-travel-rental-cars-v1",
+            "large-purchases-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

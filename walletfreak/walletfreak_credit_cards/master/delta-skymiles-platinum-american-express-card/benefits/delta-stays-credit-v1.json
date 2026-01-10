@@ -1,0 +1,22 @@
+{
+    "BenefitId": "delta-stays-credit",
+    "benefit_id": "delta-stays-credit",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Delta Stays Credit",
+    "description": "$150 Delta Stays Credit",
+    "additional_details": null,
+    "benefit_category": [
+        "Delta",
+        "Generic Hotels"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 150,
+    "numeric_type": "Cash",
+    "dollar_value": 150,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": true,
+    "effective_date": "2025-11-29"
+}

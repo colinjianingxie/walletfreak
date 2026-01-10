@@ -1,0 +1,22 @@
+{
+    "BenefitId": "club-passes",
+    "benefit_id": "club-passes",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Club Passes",
+    "description": "2 United Club one-time passes each cardmember anniversary",
+    "additional_details": null,
+    "benefit_category": [
+        "United",
+        "Lounge Access"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 2.0,
+    "numeric_type": "Lounge",
+    "dollar_value": null,
+    "time_category": "Annually (anniversary year)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

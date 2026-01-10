@@ -1,0 +1,17 @@
+{
+    "question_id": "q-3",
+    "short_desc": "Buying Power",
+    "question": "Do you value the flexibility to spend above your credit limit for large business purchases?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Somewhat",
+        "Highly"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Financial Protection"
+}

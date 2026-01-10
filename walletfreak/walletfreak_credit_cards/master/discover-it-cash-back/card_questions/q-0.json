@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Free FICO Score",
+    "question": "Are you focused on monitoring and improving your credit score monthly?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Credit Monitoring"
+}

@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Hilton Credit",
+    "question": "How often do you stay at Hilton properties for business throughout the year?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Never",
+        "1-2 times",
+        "Quarterly"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Hilton"
+}

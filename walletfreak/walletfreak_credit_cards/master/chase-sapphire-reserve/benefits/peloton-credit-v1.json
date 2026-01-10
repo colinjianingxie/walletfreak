@@ -1,0 +1,22 @@
+{
+    "BenefitId": "peloton-credit",
+    "benefit_id": "peloton-credit",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Peloton Credit",
+    "description": "Peloton credits",
+    "additional_details": "credits totaling $120 per year ($10/month) through Dec 31, 2027 plus bonus points",
+    "benefit_category": [
+        "Peloton",
+        "Generic Health & Wellness"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 120.0,
+    "numeric_type": "Cash",
+    "dollar_value": 120,
+    "time_category": "Monthly",
+    "enrollment_required": true,
+    "effective_date": "2025-11-29"
+}

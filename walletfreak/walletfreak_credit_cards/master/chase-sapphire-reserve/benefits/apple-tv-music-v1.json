@@ -1,0 +1,23 @@
+{
+    "BenefitId": "apple-tv-music",
+    "benefit_id": "apple-tv-music",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Apple TV+ & Music",
+    "description": "Complimentary Apple TV+ and Music",
+    "additional_details": "through Jun 22, 2027",
+    "benefit_category": [
+        "Apple TV+",
+        "Apple Music",
+        "Generic Entertainment"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 288,
+    "numeric_type": "Cash",
+    "dollar_value": 288,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": true,
+    "effective_date": "2025-12-24"
+}

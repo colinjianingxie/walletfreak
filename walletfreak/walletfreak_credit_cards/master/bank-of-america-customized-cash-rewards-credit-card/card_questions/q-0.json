@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Choice Category",
+    "question": "How often do you spend in categories like gas, dining, or online shopping?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Rarely",
+        "Occasionally",
+        "Frequently"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Shopping"
+}

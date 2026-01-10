@@ -1,0 +1,15 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Airline Credit",
+    "question": "Do you spend at least $100 on airline incidental fees (bags, seats) annually?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Airline"
+}

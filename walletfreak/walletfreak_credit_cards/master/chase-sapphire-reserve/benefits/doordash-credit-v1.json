@@ -1,0 +1,22 @@
+{
+    "BenefitId": "doordash-credit",
+    "benefit_id": "doordash-credit",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "DoorDash Credit",
+    "description": "DoorDash credits",
+    "additional_details": "monthly promos totaling $300 per year through Dec 31, 2027",
+    "benefit_category": [
+        "DoorDash",
+        "Generic Dining"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 300.0,
+    "numeric_type": "Cash",
+    "dollar_value": 300,
+    "time_category": "Monthly",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

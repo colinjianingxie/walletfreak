@@ -1,0 +1,15 @@
+{
+    "rate_id": "gas",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 5,
+    "category": [
+        "Gas",
+        "Military Bases"
+    ],
+    "currency": "cash back",
+    "additional_details": "gas & military bases",
+    "is_default": false
+}

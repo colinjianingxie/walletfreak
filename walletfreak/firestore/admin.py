@@ -187,7 +187,7 @@ class CreditCardAdmin(FirestoreModelAdmin):
     search_fields = ('name', 'issuer')
     
     def get_collection_name(self):
-        return 'credit_cards'
+        return 'master_cards'
 
 @admin.register(Personality)
 class PersonalityAdmin(FirestoreModelAdmin):

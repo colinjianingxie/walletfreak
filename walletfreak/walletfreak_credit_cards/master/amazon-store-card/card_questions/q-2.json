@@ -1,0 +1,17 @@
+{
+    "question_id": "q-2",
+    "short_desc": "24 month 0% financing",
+    "question": "Are you interested in extended financing for select high-value Amazon items over 24 months without interest?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Shopping"
+}

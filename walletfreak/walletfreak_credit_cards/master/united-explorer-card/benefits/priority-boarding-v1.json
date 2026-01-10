@@ -1,0 +1,22 @@
+{
+    "BenefitId": "priority-boarding",
+    "benefit_id": "priority-boarding",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Priority Boarding",
+    "description": "Priority boarding on United flights",
+    "additional_details": null,
+    "benefit_category": [
+        "United",
+        "Generic Airlines"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Permanent",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

@@ -1,0 +1,14 @@
+{
+    "rate_id": "hotels",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": [
+        "Generic Hotels"
+    ],
+    "currency": "points",
+    "additional_details": "hotel accommodations booked directly with hotel",
+    "is_default": false
+}

@@ -1,0 +1,22 @@
+{
+    "BenefitId": "travel-dining-credit",
+    "benefit_id": "travel-dining-credit",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Travel & Dining Credit",
+    "description": "$325 annual travel/dining credit",
+    "additional_details": null,
+    "benefit_category": [
+        "Generic Travel Perks",
+        "Generic Dining"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 325.0,
+    "numeric_type": "Cash",
+    "dollar_value": 325,
+    "time_category": "Annually (anniversary year)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

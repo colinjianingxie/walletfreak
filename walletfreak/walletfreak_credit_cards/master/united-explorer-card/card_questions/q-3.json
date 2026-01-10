@@ -1,0 +1,15 @@
+{
+    "question_id": "q-3",
+    "short_desc": "TSA Credit",
+    "question": "Do you want the government to reimburse your Global Entry or TSA PreCheck application fee?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Travel Security"
+}

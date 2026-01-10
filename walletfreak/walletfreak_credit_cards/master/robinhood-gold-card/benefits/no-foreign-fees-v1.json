@@ -1,0 +1,15 @@
+{
+    "benefit_id": "no-foreign-fees",
+    "short_description": "No Foreign Transaction Fees",
+    "description": "Pay no foreign transaction fees on purchases made outside the United States.",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "Travel"
+    ],
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

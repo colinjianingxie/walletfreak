@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Disney Credit",
+    "question": "Do you want $7 back every month on your Disney Bundle subscription?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Streaming"
+}

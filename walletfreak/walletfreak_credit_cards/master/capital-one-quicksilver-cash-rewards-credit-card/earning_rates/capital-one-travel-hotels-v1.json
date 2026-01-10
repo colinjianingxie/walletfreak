@@ -1,0 +1,14 @@
+{
+    "rate_id": "capital-one-travel-hotels",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 5,
+    "category": [
+        "Capital One Travel Hotels"
+    ],
+    "currency": "cash back",
+    "additional_details": "hotels booked through Capital One Travel",
+    "is_default": false
+}

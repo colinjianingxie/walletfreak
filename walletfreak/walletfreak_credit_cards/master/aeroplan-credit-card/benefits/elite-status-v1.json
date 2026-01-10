@@ -1,0 +1,21 @@
+{
+    "BenefitId": "elite-status",
+    "benefit_id": "elite-status",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Elite Status",
+    "description": "Automatic Aeroplan 25K Elite Status",
+    "additional_details": "for the year opened and next; retain with $15,000 spend annually; changes effective 1/1/2026",
+    "benefit_category": [
+        "Generic Airlines"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 300.0,
+    "numeric_type": "Cash",
+    "dollar_value": 300,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2025-01-01"
+}

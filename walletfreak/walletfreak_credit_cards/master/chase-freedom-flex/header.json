@@ -1,0 +1,30 @@
+{
+    "slug-id": "chase-freedom-flex",
+    "name": "Chase Freedom Flex",
+    "image_url": "/static/images/credit_cards/chase-freedom-flex.avif",
+    "issuer": "Chase",
+    "annual_fee": 0,
+    "application_link": "https://secure.chase.com/web/oao/application/card?sourceCode=HPKP&action=guest#/origination/cardDetails/index/index;cellCode=61DS;combo=Y",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "10/10. Identical to its sibling. $500 spend for $200. Clear terms with no hidden tiers.",
+    "points_value_cpp": null,
+    "active_indices": {
+        "benefits": [
+            "dashpass-v1",
+            "doordash-non-restaurant-credit-v1"
+        ],
+        "earning_rates": [
+            "rotating-categories-v1",
+            "chase-travel-flights-v1",
+            "chase-travel-hotels-v1",
+            "chase-travel-rental-cars-v1",
+            "dining-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "rate_id": "groceries",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": [
+        "Generic Groceries"
+    ],
+    "currency": "miles",
+    "additional_details": "grocery stores, including grocery delivery services",
+    "is_default": false
+}

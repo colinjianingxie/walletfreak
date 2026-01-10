@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Preferred Rewards",
+    "question": "Do you maintain a significant balance in Bank of America business checking or Merrill business investment accounts (over $20k)?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Financial & Rewards"
+}

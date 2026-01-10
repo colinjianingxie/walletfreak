@@ -1,0 +1,14 @@
+{
+    "rate_id": "ihg",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 26,
+    "category": [
+        "IHG"
+    ],
+    "currency": "points",
+    "additional_details": "total points at IHG hotels",
+    "is_default": false
+}

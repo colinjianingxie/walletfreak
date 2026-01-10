@@ -1,0 +1,23 @@
+{
+    "BenefitId": "uber-cash",
+    "benefit_id": "uber-cash",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Uber Cash",
+    "description": "$200 Uber Cash",
+    "additional_details": "$15 monthly + $20 bonus December",
+    "benefit_category": [
+        "Uber",
+        "Generic Transportation",
+        "Generic Dining"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 200.0,
+    "numeric_type": "Cash",
+    "dollar_value": 200,
+    "time_category": "Monthly",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

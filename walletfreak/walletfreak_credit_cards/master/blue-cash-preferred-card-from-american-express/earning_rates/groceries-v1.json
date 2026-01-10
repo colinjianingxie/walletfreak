@@ -1,0 +1,14 @@
+{
+    "rate_id": "groceries",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 6,
+    "category": [
+        "Generic Groceries"
+    ],
+    "currency": "cash back",
+    "additional_details": "U.S. supermarkets (up to $6,000/year, then 1%)",
+    "is_default": false
+}

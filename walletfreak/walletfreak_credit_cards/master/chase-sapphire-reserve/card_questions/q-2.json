@@ -1,0 +1,17 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Additional Hotel Credit",
+    "question": "Do you plan to book prepaid hotel stays through Chase Travel at select brands like IHG or Omni?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Hotel"
+}

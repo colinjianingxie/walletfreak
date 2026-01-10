@@ -1,0 +1,10 @@
+{
+    "offer_id": "offer-1",
+    "is_active": true,
+    "value": 100000,
+    "terms": "Spend $4,000 in 3 months for 75,000 points, plus spend a total of $20,000 in 12 months for 25,000 points",
+    "currency": "Points",
+    "spend_amount": 20000,
+    "duration_months": 12,
+    "effective_date": "2025-12-28"
+}

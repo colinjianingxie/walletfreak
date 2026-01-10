@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Phone Protection",
+    "question": "Do you want up to $600 in phone protection with just a $25 deductible?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Cell Phone Protection"
+}

@@ -1,0 +1,15 @@
+{
+    "rate_id": "delta",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Delta",
+        "Generic Hotels"
+    ],
+    "currency": "miles",
+    "additional_details": "Delta & direct hotels",
+    "is_default": false
+}

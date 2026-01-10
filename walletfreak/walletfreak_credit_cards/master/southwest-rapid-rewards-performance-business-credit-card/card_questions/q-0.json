@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Anniversary Points",
+    "question": "Do you value automatic annual points to keep your airline status or balance active?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Anniversary Bonus"
+}

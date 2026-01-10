@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "DashPass",
+    "question": "Do you value a free delivery membership for your favorite local restaurants?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Delivery"
+}

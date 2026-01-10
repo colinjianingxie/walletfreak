@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Presale Access",
+    "question": "Do you enjoy early access to concert tickets or preferred seating?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Entertainment"
+}

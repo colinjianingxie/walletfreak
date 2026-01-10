@@ -1,0 +1,21 @@
+{
+    "BenefitId": "global-entry-credit",
+    "benefit_id": "global-entry-credit",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Global Entry Credit",
+    "description": "Global Entry\u00ae or TSA PreCheck\u00ae application fee credit",
+    "additional_details": "Reimbursement for application fee up to $120 every 4 years",
+    "benefit_category": [
+        "Global Entry"
+    ],
+    "benefit_type": "Security",
+    "numeric_value": 120.0,
+    "numeric_type": "Cash",
+    "dollar_value": 30,
+    "time_category": "Every 4 years",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

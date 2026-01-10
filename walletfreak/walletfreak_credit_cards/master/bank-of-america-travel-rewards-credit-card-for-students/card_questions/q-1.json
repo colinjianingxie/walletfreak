@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Preferred Rewards Boost",
+    "question": "Do you have or plan to open a Bank of America account to qualify for rewards boosts?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Financial"
+}

@@ -1,0 +1,14 @@
+{
+    "rate_id": "amex-travel-flights",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Amex Travel Flights"
+    ],
+    "currency": "points",
+    "additional_details": "flights via Amex Travel",
+    "is_default": false
+}

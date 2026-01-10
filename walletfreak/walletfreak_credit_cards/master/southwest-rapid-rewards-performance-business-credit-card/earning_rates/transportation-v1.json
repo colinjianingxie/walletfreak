@@ -1,0 +1,14 @@
+{
+    "rate_id": "transportation",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": [
+        "Generic Transportation"
+    ],
+    "currency": "points",
+    "additional_details": "local transit and commuting, including rideshare",
+    "is_default": false
+}

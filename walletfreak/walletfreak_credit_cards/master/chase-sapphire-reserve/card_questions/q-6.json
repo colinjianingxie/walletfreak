@@ -1,0 +1,17 @@
+{
+    "question_id": "q-6",
+    "short_desc": "DashPass",
+    "question": "Do you use DoorDash or Caviar frequently and want free delivery for a year?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Delivery"
+}

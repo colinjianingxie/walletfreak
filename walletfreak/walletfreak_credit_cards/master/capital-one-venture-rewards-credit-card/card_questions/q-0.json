@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "TSA Credit",
+    "question": "Do you travel enough to justify a $120 credit to skip the long security lines at the airport?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Travel Security"
+}

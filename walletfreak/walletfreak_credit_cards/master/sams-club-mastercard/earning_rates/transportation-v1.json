@@ -1,0 +1,14 @@
+{
+    "rate_id": "transportation",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 5,
+    "category": [
+        "Generic Transportation"
+    ],
+    "currency": "cash back",
+    "additional_details": "gas stations",
+    "is_default": false
+}

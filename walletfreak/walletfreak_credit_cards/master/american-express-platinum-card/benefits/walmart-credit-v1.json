@@ -1,0 +1,22 @@
+{
+    "BenefitId": "walmart-credit",
+    "benefit_id": "walmart-credit",
+    "version": "v1",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Walmart+ Credit",
+    "description": "$155 Walmart+ monthly membership credit",
+    "additional_details": "plus tax",
+    "benefit_category": [
+        "Walmart",
+        "Generic Shopping"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 155.0,
+    "numeric_type": "Cash",
+    "dollar_value": 155,
+    "time_category": "Monthly",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

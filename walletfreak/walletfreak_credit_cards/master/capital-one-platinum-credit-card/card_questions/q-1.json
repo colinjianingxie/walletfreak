@@ -1,0 +1,15 @@
+{
+    "question_id": "q-1",
+    "short_desc": "No Annual Fee",
+    "question": "Do you prefer a card with no annual fee even if it doesn't offer rewards?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Financial & Rewards"
+}
