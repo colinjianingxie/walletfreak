@@ -167,7 +167,7 @@ class Command(BaseCommand):
             "slug-id", "name", "issuer", "image_url", "annual_fee",
             "application_link", "min_credit_score", "max_credit_score",
             "is_524", "freak_verdict", "points_value_cpp", "show_in_calculators",
-            "referral_links", "credits_value", "rewards_structure" # Legacy or extra fields
+            "referral_links"
         ]
         
         # Load existing header to preserve active_indices and un-updated fields
@@ -416,35 +416,58 @@ class Command(BaseCommand):
                  self.stdout.write(self.style.ERROR(f"Response Body: {response.text}"))
             return None
 
-    def get_aggregated_categories(self):
-        # ... logic to read all headers and aggregate categories ...
-        # Simplified: read all headers in master
-        categories_map = {}
-        if not os.path.exists(self.master_dir): return []
+    def get_all_unique_categories(self):
+        """
+        Aggregates all unique categories used in active benefits and earning rates across all cards.
+        """
+        categories = set()
         
-        for d in os.listdir(self.master_dir):
-            h_path = os.path.join(self.master_dir, d, 'header.json')
-            if os.path.exists(h_path):
-                try:
-                    with open(h_path, 'r') as f:
-                        data = json.load(f)
-                        # Assume data can have 'Categories' field? 
-                        # Actually refactor REMOVED Categories from header.
-                        # So we might not have a source anymore unless we query DB or stored locally.
-                        # For now, let's skip dynamic categories or hardcode defaults.
-                        pass
-                except:
-                    pass
-        # Hardcoded set for stability
-        return [
-            {"CategoryName": "Dining", "Icon": "fa-utensils", "CategoryNameDetailed": ["Dining", "Takeout", "Delivery"]},
-            {"CategoryName": "Travel", "Icon": "fa-plane", "CategoryNameDetailed": ["Airlines", "Hotels", "Car Rental", "Transit"]},
-            {"CategoryName": "Groceries", "Icon": "fa-shopping-basket", "CategoryNameDetailed": ["Supermarkets", "Online Groceries"]},
-            {"CategoryName": "Gas", "Icon": "fa-gas-pump", "CategoryNameDetailed": ["Gas Stations"]},
-        ]
+        if not os.path.exists(self.master_dir):
+            return []
+
+        for card_slug in os.listdir(self.master_dir):
+            card_dir = os.path.join(self.master_dir, card_slug)
+            if not os.path.isdir(card_dir):
+                continue
+                
+            # Check Benefits
+            ben_dir = os.path.join(card_dir, 'benefits')
+            if os.path.exists(ben_dir):
+                for f in os.listdir(ben_dir):
+                    if f.endswith('.json'):
+                        try:
+                            with open(os.path.join(ben_dir, f), 'r') as fd:
+                                data = json.load(fd)
+                                cats = data.get('benefit_category', [])
+                                if isinstance(cats, list):
+                                    for c in cats: categories.add(str(c))
+                                elif isinstance(cats, str):
+                                    categories.add(cats)
+                        except: pass
+
+            # Check Earning Rates
+            earn_dir = os.path.join(card_dir, 'earning_rates')
+            if os.path.exists(earn_dir):
+                for f in os.listdir(earn_dir):
+                    if f.endswith('.json'):
+                        try:
+                            with open(os.path.join(earn_dir, f), 'r') as fd:
+                                data = json.load(fd)
+                                cats = data.get('category', [])
+                                if isinstance(cats, list):
+                                    for c in cats: categories.add(str(c))
+                                elif isinstance(cats, str):
+                                    categories.add(cats)
+                        except: pass
+                        
+        return sorted(list(categories))
 
     def construction_prompt(self, current_json, slug):
         today = datetime.date.today().isoformat()
+        
+        # Get dynamic categories
+        existing_categories = self.get_all_unique_categories()
+        cat_str = ", ".join(f'"{c}"' for c in existing_categories)
         
         # Strip internal fields from current_json to avoid confusing LLM
         clean_json = current_json.copy()
@@ -461,6 +484,10 @@ Here is the CURRENT known data (JSON):
 2. Return a JSON object with the UPDATED details.
 3. Validate all fields against the schema below.
 
+**EXISTING CATEGORIES**:
+[{cat_str}]
+*Please prioritize using these categories for 'benefit_category' and 'earning_rates' category fields. Only create new categories if strictly necessary.*
+
 **SCHEMA RULES (Snake Case)**:
 - **slug-id**: Must remain "{slug}".
 - **name**: Card Name.
@@ -471,7 +498,7 @@ Here is the CURRENT known data (JSON):
 - **min_credit_score**: Number (e.g. 670).
 - **max_credit_score**: Number (e.g. 850).
 - **points_value_cpp**: Number or null (e.g. 1.5, or null for cash back).
-- **is_524**: Boolean (Chase 5/24 rule).
+- **is_524**: Boolean (Willy apply to Chase 5/24 rule).
 - **freak_verdict**: Short opinion string.
 
 **SUB-COLLECTIONS**:
