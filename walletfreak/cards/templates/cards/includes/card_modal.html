@@ -168,7 +168,7 @@
 
 <script>
 // Shared Modal Logic
-let scrollPosition = 0;
+var scrollPosition = 0;
 
 function setAnniversaryDefaultState() {
     const dateInput = document.getElementById('anniversary-date-input');
@@ -757,8 +757,8 @@ function toggleExpandable(element) {
 }
 
 // Anniversary Modal Logic
-let currentAnniversaryCardId = null;
-let pendingCardForAdd = null;
+var currentAnniversaryCardId = null;
+var pendingCardForAdd = null;
 
 function openAnniversaryModal(cardId, cardName) {
     currentAnniversaryCardId = cardId;
@@ -990,8 +990,10 @@ function getCookie(name) {
 }
 
 // Add spin animation
-const style = document.createElement('style');
-style.innerHTML = `
+if (!document.getElementById('card-modal-styles')) {
+    var style = document.createElement('style');
+    style.id = 'card-modal-styles';
+    style.innerHTML = `
 @keyframes spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
@@ -1045,6 +1047,7 @@ style.innerHTML = `
     /* Compact Tabs */
     .card-tabs {
         margin-bottom: 1rem !important;
+        padding: 0 1.5rem 0 1.5rem !important;
     }
     .card-tab {
         padding: 0.5rem !important;
@@ -1091,7 +1094,8 @@ style.innerHTML = `
     }
 }
 `;
-document.head.appendChild(style);
+    document.head.appendChild(style);
+}
 
 // Close modal when clicking outside
 window.onclick = function(event) {

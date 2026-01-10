@@ -20,7 +20,7 @@ async function updatePersonalityUI(slug, score) {
     try {
         // Fetch personality details for the name
         // We could cache this, but it changes rarely
-        const pDoc = await db.collection('personalities').doc(slug).get();
+        const pDoc = await firestoreDb.collection('personalities').doc(slug).get();
         let name = slug;
         if (pDoc.exists) {
             name = pDoc.data().name;

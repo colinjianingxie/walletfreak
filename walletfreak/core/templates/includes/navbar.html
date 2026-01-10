@@ -342,20 +342,19 @@
     </div>
     
     <script>
-        function handleLogout(e) {
-            e.preventDefault();
-            // Set flag to prevent base.html from auto-syncing logic re-logging us in
-            sessionStorage.setItem('logging_out', 'true');
-            firebase.auth().signOut().then(() => {
-                window.location.href = "/logout/";
-            });
+        // Define logout handler globally if not already defined
+        if (!window.handleLogout) {
+            window.handleLogout = function(e) {
+                e.preventDefault();
+                sessionStorage.setItem('logging_out', 'true');
+                firebase.auth().signOut().then(() => {
+                    window.location.href = "/logout/";
+                });
+            };
         }
 
-
-
-        // Mobile menu toggle logic
-        document.addEventListener('DOMContentLoaded', function () {
-            
+        // Initialize Navbar Logic
+        (function() {
             const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
             const mobileMenuClose = document.getElementById('mobile-menu-close');
             const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
@@ -365,13 +364,11 @@
                 document.body.style.overflow = mobileMenuOverlay.classList.contains('active') ? 'hidden' : '';
             }
 
-            if (mobileMenuToggle) {
-                mobileMenuToggle.addEventListener('click', toggleMenu);
-            }
+            // Clean up previous listeners if they exist (though elements are replaced, good practice)
+            // Note: For element-specific listeners, replacement handles cleanup naturally.
 
-            if (mobileMenuClose) {
-                mobileMenuClose.addEventListener('click', toggleMenu);
-            }
+            if (mobileMenuToggle) mobileMenuToggle.addEventListener('click', toggleMenu);
+            if (mobileMenuClose) mobileMenuClose.addEventListener('click', toggleMenu);
 
             // User dropdown toggle (Desktop)
             const userDropdownToggle = document.getElementById('user-dropdown-toggle');
@@ -382,14 +379,29 @@
                     e.stopPropagation();
                     userDropdownMenu.classList.toggle('active');
                 });
+                
+                // Cleanup old document listener if it exists to prevent leaks
+                if (window.closeDropdownHandler) {
+                    document.removeEventListener('click', window.closeDropdownHandler);
+                }
 
-                // Close dropdown when clicking outside
-                document.addEventListener('click', function (e) {
-                    if (!userDropdownMenu.contains(e.target) && !userDropdownToggle.contains(e.target)) {
-                        userDropdownMenu.classList.remove('active');
+                // Define and attach new document listener
+                window.closeDropdownHandler = function (e) {
+                    // Check if elements still exist in DOM (they might be gone after swap)
+                    if (document.body.contains(userDropdownMenu) && document.body.contains(userDropdownToggle)) {
+                         if (!userDropdownMenu.contains(e.target) && !userDropdownToggle.contains(e.target)) {
+                            userDropdownMenu.classList.remove('active');
+                        }
+                    } else {
+                        // Elements are detached, this handler is stale.
+                        // (Ideally we remove it, but we can't easily self-remove without reference context issues 
+                        // or until next init cleans it up). 
+                        // The cleanup at the start of this block handles it for the NEXT swap.
                     }
-                });
+                };
+
+                document.addEventListener('click', window.closeDropdownHandler);
             }
-        });
+        })();
     </script>
 </nav>

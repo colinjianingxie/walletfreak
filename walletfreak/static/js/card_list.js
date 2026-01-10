@@ -1,28 +1,32 @@
 // Elements
-const searchInput = document.getElementById('search-input');
-const minFeeSlider = document.getElementById('min-fee-slider');
-const maxFeeSlider = document.getElementById('max-fee-slider');
-const feeRangeDisplay = document.getElementById('fee-range-display');
-const sliderTrack = document.getElementById('slider-track');
-const sortSelect = document.getElementById('sort-select');
-const issuerFilters = document.querySelectorAll('.issuer-filter');
-const categoryPills = document.querySelectorAll('.category-pill');
-const cardsGrid = document.getElementById('cards-grid');
-const exploreCards = document.querySelectorAll('.explore-card');
-const noResults = document.getElementById('no-results');
-const loadMoreBtn = document.getElementById('load-more-btn');
-const loadMoreContainer = document.getElementById('load-more-container');
-const remainingCount = document.getElementById('remaining-count');
-const totalCardsCount = document.getElementById('total-cards-count');
-const compareBar = document.getElementById('compare-bar');
-const comparePreviewCircles = document.getElementById('compare-preview-circles');
-const compareCountText = document.getElementById('compare-count-text');
+// Elements
+var cardSearchInput = document.getElementById('search-input'); // Declared globally and initialized
+var minFeeSlider = document.getElementById('min-fee-slider');
+var maxFeeSlider = document.getElementById('max-fee-slider');
+var feeRangeDisplay = document.getElementById('fee-range-display'); // Keep original declaration for global access
+var sliderTrack = document.getElementById('slider-track');
+var sortSelect = document.getElementById('sort-select');
+var issuerFilters = document.querySelectorAll('.issuer-filter');
+var categoryPills = document.querySelectorAll('.category-pill');
+var cardsGrid = document.getElementById('cards-grid');
+var exploreCards = document.querySelectorAll('.explore-card');
+var noResults = document.getElementById('no-results');
+var loadMoreBtn = document.getElementById('load-more-btn');
+var loadMoreContainer = document.getElementById('load-more-container');
+var remainingCount = document.getElementById('remaining-count');
+var totalCardsCount = document.getElementById('total-cards-count');
+var compareBar = document.getElementById('compare-bar');
+var comparePreviewCircles = document.getElementById('compare-preview-circles');
+var compareCountText = document.getElementById('compare-count-text');
 
 // Compare State
-let selectedCards = new Map(); // id -> {name, issuer, color}
+var selectedCards = new Map(); // id -> {name, issuer, color}
 
 // Auth & Realtime State
-let walletListenerUnsubscribe = null;
+if (typeof walletListenerUnsubscribe !== 'undefined' && walletListenerUnsubscribe) {
+    walletListenerUnsubscribe();
+}
+var walletListenerUnsubscribe = null;
 if (typeof firebase !== 'undefined' && typeof firebase.auth === 'function') {
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
@@ -36,11 +40,11 @@ if (typeof firebase !== 'undefined' && typeof firebase.auth === 'function') {
 }
 
 // State
-let cardsPerPage = 9; // Updated to 9 as requested
-let currentlyShowing = cardsPerPage;
-let activeCategory = '';
-let currentView = localStorage.getItem('exploreView') || 'grid';
-let currentMatchingCards = []; // Store filtered results for pagination
+var cardsPerPage = 9; // Updated to 9 as requested
+var currentlyShowing = cardsPerPage;
+var activeCategory = '';
+var currentView = localStorage.getItem('exploreView') || 'grid';
+var currentMatchingCards = []; // Store filtered results for pagination
 
 // Helper to normalize strings for comparison (remove spaces, special chars, lowercase)
 function normalize(str) {
@@ -123,7 +127,7 @@ function updateSlider() {
     const minVal = parseInt(minFeeSlider.value);
     const maxVal = parseInt(maxFeeSlider.value);
 
-    feeRangeDisplay.textContent = `$${minVal} - $${maxVal}`;
+    feeRangeDisplay.textContent = `$${minVal} - $${maxVal} `;
 
     // Calculate track position using percentages for better responsiveness
     const percent1 = (minVal / 1000) * 100;
@@ -190,7 +194,7 @@ function resetFilters() {
         cb.checked = false;
     });
 
-    if (searchInput) searchInput.value = '';
+    if (cardSearchInput) cardSearchInput.value = '';
     activeCategory = '';
     // Reset category pills UI
     categoryPills.forEach(p => {
@@ -210,7 +214,7 @@ function resetFilters() {
 }
 
 // Search & Sort
-if (searchInput) searchInput.addEventListener('input', filterCards);
+if (cardSearchInput) cardSearchInput.addEventListener('input', filterCards);
 if (sortSelect) {
     sortSelect.addEventListener('change', () => {
         // Update URL without reload
@@ -224,7 +228,7 @@ if (sortSelect) {
 }
 
 function filterCards() {
-    const query = searchInput ? searchInput.value.toLowerCase() : '';
+    const query = cardSearchInput ? cardSearchInput.value.toLowerCase() : '';
     const minFee = minFeeSlider ? parseInt(minFeeSlider.value) : 0;
     const maxFee = maxFeeSlider ? parseInt(maxFeeSlider.value) : 1000;
 
@@ -485,7 +489,7 @@ function toggleCardSelection(cardId, btn) {
 
 function updateCompareUI(cardId, isSelected) {
     // 1. Update Compare Button (Grid View / General)
-    const btn = document.querySelector(`.compare-select-btn[data-card-id="${cardId}"]`);
+    const btn = document.querySelector(`.compare - select - btn[data - card - id="${cardId}"]`);
     if (btn) {
         if (isSelected) {
             btn.style.background = '#3B82F6';
@@ -500,7 +504,7 @@ function updateCompareUI(cardId, isSelected) {
 
     // 2. Update Checkbox (List View)
     // Find the data source div for this card, then finding the sibling checkbox
-    const dataDiv = document.querySelector(`.compare-data-source[data-card-id="${cardId}"]`);
+    const dataDiv = document.querySelector(`.compare - data - source[data - card - id="${cardId}"]`);
     if (dataDiv) {
         const checkbox = dataDiv.parentElement.querySelector('.list-checkbox');
         if (checkbox) {
@@ -651,7 +655,7 @@ function handleCardClick(cardId) {
     // If in LIST view, row click toggles selection (checkbox)
     if (currentView === 'list') {
         // Find the data source element to get card details
-        const dataDiv = document.querySelector(`.compare-data-source[data-card-id="${cardId}"]`);
+        const dataDiv = document.querySelector(`.compare - data - source[data - card - id="${cardId}"]`);
         if (dataDiv) {
             toggleCardSelection(cardId, dataDiv);
         }
@@ -667,7 +671,7 @@ function checkFilterDirty() {
     const minFee = minFeeSlider ? parseInt(minFeeSlider.value) : 0;
     const maxFee = maxFeeSlider ? parseInt(maxFeeSlider.value) : 1000;
     const selectedIssuers = Array.from(issuerFilters).filter(f => f.checked).length;
-    const query = searchInput ? searchInput.value : '';
+    const query = cardSearchInput ? cardSearchInput.value : '';
     const hasCategory = activeCategory !== '';
 
     if (minFee !== 0) return true;

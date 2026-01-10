@@ -2,7 +2,7 @@
  * Wallet Card Preview Logic
  */
 
-let selectedAddCard = null;
+var selectedAddCard = null;
 
 function resetCardPreview() {
     selectedAddCard = null;

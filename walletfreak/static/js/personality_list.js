@@ -1,7 +1,7 @@
-let currentQuestion = 0;
-const userAnswers = {};
+var currentQuestion = 0;
+var userAnswers = {};
 // Track votes for each personality
-const personalityVotes = {};
+var personalityVotes = {};
 
 function loadQuestion() {
     const q = questions[currentQuestion];
@@ -127,7 +127,7 @@ function previousQuestion() {
 }
 
 // Refactored to store answers and calculate at end
-const stageSelections = {}; // stage_index -> [list of personalities from selected options]
+var stageSelections = {}; // stage_index -> [list of personalities from selected options]
 
 // Override nextQuestion to store selections
 nextQuestion = function () {

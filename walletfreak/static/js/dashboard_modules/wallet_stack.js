@@ -6,10 +6,10 @@ function renderWalletStack() {
     // Helper to find image URL
     const getCardImage = (c) => {
         if (c.image_url && c.image_url.startsWith('http')) return c.image_url;
-        // Try to find in allCardsData (source of truth)
-        if (typeof allCardsData !== 'undefined') {
+        // Try to find in globalAllCardsData (source of truth)
+        if (typeof globalAllCardsData !== 'undefined') {
             // Check both id and card_id to handle both Firestore and static data formats
-            const found = allCardsData.find(ac => ac.id === c.id || ac.id === c.card_id);
+            const found = globalAllCardsData.find(ac => ac.id === c.id || ac.id === c.card_id);
             if (found && found.image_url) return found.image_url;
         }
         return '/static/images/card_placeholder.png';

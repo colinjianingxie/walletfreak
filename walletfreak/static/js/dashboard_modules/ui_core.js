@@ -17,10 +17,10 @@ function updateWalletUI() {
     document.querySelectorAll('.user-dropdown-badge').forEach(el => el.textContent = count);
 
     // 3. Update Available Cards (Global) for Search
-    // Filter allCardsData to exclude cards currently in wallet
-    if (typeof allCardsData !== 'undefined') {
+    // Filter globalAllCardsData to exclude cards currently in wallet
+    if (typeof globalAllCardsData !== 'undefined') {
         const walletCardIds = new Set(walletCards.map(c => c.card_id || c.id));
-        availableCards = allCardsData.filter(card => !walletCardIds.has(card.id));
+        globalAvailableCards = globalAllCardsData.filter(card => !walletCardIds.has(card.id));
 
         // Refresh the search list if it's visible
         // We use applyMobileFilters() as it handles the rendering and existing filters

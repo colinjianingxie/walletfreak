@@ -79,14 +79,14 @@
 {{ submission_cards|json_script:"submission-cards-data" }}
 
 <script>
-    const cardSelect = document.getElementById('card_select');
-    const benefitSelect = document.getElementById('benefit_select');
-    const cardNameInput = document.getElementById('card_name_input');
-    const clearedDateWrapper = document.getElementById('cleared-date-wrapper');
-    const modalTitle = document.querySelector('.dp-modal-title');
-    const modalSubmitBtn = document.getElementById('modal-submit-btn');
-    const editIdInput = document.getElementById('edit_datapoint_id');
-    const form = document.getElementById('dp-submit-form');
+    var cardSelect = document.getElementById('card_select');
+    var benefitSelect = document.getElementById('benefit_select');
+    var cardNameInput = document.getElementById('card_name_input');
+    var clearedDateWrapper = document.getElementById('cleared-date-wrapper');
+    var modalTitle = document.querySelector('.dp-modal-title');
+    var modalSubmitBtn = document.getElementById('modal-submit-btn');
+    var editIdInput = document.getElementById('edit_datapoint_id');
+    var form = document.getElementById('dp-submit-form');
     
     function toggleDateFields() {
         const status = document.querySelector('input[name="status"]:checked').value;
@@ -97,8 +97,8 @@
         }
     }
     
-    const transactionDateInput = form.querySelector('input[name="transaction_date"]');
-    const clearedDateInput = form.querySelector('input[name="cleared_date"]');
+    var transactionDateInput = form.querySelector('input[name="transaction_date"]');
+    var clearedDateInput = form.querySelector('input[name="cleared_date"]');
 
     function setMaxDate() {
         const today = new Date().toISOString().split('T')[0];
@@ -132,7 +132,7 @@
     toggleDateFields();
     
     // Parse the JSON data from the template
-    const cardBenefitsMap = {
+    var cardBenefitsMap = {
         {% for card in submission_cards %}
         "{{ card.slug }}": [
             {% for benefit in card.benefits %}
@@ -304,7 +304,7 @@
     }
     
     // reset modal on close
-    const originalCloseModal = window.closeModal;
+    var originalCloseModal = window.closeModal;
     window.closeModal = function(id) {
         if (id === 'submit-modal') {
              // Reset UI state

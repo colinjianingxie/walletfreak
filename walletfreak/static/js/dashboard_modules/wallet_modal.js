@@ -115,7 +115,7 @@ function switchTab(view) {
                     filterCards('All', false);
                 }
             } else {
-                renderCardResults(availableCards);
+                renderCardResults(globalAvailableCards);
             }
         }
     }

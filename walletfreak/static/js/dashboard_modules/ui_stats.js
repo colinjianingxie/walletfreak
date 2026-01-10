@@ -14,10 +14,10 @@ function updateNetPerformanceUI() {
     let totalFees = 0;
     if (typeof walletCards !== 'undefined' && Array.isArray(walletCards)) {
         walletCards.forEach(userCard => {
-            if (typeof allCardsData !== 'undefined') {
+            if (typeof globalAllCardsData !== 'undefined') {
                 // Fix: Subcollection uses 'id' as slug, legacy uses 'card_id'
                 const slug = userCard.card_id || userCard.id;
-                const staticCard = allCardsData.find(c => c.id === slug);
+                const staticCard = globalAllCardsData.find(c => c.id === slug);
                 if (staticCard && staticCard.annual_fee) {
                     totalFees += parseFloat(staticCard.annual_fee);
                 }
@@ -52,9 +52,9 @@ function updateTotalAnnualFeeUI() {
     if (typeof walletCards !== 'undefined' && Array.isArray(walletCards)) {
         walletCards.forEach(userCard => {
             // Find static card data to get the fee
-            if (typeof allCardsData !== 'undefined') {
+            if (typeof globalAllCardsData !== 'undefined') {
                 const slug = userCard.card_id || userCard.id;
-                const staticCard = allCardsData.find(c => c.id === slug);
+                const staticCard = globalAllCardsData.find(c => c.id === slug);
                 if (staticCard && staticCard.annual_fee) {
                     totalFees += parseFloat(staticCard.annual_fee);
                 }
@@ -83,9 +83,9 @@ function calculateCreditsUsed() {
                             if (key.startsWith(currentYear)) {
                                 // ALWAYS verify against static data (Source of Truth) to match Backend logic
                                 // Ignore benefit.benefit_type on the user object as it may be stale or incorrect
-                                if (typeof allCardsData !== 'undefined') {
+                                if (typeof globalAllCardsData !== 'undefined') {
                                     const slug = card.card_id || card.id;
-                                    const staticCard = allCardsData.find(c => c.id === slug);
+                                    const staticCard = globalAllCardsData.find(c => c.id === slug);
                                     if (staticCard && staticCard.benefits) {
                                         // Find benefit index from key "benefit_X"
                                         const benefitKey = Object.keys(card.benefit_usage).find(k => card.benefit_usage[k] === benefit);
@@ -143,9 +143,9 @@ function updateYtdRewardsUI() {
 
     if (typeof walletCards !== 'undefined' && Array.isArray(walletCards)) {
         walletCards.forEach(userCard => {
-            if (typeof allCardsData !== 'undefined') {
+            if (typeof globalAllCardsData !== 'undefined') {
                 const slug = userCard.card_id || userCard.id;
-                const staticCard = allCardsData.find(c => c.id === slug);
+                const staticCard = globalAllCardsData.find(c => c.id === slug);
                 if (staticCard && staticCard.benefits) {
                     staticCard.benefits.forEach((b, index) => {
                         // Filter out Protection and Bonus benefits

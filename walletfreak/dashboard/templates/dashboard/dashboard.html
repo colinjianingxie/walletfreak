@@ -8,22 +8,22 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/dashboard_modules/utils.js' %}"></script>
-<script src="{% static 'js/dashboard_modules/state.js' %}"></script>
-<script src="{% static 'js/dashboard_modules/ui_stats.js' %}"></script>
-<script src="{% static 'js/dashboard_modules/ui_chase.js' %}"></script>
-<script src="{% static 'js/dashboard_modules/ui_personality.js' %}"></script>
-<script src="{% static 'js/dashboard_modules/ui_core.js' %}?v=1.6"></script>
-<script src="{% static 'js/dashboard_modules/actions.js' %}"></script>
-<script src="{% static 'js/dashboard_modules/mobile_ui.js' %}"></script>
-<script src="{% static 'js/dashboard_modules/wallet_stack.js' %}"></script>
-<script src="{% static 'js/dashboard_modules/wallet_add.js' %}"></script>
-<script src="{% static 'js/dashboard_modules/wallet_preview.js' %}"></script>
-<script src="{% static 'js/dashboard_modules/wallet_modal.js' %}"></script>
-<script src="{% static 'js/dashboard_modules/benefits_filters.js' %}"></script>
-<script src="{% static 'js/dashboard_modules/benefits_modal.js' %}"></script>
-<script src="{% static 'js/dashboard_modules/benefits_actions.js' %}"></script>
-<script src="{% static 'js/dashboard_modules/benefits.js' %}?v=1.6"></script>
+<script src="{% static 'js/dashboard_modules/utils.js' %}?v=1.9"></script>
+<script src="{% static 'js/dashboard_modules/state.js' %}?v=1.9"></script>
+<script src="{% static 'js/dashboard_modules/ui_stats.js' %}?v=1.9"></script>
+<script src="{% static 'js/dashboard_modules/ui_chase.js' %}?v=1.9"></script>
+<script src="{% static 'js/dashboard_modules/ui_personality.js' %}?v=1.9"></script>
+<script src="{% static 'js/dashboard_modules/ui_core.js' %}?v=1.9"></script>
+<script src="{% static 'js/dashboard_modules/actions.js' %}?v=1.9"></script>
+<script src="{% static 'js/dashboard_modules/mobile_ui.js' %}?v=1.9"></script>
+<script src="{% static 'js/dashboard_modules/wallet_stack.js' %}?v=1.9"></script>
+<script src="{% static 'js/dashboard_modules/wallet_add.js' %}?v=1.9"></script>
+<script src="{% static 'js/dashboard_modules/wallet_preview.js' %}?v=1.9"></script>
+<script src="{% static 'js/dashboard_modules/wallet_modal.js' %}?v=1.9"></script>
+<script src="{% static 'js/dashboard_modules/benefits_filters.js' %}?v=1.9"></script>
+<script src="{% static 'js/dashboard_modules/benefits_modal.js' %}?v=1.9"></script>
+<script src="{% static 'js/dashboard_modules/benefits_actions.js' %}?v=1.9"></script>
+<script src="{% static 'js/dashboard_modules/benefits.js' %}?v=1.9"></script>
 {% endblock %}
 
 {% block content %}
@@ -51,10 +51,11 @@
 
 <script>
     // --- Manage Wallet Modal Logic ---
-    const currentUserUid = "{{ request.session.uid }}";
+    // --- Manage Wallet Modal Logic ---
+    var globalUserUid = "{{ request.session.uid }}";
     // allCardsData contains ALL cards (database), used for client-side filtering
-    const allCardsData = {{ all_cards_json|safe }};
+    var globalAllCardsData = {{ all_cards_json|safe }};
     // Initialize availableCards with allCardsData for legacy compatibility, will be filtered by JS
-    let availableCards = allCardsData;
+    var globalAvailableCards = globalAllCardsData;
 </script>
 {% endblock %}

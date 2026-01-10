@@ -3,16 +3,16 @@
  */
 
 // --- Anniversary Modal Logic ---
-let currentAnniversaryCardId = null;
+var globalAnniversaryCardId = null;
 
 function addSelectedCard() {
     if (!selectedAddCard) return;
 
     // Open anniversary modal in "add" mode
     // We pass null as cardId to indicate we are adding a new card
-    // But we store the selectedAddCard.id in a separate variable or reuse currentAnniversaryCardId with a flag
+    // But we store the selectedAddCard.id in a separate variable or reuse globalAnniversaryCardId with a flag
 
-    currentAnniversaryCardId = 'ADD_NEW_CARD'; // Special flag
+    globalAnniversaryCardId = 'ADD_NEW_CARD'; // Special flag
     document.getElementById('anniversary-card-name').textContent = selectedAddCard.name;
 
     // Default to current month
@@ -30,7 +30,7 @@ function addSelectedCard() {
 }
 
 function openAnniversaryModal(cardId, cardName, currentDate) {
-    currentAnniversaryCardId = cardId;
+    globalAnniversaryCardId = cardId;
     document.getElementById('anniversary-card-name').textContent = cardName;
     document.getElementById('anniversary-date-input').value = currentDate || '';
 
@@ -47,7 +47,7 @@ function openAnniversaryModal(cardId, cardName, currentDate) {
 
 function closeAnniversaryModal() {
     document.getElementById('anniversary-modal').style.display = 'none';
-    currentAnniversaryCardId = null;
+    globalAnniversaryCardId = null;
 }
 
 function setAnniversaryDefaultState() {
@@ -113,7 +113,7 @@ function saveAnniversaryDate() {
     }
 
     // Check if we are adding a new card
-    if (currentAnniversaryCardId === 'ADD_NEW_CARD') {
+    if (globalAnniversaryCardId === 'ADD_NEW_CARD') {
         if (!selectedAddCard) return;
 
         showLoader();
@@ -163,8 +163,8 @@ function saveAnniversaryDate() {
                     const searchInput = document.getElementById('card-search-input');
                     if (searchInput && searchInput.value) {
                         searchInput.dispatchEvent(new Event('input'));
-                    } else if (typeof availableCards !== 'undefined') {
-                        renderCardResults(availableCards);
+                    } else if (typeof globalAvailableCards !== 'undefined') {
+                        renderCardResults(globalAvailableCards);
                     }
 
                     // Explicitly hide loader since we aren't reloading
@@ -200,7 +200,7 @@ function saveAnniversaryDate() {
     formData.append('anniversary_date', date);
     formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
 
-    fetch(`/wallet/update-anniversary/${currentAnniversaryCardId}/`, {
+    fetch(`/wallet/update-anniversary/${globalAnniversaryCardId}/`, {
         method: 'POST',
         body: formData,
         headers: {
@@ -230,8 +230,8 @@ function saveAnniversaryDate() {
 }
 
 // --- Remove Card Modal Logic ---
-let cardToRemoveForm = null;
-let cardToRemoveId = null;
+var cardToRemoveForm = null;
+var cardToRemoveId = null;
 
 function openRemoveCardModal(e, form, cardName, cardId) {
     if (e) e.preventDefault();

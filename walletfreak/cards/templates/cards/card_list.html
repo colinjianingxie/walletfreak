@@ -88,18 +88,18 @@
 
 <script>
 // Define allCardsData for modal usage
-const allCardsData = {{ cards_json|safe }};
+var allCardsData = {{ cards_json|safe }};
 
 // Track which cards are already in wallet
-const walletCardIds = new Set({{ wallet_card_ids|safe|default:'[]' }});
+var walletCardIds = new Set({{ wallet_card_ids|safe|default:'[]' }});
 
 // Template filter for dictionary access
-const userMatchScores = {{ user_match_scores|safe|default:'{}' }};
-const userPersonality = {{ user_personality_json|safe|default:'null' }};
-const currentUserUid = "{{ request.session.uid }}";
+var userMatchScores = {{ user_match_scores|safe|default:'{}' }};
+var userPersonality = {{ user_personality_json|safe|default:'null' }};
+var currentUserUid = "{{ request.session.uid }}";
 
 </script>
-<script src="{% static 'js/card_list.js' %}?v=1.7"></script>
+<script src="{% static 'js/card_list.js' %}?v=1.8"></script>
 
 
 {% endblock %}

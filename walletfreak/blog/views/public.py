@@ -305,7 +305,10 @@ def blog_list(request):
         }
     }
 
-    if request.headers.get('HX-Request') or request.headers.get('Hx-Request'):
+    is_htmx = request.headers.get('HX-Request') or request.headers.get('Hx-Request')
+    is_boosted = request.headers.get('HX-Boosted') or request.headers.get('Hx-Boosted')
+
+    if is_htmx and not is_boosted:
         return render(request, 'blog/partials/blog_list_results.html', context)
 
     return render(request, 'blog/blog_list.html', context)

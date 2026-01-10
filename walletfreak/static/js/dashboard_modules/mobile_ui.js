@@ -40,9 +40,9 @@ function showMobileAddNewScreen() {
         addNewScreen.style.display = 'flex';
     }
 
-    // Load cards when showing add new screen - use actual availableCards data
-    if (typeof availableCards !== 'undefined') {
-        renderMobileCards(availableCards);
+    // Load cards when showing add new screen - use actual globalAvailableCards data
+    if (typeof globalAvailableCards !== 'undefined') {
+        renderMobileCards(globalAvailableCards);
     } else {
         loadMobileCards(); // fallback to sample data
     }
@@ -85,7 +85,7 @@ function backToMobileSearch() {
 
 // Mobile card loading and filtering
 function loadMobileCards() {
-    // Fallback sample cards if availableCards is not defined
+    // Fallback sample cards if globalAvailableCards is not defined
     const sampleCards = [
         { id: 1, name: 'Sapphire Preferred', issuer: 'Chase' },
         { id: 2, name: 'Sapphire Reserve', issuer: 'Chase' },
@@ -126,8 +126,8 @@ function renderMobileCards(cards) {
     });
 }
 
-// Track selected filters for mobile
-let selectedMobileFilter = 'All'; // Changed from Set to single value for Radio behavior
+// Track selected filters// Basic Mobile UI Handling
+var selectedMobileFilter = 'all'; // Changed from Set to single value for Radio behavior
 
 function toggleMobileFilter(issuer) {
     const btn = document.getElementById(`filter-${issuer}`);
@@ -165,15 +165,15 @@ function toggleMobileFilter(issuer) {
 }
 
 function applyMobileFilters() {
-    if (typeof availableCards === 'undefined') {
-        console.log('availableCards not available');
+    if (typeof globalAvailableCards === 'undefined') {
+        console.log('globalAvailableCards not available');
         return;
     }
 
     const searchInput = document.getElementById('mobile-card-search');
     const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
 
-    let filtered = availableCards;
+    let filtered = globalAvailableCards;
 
     // 1. Filter by Search Term
     if (searchTerm) {
@@ -203,8 +203,8 @@ function applyMobileFilters() {
 }
 
 function filterMobileCards(issuer) {
-    if (typeof availableCards === 'undefined') {
-        console.log('availableCards not available, filtering by:', issuer);
+    if (typeof globalAvailableCards === 'undefined') {
+        console.log('globalAvailableCards not available, filtering by:', issuer);
         return;
     }
 
@@ -213,7 +213,7 @@ function filterMobileCards(issuer) {
         searchIssuer = 'American Express';
     }
 
-    const filtered = availableCards.filter(c =>
+    const filtered = globalAvailableCards.filter(c =>
         c.issuer.toLowerCase().includes(searchIssuer.toLowerCase())
     );
     renderMobileCards(filtered);
@@ -445,8 +445,8 @@ function addMobileSelectedCard() {
             addSelectedCard();
         } else {
             // Fallback - directly trigger anniversary modal
-            if (typeof currentAnniversaryCardId !== 'undefined') {
-                currentAnniversaryCardId = 'ADD_NEW_CARD';
+            if (typeof globalAnniversaryCardId !== 'undefined') {
+                globalAnniversaryCardId = 'ADD_NEW_CARD';
                 document.getElementById('anniversary-card-name').textContent = selectedAddCard.name;
 
                 const now = new Date();

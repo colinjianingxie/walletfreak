@@ -9,7 +9,7 @@ function renderMainDashboardStack() {
     // refreshDashboardBenefits(); // CAUSES LOOP: fetching server loader HTML overwrites client calculation
 }
 
-let isRefreshingBenefits = false;
+var isRefreshingBenefits = false;
 async function refreshDashboardBenefits() {
     if (isRefreshingBenefits) return;
     isRefreshingBenefits = true;

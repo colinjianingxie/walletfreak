@@ -12,7 +12,6 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.4">
     <!-- Tailwind removed -->
-    {% block extra_css %}{% endblock %}
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
@@ -78,9 +77,46 @@
             }
         });
     </script>
+    <style>
+        /* HTMX Indicator - Top Progress Bar */
+        .htmx-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, #2563eb, #9333ea);
+            z-index: 9999;
+            transform-origin: left;
+            transform: scaleX(0);
+            transition: transform 0.2s ease-in-out;
+            opacity: 0;
+        }
+
+        .htmx-request .htmx-indicator {
+            opacity: 1;
+            transform: scaleX(1);
+            animation: progress-indeterminate 1s infinite linear;
+        }
+
+        @keyframes progress-indeterminate {
+            0% { transform: translateX(-100%) scaleX(0.2); }
+            50% { transform: translateX(0%) scaleX(0.5); }
+            100% { transform: translateX(100%) scaleX(0.2); }
+        }
+    </style>
+    <script>
+        // Fix scroll locking on HTMX swap
+        document.body.addEventListener('htmx:afterSwap', function(event) {
+            document.body.style.overflow = '';
+            document.body.classList.remove('modal-open');
+        });
+    </script>
 </head>
 
-<body>
+<body hx-boost="true">
+    <div class="htmx-indicator"></div>
+    {% block extra_css %}{% endblock %}
     {% include 'includes/navbar.html' %}
 
 

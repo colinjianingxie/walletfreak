@@ -2,9 +2,9 @@
  * Wallet Filter & Search (Add Card View) Logic
  */
 
-// State for desktop persistence
-let currentDesktopFilter = 'All';
-let currentDesktopSearch = '';
+// Logic for "Add New Card" workflow
+var currentDesktopFilter = 'all';
+var currentDesktopSearch = '';
 
 function renderCardResults(cards) {
     const container = document.getElementById('card-results-list');
@@ -26,7 +26,7 @@ function renderCardResults(cards) {
         // Helper to find image URL (same as renderWalletStack)
         const getCardImage = (c) => {
             if (c.image_url && c.image_url.startsWith('http')) return c.image_url;
-            // Try to find in allCardsData (source of truth) if available, though 'card' here should be from availableCards
+            // Try to find in globalAllCardsData (source of truth) if available, though 'card' here should be from globalAvailableCards
             if (c.image_url) return c.image_url;
             return '/static/images/card_placeholder.png';
         };
@@ -85,7 +85,7 @@ function filterCards(issuer, resetSearch = true) {
     }
 
     // Apply combined filter: Search + Category
-    let filtered = availableCards;
+    let filtered = globalAvailableCards;
 
     // 1. Text Search (if any)
     if (currentDesktopSearch) {

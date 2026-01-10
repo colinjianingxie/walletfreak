@@ -1,5 +1,5 @@
 // Anniversary Date Logic
-let currentEditCardId = null;
+var currentEditCardId = null;
 
 function openEditAnniversaryModal(event, userCardId, currentDate = null) {
     if (event) {

@@ -176,7 +176,7 @@ def datapoint_list(request):
         'selected_card_benefits': selected_card_benefits,
     }
 
-    if request.headers.get('HX-Request'):
+    if request.headers.get('HX-Request') and not request.headers.get('HX-Boosted'):
         context['is_htmx'] = True
         return render(request, 'datapoints/partials/_feed.html', context)
 

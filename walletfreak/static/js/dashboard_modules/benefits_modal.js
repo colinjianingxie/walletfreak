@@ -1,10 +1,9 @@
 /**
- * Benefits Modal Logic & State
+ * Benefits Modal Logic
  */
-
-let currentBenefitData = {};
-let currentBenefitPeriods = [];
-let currentPeriodIndex = 0;
+var currentBenefitData = null;
+var currentBenefitPeriods = [];
+var currentPeriodIndex = 0;
 
 function openBenefitModal(cardId, benefitId, benefitName, amount, used, frequency, periodKey, scriptId, isIgnored, ytdUsed) {
     // Parse periods from json_script
