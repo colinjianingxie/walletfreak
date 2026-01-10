@@ -169,30 +169,95 @@ p {
 
 .nav-links {
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
     align-items: center;
+}
+
+.nav-items {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex-wrap: nowrap;
+    /* Prevent wrapping */
 }
 
 .nav-items a {
     font-weight: 600;
     color: var(--text-muted);
     font-size: 0.95rem;
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem 1rem;
     border-radius: 99px;
     transition: all 0.2s ease;
+    white-space: nowrap;
 }
 
 .nav-items a:hover {
     color: var(--primary);
+    background-color: #f8fafc;
 }
 
 .nav-links .nav-items a.active {
-    color: #2563EB !important;
-    background-color: #DBEAFE !important;
+    color: #2563eb !important;
+    background-color: #dbeafe !important;
     font-weight: 600;
     border-radius: 9999px;
-    padding: 0.75rem 1.5rem !important;
-    display: inline-block;
+    padding: 0.75rem 1rem !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Response Navbar Sizing */
+@media (max-width: 1400px) {
+    .navbar .container {
+        gap: 1rem !important;
+    }
+
+    .logo span {
+        font-size: 1.25rem !important;
+    }
+
+    .nav-links {
+        gap: 0.5rem;
+    }
+
+    .nav-items a {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.85rem;
+    }
+
+    .nav-links .nav-items a.active {
+        padding: 0.5rem 0.6rem !important;
+    }
+}
+
+/* Extra compact for the tightest desktop range before mobile */
+@media (max-width: 1150px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .logo img {
+        height: 32px !important;
+    }
+
+    .nav-items {
+        gap: 0;
+    }
+
+    .nav-items a {
+        padding: 0.4rem 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .user-dropdown-toggle {
+        padding: 0.25rem !important;
+    }
+
+    .user-dropdown-toggle-name {
+        display: none !important;
+        /* Hide user name to save space */
+    }
 }
 
 /* Buttons */

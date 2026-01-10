@@ -86,7 +86,7 @@ function selectCardForPreview(card, element) {
                         cat = cat.join(', ');
                     }
 
-                    const rate = parseFloat(item.rate || item.value || 0);
+                    const rate = parseFloat(item.rate || item.value || item.multiplier || 0);
                     const currency = item.currency || 'points';
 
                     // Build details text similar to card_modal.html

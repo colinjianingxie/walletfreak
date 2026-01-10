@@ -137,7 +137,10 @@ def dashboard(request):
                 dollar_value = benefit.get('dollar_value')
                 if dollar_value and dollar_value > 0:
                     # benefit_id = f"benefit_{idx}" # OLD
-                    benefit_id = str(idx) # NEW: Simple index "0", "1", etc.
+                    benefit_id = benefit.get('id')
+                    if not benefit_id: 
+                         # Fallback for legacy or malformed data, though id should be there from hydration
+                         benefit_id = str(idx)
                     frequency = benefit.get('time_category', 'Annually (calendar year)')
                     
                     # Get usage from user's card data

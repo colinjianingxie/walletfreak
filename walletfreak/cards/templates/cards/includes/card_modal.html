@@ -623,7 +623,7 @@ function openCardModal(cardId) {
     
     const benefits = card.benefits || [];
     // Filter out benefits with benefit_type "Multiplier" or "Cashback"
-    const filteredBenefits = benefits.filter(b => b.benefit_type !== 'Multiplier' && b.benefit_type !== 'Cashback');
+    const filteredBenefits = benefits.filter(b => b.benefit_type !== 'Multiplier' && b.benefit_type !== 'Cashback' && b.benefit_type !== 'Financing' && b.benefit_type !== 'Deferred Interest' && b.benefit_type !== 'Insurance');
     
     if (Array.isArray(filteredBenefits) && filteredBenefits.length > 0) {
         filteredBenefits.forEach((benefit, index) => {
@@ -677,8 +677,8 @@ function openCardModal(cardId) {
             const wrapper = document.createElement('div');
             wrapper.className = 'expandable-row-wrapper';
             wrapper.innerHTML = `
-                <div class="expandable-row" onclick="toggleExpandable(this)">
-                    <div class="earning-cat">${name}</div>
+                <div class="expandable-row" onclick="toggleExpandable(this)" style="width: 100%;">
+                    <div class="earning-cat" style="flex: 1;">${name}</div>
                     <div style="display: flex; align-items: center; gap: 0.5rem;">
                         <div class="${valueClass}">${valueDisplay}</div>
                         <span class="material-icons expand-arrow" style="font-size: 20px; color: #94A3B8;">expand_more</span>
