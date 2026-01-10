@@ -1,0 +1,15 @@
+{
+    "benefit_id": "fraud-protection",
+    "short_description": "Fraud Protection",
+    "description": "Provides fraud protection and monitoring for unauthorized transactions.",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "Fraud Protection"
+    ],
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

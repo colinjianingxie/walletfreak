@@ -1,0 +1,17 @@
+{
+    "benefit_id": "visa-signature-benefits",
+    "short_description": "Visa Signature Perks",
+    "description": "Access to Visa Signature benefits including roadside dispatch, travel and emergency assistance, and zero fraud liability.",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Ongoing",
+    "benefit_category": [
+        "Generic Protection",
+        "Roadside Assistance",
+        "Travel Security"
+    ],
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

@@ -1,0 +1,15 @@
+{
+    "question_id": "q-4",
+    "short_desc": "Credit Requirements",
+    "question": "Is your credit score at least good (670+)?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": "Credit Building"
+}

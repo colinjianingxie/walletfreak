@@ -1,0 +1,15 @@
+{
+    "question_id": "q-3",
+    "short_desc": "Security Deposit",
+    "question": "Do you prefer an unsecured card without a security deposit?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": "Credit Building"
+}

@@ -1,0 +1,15 @@
+{
+    "question_id": "q-3",
+    "short_desc": "Investment Goals",
+    "question": "Are you interested in automatically contributing credit card rewards to investments or savings?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": "Generic Financial & Rewards"
+}

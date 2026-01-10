@@ -1,0 +1,15 @@
+{
+    "question_id": "q-3",
+    "short_desc": "Car Rental Frequency",
+    "question": "Do you rent cars multiple times a year?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": "Rental Coverage"
+}

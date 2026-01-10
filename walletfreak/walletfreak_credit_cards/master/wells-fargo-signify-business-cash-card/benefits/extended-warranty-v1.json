@@ -1,0 +1,15 @@
+{
+    "benefit_id": "extended-warranty",
+    "short_description": "Extended Warranty",
+    "description": "Extends the manufacturer's warranty on eligible purchases.",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "Generic Protection"
+    ],
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

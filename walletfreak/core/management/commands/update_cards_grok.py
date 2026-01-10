@@ -270,7 +270,13 @@ class Command(BaseCommand):
                         final_vid = f"{base_id}-v{new_v_num}"
                         
                         # Deprecate old file
-                        old_item['valid_until'] = yesterday_str
+                        if old_item.get('valid_from') == today_str:
+                             # If it was created today, we can just expire it today (effectively 0-day or effectively overwritten logic depending on interpretation, but safer than yesterday)
+                             # Or we can treat it as a correction invalidating the previous one.
+                             old_item['valid_until'] = today_str
+                        else:
+                             old_item['valid_until'] = yesterday_str
+                        
                         old_item['is_active'] = False
                         with open(os.path.join(target_dir, f"{active_vid}.json"), 'w') as f:
                             json.dump(old_item, f, indent=4)
@@ -418,56 +424,36 @@ class Command(BaseCommand):
 
     def get_all_unique_categories(self):
         """
-        Aggregates all unique categories used in active benefits and earning rates across all cards.
+        Loads the structured unique categories from categories_list.json.
+        Returns a formatted string describing the hierarchy to help the LLM.
         """
-        categories = set()
-        
-        if not os.path.exists(self.master_dir):
-            return []
-
-        for card_slug in os.listdir(self.master_dir):
-            card_dir = os.path.join(self.master_dir, card_slug)
-            if not os.path.isdir(card_dir):
-                continue
+        json_path = os.path.join(settings.BASE_DIR, 'walletfreak_credit_cards', 'categories_list.json')
+        if not os.path.exists(json_path):
+             # Fallback to old behavior or empty
+             return "No categories found."
+             
+        try:
+            with open(json_path, 'r') as f:
+                data = json.load(f)
                 
-            # Check Benefits
-            ben_dir = os.path.join(card_dir, 'benefits')
-            if os.path.exists(ben_dir):
-                for f in os.listdir(ben_dir):
-                    if f.endswith('.json'):
-                        try:
-                            with open(os.path.join(ben_dir, f), 'r') as fd:
-                                data = json.load(fd)
-                                cats = data.get('benefit_category', [])
-                                if isinstance(cats, list):
-                                    for c in cats: categories.add(str(c))
-                                elif isinstance(cats, str):
-                                    categories.add(cats)
-                        except: pass
-
-            # Check Earning Rates
-            earn_dir = os.path.join(card_dir, 'earning_rates')
-            if os.path.exists(earn_dir):
-                for f in os.listdir(earn_dir):
-                    if f.endswith('.json'):
-                        try:
-                            with open(os.path.join(earn_dir, f), 'r') as fd:
-                                data = json.load(fd)
-                                cats = data.get('category', [])
-                                if isinstance(cats, list):
-                                    for c in cats: categories.add(str(c))
-                                elif isinstance(cats, str):
-                                    categories.add(cats)
-                        except: pass
-                        
-        return sorted(list(categories))
+            # Format as: "Parent Category (Children: Child1, Child2, ...)"
+            lines = []
+            for item in data:
+                parent = item.get('CategoryName')
+                children = item.get('CategoryNameDetailed', [])
+                child_str = ", ".join(children)
+                lines.append(f"- {parent}: [{child_str}]")
+            
+            return "\n".join(lines)
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f"Error loading categories list: {e}"))
+            return "Error loading categories."
 
     def construction_prompt(self, current_json, slug):
         today = datetime.date.today().isoformat()
         
         # Get dynamic categories
-        existing_categories = self.get_all_unique_categories()
-        cat_str = ", ".join(f'"{c}"' for c in existing_categories)
+        cat_hierarchy = self.get_all_unique_categories()
         
         # Strip internal fields from current_json to avoid confusing LLM
         clean_json = current_json.copy()
@@ -484,9 +470,16 @@ Here is the CURRENT known data (JSON):
 2. Return a JSON object with the UPDATED details.
 3. Validate all fields against the schema below.
 
-**EXISTING CATEGORIES**:
-[{cat_str}]
-*Please prioritize using these categories for 'benefit_category' and 'earning_rates' category fields. Only create new categories if strictly necessary.*
+**VALID CATEGORIES HIERARCHY**:
+{cat_hierarchy}
+
+**CRITICAL INSTRUCTIONS FOR UPDATES (READ CAREFULLY)**:
+1. **CONSERVATIVE UPDATES**: The "CURRENT known data" provided above is heavily curated. **DO NOT CHANGE** values (especially multipliers or credits) unless you find **EXPLICIT, RECENT EVIDENCE** in the web search results that contradicts it (e.g., a "devaluation" or "new offer").
+2. **Ambiguity**: If web results are ambiguous or unclear, **KEEP THE CURRENT VALUE**. Do not guess.
+3. **Categories**: You MUST choose categories ONLY from the "Valid Categories Hierarchy" above.
+4. **Specificity**: For `benefit_category` and `earning_rates.category`, select the most specific child category if applicable.
+5. **No Duplicates**: **DO NOT CREATE DUPLICATE CATEGORIES**.
+6. **No Inventions**: Do NOT invent new categories not in the list.
 
 **SCHEMA RULES (Snake Case)**:
 - **slug-id**: Must remain "{slug}".

@@ -1,0 +1,15 @@
+{
+    "benefit_id": "purchase-protection",
+    "short_description": "Purchase Protection",
+    "description": "Covers eligible purchases against damage or theft for 120 days from the date of purchase.",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Ongoing",
+    "benefit_category": [
+        "Generic Protection"
+    ],
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

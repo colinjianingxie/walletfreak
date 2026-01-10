@@ -1,0 +1,16 @@
+{
+    "benefit_id": "companion-certificate",
+    "short_description": "$99 Companion Certificate",
+    "description": "Earn a $99 companion certificate after qualifying spend.",
+    "value": 99,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "American Airlines",
+        "Generic Travel Perks"
+    ],
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

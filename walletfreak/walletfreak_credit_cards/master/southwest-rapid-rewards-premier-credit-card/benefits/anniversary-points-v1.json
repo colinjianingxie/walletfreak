@@ -1,0 +1,16 @@
+{
+    "benefit_id": "anniversary-points",
+    "short_description": "6,000 Anniversary Points",
+    "description": "Receive 6,000 points each year on your card anniversary.",
+    "value": 6000,
+    "currency": "Points",
+    "period": "Annually",
+    "benefit_category": [
+        "Rewards Bonus",
+        "Southwest"
+    ],
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

@@ -6,7 +6,7 @@
     "currency": "Cash",
     "period": "Annually",
     "benefit_category": [
-        "Travel"
+        "Fee Waiver"
     ],
     "version": "v1",
     "valid_from": "2026-01-10",

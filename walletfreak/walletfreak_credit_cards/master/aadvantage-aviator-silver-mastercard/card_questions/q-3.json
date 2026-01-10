@@ -1,0 +1,17 @@
+{
+    "question_id": "q-3",
+    "short_desc": "Companion Travel",
+    "question": "Do you travel with a companion on American Airlines?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Yes",
+        "No",
+        "Sometimes"
+    ],
+    "weights": [
+        1.0,
+        0.0,
+        0.5
+    ],
+    "benefit_category": "Generic Travel Perks"
+}

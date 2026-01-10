@@ -1,0 +1,15 @@
+{
+    "question_id": "q-4",
+    "short_desc": "EarlyBird Check-In Usage",
+    "question": "Would you use EarlyBird Check-In for better boarding positions?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": "Generic Travel Perks"
+}

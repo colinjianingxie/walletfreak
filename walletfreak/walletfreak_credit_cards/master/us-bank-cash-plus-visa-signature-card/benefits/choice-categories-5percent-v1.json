@@ -1,0 +1,16 @@
+{
+    "benefit_id": "choice-categories-5percent",
+    "short_description": "5% Cash Back Categories",
+    "description": "Earn 5% cash back on your first $2,000 in combined eligible purchases each quarter in two categories you choose.",
+    "value": 5,
+    "currency": "Cash",
+    "period": "Quarterly",
+    "benefit_category": [
+        "Choice Category",
+        "Top Category"
+    ],
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

@@ -1,0 +1,24 @@
+{
+    "slug-id": "alliant-cashback-visa-signature-card",
+    "active_indices": {
+        "benefits": [
+            "cell-phone-protection-v1",
+            "roadside-assistance-v1",
+            "rental-coverage-v1"
+        ],
+        "earning_rates": [
+            "all-purchases-v1"
+        ],
+        "sign_up_bonus": []
+    },
+    "name": "Alliant Cashback Visa Signature Card",
+    "issuer": "Alliant Credit Union",
+    "image_url": "/static/images/credit_cards/alliant-cashback-visa-signature-card.png",
+    "annual_fee": 0,
+    "application_link": "https://www.alliantcreditunion.org/credit-cards/visa-signature-card",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "A decent flat-rate cash back card for credit union members, but the recent drop to 1.5% from 2.5% is a big devaluation.",
+    "points_value_cpp": null
+}

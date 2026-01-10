@@ -1,0 +1,15 @@
+{
+    "question_id": "q-4",
+    "short_desc": "In-Flight Purchases",
+    "question": "Do you purchase food or WiFi during flights?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": "Generic Travel Perks"
+}

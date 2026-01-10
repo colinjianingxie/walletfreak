@@ -1,0 +1,15 @@
+{
+    "question_id": "q-4",
+    "short_desc": "Cell Phone Usage",
+    "question": "Do you pay your business cell phone bill with a credit card?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": "Cell Phone Protection"
+}

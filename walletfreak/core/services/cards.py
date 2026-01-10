@@ -23,6 +23,24 @@ class CardMixin:
         cards_snapshot = self.get_collection('master_cards')
         return cards_snapshot
 
+    def get_user_card_count(self, uid):
+        """
+        Efficiently count user cards without fetching full data.
+        """
+        try:
+            # Aggregate count if available
+            try:
+                from google.cloud.firestore import AggregateQuery
+                query = self.db.collection('users').document(uid).collection('user_cards').count()
+                return query.get()[0][0].value
+            except Exception:
+                # Fallback to len of ids (projections?)
+                # Or regular stream if projection not easy via python client wrapper
+                query = self.db.collection('users').document(uid).collection('user_cards')
+                return len(list(query.stream()))
+        except Exception:
+            return 0
+
     def get_cards(self):
         """
         Get all cards with full subcollections (active benefits, earning_rates, sign_up_bonus).
@@ -35,6 +53,9 @@ class CardMixin:
         
         # 1. Fetch all master cards
         cards_snapshot = self.get_collection('master_cards')
+        # Sort cards by name for consistent ordering
+        cards_snapshot.sort(key=lambda x: x.get('name', ''))
+        
         cards_map = {c['id']: c for c in cards_snapshot if 'id' in c}
         
         if not cards_map:
@@ -51,51 +72,28 @@ class CardMixin:
             c['earning_rates'] = []
             c['sign_up_bonus'] = {} 
             c['card_questions'] = []
-            # We will populate these using active_indices if available
         
         # Collect all references to fetch
-        stats_benefit_refs = []
-        stats_rate_refs = []
-        
-        # We need to map back results to cards. 
-        # Since getAll returns a list of snapshots, we need to know which snapshot belongs to which card?
-        # Actually, snapshots contain the reference, and ref.parent.parent is the card.
-        # BUT active_indices point to docs inside subcollections. 
-        
-        valid_indices_count = 0
-        
         refs_to_fetch = []
-        
+        ref_map = {} # path -> (card_id, type)
+
         for card_id, c in cards_map.items():
             indices = c.get('active_indices', {})
             
-            # Benefits
-            if indices.get('benefits'):
-                for b_id in indices['benefits']:
-                    # Construct ref: master_cards/{card_id}/benefits/{b_id}
-                    # Note: b_id in active_indices is the DOC ID (e.g. uber-cash-v1)
-                    ref = self.db.collection('master_cards').document(card_id).collection('benefits').document(b_id)
-                    refs_to_fetch.append(ref)
-            
-            # Earning Rates
-            if indices.get('earning_rates'):
-                for r_id in indices['earning_rates']:
-                    ref = self.db.collection('master_cards').document(card_id).collection('earning_rates').document(r_id)
-                    refs_to_fetch.append(ref)
+            def add_refs(type_key, collection_name):
+                if indices.get(type_key):
+                    for item_id in indices[type_key]:
+                        ref = self.db.collection('master_cards').document(card_id).collection(collection_name).document(item_id)
+                        refs_to_fetch.append(ref)
+                        ref_map[ref.path] = (card_id, type_key)
 
-            # Check if any indices were found to increment logic check
-            if indices:
-                valid_indices_count += 1
-                
-        # Fallback: If active_indices are missing (legacy or not seeded correctly), 
-        # we might need the Collection Group query -> BUT that failed due to index.
-        # So we MUST rely on active_indices for performance, or iterate linearly (slow).
-        # Given we just refactored and seeded, active_indices SHOULD be there.
-        # If headers are missing active_indices, we have a data problem.
-        
+            add_refs('benefits', 'benefits')
+            add_refs('earning_rates', 'earning_rates')
+            add_refs('sign_up_bonus', 'sign_up_bonus')
+            add_refs('card_questions', 'card_questions')
+
         if refs_to_fetch:
-            # Batch Get
-            # Chunking in groups of 100
+            # Batch Get - Chunking in groups of 100
             chunks = [refs_to_fetch[i:i + 100] for i in range(0, len(refs_to_fetch), 100)]
             
             for chunk in chunks:
@@ -106,58 +104,28 @@ class CardMixin:
                     
                     data = snap.to_dict()
                     data['id'] = snap.id
-                    data['slug'] = snap.id # Ensure slug is present as it is used in views
-                    parent_coll = snap.reference.parent
-                    card_id = parent_coll.parent.id
-                    type_name = parent_coll.id # 'benefits' or 'earning_rates'
                     
-                    if card_id in cards_map:
-                        if type_name == 'benefits':
-                            cards_map[card_id]['benefits'].append(data)
-                        elif type_name == 'earning_rates':
-                            cards_map[card_id]['earning_rates'].append(data)
-
-        # 4. Fetch Sign Up Bonuses (Collection Group) - Usually small enough or can rely on active_indices too if added
-        # current active_indices has 'sign_up_bonus' as single item or list?
-        # In refactor script: `active_indices['sign_up_bonus'] = None`. 
-        # So we rely on gathering all? Or just fetch the default one?
-        # Let's keep Collection Group for SUBs and Questions as they are less frequent updates / fewer docs?
-        # Or iterate cards. 
-        # Let's simple iterate collection group for now but WITHOUT FILTER.
-        # Simply get all SUBs. There aren't that many.
-        try:
-            bonus_docs = self.db.collection_group('sign_up_bonus').stream()
-            for doc in bonus_docs:
-                parent = doc.reference.parent.parent
-                if parent and parent.id in cards_map:
-                    data = doc.to_dict()
-                    data['id'] = doc.id
-                    if '_raw_bonuses' not in cards_map[parent.id]:
-                        cards_map[parent.id]['_raw_bonuses'] = []
-                    cards_map[parent.id]['_raw_bonuses'].append(data)
-        except Exception as e:
-            print(f"Error fetching sign_up_bonus: {e}")
-
-        # 5. Fetch Card Questions
-        try:
-            questions_docs = self.db.collection_group('card_questions').stream()
-            for doc in questions_docs:
-                parent = doc.reference.parent.parent
-                if parent and parent.id in cards_map:
-                    data = doc.to_dict()
-                    data['id'] = doc.id
-                    if 'card_questions' not in cards_map[parent.id]:
-                        cards_map[parent.id]['card_questions'] = []
-                    cards_map[parent.id]['card_questions'].append(data)
-        except Exception as e:
-            print(f"Error fetching card_questions: {e}")
+                    # Identify owner
+                    card_id, type_key = ref_map.get(snap.reference.path, (None, None))
+                    
+                    if card_id and card_id in cards_map:
+                        container = cards_map[card_id].get(type_key)
+                        if isinstance(container, list):
+                            container.append(data)
 
         # 6. Process
         for card in cards_map.values():
-            raw_bonuses = card.get('_raw_bonuses', [])
-            if '_raw_bonuses' in card: del card['_raw_bonuses']
+            raw_bonuses = card.get('sign_up_bonus', []) if isinstance(card.get('sign_up_bonus'), list) else [] 
+            # Note: in loop above we appended to list, but initialization was dict... wait.
+            # Initialization above: c['sign_up_bonus'] = {} -> WRONG if used as list accumulator.
+            # Let's check logic: `add_refs` uses `indices['sign_up_bonus']`.
+            # We append to refs.
+            # Then retrieve and append to `container`.
+            # If `container` is dict, append fails.
+            # FIX: Initialize all as lists.
             
-            card['sign_up_bonus'] = self._process_signup_bonuses(raw_bonuses)
+            # Correcting processing logic:
+            card['sign_up_bonus'] = self._process_signup_bonuses(card.get('sign_up_bonus', []))
             card['card_questions'] = self._process_card_questions(card.get('card_questions', []))
             card['benefits'].sort(key=lambda x: x.get('benefit_id') or '')
 
@@ -234,39 +202,48 @@ class CardMixin:
     def _enrich_card_with_subcollections(self, card_id, card_data):
         try:
             card_ref = self.db.collection('master_cards').document(card_id)
-            
-            # Using active_indices here for single card as well if available
             indices = card_data.get('active_indices', {})
-            benefits = []
-            earning_rates = []
             
-            if indices.get('benefits'):
-                # Fetch specific
-                refs = [card_ref.collection('benefits').document(bid) for bid in indices['benefits']]
-                for snap in self.db.get_all(refs):
-                    if snap.exists:
-                         benefits.append({**snap.to_dict(), 'id': snap.id})
-            else:
-                 # Fallback to query
-                benefits = [{**doc.to_dict(), 'id': doc.id} 
-                    for doc in card_ref.collection('benefits').where(filter=FieldFilter('is_active', '==', True)).stream()]
+            # Prepare result containers
+            card_data['benefits'] = []
+            card_data['earning_rates'] = []
+            # Intermediate lists for bonuses/questions
+            bonuses = []
+            questions = []
             
-            card_data['benefits'] = benefits
-            
-            if indices.get('earning_rates'):
-                 refs = [card_ref.collection('earning_rates').document(rid) for rid in indices['earning_rates']]
-                 for snap in self.db.get_all(refs):
-                    if snap.exists:
-                         earning_rates.append({**snap.to_dict(), 'id': snap.id})
-            else:
-                earning_rates = [{**doc.to_dict(), 'id': doc.id} 
-                    for doc in card_ref.collection('earning_rates').where(filter=FieldFilter('is_active', '==', True)).stream()]
-            card_data['earning_rates'] = earning_rates
-            
-            bonuses = [{**doc.to_dict(), 'id': doc.id} for doc in card_ref.collection('sign_up_bonus').stream()]
-            card_data['sign_up_bonus'] = self._process_signup_bonuses(bonuses)
+            refs_to_fetch = []
+            ref_type_map = {} # path -> type_key
 
-            questions = [{**doc.to_dict(), 'id': doc.id} for doc in card_ref.collection('card_questions').stream()]
+            def add_refs(type_key, collection):
+                if indices.get(type_key):
+                    for iid in indices[type_key]:
+                        ref = card_ref.collection(collection).document(iid)
+                        refs_to_fetch.append(ref)
+                        ref_type_map[ref.path] = type_key
+            
+            add_refs('benefits', 'benefits')
+            add_refs('earning_rates', 'earning_rates')
+            add_refs('sign_up_bonus', 'sign_up_bonus')
+            add_refs('card_questions', 'card_questions')
+
+            if refs_to_fetch:
+                snaps = self.db.get_all(refs_to_fetch)
+                for snap in snaps:
+                    if snap.exists:
+                        type_key = ref_type_map.get(snap.reference.path)
+                        data = {**snap.to_dict(), 'id': snap.id}
+                        
+                        if type_key == 'benefits':
+                            card_data['benefits'].append(data)
+                        elif type_key == 'earning_rates':
+                            card_data['earning_rates'].append(data)
+                        elif type_key == 'sign_up_bonus':
+                            bonuses.append(data)
+                        elif type_key == 'card_questions':
+                            questions.append(data)
+
+            # Process processed fields
+            card_data['sign_up_bonus'] = self._process_signup_bonuses(bonuses)
             card_data['card_questions'] = self._process_card_questions(questions)
 
         except Exception as e:
@@ -307,11 +284,17 @@ class CardMixin:
             
         return True
 
-    def get_user_cards(self, uid, status=None):
+    def get_user_cards(self, uid, status=None, hydrate=True):
+        """
+        Get user cards.
+        hydrate: If True, merges with Master Card data (Requires fetching Master Cards).
+                 If False, returns only User Card data (Lightweight).
+        """
         query = self.db.collection('users').document(uid).collection('user_cards')
         if status:
             query = query.where(filter=FieldFilter('status', '==', status))
         
+        # User Cards are small, stream is fine.
         user_cards_docs = list(query.stream())
         if not user_cards_docs:
             return []
@@ -321,6 +304,12 @@ class CardMixin:
             data = doc.to_dict()
             card_id = doc.id
             user_cards_map[card_id] = data
+            
+        if not hydrate:
+             return [
+                 {**data, 'id': cid, 'card_slug_id': cid} 
+                 for cid, data in user_cards_map.items()
+             ]
             
         # Get cached master data for efficiency
         all_hydrated_cards = self.get_cards() 

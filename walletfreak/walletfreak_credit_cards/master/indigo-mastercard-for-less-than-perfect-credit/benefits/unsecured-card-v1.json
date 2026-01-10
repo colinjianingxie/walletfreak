@@ -1,0 +1,15 @@
+{
+    "benefit_id": "unsecured-card",
+    "short_description": "Unsecured Credit Card",
+    "description": "No security deposit required, ideal for those with less than perfect credit.",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "Credit Building"
+    ],
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

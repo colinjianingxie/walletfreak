@@ -1,0 +1,15 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Everyday Spending",
+    "question": "Do you want unlimited cash back on all purchases without categories?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": "All Purchases"
+}

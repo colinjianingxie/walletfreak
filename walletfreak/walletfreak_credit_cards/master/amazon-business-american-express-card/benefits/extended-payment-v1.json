@@ -1,0 +1,15 @@
+{
+    "benefit_id": "extended-payment",
+    "short_description": "Extended Payment Option",
+    "description": "Choose a 60-day interest-free period on eligible purchases instead of earning rewards.",
+    "value": null,
+    "currency": null,
+    "period": null,
+    "benefit_category": [
+        "Generic Financial & Rewards"
+    ],
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

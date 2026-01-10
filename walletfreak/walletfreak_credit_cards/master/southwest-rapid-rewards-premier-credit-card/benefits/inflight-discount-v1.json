@@ -1,0 +1,16 @@
+{
+    "benefit_id": "inflight-discount",
+    "short_description": "25% Back on Inflight Purchases",
+    "description": "Get 25% back on inflight purchases.",
+    "value": 25,
+    "currency": "Percent",
+    "period": "Ongoing",
+    "benefit_category": [
+        "Generic Travel Perks",
+        "Southwest"
+    ],
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

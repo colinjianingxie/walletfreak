@@ -1,0 +1,15 @@
+{
+    "benefit_id": "no-credit-check",
+    "short_description": "No Credit Check",
+    "description": "Apply without a credit check, making it accessible for those with poor or no credit history.",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "Credit Building"
+    ],
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

@@ -1,0 +1,17 @@
+{
+    "question_id": "q-4",
+    "short_desc": "Rewards Expectation",
+    "question": "Do you need a card that earns rewards on purchases, or is credit building your main goal?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Credit building only",
+        "Need rewards",
+        "Sometimes want rewards"
+    ],
+    "weights": [
+        1.0,
+        0.0,
+        0.5
+    ],
+    "benefit_category": "No Rewards"
+}

@@ -1,0 +1,15 @@
+{
+    "benefit_id": "purchase-protection",
+    "short_description": "Purchase Protection",
+    "description": "Covers eligible purchases against damage or theft for a certain period after purchase.",
+    "value": 1000,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "Generic Protection"
+    ],
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

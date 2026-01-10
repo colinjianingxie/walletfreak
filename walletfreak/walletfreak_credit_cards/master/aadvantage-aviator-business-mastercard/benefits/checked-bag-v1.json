@@ -1,0 +1,16 @@
+{
+    "benefit_id": "checked-bag",
+    "short_description": "Free Checked Bag",
+    "description": "First checked bag free on domestic American Airlines itineraries for you and up to 4 companions.",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "American Airlines",
+        "Travel"
+    ],
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

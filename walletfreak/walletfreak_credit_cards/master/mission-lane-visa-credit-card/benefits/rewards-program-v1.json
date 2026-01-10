@@ -1,0 +1,15 @@
+{
+    "benefit_id": "rewards-program",
+    "short_description": "Rewards Program",
+    "description": "Earn rewards on everyday purchases while building credit.",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "Rewards Bonus"
+    ],
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

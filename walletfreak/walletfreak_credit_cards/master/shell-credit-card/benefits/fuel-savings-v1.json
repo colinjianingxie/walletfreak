@@ -1,0 +1,15 @@
+{
+    "benefit_id": "fuel-savings",
+    "short_description": "Shell Fuel Discount",
+    "description": "Save up to 5 cents per gallon on fuel purchases at Shell stations through the Fuel Rewards program.",
+    "value": 5,
+    "currency": "Cash",
+    "period": "Monthly",
+    "benefit_category": [
+        "Gas"
+    ],
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

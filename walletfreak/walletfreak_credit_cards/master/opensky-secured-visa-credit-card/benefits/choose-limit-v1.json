@@ -1,0 +1,15 @@
+{
+    "benefit_id": "choose-limit",
+    "short_description": "Choose Your Credit Limit",
+    "description": "Set your own credit limit by providing a security deposit between $200 and $3,000.",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "Credit Building"
+    ],
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Business Expenses",
+    "question": "Do you have regular business expenses that you could charge to a credit card?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Yes",
+        "No",
+        "Sometimes"
+    ],
+    "weights": [
+        1.0,
+        0.0,
+        0.5
+    ],
+    "benefit_category": "All Purchases"
+}

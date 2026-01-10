@@ -1,0 +1,15 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Anniversary Points Value",
+    "question": "Would 6,000 anniversary points be valuable for your travel needs?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": "Rewards Bonus"
+}

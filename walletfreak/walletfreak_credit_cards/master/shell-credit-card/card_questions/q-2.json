@@ -1,0 +1,15 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Interest in Fuel Savings",
+    "question": "Are you looking to save money on gas purchases?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": "Gas"
+}

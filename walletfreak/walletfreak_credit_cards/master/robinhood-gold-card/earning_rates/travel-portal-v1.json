@@ -7,6 +7,6 @@
     "is_default": false,
     "version": "v1",
     "valid_from": "2026-01-10",
-    "valid_until": null,
-    "is_active": true
+    "valid_until": "2026-01-09",
+    "is_active": false
 }

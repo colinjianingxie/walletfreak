@@ -1,0 +1,16 @@
+{
+    "benefit_id": "free-checked-bags",
+    "short_description": "Free Checked Bags",
+    "description": "Free checked bags on American Airlines flights for you and companions.",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "American Airlines",
+        "Generic Travel Perks"
+    ],
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

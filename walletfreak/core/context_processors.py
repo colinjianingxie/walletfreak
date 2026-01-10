@@ -29,8 +29,7 @@ def wallet_status(request):
                 wallet_count = cache.get(wallet_key)
                 
                 if wallet_count is None:
-                    user_cards = db.get_user_cards(uid)
-                    wallet_count = len(user_cards)
+                    wallet_count = db.get_user_card_count(uid)
                     cache.set(wallet_key, wallet_count, 300) # 5 mins
                 
                 # Get assigned personality details if available

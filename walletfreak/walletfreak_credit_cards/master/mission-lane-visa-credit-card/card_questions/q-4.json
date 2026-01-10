@@ -1,0 +1,17 @@
+{
+    "question_id": "q-4",
+    "short_desc": "Fraud Protection Importance",
+    "question": "How important is fraud protection to you when choosing a credit card?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Very Important",
+        "Somewhat Important",
+        "Not Important"
+    ],
+    "weights": [
+        1.0,
+        0.5,
+        0.0
+    ],
+    "benefit_category": "Fraud Protection"
+}

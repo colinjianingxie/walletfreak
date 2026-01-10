@@ -1,0 +1,15 @@
+{
+    "question_id": "q-4",
+    "short_desc": "Direct Deposit",
+    "question": "Do you have or plan to set up direct deposit with SoFi?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": "Banking"
+}

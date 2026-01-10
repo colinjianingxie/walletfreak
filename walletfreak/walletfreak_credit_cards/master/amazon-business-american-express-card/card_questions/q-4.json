@@ -1,0 +1,15 @@
+{
+    "question_id": "q-4",
+    "short_desc": "Business Card Usage",
+    "question": "Are you looking for a no-annual-fee business credit card for everyday use?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": "Generic Business & Tech"
+}

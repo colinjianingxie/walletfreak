@@ -1,0 +1,16 @@
+{
+    "benefit_id": "inflight-savings",
+    "short_description": "Inflight Savings",
+    "description": "Receive 25% back as a statement credit on food and beverages purchased inflight on American Airlines flights.",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "American Airlines",
+        "Generic Dining"
+    ],
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

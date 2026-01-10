@@ -1,0 +1,12 @@
+{
+    "rate_id": "southwest-purchases",
+    "multiplier": 3.0,
+    "category": [
+        "Southwest"
+    ],
+    "is_default": false,
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

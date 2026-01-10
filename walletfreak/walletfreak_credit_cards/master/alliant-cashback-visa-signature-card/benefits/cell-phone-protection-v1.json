@@ -1,0 +1,15 @@
+{
+    "benefit_id": "cell-phone-protection",
+    "short_description": "Cell Phone Protection",
+    "description": "Up to $600 per claim for damage or theft when you pay your monthly cell phone bill with the card, with a $25 deductible and maximum of two claims per year.",
+    "value": 600,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "Cell Phone Protection"
+    ],
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

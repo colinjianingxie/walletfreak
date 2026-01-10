@@ -1,0 +1,16 @@
+{
+    "benefit_id": "companion-certificate",
+    "short_description": "Companion Certificate",
+    "description": "Earn a companion certificate for domestic economy travel after spending $30,000 annually.",
+    "value": 99,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "American Airlines",
+        "Travel"
+    ],
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

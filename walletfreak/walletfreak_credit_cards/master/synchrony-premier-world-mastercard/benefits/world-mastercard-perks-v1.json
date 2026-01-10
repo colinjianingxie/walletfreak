@@ -1,0 +1,16 @@
+{
+    "benefit_id": "world-mastercard-perks",
+    "short_description": "World Mastercard Benefits",
+    "description": "Access to World Mastercard benefits including travel assistance, cellphone protection, and more.",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "Generic Travel Perks",
+        "Generic Protection"
+    ],
+    "version": "v1",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

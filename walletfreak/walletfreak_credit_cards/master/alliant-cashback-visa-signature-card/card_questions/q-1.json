@@ -1,0 +1,15 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Cell Phone Bill Payment",
+    "question": "Do you pay your monthly cell phone bill with a credit card?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": "Cell Phone Protection"
+}
