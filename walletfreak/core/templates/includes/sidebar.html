@@ -1,0 +1,294 @@
+{% load static %}
+<style>
+    /* Mimic Tailwind Utilities for Sidebar */
+    .app-sidebar .space-y-8 > * + * {
+        margin-top: 2rem;
+    }
+    .app-sidebar .space-y-1 > * + * {
+        margin-top: 0.25rem;
+    }
+    .app-sidebar .flex {
+        display: flex;
+    }
+    .app-sidebar .items-center {
+        align-items: center;
+    }
+    .app-sidebar .justify-between {
+        justify-content: space-between;
+    }
+    .app-sidebar .gap-3 {
+        gap: 0.75rem;
+    }
+    .app-sidebar .px-3 {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+    .app-sidebar .py-6 {
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+    }
+    .app-sidebar .py-2 {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+    .app-sidebar .mb-2 {
+        margin-bottom: 0.5rem;
+    }
+    .app-sidebar .w-full {
+        width: 100%;
+    }
+    .app-sidebar .text-xs {
+        font-size: 0.75rem;
+        line-height: 1rem;
+    }
+    .app-sidebar .text-sm {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+    }
+    .app-sidebar .font-semibold {
+        font-weight: 600;
+    }
+    .app-sidebar .font-bold {
+        font-weight: 700;
+    }
+    .app-sidebar .uppercase {
+        text-transform: uppercase;
+    }
+    .app-sidebar .tracking-wider {
+        letter-spacing: 0.05em;
+    }
+    .app-sidebar .cursor-pointer {
+        cursor: pointer;
+    }
+    .app-sidebar .rounded-lg {
+        border-radius: 0.5rem;
+    }
+    .app-sidebar .rounded-full {
+        border-radius: 9999px;
+    }
+    .app-sidebar .transition-colors {
+        transition-property: background-color, border-color, color, fill, stroke;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 150ms;
+    }
+    
+    /* Mock Colors */
+    .app-sidebar .bg-blue-600-10 {
+        background-color: rgba(37, 99, 235, 0.1);
+    }
+    .app-sidebar .hover-bg-slate-800:hover {
+        background-color: var(--slate-800, #1e293b);
+    }
+    .app-sidebar .text-slate-500 {
+        color: var(--slate-500, #64748b);
+    }
+    .app-sidebar .text-slate-400 {
+        color: var(--slate-400, #94a3b8);
+    }
+    .app-sidebar .text-slate-200 {
+        color: var(--slate-200, #e2e8f0);
+    }
+    .app-sidebar .hover-text-slate-300:hover {
+        color: var(--slate-300, #cbd5e1);
+    }
+    .app-sidebar .hover-text-slate-200:hover {
+        color: var(--slate-200, #e2e8f0);
+    }
+    .app-sidebar .text-blue-400 {
+        color: var(--blue-400, #60a5fa);
+    }
+    .app-sidebar .bg-blue-500 {
+        background-color: var(--blue-500, #3b82f6);
+    }
+    .app-sidebar .text-white {
+        color: #ffffff;
+    }
+
+    /* Active/Highlight Utilities */
+    .app-sidebar .bg-blue-600\/10 {
+        background-color: rgba(37, 99, 235, 0.1);
+    }
+
+    /* Logout Button Specifics */
+    .btn-logout-sidebar {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.5rem 0.75rem;
+        margin-top: 1rem;
+        color: #ef4444; /* red-500 */
+        font-size: 0.875rem;
+        font-weight: 500;
+        background: transparent;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .btn-logout-sidebar:hover {
+        background: rgba(239, 68, 68, 0.1);
+        border-color: #ef4444;
+    }
+    
+    /* Notification Badge */
+    .notification-badge {
+        padding: 0.125rem 0.5rem;
+        font-size: 0.75rem; 
+        font-weight: 700; 
+        background-color: var(--blue-500, #3b82f6); 
+        color: white; 
+        border-radius: 9999px;
+    }
+
+    /* Scrollbar Styling Inside Nav */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+</style>
+
+<aside class="app-sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="brand">
+            <img src="{% static 'images/logo_main.png' %}" alt="WalletFreak" style="height: 2rem; width: auto;">
+            <span class="brand-text">WalletFreak</span>
+        </div>
+        <button class="mobile-toggle-btn icon-btn" onclick="toggleSidebar()" style="color: var(--slate-400);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+        </button>
+    </div>
+
+    <!-- Main Navigation (Includes Footer Content for Scrolling) -->
+    <nav class="flex-1 overflow-y-auto py-6 px-3 space-y-8 no-scrollbar" style="display: flex; flex-direction: column; padding: 1.5rem 0.75rem; height: calc(100vh - 4rem); overflow-y: auto;">
+        
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
+            <!-- Overview Group -->
+            <div>
+                <div class="flex items-center justify-between px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider cursor-pointer hover-text-slate-300">
+                    Overview
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+                </div>
+                <div class="space-y-1" style="display: flex; flex-direction: column; gap: 0.25rem;">
+                    <!-- Removed duplicate Dashboard link, kept My Wallet only -->
+                    <a href="{% url 'dashboard' %}" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors {% if request.path == '/' or '/wallet/' in request.path %}bg-blue-600/10 text-blue-400 font-medium{% else %}hover-bg-slate-800 text-slate-400 hover-text-slate-200{% endif %}">
+                        <div class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallet {% if request.path == '/' or '/wallet/' in request.path %}text-blue-400{% else %}text-slate-500{% endif %}" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"></path><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path></svg>
+                            My Wallet
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Analysis Group -->
+            <div>
+                <div class="flex items-center justify-between px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider cursor-pointer hover-text-slate-300">
+                    Analysis
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+                </div>
+                <div class="space-y-1" style="display: flex; flex-direction: column; gap: 0.25rem;">
+                    <a href="{% url 'card_list' %}" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors {% if '/cards' in request.path or '/explore' in request.path %}bg-blue-600/10 text-blue-400 font-medium{% else %}hover-bg-slate-800 text-slate-400 hover-text-slate-200{% endif %}">
+                        <div class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe {% if '/cards' in request.path or '/explore' in request.path %}text-blue-400{% else %}text-slate-500{% endif %}" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+                            Explore
+                        </div>
+                    </a>
+                    <a href="{% url 'datapoint_list' %}" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors {% if '/datapoints' in request.path %}bg-blue-600/10 text-blue-400 font-medium{% else %}hover-bg-slate-800 text-slate-400 hover-text-slate-200{% endif %}">
+                        <div class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-no-axes-column {% if '/datapoints' in request.path %}text-blue-400{% else %}text-slate-500{% endif %}" aria-hidden="true"><path d="M5 21v-6"></path><path d="M12 21V3"></path><path d="M19 21V9"></path></svg>
+                            Data Points
+                        </div>
+                    </a>
+                    <a href="{% url 'blog_list' %}" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors {% if '/blog' in request.path or '/ledger' in request.path %}bg-blue-600/10 text-blue-400 font-medium{% else %}hover-bg-slate-800 text-slate-400 hover-text-slate-200{% endif %}">
+                        <div class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open {% if '/blog' in request.path or '/ledger' in request.path %}text-blue-400{% else %}text-slate-500{% endif %}" aria-hidden="true"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg>
+                            Ledger
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Tools & Community Group -->
+            <div>
+                <div class="flex items-center justify-between px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider cursor-pointer hover-text-slate-300">
+                    Tools &amp; Community
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+                </div>
+                <div class="space-y-1" style="display: flex; flex-direction: column; gap: 0.25rem;">
+                    <a href="{% url 'calculators_index' %}" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors {% if '/calculators' in request.path %}bg-blue-600/10 text-blue-400 font-medium{% else %}hover-bg-slate-800 text-slate-400 hover-text-slate-200{% endif %}">
+                        <div class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calculator {% if '/calculators' in request.path %}text-blue-400{% else %}text-slate-500{% endif %}" aria-hidden="true"><rect width="16" height="20" x="4" y="2" rx="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line><line x1="16" x2="16" y1="14" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></svg>
+                            Calculators
+                        </div>
+                    </a>
+                    <a href="{% url 'personality_list' %}" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors {% if '/personalities' in request.path or '/freaks' in request.path %}bg-blue-600/10 text-blue-400 font-medium{% else %}hover-bg-slate-800 text-slate-400 hover-text-slate-200{% endif %}">
+                        <div class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users {% if '/personalities' in request.path or '/freaks' in request.path %}text-blue-400{% else %}text-slate-500{% endif %}" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                            Freaks
+                        </div>
+                        <span class="notification-badge">12</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Settings Group -->
+            <div>
+                <div class="flex items-center justify-between px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider cursor-pointer hover-text-slate-300">
+                    Settings
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+                </div>
+                <div class="space-y-1" style="display: flex; flex-direction: column; gap: 0.25rem;">
+                    <a href="{% url 'profile' %}" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors {% if '/profile' in request.path %}bg-blue-600/10 text-blue-400 font-medium{% else %}hover-bg-slate-800 text-slate-400 hover-text-slate-200{% endif %}">
+                        <div class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings {% if '/profile' in request.path %}text-blue-400{% else %}text-slate-500{% endif %}" aria-hidden="true"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            Preferences
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Premium Upgrade Card (Conditional) -->
+            {% if not user_is_premium %}
+            <div class="upgrade-card" style="margin-top: 2rem;">
+                <div style="display: flex; align-items: start; justify-content: space-between; margin-bottom: 0.75rem;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap" aria-hidden="true" style="color: #fde047; fill: #fde047; width: 1.25rem; height: 1.25rem;"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>
+                    <span style="font-size: 0.75rem; font-weight: 700; background-color: rgba(255,255,255,0.2); padding: 0.125rem 0.5rem; border-radius: 0.25rem;">PRO</span>
+                </div>
+                <h4 style="font-weight: 700; font-size: 0.875rem; margin-bottom: 0.25rem;">Upgrade to Premium</h4>
+                <p style="font-size: 0.75rem; color: #e0e7ff; margin-bottom: 0.75rem;">Unlock AI insights and unlimited ledgers.</p>
+                <a href="{% url 'pricing' %}" class="upgrade-btn">Upgrade Now</a>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- User Profile & Logout (Pushed to bottom, but scrollable if needed) -->
+        <div class="sidebar-user" style="margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--slate-800);">
+            {% if user.is_authenticated %}
+            <a href="{% url 'profile' %}" class="user-profile-link">
+                {% if user_profile.photo_url %}
+                <img alt="User" class="user-avatar" src="{{ user_profile.photo_url }}">
+                {% else %}
+                <img alt="User" class="user-avatar" src="https://picsum.photos/100/100">
+                {% endif %}
+                <div style="text-align: left; flex: 1; overflow: hidden;">
+                    <p style="font-size: 0.875rem; font-weight: 500; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0;">{{ user.first_name|default:"User" }}</p>
+                    <p style="font-size: 0.75rem; color: var(--slate-500); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0;">{{ user.email }}</p>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings" aria-hidden="true" style="color: var(--slate-500);"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </a>
+            <button onclick="handleLogout(event)" class="btn-logout-sidebar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                Log Out
+            </button>
+            {% else %}
+            <a href="{% url 'login' %}" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem; background: var(--blue-600); color: white; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 0.875rem; transition: background 0.2s;">
+                Log In
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-in"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>
+            </a>
+            {% endif %}
+        </div>
+    </nav>
+</aside>

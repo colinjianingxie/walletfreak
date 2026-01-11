@@ -37,6 +37,34 @@
     }
 }
 
+/* Hero Layout */
+.grid-responsive-hero {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+@media (max-width: 1024px) {
+    .grid-responsive-hero {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+    }
+
+    .grid-responsive-hero>div:first-child {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.card-stack-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
 /* Hero Card Stack */
 .hero-card {
     width: 380px;
