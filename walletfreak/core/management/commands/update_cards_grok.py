@@ -21,6 +21,11 @@ class Command(BaseCommand):
             action='store_true',
             help='Automatically seed the database after update',
         )
+        parser.add_argument(
+            '--premium-only',
+            action='store_true',
+            help='Only update premium tier cards (annual_fee > 0)',
+        )
 
     def handle(self, *args, **options):
         api_key = os.environ.get('GROK_API_KEY')
@@ -34,12 +39,36 @@ class Command(BaseCommand):
 
         card_slugs_arg = options.get('cards')
         auto_seed = options.get('auto-seed')
+        premium_only = options.get('premium-only')
         
         if card_slugs_arg:
             slugs = [s.strip() for s in card_slugs_arg.split(',') if s.strip()]
         else:
             # If no args, update ALL existing cards
             slugs = [d for d in os.listdir(self.master_dir) if os.path.isdir(os.path.join(self.master_dir, d))]
+
+        # Filter for premium tier if requested
+        if premium_only:
+            filtered_slugs = []
+            for slug in slugs:
+                header_path = os.path.join(self.master_dir, slug, 'header.json')
+                if os.path.exists(header_path):
+                    try:
+                        with open(header_path, 'r') as f:
+                            header_data = json.load(f)
+                        annual_fee = header_data.get('annual_fee', 0)
+                        if annual_fee > 0:
+                            filtered_slugs.append(slug)
+                            self.stdout.write(f"✓ {slug} is premium (annual_fee: ${annual_fee})")
+                        else:
+                            self.stdout.write(self.style.WARNING(f"✗ Skipping {slug} (annual_fee: ${annual_fee})"))
+                    except Exception as e:
+                        self.stdout.write(self.style.WARNING(f"✗ Skipping {slug} (error reading header: {e})"))
+                else:
+                    # New card without header - skip if premium-only
+                    self.stdout.write(self.style.WARNING(f"✗ Skipping {slug} (no header.json found)"))
+            slugs = filtered_slugs
+            self.stdout.write(f"\nFiltered to {len(slugs)} premium cards")
 
         self.stdout.write(f"Processing {len(slugs)} cards...")
         updated_slugs = []
