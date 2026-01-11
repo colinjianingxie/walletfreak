@@ -8,9 +8,7 @@
     "short_description": "24 month 0% financing",
     "description": "0% APR for 24 months with equal monthly payments",
     "additional_details": "On select Amazon purchases. Cannot be combined with 5% back rewards.",
-    "benefit_category": [
-        "Generic Shopping"
-    ],
+    "benefit_category": "Amazon",
     "benefit_type": "Financing",
     "numeric_value": 24.0,
     "numeric_type": "Months",

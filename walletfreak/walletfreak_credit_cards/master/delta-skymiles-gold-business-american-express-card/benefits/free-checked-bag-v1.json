@@ -8,9 +8,7 @@
     "short_description": "Free Checked Bag",
     "description": "First checked bag free on Delta flights",
     "additional_details": "Applies to cardmember and up to 8 companions on the same reservation",
-    "benefit_category": [
-        "Generic Travel Perks"
-    ],
+    "benefit_category": "Free Checked Bags",
     "benefit_type": "Perk",
     "numeric_value": 70.0,
     "numeric_type": "Cash",

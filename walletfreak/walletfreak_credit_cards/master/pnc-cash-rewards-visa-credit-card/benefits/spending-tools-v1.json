@@ -8,10 +8,7 @@
     "short_description": "Spending Tools",
     "description": "PNC Purchase Analysis",
     "additional_details": null,
-    "benefit_category": [
-        "Generic Business & Tech",
-        "Business Management"
-    ],
+    "benefit_category": "Business",
     "benefit_type": "Perk",
     "numeric_value": 0,
     "numeric_type": null,

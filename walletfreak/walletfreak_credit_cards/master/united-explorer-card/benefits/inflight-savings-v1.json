@@ -9,8 +9,8 @@
     "description": "25% back on United inflight & Club premium drink purchases",
     "additional_details": null,
     "benefit_category": [
-        "United",
-        "Generic Airlines"
+        "Airlines",
+        "United Airlines"
     ],
     "benefit_type": "Savings",
     "numeric_value": 25.0,

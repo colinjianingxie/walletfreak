@@ -6,12 +6,12 @@
     "is_active": true,
     "multiplier": 4,
     "category": [
-        "Advertising",
-        "Software",
-        "Generic Dining",
+        "Business",
+        "Cell Phone Plans",
+        "Dining",
         "Gas",
-        "Transit",
-        "Phone Plans"
+        "Software as a Service",
+        "Transit"
     ],
     "currency": "points",
     "additional_details": "on the top 2 categories each billing cycle from 6 eligible U.S. categories, up to $150,000 per calendar year",

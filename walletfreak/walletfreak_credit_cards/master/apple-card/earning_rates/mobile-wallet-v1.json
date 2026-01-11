@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 2,
-    "category": [
-        "Mobile Wallet"
-    ],
+    "category": "Mobile Wallet",
     "currency": "cash back",
     "additional_details": "with Apple Pay",
     "is_default": false

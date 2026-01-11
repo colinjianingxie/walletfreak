@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 5,
-    "category": [
-        "Chase Travel Hotels"
-    ],
+    "category": "Chase Travel",
     "currency": "cash back",
     "additional_details": "hotels through Portal",
     "is_default": false

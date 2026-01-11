@@ -8,9 +8,7 @@
     "short_description": "Rideshare Credit",
     "description": "$100 Annual Rideshare Credit ($8/month Jan-Nov, $12 Dec)",
     "additional_details": "Statement credit for rideshare purchases",
-    "benefit_category": [
-        "Generic Transportation"
-    ],
+    "benefit_category": "Transit",
     "benefit_type": "Credit",
     "numeric_value": 100,
     "numeric_type": "Cash",

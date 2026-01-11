@@ -8,9 +8,7 @@
     "short_description": "Anniversary Bonus",
     "description": "10% anniversary points bonus based on total purchases in prior account anniversary year",
     "additional_details": null,
-    "benefit_category": [
-        "Anniversary Bonus"
-    ],
+    "benefit_category": "Anniversary Bonus",
     "benefit_type": "Bonus",
     "numeric_value": 10.0,
     "numeric_type": "Percent",

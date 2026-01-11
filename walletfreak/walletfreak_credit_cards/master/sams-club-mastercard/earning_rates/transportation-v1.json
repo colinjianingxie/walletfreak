@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 5,
-    "category": [
-        "Generic Transportation"
-    ],
+    "category": "Transit",
     "currency": "cash back",
     "additional_details": "gas stations",
     "is_default": false

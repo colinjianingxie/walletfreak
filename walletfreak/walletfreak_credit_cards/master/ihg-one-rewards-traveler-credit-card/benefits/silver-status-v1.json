@@ -9,9 +9,9 @@
     "description": "Silver Elite status",
     "additional_details": null,
     "benefit_category": [
-        "IHG",
-        "Generic Hotels",
-        "Status"
+        "Generic IHG",
+        "Hotels",
+        "Status Boost"
     ],
     "benefit_type": "Status",
     "numeric_value": null,

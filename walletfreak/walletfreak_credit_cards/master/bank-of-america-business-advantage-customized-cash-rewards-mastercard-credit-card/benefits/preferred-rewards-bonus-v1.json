@@ -8,9 +8,7 @@
     "short_description": "Preferred Rewards Bonus",
     "description": "Preferred Rewards for Business bonus (up to 75% boost)",
     "additional_details": "Get a 25% to 75% rewards bonus on every purchase if you have a business checking account and qualify for Preferred Rewards for Business.",
-    "benefit_category": [
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Bonus",
     "numeric_value": 75.0,
     "numeric_type": "Percent",

@@ -9,8 +9,8 @@
     "description": "Complimentary DashPass membership",
     "additional_details": "activate by 12/31/2027",
     "benefit_category": [
-        "DoorDash",
-        "Generic Dining"
+        "Dining",
+        "DoorDash"
     ],
     "benefit_type": "Perk",
     "numeric_value": 120,

@@ -8,9 +8,7 @@
     "short_description": "Miles Transfer",
     "description": "Ability to transfer miles to partners",
     "additional_details": null,
-    "benefit_category": [
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Perk",
     "numeric_value": null,
     "numeric_type": null,

@@ -8,10 +8,7 @@
     "short_description": "Gift Card",
     "description": "$150 Instant Amazon Gift Card",
     "additional_details": null,
-    "benefit_category": [
-        "Amazon",
-        "Generic Shopping"
-    ],
+    "benefit_category": "Amazon",
     "benefit_type": "Perk",
     "numeric_value": 150,
     "numeric_type": "Cash",

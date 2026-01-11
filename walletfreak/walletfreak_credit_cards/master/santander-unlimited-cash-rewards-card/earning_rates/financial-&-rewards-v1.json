@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 1.5,
-    "category": [
-        "Generic Financial & Rewards"
-    ],
+    "category": "Financial Rewards",
     "currency": "cash back",
     "additional_details": "unlimited (3% for first 12 months)",
     "is_default": true

@@ -8,9 +8,7 @@
     "short_description": "No Fees",
     "description": "No late fees no penalty rate no annual fee",
     "additional_details": null,
-    "benefit_category": [
-        "Generic Protection"
-    ],
+    "benefit_category": "Protection",
     "benefit_type": "Perk",
     "numeric_value": null,
     "numeric_type": null,

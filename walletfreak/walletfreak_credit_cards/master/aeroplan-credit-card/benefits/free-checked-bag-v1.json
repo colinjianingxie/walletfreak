@@ -8,9 +8,7 @@
     "short_description": "Free Checked Bag",
     "description": "Free first checked bag on Air Canada flights",
     "additional_details": "for cardmember and up to 8 companions",
-    "benefit_category": [
-        "Generic Airlines"
-    ],
+    "benefit_category": "Airlines",
     "benefit_type": "Perk",
     "numeric_value": 140.0,
     "numeric_type": "Cash",

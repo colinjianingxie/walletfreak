@@ -9,8 +9,8 @@
     "description": "Up to $10 quarterly DoorDash non-restaurant credit",
     "additional_details": null,
     "benefit_category": [
-        "DoorDash",
-        "Generic Dining"
+        "Dining",
+        "DoorDash"
     ],
     "benefit_type": "Credit",
     "numeric_value": 40.0,

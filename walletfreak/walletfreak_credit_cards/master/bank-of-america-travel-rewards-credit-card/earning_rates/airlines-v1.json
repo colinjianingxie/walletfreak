@@ -6,8 +6,8 @@
     "is_active": true,
     "multiplier": 3,
     "category": [
-        "Generic Airlines",
-        "Generic Hotels"
+        "Airlines",
+        "Hotels"
     ],
     "currency": "points",
     "additional_details": "through Bank of America Travel",

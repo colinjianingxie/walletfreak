@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 10,
-    "category": [
-        "Citi Travel Attractions"
-    ],
+    "category": "Citi Travel",
     "currency": "points",
     "additional_details": "attractions through Citi Travel",
     "is_default": false

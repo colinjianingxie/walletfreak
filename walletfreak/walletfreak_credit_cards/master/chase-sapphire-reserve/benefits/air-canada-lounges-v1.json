@@ -8,9 +8,7 @@
     "short_description": "Air Canada Lounges",
     "description": "Air Canada lounge access",
     "additional_details": "complimentary for cardmember +1 guest on Star Alliance flights",
-    "benefit_category": [
-        "Lounge Access"
-    ],
+    "benefit_category": "Lounges",
     "benefit_type": "Perk",
     "numeric_value": 3,
     "numeric_type": "Lounge",

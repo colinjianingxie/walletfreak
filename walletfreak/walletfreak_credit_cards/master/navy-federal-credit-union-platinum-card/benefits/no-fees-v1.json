@@ -8,9 +8,7 @@
     "short_description": "No Fees",
     "description": "No foreign transaction fees or balance transfer fees",
     "additional_details": "Ideal for international travel or consolidating debt",
-    "benefit_category": [
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Perk",
     "numeric_value": 0,
     "numeric_type": "Cash",

@@ -8,9 +8,7 @@
     "short_description": "No Foreign Fees",
     "description": "No foreign transaction fees",
     "additional_details": "Pay no extra fees when making purchases outside of the United States.",
-    "benefit_category": [
-        "Generic Travel Perks"
-    ],
+    "benefit_category": "Travel Perks",
     "benefit_type": "Perk",
     "numeric_value": 0.0,
     "numeric_type": "Percent",

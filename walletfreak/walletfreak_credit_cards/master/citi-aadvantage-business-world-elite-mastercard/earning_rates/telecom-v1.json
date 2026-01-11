@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 2,
-    "category": [
-        "Telecom"
-    ],
+    "category": "Telecom",
     "currency": "miles",
     "additional_details": "telecommunications merchants, cable and satellite providers",
     "is_default": false

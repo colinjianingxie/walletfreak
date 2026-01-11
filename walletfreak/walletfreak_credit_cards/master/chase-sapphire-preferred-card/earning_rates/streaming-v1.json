@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 3,
-    "category": [
-        "Streaming"
-    ],
+    "category": "Streaming",
     "currency": "points",
     "additional_details": "streaming",
     "is_default": false

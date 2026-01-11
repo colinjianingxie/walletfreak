@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 1.5,
-    "category": [
-        "Generic Financial & Rewards"
-    ],
+    "category": "Financial Rewards",
     "currency": "cash back",
     "additional_details": "all purchases after first year",
     "is_default": true

@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 5,
-    "category": [
-        "Gas"
-    ],
+    "category": "Costco",
     "currency": "cash back",
     "additional_details": "gas at Costco (up to $7,000/year combined with 4%, then 1%)",
     "is_default": false

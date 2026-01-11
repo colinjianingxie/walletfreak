@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 4,
-    "category": [
-        "Generic Airlines"
-    ],
+    "category": "Airlines",
     "currency": "points",
     "additional_details": "Airlines",
     "is_default": false

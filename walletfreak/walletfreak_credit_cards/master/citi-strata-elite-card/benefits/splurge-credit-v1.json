@@ -10,8 +10,8 @@
     "additional_details": null,
     "benefit_category": [
         "Best Buy",
-        "Generic Shopping",
-        "Generic Entertainment"
+        "Entertainment",
+        "Retail Shopping"
     ],
     "benefit_type": "Credit",
     "numeric_value": 200.0,

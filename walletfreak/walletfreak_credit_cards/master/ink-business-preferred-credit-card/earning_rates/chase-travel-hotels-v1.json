@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 3,
-    "category": [
-        "Chase Travel Hotels"
-    ],
+    "category": "Chase Travel",
     "currency": "points",
     "additional_details": "hotels through Chase Travel",
     "is_default": false

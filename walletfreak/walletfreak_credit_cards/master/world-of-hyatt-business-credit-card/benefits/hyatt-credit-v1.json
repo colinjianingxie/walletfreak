@@ -8,9 +8,7 @@
     "short_description": "Hyatt Credit",
     "description": "$100 Annual Hyatt Credit",
     "additional_details": "$50 statement credit up to two times each anniversary year",
-    "benefit_category": [
-        "Hyatt"
-    ],
+    "benefit_category": "Generic World of Hyatt",
     "benefit_type": "Credit",
     "numeric_value": 100,
     "numeric_type": "Cash",

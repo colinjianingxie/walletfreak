@@ -9,7 +9,8 @@
     "description": "$600 Hotel Credit on prepaid Fine Hotels + Resorts or The Hotel Collection",
     "additional_details": "$300 semi-annually",
     "benefit_category": [
-        "Generic Hotels"
+        "Amex Travel",
+        "Hotels"
     ],
     "benefit_type": "Credit",
     "numeric_value": 600.0,

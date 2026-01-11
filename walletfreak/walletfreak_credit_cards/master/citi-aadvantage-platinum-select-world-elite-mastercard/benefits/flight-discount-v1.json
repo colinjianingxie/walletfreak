@@ -8,9 +8,7 @@
     "short_description": "Flight Discount",
     "description": "$125 American Airlines Flight Discount",
     "additional_details": "After you spend $20,000+ and renew the card",
-    "benefit_category": [
-        "American Airlines"
-    ],
+    "benefit_category": "American Airlines",
     "benefit_type": "Credit",
     "numeric_value": 125,
     "numeric_type": "Cash",

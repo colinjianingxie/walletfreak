@@ -6,7 +6,8 @@
     "is_active": true,
     "multiplier": 2,
     "category": [
-        "Generic Airlines"
+        "Airlines",
+        "American Airlines"
     ],
     "currency": "miles",
     "additional_details": "eligible American Airlines purchases",

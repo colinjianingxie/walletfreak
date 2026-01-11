@@ -9,7 +9,8 @@
     "description": "Sapphire Reserve Exclusive Tables dining benefits",
     "additional_details": "exclusive dining access and up to $300 in credits ($150 per half-year) through Jun 30, 2026",
     "benefit_category": [
-        "Generic Dining"
+        "Dining",
+        "Sapphire Reserve Exclusive Tables"
     ],
     "benefit_type": "Credit",
     "numeric_value": 300.0,

@@ -8,9 +8,7 @@
     "short_description": "Rental Car Insurance",
     "description": "Collision Damage Waiver for rental cars (secondary coverage)",
     "additional_details": "Covers physical damage and theft for rentals of 15 days or less",
-    "benefit_category": [
-        "Generic Transportation"
-    ],
+    "benefit_category": "Transit",
     "benefit_type": "Perk",
     "numeric_value": 1.0,
     "numeric_type": "Perk",

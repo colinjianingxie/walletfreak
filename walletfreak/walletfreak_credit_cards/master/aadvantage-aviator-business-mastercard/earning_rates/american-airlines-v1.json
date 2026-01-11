@@ -1,9 +1,7 @@
 {
     "rate_id": "american-airlines",
     "multiplier": 2.0,
-    "category": [
-        "American Airlines"
-    ],
+    "category": "American Airlines",
     "is_default": false,
     "version": "v1",
     "valid_from": "2026-01-10",

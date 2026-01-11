@@ -8,10 +8,7 @@
     "short_description": "Blacklane Credit",
     "description": "$200 Blacklane Ride Credit",
     "additional_details": null,
-    "benefit_category": [
-        "Blacklane",
-        "Generic Transportation"
-    ],
+    "benefit_category": "Transit",
     "benefit_type": "Credit",
     "numeric_value": 200.0,
     "numeric_type": "Cash",

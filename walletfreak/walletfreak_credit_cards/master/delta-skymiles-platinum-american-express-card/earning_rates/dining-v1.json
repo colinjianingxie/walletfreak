@@ -6,8 +6,8 @@
     "is_active": true,
     "multiplier": 2,
     "category": [
-        "Generic Dining",
-        "Generic Groceries"
+        "Dining",
+        "Supermarkets"
     ],
     "currency": "miles",
     "additional_details": "supermarkets & restaurants",

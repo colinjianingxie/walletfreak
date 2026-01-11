@@ -9,10 +9,10 @@
     "description": "$240 Flexible Business Credit",
     "additional_details": "$20 monthly for eligible U.S. purchases at FedEx, Grubhub, and Office Supply Stores",
     "benefit_category": [
+        "Dining",
         "FedEx",
         "Grubhub",
-        "Office Supplies",
-        "Generic Dining"
+        "Office Supplies"
     ],
     "benefit_type": "Credit",
     "numeric_value": 240.0,

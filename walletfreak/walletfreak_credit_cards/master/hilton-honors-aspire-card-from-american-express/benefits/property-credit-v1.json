@@ -9,9 +9,9 @@
     "description": "$100 Property Credit",
     "additional_details": "Waldorf Astoria/Conrad 2-night min",
     "benefit_category": [
-        "Waldorf Astoria",
-        "Conrad",
-        "Generic Hotels"
+        "Conrad Hotels",
+        "Hotels",
+        "Waldorf Astoria"
     ],
     "benefit_type": "Credit",
     "numeric_value": 100.0,

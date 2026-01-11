@@ -8,10 +8,7 @@
     "short_description": "Credit Building",
     "description": "Credit line increase potential after on-time payments",
     "additional_details": null,
-    "benefit_category": [
-        "Credit Building",
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Perk",
     "numeric_value": null,
     "numeric_type": null,

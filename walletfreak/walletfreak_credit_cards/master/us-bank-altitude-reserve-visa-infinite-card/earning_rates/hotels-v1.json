@@ -6,8 +6,8 @@
     "is_active": true,
     "multiplier": 5,
     "category": [
-        "Generic Hotels",
-        "Generic Airlines"
+        "Airlines",
+        "Hotels"
     ],
     "currency": "points",
     "additional_details": "prepaid travel",

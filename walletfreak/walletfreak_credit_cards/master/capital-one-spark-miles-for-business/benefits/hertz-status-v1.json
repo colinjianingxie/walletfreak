@@ -9,9 +9,9 @@
     "description": "Hertz Five Star elite status",
     "additional_details": null,
     "benefit_category": [
+        "Car Rentals",
         "Hertz",
-        "Rental Cars",
-        "Status"
+        "Status Boost"
     ],
     "benefit_type": "Status",
     "numeric_value": null,

@@ -5,9 +5,7 @@
     "value": 5,
     "currency": "Cash",
     "period": "Monthly",
-    "benefit_category": [
-        "Gas"
-    ],
+    "benefit_category": "Gas",
     "version": "v1",
     "valid_from": "2026-01-10",
     "valid_until": null,

@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 5,
-    "category": [
-        "Generic Entertainment"
-    ],
+    "category": "Entertainment",
     "currency": "cash back",
     "additional_details": "with Prime, on Kindle Unlimited",
     "is_default": false

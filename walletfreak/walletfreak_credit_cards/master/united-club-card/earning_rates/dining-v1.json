@@ -6,8 +6,8 @@
     "is_active": true,
     "multiplier": 2,
     "category": [
-        "Generic Dining",
-        "Generic Travel Perks"
+        "Dining",
+        "Travel Perks"
     ],
     "currency": "miles",
     "additional_details": "other travel",

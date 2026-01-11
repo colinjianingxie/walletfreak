@@ -8,10 +8,7 @@
     "short_description": "SmartDelay",
     "description": "SmartDelay Lounge Access",
     "additional_details": null,
-    "benefit_category": [
-        "SmartDelay",
-        "Lounge Access"
-    ],
+    "benefit_category": "Lounges",
     "benefit_type": "Access",
     "numeric_value": 1,
     "numeric_type": "Lounge",

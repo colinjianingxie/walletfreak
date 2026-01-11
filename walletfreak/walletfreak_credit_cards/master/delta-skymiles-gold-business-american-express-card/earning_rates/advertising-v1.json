@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 2,
-    "category": [
-        "Advertising"
-    ],
+    "category": "Business",
     "currency": "miles",
     "additional_details": "U.S. advertising in select media (up to $50k per year)",
     "is_default": false

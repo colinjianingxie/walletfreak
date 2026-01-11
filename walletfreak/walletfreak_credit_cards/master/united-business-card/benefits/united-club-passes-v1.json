@@ -9,7 +9,8 @@
     "description": "Two United Club one-time passes each year",
     "additional_details": null,
     "benefit_category": [
-        "Generic Travel Perks"
+        "Travel Perks",
+        "United Club"
     ],
     "benefit_type": "Perk",
     "numeric_value": 2,

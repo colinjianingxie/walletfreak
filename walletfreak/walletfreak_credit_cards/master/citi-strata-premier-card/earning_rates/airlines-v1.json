@@ -6,10 +6,10 @@
     "is_active": true,
     "multiplier": 3,
     "category": [
-        "Generic Airlines",
+        "Airlines",
+        "Dining",
         "Gas",
-        "Generic Dining",
-        "Generic Groceries"
+        "Groceries"
     ],
     "currency": "points",
     "additional_details": "Air, Gas, Dining, Groceries",

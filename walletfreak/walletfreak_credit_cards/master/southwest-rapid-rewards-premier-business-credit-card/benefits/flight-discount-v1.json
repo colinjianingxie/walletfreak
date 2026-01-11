@@ -8,9 +8,7 @@
     "short_description": "Flight Discount",
     "description": "15% Flight Discount promo code each year",
     "additional_details": "excludes Basic fares",
-    "benefit_category": [
-        "Southwest"
-    ],
+    "benefit_category": "Southwest Airlines",
     "benefit_type": "Perk",
     "numeric_value": 15.0,
     "numeric_type": "Percent",

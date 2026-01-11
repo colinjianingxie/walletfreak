@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 3,
-    "category": [
-        "Chase Travel Rental Cars"
-    ],
+    "category": "Chase Travel",
     "currency": "points",
     "additional_details": "rental cars through Chase Travel",
     "is_default": false

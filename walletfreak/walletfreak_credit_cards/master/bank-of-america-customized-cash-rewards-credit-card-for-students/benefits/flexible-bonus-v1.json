@@ -8,10 +8,7 @@
     "short_description": "Flexible Bonus",
     "description": "Flexible 3% Cash Back Category",
     "additional_details": null,
-    "benefit_category": [
-        "Rewards Bonus",
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Bonus",
     "numeric_value": 3,
     "numeric_type": "Percent",

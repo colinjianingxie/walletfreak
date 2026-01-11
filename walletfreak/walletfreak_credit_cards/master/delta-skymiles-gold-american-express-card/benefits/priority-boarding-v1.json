@@ -8,9 +8,7 @@
     "short_description": "Priority Boarding",
     "description": "Priority Boarding",
     "additional_details": "Receive Zone 5 priority boarding on Delta flights",
-    "benefit_category": [
-        "Delta"
-    ],
+    "benefit_category": "Delta Air Lines",
     "benefit_type": "Perk",
     "numeric_value": 1.0,
     "numeric_type": "Perk",

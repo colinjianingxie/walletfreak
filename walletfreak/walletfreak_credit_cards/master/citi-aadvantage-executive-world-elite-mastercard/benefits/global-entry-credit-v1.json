@@ -9,7 +9,8 @@
     "description": "Global Entry\u00ae or TSA PreCheck\u00ae application fee credit",
     "additional_details": "Reimbursement for application fee up to $120 every 4 years",
     "benefit_category": [
-        "Global Entry"
+        "Global Entry",
+        "TSA PreCheck"
     ],
     "benefit_type": "Security",
     "numeric_value": 120.0,

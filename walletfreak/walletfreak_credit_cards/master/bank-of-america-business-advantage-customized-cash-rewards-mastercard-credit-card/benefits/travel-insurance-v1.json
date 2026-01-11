@@ -8,9 +8,7 @@
     "short_description": "Travel Insurance",
     "description": "Travel Accident Insurance",
     "additional_details": "Up to $100,000 in coverage for accidental death or dismemberment while traveling on common carriers.",
-    "benefit_category": [
-        "Generic Travel Perks"
-    ],
+    "benefit_category": "Travel Perks",
     "benefit_type": "Perk",
     "numeric_value": 100000.0,
     "numeric_type": "Cash",

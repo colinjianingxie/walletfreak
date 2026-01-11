@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 10,
-    "category": [
-        "Capital One Travel Rental Cars"
-    ],
+    "category": "Capital One Travel",
     "currency": "miles",
     "additional_details": "rental cars booked through Capital One Business Travel",
     "is_default": false

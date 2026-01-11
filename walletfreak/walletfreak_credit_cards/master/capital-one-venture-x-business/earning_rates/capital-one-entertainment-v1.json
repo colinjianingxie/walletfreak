@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 5,
-    "category": [
-        "Capital One Entertainment"
-    ],
+    "category": "Entertainment",
     "currency": "miles",
     "additional_details": "tickets for sports, music, and events via Capital One Entertainment",
     "is_default": false

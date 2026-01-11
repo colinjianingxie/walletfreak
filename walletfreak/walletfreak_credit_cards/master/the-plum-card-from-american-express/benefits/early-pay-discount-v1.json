@@ -8,9 +8,7 @@
     "short_description": "Early Pay Discount",
     "description": "Unlimited 1.5% Early Pay Discount",
     "additional_details": "when you pay within 10 days of statement closing date",
-    "benefit_category": [
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Perk",
     "numeric_value": 1.5,
     "numeric_type": "Percent",

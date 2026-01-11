@@ -8,9 +8,7 @@
     "short_description": "Gold Status",
     "description": "Complimentary Hilton Honors Gold Status",
     "additional_details": null,
-    "benefit_category": [
-        "Hilton"
-    ],
+    "benefit_category": "Generic Hilton",
     "benefit_type": "Perk",
     "numeric_value": 1.0,
     "numeric_type": "Membership",

@@ -9,8 +9,8 @@
     "description": "$100 Saks Fifth Avenue credit",
     "additional_details": "$50 semi-annually",
     "benefit_category": [
-        "Saks",
-        "Generic Shopping"
+        "Retail Shopping",
+        "Saks Fifth Avenue"
     ],
     "benefit_type": "Credit",
     "numeric_value": 100.0,

@@ -6,8 +6,8 @@
     "is_active": true,
     "multiplier": 2,
     "category": [
-        "Gas",
-        "Generic Dining"
+        "Dining",
+        "Gas"
     ],
     "currency": "cash back",
     "additional_details": "gas & dining",

@@ -8,9 +8,7 @@
     "short_description": "Intro APR",
     "description": "Cash Flow Management",
     "additional_details": "0% Intro APR on purchases for the first 9 billing cycles.",
-    "benefit_category": [
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Credit",
     "numeric_value": 9.0,
     "numeric_type": "Months",

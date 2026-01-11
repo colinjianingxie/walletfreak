@@ -8,9 +8,7 @@
     "short_description": "Free FICO Score",
     "description": "Free FICO\u00ae Score access",
     "additional_details": "Updated monthly for free through the Mobile Banking app or Online Banking",
-    "benefit_category": [
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Perk",
     "numeric_value": 1.0,
     "numeric_type": "Perk",

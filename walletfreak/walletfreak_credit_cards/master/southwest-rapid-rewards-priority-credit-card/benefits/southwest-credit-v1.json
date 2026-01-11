@@ -9,8 +9,8 @@
     "description": "$75 annual Southwest travel credit",
     "additional_details": null,
     "benefit_category": [
-        "Southwest",
-        "Generic Airlines"
+        "Airlines",
+        "Southwest Airlines"
     ],
     "benefit_type": "Credit",
     "numeric_value": 75.0,

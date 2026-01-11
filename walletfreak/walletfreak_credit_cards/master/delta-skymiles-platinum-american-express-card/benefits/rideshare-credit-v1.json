@@ -8,9 +8,7 @@
     "short_description": "Rideshare Credit",
     "description": "$120 Rideshare Credit",
     "additional_details": null,
-    "benefit_category": [
-        "Generic Transportation"
-    ],
+    "benefit_category": "Transit",
     "benefit_type": "Credit",
     "numeric_value": 120,
     "numeric_type": "Cash",

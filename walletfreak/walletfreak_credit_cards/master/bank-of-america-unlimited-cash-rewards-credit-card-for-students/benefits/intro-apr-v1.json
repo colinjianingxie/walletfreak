@@ -8,9 +8,7 @@
     "short_description": "Intro APR",
     "description": "0% Introductory APR for 15 billing cycles",
     "additional_details": "Applies to purchases and balance transfers made within 60 days of account opening",
-    "benefit_category": [
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Perk",
     "numeric_value": 15.0,
     "numeric_type": "Months",

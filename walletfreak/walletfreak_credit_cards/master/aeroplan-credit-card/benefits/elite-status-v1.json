@@ -8,9 +8,7 @@
     "short_description": "Elite Status",
     "description": "Automatic Aeroplan 25K Elite Status",
     "additional_details": "for the year opened and next; retain with $15,000 spend annually; changes effective 1/1/2026",
-    "benefit_category": [
-        "Generic Airlines"
-    ],
+    "benefit_category": "Airlines",
     "benefit_type": "Perk",
     "numeric_value": 300.0,
     "numeric_type": "Cash",

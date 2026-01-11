@@ -8,10 +8,7 @@
     "short_description": "Fee Waiver",
     "description": "Annual fee refunded with $150k spend",
     "additional_details": null,
-    "benefit_category": [
-        "Fee Waiver",
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Credit",
     "numeric_value": 150.0,
     "numeric_type": "Cash",

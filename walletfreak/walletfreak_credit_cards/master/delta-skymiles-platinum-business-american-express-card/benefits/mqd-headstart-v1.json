@@ -8,9 +8,7 @@
     "short_description": "MQD Headstart",
     "description": "2,500 MQD Headstart",
     "additional_details": "Receive 2,500 Medallion Qualification Dollars each year",
-    "benefit_category": [
-        "Generic Travel Perks"
-    ],
+    "benefit_category": "Travel Perks",
     "benefit_type": "Bonus",
     "numeric_value": 2500.0,
     "numeric_type": "Points",

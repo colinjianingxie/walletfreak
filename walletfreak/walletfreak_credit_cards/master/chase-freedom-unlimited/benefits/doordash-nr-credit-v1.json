@@ -9,8 +9,8 @@
     "description": "$40 annual DoorDash NR credit",
     "additional_details": null,
     "benefit_category": [
-        "DoorDash",
-        "Generic Dining"
+        "Dining",
+        "DoorDash"
     ],
     "benefit_type": "Credit",
     "numeric_value": 40,

@@ -8,10 +8,7 @@
     "short_description": "Deposit Refund",
     "description": "Refundable Security Deposit",
     "additional_details": null,
-    "benefit_category": [
-        "Credit Building",
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Perk",
     "numeric_value": 0,
     "numeric_type": null,

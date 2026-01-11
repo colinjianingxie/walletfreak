@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 3,
-    "category": [
-        "Generic Dining"
-    ],
+    "category": "Dining",
     "currency": "cash back",
     "additional_details": null,
     "is_default": false

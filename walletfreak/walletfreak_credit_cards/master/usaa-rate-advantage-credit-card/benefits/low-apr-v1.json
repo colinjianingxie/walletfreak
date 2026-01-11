@@ -8,9 +8,7 @@
     "short_description": "Low APR",
     "description": "Lowest Variable APR",
     "additional_details": "Designed for users who carry a balance",
-    "benefit_category": [
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Perk",
     "numeric_value": null,
     "numeric_type": "Perk",

@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 17,
-    "category": [
-        "Marriott"
-    ],
+    "category": "Generic Marriott Bonvoy",
     "currency": "points",
     "additional_details": "total points at Marriott hotels (6x from card + base + status)",
     "is_default": false

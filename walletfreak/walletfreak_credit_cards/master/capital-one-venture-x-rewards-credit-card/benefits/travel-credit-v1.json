@@ -9,7 +9,8 @@
     "description": "$300 annual travel credit for bookings through Capital One Travel",
     "additional_details": null,
     "benefit_category": [
-        "Generic Travel Perks"
+        "Capital One Travel",
+        "Travel Perks"
     ],
     "benefit_type": "Credit",
     "numeric_value": 300.0,

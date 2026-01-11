@@ -8,9 +8,7 @@
     "short_description": "In-Flight Savings",
     "description": "20% savings on eligible in-flight Delta purchases",
     "additional_details": "Includes food, beverages, and audio headsets; savings provided as a statement credit",
-    "benefit_category": [
-        "Delta"
-    ],
+    "benefit_category": "Delta Air Lines",
     "benefit_type": "Credit",
     "numeric_value": 20.0,
     "numeric_type": "Percent",

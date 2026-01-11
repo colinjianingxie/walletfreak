@@ -9,9 +9,9 @@
     "description": "Complimentary Hertz Five Star\u00ae status",
     "additional_details": null,
     "benefit_category": [
+        "Car Rentals",
         "Hertz",
-        "Rental Cars",
-        "Status"
+        "Status Boost"
     ],
     "benefit_type": "Perk",
     "numeric_value": null,

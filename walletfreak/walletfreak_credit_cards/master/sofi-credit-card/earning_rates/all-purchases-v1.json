@@ -1,9 +1,7 @@
 {
     "rate_id": "all-purchases",
     "multiplier": 3.0,
-    "category": [
-        "All Purchases"
-    ],
+    "category": "All Purchases",
     "is_default": true,
     "version": "v1",
     "valid_from": "2026-01-10",

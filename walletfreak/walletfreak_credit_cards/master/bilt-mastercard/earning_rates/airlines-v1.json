@@ -6,8 +6,8 @@
     "is_active": true,
     "multiplier": 2,
     "category": [
-        "Generic Airlines",
-        "Generic Hotels"
+        "Airlines",
+        "Direct Hotel Bookings"
     ],
     "currency": "points",
     "additional_details": "direct air & hotel bookings",

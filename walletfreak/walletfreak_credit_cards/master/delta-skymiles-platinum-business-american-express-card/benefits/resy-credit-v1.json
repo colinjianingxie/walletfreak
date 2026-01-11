@@ -8,9 +8,7 @@
     "short_description": "Resy Credit",
     "description": "$120 Resy Credit",
     "additional_details": "Up to $10 back per month on eligible Resy purchases",
-    "benefit_category": [
-        "Generic Dining"
-    ],
+    "benefit_category": "Resy Bookings",
     "benefit_type": "Credit",
     "numeric_value": 10.0,
     "numeric_type": "Cash",

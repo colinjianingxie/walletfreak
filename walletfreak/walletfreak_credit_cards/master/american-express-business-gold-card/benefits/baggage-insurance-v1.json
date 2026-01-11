@@ -8,9 +8,7 @@
     "short_description": "Baggage Insurance",
     "description": "Baggage Insurance Plan",
     "additional_details": "up to $1,250 for carry-on, $500 for checked per person",
-    "benefit_category": [
-        "Generic Travel Perks"
-    ],
+    "benefit_category": "Travel Perks",
     "benefit_type": "Perk",
     "numeric_value": 1750.0,
     "numeric_type": "Cash",

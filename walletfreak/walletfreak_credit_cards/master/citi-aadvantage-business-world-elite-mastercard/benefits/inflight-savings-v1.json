@@ -9,7 +9,8 @@
     "description": "25% savings on American Airlines inflight food, beverage, and Wi-Fi purchases",
     "additional_details": "Savings provided as a statement credit",
     "benefit_category": [
-        "Generic Airlines"
+        "Airlines",
+        "American Airlines"
     ],
     "benefit_type": "Credit",
     "numeric_value": 25.0,

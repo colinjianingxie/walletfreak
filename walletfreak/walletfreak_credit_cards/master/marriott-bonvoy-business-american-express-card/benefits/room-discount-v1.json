@@ -8,9 +8,7 @@
     "short_description": "Room Discount",
     "description": "7% Room Rate Discount",
     "additional_details": "Book direct with Amex Business rate",
-    "benefit_category": [
-        "Marriott"
-    ],
+    "benefit_category": "Generic Marriott Bonvoy",
     "benefit_type": "Perk",
     "numeric_value": 7.0,
     "numeric_type": "Percent",

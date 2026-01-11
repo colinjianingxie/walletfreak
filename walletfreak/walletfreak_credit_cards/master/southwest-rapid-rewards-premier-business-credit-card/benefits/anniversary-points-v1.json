@@ -8,9 +8,7 @@
     "short_description": "Anniversary Points",
     "description": "6,000 anniversary points every year",
     "additional_details": null,
-    "benefit_category": [
-        "Anniversary Bonus"
-    ],
+    "benefit_category": "Anniversary Bonus",
     "benefit_type": "Bonus",
     "numeric_value": 6000.0,
     "numeric_type": "Points",

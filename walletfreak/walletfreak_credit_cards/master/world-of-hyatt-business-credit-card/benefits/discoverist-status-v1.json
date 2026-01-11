@@ -8,9 +8,7 @@
     "short_description": "Discoverist Status",
     "description": "Discoverist status for you and 5 employees",
     "additional_details": null,
-    "benefit_category": [
-        "Generic Travel Perks"
-    ],
+    "benefit_category": "Travel Perks",
     "benefit_type": "Perk",
     "numeric_value": null,
     "numeric_type": "Membership",

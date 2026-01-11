@@ -8,10 +8,7 @@
     "short_description": "Admirals Club Passes",
     "description": "4 Admirals Club Passes per year",
     "additional_details": null,
-    "benefit_category": [
-        "Admirals Club",
-        "Lounge Access"
-    ],
+    "benefit_category": "Admirals Club",
     "benefit_type": "Access",
     "numeric_value": 4.0,
     "numeric_type": "Passes",

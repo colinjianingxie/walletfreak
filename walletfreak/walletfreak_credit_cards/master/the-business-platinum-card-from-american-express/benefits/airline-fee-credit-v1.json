@@ -8,9 +8,7 @@
     "short_description": "Airline Fee Credit",
     "description": "$200 Airline Fee Credit",
     "additional_details": null,
-    "benefit_category": [
-        "Generic Airlines"
-    ],
+    "benefit_category": "Airlines",
     "benefit_type": "Credit",
     "numeric_value": 200.0,
     "numeric_type": "Cash",

@@ -5,9 +5,7 @@
     "value": 0,
     "currency": "Cash",
     "period": "Annually",
-    "benefit_category": [
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "version": "v1",
     "valid_from": "2026-01-10",
     "valid_until": null,

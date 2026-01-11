@@ -9,8 +9,8 @@
     "description": "$400 Hilton resort credit",
     "additional_details": "Up to $200 semi-annually",
     "benefit_category": [
-        "Hilton",
-        "Generic Hotels"
+        "Generic Hilton",
+        "Hotels"
     ],
     "benefit_type": "Credit",
     "numeric_value": 400.0,

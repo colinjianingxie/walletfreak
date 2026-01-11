@@ -9,9 +9,9 @@
     "description": "Diamond status",
     "additional_details": "Top-tier Hilton status",
     "benefit_category": [
-        "Hilton",
-        "Generic Hotels",
-        "Status"
+        "Generic Hilton",
+        "Hotels",
+        "Status Boost"
     ],
     "benefit_type": "Status",
     "numeric_value": null,

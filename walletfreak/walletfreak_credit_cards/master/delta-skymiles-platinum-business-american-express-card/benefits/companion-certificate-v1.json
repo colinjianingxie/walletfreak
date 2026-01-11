@@ -8,9 +8,7 @@
     "short_description": "Companion Certificate",
     "description": "Annual Companion Certificate",
     "additional_details": "Main Cabin round-trip for domestic, Caribbean, or Central American flights upon renewal",
-    "benefit_category": [
-        "Delta"
-    ],
+    "benefit_category": "Delta Air Lines",
     "benefit_type": "Perk",
     "numeric_value": 1.0,
     "numeric_type": "Passes",

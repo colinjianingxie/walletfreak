@@ -8,9 +8,7 @@
     "short_description": "Business Preferred Rewards",
     "description": "Preferred Rewards for Business: up to 75% more cash back",
     "additional_details": "Requires qualifying business account balance",
-    "benefit_category": [
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Bonus",
     "numeric_value": 75.0,
     "numeric_type": "Percent",

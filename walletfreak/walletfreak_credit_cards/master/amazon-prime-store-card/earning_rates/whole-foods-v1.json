@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 5,
-    "category": [
-        "Whole Foods"
-    ],
+    "category": "Whole Foods Market",
     "currency": "cash back",
     "additional_details": "with Prime, in-store code required",
     "is_default": false

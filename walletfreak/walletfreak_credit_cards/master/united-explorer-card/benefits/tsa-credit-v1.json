@@ -9,10 +9,10 @@
     "description": "Global Entry/TSA PreCheck/NEXUS fee credit",
     "additional_details": "up to $120",
     "benefit_category": [
-        "Travel Security",
+        "Airport Security Credits",
         "Global Entry",
-        "TSA PreCheck",
-        "NEXUS"
+        "NEXUS",
+        "TSA PreCheck"
     ],
     "benefit_type": "Security",
     "numeric_value": 120.0,

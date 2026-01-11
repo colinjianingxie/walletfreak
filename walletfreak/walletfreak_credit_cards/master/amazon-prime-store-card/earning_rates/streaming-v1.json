@@ -6,6 +6,7 @@
     "is_active": true,
     "multiplier": 5,
     "category": [
+        "Amazon",
         "Streaming"
     ],
     "currency": "cash back",

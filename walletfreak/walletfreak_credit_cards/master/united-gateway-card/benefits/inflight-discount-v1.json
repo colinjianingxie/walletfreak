@@ -8,9 +8,7 @@
     "short_description": "Inflight Discount",
     "description": "25% back on United inflight purchases",
     "additional_details": "Includes food, beverages, and Wi-Fi",
-    "benefit_category": [
-        "United"
-    ],
+    "benefit_category": "United Airlines",
     "benefit_type": "Credit",
     "numeric_value": 25,
     "numeric_type": "Percent",

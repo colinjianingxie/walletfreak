@@ -8,9 +8,7 @@
     "short_description": "Airline Credits",
     "description": "Up to $100 in statement credits for eligible airline purchases",
     "additional_details": "$50 semi-annually after spending $250 each period on airlines in 2026",
-    "benefit_category": [
-        "Generic Airlines"
-    ],
+    "benefit_category": "Airlines",
     "benefit_type": "Credit",
     "numeric_value": 100,
     "numeric_type": "Cash",

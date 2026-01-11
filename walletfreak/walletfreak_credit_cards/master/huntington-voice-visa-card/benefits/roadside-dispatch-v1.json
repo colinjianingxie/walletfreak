@@ -8,10 +8,7 @@
     "short_description": "Roadside Dispatch",
     "description": "Roadside Dispatch",
     "additional_details": null,
-    "benefit_category": [
-        "Roadside Assistance",
-        "Generic Protection"
-    ],
+    "benefit_category": "Protection",
     "benefit_type": "Perk",
     "numeric_value": null,
     "numeric_type": null,

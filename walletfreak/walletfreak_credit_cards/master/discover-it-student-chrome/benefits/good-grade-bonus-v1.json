@@ -8,10 +8,7 @@
     "short_description": "Good Grade Bonus",
     "description": "$20 GPA Statement credit",
     "additional_details": null,
-    "benefit_category": [
-        "Rewards Bonus",
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Bonus",
     "numeric_value": 20,
     "numeric_type": "Cash",

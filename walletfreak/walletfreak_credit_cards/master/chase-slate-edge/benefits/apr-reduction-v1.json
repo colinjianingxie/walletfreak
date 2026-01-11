@@ -8,10 +8,7 @@
     "short_description": "APR Reduction",
     "description": "0% intro APR offers",
     "additional_details": "potential APR reduction",
-    "benefit_category": [
-        "Credit Building",
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Perk",
     "numeric_value": null,
     "numeric_type": null,

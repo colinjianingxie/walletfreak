@@ -6,8 +6,8 @@
     "is_active": true,
     "multiplier": 2,
     "category": [
-        "Generic Travel Perks",
-        "Generic Dining"
+        "Dining",
+        "Travel Perks"
     ],
     "currency": "points",
     "additional_details": null,

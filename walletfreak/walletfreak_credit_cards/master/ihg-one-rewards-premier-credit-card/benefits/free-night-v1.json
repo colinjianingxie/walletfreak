@@ -9,8 +9,8 @@
     "description": "Anniversary Free Night Award",
     "additional_details": "up to 40,000 points",
     "benefit_category": [
-        "IHG",
-        "Generic Hotels"
+        "Generic IHG",
+        "Hotels"
     ],
     "benefit_type": "Free Night",
     "numeric_value": 1,

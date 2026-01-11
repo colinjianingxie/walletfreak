@@ -8,9 +8,7 @@
     "short_description": "Airline Credit",
     "description": "$100 annual airline credit",
     "additional_details": null,
-    "benefit_category": [
-        "Generic Airlines"
-    ],
+    "benefit_category": "Airlines",
     "benefit_type": "Credit",
     "numeric_value": 100.0,
     "numeric_type": "Cash",

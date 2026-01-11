@@ -8,9 +8,7 @@
     "short_description": "Preferred Rewards Boost",
     "description": "Preferred Rewards bonus: 25% to 75% more cash back",
     "additional_details": "Requires qualifying Bank of America account balance; does not apply to first-year bonus",
-    "benefit_category": [
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Bonus",
     "numeric_value": 75.0,
     "numeric_type": "Percent",

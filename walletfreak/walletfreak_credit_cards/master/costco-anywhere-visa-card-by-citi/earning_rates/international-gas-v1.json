@@ -6,8 +6,9 @@
     "is_active": true,
     "multiplier": 4,
     "category": [
-        "International Gas",
-        "EV Charging"
+        "Costco",
+        "EV Charging",
+        "International Gas Stations"
     ],
     "currency": "cash back",
     "additional_details": "worldwide gas & EV (non-Costco, up to $7,000/year combined with 5%, then 1%)",

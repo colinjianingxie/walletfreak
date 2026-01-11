@@ -8,9 +8,7 @@
     "short_description": "Free Bag",
     "description": "First checked bag free",
     "additional_details": "On domestic AA itineraries for you and up to 4 companions",
-    "benefit_category": [
-        "American Airlines"
-    ],
+    "benefit_category": "American Airlines",
     "benefit_type": "Perk",
     "numeric_value": 1,
     "numeric_type": "Passes",

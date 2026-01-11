@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 7,
-    "category": [
-        "Hilton"
-    ],
+    "category": "Generic Hilton",
     "currency": "points",
     "additional_details": "at Hilton properties",
     "is_default": false

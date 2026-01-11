@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 5,
-    "category": [
-        "Capital One Travel Vacation Rentals"
-    ],
+    "category": "Capital One Travel",
     "currency": "miles",
     "additional_details": "vacation rentals booked through Capital One Business Travel",
     "is_default": false

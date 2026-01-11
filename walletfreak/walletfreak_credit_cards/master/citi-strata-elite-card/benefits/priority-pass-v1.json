@@ -8,10 +8,7 @@
     "short_description": "Priority Pass",
     "description": "Priority Pass Lounge Membership",
     "additional_details": null,
-    "benefit_category": [
-        "Priority Pass",
-        "Lounge Access"
-    ],
+    "benefit_category": "Priority Pass Select",
     "benefit_type": "Membership",
     "numeric_value": 1.0,
     "numeric_type": "Membership",

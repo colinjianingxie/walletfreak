@@ -9,8 +9,8 @@
     "description": "$84 Dunkin' Credit",
     "additional_details": "$7 monthly",
     "benefit_category": [
-        "Dunkin",
-        "Generic Dining"
+        "Coffee Shops",
+        "Dining"
     ],
     "benefit_type": "Credit",
     "numeric_value": 84.0,

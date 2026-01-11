@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 4,
-    "category": [
-        "Generic Airlines"
-    ],
+    "category": "Direct Airline Bookings",
     "currency": "points",
     "additional_details": "flights booked directly with airlines",
     "is_default": false

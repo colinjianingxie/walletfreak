@@ -6,8 +6,8 @@
     "is_active": true,
     "multiplier": 5,
     "category": [
-        "Office Supplies",
-        "Phone Plans"
+        "Cell Phone Plans",
+        "Office Supplies"
     ],
     "currency": "cash back",
     "additional_details": "office supply & phone",

@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 1.5,
-    "category": [
-        "Large Purchases"
-    ],
+    "category": "Financial Rewards",
     "currency": "miles",
     "additional_details": "purchases of $5,000 or more (cap applies)",
     "is_default": false

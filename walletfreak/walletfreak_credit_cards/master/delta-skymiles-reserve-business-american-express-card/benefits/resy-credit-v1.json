@@ -8,9 +8,7 @@
     "short_description": "Resy Credit",
     "description": "$240 Resy Credit",
     "additional_details": "$20 per month for enrolled U.S. Resy restaurants",
-    "benefit_category": [
-        "Generic Dining"
-    ],
+    "benefit_category": "Resy Bookings",
     "benefit_type": "Credit",
     "numeric_value": 20.0,
     "numeric_type": "Cash",

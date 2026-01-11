@@ -6,9 +6,9 @@
     "is_active": true,
     "multiplier": 4,
     "category": [
-        "Generic Travel Perks",
-        "Generic Transportation",
-        "EV Charging"
+        "EV Charging",
+        "Transit",
+        "Travel Perks"
     ],
     "currency": "points",
     "additional_details": "travel & gas",

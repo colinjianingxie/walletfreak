@@ -6,9 +6,9 @@
     "is_active": true,
     "multiplier": 2,
     "category": [
-        "Generic Dining",
-        "Generic Travel Perks",
-        "Streaming"
+        "Dining",
+        "Streaming",
+        "Travel Perks"
     ],
     "currency": "miles",
     "additional_details": "dining, streaming, travel",

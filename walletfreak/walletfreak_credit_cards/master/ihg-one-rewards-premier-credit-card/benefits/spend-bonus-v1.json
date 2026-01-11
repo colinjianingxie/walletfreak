@@ -9,8 +9,8 @@
     "description": "$100 statement credit + 10,000 points after $20,000 spend annually",
     "additional_details": null,
     "benefit_category": [
-        "IHG",
-        "Generic Hotels"
+        "Generic IHG",
+        "Hotels"
     ],
     "benefit_type": "Bonus",
     "numeric_value": 10000,

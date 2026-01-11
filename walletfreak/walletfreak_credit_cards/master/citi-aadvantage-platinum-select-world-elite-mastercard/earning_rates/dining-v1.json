@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 2,
-    "category": [
-        "Generic Dining"
-    ],
+    "category": "Dining",
     "currency": "miles",
     "additional_details": "restaurants",
     "is_default": false

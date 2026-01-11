@@ -8,9 +8,7 @@
     "short_description": "Additional Hotel Credit",
     "description": "$250 additional Chase Travel hotel credit",
     "additional_details": "for prepaid 2-night stays at select brands (IHG, Omni, Virgin Hotels, etc.) through Dec 31, 2026",
-    "benefit_category": [
-        "Chase Travel Hotels"
-    ],
+    "benefit_category": "Chase Travel",
     "benefit_type": "Credit",
     "numeric_value": 250.0,
     "numeric_type": "Cash",

@@ -8,9 +8,7 @@
     "short_description": "Gold Status",
     "description": "Complimentary Marriott Bonvoy Gold Elite Status",
     "additional_details": null,
-    "benefit_category": [
-        "Marriott"
-    ],
+    "benefit_category": "Generic Marriott Bonvoy",
     "benefit_type": "Perk",
     "numeric_value": 1,
     "numeric_type": "Membership",

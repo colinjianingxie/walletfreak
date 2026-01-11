@@ -8,9 +8,7 @@
     "short_description": "Lyft Credit",
     "description": "Up to $120 back on eligible Lyft rides",
     "additional_details": "$10 credit after taking 3 eligible rides in a calendar month",
-    "benefit_category": [
-        "Lyft"
-    ],
+    "benefit_category": "Lyft",
     "benefit_type": "Credit",
     "numeric_value": 10.0,
     "numeric_type": "Cash",

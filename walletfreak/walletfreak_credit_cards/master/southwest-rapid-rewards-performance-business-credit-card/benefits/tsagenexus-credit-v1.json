@@ -10,7 +10,8 @@
     "additional_details": null,
     "benefit_category": [
         "Global Entry",
-        "Generic Travel Perks"
+        "NEXUS",
+        "TSA PreCheck"
     ],
     "benefit_type": "Security",
     "numeric_value": 120.0,

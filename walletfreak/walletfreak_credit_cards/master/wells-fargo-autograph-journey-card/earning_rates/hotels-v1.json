@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 5,
-    "category": [
-        "Generic Hotels"
-    ],
+    "category": "Hotels",
     "currency": "points",
     "additional_details": "Hotels",
     "is_default": false

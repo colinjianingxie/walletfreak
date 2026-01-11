@@ -9,9 +9,9 @@
     "description": "Apple Card Monthly Installments",
     "additional_details": null,
     "benefit_category": [
-        "Apple",
-        "Generic Protection",
-        "Generic Financial & Rewards"
+        "Apple Store",
+        "Financial Rewards",
+        "Protection"
     ],
     "benefit_type": "Perk",
     "numeric_value": 0,

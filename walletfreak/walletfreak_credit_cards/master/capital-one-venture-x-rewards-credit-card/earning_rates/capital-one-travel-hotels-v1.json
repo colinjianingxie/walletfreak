@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 10,
-    "category": [
-        "Capital One Travel Hotels"
-    ],
+    "category": "Capital One Travel",
     "currency": "miles",
     "additional_details": "hotels through portal",
     "is_default": false

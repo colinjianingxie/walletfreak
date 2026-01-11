@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 4,
-    "category": [
-        "Generic Dining"
-    ],
+    "category": "Dining",
     "currency": "points",
     "additional_details": "U.S. restaurants",
     "is_default": false

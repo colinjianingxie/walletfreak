@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 2,
-    "category": [
-        "Rental Cars"
-    ],
+    "category": "Car Rentals",
     "currency": "miles",
     "additional_details": "car rental merchants",
     "is_default": false

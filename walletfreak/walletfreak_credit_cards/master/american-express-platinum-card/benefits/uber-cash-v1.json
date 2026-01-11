@@ -9,9 +9,8 @@
     "description": "$200 Uber Cash",
     "additional_details": "$15 monthly + $20 bonus December",
     "benefit_category": [
-        "Uber",
-        "Generic Transportation",
-        "Generic Dining"
+        "Dining",
+        "Uber"
     ],
     "benefit_type": "Credit",
     "numeric_value": 200.0,

@@ -6,8 +6,8 @@
     "is_active": true,
     "multiplier": 3,
     "category": [
-        "Generic Dining",
-        "Generic Airlines"
+        "Dining",
+        "Direct Airline Bookings"
     ],
     "currency": "points",
     "additional_details": "restaurants & flights direct",

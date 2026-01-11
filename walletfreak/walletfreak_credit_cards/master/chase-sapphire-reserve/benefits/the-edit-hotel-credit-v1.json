@@ -9,7 +9,9 @@
     "description": "$500 The Edit by Chase Travel hotel credit",
     "additional_details": "up to $500 annually, max $250 per transaction on prepaid 2-night stays",
     "benefit_category": [
-        "Chase Travel Hotels"
+        "Chase Travel",
+        "Max",
+        "The Edit by Chase Travel"
     ],
     "benefit_type": "Credit",
     "numeric_value": 500.0,

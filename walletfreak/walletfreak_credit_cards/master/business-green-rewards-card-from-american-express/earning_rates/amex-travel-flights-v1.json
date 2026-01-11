@@ -5,10 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 2,
-    "category": [
-        "Amex Travel Flights",
-        "Amex Travel Hotels"
-    ],
+    "category": "Amex Travel",
     "currency": "points",
     "additional_details": "flights and prepaid hotels through amextravel.com",
     "is_default": false

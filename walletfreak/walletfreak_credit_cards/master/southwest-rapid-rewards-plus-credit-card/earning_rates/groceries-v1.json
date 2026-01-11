@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 2,
-    "category": [
-        "Generic Groceries"
-    ],
+    "category": "Groceries",
     "currency": "points",
     "additional_details": "grocery stores (up to $5,000 combined/year)",
     "is_default": false

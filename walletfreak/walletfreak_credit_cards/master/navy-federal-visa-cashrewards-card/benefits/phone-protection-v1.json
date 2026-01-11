@@ -8,9 +8,7 @@
     "short_description": "Phone Protection",
     "description": "Cell Phone Protection",
     "additional_details": "Up to $600 per claim if you pay your monthly bill with the card",
-    "benefit_category": [
-        "Phone Plans"
-    ],
+    "benefit_category": "Cell Phone Plans",
     "benefit_type": "Perk",
     "numeric_value": 600.0,
     "numeric_type": "Cash",

@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 0,
-    "category": [
-        "No Rewards"
-    ],
+    "category": "Financial Rewards",
     "currency": null,
     "additional_details": "no rewards",
     "is_default": false

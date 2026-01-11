@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 10,
-    "category": [
-        "Peloton"
-    ],
+    "category": "Peloton",
     "currency": "points",
     "additional_details": "on Peloton equipment and accessories over $150 through Dec 31, 2027",
     "is_default": false

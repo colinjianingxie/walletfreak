@@ -9,9 +9,9 @@
     "description": "$300 lululemon Credit",
     "additional_details": "$75 quarterly",
     "benefit_category": [
-        "lululemon",
-        "Generic Shopping",
-        "Generic Health & Wellness"
+        "Health",
+        "Retail Shopping",
+        "lululemon"
     ],
     "benefit_type": "Credit",
     "numeric_value": 300.0,

@@ -8,10 +8,7 @@
     "short_description": "PRIOR Subscription",
     "description": "Complimentary PRIOR travel subscription",
     "additional_details": null,
-    "benefit_category": [
-        "PRIOR",
-        "Generic Travel Perks"
-    ],
+    "benefit_category": "Travel Perks",
     "benefit_type": "Perk",
     "numeric_value": 149,
     "numeric_type": "Cash",

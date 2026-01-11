@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 2,
-    "category": [
-        "Delta"
-    ],
+    "category": "Delta Air Lines",
     "currency": "miles",
     "additional_details": "purchases made directly with Delta",
     "is_default": false

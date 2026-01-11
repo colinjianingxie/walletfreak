@@ -8,9 +8,7 @@
     "short_description": "Delta Stays Credit",
     "description": "$100 Delta Stays Credit",
     "additional_details": "Annual statement credit after using your card to book prepaid hotels or vacation rentals through Delta Stays",
-    "benefit_category": [
-        "Delta"
-    ],
+    "benefit_category": "Delta Air Lines",
     "benefit_type": "Credit",
     "numeric_value": 100.0,
     "numeric_type": "Cash",

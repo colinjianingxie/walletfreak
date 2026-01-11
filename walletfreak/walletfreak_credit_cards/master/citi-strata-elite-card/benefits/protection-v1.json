@@ -8,10 +8,7 @@
     "short_description": "Protection",
     "description": "Travel Insurance Coverage",
     "additional_details": null,
-    "benefit_category": [
-        "Insurance",
-        "Generic Protection"
-    ],
+    "benefit_category": "Protection",
     "benefit_type": "Insurance",
     "numeric_value": null,
     "numeric_type": null,

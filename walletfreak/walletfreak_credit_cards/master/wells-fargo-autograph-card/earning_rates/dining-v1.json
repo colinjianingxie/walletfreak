@@ -6,12 +6,12 @@
     "is_active": true,
     "multiplier": 3,
     "category": [
-        "Generic Dining",
-        "Generic Travel Perks",
-        "Generic Transportation",
+        "Cell Phone Plans",
+        "Dining",
         "EV Charging",
         "Streaming",
-        "Phone Plans"
+        "Transit",
+        "Travel Perks"
     ],
     "currency": "points",
     "additional_details": "unlimited categories",

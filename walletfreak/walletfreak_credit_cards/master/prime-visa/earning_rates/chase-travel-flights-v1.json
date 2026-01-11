@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 5,
-    "category": [
-        "Chase Travel Flights"
-    ],
+    "category": "Chase Travel",
     "currency": "cash back",
     "additional_details": "flights through Portal",
     "is_default": false

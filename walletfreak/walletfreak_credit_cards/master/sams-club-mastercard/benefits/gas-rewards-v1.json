@@ -9,9 +9,9 @@
     "description": "5% back on Gas worldwide",
     "additional_details": null,
     "benefit_category": [
+        "Financial Rewards",
         "Gas",
-        "Generic Transportation",
-        "Rewards Bonus"
+        "Transit"
     ],
     "benefit_type": "Bonus",
     "numeric_value": 5,

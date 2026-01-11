@@ -8,9 +8,7 @@
     "short_description": "Credit Monitoring",
     "description": "Free access to CreditWise credit monitoring",
     "additional_details": "Monitor your credit score and receive alerts for changes to your credit report.",
-    "benefit_category": [
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Membership",
     "numeric_value": 1.0,
     "numeric_type": "Membership",

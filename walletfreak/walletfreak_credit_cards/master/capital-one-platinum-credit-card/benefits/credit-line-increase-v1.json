@@ -8,9 +8,7 @@
     "short_description": "Credit Line Increase",
     "description": "Automatic credit line reviews in as little as 6 months",
     "additional_details": "Be automatically considered for a higher credit line with responsible use.",
-    "benefit_category": [
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Upgrade",
     "numeric_value": 6.0,
     "numeric_type": "Months",

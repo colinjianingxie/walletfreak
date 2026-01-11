@@ -8,9 +8,7 @@
     "short_description": "No Expiration",
     "description": "Unlimited Cash Back with no expiration",
     "additional_details": "Rewards don't expire as long as your account remains open.",
-    "benefit_category": [
-        "All Purchases"
-    ],
+    "benefit_category": "All Purchases",
     "benefit_type": "Perk",
     "numeric_value": null,
     "numeric_type": "Perk",

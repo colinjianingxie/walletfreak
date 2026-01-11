@@ -6,7 +6,8 @@
     "currency": "Cash",
     "period": "Annually",
     "benefit_category": [
-        "Cell Phone Protection"
+        "Cell Phone Protection",
+        "Max"
     ],
     "version": "v1",
     "valid_from": "2026-01-10",

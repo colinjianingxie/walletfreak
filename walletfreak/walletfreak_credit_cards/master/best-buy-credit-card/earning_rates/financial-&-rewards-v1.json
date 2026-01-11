@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 0,
-    "category": [
-        "Generic Financial & Rewards"
-    ],
+    "category": "Financial Rewards",
     "currency": null,
     "additional_details": "non-qualifying spend",
     "is_default": true

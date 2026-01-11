@@ -6,8 +6,8 @@
     "is_active": true,
     "multiplier": 2,
     "category": [
-        "Generic Hotels",
-        "Generic Travel Perks"
+        "Direct Hotel Bookings",
+        "Travel Perks"
     ],
     "currency": "points",
     "additional_details": "direct hotels",

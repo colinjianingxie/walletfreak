@@ -6,7 +6,8 @@
     "is_active": true,
     "multiplier": 5,
     "category": [
-        "Generic Groceries"
+        "Amazon",
+        "Amazon Fresh"
     ],
     "currency": "cash back",
     "additional_details": "with Prime, on Amazon Fresh",

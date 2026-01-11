@@ -8,9 +8,7 @@
     "short_description": "Transfer Bonus",
     "description": "10% bonus on Chase Ultimate Rewards transfers to Aeroplan",
     "additional_details": "up to 25,000 bonus points per year on transfers of 50,000+ points",
-    "benefit_category": [
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Bonus",
     "numeric_value": 25000.0,
     "numeric_type": "Points",

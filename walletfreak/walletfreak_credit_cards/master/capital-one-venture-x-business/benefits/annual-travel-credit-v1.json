@@ -8,9 +8,7 @@
     "short_description": "Annual Travel Credit",
     "description": "$300 annual credit for bookings made through Capital One Business Travel",
     "additional_details": "Available each cardmember year for flights, hotels, or car rentals",
-    "benefit_category": [
-        "Generic Travel Perks"
-    ],
+    "benefit_category": "Travel Perks",
     "benefit_type": "Credit",
     "numeric_value": 300.0,
     "numeric_type": "Cash",

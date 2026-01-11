@@ -6,8 +6,8 @@
     "is_active": true,
     "multiplier": 4,
     "category": [
-        "Generic Dining",
-        "Generic Entertainment",
+        "Dining",
+        "Entertainment",
         "Streaming"
     ],
     "currency": "cash back",

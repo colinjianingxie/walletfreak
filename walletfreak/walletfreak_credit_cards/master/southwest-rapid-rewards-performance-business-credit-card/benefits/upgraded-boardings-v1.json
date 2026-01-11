@@ -9,8 +9,8 @@
     "description": "4 Upgraded Boardings per year when available",
     "additional_details": null,
     "benefit_category": [
-        "Southwest",
-        "Generic Travel Perks"
+        "Southwest Airlines",
+        "Travel Perks"
     ],
     "benefit_type": "Perk",
     "numeric_value": 4.0,

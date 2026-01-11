@@ -8,9 +8,7 @@
     "short_description": "TakeOff 15",
     "description": "15% discount on Delta award travel",
     "additional_details": "Discount applies to Delta-operated flights booked with miles via Delta website/app",
-    "benefit_category": [
-        "Delta"
-    ],
+    "benefit_category": "Delta Air Lines",
     "benefit_type": "Perk",
     "numeric_value": 15.0,
     "numeric_type": "Percent",

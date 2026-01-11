@@ -6,9 +6,9 @@
     "is_active": true,
     "multiplier": 2,
     "category": [
-        "United",
-        "Generic Dining",
-        "Generic Hotels"
+        "Dining",
+        "Direct Hotel Bookings",
+        "United Airlines"
     ],
     "currency": "miles",
     "additional_details": "United, dining, direct hotels",

@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 9,
-    "category": [
-        "Hyatt"
-    ],
+    "category": "Generic World of Hyatt",
     "currency": "points",
     "additional_details": "total points at Hyatt properties",
     "is_default": false

@@ -9,7 +9,9 @@
     "description": "Unlimited access to Capital One Lounges and 1,300+ Priority Pass lounges",
     "additional_details": "Includes access for the cardholder and 2 guests; note: guest policy updates starting Feb 1, 2026",
     "benefit_category": [
-        "Generic Travel Perks"
+        "Capital One Lounge",
+        "Priority Pass Select",
+        "Travel Perks"
     ],
     "benefit_type": "Perk",
     "numeric_value": 1.0,

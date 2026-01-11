@@ -6,9 +6,9 @@
     "is_active": true,
     "multiplier": 3,
     "category": [
-        "Generic Dining",
-        "Generic Groceries",
-        "Gas"
+        "Dining",
+        "Gas",
+        "Groceries"
     ],
     "currency": "points",
     "additional_details": "on the first $6,000 spent in combined purchases annually",

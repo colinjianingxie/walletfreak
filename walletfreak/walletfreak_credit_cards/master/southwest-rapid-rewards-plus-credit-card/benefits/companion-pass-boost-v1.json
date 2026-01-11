@@ -8,9 +8,7 @@
     "short_description": "Companion Pass Boost",
     "description": "10,000 Companion Pass qualifying points boost each year",
     "additional_details": null,
-    "benefit_category": [
-        "Southwest"
-    ],
+    "benefit_category": "Southwest Airlines",
     "benefit_type": "Perk",
     "numeric_value": 10000.0,
     "numeric_type": "Points",

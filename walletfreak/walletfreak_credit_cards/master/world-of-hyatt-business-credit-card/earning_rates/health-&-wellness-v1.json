@@ -6,7 +6,8 @@
     "is_active": true,
     "multiplier": 2,
     "category": [
-        "Generic Health & Wellness"
+        "Gym Memberships",
+        "Health"
     ],
     "currency": "points",
     "additional_details": "Fitness club and gym memberships",

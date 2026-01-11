@@ -8,10 +8,7 @@
     "short_description": "Walmart+ Credit",
     "description": "$155 Walmart+ monthly membership credit",
     "additional_details": "plus tax",
-    "benefit_category": [
-        "Walmart",
-        "Generic Shopping"
-    ],
+    "benefit_category": "Walmart",
     "benefit_type": "Credit",
     "numeric_value": 155.0,
     "numeric_type": "Cash",

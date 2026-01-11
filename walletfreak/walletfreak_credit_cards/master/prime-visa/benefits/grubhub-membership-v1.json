@@ -9,8 +9,8 @@
     "description": "Complimentary Grubhub+ membership",
     "additional_details": null,
     "benefit_category": [
-        "Grubhub",
-        "Generic Dining"
+        "Dining",
+        "Grubhub"
     ],
     "benefit_type": "Perk",
     "numeric_value": 120,

@@ -8,10 +8,7 @@
     "short_description": "Lyft Credit",
     "description": "Lyft credits",
     "additional_details": "credits totaling $120 per year ($10/month) through Sep 30, 2027 plus bonus points",
-    "benefit_category": [
-        "Lyft",
-        "Generic Transportation"
-    ],
+    "benefit_category": "Lyft",
     "benefit_type": "Credit",
     "numeric_value": 120.0,
     "numeric_type": "Cash",

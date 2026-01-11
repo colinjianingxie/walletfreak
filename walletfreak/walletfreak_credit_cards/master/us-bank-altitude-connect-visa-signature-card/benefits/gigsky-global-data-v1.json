@@ -8,10 +8,7 @@
     "short_description": "GigSky Global Data",
     "description": "GigSky Global Mobile Data eSIM",
     "additional_details": null,
-    "benefit_category": [
-        "GigSky",
-        "Generic Travel Perks"
-    ],
+    "benefit_category": "Travel Perks",
     "benefit_type": "Perk",
     "numeric_value": 50,
     "numeric_type": "Cash",

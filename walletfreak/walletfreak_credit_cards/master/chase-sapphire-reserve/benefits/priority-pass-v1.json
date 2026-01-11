@@ -8,10 +8,7 @@
     "short_description": "Priority Pass",
     "description": "Priority Pass Select airport lounge membership",
     "additional_details": "includes Chase Sapphire Lounges access",
-    "benefit_category": [
-        "Priority Pass",
-        "Lounge Access"
-    ],
+    "benefit_category": "Priority Pass Select",
     "benefit_type": "Perk",
     "numeric_value": 3,
     "numeric_type": "Lounge",

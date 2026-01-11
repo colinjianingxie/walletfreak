@@ -6,9 +6,9 @@
     "is_active": true,
     "multiplier": 6,
     "category": [
-        "Generic Dining",
-        "Generic Groceries",
-        "Gas"
+        "Dining",
+        "Gas",
+        "Supermarkets"
     ],
     "currency": "points",
     "additional_details": "U.S. restaurants, supermarkets, gas",

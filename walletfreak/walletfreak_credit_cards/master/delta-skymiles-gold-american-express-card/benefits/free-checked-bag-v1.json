@@ -8,9 +8,7 @@
     "short_description": "Free Checked Bag",
     "description": "First Checked Bag Free",
     "additional_details": "Save up to $70 on a round-trip Delta flight for you and up to 8 companions on the same reservation",
-    "benefit_category": [
-        "Delta"
-    ],
+    "benefit_category": "Delta Air Lines",
     "benefit_type": "Perk",
     "numeric_value": 1.0,
     "numeric_type": "Passes",

@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 10,
-    "category": [
-        "American Airlines Hotels"
-    ],
+    "category": "Hotels",
     "currency": "miles",
     "additional_details": "Hotels booked through aadvantagehotels.com",
     "is_default": false

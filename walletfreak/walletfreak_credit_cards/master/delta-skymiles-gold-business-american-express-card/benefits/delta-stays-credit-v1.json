@@ -8,9 +8,7 @@
     "short_description": "Delta Stays Credit",
     "description": "$150 annual Delta Stays credit for prepaid hotel or vacation rental bookings",
     "additional_details": "Must book through Delta Stays on delta.com",
-    "benefit_category": [
-        "Generic Hotels"
-    ],
+    "benefit_category": "Hotels",
     "benefit_type": "Credit",
     "numeric_value": 150.0,
     "numeric_type": "Cash",

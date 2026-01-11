@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 2,
-    "category": [
-        "Generic Financial & Rewards"
-    ],
+    "category": "Financial Rewards",
     "currency": "cash rewards",
     "additional_details": "unlimited everything",
     "is_default": true

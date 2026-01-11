@@ -6,10 +6,10 @@
     "is_active": true,
     "multiplier": 2,
     "category": [
-        "Generic Dining",
-        "Generic Airlines",
-        "Generic Transportation",
-        "Generic Health & Wellness"
+        "Airlines",
+        "Dining",
+        "Health",
+        "Transit"
     ],
     "currency": "points",
     "additional_details": "frequent categories",

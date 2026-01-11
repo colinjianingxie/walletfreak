@@ -9,8 +9,9 @@
     "description": "$120 Disney Bundle Credit",
     "additional_details": "$10 monthly for enrolled bundle subscription",
     "benefit_category": [
-        "Disney",
-        "Generic Entertainment"
+        "Disney Parks",
+        "Disney Plus",
+        "Entertainment"
     ],
     "benefit_type": "Credit",
     "numeric_value": 120.0,

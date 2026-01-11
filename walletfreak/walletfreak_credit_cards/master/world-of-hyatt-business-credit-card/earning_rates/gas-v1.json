@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 2,
-    "category": [
-        "Gas"
-    ],
+    "category": "Gas",
     "currency": "points",
     "additional_details": "Top 3 category (Gas)",
     "is_default": false

@@ -8,9 +8,7 @@
     "short_description": "Luxury Hotel Perks",
     "description": "Visa Signature Luxury Hotel benefits",
     "additional_details": null,
-    "benefit_category": [
-        "Generic Hotels"
-    ],
+    "benefit_category": "Hotels",
     "benefit_type": "Perk",
     "numeric_value": null,
     "numeric_type": null,

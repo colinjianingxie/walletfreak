@@ -9,9 +9,9 @@
     "description": "$300 Marriott dining statement credit",
     "additional_details": "up to $25 monthly",
     "benefit_category": [
-        "Marriott",
-        "Generic Dining",
-        "Generic Hotels"
+        "Dining",
+        "Generic Marriott Bonvoy",
+        "Hotels"
     ],
     "benefit_type": "Credit",
     "numeric_value": 300.0,

@@ -9,8 +9,8 @@
     "description": "10% off select merchandise purchases at Disney Store and DisneyStore.com",
     "additional_details": null,
     "benefit_category": [
-        "Disney",
-        "Generic Shopping"
+        "Disney Parks",
+        "Retail Shopping"
     ],
     "benefit_type": "Perk",
     "numeric_value": 10.0,

@@ -8,9 +8,7 @@
     "short_description": "Delta Stays Credit",
     "description": "$250 Delta Stays credit",
     "additional_details": "Annual credit for prepaid Delta Stays bookings",
-    "benefit_category": [
-        "Generic Hotels"
-    ],
+    "benefit_category": "Hotels",
     "benefit_type": "Credit",
     "numeric_value": 250.0,
     "numeric_type": "Cash",

@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 4,
-    "category": [
-        "Generic Groceries"
-    ],
+    "category": "Supermarkets",
     "currency": "points",
     "additional_details": "U.S. supermarkets",
     "is_default": false

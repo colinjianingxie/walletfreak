@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 0,
-    "category": [
-        "No Rewards"
-    ],
+    "category": "Financial Rewards",
     "currency": "cash back",
     "additional_details": "No rewards earning on this card",
     "is_default": true

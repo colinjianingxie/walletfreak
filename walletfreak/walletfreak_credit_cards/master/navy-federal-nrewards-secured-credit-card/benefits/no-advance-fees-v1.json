@@ -8,9 +8,7 @@
     "short_description": "No Advance Fees",
     "description": "No cash advance fees",
     "additional_details": null,
-    "benefit_category": [
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Perk",
     "numeric_value": null,
     "numeric_type": null,

@@ -8,9 +8,7 @@
     "short_description": "Preferred Rewards Bonus",
     "description": "Bank of America Preferred Rewards\u00ae 25%-75% bonus",
     "additional_details": "Get a 25% to 75% rewards bonus on every purchase if you have a qualifying Bank of America checking or savings account",
-    "benefit_category": [
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Bonus",
     "numeric_value": 25.0,
     "numeric_type": "Percent",

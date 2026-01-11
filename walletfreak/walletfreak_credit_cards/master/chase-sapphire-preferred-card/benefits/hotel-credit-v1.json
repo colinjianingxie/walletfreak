@@ -8,9 +8,7 @@
     "short_description": "Hotel Credit",
     "description": "$50 Annual Chase Travel Hotel Credit",
     "additional_details": null,
-    "benefit_category": [
-        "Generic Hotels"
-    ],
+    "benefit_category": "Chase Travel",
     "benefit_type": "Credit",
     "numeric_value": 50.0,
     "numeric_type": "Cash",

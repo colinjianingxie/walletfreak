@@ -9,9 +9,9 @@
     "description": "Complimentary Apple TV+ and Music",
     "additional_details": "through Jun 22, 2027",
     "benefit_category": [
-        "Apple TV+",
         "Apple Music",
-        "Generic Entertainment"
+        "Apple TV Plus",
+        "Entertainment"
     ],
     "benefit_type": "Perk",
     "numeric_value": 288,

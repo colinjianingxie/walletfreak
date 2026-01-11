@@ -8,9 +8,7 @@
     "short_description": "6 month deferred interest",
     "description": "No interest if paid in full within 6 months",
     "additional_details": "On purchases of $149 or more. Deferred interest: full interest charged if not paid in full. Ends February 16, 2026. Cannot be combined with 5% back rewards.",
-    "benefit_category": [
-        "Generic Shopping"
-    ],
+    "benefit_category": "Retail Shopping",
     "benefit_type": "Deferred Interest",
     "numeric_value": 6.0,
     "numeric_type": "Months",

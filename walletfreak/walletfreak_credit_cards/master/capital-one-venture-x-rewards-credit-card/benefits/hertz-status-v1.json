@@ -9,9 +9,9 @@
     "description": "Hertz President's Circle elite status",
     "additional_details": "enrollment required",
     "benefit_category": [
+        "Car Rentals",
         "Hertz",
-        "Rental Cars",
-        "Status"
+        "Status Boost"
     ],
     "benefit_type": "Status",
     "numeric_value": null,

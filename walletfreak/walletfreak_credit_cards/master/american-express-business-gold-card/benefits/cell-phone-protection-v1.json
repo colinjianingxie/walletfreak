@@ -9,8 +9,9 @@
     "description": "Cell Phone Protection",
     "additional_details": "up to $800 per claim, $50 deductible, max 2 claims per 12 months",
     "benefit_category": [
-        "Phone Plans",
-        "Generic Business & Tech"
+        "Business",
+        "Cell Phone Plans",
+        "Max"
     ],
     "benefit_type": "Perk",
     "numeric_value": 1600.0,

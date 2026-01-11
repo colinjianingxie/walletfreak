@@ -8,9 +8,7 @@
     "short_description": "Car Rental Insurance",
     "description": "Car Rental Loss and Damage Insurance",
     "additional_details": "secondary coverage for damage or theft",
-    "benefit_category": [
-        "Rental Cars"
-    ],
+    "benefit_category": "Car Rentals",
     "benefit_type": "Perk",
     "numeric_value": 50000.0,
     "numeric_type": "Cash",

@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 2,
-    "category": [
-        "Shipping"
-    ],
+    "category": "Shipping",
     "currency": "miles",
     "additional_details": "U.S. shipping providers (up to $50k per year)",
     "is_default": false

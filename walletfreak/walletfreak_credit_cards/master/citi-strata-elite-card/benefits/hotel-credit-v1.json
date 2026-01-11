@@ -8,9 +8,7 @@
     "short_description": "Hotel Credit",
     "description": "$300 Hotel Credit via CitiTravel",
     "additional_details": null,
-    "benefit_category": [
-        "Generic Hotels"
-    ],
+    "benefit_category": "Hotels",
     "benefit_type": "Credit",
     "numeric_value": 300.0,
     "numeric_type": "Cash",

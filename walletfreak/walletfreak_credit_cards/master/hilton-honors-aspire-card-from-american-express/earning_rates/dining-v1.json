@@ -6,9 +6,9 @@
     "is_active": true,
     "multiplier": 7,
     "category": [
-        "Generic Dining",
-        "Generic Airlines",
-        "Rental Cars"
+        "Car Rentals",
+        "Dining",
+        "Direct Airline Bookings"
     ],
     "currency": "points",
     "additional_details": "restaurants, flights direct, rental cars",

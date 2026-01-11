@@ -8,9 +8,7 @@
     "short_description": "Flight Credit",
     "description": "$200 Delta Flight Credit",
     "additional_details": "After spending $10,000 in a calendar year",
-    "benefit_category": [
-        "Delta"
-    ],
+    "benefit_category": "Delta Air Lines",
     "benefit_type": "Credit",
     "numeric_value": 200.0,
     "numeric_type": "Cash",

@@ -9,8 +9,8 @@
     "description": "Free Night Reward after $15,000 spend in calendar year",
     "additional_details": null,
     "benefit_category": [
-        "Hilton",
-        "Generic Hotels"
+        "Generic Hilton",
+        "Hotels"
     ],
     "benefit_type": "Perk",
     "numeric_value": 1,

@@ -6,9 +6,9 @@
     "is_active": true,
     "multiplier": 2,
     "category": [
-        "Generic Airlines",
-        "Generic Hotels",
-        "Generic Transportation"
+        "Airlines",
+        "Hotels",
+        "Transit"
     ],
     "currency": "points",
     "additional_details": "all other travel (direct)",

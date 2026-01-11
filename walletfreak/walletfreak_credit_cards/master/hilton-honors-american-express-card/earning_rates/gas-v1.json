@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 5,
-    "category": [
-        "Gas"
-    ],
+    "category": "Gas Stations",
     "currency": "points",
     "additional_details": "U.S. gas stations",
     "is_default": false

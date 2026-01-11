@@ -6,9 +6,9 @@
     "is_active": true,
     "multiplier": 3,
     "category": [
-        "Generic Travel Perks",
+        "Dining",
         "Transit",
-        "Generic Dining"
+        "Travel Perks"
     ],
     "currency": "points",
     "additional_details": "transit, restaurants, travel",

@@ -8,9 +8,7 @@
     "short_description": "Overdraft Protection",
     "description": "Overdraft protection when linked to BoA business checking",
     "additional_details": null,
-    "benefit_category": [
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Perk",
     "numeric_value": null,
     "numeric_type": "Perk",

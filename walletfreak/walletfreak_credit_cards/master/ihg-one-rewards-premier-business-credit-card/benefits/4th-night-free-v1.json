@@ -8,9 +8,7 @@
     "short_description": "4th Night Free",
     "description": "Redeem 3 Nights, Get 4th Night Free",
     "additional_details": "On award stays",
-    "benefit_category": [
-        "IHG"
-    ],
+    "benefit_category": "Generic IHG",
     "benefit_type": "Perk",
     "numeric_value": 1,
     "numeric_type": "FreeNight",

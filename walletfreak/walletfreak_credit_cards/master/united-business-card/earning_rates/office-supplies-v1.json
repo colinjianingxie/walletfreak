@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 2,
-    "category": [
-        "Office Supplies"
-    ],
+    "category": "Office Supplies",
     "currency": "miles",
     "additional_details": "Office supply stores",
     "is_default": false

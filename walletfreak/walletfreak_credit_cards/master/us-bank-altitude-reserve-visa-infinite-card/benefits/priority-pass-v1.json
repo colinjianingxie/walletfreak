@@ -8,10 +8,7 @@
     "short_description": "Priority Pass",
     "description": "12 Priority Pass visits per year",
     "additional_details": null,
-    "benefit_category": [
-        "Priority Pass",
-        "Lounge Access"
-    ],
+    "benefit_category": "Priority Pass Select",
     "benefit_type": "Access",
     "numeric_value": 12.0,
     "numeric_type": "Lounge",

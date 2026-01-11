@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 6,
-    "category": [
-        "Streaming"
-    ],
+    "category": "Streaming",
     "currency": "cash back",
     "additional_details": "select U.S. streaming subscriptions",
     "is_default": false

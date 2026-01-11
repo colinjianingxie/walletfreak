@@ -9,8 +9,8 @@
     "description": "Annual Free Night Reward",
     "additional_details": "Standard night at any Hilton",
     "benefit_category": [
-        "Hilton",
-        "Generic Hotels"
+        "Generic Hilton",
+        "Hotels"
     ],
     "benefit_type": "Perk",
     "numeric_value": 1,

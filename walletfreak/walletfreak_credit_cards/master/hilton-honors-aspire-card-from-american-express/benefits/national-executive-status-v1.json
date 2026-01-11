@@ -9,9 +9,9 @@
     "description": "National Car Rental Emerald Club Executive status",
     "additional_details": null,
     "benefit_category": [
-        "National",
-        "Rental Cars",
-        "Status"
+        "Car Rentals",
+        "National Car Rental",
+        "Status Boost"
     ],
     "benefit_type": "Status",
     "numeric_value": null,

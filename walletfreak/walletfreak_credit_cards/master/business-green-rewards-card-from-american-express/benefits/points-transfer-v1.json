@@ -8,9 +8,7 @@
     "short_description": "Points Transfer",
     "description": "Amex Membership Rewards transfer to partners",
     "additional_details": "Transfer points to airline and hotel partners",
-    "benefit_category": [
-        "Generic Travel Perks"
-    ],
+    "benefit_category": "Travel Perks",
     "benefit_type": "Perk",
     "numeric_value": null,
     "numeric_type": "Perk",

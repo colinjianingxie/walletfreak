@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 4,
-    "category": [
-        "Generic Financial & Rewards"
-    ],
+    "category": "Financial Rewards",
     "currency": "cash back",
     "additional_details": "qualifying accounts (capped at $10,000 per billing cycle)",
     "is_default": true

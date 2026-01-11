@@ -6,10 +6,10 @@
     "is_active": true,
     "multiplier": 2,
     "category": [
-        "Generic Dining",
-        "Generic Hotels",
-        "Rental Cars",
-        "Generic Transportation"
+        "Car Rentals",
+        "Dining",
+        "Hotels",
+        "Transit"
     ],
     "currency": "points",
     "additional_details": "partners",

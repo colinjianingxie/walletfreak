@@ -9,8 +9,8 @@
     "description": "Up to $120 back on eligible Grubhub purchases",
     "additional_details": "$10 monthly statement credit for Grubhub orders",
     "benefit_category": [
-        "Grubhub",
-        "Generic Dining"
+        "Dining",
+        "Grubhub"
     ],
     "benefit_type": "Credit",
     "numeric_value": 10.0,

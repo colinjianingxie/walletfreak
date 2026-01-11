@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 3,
-    "category": [
-        "United"
-    ],
+    "category": "United Airlines",
     "currency": "miles",
     "additional_details": "United flights",
     "is_default": false

@@ -9,9 +9,9 @@
     "description": "1 Elite Night Credit for every $5,000 spent",
     "additional_details": null,
     "benefit_category": [
-        "Marriott",
-        "Generic Hotels",
-        "Status"
+        "Generic Marriott Bonvoy",
+        "Hotels",
+        "Status Boost"
     ],
     "benefit_type": "Bonus",
     "numeric_value": 1,

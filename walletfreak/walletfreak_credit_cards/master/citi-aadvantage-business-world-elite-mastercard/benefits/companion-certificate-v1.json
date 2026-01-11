@@ -9,7 +9,8 @@
     "description": "American Airlines Companion Certificate for domestic travel",
     "additional_details": "Earned after $30,000+ spend in a membership year and account renewal. Redeeming costs $99 plus taxes.",
     "benefit_category": [
-        "Generic Airlines"
+        "Airlines",
+        "American Airlines"
     ],
     "benefit_type": "Perk",
     "numeric_value": 1,

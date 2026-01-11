@@ -8,9 +8,7 @@
     "short_description": "Entertainment Credit",
     "description": "$300 Digital Entertainment Credit",
     "additional_details": "$25 monthly",
-    "benefit_category": [
-        "Generic Entertainment"
-    ],
+    "benefit_category": "Entertainment",
     "benefit_type": "Credit",
     "numeric_value": 300.0,
     "numeric_type": "Cash",

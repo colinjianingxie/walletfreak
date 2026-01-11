@@ -8,10 +8,7 @@
     "short_description": "LoungeBuddy Credit",
     "description": "$100 LoungeBuddy credit",
     "additional_details": null,
-    "benefit_category": [
-        "LoungeBuddy",
-        "Lounge Access"
-    ],
+    "benefit_category": "Lounges",
     "benefit_type": "Credit",
     "numeric_value": 100.0,
     "numeric_type": "Lounge",

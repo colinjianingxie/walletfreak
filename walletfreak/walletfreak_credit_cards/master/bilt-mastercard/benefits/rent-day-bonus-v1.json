@@ -9,10 +9,10 @@
     "description": "Rent Day double points bonus",
     "additional_details": null,
     "benefit_category": [
-        "Generic Dining",
-        "Generic Travel Perks",
         "All Purchases",
-        "Generic Financial & Rewards"
+        "Dining",
+        "Financial Rewards",
+        "Travel Perks"
     ],
     "benefit_type": "Bonus",
     "numeric_value": 0,

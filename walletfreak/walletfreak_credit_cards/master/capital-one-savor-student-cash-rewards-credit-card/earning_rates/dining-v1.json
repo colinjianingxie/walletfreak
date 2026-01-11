@@ -6,9 +6,9 @@
     "is_active": true,
     "multiplier": 3,
     "category": [
-        "Generic Dining",
-        "Generic Entertainment",
-        "Generic Groceries"
+        "Dining",
+        "Entertainment",
+        "Groceries"
     ],
     "currency": "cash back",
     "additional_details": null,

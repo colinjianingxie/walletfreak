@@ -9,7 +9,8 @@
     "description": "Up to $120 credit for Global Entry or TSA PreCheck\u00ae",
     "additional_details": "Available every 4 years as a statement credit",
     "benefit_category": [
-        "Generic Travel Perks"
+        "Global Entry",
+        "TSA PreCheck"
     ],
     "benefit_type": "Security",
     "numeric_value": 120.0,

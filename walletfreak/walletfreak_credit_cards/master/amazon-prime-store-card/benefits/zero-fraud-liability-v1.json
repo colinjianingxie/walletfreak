@@ -8,9 +8,7 @@
     "short_description": "Zero fraud liability",
     "description": "Zero fraud liability",
     "additional_details": "You are not liable for unauthorized purchases.",
-    "benefit_category": [
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Perk",
     "numeric_value": null,
     "numeric_type": null,

@@ -504,7 +504,8 @@ Here is the CURRENT known data (JSON):
 - **earning_rates**: List of objects.
     - `rate_id`: (IMPORTANT) Keep existing ID (e.g. "dining").
     - `multiplier`: Number (e.g. 4.0).
-    - `category`: List strings (e.g. ["Dining"]).
+    - `category`: List of strings (e.g. ["Dining", "Resy Bookings"]). **Must be a list**.
+    - `additional_details`: **REQUIRED**. Specific string detailing conditions (e.g. "on purchases made directly with airlines"). Must NOT be empty.
     - `is_default`: Boolean (True for "All other purchases").
 - **sign_up_bonus**: List of objects (usually 1).
     - `offer_id`: e.g. "offer-1".
@@ -518,7 +519,7 @@ Here is the CURRENT known data (JSON):
     - `question_type`: "multiple_choice" or "boolean".
     - `choices`: ["Yes", "No", "Sometimes"].
     - `weights`: [1.0, 0.0, 0.5].
-    - `benefit_category`: String (e.g. "Rideshare").
+    - `benefit_category`: List of strings (e.g. ["Uber"]).
 
 **INSTRUCTIONS**:
 - If `sign_up_bonus` or `questions` are empty in the input, YOU MUST GENERATE them based on the web search data.

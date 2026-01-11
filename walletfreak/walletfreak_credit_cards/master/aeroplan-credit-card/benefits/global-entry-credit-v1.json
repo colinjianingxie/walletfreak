@@ -9,7 +9,10 @@
     "description": "$120 Global Entry, TSA PreCheck or NEXUS Credit",
     "additional_details": "every 4 years",
     "benefit_category": [
-        "Travel Security"
+        "Airport Security Credits",
+        "Global Entry",
+        "NEXUS",
+        "TSA PreCheck"
     ],
     "benefit_type": "Security",
     "numeric_value": 120.0,

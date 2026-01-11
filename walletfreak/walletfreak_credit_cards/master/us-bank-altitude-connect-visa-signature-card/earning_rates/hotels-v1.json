@@ -6,8 +6,8 @@
     "is_active": true,
     "multiplier": 5,
     "category": [
-        "Generic Hotels",
-        "Rental Cars"
+        "Car Rentals",
+        "Hotels"
     ],
     "currency": "points",
     "additional_details": "through Altitude Rewards",

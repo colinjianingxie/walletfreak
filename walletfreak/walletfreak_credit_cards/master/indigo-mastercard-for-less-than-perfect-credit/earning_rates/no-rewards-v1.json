@@ -1,9 +1,7 @@
 {
     "rate_id": "no-rewards",
     "multiplier": 0.0,
-    "category": [
-        "No Rewards"
-    ],
+    "category": "Financial Rewards",
     "is_default": true,
     "version": "v1",
     "valid_from": "2026-01-10",

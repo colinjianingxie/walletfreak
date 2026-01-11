@@ -8,9 +8,7 @@
     "short_description": "Luggage Help",
     "description": "Lost Luggage Assistance",
     "additional_details": "Assistance in locating and coordinating the return of lost luggage when traveling.",
-    "benefit_category": [
-        "Generic Travel Perks"
-    ],
+    "benefit_category": "Travel Perks",
     "benefit_type": "Perk",
     "numeric_value": null,
     "numeric_type": "Perk",

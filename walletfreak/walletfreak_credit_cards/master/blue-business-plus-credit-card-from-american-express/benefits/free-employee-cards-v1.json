@@ -8,10 +8,7 @@
     "short_description": "Free Employee Cards",
     "description": "Free additional employee cards",
     "additional_details": null,
-    "benefit_category": [
-        "Generic Business & Tech",
-        "Business Management"
-    ],
+    "benefit_category": "Business",
     "benefit_type": "Perk",
     "numeric_value": null,
     "numeric_type": null,

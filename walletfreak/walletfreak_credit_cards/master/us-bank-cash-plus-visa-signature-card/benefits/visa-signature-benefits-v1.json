@@ -6,9 +6,8 @@
     "currency": "Cash",
     "period": "Ongoing",
     "benefit_category": [
-        "Generic Protection",
-        "Roadside Assistance",
-        "Travel Security"
+        "Airport Security Credits",
+        "Protection"
     ],
     "version": "v1",
     "valid_from": "2026-01-10",

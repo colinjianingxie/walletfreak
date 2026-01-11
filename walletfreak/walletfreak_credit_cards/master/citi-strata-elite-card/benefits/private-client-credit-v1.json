@@ -8,10 +8,7 @@
     "short_description": "Private Client Credit",
     "description": "Citigold Private Client Credit",
     "additional_details": null,
-    "benefit_category": [
-        "Banking",
-        "Generic Financial & Rewards"
-    ],
+    "benefit_category": "Financial Rewards",
     "benefit_type": "Perk",
     "numeric_value": 595.0,
     "numeric_type": "Cash",

@@ -6,7 +6,9 @@
     "is_active": true,
     "multiplier": 5,
     "category": [
-        "Disney"
+        "Disney Parks",
+        "Disney Plus",
+        "Hulu"
     ],
     "currency": "points",
     "additional_details": "Disney+, Hulu, and ESPN+ streaming",

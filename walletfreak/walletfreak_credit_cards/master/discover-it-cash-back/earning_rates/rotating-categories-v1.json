@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 5,
-    "category": [
-        "Rotating Categories"
-    ],
+    "category": "Rotating Categories",
     "currency": "cash back",
     "additional_details": "quarterly rotating categories",
     "is_default": false

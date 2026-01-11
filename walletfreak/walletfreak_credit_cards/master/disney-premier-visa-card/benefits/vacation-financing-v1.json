@@ -8,9 +8,7 @@
     "short_description": "Vacation Financing",
     "description": "0% promo APR for 6 months on select Disney vacation packages",
     "additional_details": "From the date of purchase",
-    "benefit_category": [
-        "Disney"
-    ],
+    "benefit_category": "Disney Parks",
     "benefit_type": "Perk",
     "numeric_value": 6.0,
     "numeric_type": "Months",

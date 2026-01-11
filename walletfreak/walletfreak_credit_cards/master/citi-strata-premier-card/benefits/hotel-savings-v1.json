@@ -8,9 +8,7 @@
     "short_description": "Hotel Savings",
     "description": "$100 annual hotel savings benefit on $500+ single stay through CitiTravel.com",
     "additional_details": null,
-    "benefit_category": [
-        "Generic Hotels"
-    ],
+    "benefit_category": "Hotels",
     "benefit_type": "Credit",
     "numeric_value": 100.0,
     "numeric_type": "Cash",

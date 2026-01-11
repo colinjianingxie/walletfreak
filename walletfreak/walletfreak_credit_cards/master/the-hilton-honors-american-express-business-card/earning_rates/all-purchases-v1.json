@@ -5,9 +5,7 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 5,
-    "category": [
-        "All Purchases"
-    ],
+    "category": "All Purchases",
     "currency": "points",
     "additional_details": "first $100,000 in eligible purchases per year",
     "is_default": false

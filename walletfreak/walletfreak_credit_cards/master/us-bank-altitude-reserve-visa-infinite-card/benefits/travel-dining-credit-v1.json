@@ -9,8 +9,8 @@
     "description": "$325 annual travel/dining credit",
     "additional_details": null,
     "benefit_category": [
-        "Generic Travel Perks",
-        "Generic Dining"
+        "Dining",
+        "Travel Perks"
     ],
     "benefit_type": "Credit",
     "numeric_value": 325.0,

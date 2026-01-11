@@ -6,10 +6,8 @@
     "is_active": true,
     "multiplier": 3,
     "category": [
-        "British Airways",
-        "Aer Lingus",
-        "Iberia",
-        "LEVEL"
+        "Avios Redemptions",
+        "British Airways Executive Club"
     ],
     "currency": "points",
     "additional_details": null,

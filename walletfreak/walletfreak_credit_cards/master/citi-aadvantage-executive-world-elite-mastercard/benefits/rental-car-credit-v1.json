@@ -10,7 +10,7 @@
     "additional_details": "Statement credit for rentals booked directly on avis.com or budget.com",
     "benefit_category": [
         "Avis",
-        "Budget"
+        "Car Rentals"
     ],
     "benefit_type": "Credit",
     "numeric_value": 120.0,

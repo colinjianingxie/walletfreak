@@ -1,9 +1,7 @@
 {
     "rate_id": "office-supplies",
     "multiplier": 2.0,
-    "category": [
-        "Office Supplies"
-    ],
+    "category": "Office Supplies",
     "is_default": false,
     "version": "v1",
     "valid_from": "2026-01-10",

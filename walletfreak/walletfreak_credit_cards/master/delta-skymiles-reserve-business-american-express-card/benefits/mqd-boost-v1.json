@@ -8,9 +8,7 @@
     "short_description": "MQD Boost",
     "description": "MQD Boost ($1 for $10)",
     "additional_details": "Earn $1 MQD for every $10 of purchases",
-    "benefit_category": [
-        "Generic Travel Perks"
-    ],
+    "benefit_category": "Travel Perks",
     "benefit_type": "Bonus",
     "numeric_value": 0.1,
     "numeric_type": "Percent",
