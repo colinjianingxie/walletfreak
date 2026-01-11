@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "American Airlines Frequency",
+    "question": "Do you fly with American Airlines at least 4 times a year?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": [
+        "American Airlines"
+    ]
+}

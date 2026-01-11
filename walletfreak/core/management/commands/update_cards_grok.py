@@ -35,9 +35,13 @@ class Command(BaseCommand):
             '--update-types',
             type=str,
             default='all',
-            help='Comma-separated list of components to update: bonus, benefits, rates, questions, all (default: all)',
+            help='Comma-separated list of components to update: header, bonus, benefits, rates, questions, all (default: all)',
         )
-
+        parser.add_argument(
+            '--prompt',
+            action='store_true',
+            help='Output the generated prompt for debugging without making API calls',
+        )
     def handle(self, *args, **options):
         api_key = os.environ.get('GROK_API_KEY')
         if not api_key:
@@ -55,7 +59,7 @@ class Command(BaseCommand):
         update_types_arg = options.get('update_types', 'all')
         
         # Parse and validate update_types
-        valid_types = {'bonus', 'benefits', 'rates', 'questions', 'all'}
+        valid_types = {'header', 'bonus', 'benefits', 'rates', 'questions', 'all'}
         update_types_list = [t.strip() for t in update_types_arg.split(',') if t.strip()]
         
         # Validate types
@@ -67,7 +71,7 @@ class Command(BaseCommand):
         
         # If 'all' is specified, update everything
         if 'all' in update_types_list:
-            update_types_list = ['bonus', 'benefits', 'rates', 'questions']
+            update_types_list = ['header', 'bonus', 'benefits', 'rates', 'questions']
         
         self.stdout.write(f"Update types: {', '.join(update_types_list)}")
         
@@ -128,6 +132,21 @@ class Command(BaseCommand):
             
             # 2. Construct Prompt
             prompt = self.construction_prompt(current_data, slug, update_types_list)
+            
+            # If prompt flag is set, output prompt and skip this card
+            if options.get('prompt'):
+                self.stdout.write(self.style.SUCCESS(f"\nGenerative Prompt for {slug}:"))
+                self.stdout.write("-" * 50)
+                self.stdout.write(prompt)
+                self.stdout.write("-" * 50)
+                
+                # Write to file as requested
+                output_path = os.path.join(settings.BASE_DIR, '..', 'card_updates.json')
+                with open(output_path, 'w') as f:
+                    f.write(prompt)
+                self.stdout.write(self.style.SUCCESS(f"Prompt written to {output_path}"))
+                
+                continue
             
             # 3. Call API
             # For new cards, apply_url might be missing, Grok handles it via web search
@@ -544,7 +563,10 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR(f"Error loading categories list: {e}"))
             return "Error loading categories."
 
-    def construction_prompt(self, current_json, slug):
+    def construction_prompt(self, current_json, slug, update_types=None):
+        if update_types is None:
+            update_types = ['bonus', 'benefits', 'rates', 'questions']
+        
         today = datetime.date.today().isoformat()
         
         # Get dynamic categories
@@ -554,15 +576,57 @@ class Command(BaseCommand):
         clean_json = current_json.copy()
         clean_json.pop('active_indices', None)
         
+        # Remove components not being updated from the JSON to reduce token usage
+        if 'benefits' not in update_types:
+            clean_json.pop('benefits', None)
+        if 'rates' not in update_types:
+            clean_json.pop('earning_rates', None)
+        if 'bonus' not in update_types:
+            clean_json.pop('sign_up_bonus', None)
+        if 'questions' not in update_types:
+            clean_json.pop('questions', None)
+        
+        # Build component-specific instructions
+        components_to_update = []
+        if 'header' in update_types:
+            components_to_update.append("header (card metadata)")
+        if 'bonus' in update_types:
+            components_to_update.append("sign-up bonus")
+        if 'benefits' in update_types:
+            components_to_update.append("benefits")
+        if 'rates' in update_types:
+            components_to_update.append("earning rates")
+        if 'questions' in update_types:
+            components_to_update.append("questions")
+        
+        components_str = ", ".join(components_to_update)
+        
+        # Determine image_url instruction
+        if clean_json.get('image_url'):
+            image_url_instr = f'- **image_url**: "{clean_json["image_url"]}" (Keep as provided).'
+        else:
+            image_url_instr = '- **image_url**: null (Default to null if no image provided).'
+
+        # 3. Clean application_link if needed (remove markdown)
+        app_link = clean_json.get('application_link', '')
+        if app_link and app_link.startswith('[') and '](' in app_link and app_link.endswith(')'):
+             try:
+                 # Extract URL from [text](url)
+                 clean_json['application_link'] = app_link.split('](')[1][:-1]
+             except:
+                 pass
+        
         prompt = f"""
 I want to do a websearch to get the latest updates for the credit card: "{clean_json.get('name', slug)}" (Slug: {slug}) as of {today}.
+
+**FOCUS**: This update is ONLY for: {components_str}. Do NOT update other components.
 
 Here is the CURRENT known data (JSON):
 {json.dumps(clean_json, indent=4)}
 
 **TASK**:
 1. Search the web (official issuer site preferred) for the current details of this card.
-2. Return a JSON object with the UPDATED details.
+2. Return a JSON object with the UPDATED details for {components_str} ONLY.
 3. Validate all fields against the schema below.
 
 **VALID CATEGORIES HIERARCHY**:
@@ -580,48 +644,128 @@ Here is the CURRENT known data (JSON):
 - **slug-id**: Must remain "{slug}".
 - **name**: Card Name.
 - **issuer**: e.g., "American Express", "Chase", "Capital One".
-- **image_url**: {clean_json.get('image_url') or "/static/images/credit_cards/" + slug + ".png"}
-- **annual_fee**: Number (e.g. 95).
-- **application_link**: Official URL.
-- **min_credit_score**: Number (e.g. 670).
+{image_url_instr}
+- **annual_fee**: Number (e.g. 95, 0 for no fee).
+- **application_link**: Official URL to apply for the card.
+- **min_credit_score**: Number (e.g. 670). Use 300 for secured cards.
 - **max_credit_score**: Number (e.g. 850).
-- **points_value_cpp**: Number or null (e.g. 1.5, or null for cash back).
-- **is_524**: Boolean (Willy apply to Chase 5/24 rule).
-- **freak_verdict**: Short opinion string.
+- **points_value_cpp**: Number or null (e.g. 1.5 for points cards, null for cash back).
+- **is_524**: Boolean (true if applies to Chase 5/24 rule).
+- **freak_verdict**: String: short opinion or "No Freak verdict for this card yet".
+"""
 
-**SUB-COLLECTIONS**:
+        # Add header-specific instructions
+        if 'header' in update_types:
+            prompt += """
+**HEADER FIELDS** (REQUIRED TO UPDATE):
+ALL of these fields MUST be included in your response:
+- `slug-id`: String (keep as provided)
+- `name`: String (card name)
+- `issuer`: String (e.g. "Citi", "Chase", "American Express")
+- `image_url`: String (or null if not provided)
+- `annual_fee`: Number (e.g. 95, use 0 for no fee)
+- `application_link`: String (official application URL)
+- `min_credit_score`: Number (e.g. 670, use 300 for secured cards)
+- `max_credit_score`: Number (e.g. 850)
+- `points_value_cpp`: Number or null (cents per point, null for cash back)
+- `is_524`: Boolean (true/false), if having the card will affect chase 5/24 rule
+- `freak_verdict`: String (brief verdict or "No Freak verdict for this card yet")
+"""
+
+        # Add component-specific schema instructions
+        if 'benefits' in update_types:
+            prompt += """
+**BENEFITS** (REQUIRED TO UPDATE):
 - **benefits**: List of objects.
-    - `benefit_id`: (IMPORTANT) Keep existing ID if updating an existing benefit (e.g. "dining-credit"). Create logical ID for new ones (e.g. "disney-bundle").
-    - `short_description`: e.g. "Uber Cash"
-    - `description`: Full text.
-    - `value`, `currency` (Cash/Points/Miles), `period` (Monthly/Annually).
-    - `benefit_category`: List of strings (e.g. ["Rideshare", "Dining"]).
-- **earning_rates**: List of objects.
-    - `rate_id`: (IMPORTANT) Keep existing ID (e.g. "dining").
-    - `multiplier`: Number (e.g. 4.0).
-    - `category`: List of strings (e.g. ["Dining", "Resy Bookings"]). **Must be a list**.
-    - `additional_details`: **REQUIRED**. Specific string detailing conditions (e.g. "on purchases made directly with airlines"). Must NOT be empty.
-    - `is_default`: Boolean (True for "All other purchases").
+- `benefit_id`: (IMPORTANT) Keep existing ID if updating an existing benefit (e.g. "dining-credit"). Create logical ID for new ones (e.g. "disney-bundle").
+- `short_description`: e.g. "Uber Cash"
+- `description`: Full text.
+- `additional_details`: Brief context (e.g. "For prepaid hotel/vacation rental bookings").
+- `benefit_category`: List of strings (e.g. ["Rideshare", "Dining"]).
+- `benefit_type`: "Credit", "Perk", "Insurance".
+- `numeric_value`: Float/Number (e.g. 200.0).
+- `numeric_type`: "Cash", "Points", "Miles".
+- `dollar_value`: Integer estimated dollar value (e.g. 200).
+- `time_category`: "Annually (calendar year)", "Monthly", "One-time", "Per Use", "Quarterly".
+- `enrollment_required`: Boolean.
+- `effective_date`: String (YYYY-MM-DD) or null.
+
+**CRITICAL FOR BENEFITS**:
+- **SPLIT BUNDLED CREDITS**: If a card has a "total annual credit" composed of distinct parts (e.g., "$400 total credit" = "$200 Hotel Credit" + "$200 Airline Fee Credit"), you **MUST** create separate benefit objects for each distinct part. Do not bundle them.
+- **Granularity**: We want detailed, separate benefits for tracking purposes.
+"""
+
+
+        if 'rates' in update_types:
+            prompt += """
+**EARNING RATES** (REQUIRED TO UPDATE):
+- **earning_rates**: List of objects. **EVERY card MUST have at least one earning rate** - at minimum an "All Other Purchases" default rate.
+- `rate_id`: (IMPORTANT) Keep existing ID (e.g. "dining"). For new cards, create logical IDs like "dining", "travel", "all-other".
+- `multiplier`: Number (e.g. 4.0, 1.5, 1.0 for base rate).
+- `category`: List of strings (e.g. ["Dining", "Resy Bookings"]). **Must be a list**. Use ["Financial Rewards", "All Purchases"] for the default rate.
+- `additional_details`: **REQUIRED**. Specific string detailing conditions (e.g. "on purchases made directly with airlines"). Use "on all other purchases" for default.
+- `is_default`: Boolean (True for "All other purchases" rate, False for bonus categories).
+
+**CRITICAL**: You MUST generate earning rates for new cards. Every card earns something on purchases - research and include:
+1. Bonus category rates (e.g., 3x on dining)
+2. Default "all other purchases" rate (usually 1x or 1% or 2%)
+"""
+
+
+        if 'bonus' in update_types:
+            prompt += """
+**SIGN-UP BONUS** (REQUIRED TO UPDATE):
 - **sign_up_bonus**: List of objects (usually 1).
-    - `offer_id`: e.g. "offer-1".
-    - `value`: Number.
-    - `terms`: e.g. "Spend $4k in 3 months".
-    - `currency`: "Points"/"Miles"/"Cash".
+- `offer_id`: (CRITICAL FOR VERSIONING) If an object exists in the current data's `sign_up_bonus`, you MUST maintain the SAME `offer_id` (e.g. "offer-1") when updating the value or terms of the current public offer. DO NOT create new IDs like "offer-75k" or "limited-time-offer". Only change the ID if this is a completely different promotion type (e.g., switching from points to cash back).
+- `value`: Number (integer).
+- `terms`: e.g. "Spend $4k in 3 months".
+- `currency`: Exactly one of: "Points", "Miles", "Cash".
+- If no sign-up bonus currently exists, return an empty list [].
+- If a bonus existed but has expired with no replacement, return an empty list [].
+"""
+
+        if 'questions' in update_types:
+            prompt += """
+**QUESTIONS** (REQUIRED TO UPDATE):
 - **questions**: List of objects. Generating 3-5 questions based on benefits is REQUIRED if list is empty.
-    - `question_id`: e.g. "q-0".
-    - `short_desc`: e.g. "Uber Cash".
-    - `question`: "Do you use Uber...?"
-    - `question_type`: "multiple_choice" or "boolean".
-    - `choices`: ["Yes", "No", "Sometimes"].
-    - `weights`: [1.0, 0.0, 0.5].
-    - `benefit_category`: List of strings (e.g. ["Uber"]).
+- `question_id`: e.g. "q-0".
+- `short_desc`: e.g. "Uber Cash".
+- `question`: "Do you use Uber...?"
+- `question_type`: "multiple_choice" or "boolean".
+- `choices`: ["Yes", "No", "Sometimes"].
+- `weights`: [1.0, 0.0, 0.5].
+- `benefit_category`: List of strings (e.g. ["Uber"]).
+- Generate 3-5 generic usage questions to gauge if the card fits the user (based on its benefits).
+"""
 
-**INSTRUCTIONS**:
-- If `sign_up_bonus` or `questions` are empty in the input, YOU MUST GENERATE them based on the web search data.
-- For `sign_up_bonus`, if truly none exists, return an empty list.
-- For `questions`, generate 3-5 generic usage questions to gauge if the card fits the user (based on its benefits).
-
+        prompt += f"""
 **OUTPUT**:
-Return ONLY the strictly valid JSON object. No markdown.
+Return ONLY the strictly valid JSON object with these components: {components_str}. Include the slug-id, name, and issuer fields as well. No markdown.
 """
         return prompt
+
+    def get_all_unique_categories(self):
+        """
+        Load categories from categories_list.json and format for LLM prompt.
+        """
+        categories_path = os.path.join(settings.BASE_DIR, 'walletfreak_credit_cards', 'categories_list.json')
+        
+        try:
+            with open(categories_path, 'r') as f:
+                categories_data = json.load(f)
+            
+            # Format categories for the prompt
+            formatted = []
+            for parent_cat in categories_data:
+                parent_name = parent_cat.get('CategoryName')
+                children = parent_cat.get('CategoryNameDetailed', [])
+                
+                if children:
+                    formatted.append(f"- **{parent_name}**: {', '.join(children)}")
+                else:
+                    formatted.append(f"- **{parent_name}**")
+            
+            return "\n".join(formatted)
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f"Error loading categories list: {e}"))
+            return "Error loading categories."

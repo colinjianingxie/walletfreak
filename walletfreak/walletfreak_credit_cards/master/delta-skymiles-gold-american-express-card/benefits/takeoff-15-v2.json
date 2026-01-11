@@ -1,0 +1,20 @@
+{
+    "benefit_id": "takeoff-15",
+    "short_description": "TakeOff 15",
+    "description": "Receive a 15% discount on Award Travel when booking Delta-operated flights with miles on delta.com or the Fly Delta app.",
+    "additional_details": "Discount applies only to the mileage portion of the fare and does not apply to taxes and fees or partner-operated flights.",
+    "benefit_category": [
+        "Delta Air Lines"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 15.0,
+    "numeric_type": "Percent",
+    "dollar_value": 0,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "version": "v2",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

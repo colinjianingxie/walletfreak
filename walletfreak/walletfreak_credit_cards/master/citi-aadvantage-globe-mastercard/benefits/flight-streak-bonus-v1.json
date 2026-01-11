@@ -1,0 +1,20 @@
+{
+    "benefit_id": "flight-streak-bonus",
+    "short_description": "Flight Streak Bonus",
+    "description": "Earn 5,000 Loyalty Points after every four qualifying American Airlines flights, up to 15,000 Loyalty Points each status qualification year.",
+    "additional_details": "Flights must be eligible for AAdvantage mileage accrual.",
+    "benefit_category": [
+        "Status Boost"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 15000.0,
+    "numeric_type": "Points",
+    "dollar_value": 0,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "version": "v2",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

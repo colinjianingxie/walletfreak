@@ -96,7 +96,7 @@ python manage.py update_cards_grok --cards "chase-sapphire-reserve,amex-platinum
 #### `--update-types` (Optional, Default: `all`)
 Specify which components to update. Reduces API token usage by only updating selected components.
 
-**Valid types:** `bonus`, `benefits`, `rates`, `questions`, `all`
+**Valid types:** `header`, `bonus`, `benefits`, `rates`, `questions`, `all`
 
 ```bash
 # Update only sign-up bonus

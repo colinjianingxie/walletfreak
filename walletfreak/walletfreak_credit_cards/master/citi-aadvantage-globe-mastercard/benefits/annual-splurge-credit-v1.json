@@ -1,0 +1,21 @@
+{
+    "benefit_id": "annual-splurge-credit",
+    "short_description": "Annual Splurge Credit",
+    "description": "Earn up to $100 in statement credits on your choice of up to two brands from: 1stDibs, eligible AAdvantage Hotels bookings, Future Personal Training, and Live Nation.",
+    "additional_details": "Exclusions apply; must be purchased directly through the merchant.",
+    "benefit_category": [
+        "AAdvantage Hotels",
+        "Live Nation"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 100.0,
+    "numeric_type": "Cash",
+    "dollar_value": 100,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "version": "v2",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

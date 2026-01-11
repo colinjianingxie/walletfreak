@@ -1,0 +1,13 @@
+{
+    "rate_id": "american-airlines",
+    "multiplier": 3.0,
+    "category": [
+        "American Airlines"
+    ],
+    "additional_details": "on eligible American Airlines purchases",
+    "is_default": false,
+    "version": "v1",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

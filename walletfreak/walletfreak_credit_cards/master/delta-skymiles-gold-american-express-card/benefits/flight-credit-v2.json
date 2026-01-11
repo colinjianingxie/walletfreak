@@ -1,0 +1,20 @@
+{
+    "benefit_id": "flight-credit",
+    "short_description": "Annual Flight Credit",
+    "description": "Earn a $200 Delta Flight Credit after you spend $10,000 in purchases on your Card in a calendar year.",
+    "additional_details": "The credit is valid for future travel on Delta-operated flights.",
+    "benefit_category": [
+        "Delta Air Lines"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 200.0,
+    "numeric_type": "Cash",
+    "dollar_value": 200,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "version": "v2",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

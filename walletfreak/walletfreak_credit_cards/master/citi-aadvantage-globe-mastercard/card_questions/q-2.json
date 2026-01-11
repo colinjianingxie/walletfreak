@@ -1,7 +1,7 @@
 {
     "question_id": "q-2",
-    "short_desc": "Hotel Bookings",
-    "question": "Are you comfortable booking at least one hotel stay per year through the Delta Stays portal?",
+    "short_desc": "Lounge Access",
+    "question": "Do you value occasional access to airport lounges during your travels?",
     "question_type": "boolean",
     "choices": [
         "Yes",
@@ -12,6 +12,6 @@
         0.0
     ],
     "benefit_category": [
-        "Delta Stays"
+        "Admirals Club"
     ]
 }

@@ -13,5 +13,7 @@
         0.6,
         1.0
     ],
-    "benefit_category": "Airlines"
+    "benefit_category": [
+        "Delta Air Lines"
+    ]
 }

@@ -1,0 +1,20 @@
+{
+    "benefit_id": "delta-stays-credit",
+    "short_description": "Delta Stays Credit",
+    "description": "Receive up to $100 back annually as a statement credit for eligible prepaid Delta Stays bookings.",
+    "additional_details": "Valid for prepaid hotel or vacation rental bookings made through the Delta Stays portal.",
+    "benefit_category": [
+        "Delta Stays"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 100.0,
+    "numeric_type": "Cash",
+    "dollar_value": 100,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "version": "v2",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

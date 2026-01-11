@@ -1,0 +1,20 @@
+{
+    "benefit_id": "turo-credit",
+    "short_description": "Annual Turo Credit",
+    "description": "Earn up to $30 in statement credits for each eligible Turo trip completed, for a total of up to $240 in statement credits annually.",
+    "additional_details": "To qualify, you must link your card to your Turo account and pay for the trip with your card.",
+    "benefit_category": [
+        "Turo"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 240.0,
+    "numeric_type": "Cash",
+    "dollar_value": 240,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": true,
+    "effective_date": "2026-01-11",
+    "version": "v2",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

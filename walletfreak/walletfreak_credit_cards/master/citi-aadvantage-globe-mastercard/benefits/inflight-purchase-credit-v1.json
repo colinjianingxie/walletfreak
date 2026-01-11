@@ -1,0 +1,20 @@
+{
+    "benefit_id": "inflight-purchase-credit",
+    "short_description": "Inflight Purchase Credit",
+    "description": "Receive up to $100 in statement credits each calendar year for inflight purchases of food and beverages on American Airlines flights.",
+    "additional_details": "Valid only on domestic flights operated by American Airlines.",
+    "benefit_category": [
+        "In-flight Discounts"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 100.0,
+    "numeric_type": "Cash",
+    "dollar_value": 100,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "version": "v2",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

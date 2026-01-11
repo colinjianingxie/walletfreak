@@ -1,0 +1,18 @@
+{
+    "question_id": "q-4",
+    "short_desc": "Uber One Credit",
+    "question": "Do you use Uber or Uber Eats for rides or food delivery?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": [
+        "Delivery",
+        "Uber"
+    ]
+}

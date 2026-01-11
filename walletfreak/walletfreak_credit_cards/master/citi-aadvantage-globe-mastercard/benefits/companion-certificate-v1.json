@@ -1,0 +1,20 @@
+{
+    "benefit_id": "companion-certificate",
+    "short_description": "Annual Companion Certificate",
+    "description": "Earn an American Airlines Companion Certificate each year after your account anniversary and card renewal, valid for a domestic round-trip in Main Cabin for $99 plus taxes and fees.",
+    "additional_details": "Eligible for use after the first year of cardmembership upon renewal.",
+    "benefit_category": [
+        "Companion Certificates"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 1.0,
+    "numeric_type": "Points",
+    "dollar_value": 250,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "version": "v1",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

@@ -1,0 +1,19 @@
+{
+    "question_id": "q-3",
+    "short_desc": "Turo Car Sharing",
+    "question": "Do you use Turo for car rentals or car sharing services?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Yes, frequently",
+        "Sometimes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.5,
+        0.0
+    ],
+    "benefit_category": [
+        "Turo"
+    ]
+}

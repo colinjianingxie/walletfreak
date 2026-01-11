@@ -1,0 +1,20 @@
+{
+    "benefit_id": "admirals-club-passes",
+    "short_description": "Admirals Club Globe Passes",
+    "description": "Every calendar year, receive four Admirals Club Globe Passes, each valid for 24 hours of access to nearly 50 Admirals Club lounges worldwide.",
+    "additional_details": "Passes are valid for 24 hours and can be used at multiple lounges during that window when flying American or partners.",
+    "benefit_category": [
+        "Admirals Club"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 4.0,
+    "numeric_type": "Points",
+    "dollar_value": 300,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "version": "v1",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}
