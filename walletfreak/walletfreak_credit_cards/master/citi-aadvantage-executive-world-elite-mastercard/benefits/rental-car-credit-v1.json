@@ -1,6 +1,5 @@
 {
     "benefit_id": "rental-car-credit",
-    "version": "v1",
     "valid_from": "2020-01-01",
     "valid_until": null,
     "is_active": true,

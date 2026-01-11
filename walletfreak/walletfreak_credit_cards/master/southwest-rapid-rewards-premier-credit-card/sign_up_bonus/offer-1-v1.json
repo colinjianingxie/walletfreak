@@ -3,7 +3,6 @@
     "value": 50000,
     "terms": "Earn 50,000 bonus points after spending $1,000 on purchases in the first 3 months.",
     "currency": "Points",
-    "version": "v1",
     "valid_from": "2026-01-10",
     "valid_until": null,
     "is_active": true

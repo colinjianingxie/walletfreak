@@ -1,9 +1,8 @@
 {
     "benefit_id": "mqd-headstart",
-    "version": "v1",
     "valid_from": "2020-01-01",
-    "valid_until": null,
-    "is_active": true,
+    "valid_until": "2026-01-10",
+    "is_active": false,
     "short_description": "MQD Headstart",
     "description": "2,500 MQD Headstart",
     "additional_details": "Receive 2,500 Medallion Qualification Dollars each year",

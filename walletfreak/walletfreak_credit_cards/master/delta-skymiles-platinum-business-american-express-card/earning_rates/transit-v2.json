@@ -1,0 +1,12 @@
+{
+    "rate_id": "transit",
+    "multiplier": 1.5,
+    "category": [
+        "Transit"
+    ],
+    "additional_details": "on eligible transit purchases (up to $100k total per year for all 1.5x categories)",
+    "is_default": false,
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

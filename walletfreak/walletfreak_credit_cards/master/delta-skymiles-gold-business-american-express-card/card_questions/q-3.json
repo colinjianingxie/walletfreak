@@ -1,0 +1,17 @@
+{
+    "question_id": "q-3",
+    "short_desc": "Delta Stays",
+    "question": "Would you book hotels through Delta's travel portal to save $150 annually?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": [
+        "Delta Stays"
+    ]
+}

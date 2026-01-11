@@ -3,7 +3,6 @@
     "value": 50000,
     "terms": "Earn 50,000 bonus miles after you spend $2,000 in eligible purchases on your new Card within the first 6 months of Card Membership.",
     "currency": "Miles",
-    "version": "v2",
     "valid_from": "2026-01-11",
     "valid_until": null,
     "is_active": true

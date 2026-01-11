@@ -1,17 +1,17 @@
 {
     "question_id": "q-1",
-    "short_desc": "Delta Stays Credit",
-    "question": "Do you book at least one hotel stay per year through airline or travel portals?",
-    "question_type": "multiple_choice",
+    "short_desc": "Checked Bags",
+    "question": "Do you typically check a bag when flying on domestic routes?",
+    "question_type": "boolean",
     "choices": [
-        "No",
-        "Maybe",
-        "Yes"
+        "Yes",
+        "No"
     ],
     "weights": [
-        0.0,
-        0.5,
-        1.0
+        1.0,
+        0.0
     ],
-    "benefit_category": "Hotels"
+    "benefit_category": [
+        "Free Checked Bags"
+    ]
 }

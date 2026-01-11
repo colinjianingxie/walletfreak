@@ -1,0 +1,20 @@
+{
+    "benefit_id": "rideshare-credit",
+    "short_description": "$120 Rideshare Credit",
+    "description": "Earn up to $10 back in statement credits each month on U.S. rideshare purchases with select providers.",
+    "additional_details": "Select providers include Uber, Lyft, Curb, Revel, and Alto.",
+    "benefit_category": [
+        "Uber",
+        "Lyft"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 120.0,
+    "numeric_type": "Cash",
+    "dollar_value": 120,
+    "time_category": "Monthly",
+    "enrollment_required": true,
+    "effective_date": "2026-01-11",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

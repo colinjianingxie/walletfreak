@@ -1,0 +1,19 @@
+{
+    "benefit_id": "priority-boarding",
+    "short_description": "Priority Boarding",
+    "description": "Receive Zone 5 Priority Boarding on Delta flights.",
+    "additional_details": "Board early to secure overhead bin space for your carry-on.",
+    "benefit_category": [
+        "Priority Boarding"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 1.0,
+    "numeric_type": "Perk",
+    "dollar_value": 0,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

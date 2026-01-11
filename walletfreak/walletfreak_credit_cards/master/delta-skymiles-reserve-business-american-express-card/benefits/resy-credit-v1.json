@@ -1,9 +1,8 @@
 {
     "benefit_id": "resy-credit",
-    "version": "v1",
     "valid_from": "2020-01-01",
-    "valid_until": null,
-    "is_active": true,
+    "valid_until": "2026-01-10",
+    "is_active": false,
     "short_description": "Resy Credit",
     "description": "$240 Resy Credit",
     "additional_details": "$20 per month for enrolled U.S. Resy restaurants",

@@ -1,0 +1,20 @@
+{
+    "benefit_id": "cell-phone-protection",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Cell Phone Protection",
+    "description": "Cell Phone Protection up to $800 per claim",
+    "additional_details": "$50 deductible, up to 2 claims per year",
+    "benefit_category": [
+        "Protection",
+        "Cell Phone Protection"
+    ],
+    "benefit_type": "Insurance",
+    "numeric_value": 800,
+    "numeric_type": "Cash",
+    "dollar_value": 800,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": null
+}

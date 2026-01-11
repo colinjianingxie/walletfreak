@@ -1,0 +1,19 @@
+{
+    "benefit_id": "sky-club-access",
+    "short_description": "Delta Sky Club Access",
+    "description": "Receive 15 visits per Medallion Year to the Delta Sky Club when flying Delta.",
+    "additional_details": "Unlock unlimited access after spending $75,000 in a calendar year. Includes four one-time guest passes annually.",
+    "benefit_category": [
+        "Delta Sky Club"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 15.0,
+    "numeric_type": "Points",
+    "dollar_value": 750,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

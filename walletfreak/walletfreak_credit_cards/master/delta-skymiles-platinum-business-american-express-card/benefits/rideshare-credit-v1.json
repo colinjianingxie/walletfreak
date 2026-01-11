@@ -1,9 +1,8 @@
 {
     "benefit_id": "rideshare-credit",
-    "version": "v1",
     "valid_from": "2020-01-01",
-    "valid_until": null,
-    "is_active": true,
+    "valid_until": "2026-01-10",
+    "is_active": false,
     "short_description": "Rideshare Credit",
     "description": "$120 Rideshare Credit",
     "additional_details": "Up to $10 back per month on U.S. rideshare",

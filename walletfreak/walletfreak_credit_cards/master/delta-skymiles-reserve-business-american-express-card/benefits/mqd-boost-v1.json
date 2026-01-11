@@ -1,9 +1,8 @@
 {
     "benefit_id": "mqd-boost",
-    "version": "v1",
     "valid_from": "2020-01-01",
-    "valid_until": null,
-    "is_active": true,
+    "valid_until": "2026-01-10",
+    "is_active": false,
     "short_description": "MQD Boost",
     "description": "MQD Boost ($1 for $10)",
     "additional_details": "Earn $1 MQD for every $10 of purchases",

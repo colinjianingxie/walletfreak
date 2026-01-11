@@ -218,7 +218,7 @@ class Command(BaseCommand):
                         self.stdout.write(self.style.SUCCESS(f"[{directory}] CREATE {final_vid}"))
 
                 if should_create_new:
-                    item['version'] = final_vid.split('-')[-1] # vN
+
                     item['valid_from'] = today_str
                     item['valid_until'] = None
                     item['is_active'] = True

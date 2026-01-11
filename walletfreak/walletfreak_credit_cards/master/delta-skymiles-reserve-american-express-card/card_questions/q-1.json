@@ -1,17 +1,17 @@
 {
     "question_id": "q-1",
-    "short_desc": "Sky Club Access",
-    "question": "Are you a loyal Delta flyer who values having a dedicated quiet workspace at their airport hubs?",
-    "question_type": "multiple_choice",
+    "short_desc": "Premium Cabin Travel",
+    "question": "Do you typically book First Class or Comfort+ for yourself or a companion?",
+    "question_type": "boolean",
     "choices": [
-        "Rarely",
-        "Occasionally",
-        "Often"
+        "Yes",
+        "No"
     ],
     "weights": [
-        0.0,
-        0.5,
-        1.0
+        1.0,
+        0.0
     ],
-    "benefit_category": "Lounge Access"
+    "benefit_category": [
+        "Companion Certificates"
+    ]
 }

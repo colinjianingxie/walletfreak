@@ -1,0 +1,20 @@
+{
+    "benefit_id": "free-checked-bag",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "First Checked Bag Free",
+    "description": "First checked bag free on Delta flights",
+    "additional_details": "for cardmember and up to 8 companions on the same reservation",
+    "benefit_category": [
+        "Delta Air Lines",
+        "Free Checked Bags"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": null
+}

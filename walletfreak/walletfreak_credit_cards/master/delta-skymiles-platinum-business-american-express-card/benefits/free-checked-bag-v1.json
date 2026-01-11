@@ -1,0 +1,19 @@
+{
+    "benefit_id": "free-checked-bag",
+    "short_description": "Free Checked Bag",
+    "description": "Get your first checked bag free on Delta flights for the cardholder and up to 8 companions.",
+    "additional_details": "Save up to $70 on a round-trip Delta flight per person.",
+    "benefit_category": [
+        "Free Checked Bags"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 1.0,
+    "numeric_type": "Passes",
+    "dollar_value": 70,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

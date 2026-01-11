@@ -3,7 +3,6 @@
     "value": 200,
     "terms": "Spend $1,000 in the first 120 days",
     "currency": "Cash",
-    "version": "v1",
     "valid_from": "2026-01-10",
     "valid_until": null,
     "is_active": true

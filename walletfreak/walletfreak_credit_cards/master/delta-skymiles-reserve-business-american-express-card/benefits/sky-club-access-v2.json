@@ -1,0 +1,19 @@
+{
+    "benefit_id": "sky-club-access",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Sky Club Access",
+    "description": "Delta Sky Club Access",
+    "additional_details": "15 visits per Medallion Year; unlimited after $75k spend in calendar year",
+    "benefit_category": [
+        "Delta Sky Club"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 15.0,
+    "numeric_type": "Lounge",
+    "dollar_value": 695,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

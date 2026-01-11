@@ -1,0 +1,21 @@
+{
+    "benefit_id": "tsa-credit",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Application Fee Credit",
+    "description": "Up to $100 credit for Global Entry or up to $85 for TSA PreCheck",
+    "additional_details": null,
+    "benefit_category": [
+        "Airport Security Credits",
+        "Global Entry",
+        "TSA PreCheck"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 100,
+    "numeric_type": "Cash",
+    "dollar_value": 100,
+    "time_category": "Every 4-4.5 years",
+    "enrollment_required": false,
+    "effective_date": null
+}

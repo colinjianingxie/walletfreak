@@ -1,19 +1,17 @@
 {
     "question_id": "q-0",
-    "short_desc": "Free Checked Bag",
-    "question": "How many times a year do you check bags when flying Delta?",
-    "question_type": "multiple_choice",
+    "short_desc": "Delta Loyalty",
+    "question": "Do you fly with Delta at least twice a year?",
+    "question_type": "boolean",
     "choices": [
-        "Never",
-        "1-2 times",
-        "3-5 times",
-        "6+ times"
+        "Yes",
+        "No"
     ],
     "weights": [
-        0.0,
-        0.4,
-        0.8,
-        1.0
+        1.0,
+        0.0
     ],
-    "benefit_category": "Travel Perks"
+    "benefit_category": [
+        "Delta Air Lines"
+    ]
 }

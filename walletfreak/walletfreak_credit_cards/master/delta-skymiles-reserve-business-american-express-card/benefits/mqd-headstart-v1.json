@@ -1,0 +1,20 @@
+{
+    "benefit_id": "mqd-headstart",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "MQD Headstart",
+    "description": "$2,500 MQD Headstart",
+    "additional_details": "Receive $2,500 Medallion Qualification Dollars each Medallion Qualification Year",
+    "benefit_category": [
+        "Delta Air Lines",
+        "Status Boost"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 2500,
+    "numeric_type": "Cash",
+    "dollar_value": 2500,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": null
+}

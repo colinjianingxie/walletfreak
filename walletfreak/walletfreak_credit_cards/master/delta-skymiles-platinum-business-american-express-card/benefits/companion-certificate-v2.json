@@ -1,0 +1,19 @@
+{
+    "benefit_id": "companion-certificate",
+    "short_description": "Annual Companion Certificate",
+    "description": "Receive a Companion Certificate each year after your Card renewal, valid for one round-trip Delta Main Cabin companion ticket.",
+    "additional_details": "Valid for travel within the U.S. (including Alaska and Hawaii), Mexico, the Caribbean, or Central America. Requires payment of government-imposed taxes and fees of $22 to $250.",
+    "benefit_category": [
+        "Companion Certificates"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 1.0,
+    "numeric_type": "Passes",
+    "dollar_value": 400,
+    "time_category": "Annually (anniversary year)",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

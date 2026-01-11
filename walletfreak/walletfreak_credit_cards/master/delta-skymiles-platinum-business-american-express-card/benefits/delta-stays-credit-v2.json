@@ -1,0 +1,19 @@
+{
+    "benefit_id": "delta-stays-credit",
+    "short_description": "Delta Stays Credit",
+    "description": "Earn up to $200 back annually as a statement credit after using your Card to book prepaid hotels or vacation rentals through Delta Stays on delta.com.",
+    "additional_details": "Applies to eligible prepaid bookings made through the Delta Stays portal.",
+    "benefit_category": [
+        "Delta Stays"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 200.0,
+    "numeric_type": "Cash",
+    "dollar_value": 200,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

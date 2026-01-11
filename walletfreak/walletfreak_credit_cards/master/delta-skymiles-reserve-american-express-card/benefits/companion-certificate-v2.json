@@ -1,0 +1,19 @@
+{
+    "benefit_id": "companion-certificate",
+    "short_description": "Annual Companion Certificate",
+    "description": "Receive a Companion Certificate each year after renewal, valid for one round-trip companion ticket in First Class, Delta Comfort+, or Main Cabin.",
+    "additional_details": "Valid for travel to all 50 U.S. states, Mexico, the Caribbean, and Central America. Taxes and fees of $22 to $250 apply.",
+    "benefit_category": [
+        "Companion Certificates"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 1.0,
+    "numeric_type": "Points",
+    "dollar_value": 500,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

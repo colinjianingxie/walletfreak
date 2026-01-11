@@ -1,0 +1,19 @@
+{
+    "benefit_id": "delta-stays-credit",
+    "short_description": "$200 Delta Stays Credit",
+    "description": "Annual statement credit of up to $200 for prepaid hotels or vacation rentals booked through Delta Stays.",
+    "additional_details": "Eligible bookings must be made through [delta.com/stays](https://delta.com/stays).",
+    "benefit_category": [
+        "Delta Stays"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 200.0,
+    "numeric_type": "Cash",
+    "dollar_value": 200,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

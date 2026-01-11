@@ -1,0 +1,12 @@
+{
+    "rate_id": "hotels",
+    "multiplier": 3.0,
+    "category": [
+        "Direct Hotel Bookings"
+    ],
+    "additional_details": "on eligible purchases made directly with hotels",
+    "is_default": false,
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

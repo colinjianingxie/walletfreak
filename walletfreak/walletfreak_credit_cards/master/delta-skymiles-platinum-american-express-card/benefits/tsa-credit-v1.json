@@ -1,9 +1,8 @@
 {
     "benefit_id": "tsa-credit",
-    "version": "v1",
     "valid_from": "2020-01-01",
-    "valid_until": null,
-    "is_active": true,
+    "valid_until": "2026-01-10",
+    "is_active": false,
     "short_description": "TSA Credit",
     "description": "Global Entry/TSA PreCheck credit",
     "additional_details": null,

@@ -12,15 +12,26 @@
     "points_value_cpp": 1.2,
     "active_indices": {
         "benefits": [
-            "premium-companion-cert-v1",
-            "sky-club-access-v1",
-            "resy-credit-v1",
-            "delta-stays-credit-v1",
-            "mqd-boost-v1"
+            "premium-companion-cert-v2",
+            "sky-club-access-v2",
+            "resy-credit-v2",
+            "delta-stays-credit-v2",
+            "mqd-boost-v2",
+            "mqd-headstart-v1",
+            "rideshare-credit-v1",
+            "tsa-credit-v1",
+            "takeoff-15-v1",
+            "free-checked-bag-v1",
+            "priority-boarding-v1",
+            "hertz-status-v1",
+            "centurion-access-v1",
+            "upgrade-priority-v1"
         ],
         "earning_rates": [
-            "delta-v1",
-            "all-purchases-v1"
+            "delta-v2",
+            "transit-shipping-office-v1",
+            "post-150k-v1",
+            "all-purchases-v2"
         ],
         "sign_up_bonus": [
             "offer-1"

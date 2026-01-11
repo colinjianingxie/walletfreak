@@ -1,0 +1,19 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Lounge Frequency",
+    "question": "How often do you visit airport lounges when flying through Delta hubs?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Every trip",
+        "Occasionally",
+        "Never"
+    ],
+    "weights": [
+        1.0,
+        0.5,
+        0.0
+    ],
+    "benefit_category": [
+        "Delta Sky Club"
+    ]
+}

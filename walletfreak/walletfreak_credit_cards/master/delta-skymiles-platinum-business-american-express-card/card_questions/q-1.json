@@ -1,17 +1,19 @@
 {
     "question_id": "q-1",
-    "short_desc": "MQD Headstart",
-    "question": "How much do you value Delta Medallion Elite status?",
+    "short_desc": "Elite Status Importance",
+    "question": "How important is reaching Delta Medallion Elite status to your business travel strategy?",
     "question_type": "multiple_choice",
     "choices": [
-        "No",
-        "Somewhat",
-        "Very"
+        "Very important",
+        "Somewhat important",
+        "Not important"
     ],
     "weights": [
-        0.0,
+        1.0,
         0.5,
-        1.0
+        0.0
     ],
-    "benefit_category": "Travel Perks"
+    "benefit_category": [
+        "Travel Perks"
+    ]
 }

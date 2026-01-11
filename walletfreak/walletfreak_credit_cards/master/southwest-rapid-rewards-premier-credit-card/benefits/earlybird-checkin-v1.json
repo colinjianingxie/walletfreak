@@ -9,7 +9,6 @@
         "Southwest Airlines",
         "Travel Perks"
     ],
-    "version": "v1",
     "valid_from": "2026-01-10",
     "valid_until": null,
     "is_active": true
