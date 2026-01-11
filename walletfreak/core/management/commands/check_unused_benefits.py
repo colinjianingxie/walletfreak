@@ -65,84 +65,84 @@ class Command(BaseCommand):
                     if benefit.get('benefit_type') not in ['Credit', 'Perk']:
                         continue
 
-                dollar_val = benefit.get('dollar_value')
-                
-                if dollar_val and dollar_val > 0:
-                    credits_found = True
-                    desc = benefit.get('short_description') or benefit.get('description')
-                    time_cat = benefit.get('time_category', 'Annually')
+                    dollar_val = benefit.get('dollar_value')
                     
-                    # Determine period key
-                    # This logic mirrors parse_benefits_csv or usage logic
-                    param_ann_date = u_card.get('anniversary_date')
-                    period_key = self._get_current_period_key(time_cat, param_ann_date)
-                    
-                    # Check usage
-                    usage_data = u_card.get('benefit_usage', {})
-                    # KEY FIX: Use benefit['id'] (stable) instead of index
-                    usage_key = benefit.get('id')
-                    if not usage_key:
-                        usage_key = str(idx) # Fallback
-                    
-                    b_usage = usage_data.get(usage_key, {})
-                    
-                    # Check if ignored
-                    if b_usage.get('is_ignored', False):
-                        continue
-                    
-                    used_amount = 0
-                    is_full = False
-                    
-                    # Calculate Limit (Per-Period)
-                    limit = dollar_val
-                    period_values = benefit.get('period_values', {})
-                    
-                    if period_key:
-                        # Use period specific limit if defined, else fallback
-                        # e.g. Monthly -> /12, but period_values might have exact overrides
-                        if period_key in period_values:
-                            limit = period_values[period_key]
-                        elif 'Monthly' in time_cat:
-                            limit = dollar_val / 12
-                        elif 'Quarterly' in time_cat:
-                            limit = dollar_val / 4
-                        elif 'Semi-annually' in time_cat:
-                            limit = dollar_val / 2
-                            
-                        # If structured with periods
-                        if 'periods' in b_usage:
-                            p_data = b_usage['periods'].get(period_key, {})
-                            used_amount = p_data.get('used', 0)
-                            is_full = p_data.get('is_full', False)
+                    if dollar_val and dollar_val > 0:
+                        credits_found = True
+                        desc = benefit.get('short_description') or benefit.get('description')
+                        time_cat = benefit.get('time_category', 'Annually')
+                        
+                        # Determine period key
+                        # This logic mirrors parse_benefits_csv or usage logic
+                        param_ann_date = u_card.get('anniversary_date')
+                        period_key = self._get_current_period_key(time_cat, param_ann_date)
+                        
+                        # Check usage
+                        usage_data = u_card.get('benefit_usage', {})
+                        # KEY FIX: Use benefit['id'] (stable) instead of index
+                        usage_key = benefit.get('id')
+                        if not usage_key:
+                            usage_key = str(idx) # Fallback
+                        
+                        b_usage = usage_data.get(usage_key, {})
+                        
+                        # Check if ignored
+                        if b_usage.get('is_ignored', False):
+                            continue
+                        
+                        used_amount = 0
+                        is_full = False
+                        
+                        # Calculate Limit (Per-Period)
+                        limit = dollar_val
+                        period_values = benefit.get('period_values', {})
+                        
+                        if period_key:
+                            # Use period specific limit if defined, else fallback
+                            # e.g. Monthly -> /12, but period_values might have exact overrides
+                            if period_key in period_values:
+                                limit = period_values[period_key]
+                            elif 'Monthly' in time_cat:
+                                limit = dollar_val / 12
+                            elif 'Quarterly' in time_cat:
+                                limit = dollar_val / 4
+                            elif 'Semi-annually' in time_cat:
+                                limit = dollar_val / 2
+                                
+                            # If structured with periods
+                            if 'periods' in b_usage:
+                                p_data = b_usage['periods'].get(period_key, {})
+                                used_amount = p_data.get('used', 0)
+                                is_full = p_data.get('is_full', False)
+                            else:
+                                # Fallback or flat usage (unlikely if period_key is set correctly but safety net)
+                                used_amount = b_usage.get('used', 0)
+                                is_full = b_usage.get('is_full', False)
                         else:
-                            # Fallback or flat usage (unlikely if period_key is set correctly but safety net)
                             used_amount = b_usage.get('used', 0)
                             is_full = b_usage.get('is_full', False)
-                    else:
-                        used_amount = b_usage.get('used', 0)
-                        is_full = b_usage.get('is_full', False)
+                            
+                        # If marked as full, assume fully used regardless of amount
+                        unused = 0 if is_full else (limit - used_amount)
                         
-                    # If marked as full, assume fully used regardless of amount
-                    unused = 0 if is_full else (limit - used_amount)
-                    
-                    # Fix: Include ALL benefits for the current period, regardless of usage
-                    # But ensure we only show if there is a valid limit (i.e., it's a credit benefit)
-                    # AND if there is unused value remaining (user requirement: "only want to send an email for the benefits that still need to be used")
-                    if limit > 0 and unused > 0.01:
-                        item = {
-                            'card_name': card_name,
-                            'benefit': desc,
-                            'limit': limit,
-                            'time_cat': time_cat,
-                            'used': used_amount,
-                            'unused': unused,
-                            'is_full': is_full
-                        }
-                        user_unused_items.append(item)
-                        self.stdout.write(f"  - {card_name}: {desc}")
-                        self.stdout.write(f"    Limit: ${limit:.2f} ({time_cat}) | Used: ${used_amount:.2f} | Unused: ${unused:.2f}")
-                        if is_full:
-                            self.stdout.write(f"    (Marked as FULL)")
+                        # Fix: Include ALL benefits for the current period, regardless of usage
+                        # But ensure we only show if there is a valid limit (i.e., it's a credit benefit)
+                        # AND if there is unused value remaining (user requirement: "only want to send an email for the benefits that still need to be used")
+                        if limit > 0 and unused > 0.01:
+                            item = {
+                                'card_name': card_name,
+                                'benefit': desc,
+                                'limit': limit,
+                                'time_cat': time_cat,
+                                'used': used_amount,
+                                'unused': unused,
+                                'is_full': is_full
+                            }
+                            user_unused_items.append(item)
+                            self.stdout.write(f"  - {card_name}: {desc}")
+                            self.stdout.write(f"    Limit: ${limit:.2f} ({time_cat}) | Used: ${used_amount:.2f} | Unused: ${unused:.2f}")
+                            if is_full:
+                                self.stdout.write(f"    (Marked as FULL)")
 
             # Send Email if requested and items found
             if should_send and user_unused_items and user_email:
