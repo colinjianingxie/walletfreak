@@ -1,0 +1,20 @@
+{
+    "benefit_id": "club-membership",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Club Membership",
+    "description": "United Club membership",
+    "additional_details": "unlimited access + 2 guests",
+    "benefit_category": [
+        "United Airlines",
+        "United Club"
+    ],
+    "benefit_type": "Access",
+    "numeric_value": 3,
+    "numeric_type": "Lounge",
+    "dollar_value": null,
+    "time_category": "Permanent",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

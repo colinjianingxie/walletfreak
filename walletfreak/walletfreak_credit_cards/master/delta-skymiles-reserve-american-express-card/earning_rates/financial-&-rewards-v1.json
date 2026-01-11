@@ -1,0 +1,13 @@
+{
+    "rate_id": "financial-&-rewards",
+    "valid_from": "2020-01-01",
+    "valid_until": "2026-01-10",
+    "is_active": false,
+    "multiplier": 1,
+    "category": [
+        "Financial Rewards"
+    ],
+    "currency": "miles",
+    "additional_details": "everything else",
+    "is_default": true
+}

@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Annual Fee Refund",
+    "question": "Does your business spend over $150,000 annually to earn back your annual fee?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Maybe",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Annual Fee Refund"
+}

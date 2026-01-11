@@ -1,0 +1,13 @@
+{
+    "rate_id": "choice-category",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Choice Category"
+    ],
+    "currency": "points",
+    "additional_details": "quarterly choice",
+    "is_default": false
+}

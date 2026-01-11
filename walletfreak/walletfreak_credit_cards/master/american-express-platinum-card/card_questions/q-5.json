@@ -1,0 +1,17 @@
+{
+    "question_id": "q-5",
+    "short_desc": "Resy Credit",
+    "question": "Do you dine at sought-after restaurants and value having special access to reservations?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Dining"
+}

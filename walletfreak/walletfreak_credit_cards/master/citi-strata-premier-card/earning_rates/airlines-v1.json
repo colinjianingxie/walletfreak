@@ -1,0 +1,16 @@
+{
+    "rate_id": "airlines",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Airlines",
+        "Dining",
+        "Gas",
+        "Groceries"
+    ],
+    "currency": "points",
+    "additional_details": "Air, Gas, Dining, Groceries",
+    "is_default": false
+}

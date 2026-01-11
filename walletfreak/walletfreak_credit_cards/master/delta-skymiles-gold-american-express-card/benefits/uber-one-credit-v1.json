@@ -1,0 +1,20 @@
+{
+    "benefit_id": "uber-one-credit",
+    "short_description": "Uber One Monthly Credit",
+    "description": "Receive a statement credit of up to $9.99 per month for up to 6 consecutive months for an Uber One monthly membership.",
+    "additional_details": "Available when using your card to pay for the membership through June 25, 2026.",
+    "benefit_category": [
+        "Delivery",
+        "Uber"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 9.99,
+    "numeric_type": "Cash",
+    "dollar_value": 60,
+    "time_category": "Monthly",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

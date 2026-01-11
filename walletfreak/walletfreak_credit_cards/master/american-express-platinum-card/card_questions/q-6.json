@@ -1,0 +1,17 @@
+{
+    "question_id": "q-6",
+    "short_desc": "lululemon Credit",
+    "question": "Do you frequently buy high-quality athletic wear or yoga gear for your fitness routine?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Shopping,Fitness"
+}

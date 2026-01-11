@@ -1,0 +1,13 @@
+{
+    "rate_id": "gas",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": [
+        "Gas Stations"
+    ],
+    "currency": "miles",
+    "additional_details": "Gas stations",
+    "is_default": false
+}

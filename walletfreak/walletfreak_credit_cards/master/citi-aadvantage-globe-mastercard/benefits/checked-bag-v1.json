@@ -1,0 +1,19 @@
+{
+    "benefit_id": "checked-bag",
+    "short_description": "First Checked Bag Free",
+    "description": "Your first checked bag is free on domestic American Airlines itineraries for the primary cardmember and up to eight companions on the same reservation.",
+    "additional_details": "Valid on domestic itineraries only.",
+    "benefit_category": [
+        "Free Checked Bags"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 0.0,
+    "numeric_type": "Cash",
+    "dollar_value": 60,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

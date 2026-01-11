@@ -1,0 +1,17 @@
+{
+    "question_id": "q-3",
+    "short_desc": "Delta Stays Credit",
+    "question": "Do you book hotels or vacation rentals through Delta Stays to utilize a $250 credit?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Hotels"
+}

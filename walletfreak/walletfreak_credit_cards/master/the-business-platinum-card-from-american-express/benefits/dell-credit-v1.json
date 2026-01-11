@@ -1,0 +1,20 @@
+{
+    "benefit_id": "dell-credit",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Dell Credit",
+    "description": "$400 Dell Technologies Credit",
+    "additional_details": "$200 semi-annually",
+    "benefit_category": [
+        "Business",
+        "Dell Technologies"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 400.0,
+    "numeric_type": "Cash",
+    "dollar_value": 400,
+    "time_category": "Semi-annually",
+    "enrollment_required": true,
+    "effective_date": "2025-12-07"
+}

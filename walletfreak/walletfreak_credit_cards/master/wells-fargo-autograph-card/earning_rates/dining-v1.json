@@ -1,0 +1,18 @@
+{
+    "rate_id": "dining",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Cell Phone Plans",
+        "Dining",
+        "EV Charging",
+        "Streaming",
+        "Transit",
+        "Travel Perks"
+    ],
+    "currency": "points",
+    "additional_details": "unlimited categories",
+    "is_default": false
+}

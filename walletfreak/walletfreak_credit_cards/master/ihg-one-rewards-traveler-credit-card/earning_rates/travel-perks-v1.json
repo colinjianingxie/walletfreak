@@ -1,0 +1,13 @@
+{
+    "rate_id": "travel-perks",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 5,
+    "category": [
+        "Travel Perks"
+    ],
+    "currency": "points",
+    "additional_details": "select travel",
+    "is_default": false
+}

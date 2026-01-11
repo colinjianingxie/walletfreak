@@ -1,0 +1,23 @@
+{
+    "slug-id": "shell-credit-card",
+    "active_indices": {
+        "benefits": [
+            "fuel-savings-v1"
+        ],
+        "earning_rates": [
+            "gas-v1",
+            "default-v1"
+        ],
+        "sign_up_bonus": []
+    },
+    "name": "Shell Credit Card",
+    "issuer": "Citi",
+    "image_url": "/static/images/credit_cards/shell-credit-card.png",
+    "annual_fee": 0,
+    "application_link": "https://citiretailservices.citibankonline.com/RSnextgen/svc/launch/index.action?siteId=PLOC_SHELL",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "A solid choice for saving on fuel at Shell stations, especially for frequent drivers.",
+    "points_value_cpp": null
+}

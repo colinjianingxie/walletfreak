@@ -1,0 +1,11 @@
+{
+    "rate_id": "amazon-purchases",
+    "multiplier": 3.0,
+    "category": [
+        "Amazon"
+    ],
+    "is_default": false,
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

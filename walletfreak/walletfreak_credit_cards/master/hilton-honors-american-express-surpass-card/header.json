@@ -1,0 +1,29 @@
+{
+    "slug-id": "hilton-honors-american-express-surpass-card",
+    "name": "Hilton Honors American Express Surpass Card",
+    "image_url": "/static/images/credit_cards/hilton-honors-american-express-surpass-card.avif",
+    "issuer": "American Express",
+    "annual_fee": 150,
+    "application_link": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-surpass/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "10/10. Flat 155k points for $3k spend. Very clean.",
+    "points_value_cpp": 0.5,
+    "active_indices": {
+        "benefits": [
+            "gold-status-v1",
+            "hilton-credit-v1",
+            "free-night-v1"
+        ],
+        "earning_rates": [
+            "hilton-v1",
+            "dining-v1",
+            "shopping-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "offer_id": "offer-2",
+    "is_active": true,
+    "value": 15000,
+    "terms": "Spend $500 in 3 months",
+    "currency": "Miles",
+    "spend_amount": 500,
+    "duration_months": 3,
+    "effective_date": "2026-01-01"
+}

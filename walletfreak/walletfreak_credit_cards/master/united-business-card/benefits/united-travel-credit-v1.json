@@ -1,0 +1,19 @@
+{
+    "benefit_id": "united-travel-credit",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "United Travel Credit",
+    "description": "$125 United Travel Credit after 5 flights of $100+",
+    "additional_details": "Purchase 5 United flights of $100 or more each anniversary year",
+    "benefit_category": [
+        "United Airlines"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 125,
+    "numeric_type": "Cash",
+    "dollar_value": 125,
+    "time_category": "Annually (anniversary year)",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

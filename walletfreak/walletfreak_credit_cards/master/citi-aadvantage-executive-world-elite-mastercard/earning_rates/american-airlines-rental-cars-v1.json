@@ -1,0 +1,13 @@
+{
+    "rate_id": "american-airlines-rental-cars",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 10,
+    "category": [
+        "Car Rentals"
+    ],
+    "currency": "miles",
+    "additional_details": "Car rentals booked through aadvantagecars.com",
+    "is_default": false
+}

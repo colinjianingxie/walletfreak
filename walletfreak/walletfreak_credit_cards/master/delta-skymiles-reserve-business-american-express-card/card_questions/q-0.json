@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Sky Club Access",
+    "question": "Do you value airport lounge access during your travels?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Occasionally",
+        "Frequently"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Lounges"
+}

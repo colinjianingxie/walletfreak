@@ -1,0 +1,19 @@
+{
+    "benefit_id": "takeoff-15",
+    "valid_from": "2020-01-01",
+    "valid_until": "2026-01-10",
+    "is_active": false,
+    "short_description": "TakeOff 15",
+    "description": "TakeOff 15: 15% discount on Award Travel with miles on Delta flights",
+    "additional_details": "Applicable when booking on delta.com or the Fly Delta app; not for partner flights",
+    "benefit_category": [
+        "Delta Air Lines"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 15.0,
+    "numeric_type": "Percent",
+    "dollar_value": null,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

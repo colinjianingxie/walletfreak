@@ -1,0 +1,20 @@
+{
+    "benefit_id": "indeed-credit",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Indeed Credit",
+    "description": "$360 Indeed Credit",
+    "additional_details": "$90 quarterly",
+    "benefit_category": [
+        "Business",
+        "Indeed"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 360.0,
+    "numeric_type": "Cash",
+    "dollar_value": 360,
+    "time_category": "Quarterly",
+    "enrollment_required": true,
+    "effective_date": "2025-12-07"
+}

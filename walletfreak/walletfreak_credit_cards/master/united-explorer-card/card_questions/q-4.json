@@ -1,0 +1,17 @@
+{
+    "question_id": "q-4",
+    "short_desc": "Inflight Savings",
+    "question": "Do you buy snacks or drinks on United flights and want 25% back?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Airline"
+}

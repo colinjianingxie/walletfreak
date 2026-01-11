@@ -1,0 +1,20 @@
+{
+    "benefit_id": "phone-protection",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Phone Protection",
+    "description": "Cell phone protection up to $600 per claim",
+    "additional_details": null,
+    "benefit_category": [
+        "Cell Phone Protection",
+        "Protection"
+    ],
+    "benefit_type": "Protection",
+    "numeric_value": 600,
+    "numeric_type": null,
+    "dollar_value": 600,
+    "time_category": "Permanent (per claim)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

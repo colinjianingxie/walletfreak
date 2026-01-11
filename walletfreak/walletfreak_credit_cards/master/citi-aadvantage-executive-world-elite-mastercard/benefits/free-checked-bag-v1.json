@@ -1,0 +1,19 @@
+{
+    "benefit_id": "free-checked-bag",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Free Checked Bag",
+    "description": "First checked bag free for you and up to 8 companions",
+    "additional_details": "On domestic American Airlines itineraries on the same reservation",
+    "benefit_category": [
+        "American Airlines"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 9,
+    "numeric_type": "Perk",
+    "dollar_value": 720,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

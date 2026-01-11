@@ -1,0 +1,13 @@
+{
+    "rate_id": "financial-&-rewards",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 1,
+    "category": [
+        "Financial Rewards"
+    ],
+    "currency": "points",
+    "additional_details": "on all other purchases; plus 500 bonus points for every $2,000 spent in a calendar month, up to 1,500 points per month",
+    "is_default": true
+}

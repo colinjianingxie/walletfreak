@@ -1,0 +1,20 @@
+{
+    "benefit_id": "travel-together",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Travel Together",
+    "description": "Travel Together Ticket after $30,000 spend annually",
+    "additional_details": null,
+    "benefit_category": [
+        "Airlines",
+        "British Airways Executive Club"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

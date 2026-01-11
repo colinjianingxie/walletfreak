@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Premium Cabin Travel",
+    "question": "Do you typically book First Class or Comfort+ for yourself or a companion?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": [
+        "Companion Certificates"
+    ]
+}

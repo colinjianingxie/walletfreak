@@ -1,0 +1,17 @@
+{
+    "question_id": "q-3",
+    "short_desc": "Uber Cash",
+    "question": "Do you use ride-sharing for transit or order restaurant delivery at least once a month?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Rideshare,Food Delivery"
+}

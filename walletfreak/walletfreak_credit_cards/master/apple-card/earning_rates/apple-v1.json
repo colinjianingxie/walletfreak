@@ -1,0 +1,13 @@
+{
+    "rate_id": "apple",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Apple Store"
+    ],
+    "currency": "cash back",
+    "additional_details": "with Apple Pay",
+    "is_default": false
+}

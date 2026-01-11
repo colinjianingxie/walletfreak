@@ -1,0 +1,16 @@
+{
+    "rate_id": "software",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 1.5,
+    "category": [
+        "Financial Rewards",
+        "Shipping",
+        "Software as a Service",
+        "Transit"
+    ],
+    "currency": "points",
+    "additional_details": "business categories & $5,000+ spend",
+    "is_default": false
+}

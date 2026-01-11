@@ -1,0 +1,14 @@
+{
+    "benefit_id": "rewards-deposit",
+    "short_description": "Direct Deposit to Fidelity",
+    "description": "Deposit cash-back rewards directly into eligible Fidelity accounts like brokerage, retirement, or 529 plans.",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

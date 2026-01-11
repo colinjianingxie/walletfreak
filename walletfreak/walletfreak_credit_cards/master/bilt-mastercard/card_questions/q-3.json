@@ -1,0 +1,17 @@
+{
+    "question_id": "q-3",
+    "short_desc": "Lyft Credit",
+    "question": "Do you use the Lyft platform for your commuting or travel transportation needs?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Rideshare"
+}

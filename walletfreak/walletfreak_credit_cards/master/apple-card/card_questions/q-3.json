@@ -1,0 +1,17 @@
+{
+    "question_id": "q-3",
+    "short_desc": "HYSA Access",
+    "question": "Do you want a high-yield savings account that automatically grows your earned rewards?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Savings Interest"
+}

@@ -1,0 +1,13 @@
+{
+    "rate_id": "groceries",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Supermarkets"
+    ],
+    "currency": "points",
+    "additional_details": "supermarkets",
+    "is_default": false
+}

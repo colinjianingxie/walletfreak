@@ -1,0 +1,13 @@
+{
+    "rate_id": "financial-&-rewards",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 1.5,
+    "category": [
+        "Financial Rewards"
+    ],
+    "currency": "cash back",
+    "additional_details": "unlimited (3% for first 12 months)",
+    "is_default": true
+}

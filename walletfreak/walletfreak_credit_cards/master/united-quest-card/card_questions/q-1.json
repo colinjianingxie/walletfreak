@@ -1,0 +1,15 @@
+{
+    "question_id": "q-1",
+    "short_desc": "United Credit",
+    "question": "Do you spend at least $125 a year on United tickets to fully utilize this credit?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Airline"
+}

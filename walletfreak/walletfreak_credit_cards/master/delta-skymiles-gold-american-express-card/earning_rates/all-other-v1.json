@@ -1,0 +1,13 @@
+{
+    "rate_id": "all-other",
+    "multiplier": 1.0,
+    "category": [
+        "Financial Rewards",
+        "All Purchases"
+    ],
+    "additional_details": "on all other eligible purchases",
+    "is_default": true,
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

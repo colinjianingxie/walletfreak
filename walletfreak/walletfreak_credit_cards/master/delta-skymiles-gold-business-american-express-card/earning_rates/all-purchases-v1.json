@@ -1,0 +1,13 @@
+{
+    "rate_id": "all-purchases",
+    "valid_from": "2020-01-01",
+    "valid_until": "2026-01-10",
+    "is_active": false,
+    "multiplier": 1,
+    "category": [
+        "All Purchases"
+    ],
+    "currency": "miles",
+    "additional_details": "all other eligible purchases",
+    "is_default": true
+}

@@ -1,0 +1,13 @@
+{
+    "rate_id": "marriott",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 6,
+    "category": [
+        "Generic Marriott Bonvoy"
+    ],
+    "currency": "points",
+    "additional_details": "Marriott properties",
+    "is_default": false
+}

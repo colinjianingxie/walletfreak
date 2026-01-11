@@ -1,0 +1,20 @@
+{
+    "benefit_id": "grubhub-credit",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Grubhub Credit",
+    "description": "Up to $120 back on eligible Grubhub purchases",
+    "additional_details": "$10 monthly statement credit for Grubhub orders",
+    "benefit_category": [
+        "Dining",
+        "Grubhub"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 10.0,
+    "numeric_type": "Cash",
+    "dollar_value": 120,
+    "time_category": "Monthly",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

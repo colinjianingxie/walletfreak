@@ -1,0 +1,19 @@
+{
+    "benefit_id": "6-month-0-financing",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "6 month 0% financing",
+    "description": "0% APR for 6 months with equal monthly payments",
+    "additional_details": "On purchases of $50 to $599.99. Cannot be combined with 5% back rewards.",
+    "benefit_category": [
+        "Retail Shopping"
+    ],
+    "benefit_type": "Financing",
+    "numeric_value": 6.0,
+    "numeric_type": "Months",
+    "dollar_value": null,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2025-01-01"
+}

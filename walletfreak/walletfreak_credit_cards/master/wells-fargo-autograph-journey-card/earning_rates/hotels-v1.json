@@ -1,0 +1,13 @@
+{
+    "rate_id": "hotels",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 5,
+    "category": [
+        "Hotels"
+    ],
+    "currency": "points",
+    "additional_details": "Hotels",
+    "is_default": false
+}

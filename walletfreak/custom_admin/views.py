@@ -46,7 +46,7 @@ def admin_card_list(request):
 
 @staff_member_required
 def admin_card_edit(request, card_id):
-    card = db.get_document('credit_cards', card_id)
+    card = db.get_card_by_slug(card_id)
     
     if not card:
         messages.error(request, 'Card not found')
@@ -98,7 +98,7 @@ def admin_generate_prompt(request, card_id):
         return JsonResponse({'error': 'Unauthorized: Restricted access'}, status=403)
         
     # 2. Get card to ensure it exists (and get slug)
-    card = db.get_document('credit_cards', card_id)
+    card = db.get_card_by_slug(card_id)
     if not card:
         return JsonResponse({'error': 'Card not found'}, status=404)
         

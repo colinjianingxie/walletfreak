@@ -1,0 +1,20 @@
+{
+    "benefit_id": "rental-car-credit",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Rental Car Credit",
+    "description": "Up to $120 back on eligible prepaid Avis\u00ae or Budget rentals",
+    "additional_details": "Statement credit for rentals booked directly on avis.com or budget.com",
+    "benefit_category": [
+        "Avis",
+        "Car Rentals"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 120.0,
+    "numeric_type": "Cash",
+    "dollar_value": 120,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

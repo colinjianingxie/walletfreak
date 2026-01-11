@@ -1,0 +1,15 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Banking Loyalty",
+    "question": "Are you already a Bank of America customer or plan to keep a significant balance in their savings accounts?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Generic Financial & Rewards"
+}

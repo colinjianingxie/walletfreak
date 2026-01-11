@@ -1,0 +1,19 @@
+{
+    "benefit_id": "good-grade-bonus",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Good Grade Bonus",
+    "description": "$20 GPA Statement credit",
+    "additional_details": null,
+    "benefit_category": [
+        "Financial Rewards"
+    ],
+    "benefit_type": "Bonus",
+    "numeric_value": 20,
+    "numeric_type": "Cash",
+    "dollar_value": 20,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": true,
+    "effective_date": "2025-12-24"
+}

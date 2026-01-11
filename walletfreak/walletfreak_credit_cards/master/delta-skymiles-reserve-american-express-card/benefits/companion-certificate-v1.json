@@ -1,0 +1,20 @@
+{
+    "benefit_id": "companion-certificate",
+    "valid_from": "2020-01-01",
+    "valid_until": "2026-01-10",
+    "is_active": false,
+    "short_description": "Companion Certificate",
+    "description": "Annual Companion Certificate",
+    "additional_details": "First Class/Comfort+/Main Cabin",
+    "benefit_category": [
+        "Airlines",
+        "Delta Air Lines"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

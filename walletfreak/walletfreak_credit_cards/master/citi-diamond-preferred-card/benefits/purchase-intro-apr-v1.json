@@ -1,0 +1,19 @@
+{
+    "benefit_id": "purchase-intro-apr",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Purchase Intro APR",
+    "description": "0% Intro APR for 12 months on purchases",
+    "additional_details": "From date of account opening",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 12,
+    "numeric_type": "Months",
+    "dollar_value": null,
+    "time_category": "First year",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

@@ -1,0 +1,25 @@
+{
+    "slug-id": "bank-of-america-platinum-plus-mastercard-business-card",
+    "name": "Bank of America Platinum Plus Mastercard Business Card",
+    "image_url": "/static/images/credit_cards/bank-of-america-platinum-plus-mastercard-business-card.png",
+    "issuer": "Bank of America",
+    "annual_fee": 0,
+    "application_link": "https://www.bankofamerica.com/smallbusiness/credit-cards/products/platinum-plus-business-credit-card/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "7/10. Solid no-fee business card with cash back and low APR focus. Good for those who carry balances, but rewards are basic.",
+    "points_value_cpp": 1.0,
+    "active_indices": {
+        "benefits": [
+            "business-preferred-rewards-v1",
+            "overdraft-protection-v1"
+        ],
+        "earning_rates": [
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

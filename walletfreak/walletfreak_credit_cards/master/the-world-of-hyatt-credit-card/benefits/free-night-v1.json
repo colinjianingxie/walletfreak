@@ -1,0 +1,20 @@
+{
+    "benefit_id": "free-night",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Free Night",
+    "description": "Anniversary Free Night Award",
+    "additional_details": "Category 1-4",
+    "benefit_category": [
+        "Generic World of Hyatt",
+        "Hotels"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 1,
+    "numeric_type": "FreeNight",
+    "dollar_value": null,
+    "time_category": "Annually (anniversary year)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

@@ -1,0 +1,12 @@
+{
+    "rate_id": "shipping",
+    "multiplier": 1.5,
+    "category": [
+        "Shipping"
+    ],
+    "additional_details": "on eligible U.S. shipping purchases (up to $100k total per year for all 1.5x categories)",
+    "is_default": false,
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

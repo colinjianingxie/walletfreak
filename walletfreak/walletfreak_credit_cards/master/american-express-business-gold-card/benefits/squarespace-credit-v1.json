@@ -1,0 +1,20 @@
+{
+    "benefit_id": "squarespace-credit",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Squarespace Credit",
+    "description": "$150 Squarespace Annual Credit",
+    "additional_details": "for U.S. purchases with Squarespace",
+    "benefit_category": [
+        "Business",
+        "Software as a Service"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 150.0,
+    "numeric_type": "Cash",
+    "dollar_value": 150,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": true,
+    "effective_date": "2025-10-23"
+}

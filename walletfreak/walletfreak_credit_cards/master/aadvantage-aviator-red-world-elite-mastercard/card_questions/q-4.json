@@ -1,0 +1,15 @@
+{
+    "question_id": "q-4",
+    "short_desc": "Boarding Priority",
+    "question": "Is priority boarding important to you?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": "Generic Travel Perks"
+}

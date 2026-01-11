@@ -1,0 +1,25 @@
+{
+    "slug-id": "discover-it-miles",
+    "name": "Discover it Miles",
+    "image_url": "/static/images/credit_cards/discover-it-miles.png",
+    "issuer": "Discover",
+    "annual_fee": 0,
+    "application_link": "https://www.discovercard.com/application/website/apply?srcCde=GJX4&adobe_mc=...",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "5/10. No upfront bonus. One year delayed match.",
+    "points_value_cpp": 1.0,
+    "active_indices": {
+        "benefits": [
+            "no-ftf-v1",
+            "free-fico-score-v1"
+        ],
+        "earning_rates": [
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

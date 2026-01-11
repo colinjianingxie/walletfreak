@@ -1,0 +1,13 @@
+{
+    "rate_id": "bank-of-america-travel-center",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Bank of America Travel Center"
+    ],
+    "currency": "points",
+    "additional_details": "travel purchases booked through Bank of America Travel Center",
+    "is_default": false
+}

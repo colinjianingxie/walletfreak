@@ -1,0 +1,22 @@
+{
+    "benefit_id": "flexible-business-credit",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Flexible Business Credit",
+    "description": "$240 Flexible Business Credit",
+    "additional_details": "$20 monthly for eligible U.S. purchases at FedEx, Grubhub, and Office Supply Stores",
+    "benefit_category": [
+        "Dining",
+        "FedEx",
+        "Grubhub",
+        "Office Supplies"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 240.0,
+    "numeric_type": "Cash",
+    "dollar_value": 240,
+    "time_category": "Monthly",
+    "enrollment_required": true,
+    "effective_date": "2025-01-01"
+}

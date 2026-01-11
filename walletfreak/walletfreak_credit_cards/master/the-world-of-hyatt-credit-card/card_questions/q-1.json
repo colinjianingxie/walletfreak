@@ -1,0 +1,15 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Spend Free Night",
+    "question": "Can you spend $15,000 a year on one card to earn an extra free night at a Hyatt?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Hotel"
+}

@@ -1,0 +1,20 @@
+{
+    "benefit_id": "gold-status-path",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Gold Status Path",
+    "description": "Achieve Gold Elite Status by spending $35,000 on purchases each calendar year",
+    "additional_details": null,
+    "benefit_category": [
+        "Generic Marriott Bonvoy",
+        "Status Boost"
+    ],
+    "benefit_type": "Upgrade",
+    "numeric_value": 35000,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

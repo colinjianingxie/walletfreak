@@ -1,0 +1,13 @@
+{
+    "rate_id": "rental-cars",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": [
+        "Car Rentals"
+    ],
+    "currency": "miles",
+    "additional_details": "car rental merchants",
+    "is_default": false
+}

@@ -1,0 +1,15 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Southwest Credit",
+    "question": "Do you spend at least $75 annually on Southwest flights to use this credit?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Airline"
+}

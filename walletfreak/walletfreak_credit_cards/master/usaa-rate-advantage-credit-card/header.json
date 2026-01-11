@@ -1,0 +1,22 @@
+{
+    "slug-id": "usaa-rate-advantage-credit-card",
+    "name": "USAA Rate Advantage Credit Card",
+    "image_url": "/static/images/credit_cards/usaa-rate-advantage-credit-card.png",
+    "issuer": "USAA",
+    "annual_fee": 0,
+    "application_link": "https://www.usaa.com/banking/credit-cards-public/low-interest/rate-advantage/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "4/10. Strictly for those who carry a balance and want to minimize interest. If you pay in full, there is zero reason to have this card as it offers no rewards.",
+    "points_value_cpp": 0.0,
+    "active_indices": {
+        "benefits": [
+            "low-apr-v1"
+        ],
+        "earning_rates": [
+            "no-rewards-v1"
+        ],
+        "sign_up_bonus": []
+    }
+}

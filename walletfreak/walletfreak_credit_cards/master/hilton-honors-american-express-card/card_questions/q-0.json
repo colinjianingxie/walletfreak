@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Hilton Stays",
+    "question": "How many nights do you typically stay at Hilton properties annually?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "0",
+        "1-2",
+        "3+"
+    ],
+    "weights": [
+        0.0,
+        0.6,
+        1.0
+    ],
+    "benefit_category": "Hotels"
+}

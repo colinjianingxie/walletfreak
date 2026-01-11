@@ -1,0 +1,21 @@
+{
+    "benefit_id": "elite-credits",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Elite Credits",
+    "description": "15 Elite Night Credits annually",
+    "additional_details": null,
+    "benefit_category": [
+        "Generic Marriott Bonvoy",
+        "Hotels",
+        "Status Boost"
+    ],
+    "benefit_type": "Bonus",
+    "numeric_value": 15,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Permanent (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

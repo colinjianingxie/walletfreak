@@ -1,0 +1,14 @@
+{
+    "rate_id": "office-supplies",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 5,
+    "category": [
+        "Cell Phone Plans",
+        "Office Supplies"
+    ],
+    "currency": "cash back",
+    "additional_details": "office supply & phone",
+    "is_default": false
+}

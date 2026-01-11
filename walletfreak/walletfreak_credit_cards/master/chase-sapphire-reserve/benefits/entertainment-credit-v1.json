@@ -1,0 +1,20 @@
+{
+    "benefit_id": "entertainment-credit",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Entertainment Credit",
+    "description": "StubHub & viagogo credits",
+    "additional_details": "up to $300 in credits ($150 per half-year) through Dec 31, 2027",
+    "benefit_category": [
+        "Entertainment",
+        "StubHub"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 300.0,
+    "numeric_type": "Cash",
+    "dollar_value": 300,
+    "time_category": "Semi-annually",
+    "enrollment_required": true,
+    "effective_date": "2025-11-29"
+}

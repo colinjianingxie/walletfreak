@@ -1,0 +1,22 @@
+{
+    "benefit_id": "global-entry-credit",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Global Entry Credit",
+    "description": "$120 Global Entry, TSA PreCheck or NEXUS Credit",
+    "additional_details": "every 4 years",
+    "benefit_category": [
+        "Airport Security Credits",
+        "Global Entry",
+        "NEXUS",
+        "TSA PreCheck"
+    ],
+    "benefit_type": "Security",
+    "numeric_value": 120.0,
+    "numeric_type": "Cash",
+    "dollar_value": 120,
+    "time_category": "Every 4 years",
+    "enrollment_required": false,
+    "effective_date": "2025-01-01"
+}

@@ -1,0 +1,26 @@
+{
+    "slug-id": "pnc-cash-rewards-visa-credit-card",
+    "name": "PNC Cash Rewards Visa Credit Card",
+    "image_url": "/static/images/credit_cards/pnc-cash-rewards-visa-credit-card.png",
+    "issuer": "PNC",
+    "annual_fee": 0,
+    "application_link": "https://lending.pnc.com/cccr/getting-started?promoCode=base",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "No Freak verdict for this card yet",
+    "points_value_cpp": null,
+    "active_indices": {
+        "benefits": [
+            "spending-tools-v1",
+            "account-bonus-v1"
+        ],
+        "earning_rates": [
+            "gas-v1",
+            "dining-v1",
+            "groceries-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": []
+    }
+}

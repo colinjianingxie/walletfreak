@@ -1,0 +1,31 @@
+{
+    "slug-id": "bilt-mastercard",
+    "name": "Bilt Mastercard",
+    "image_url": "/static/images/credit_cards/bilt-mastercard.jpg",
+    "issuer": "Wells Fargo",
+    "annual_fee": 0,
+    "application_link": "https://www.wellsfargo.com/credit-cards/bilt/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "0/10. No signup bonus. Card is for rent benefits only.",
+    "points_value_cpp": 1.25,
+    "active_indices": {
+        "benefits": [
+            "rent-day-bonus-v1",
+            "phone-protection-v1",
+            "no-ftf-v1",
+            "rent-day-bonus-1-v1",
+            "lyft-credit-v1"
+        ],
+        "earning_rates": [
+            "rent-v1",
+            "dining-v1",
+            "airlines-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

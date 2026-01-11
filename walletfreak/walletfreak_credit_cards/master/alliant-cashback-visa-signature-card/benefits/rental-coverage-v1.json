@@ -1,0 +1,14 @@
+{
+    "benefit_id": "rental-coverage",
+    "short_description": "Auto Rental Collision Damage Waiver",
+    "description": "Secondary coverage for damage or theft of a rental vehicle when you decline the rental company's insurance.",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "Primary Rental Insurance"
+    ],
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

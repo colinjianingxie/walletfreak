@@ -1,0 +1,15 @@
+{
+    "rate_id": "dining",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 7,
+    "category": [
+        "Car Rentals",
+        "Dining",
+        "Direct Airline Bookings"
+    ],
+    "currency": "points",
+    "additional_details": "restaurants, flights direct, rental cars",
+    "is_default": false
+}

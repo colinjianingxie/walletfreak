@@ -1,0 +1,15 @@
+{
+    "question_id": "q-2",
+    "short_desc": "No Annual Fee",
+    "question": "Is avoiding an annual fee your top priority for a credit card?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Financial & Rewards"
+}

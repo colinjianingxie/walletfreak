@@ -1,0 +1,14 @@
+{
+    "rate_id": "mobile-wallet",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Mobile Wallet",
+        "Travel Perks"
+    ],
+    "currency": "points",
+    "additional_details": "mobile wallet & travel (mobile wallet up to $5,000 per billing cycle, then 1x)",
+    "is_default": false
+}

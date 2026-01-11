@@ -1,0 +1,17 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Resy Credit",
+    "question": "Do you dine at Resy restaurants and want up to $240 in annual credits?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Dining"
+}

@@ -1,0 +1,19 @@
+{
+    "benefit_id": "trip-delay-insurance",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Trip Delay Insurance",
+    "description": "Trip Delay Insurance",
+    "additional_details": "up to $300 per trip for delays over 12 hours",
+    "benefit_category": [
+        "Travel Perks"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 300.0,
+    "numeric_type": "Cash",
+    "dollar_value": 300,
+    "time_category": "Per Trip",
+    "enrollment_required": false,
+    "effective_date": "2025-01-01"
+}

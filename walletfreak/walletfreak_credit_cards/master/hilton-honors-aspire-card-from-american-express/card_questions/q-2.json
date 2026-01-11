@@ -1,0 +1,17 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Flight Credit",
+    "question": "Do you fly enough to utilize up to $200 in credits ($50 quarterly) for flight purchases?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Airline"
+}

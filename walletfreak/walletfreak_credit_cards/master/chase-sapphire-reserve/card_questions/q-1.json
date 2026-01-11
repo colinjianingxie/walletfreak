@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "The Edit Hotel Credit",
+    "question": "Do you enjoy staying at curated luxury hotels and receiving on-property experience credits?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Hotel"
+}

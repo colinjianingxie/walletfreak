@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Companion Pass Boost",
+    "question": "Is the Southwest Companion Pass a primary goal for your travel strategy?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Not interested",
+        "Maybe",
+        "Highly Interested"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Southwest"
+}

@@ -1,0 +1,17 @@
+{
+    "question_id": "q-3",
+    "short_desc": "Priority Pass Membership",
+    "question": "Do you travel enough to value unlimited access to over 1,500 airport lounges?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Never",
+        "Occasionally",
+        "Often"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Airport Lounge"
+}

@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Airline Credit",
+    "question": "Do you fly enough to utilize credits for incidental fees like checked bags or on-board refreshments?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Airline"
+}

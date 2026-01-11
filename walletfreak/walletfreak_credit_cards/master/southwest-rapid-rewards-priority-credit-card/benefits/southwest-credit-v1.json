@@ -1,0 +1,20 @@
+{
+    "benefit_id": "southwest-credit",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Southwest Credit",
+    "description": "$75 annual Southwest travel credit",
+    "additional_details": null,
+    "benefit_category": [
+        "Airlines",
+        "Southwest Airlines"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 75.0,
+    "numeric_type": "Cash",
+    "dollar_value": 75,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

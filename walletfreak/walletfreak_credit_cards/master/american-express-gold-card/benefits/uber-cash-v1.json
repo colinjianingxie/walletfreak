@@ -1,0 +1,19 @@
+{
+    "benefit_id": "uber-cash",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Uber Cash",
+    "description": "$150 Uber Cash for U.S. rides & Uber Eats",
+    "additional_details": "$12.50 monthly",
+    "benefit_category": [
+        "Uber Eats"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 150.0,
+    "numeric_type": "Cash",
+    "dollar_value": 150,
+    "time_category": "Monthly",
+    "enrollment_required": false,
+    "effective_date": "2026-01-01"
+}

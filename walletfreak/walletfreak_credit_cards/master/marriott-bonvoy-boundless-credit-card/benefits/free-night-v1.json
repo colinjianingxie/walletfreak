@@ -1,0 +1,20 @@
+{
+    "benefit_id": "free-night",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Free Night",
+    "description": "Free Night Award each cardmember anniversary",
+    "additional_details": "up to 50,000 points",
+    "benefit_category": [
+        "Generic Marriott Bonvoy",
+        "Hotels"
+    ],
+    "benefit_type": "Free Night",
+    "numeric_value": 1,
+    "numeric_type": "FreeNight",
+    "dollar_value": null,
+    "time_category": "Annually (anniversary year)",
+    "enrollment_required": false,
+    "effective_date": "2026-01-01"
+}

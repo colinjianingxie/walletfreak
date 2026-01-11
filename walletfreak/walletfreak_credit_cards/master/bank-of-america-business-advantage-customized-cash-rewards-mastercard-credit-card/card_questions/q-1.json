@@ -1,0 +1,15 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Choice Category",
+    "question": "Do you have high expenses in one specific area like travel, office supplies, or consulting services?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Business & Tech"
+}

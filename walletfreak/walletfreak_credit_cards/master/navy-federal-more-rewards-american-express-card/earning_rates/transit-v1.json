@@ -1,0 +1,13 @@
+{
+    "rate_id": "transit",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Transit"
+    ],
+    "currency": "points",
+    "additional_details": "transit (tolls, parking, taxis)",
+    "is_default": false
+}

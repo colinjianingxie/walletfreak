@@ -1,0 +1,21 @@
+{
+    "benefit_id": "lululemon-credit",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "lululemon Credit",
+    "description": "$300 lululemon Credit",
+    "additional_details": "$75 quarterly",
+    "benefit_category": [
+        "Health",
+        "Retail Shopping",
+        "lululemon"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 300.0,
+    "numeric_type": "Cash",
+    "dollar_value": 300,
+    "time_category": "Quarterly",
+    "enrollment_required": true,
+    "effective_date": "2025-11-29"
+}

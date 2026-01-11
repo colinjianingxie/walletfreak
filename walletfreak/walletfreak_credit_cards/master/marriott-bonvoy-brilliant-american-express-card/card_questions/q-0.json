@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Platinum Status",
+    "question": "Do you stay at Marriott hotels often enough to value free breakfast and 4 p.m. late checkout?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Always"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Hotel Status"
+}

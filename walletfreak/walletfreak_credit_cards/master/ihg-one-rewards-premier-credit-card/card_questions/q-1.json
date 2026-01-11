@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Spend Bonus",
+    "question": "Is your annual spending high enough ($20k+) that you would value an extra $100 credit and 10k points?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Maybe",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Hotel"
+}

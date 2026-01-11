@@ -1,0 +1,13 @@
+{
+    "rate_id": "citi-travel-hotels",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 10,
+    "category": [
+        "Citi Travel"
+    ],
+    "currency": "points",
+    "additional_details": "hotels through Citi Travel",
+    "is_default": false
+}

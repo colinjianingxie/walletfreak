@@ -1,0 +1,20 @@
+{
+    "benefit_id": "free-bags",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Free Bags",
+    "description": "Free first & second checked bag on United flights",
+    "additional_details": null,
+    "benefit_category": [
+        "Airlines",
+        "United Airlines"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Permanent",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

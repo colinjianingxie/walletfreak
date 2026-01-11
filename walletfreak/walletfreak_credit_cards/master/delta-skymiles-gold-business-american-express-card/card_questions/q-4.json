@@ -1,0 +1,17 @@
+{
+    "question_id": "q-4",
+    "short_desc": "Award Travel",
+    "question": "Do you prefer to redeem your miles for flights rather than cash back?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": [
+        "Delta Air Lines"
+    ]
+}

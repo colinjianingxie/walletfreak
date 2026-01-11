@@ -1,0 +1,17 @@
+{
+    "question_id": "q-8",
+    "short_desc": "Travel Protections",
+    "question": "Do you value a suite of travel insurances like trip cancellation and lost luggage?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Somewhat",
+        "Highly"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Travel Protection"
+}

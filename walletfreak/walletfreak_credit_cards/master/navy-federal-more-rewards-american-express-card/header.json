@@ -1,0 +1,29 @@
+{
+    "slug-id": "navy-federal-more-rewards-american-express-card",
+    "name": "More Rewards American Express\u00ae Card",
+    "image_url": "/static/images/credit_cards/navy-federal-more-rewards-american-express-card.jpeg",
+    "issuer": "Navy Federal Credit Union",
+    "annual_fee": 0,
+    "application_link": "https://www.navyfederal.org/loans-cards/credit-cards/more-rewards.html",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "9/10. An absolute powerhouse for a $0 fee card. Earning 3x on the most common daily categories (food and fuel) makes this one of the best value cards in the industry.",
+    "points_value_cpp": 1.0,
+    "active_indices": {
+        "benefits": [
+            "walmart-credit-v1",
+            "amex-offers-v1"
+        ],
+        "earning_rates": [
+            "dining-v1",
+            "groceries-v1",
+            "gas-v1",
+            "transit-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

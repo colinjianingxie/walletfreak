@@ -1,0 +1,28 @@
+{
+    "slug-id": "the-world-of-hyatt-credit-card",
+    "name": "The World of Hyatt Credit Card",
+    "image_url": "/static/images/credit_cards/the-world-of-hyatt-credit-card.png",
+    "issuer": "Chase",
+    "annual_fee": 95,
+    "application_link": "https://creditcards.chase.com/rewards-credit-cards/world-of-hyatt",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "2/10. Bonus mirage. 30k after $3k then requires heavy spend with a 2x boost to earn the rest.",
+    "points_value_cpp": 1.8,
+    "active_indices": {
+        "benefits": [
+            "free-night-v1",
+            "spend-free-night-v1",
+            "discoverist-status-v1"
+        ],
+        "earning_rates": [
+            "hyatt-v1",
+            "dining-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

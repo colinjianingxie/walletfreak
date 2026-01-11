@@ -1,0 +1,14 @@
+{
+    "rate_id": "delta",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Delta Air Lines",
+        "Direct Hotel Bookings"
+    ],
+    "currency": "miles",
+    "additional_details": "Delta & direct hotels",
+    "is_default": false
+}

@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Free Night",
+    "question": "Would you use a \"Free Night Award\" at a Hyatt Category 1-4 property annually?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Hotel"
+}

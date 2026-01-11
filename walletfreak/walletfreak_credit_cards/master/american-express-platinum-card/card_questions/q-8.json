@@ -1,0 +1,17 @@
+{
+    "question_id": "q-8",
+    "short_desc": "Saks Credit",
+    "question": "Do you shop for designer fashion, luxury skincare, or high-end home decor at premium department stores?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Shopping"
+}

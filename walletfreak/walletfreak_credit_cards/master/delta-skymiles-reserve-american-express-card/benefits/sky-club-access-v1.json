@@ -1,0 +1,20 @@
+{
+    "benefit_id": "sky-club-access",
+    "valid_from": "2020-01-01",
+    "valid_until": "2026-01-10",
+    "is_active": false,
+    "short_description": "Sky Club Access",
+    "description": "Delta Sky Club access",
+    "additional_details": "15 visits per year; unlimited after $75,000 spend",
+    "benefit_category": [
+        "Delta Air Lines",
+        "Delta Sky Club"
+    ],
+    "benefit_type": "Access",
+    "numeric_value": 15.0,
+    "numeric_type": "Lounge",
+    "dollar_value": null,
+    "time_category": "Permanent (Medallion year)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

@@ -1,0 +1,13 @@
+{
+    "rate_id": "ihg",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 10,
+    "category": [
+        "Generic IHG"
+    ],
+    "currency": "points",
+    "additional_details": "at IHG properties",
+    "is_default": false
+}

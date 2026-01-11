@@ -1,0 +1,27 @@
+{
+    "slug-id": "bank-of-america-premium-rewards-credit-card",
+    "name": "Bank of America Premium Rewards Credit Card",
+    "image_url": "/static/images/credit_cards/bank-of-america-premium-rewards-credit-card.png",
+    "issuer": "Bank of America",
+    "annual_fee": 95,
+    "application_link": "https://secure.bankofamerica.com/ogateway/public/apply-now-services/iaoconsumer/rest/public/usa/initialize/cc/v1?requesttype=usa&campaignId=4076573&productOfferCode=47&locale=en_US",
+    "min_credit_score": 750,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "10/10. Flat 60k points for $4k spend.",
+    "points_value_cpp": 1.0,
+    "active_indices": {
+        "benefits": [
+            "rewards-boost-v1",
+            "airline-credit-v1",
+            "tsa-credit-v1"
+        ],
+        "earning_rates": [
+            "travel-perks-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

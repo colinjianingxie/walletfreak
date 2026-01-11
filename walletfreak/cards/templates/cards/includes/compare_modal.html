@@ -282,7 +282,10 @@ function openCompareModal() {
     `;
     
     cards.forEach(card => {
-        const rates = extractEarningRates(card.benefits) || [];
+        let rates = card.earning_rates || [];
+        if (!rates.length) {
+             rates = extractEarningRates(card.benefits) || [];
+        }
         const topRates = rates.sort((a, b) => (b.value || 0) - (a.value || 0)).slice(0, 3);
         
         const cardRow = document.createElement('div');
@@ -400,7 +403,7 @@ function extractKeyBenefits(benefits) {
     if (!benefits || !Array.isArray(benefits)) return [];
     
     return benefits
-        .filter(b => b.benefit_type !== 'Multiplier' && b.benefit_type !== 'Cashback')
+        .filter(b => b.benefit_type !== 'Multiplier' && b.benefit_type !== 'Cashback' && b.benefit_type !== 'Financing' && b.benefit_type !== 'Deferred Interest' && b.benefit_type !== 'Insurance')
         .map(b => ({
             title: b.short_description || b.name || b.title || 'Benefit',
             value: b.numeric_value || b.value || b.amount || 'Included',

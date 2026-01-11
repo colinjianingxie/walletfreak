@@ -1,0 +1,19 @@
+{
+    "benefit_id": "hotel-credit",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Hotel Credit",
+    "description": "$300 Hotel Credit via CitiTravel",
+    "additional_details": null,
+    "benefit_category": [
+        "Hotels"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 300.0,
+    "numeric_type": "Cash",
+    "dollar_value": 300,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2025-07-28"
+}

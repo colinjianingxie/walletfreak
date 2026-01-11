@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Flight Discount",
+    "question": "How often do you book full-fare Southwest flights where a 15% discount would be significant?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Rarely",
+        "Once a year",
+        "Multiple times"
+    ],
+    "weights": [
+        0.0,
+        0.7,
+        1.0
+    ],
+    "benefit_category": "Southwest"
+}

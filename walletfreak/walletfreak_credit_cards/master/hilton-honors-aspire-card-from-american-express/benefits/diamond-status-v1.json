@@ -1,0 +1,21 @@
+{
+    "benefit_id": "diamond-status",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Diamond Status",
+    "description": "Diamond status",
+    "additional_details": "Top-tier Hilton status",
+    "benefit_category": [
+        "Generic Hilton",
+        "Hotels",
+        "Status Boost"
+    ],
+    "benefit_type": "Status",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Permanent",
+    "enrollment_required": false,
+    "effective_date": "2025-12-25"
+}

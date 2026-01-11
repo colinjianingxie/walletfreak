@@ -1,0 +1,19 @@
+{
+    "benefit_id": "air-canada-lounges",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Air Canada Lounges",
+    "description": "Air Canada lounge access",
+    "additional_details": "complimentary for cardmember +1 guest on Star Alliance flights",
+    "benefit_category": [
+        "Lounges"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 3,
+    "numeric_type": "Lounge",
+    "dollar_value": 0,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

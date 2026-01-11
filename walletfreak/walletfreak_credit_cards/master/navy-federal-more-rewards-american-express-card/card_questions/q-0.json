@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Groceries & Gas",
+    "question": "What is your typical monthly spend on groceries and gas?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Low",
+        "Moderate",
+        "High"
+    ],
+    "weights": [
+        0.0,
+        0.6,
+        1.0
+    ],
+    "benefit_category": "Shopping"
+}

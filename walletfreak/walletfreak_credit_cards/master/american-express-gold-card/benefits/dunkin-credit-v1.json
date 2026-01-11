@@ -1,0 +1,20 @@
+{
+    "benefit_id": "dunkin-credit",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Dunkin Credit",
+    "description": "$84 Dunkin' Credit",
+    "additional_details": "$7 monthly",
+    "benefit_category": [
+        "Coffee Shops",
+        "Dining"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 84.0,
+    "numeric_type": "Cash",
+    "dollar_value": 84,
+    "time_category": "Monthly",
+    "enrollment_required": true,
+    "effective_date": "2025-11-29"
+}

@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Phone Protection",
+    "question": "Do you value having insurance to protect your phone against damage or theft just by paying your bill?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Somewhat",
+        "Highly"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Cell Phone Protection"
+}

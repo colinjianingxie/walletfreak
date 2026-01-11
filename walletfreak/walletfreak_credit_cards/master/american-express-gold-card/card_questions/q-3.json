@@ -1,0 +1,17 @@
+{
+    "question_id": "q-3",
+    "short_desc": "Dunkin Credit",
+    "question": "Is a morning coffee or donut from Dunkin' a staple of your routine?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Dining"
+}

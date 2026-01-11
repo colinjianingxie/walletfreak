@@ -1,0 +1,14 @@
+{
+    "benefit_id": "credit-building",
+    "short_description": "Credit Building",
+    "description": "Reports to all three major credit bureaus to help build or rebuild your credit score.",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

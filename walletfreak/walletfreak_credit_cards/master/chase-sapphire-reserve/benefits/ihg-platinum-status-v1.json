@@ -1,0 +1,21 @@
+{
+    "benefit_id": "ihg-platinum-status",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "IHG Platinum Status",
+    "description": "Complimentary IHG One Rewards Platinum Elite status",
+    "additional_details": "through Dec 31, 2027",
+    "benefit_category": [
+        "Generic IHG",
+        "Hotels",
+        "Status Boost"
+    ],
+    "benefit_type": "Status",
+    "numeric_value": 1,
+    "numeric_type": "Upgrade",
+    "dollar_value": null,
+    "time_category": "Ongoing",
+    "enrollment_required": true,
+    "effective_date": "2025-11-29"
+}

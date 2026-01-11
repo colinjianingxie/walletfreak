@@ -1,0 +1,19 @@
+{
+    "benefit_id": "lyft-credit",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Lyft Credit",
+    "description": "Lyft credits",
+    "additional_details": "credits totaling $120 per year ($10/month) through Sep 30, 2027 plus bonus points",
+    "benefit_category": [
+        "Lyft"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 120.0,
+    "numeric_type": "Cash",
+    "dollar_value": 120,
+    "time_category": "Monthly",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

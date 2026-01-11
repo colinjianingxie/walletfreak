@@ -1,0 +1,17 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Award Discount",
+    "question": "Do you book United flights with miles and want to save 10,000 miles on your bookings twice a year?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Airline"
+}

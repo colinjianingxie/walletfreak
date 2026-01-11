@@ -1,0 +1,33 @@
+{
+    "slug-id": "chase-sapphire-preferred-card",
+    "name": "Chase Sapphire Preferred Card",
+    "image_url": "/static/images/credit_cards/chase-sapphire-preferred-card.png",
+    "issuer": "Chase",
+    "annual_fee": 95,
+    "application_link": "https://secure.chase.com/web/oao/application/card?sourceCode=HSGD&action=guest#/origination/cardDetails/index/index;cellCode=61DS;combo=Y",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "10/10. Simple and clean. No tiered spending or hidden boosts. $5,000 in 3 months gets you the full 75k points.",
+    "points_value_cpp": 1.25,
+    "active_indices": {
+        "benefits": [
+            "hotel-credit-v1",
+            "anniversary-bonus-v1",
+            "dashpass-v1"
+        ],
+        "earning_rates": [
+            "chase-travel-flights-v1",
+            "chase-travel-hotels-v1",
+            "chase-travel-rental-cars-v1",
+            "dining-v1",
+            "online-groceries-v1",
+            "streaming-v1",
+            "airlines-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

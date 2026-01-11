@@ -1,0 +1,17 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Cell Phone Protection",
+    "question": "Does your business value up to $1,000 in coverage for employee cell phones?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Somewhat",
+        "Highly"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Cell Phone Protection"
+}

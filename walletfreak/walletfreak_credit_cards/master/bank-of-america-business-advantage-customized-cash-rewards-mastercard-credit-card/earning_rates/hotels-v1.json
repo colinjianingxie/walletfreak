@@ -1,0 +1,13 @@
+{
+    "rate_id": "hotels",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Hotels"
+    ],
+    "currency": "cash back",
+    "additional_details": "choice category: Hotels (first $50,000 combined annual spend on choice + dining)",
+    "is_default": false
+}

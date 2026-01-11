@@ -1,0 +1,15 @@
+{
+    "question_id": "q-1",
+    "short_desc": "High Spending in Custom Categories",
+    "question": "Do you have high spending in categories like TV/internet/streaming, department stores, or electronics that you could choose for 5% cash back?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": "Choice Category"
+}

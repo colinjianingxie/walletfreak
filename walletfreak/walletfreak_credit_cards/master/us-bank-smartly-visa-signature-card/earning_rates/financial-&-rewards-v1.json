@@ -1,0 +1,13 @@
+{
+    "rate_id": "financial-&-rewards",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 4,
+    "category": [
+        "Financial Rewards"
+    ],
+    "currency": "cash back",
+    "additional_details": "qualifying accounts (capped at $10,000 per billing cycle)",
+    "is_default": true
+}

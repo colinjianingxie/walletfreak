@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Companion Certificate",
+    "question": "Do you travel with a companion and want a \"buy one, get one\" certificate for a domestic flight once a year?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Airline"
+}

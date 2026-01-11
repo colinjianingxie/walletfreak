@@ -1,0 +1,32 @@
+{
+    "slug-id": "aeroplan-credit-card",
+    "name": "Aeroplan Credit Card",
+    "image_url": "/static/images/credit_cards/aeroplan-credit-card.png",
+    "issuer": "Chase",
+    "annual_fee": 95,
+    "application_link": "https://creditcards.chase.com/travel-credit-cards/aircanada/aeroplan",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "8/10. Excellent for Air Canada loyalists with a strong tiered welcome bonus worth up to $1,400 and valuable elite status perks, though the benefits are niche if you don't fly with them often.",
+    "points_value_cpp": 1.4,
+    "active_indices": {
+        "benefits": [
+            "global-entry-credit-v1",
+            "dashpass-v1",
+            "elite-status-v1",
+            "free-checked-bag-v1",
+            "no-fx-fees-v1",
+            "transfer-bonus-v1"
+        ],
+        "earning_rates": [
+            "groceries-v1",
+            "dining-v1",
+            "airlines-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

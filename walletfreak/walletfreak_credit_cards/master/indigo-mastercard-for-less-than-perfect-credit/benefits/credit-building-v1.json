@@ -1,0 +1,14 @@
+{
+    "benefit_id": "credit-building",
+    "short_description": "Credit Building",
+    "description": "Reports payment history to all three major credit bureaus to help establish or rebuild credit with on-time payments.",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

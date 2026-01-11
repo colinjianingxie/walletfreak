@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "DashPass",
+    "question": "Do you want to save on delivery fees for your food orders?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Delivery"
+}

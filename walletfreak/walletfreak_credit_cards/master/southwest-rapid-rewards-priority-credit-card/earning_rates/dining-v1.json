@@ -1,0 +1,16 @@
+{
+    "rate_id": "dining",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": [
+        "Car Rentals",
+        "Dining",
+        "Hotels",
+        "Transit"
+    ],
+    "currency": "points",
+    "additional_details": "partners",
+    "is_default": false
+}

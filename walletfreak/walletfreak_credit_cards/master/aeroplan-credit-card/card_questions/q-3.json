@@ -1,0 +1,17 @@
+{
+    "question_id": "q-3",
+    "short_desc": "Free Checked Bag",
+    "question": "When flying with Air Canada, do you typically check bags and travel with companions?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Airline"
+}

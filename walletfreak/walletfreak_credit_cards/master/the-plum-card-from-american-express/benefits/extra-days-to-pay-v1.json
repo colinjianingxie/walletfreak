@@ -1,0 +1,19 @@
+{
+    "benefit_id": "extra-days-to-pay",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Extra Days to Pay",
+    "description": "Take up to 60 days to pay without interest",
+    "additional_details": "pay minimum due by date",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 60.0,
+    "numeric_type": "Days",
+    "dollar_value": null,
+    "time_category": "Monthly",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

@@ -1,0 +1,10 @@
+{
+    "offer_id": "offer-1",
+    "is_active": true,
+    "value": 100000,
+    "terms": "Earn 100,000 Membership Rewards points after spending $15,000 on eligible purchases within the first 3 months",
+    "currency": "Points",
+    "spend_amount": 15000,
+    "duration_months": 3,
+    "effective_date": "2025-12-28"
+}

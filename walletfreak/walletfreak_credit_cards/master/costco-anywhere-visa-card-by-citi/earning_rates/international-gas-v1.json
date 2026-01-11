@@ -1,0 +1,15 @@
+{
+    "rate_id": "international-gas",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 4,
+    "category": [
+        "Costco",
+        "EV Charging",
+        "International Gas Stations"
+    ],
+    "currency": "cash back",
+    "additional_details": "worldwide gas & EV (non-Costco, up to $7,000/year combined with 5%, then 1%)",
+    "is_default": false
+}

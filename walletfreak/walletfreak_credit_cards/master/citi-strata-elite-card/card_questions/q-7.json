@@ -1,0 +1,15 @@
+{
+    "question_id": "q-7",
+    "short_desc": "Private Client Credit",
+    "question": "Are you a Citigold Private Client who can qualify for an annual fee credit?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Banking"
+}

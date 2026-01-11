@@ -1,0 +1,13 @@
+{
+    "rate_id": "delta",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Delta Air Lines"
+    ],
+    "currency": "miles",
+    "additional_details": "on eligible Delta purchases",
+    "is_default": false
+}

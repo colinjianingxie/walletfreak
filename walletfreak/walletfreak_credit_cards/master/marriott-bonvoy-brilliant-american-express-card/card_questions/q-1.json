@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Marriott Dining",
+    "question": "How often do you dine at restaurants where a $25 monthly credit would be easy to use?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Monthly",
+        "Weekly"
+    ],
+    "weights": [
+        0.0,
+        0.8,
+        1.0
+    ],
+    "benefit_category": "Dining,Hotel"
+}

@@ -1,0 +1,22 @@
+{
+    "slug-id": "chase-slate-edge",
+    "name": "Chase Slate Edge",
+    "image_url": "/static/images/credit_cards/chase-slate-edge.jpg",
+    "issuer": "Chase",
+    "annual_fee": 0,
+    "application_link": "https://creditcards.chase.com/balance-transfer-credit-cards/slate-edge",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "No Freak verdict for this card yet",
+    "points_value_cpp": null,
+    "active_indices": {
+        "benefits": [
+            "apr-reduction-v1"
+        ],
+        "earning_rates": [
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": []
+    }
+}

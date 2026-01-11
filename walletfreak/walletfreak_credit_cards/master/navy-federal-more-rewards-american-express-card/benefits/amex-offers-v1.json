@@ -1,0 +1,19 @@
+{
+    "benefit_id": "amex-offers",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Amex Offers",
+    "description": "Amex Offers access",
+    "additional_details": "Merchant-specific discounts and bonus points",
+    "benefit_category": [
+        "Retail Shopping"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 1.0,
+    "numeric_type": "Perk",
+    "dollar_value": 100,
+    "time_category": "Ongoing",
+    "enrollment_required": true,
+    "effective_date": "2025-12-28"
+}

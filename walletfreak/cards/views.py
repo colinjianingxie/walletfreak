@@ -364,7 +364,7 @@ def card_list(request):
     all_categories = sorted(list(actual_categories))
     
     # Fee range
-    fees = [c.get('annual_fee', 0) for c in all_cards]
+    fees = [c.get('annual_fee') or 0 for c in all_cards]
     min_fee = min(fees) if fees else 0
     max_fee = max(fees) if fees else 1000
 
@@ -389,13 +389,13 @@ def card_list(request):
 
     if min_fee_filter:
         try:
-            filtered_cards = [c for c in filtered_cards if c.get('annual_fee', 0) >= int(min_fee_filter)]
+            filtered_cards = [c for c in filtered_cards if (c.get('annual_fee') or 0) >= int(min_fee_filter)]
         except ValueError:
             pass
             
     if max_fee_filter:
         try:
-            filtered_cards = [c for c in filtered_cards if c.get('annual_fee', 0) <= int(max_fee_filter)]
+            filtered_cards = [c for c in filtered_cards if (c.get('annual_fee') or 0) <= int(max_fee_filter)]
         except ValueError:
             pass
         
@@ -418,9 +418,9 @@ def card_list(request):
     elif sort_by == 'name':
         filtered_cards = sorted(filtered_cards, key=lambda c: c.get('name', '').lower())
     elif sort_by == 'fee_low':
-        filtered_cards = sorted(filtered_cards, key=lambda c: c.get('annual_fee', 0))
+        filtered_cards = sorted(filtered_cards, key=lambda c: c.get('annual_fee') or 0)
     elif sort_by == 'fee_high':
-        filtered_cards = sorted(filtered_cards, key=lambda c: c.get('annual_fee', 0), reverse=True)
+        filtered_cards = sorted(filtered_cards, key=lambda c: c.get('annual_fee') or 0, reverse=True)
 
     # Pagination
     paginator = Paginator(filtered_cards, 200)  # Show all cards (client-side filtering)

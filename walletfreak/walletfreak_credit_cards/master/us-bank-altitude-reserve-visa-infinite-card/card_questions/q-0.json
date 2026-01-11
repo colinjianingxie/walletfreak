@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Travel & Dining Credit",
+    "question": "Is your annual spending on travel and dining at least $325, making this credit easy to use?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Travel,Dining"
+}

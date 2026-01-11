@@ -1,0 +1,17 @@
+{
+    "question_id": "q-12",
+    "short_desc": "Apple TV+ & Music",
+    "question": "Do you currently pay for Apple TV+ or Apple Music and want them for free?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Streaming"
+}

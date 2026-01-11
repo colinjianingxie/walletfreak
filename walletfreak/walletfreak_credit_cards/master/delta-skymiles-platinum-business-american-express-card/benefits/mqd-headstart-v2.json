@@ -1,0 +1,19 @@
+{
+    "benefit_id": "mqd-headstart",
+    "short_description": "MQD Headstart",
+    "description": "Get a head start on status with 2,500 Medallion Qualification Dollars (MQD) each Medallion Qualification Year.",
+    "additional_details": "MQDs are typically deposited within 6-8 weeks of opening the account and annually thereafter.",
+    "benefit_category": [
+        "Travel Perks"
+    ],
+    "benefit_type": "Bonus",
+    "numeric_value": 2500.0,
+    "numeric_type": "Points",
+    "dollar_value": 0,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

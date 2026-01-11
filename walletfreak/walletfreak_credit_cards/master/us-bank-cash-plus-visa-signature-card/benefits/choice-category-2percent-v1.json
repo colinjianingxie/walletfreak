@@ -1,0 +1,14 @@
+{
+    "benefit_id": "choice-category-2percent",
+    "short_description": "2% Cash Back Category",
+    "description": "Earn unlimited 2% cash back on eligible purchases in one everyday category you choose, such as gas stations, grocery stores or restaurants.",
+    "value": 2,
+    "currency": "Cash",
+    "period": "Ongoing",
+    "benefit_category": [
+        "Choice Category"
+    ],
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

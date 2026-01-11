@@ -1,0 +1,20 @@
+{
+    "benefit_id": "anniversary-points",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Anniversary Points",
+    "description": "7,500 anniversary bonus points each year",
+    "additional_details": null,
+    "benefit_category": [
+        "Anniversary Bonus",
+        "Southwest Airlines"
+    ],
+    "benefit_type": "Bonus",
+    "numeric_value": 7500,
+    "numeric_type": "Points",
+    "dollar_value": null,
+    "time_category": "Annually (anniversary year)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

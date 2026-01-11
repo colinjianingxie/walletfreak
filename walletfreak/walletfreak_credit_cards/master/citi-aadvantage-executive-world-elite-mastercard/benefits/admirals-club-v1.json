@@ -1,0 +1,19 @@
+{
+    "benefit_id": "admirals-club",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Admirals Club",
+    "description": "Complimentary Admirals Club\u00ae membership with guest privileges",
+    "additional_details": "Value of up to $850; primary cardmember and immediate family or up to 2 guests",
+    "benefit_category": [
+        "Admirals Club"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 1,
+    "numeric_type": "Membership",
+    "dollar_value": 850,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

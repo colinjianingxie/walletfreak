@@ -1,0 +1,20 @@
+{
+    "benefit_id": "global-entry-tsa-precheck",
+    "short_description": "Global Entry / TSA PreCheck Credit",
+    "description": "Receive a statement credit of up to $120 every 4 years as reimbursement for the application fee for Global Entry or TSA PreCheck.",
+    "additional_details": "Reimbursement is provided once every 4 years.",
+    "benefit_category": [
+        "Global Entry",
+        "TSA PreCheck"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 120.0,
+    "numeric_type": "Cash",
+    "dollar_value": 120,
+    "time_category": "One-time",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

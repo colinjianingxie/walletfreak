@@ -1,0 +1,13 @@
+{
+    "rate_id": "shopping",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Online Retail"
+    ],
+    "currency": "cash back",
+    "additional_details": "U.S. online retail",
+    "is_default": false
+}

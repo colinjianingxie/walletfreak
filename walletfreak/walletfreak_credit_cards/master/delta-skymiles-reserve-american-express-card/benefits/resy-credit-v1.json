@@ -1,0 +1,19 @@
+{
+    "benefit_id": "resy-credit",
+    "short_description": "$240 Resy Credit",
+    "description": "Earn up to $20 per month in statement credits on eligible purchases with U.S. Resy restaurants.",
+    "additional_details": "Must enroll your card and pay at restaurants listed on Resy.com or the Resy app.",
+    "benefit_category": [
+        "Resy Bookings"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 240.0,
+    "numeric_type": "Cash",
+    "dollar_value": 240,
+    "time_category": "Monthly",
+    "enrollment_required": true,
+    "effective_date": "2026-01-11",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

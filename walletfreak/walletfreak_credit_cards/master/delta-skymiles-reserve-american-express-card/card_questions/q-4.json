@@ -1,0 +1,17 @@
+{
+    "question_id": "q-4",
+    "short_desc": "Annual Spend",
+    "question": "Do you anticipate spending more than $75,000 on this card annually?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.5
+    ],
+    "benefit_category": [
+        "Delta Sky Club"
+    ]
+}

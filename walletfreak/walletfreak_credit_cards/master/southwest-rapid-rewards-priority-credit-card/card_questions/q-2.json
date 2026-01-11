@@ -1,0 +1,17 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Upgraded Boardings",
+    "question": "How important is it for you to be in the A1-A15 boarding group to pick your favorite seat?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Airline"
+}

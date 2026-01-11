@@ -1,0 +1,14 @@
+{
+    "rate_id": "post-150k",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 1.5,
+    "category": [
+        "Financial Rewards",
+        "All Purchases"
+    ],
+    "currency": "miles",
+    "additional_details": "after spending $150,000 in a calendar year, on eligible purchases for the rest of the year",
+    "is_default": false
+}

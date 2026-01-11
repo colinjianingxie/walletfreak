@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "DoorDash Non-Restaurant Credit",
+    "question": "Do you order office supplies or convenience items via DoorDash?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Delivery"
+}

@@ -1,0 +1,19 @@
+{
+    "benefit_id": "mqd-boost",
+    "short_description": "MQD Boost",
+    "description": "Earn $1 Medallion Qualification Dollar (MQD) for every $20 in eligible purchases made on your Card.",
+    "additional_details": "Accelerates your path to Medallion status through everyday business spending.",
+    "benefit_category": [
+        "Travel Perks"
+    ],
+    "benefit_type": "Bonus",
+    "numeric_value": 0.05,
+    "numeric_type": "Points",
+    "dollar_value": 0,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

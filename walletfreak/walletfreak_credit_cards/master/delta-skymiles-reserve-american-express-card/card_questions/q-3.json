@@ -1,0 +1,17 @@
+{
+    "question_id": "q-3",
+    "short_desc": "Statement Credit Usage",
+    "question": "Do you frequently use Uber, Lyft, or dine at Resy-affiliated restaurants?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": [
+        "Resy Bookings"
+    ]
+}

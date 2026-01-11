@@ -1,0 +1,15 @@
+{
+    "benefit_id": "inflight-rebates",
+    "short_description": "In-Flight Food and WiFi Rebates",
+    "description": "Rebates on in-flight food purchases and WiFi on American Airlines flights.",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "American Airlines",
+        "Travel Perks"
+    ],
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

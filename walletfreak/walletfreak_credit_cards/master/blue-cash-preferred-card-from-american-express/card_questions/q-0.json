@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Disney Credit",
+    "question": "Do you currently pay for Disney+, Hulu, or ESPN+ and want $10 back every month?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Streaming"
+}

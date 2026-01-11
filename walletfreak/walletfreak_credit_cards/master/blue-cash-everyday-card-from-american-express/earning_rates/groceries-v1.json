@@ -1,0 +1,13 @@
+{
+    "rate_id": "groceries",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Supermarkets"
+    ],
+    "currency": "cash back",
+    "additional_details": "U.S. supermarkets",
+    "is_default": false
+}

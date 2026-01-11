@@ -1,0 +1,20 @@
+{
+    "benefit_id": "exclusive-tables",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Exclusive Tables",
+    "description": "Sapphire Reserve Exclusive Tables dining benefits",
+    "additional_details": "exclusive dining access and up to $300 in credits ($150 per half-year) through Jun 30, 2026",
+    "benefit_category": [
+        "Dining",
+        "Sapphire Reserve Exclusive Tables"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 300.0,
+    "numeric_type": "Cash",
+    "dollar_value": 300,
+    "time_category": "Semi-annually",
+    "enrollment_required": true,
+    "effective_date": "2025-11-29"
+}

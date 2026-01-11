@@ -1,0 +1,19 @@
+{
+    "benefit_id": "early-pay-discount",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Early Pay Discount",
+    "description": "Unlimited 1.5% Early Pay Discount",
+    "additional_details": "when you pay within 10 days of statement closing date",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 1.5,
+    "numeric_type": "Percent",
+    "dollar_value": null,
+    "time_category": "Monthly",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Groceries",
+    "question": "Do you regularly shop at grocery stores or wholesale clubs?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Groceries"
+}

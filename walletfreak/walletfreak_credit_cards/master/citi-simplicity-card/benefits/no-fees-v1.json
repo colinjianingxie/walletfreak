@@ -1,0 +1,19 @@
+{
+    "benefit_id": "no-fees",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "No Fees",
+    "description": "No late fees no penalty rate no annual fee",
+    "additional_details": null,
+    "benefit_category": [
+        "Protection"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Permanent",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

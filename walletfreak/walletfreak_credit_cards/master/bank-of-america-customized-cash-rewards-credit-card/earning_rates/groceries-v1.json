@@ -1,0 +1,14 @@
+{
+    "rate_id": "groceries",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": [
+        "Groceries",
+        "Wholesale Clubs"
+    ],
+    "currency": "cash back",
+    "additional_details": "grocery stores and wholesale clubs, up to $2500 quarterly combined with 3%/6% category",
+    "is_default": false
+}

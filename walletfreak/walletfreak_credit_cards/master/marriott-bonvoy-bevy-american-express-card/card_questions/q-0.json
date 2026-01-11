@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Gold Status",
+    "question": "Do you value automatic room upgrades and late checkout at Marriott hotels?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Hotels"
+}

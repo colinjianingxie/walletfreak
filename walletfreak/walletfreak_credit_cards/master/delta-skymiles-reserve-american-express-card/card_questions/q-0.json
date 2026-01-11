@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Elite Status Priority",
+    "question": "Are you actively chasing or maintaining Delta Medallion Elite status?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": [
+        "Status Boost"
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Checked Bags",
+    "question": "Do you typically check a bag when flying on domestic routes?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": [
+        "Free Checked Bags"
+    ]
+}

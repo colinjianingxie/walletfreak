@@ -1,0 +1,17 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Blacklane Credit",
+    "question": "Do you use premium car services like Blacklane for airport transfers?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Transportation"
+}

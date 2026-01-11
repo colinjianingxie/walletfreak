@@ -1,0 +1,17 @@
+{
+    "question_id": "q-3",
+    "short_desc": "Travel Habits",
+    "question": "Do you drive long distances regularly?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Yes",
+        "Sometimes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.5,
+        0.0
+    ],
+    "benefit_category": "Transit"
+}

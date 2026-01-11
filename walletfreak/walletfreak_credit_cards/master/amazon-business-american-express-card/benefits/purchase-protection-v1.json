@@ -1,0 +1,14 @@
+{
+    "benefit_id": "purchase-protection",
+    "short_description": "Purchase Protection",
+    "description": "Your Covered Purchases can be covered when they're accidentally damaged or stolen for up to 90 days from the Covered Purchase date.",
+    "value": null,
+    "currency": null,
+    "period": null,
+    "benefit_category": [
+        "Protection"
+    ],
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

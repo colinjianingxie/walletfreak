@@ -1,0 +1,15 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Business Utilities",
+    "question": "Is your monthly business spending on telecommunications and cable services significant?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Low",
+        "High"
+    ],
+    "weights": [
+        0.3,
+        1.0
+    ],
+    "benefit_category": "Business & Tech"
+}

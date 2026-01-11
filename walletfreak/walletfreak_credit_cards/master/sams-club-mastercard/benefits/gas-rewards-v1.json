@@ -1,0 +1,21 @@
+{
+    "benefit_id": "gas-rewards",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Gas Rewards",
+    "description": "5% back on Gas worldwide",
+    "additional_details": null,
+    "benefit_category": [
+        "Financial Rewards",
+        "Gas",
+        "Transit"
+    ],
+    "benefit_type": "Bonus",
+    "numeric_value": 5,
+    "numeric_type": "Percent",
+    "dollar_value": 300,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2025-12-24"
+}

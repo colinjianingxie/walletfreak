@@ -1,0 +1,17 @@
+{
+    "question_id": "q-4",
+    "short_desc": "No FX Fees",
+    "question": "Does your business make international purchases or travel abroad?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Travel Perks"
+}

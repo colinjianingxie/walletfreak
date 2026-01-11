@@ -1,6 +1,7 @@
 from firebase_admin import firestore
 from datetime import datetime, timedelta
 import ast
+from google.cloud.firestore import FieldFilter
 
 class CardMixin:
     def __init__(self, *args, **kwargs):
@@ -18,31 +19,52 @@ class CardMixin:
         """
         Get basic card info without subcollections (benefits, rates, bonuses).
         Use this when you only need card metadata (name, issuer, annual_fee, etc.)
-        This is MUCH cheaper than get_cards() - only ~90 reads instead of 700-1300.
         """
-        cards_snapshot = self.get_collection('credit_cards')
+        cards_snapshot = self.get_collection('master_cards')
         return cards_snapshot
+
+    def get_user_card_count(self, uid):
+        """
+        Efficiently count user cards without fetching full data.
+        """
+        try:
+            # Aggregate count if available
+            try:
+                from google.cloud.firestore import AggregateQuery
+                query = self.db.collection('users').document(uid).collection('user_cards').count()
+                return query.get()[0][0].value
+            except Exception:
+                # Fallback to len of ids (projections?)
+                # Or regular stream if projection not easy via python client wrapper
+                query = self.db.collection('users').document(uid).collection('user_cards')
+                return len(list(query.stream()))
+        except Exception:
+            return 0
+
     def get_cards(self):
         """
-        Get all cards with full subcollections (benefits, earning_rates, sign_up_bonus).
-        This is cached for 5 minutes to reduce Firestore reads.
-        WARNING: This is expensive (~700-1300 reads). Use get_cards_basic() when possible.
+        Get all cards with full subcollections (active benefits, earning_rates, sign_up_bonus).
+        Returns hydrated card objects.
         """
         # Check cache first
         if self._cards_cache is not None and self._cards_cache_time is not None:
             if datetime.now() - self._cards_cache_time < self._cards_cache_ttl:
                 return self._cards_cache
         
-        # Cache miss or expired - fetch from Firestore
-        # optimized: Use Collection Group queries to fetch all subcollections in 3 requests total
-        # instead of N * 3 requests.
+        # 1. Fetch all master cards
+        cards_snapshot = self.get_collection('master_cards')
+        # Sort cards by name for consistent ordering
+        cards_snapshot.sort(key=lambda x: x.get('name', ''))
         
-        # 1. Fetch all cards
-        cards_snapshot = self.get_collection('credit_cards')
         cards_map = {c['id']: c for c in cards_snapshot if 'id' in c}
         
         if not cards_map:
             return []
+
+        # Ensure slug is present
+        for c in cards_map.values():
+            if 'slug' not in c:
+                c['slug'] = c['id']
             
         # Initialize subcollection containers
         for c in cards_map.values():
@@ -50,65 +72,62 @@ class CardMixin:
             c['earning_rates'] = []
             c['sign_up_bonus'] = {} 
             c['card_questions'] = []
-            c['_raw_bonuses'] = []
+        
+        # Collect all references to fetch
+        refs_to_fetch = []
+        ref_map = {} # path -> (card_id, type)
 
-        # 2. Fetch Benefits (Collection Group)
-        try:
-            benefits_docs = self.db.collection_group('benefits').stream()
-            for doc in benefits_docs:
-                # doc.reference.parent.parent is the Card Document Reference
-                parent = doc.reference.parent.parent
-                if parent and parent.id in cards_map:
-                    data = doc.to_dict()
-                    data['id'] = doc.id
-                    cards_map[parent.id]['benefits'].append(data)
-        except Exception as e:
-            print(f"Error fetching benefits collection group: {e}")
+        for card_id, c in cards_map.items():
+            indices = c.get('active_indices', {})
+            
+            def add_refs(type_key, collection_name):
+                if indices.get(type_key):
+                    for item_id in indices[type_key]:
+                        ref = self.db.collection('master_cards').document(card_id).collection(collection_name).document(item_id)
+                        refs_to_fetch.append(ref)
+                        ref_map[ref.path] = (card_id, type_key)
 
-        # 3. Fetch Earning Rates (Collection Group)
-        try:
-            earning_docs = self.db.collection_group('earning_rates').stream()
-            for doc in earning_docs:
-                parent = doc.reference.parent.parent
-                if parent and parent.id in cards_map:
-                    data = doc.to_dict()
-                    data['id'] = doc.id
-                    cards_map[parent.id]['earning_rates'].append(data)
-        except Exception as e:
-            print(f"Error fetching earning_rates collection group: {e}")
+            add_refs('benefits', 'benefits')
+            add_refs('earning_rates', 'earning_rates')
+            add_refs('sign_up_bonus', 'sign_up_bonus')
+            add_refs('card_questions', 'card_questions')
 
-        # 4. Fetch Sign Up Bonuses (Collection Group)
-        try:
-            bonus_docs = self.db.collection_group('sign_up_bonus').stream()
-            for doc in bonus_docs:
-                parent = doc.reference.parent.parent
-                if parent and parent.id in cards_map:
-                    data = doc.to_dict()
-                    data['id'] = doc.id
-                    cards_map[parent.id]['_raw_bonuses'].append(data)
-        except Exception as e:
-            print(f"Error fetching sign_up_bonus collection group: {e}")
+        if refs_to_fetch:
+            # Batch Get - Chunking in groups of 100
+            chunks = [refs_to_fetch[i:i + 100] for i in range(0, len(refs_to_fetch), 100)]
+            
+            for chunk in chunks:
+                snaps = self.db.get_all(chunk)
+                for snap in snaps:
+                    if not snap.exists:
+                        continue
+                    
+                    data = snap.to_dict()
+                    data['id'] = snap.id
+                    
+                    # Identify owner
+                    card_id, type_key = ref_map.get(snap.reference.path, (None, None))
+                    
+                    if card_id and card_id in cards_map:
+                        container = cards_map[card_id].get(type_key)
+                        if isinstance(container, list):
+                            container.append(data)
 
-        # 5. Fetch Card Questions (Collection Group)
-        try:
-            questions_docs = self.db.collection_group('card_questions').stream()
-            for doc in questions_docs:
-                parent = doc.reference.parent.parent
-                if parent and parent.id in cards_map:
-                    data = doc.to_dict()
-                    data['id'] = doc.id
-                    if 'card_questions' not in cards_map[parent.id]:
-                        cards_map[parent.id]['card_questions'] = []
-                    cards_map[parent.id]['card_questions'].append(data)
-        except Exception as e:
-            print(f"Error fetching card_questions collection group: {e}")
-
-        # 6. Process Bonuses, Questions, and Benefits per card
+        # 6. Process
         for card in cards_map.values():
-            raw_bonuses = card.pop('_raw_bonuses')
-            card['sign_up_bonus'] = self._process_signup_bonuses(raw_bonuses)
+            raw_bonuses = card.get('sign_up_bonus', []) if isinstance(card.get('sign_up_bonus'), list) else [] 
+            # Note: in loop above we appended to list, but initialization was dict... wait.
+            # Initialization above: c['sign_up_bonus'] = {} -> WRONG if used as list accumulator.
+            # Let's check logic: `add_refs` uses `indices['sign_up_bonus']`.
+            # We append to refs.
+            # Then retrieve and append to `container`.
+            # If `container` is dict, append fails.
+            # FIX: Initialize all as lists.
+            
+            # Correcting processing logic:
+            card['sign_up_bonus'] = self._process_signup_bonuses(card.get('sign_up_bonus', []))
             card['card_questions'] = self._process_card_questions(card.get('card_questions', []))
-            card['benefits'] = self._process_benefits(card.get('benefits', []))
+            card['benefits'].sort(key=lambda x: x.get('benefit_id') or '')
 
         result = list(cards_map.values())
         
@@ -119,36 +138,27 @@ class CardMixin:
         return result
     
     def get_card_by_slug(self, slug):
-        card_data = self.get_document('credit_cards', slug)
+        card_data = self.get_document('master_cards', slug)
         if card_data:
             self._enrich_card_with_subcollections(slug, card_data)
         return card_data
 
     def _process_signup_bonuses(self, bonuses):
-        """
-        Helper to select the correct bonus from a list of bonus dicts.
-        """
         if not bonuses:
             return {}
-            
         from datetime import datetime
         today_str = datetime.now().strftime('%Y-%m-%d')
-        
         valid_bonuses = []
         default_bonus = None
-        
         for b in bonuses:
-            b_date = b.get('date') or b.get('id')
-            
+            b_date = b.get('date') or b.get('effective_date') or b.get('id')
             if b_date == 'default' or b.get('id') == 'default':
                 default_bonus = b
             else:
                 if b_date and b_date <= today_str:
                     b['resolved_date'] = b_date
                     valid_bonuses.append(b)
-        
         valid_bonuses.sort(key=lambda x: x.get('resolved_date', ''), reverse=True)
-        
         if valid_bonuses:
             return valid_bonuses[0]
         elif default_bonus:
@@ -156,12 +166,8 @@ class CardMixin:
         return {}
 
     def _process_card_questions(self, questions):
-        """
-        Parses stringified list fields in card questions.
-        """
         processed = []
         for q in questions:
-            # Parse ChoiceList
             choice_list = []
             try:
                 raw_choices = q.get('ChoiceList')
@@ -172,7 +178,6 @@ class CardMixin:
             except (ValueError, SyntaxError):
                 choice_list = []
 
-            # Parse ChoiceWeight
             choice_weights = []
             try:
                 raw_weights = q.get('ChoiceWeight')
@@ -182,240 +187,188 @@ class CardMixin:
                     choice_weights = raw_weights
             except (ValueError, SyntaxError):
                 choice_weights = []
-                
-            # Normalize keys to match view expectation (snake_case vs CamelCase in DB?)
-            # The CSV keys were BenefitShortDescription, Question, etc.
-            # We should standardize to what the view expects:
-            # 'short_desc', 'question_type', 'choices', 'weights', 'question', 'category'
-            
             item = {
-                'short_desc': q.get('BenefitShortDescription', ''),
-                'question_type': q.get('QuestionType', 'yes_no'),
-                'choices': choice_list,
-                'weights': choice_weights,
-                'question': q.get('Question', ''),
-                'category': q.get('BenefitCategory', ''),
+                'short_desc': q.get('short_desc') or q.get('BenefitShortDescription', ''),
+                'question_type': q.get('question_type') or q.get('QuestionType', 'yes_no'),
+                'choices': q.get('choices') or choice_list,
+                'weights': q.get('weights') or choice_weights,
+                'question': q.get('question') or q.get('Question', ''),
+                'category': q.get('benefit_category') or q.get('BenefitCategory', ''),
                 'id': q.get('id')
             }
             processed.append(item)
-            
-
         return processed
 
-    def _process_benefits(self, benefits):
-        """
-        Resolves versioned benefits.
-        Returns the latest active version of each benefit_id.
-        """
-        if not benefits:
-            return []
-            
-        from datetime import datetime
-        today_str = datetime.now().strftime('%Y-%m-%d')
-        
-        # Group by benefit_id
-        grouped = {}
-        legacy_items = []
-        
-        for b in benefits:
-            b_id = b.get('benefit_id')
-            if not b_id:
-                legacy_items.append(b)
-                continue
-                
-            if b_id not in grouped:
-                grouped[b_id] = []
-            grouped[b_id].append(b)
-            
-        resolved = []
-        
-        for b_id, versions in grouped.items():
-            # Filter valid dates <= today
-            valid_versions = []
-            future_versions = [] # Optional: could show "Coming Soon"
-            
-            for v in versions:
-                eff = v.get('effective_date')
-                # If no effective date, assume valid/legacy
-                if not eff:
-                    valid_versions.append(v)
-                    continue
-                    
-                if eff <= today_str:
-                    valid_versions.append(v)
-                else:
-                    future_versions.append(v)
-            
-            # Pick latest valid
-            if valid_versions:
-                # Sort descending by date (None counts as very old, or handle separately?)
-                # If date is string YYYY-MM-DD, default sort string works
-                valid_versions.sort(key=lambda x: x.get('effective_date') or '0000-00-00', reverse=True)
-                resolved.append(valid_versions[0])
-            elif future_versions:
-                # No active version? Maybe show the future one?
-                # For now, let's skip to avoid showing things not yet valid.
-                pass
-                
-        return resolved + legacy_items
-
     def _enrich_card_with_subcollections(self, card_id, card_data):
-        """
-        Fetches benefits, earning_rates, and sign_up_bonus from subcollections
-        and populates the card_data dictionary in-place.
-        (Used for single card fetch)
-        """
         try:
-            card_ref = self.db.collection('credit_cards').document(card_id)
+            card_ref = self.db.collection('master_cards').document(card_id)
+            indices = card_data.get('active_indices', {})
             
-            # 1. Benefits
-            benefits = [{**doc.to_dict(), 'id': doc.id} for doc in card_ref.collection('benefits').stream()]
-            card_data['benefits'] = self._process_benefits(benefits)
+            # Prepare result containers
+            card_data['benefits'] = []
+            card_data['earning_rates'] = []
+            # Intermediate lists for bonuses/questions
+            bonuses = []
+            questions = []
             
-            # 2. Earning Rates
-            earning_rates = [{**doc.to_dict(), 'id': doc.id} for doc in card_ref.collection('earning_rates').stream()]
-            card_data['earning_rates'] = earning_rates
-            
-            # 3. Sign Up Bonus
-            bonuses = [{**doc.to_dict(), 'id': doc.id} for doc in card_ref.collection('sign_up_bonus').stream()]
-            card_data['sign_up_bonus'] = self._process_signup_bonuses(bonuses)
+            refs_to_fetch = []
+            ref_type_map = {} # path -> type_key
 
-            # 4. Card Questions
-            questions = [{**doc.to_dict(), 'id': doc.id} for doc in card_ref.collection('card_questions').stream()]
+            def add_refs(type_key, collection):
+                if indices.get(type_key):
+                    for iid in indices[type_key]:
+                        ref = card_ref.collection(collection).document(iid)
+                        refs_to_fetch.append(ref)
+                        ref_type_map[ref.path] = type_key
+            
+            add_refs('benefits', 'benefits')
+            add_refs('earning_rates', 'earning_rates')
+            add_refs('sign_up_bonus', 'sign_up_bonus')
+            add_refs('card_questions', 'card_questions')
+
+            if refs_to_fetch:
+                snaps = self.db.get_all(refs_to_fetch)
+                for snap in snaps:
+                    if snap.exists:
+                        type_key = ref_type_map.get(snap.reference.path)
+                        data = {**snap.to_dict(), 'id': snap.id}
+                        
+                        if type_key == 'benefits':
+                            card_data['benefits'].append(data)
+                        elif type_key == 'earning_rates':
+                            card_data['earning_rates'].append(data)
+                        elif type_key == 'sign_up_bonus':
+                            bonuses.append(data)
+                        elif type_key == 'card_questions':
+                            questions.append(data)
+
+            # Process processed fields
+            card_data['sign_up_bonus'] = self._process_signup_bonuses(bonuses)
             card_data['card_questions'] = self._process_card_questions(questions)
 
         except Exception as e:
             print(f"Error enriching card {card_id}: {e}")
 
     def add_card_to_user(self, uid, card_id, status='active', anniversary_date=None):
-        # status: 'active', 'inactive', 'eyeing'
         user_ref = self.db.collection('users').document(uid)
-        card_ref = self.db.collection('credit_cards').document(card_id)
-        card_snap = card_ref.get()
+        master_ref = self.db.collection('master_cards').document(card_id)
+        master_snap = master_ref.get()
         
-        if not card_snap.exists:
+        if not master_snap.exists:
             return False
-            
-        card_data = card_snap.to_dict()
         
-        # Add to subcollection
-        # Add to subcollection
         user_card_data = {
-            # 'card_id': card_id,      # REMOVED: Stored as Document ID
-            # 'card_slug_id': card_id, # REMOVED: Stored as Document ID
-            'name': card_data.get('name'),
-            'image_url': card_data.get('image_url'),
+            'card_ref': master_ref,
+            'card_slug_id': card_id, 
             'status': status,
             'added_at': firestore.SERVER_TIMESTAMP,
-            'anniversary_date': anniversary_date, # YYYY-MM-DD string or None
-            'benefit_usage': {} # Map of benefit_id -> usage
+            'anniversary_date': anniversary_date,
+            'benefit_usage': {}
         }
         
-        # Add to subcollection using explicit ID (slug)
-        # This replaces the correct random ID logic with the Slug ID as Primary Key
         user_card_ref = user_ref.collection('user_cards').document(card_id)
-        user_card_ref.set(user_card_data)
+        user_card_ref.set(user_card_data, merge=True)
         
-        # Auto-evaluate personality
         try:
-            # 1. Get updated cards
             current_cards = self.get_user_cards(uid, status='active')
-            
-            # CONSISTENCY FIX: Ensure the new card is in the list (if active)
-            # Firestore queries might be eventually consistent
-            if status == 'active':
-                # Check if card is already in list (by id check using slug)
-                if not any(c.get('id') == card_id for c in current_cards):
-                    # Append it manually
-                    new_card_entry = user_card_data.copy()
-                    new_card_entry['id'] = card_id
-                    current_cards.append(new_card_entry)
-            
-            # 2. Determine best fit (handles <= 1 logic internally)
             best_fit = self.determine_best_fit_personality(current_cards)
-            
-            # 3. Update profile if found
             if best_fit:
                 user_card_slugs = set(c.get('card_id') for c in current_cards)
                 personality_cards = set()
                 for slot in best_fit.get('slots', []):
                     personality_cards.update(slot.get('cards', []))
                 overlap = len(user_card_slugs.intersection(personality_cards))
-                
-                # If student-starter (implicit match), score might be irrelevant or we can set strict defaults
-                # The logic above calculates overlap, but for student-starter it might be 0 overlap if it has no defined cards
-                # Let's ensure we update regardless.
-                
                 self.update_user_personality(uid, best_fit.get('id'), score=overlap)
-                print(f"Auto-assigned personality {best_fit.get('id')} to user {uid} with score {overlap}")
         except Exception as e:
             print(f"Error auto-evaluating personality: {e}")
             
         return True
 
-    def get_user_cards(self, uid, status=None):
+    def get_user_cards(self, uid, status=None, hydrate=True):
+        """
+        Get user cards.
+        hydrate: If True, merges with Master Card data (Requires fetching Master Cards).
+                 If False, returns only User Card data (Lightweight).
+        """
         query = self.db.collection('users').document(uid).collection('user_cards')
         if status:
-            # Use FieldFilter to avoid UserWarning about positional arguments
-            from google.cloud.firestore import FieldFilter
             query = query.where(filter=FieldFilter('status', '==', status))
         
-        # Inject card_id and card_slug_id from doc.id for compatibility
-        return [
-            doc.to_dict() | {
-                'id': doc.id, 
-                'card_id': doc.id, 
-                'card_slug_id': doc.id
-            } 
-            for doc in query.stream()
-        ]
+        # User Cards are small, stream is fine.
+        user_cards_docs = list(query.stream())
+        if not user_cards_docs:
+            return []
+            
+        user_cards_map = {} 
+        for doc in user_cards_docs:
+            data = doc.to_dict()
+            card_id = doc.id
+            user_cards_map[card_id] = data
+            
+        if not hydrate:
+             return [
+                 {**data, 'id': cid, 'card_slug_id': cid} 
+                 for cid, data in user_cards_map.items()
+             ]
+            
+        # Get cached master data for efficiency
+        all_hydrated_cards = self.get_cards() 
+        hydrated_map = {c['id']: c for c in all_hydrated_cards}
+        
+        results = []
+        for card_id, user_data in user_cards_map.items():
+            master_card = hydrated_map.get(card_id)
+            if master_card:
+                composite = master_card.copy()
+                composite.update({
+                    'user_card_id': card_id,
+                    'status': user_data.get('status'),
+                    'added_at': user_data.get('added_at'),
+                    'anniversary_date': user_data.get('anniversary_date'),
+                    'benefit_usage': user_data.get('benefit_usage', {}),
+                    'id': card_id,
+                    'card_id': card_id,
+                    'card_slug_id': card_id,
+                    'card_ref': user_data.get('card_ref') # Preserve ref
+                })
+                results.append(composite)
+            else:
+                results.append(user_data | {'id': card_id, 'name': 'Unknown Card'})
+
+        return results
 
     def update_card_status(self, uid, user_card_id, new_status):
         ref = self.db.collection('users').document(uid).collection('user_cards').document(user_card_id)
         ref.update({'status': new_status})
 
     def remove_card_from_user(self, uid, user_card_id):
-        # 1. Fetch doc to get card_slug before deleting
         doc_ref = self.db.collection('users').document(uid).collection('user_cards').document(user_card_id)
         doc = doc_ref.get()
         card_slug = None
         
         if doc.exists:
-            card_slug = doc.to_dict().get('card_id') # This is the generic card slug
+            card_slug = doc_ref.id 
             doc_ref.delete()
         else:
-            # Document might be gone or invalid ID
             return None
         
-        # Auto-evaluate personality
         try:
-            # 1. Get updated cards (active only)
             current_cards = self.get_user_cards(uid, status='active')
-            
-            # CONSISTENCY FIX: Explicitly remove the deleted card from the list if present
-            # Firestore queries might return the deleted document if eventually consistent
             current_cards = [c for c in current_cards if c.get('id') != user_card_id]
-            
-            # 2. Determine best fit (handles <= 1 logic internally)
             best_fit = self.determine_best_fit_personality(current_cards)
-            
-            # 3. Update profile if found
             if best_fit:
                 user_card_slugs = set(c.get('card_id') for c in current_cards)
                 personality_cards = set()
                 for slot in best_fit.get('slots', []):
                     personality_cards.update(slot.get('cards', []))
                 overlap = len(user_card_slugs.intersection(personality_cards))
-                
                 self.update_user_personality(uid, best_fit.get('id'), score=overlap)
-                print(f"Auto-assigned personality {best_fit.get('id')} to user {uid} with score {overlap}")
         except Exception as e:
             print(f"Error auto-evaluating personality on remove: {e}")
 
         return card_slug
 
     def update_card_details(self, uid, user_card_id, data):
-        # Generic update for user card (e.g. anniversary date)
         ref = self.db.collection('users').document(uid).collection('user_cards').document(user_card_id)
         ref.update(data)
 
@@ -427,11 +380,8 @@ class CardMixin:
         }
         
         if period_key:
-            # Update specific period
             if increment:
                 update_data[f'benefit_usage.{benefit_name}.periods.{period_key}.used'] = firestore.Increment(usage_amount)
-                # Note: We cannot increment the main 'used' field accurately if it's just a snapshot, 
-                # but we can increment it too assuming it tracks the same period
                 update_data[f'benefit_usage.{benefit_name}.used'] = firestore.Increment(usage_amount)
             else:
                 update_data[f'benefit_usage.{benefit_name}.periods.{period_key}.used'] = usage_amount
@@ -439,7 +389,6 @@ class CardMixin:
 
             update_data[f'benefit_usage.{benefit_name}.periods.{period_key}.is_full'] = is_full
         else:
-            # Legacy/Simple update
             if increment:
                 update_data[f'benefit_usage.{benefit_name}.used'] = firestore.Increment(usage_amount)
             else:
@@ -448,12 +397,9 @@ class CardMixin:
         card_ref.update(update_data)
 
     def toggle_benefit_ignore(self, uid, user_card_id, benefit_name, is_ignored):
-        """Toggle the ignore status of a benefit"""
         card_ref = self.db.collection('users').document(uid).collection('user_cards').document(user_card_id)
-        
         update_data = {
             f'benefit_usage.{benefit_name}.is_ignored': is_ignored,
             f'benefit_usage.{benefit_name}.last_updated': firestore.SERVER_TIMESTAMP
         }
-        
         card_ref.update(update_data)

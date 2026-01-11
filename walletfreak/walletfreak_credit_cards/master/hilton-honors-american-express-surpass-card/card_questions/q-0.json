@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Gold Status",
+    "question": "Do you value having Hilton Gold status for perks like space-available room upgrades and food/beverage credits?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Hotel Status"
+}

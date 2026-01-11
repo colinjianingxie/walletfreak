@@ -1,0 +1,17 @@
+{
+    "question_id": "q-3",
+    "short_desc": "Spending Habits",
+    "question": "How would you describe your monthly spending on everyday purchases?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Low (under $1,000)",
+        "Medium ($1,000-$3,000)",
+        "High (over $3,000)"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "All Purchases"
+}

@@ -1,0 +1,21 @@
+{
+    "benefit_id": "cell-phone-protection",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Cell Phone Protection",
+    "description": "Cell Phone Protection",
+    "additional_details": "up to $800 per claim, $50 deductible, max 2 claims per 12 months",
+    "benefit_category": [
+        "Business",
+        "Cell Phone Plans",
+        "Max"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 1600.0,
+    "numeric_type": "Cash",
+    "dollar_value": 1500,
+    "time_category": "Per Claim",
+    "enrollment_required": false,
+    "effective_date": "2025-01-01"
+}

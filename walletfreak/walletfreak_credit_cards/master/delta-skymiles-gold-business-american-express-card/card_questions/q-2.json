@@ -1,0 +1,19 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Business Advertising/Shipping",
+    "question": "Does your business spend at least $1,000 monthly on shipping or online advertising?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Yes, significant spend",
+        "Yes, moderate spend",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.6,
+        0.0
+    ],
+    "benefit_category": [
+        "Business"
+    ]
+}

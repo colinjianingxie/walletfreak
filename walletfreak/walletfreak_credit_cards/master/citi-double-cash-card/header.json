@@ -1,0 +1,25 @@
+{
+    "slug-id": "citi-double-cash-card",
+    "name": "Citi Double Cash Card",
+    "image_url": "/static/images/credit_cards/citi-double-cash-card.png",
+    "issuer": "Citi",
+    "annual_fee": 0,
+    "application_link": "https://www.citi.com/credit-cards/citi-double-cash-credit-card",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "0/10. No signup bonus. Poor value for churners.",
+    "points_value_cpp": null,
+    "active_indices": {
+        "benefits": [
+            "fraud-protection-v1",
+            "presale-access-v1"
+        ],
+        "earning_rates": [
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

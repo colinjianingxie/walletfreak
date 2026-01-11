@@ -1,0 +1,16 @@
+{
+    "rate_id": "dining",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": [
+        "Airlines",
+        "Dining",
+        "Health",
+        "Transit"
+    ],
+    "currency": "points",
+    "additional_details": "frequent categories",
+    "is_default": false
+}

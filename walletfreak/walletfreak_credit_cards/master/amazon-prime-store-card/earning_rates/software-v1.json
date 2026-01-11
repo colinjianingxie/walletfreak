@@ -1,0 +1,13 @@
+{
+    "rate_id": "software",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 5,
+    "category": [
+        "Software as a Service"
+    ],
+    "currency": "cash back",
+    "additional_details": "with Prime, on Alexa Skills",
+    "is_default": false
+}

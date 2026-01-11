@@ -1,0 +1,14 @@
+{
+    "benefit_id": "fraud-protection",
+    "short_description": "Fraud Protection",
+    "description": "Zero liability for unauthorized charges and real-time fraud monitoring.",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "Fraud Protection"
+    ],
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

@@ -1,0 +1,19 @@
+{
+    "benefit_id": "rideshare-credit",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Rideshare Credit",
+    "description": "$100 Annual Rideshare Credit ($8/month Jan-Nov, $12 Dec)",
+    "additional_details": "Statement credit for rideshare purchases",
+    "benefit_category": [
+        "Transit"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 100,
+    "numeric_type": "Cash",
+    "dollar_value": 100,
+    "time_category": "Monthly",
+    "enrollment_required": true,
+    "effective_date": "2025-12-28"
+}

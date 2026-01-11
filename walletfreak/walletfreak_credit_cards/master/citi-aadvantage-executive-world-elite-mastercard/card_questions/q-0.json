@@ -1,0 +1,19 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Admirals Club",
+    "question": "How often do you visit airport lounges when flying?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Never",
+        "Occasionally",
+        "Monthly",
+        "Weekly"
+    ],
+    "weights": [
+        0.0,
+        0.3,
+        0.8,
+        1.0
+    ],
+    "benefit_category": "Travel Perks"
+}

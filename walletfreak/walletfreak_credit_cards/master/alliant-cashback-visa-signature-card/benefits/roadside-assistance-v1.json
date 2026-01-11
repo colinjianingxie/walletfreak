@@ -1,0 +1,14 @@
+{
+    "benefit_id": "roadside-assistance",
+    "short_description": "Roadside Dispatch",
+    "description": "Access to a 24/7 roadside assistance hotline for services like towing, tire changing, and more (pay-per-use).",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "Protection"
+    ],
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

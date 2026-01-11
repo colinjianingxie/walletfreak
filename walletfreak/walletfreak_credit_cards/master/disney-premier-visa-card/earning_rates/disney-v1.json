@@ -1,0 +1,15 @@
+{
+    "rate_id": "disney",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 5,
+    "category": [
+        "Disney Parks",
+        "Disney Plus",
+        "Hulu"
+    ],
+    "currency": "points",
+    "additional_details": "Disney+, Hulu, and ESPN+ streaming",
+    "is_default": false
+}

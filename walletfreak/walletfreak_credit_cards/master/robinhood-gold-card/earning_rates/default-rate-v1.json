@@ -1,0 +1,11 @@
+{
+    "rate_id": "default-rate",
+    "multiplier": 3.0,
+    "category": [
+        "All Purchases"
+    ],
+    "is_default": true,
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

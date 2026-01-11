@@ -1,0 +1,13 @@
+{
+    "rate_id": "chase-travel-flights",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 8,
+    "category": [
+        "Chase Travel"
+    ],
+    "currency": "points",
+    "additional_details": "flights through Chase Travel",
+    "is_default": false
+}

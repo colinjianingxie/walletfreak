@@ -1,0 +1,15 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Credit History",
+    "question": "Do you have less than perfect credit and want to build it?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": "Credit Building"
+}

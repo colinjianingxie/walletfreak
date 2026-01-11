@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Low APR",
+    "question": "How often do you carry a balance on your credit card month-to-month?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Never",
+        "Occasionally",
+        "Often"
+    ],
+    "weights": [
+        0.0,
+        0.6,
+        1.0
+    ],
+    "benefit_category": "Financial & Rewards"
+}

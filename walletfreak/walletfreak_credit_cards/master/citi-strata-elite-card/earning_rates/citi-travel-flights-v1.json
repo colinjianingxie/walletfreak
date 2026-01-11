@@ -1,0 +1,13 @@
+{
+    "rate_id": "citi-travel-flights",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 6,
+    "category": [
+        "Citi Travel"
+    ],
+    "currency": "points",
+    "additional_details": "flights through Citi Travel",
+    "is_default": false
+}

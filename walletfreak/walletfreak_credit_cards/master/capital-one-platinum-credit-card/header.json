@@ -1,0 +1,25 @@
+{
+    "slug-id": "capital-one-platinum-credit-card",
+    "name": "Capital One Platinum Credit Card",
+    "image_url": "/static/images/credit_cards/capital-one-platinum-credit-card.avif",
+    "issuer": "Capital One",
+    "annual_fee": 0,
+    "application_link": "https://www.capitalone.com/credit-cards/platinum/",
+    "min_credit_score": 580,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "7/10. A no-frills workhorse for credit builders. While it completely lacks rewards and signup bonuses, its $0 annual fee and no foreign transaction fees make it a safe and inexpensive tool for establishing a credit history. The automatic credit line reviews are a great incentive for consistent, responsible use.",
+    "points_value_cpp": 0,
+    "active_indices": {
+        "benefits": [
+            "credit-line-increase-v1",
+            "no-foreign-fees-v1",
+            "fraud-liability-v1",
+            "credit-monitoring-v1"
+        ],
+        "earning_rates": [
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": []
+    }
+}

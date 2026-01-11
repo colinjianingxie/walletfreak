@@ -1,0 +1,33 @@
+{
+    "slug-id": "capital-one-venture-x-rewards-credit-card",
+    "name": "Capital One Venture X Rewards Credit Card",
+    "image_url": "/static/images/credit_cards/capital-one-venture-x-rewards-credit-card.webp",
+    "issuer": "Capital One",
+    "annual_fee": 395,
+    "application_link": "https://www.capitalone.com/credit-cards/venture-x/",
+    "min_credit_score": 740,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "10/10. High $10k spend but a single flat 100k miles. Very transparent.",
+    "points_value_cpp": 1.0,
+    "active_indices": {
+        "benefits": [
+            "travel-credit-v1",
+            "anniversary-miles-v1",
+            "lounge-access-v1",
+            "tsa-credit-v1",
+            "hertz-status-v1",
+            "prior-subscription-v1"
+        ],
+        "earning_rates": [
+            "capital-one-travel-hotels-v1",
+            "capital-one-travel-rental-cars-v1",
+            "capital-one-travel-flights-v1",
+            "capital-one-entertainment-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

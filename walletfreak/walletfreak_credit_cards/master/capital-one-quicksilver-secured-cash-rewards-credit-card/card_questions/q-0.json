@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Credit Review",
+    "question": "Are you focused on moving from a secured card to an unsecured one by building credit?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Somewhat",
+        "Highly"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Credit Building"
+}

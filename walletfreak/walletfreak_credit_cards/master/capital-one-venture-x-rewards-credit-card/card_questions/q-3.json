@@ -1,0 +1,19 @@
+{
+    "question_id": "q-3",
+    "short_desc": "TSA Credit",
+    "question": "Do you want a credit for Global Entry or TSA PreCheck to expedite your airport experience?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Already Have It",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.2,
+        1.0
+    ],
+    "benefit_category": [
+        "Travel Security"
+    ]
+}

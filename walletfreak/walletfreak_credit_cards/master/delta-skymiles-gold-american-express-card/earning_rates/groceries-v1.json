@@ -1,0 +1,13 @@
+{
+    "rate_id": "groceries",
+    "valid_from": "2020-01-01",
+    "valid_until": "2026-01-10",
+    "is_active": false,
+    "multiplier": 2,
+    "category": [
+        "Supermarkets"
+    ],
+    "currency": "miles",
+    "additional_details": "at U.S. supermarkets",
+    "is_default": false
+}

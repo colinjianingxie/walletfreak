@@ -1,0 +1,19 @@
+{
+    "benefit_id": "12-month-deferred-interest",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "12 month deferred interest",
+    "description": "No interest if paid in full within 12 months",
+    "additional_details": "On purchases of $599 or more. Deferred interest: full interest charged if not paid in full. Ends February 16, 2026. Cannot be combined with 5% back rewards.",
+    "benefit_category": [
+        "Retail Shopping"
+    ],
+    "benefit_type": "Deferred Interest",
+    "numeric_value": 12.0,
+    "numeric_type": "Months",
+    "dollar_value": null,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2025-01-01"
+}

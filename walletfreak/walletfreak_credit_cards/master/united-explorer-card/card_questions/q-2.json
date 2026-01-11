@@ -1,0 +1,17 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Club Passes",
+    "question": "How much do you value having a quiet workspace or refreshments during your United layovers?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Lounge Access"
+}

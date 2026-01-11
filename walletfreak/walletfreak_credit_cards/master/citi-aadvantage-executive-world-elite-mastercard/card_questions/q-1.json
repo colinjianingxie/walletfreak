@@ -1,0 +1,15 @@
+{
+    "question_id": "q-1",
+    "short_desc": "American Airlines Loyalty",
+    "question": "Is American Airlines your primary carrier for domestic travel?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Airlines"
+}

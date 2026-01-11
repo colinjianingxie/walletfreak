@@ -1,0 +1,21 @@
+{
+    "benefit_id": "tsagenexus-credit",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "TSA/GE/NEXUS Credit",
+    "description": "Up to $120 Global Entry, TSA PreCheck, or NEXUS fee credit",
+    "additional_details": null,
+    "benefit_category": [
+        "Global Entry",
+        "NEXUS",
+        "TSA PreCheck"
+    ],
+    "benefit_type": "Security",
+    "numeric_value": 120.0,
+    "numeric_type": "Cash",
+    "dollar_value": 120,
+    "time_category": "Every 4 years",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

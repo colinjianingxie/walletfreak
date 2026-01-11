@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Cash Back Rate",
+    "question": "Do you prefer a flat-rate rewards system for your business expenses without tracking categories?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Financial & Rewards"
+}

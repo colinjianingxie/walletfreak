@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Priority Pass",
+    "question": "Would you value having 4 one-time passes to airport lounges annually?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Lounge Access"
+}

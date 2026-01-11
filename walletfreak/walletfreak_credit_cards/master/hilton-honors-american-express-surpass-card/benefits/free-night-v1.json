@@ -1,0 +1,20 @@
+{
+    "benefit_id": "free-night",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Free Night",
+    "description": "Free Night Reward after $15,000 spend in calendar year",
+    "additional_details": null,
+    "benefit_category": [
+        "Generic Hilton",
+        "Hotels"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 1,
+    "numeric_type": "FreeNight",
+    "dollar_value": null,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

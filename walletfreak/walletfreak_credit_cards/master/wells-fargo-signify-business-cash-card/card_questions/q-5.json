@@ -1,0 +1,17 @@
+{
+    "question_id": "q-5",
+    "short_desc": "Rental Cars",
+    "question": "Do you frequently rent cars for business travel?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Yes",
+        "No",
+        "Occasionally"
+    ],
+    "weights": [
+        1.0,
+        0.0,
+        0.5
+    ],
+    "benefit_category": "Rental Coverage"
+}

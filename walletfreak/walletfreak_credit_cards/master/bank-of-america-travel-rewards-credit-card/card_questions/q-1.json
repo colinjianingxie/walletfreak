@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Preferred Rewards Bonus",
+    "question": "Do you have significant balances with Bank of America to unlock a 25%-75% points bonus?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "None",
+        "Some",
+        "High"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Rewards Bonus"
+}

@@ -1,0 +1,19 @@
+{
+    "benefit_id": "luggage-help",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Luggage Help",
+    "description": "Lost Luggage Assistance",
+    "additional_details": "Assistance in locating and coordinating the return of lost luggage when traveling.",
+    "benefit_category": [
+        "Travel Perks"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": null,
+    "numeric_type": "Perk",
+    "dollar_value": null,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

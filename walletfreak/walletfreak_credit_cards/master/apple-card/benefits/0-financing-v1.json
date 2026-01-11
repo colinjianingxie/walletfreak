@@ -1,0 +1,21 @@
+{
+    "benefit_id": "0-financing",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "0% Financing",
+    "description": "Apple Card Monthly Installments",
+    "additional_details": null,
+    "benefit_category": [
+        "Apple Store",
+        "Financial Rewards",
+        "Protection"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 0,
+    "numeric_type": null,
+    "dollar_value": 0,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2025-12-24"
+}

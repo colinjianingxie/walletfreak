@@ -1,0 +1,20 @@
+{
+    "benefit_id": "dashpass",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "DashPass",
+    "description": "Complimentary DashPass membership",
+    "additional_details": "activate by 12/31/2027",
+    "benefit_category": [
+        "Dining",
+        "DoorDash"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 120,
+    "numeric_type": "Cash",
+    "dollar_value": 120,
+    "time_category": "Minimum 12 months from activation",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

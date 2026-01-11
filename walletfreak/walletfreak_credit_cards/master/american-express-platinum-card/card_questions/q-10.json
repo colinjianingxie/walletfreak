@@ -1,0 +1,17 @@
+{
+    "question_id": "q-10",
+    "short_desc": "Oura Credit",
+    "question": "Do you value advanced sleep and health tracking with a premium smart ring?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Fitness,Wellness"
+}

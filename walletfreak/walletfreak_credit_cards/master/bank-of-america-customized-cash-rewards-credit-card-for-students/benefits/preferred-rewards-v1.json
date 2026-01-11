@@ -1,0 +1,19 @@
+{
+    "benefit_id": "preferred-rewards",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Preferred Rewards",
+    "description": "Preferred Rewards Eligibility",
+    "additional_details": null,
+    "benefit_category": [
+        "Financial Rewards"
+    ],
+    "benefit_type": "Bonus",
+    "numeric_value": 0,
+    "numeric_type": null,
+    "dollar_value": 0,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2025-12-24"
+}

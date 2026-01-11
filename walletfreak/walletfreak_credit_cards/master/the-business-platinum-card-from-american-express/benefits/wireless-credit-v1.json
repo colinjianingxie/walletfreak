@@ -1,0 +1,20 @@
+{
+    "benefit_id": "wireless-credit",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Wireless Credit",
+    "description": "$120 Wireless Telephone Credit",
+    "additional_details": "$10 monthly",
+    "benefit_category": [
+        "Business",
+        "Cell Phone Plans"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 120.0,
+    "numeric_type": "Cash",
+    "dollar_value": 120,
+    "time_category": "Monthly",
+    "enrollment_required": true,
+    "effective_date": "2025-12-07"
+}

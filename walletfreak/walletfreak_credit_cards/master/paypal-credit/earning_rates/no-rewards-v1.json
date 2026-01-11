@@ -1,0 +1,13 @@
+{
+    "rate_id": "no-rewards",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 0,
+    "category": [
+        "Financial Rewards"
+    ],
+    "currency": null,
+    "additional_details": "no rewards",
+    "is_default": false
+}

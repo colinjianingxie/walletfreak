@@ -1,0 +1,16 @@
+{
+    "rate_id": "transit-shipping-office",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 1.5,
+    "category": [
+        "Transit",
+        "Business",
+        "Shipping",
+        "Office Supplies"
+    ],
+    "currency": "miles",
+    "additional_details": "on eligible transit, U.S. shipping, and U.S. office supply store purchases",
+    "is_default": false
+}

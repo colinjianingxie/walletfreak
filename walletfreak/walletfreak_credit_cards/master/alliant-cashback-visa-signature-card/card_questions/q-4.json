@@ -1,0 +1,17 @@
+{
+    "question_id": "q-4",
+    "short_desc": "Spending Amount",
+    "question": "How much do you typically spend on credit cards each month?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Over $2,000",
+        "$1,000-$2,000",
+        "Under $1,000"
+    ],
+    "weights": [
+        1.0,
+        0.7,
+        0.3
+    ],
+    "benefit_category": "All Purchases"
+}

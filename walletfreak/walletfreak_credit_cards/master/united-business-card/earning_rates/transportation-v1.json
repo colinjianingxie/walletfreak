@@ -1,0 +1,13 @@
+{
+    "rate_id": "transportation",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": [
+        "Transit"
+    ],
+    "currency": "miles",
+    "additional_details": "Local transit and commuting",
+    "is_default": false
+}

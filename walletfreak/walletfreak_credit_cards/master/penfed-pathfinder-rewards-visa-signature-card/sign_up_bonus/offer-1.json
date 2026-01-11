@@ -1,0 +1,10 @@
+{
+    "offer_id": "offer-1",
+    "is_active": true,
+    "value": 0,
+    "terms": "No welcome bonus",
+    "currency": "Points",
+    "spend_amount": 0,
+    "duration_months": 0,
+    "effective_date": null
+}

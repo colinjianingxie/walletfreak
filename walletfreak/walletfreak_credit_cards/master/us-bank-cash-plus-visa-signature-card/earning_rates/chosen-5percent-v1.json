@@ -1,0 +1,11 @@
+{
+    "rate_id": "chosen-5percent",
+    "multiplier": 5.0,
+    "category": [
+        "Choice Category"
+    ],
+    "is_default": false,
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

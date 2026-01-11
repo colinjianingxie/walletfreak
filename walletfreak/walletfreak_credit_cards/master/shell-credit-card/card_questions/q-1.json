@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Monthly Fuel Spend",
+    "question": "How often do you fill up your vehicle with gas?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Frequently",
+        "Sometimes",
+        "Rarely"
+    ],
+    "weights": [
+        1.0,
+        0.5,
+        0.0
+    ],
+    "benefit_category": "Gas"
+}

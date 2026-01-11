@@ -1,0 +1,17 @@
+{
+    "question_id": "q-5",
+    "short_desc": "PRIOR Subscription",
+    "question": "Are you an enthusiast for curated, high-end travel guides and unique experiences?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": [
+        "Travel"
+    ]
+}

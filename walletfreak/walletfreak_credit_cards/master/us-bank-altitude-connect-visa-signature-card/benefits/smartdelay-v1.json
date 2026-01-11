@@ -1,0 +1,19 @@
+{
+    "benefit_id": "smartdelay",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "SmartDelay",
+    "description": "SmartDelay Lounge Access",
+    "additional_details": null,
+    "benefit_category": [
+        "Lounges"
+    ],
+    "benefit_type": "Access",
+    "numeric_value": 1,
+    "numeric_type": "Lounge",
+    "dollar_value": 50,
+    "time_category": "Per occurrence",
+    "enrollment_required": true,
+    "effective_date": "2025-12-24"
+}

@@ -1,0 +1,19 @@
+{
+    "benefit_id": "mqd-headstart",
+    "valid_from": "2020-01-01",
+    "valid_until": "2026-01-10",
+    "is_active": false,
+    "short_description": "MQD Headstart",
+    "description": "2,500 MQD Headstart",
+    "additional_details": "Receive 2,500 Medallion Qualification Dollars each year",
+    "benefit_category": [
+        "Travel Perks"
+    ],
+    "benefit_type": "Bonus",
+    "numeric_value": 2500.0,
+    "numeric_type": "Points",
+    "dollar_value": null,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

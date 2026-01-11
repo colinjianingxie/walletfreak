@@ -1,0 +1,19 @@
+{
+    "benefit_id": "travel-insurance",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Travel Insurance",
+    "description": "Travel Accident Insurance",
+    "additional_details": "Up to $100,000 in coverage for accidental death or dismemberment while traveling on common carriers.",
+    "benefit_category": [
+        "Travel Perks"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 100000.0,
+    "numeric_type": "Cash",
+    "dollar_value": null,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

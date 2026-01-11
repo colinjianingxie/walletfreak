@@ -1,0 +1,22 @@
+{
+    "slug-id": "capital-one-platinum-secured-credit-card",
+    "name": "Capital One Platinum Secured Credit Card",
+    "image_url": "/static/images/credit_cards/capital-one-platinum-secured-credit-card.webp",
+    "issuer": "Capital One",
+    "annual_fee": 0,
+    "application_link": "https://www.capitalone.com/credit-cards/apply/platinum-secured/",
+    "min_credit_score": 300,
+    "max_credit_score": 579,
+    "is_524": true,
+    "freak_verdict": "No Freak verdict for this card yet",
+    "points_value_cpp": null,
+    "active_indices": {
+        "benefits": [
+            "credit-building-v1"
+        ],
+        "earning_rates": [
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": []
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "rate_id": "travel-perks",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 4,
+    "category": [
+        "EV Charging",
+        "Transit",
+        "Travel Perks"
+    ],
+    "currency": "points",
+    "additional_details": "travel & gas",
+    "is_default": false
+}

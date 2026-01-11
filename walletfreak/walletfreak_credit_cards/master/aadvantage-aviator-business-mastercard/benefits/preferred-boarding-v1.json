@@ -1,0 +1,15 @@
+{
+    "benefit_id": "preferred-boarding",
+    "short_description": "Preferred Boarding",
+    "description": "Group 5 boarding on American Airlines flights for you and up to 4 companions.",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "American Airlines",
+        "Travel Perks"
+    ],
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

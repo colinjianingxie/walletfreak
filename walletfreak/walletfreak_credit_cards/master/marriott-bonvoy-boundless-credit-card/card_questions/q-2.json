@@ -1,0 +1,15 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Airline Credits",
+    "question": "Do you frequently make purchases related to air travel and appreciate rebates on those expenses?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Travel Perks"
+}

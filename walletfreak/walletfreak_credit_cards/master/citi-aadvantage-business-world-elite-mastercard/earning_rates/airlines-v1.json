@@ -1,0 +1,14 @@
+{
+    "rate_id": "airlines",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": [
+        "Airlines",
+        "American Airlines"
+    ],
+    "currency": "miles",
+    "additional_details": "eligible American Airlines purchases",
+    "is_default": false
+}

@@ -1,0 +1,20 @@
+{
+    "benefit_id": "saks-credit",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Saks Credit",
+    "description": "$100 Saks Fifth Avenue credit",
+    "additional_details": "$50 semi-annually",
+    "benefit_category": [
+        "Retail Shopping",
+        "Saks Fifth Avenue"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 100.0,
+    "numeric_type": "Cash",
+    "dollar_value": 100,
+    "time_category": "Semi-annually",
+    "enrollment_required": true,
+    "effective_date": "2025-11-29"
+}

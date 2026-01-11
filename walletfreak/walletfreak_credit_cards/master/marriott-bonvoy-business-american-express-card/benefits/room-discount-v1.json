@@ -1,0 +1,19 @@
+{
+    "benefit_id": "room-discount",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Room Discount",
+    "description": "7% Room Rate Discount",
+    "additional_details": "Book direct with Amex Business rate",
+    "benefit_category": [
+        "Generic Marriott Bonvoy"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 7.0,
+    "numeric_type": "Percent",
+    "dollar_value": null,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

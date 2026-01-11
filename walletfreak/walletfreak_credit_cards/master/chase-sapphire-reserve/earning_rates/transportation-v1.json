@@ -1,0 +1,13 @@
+{
+    "rate_id": "transportation",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 1,
+    "category": [
+        "Transit"
+    ],
+    "currency": "points",
+    "additional_details": "all other travel (e.g., cruises, transit, direct car rentals)",
+    "is_default": false
+}

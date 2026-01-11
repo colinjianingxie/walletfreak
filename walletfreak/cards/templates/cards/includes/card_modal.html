@@ -280,61 +280,31 @@ function openCardModal(cardId) {
 
     // Logic: Try remote URL (image_url/ImageURL) -> local_image -> heuristic local (slug+ext) -> default
     
-    // Helper to try loading an image
-    const tryLoadImage = (url, onSuccess, onError) => {
-        const img = new Image();
-        img.onload = () => onSuccess(url);
-        img.onerror = onError;
-        // Add cache buster to prevent caching issues
-        img.src = url;
-    };
-
-    // Chain step 3: Heuristic search for local image
-    const tryHeuristic = (index = 0) => {
-        const extensions = ['png', 'PNG', 'jpg', 'JPG', 'jpeg', 'webp', 'WEBP', 'avif', 'AVIF'];
-        if (index >= extensions.length) {
-            setDefaultVisual();
-            return;
-        }
-        
-        // Use slug if available, else id (if it looks like a slug)
-        // If id is numeric (mock data) and no slug, skip heuristic
-        if ((typeof card.id === 'number' || !isNaN(card.id)) && !card.slug) {
-             setDefaultVisual();
-             return;
-        }
-        
-        const slug = card.slug || card.id;
-        const path = `/static/images/credit_cards/${slug}.${extensions[index]}`;
-        
-        tryLoadImage(path, setBgImage, () => tryHeuristic(index + 1));
-    };
-
-    // Chain step 2: Check defined local_image
-    const tryLocalImage = () => {
-        if (card.local_image) {
-            // Handle path with or without /static/ prefix
-            let localPath = card.local_image;
-            if (!localPath.startsWith('/static/') && !localPath.startsWith('http')) {
-                 localPath = `/static/${localPath}`;
-            }
-            
-            tryLoadImage(localPath, setBgImage, () => tryHeuristic(0));
-        } else {
-            tryHeuristic(0);
-        }
-    };
-
-    // Chain step 1: Check remote URL (Prioritized)
+    // Logic: Use remote URL if available, otherwise local_image, otherwise default
+    
     // Check both snake_case and CamelCase to be safe
     let remoteUrl = card.image_url || card.ImageURL;
     
     // Fix: Strip absolute domain if present to avoid 404s on localhost
     if (remoteUrl) {
         remoteUrl = remoteUrl.replace('https://www.walletfreak.com', '').replace('https://walletfreak.com', '');
-        tryLoadImage(remoteUrl, setBgImage, tryLocalImage);
+    }
+
+    let imageUrl = null;
+    if (remoteUrl) {
+        imageUrl = remoteUrl;
+    } else if (card.local_image) {
+         let localPath = card.local_image;
+         if (!localPath.startsWith('/static/') && !localPath.startsWith('http')) {
+             localPath = `/static/${localPath}`;
+         }
+         imageUrl = localPath;
+    }
+
+    if (imageUrl) {
+        setBgImage(imageUrl);
     } else {
-        tryLocalImage();
+        setDefaultVisual();
     }
     
     // Stats
@@ -623,7 +593,7 @@ function openCardModal(cardId) {
     
     const benefits = card.benefits || [];
     // Filter out benefits with benefit_type "Multiplier" or "Cashback"
-    const filteredBenefits = benefits.filter(b => b.benefit_type !== 'Multiplier' && b.benefit_type !== 'Cashback');
+    const filteredBenefits = benefits.filter(b => b.benefit_type !== 'Multiplier' && b.benefit_type !== 'Cashback' && b.benefit_type !== 'Financing' && b.benefit_type !== 'Deferred Interest' && b.benefit_type !== 'Insurance');
     
     if (Array.isArray(filteredBenefits) && filteredBenefits.length > 0) {
         filteredBenefits.forEach((benefit, index) => {
@@ -677,8 +647,8 @@ function openCardModal(cardId) {
             const wrapper = document.createElement('div');
             wrapper.className = 'expandable-row-wrapper';
             wrapper.innerHTML = `
-                <div class="expandable-row" onclick="toggleExpandable(this)">
-                    <div class="earning-cat">${name}</div>
+                <div class="expandable-row" onclick="toggleExpandable(this)" style="width: 100%;">
+                    <div class="earning-cat" style="flex: 1;">${name}</div>
                     <div style="display: flex; align-items: center; gap: 0.5rem;">
                         <div class="${valueClass}">${valueDisplay}</div>
                         <span class="material-icons expand-arrow" style="font-size: 20px; color: #94A3B8;">expand_more</span>

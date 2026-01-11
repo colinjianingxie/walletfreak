@@ -1,0 +1,14 @@
+{
+    "rate_id": "gas",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "EV Charging",
+        "Gas"
+    ],
+    "currency": "cash back",
+    "additional_details": "choice category: Gas & EV Charging (first $50,000 combined annual spend on choice + dining)",
+    "is_default": false
+}

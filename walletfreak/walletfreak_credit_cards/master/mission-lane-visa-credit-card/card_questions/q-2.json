@@ -1,0 +1,17 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Rewards Interest",
+    "question": "Do you want a card that earns rewards on everyday spending?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Yes",
+        "No",
+        "Sometimes"
+    ],
+    "weights": [
+        1.0,
+        0.0,
+        0.5
+    ],
+    "benefit_category": "Rewards Bonus"
+}

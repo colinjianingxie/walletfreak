@@ -1,0 +1,15 @@
+{
+    "question_id": "q-4",
+    "short_desc": "No FTF",
+    "question": "Do you make international business purchases and want to avoid transaction fees?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Travel"
+}

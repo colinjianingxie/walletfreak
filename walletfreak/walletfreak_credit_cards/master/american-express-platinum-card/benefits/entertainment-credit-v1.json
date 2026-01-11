@@ -1,0 +1,19 @@
+{
+    "benefit_id": "entertainment-credit",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Entertainment Credit",
+    "description": "$300 Digital Entertainment Credit",
+    "additional_details": "$25 monthly",
+    "benefit_category": [
+        "Entertainment"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 300.0,
+    "numeric_type": "Cash",
+    "dollar_value": 300,
+    "time_category": "Monthly",
+    "enrollment_required": true,
+    "effective_date": "2025-11-29"
+}

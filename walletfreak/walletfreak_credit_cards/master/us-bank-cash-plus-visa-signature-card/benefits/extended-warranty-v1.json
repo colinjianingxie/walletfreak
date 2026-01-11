@@ -1,0 +1,14 @@
+{
+    "benefit_id": "extended-warranty",
+    "short_description": "Extended Warranty",
+    "description": "Extends the time period of the U.S. manufacturer's warranty by an additional year on eligible warranties of three years or less.",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Ongoing",
+    "benefit_category": [
+        "Protection"
+    ],
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

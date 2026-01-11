@@ -1,0 +1,20 @@
+{
+    "benefit_id": "inflight-savings",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Inflight Savings",
+    "description": "25% back on inflight purchases",
+    "additional_details": null,
+    "benefit_category": [
+        "Airlines",
+        "Southwest Airlines"
+    ],
+    "benefit_type": "Savings",
+    "numeric_value": 25.0,
+    "numeric_type": "Percent",
+    "dollar_value": null,
+    "time_category": "Permanent",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29"
+}

@@ -1,0 +1,13 @@
+{
+    "rate_id": "gas",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": [
+        "Gas Stations"
+    ],
+    "currency": "points",
+    "additional_details": "gas stations (up to $8,000 combined/year)",
+    "is_default": false
+}

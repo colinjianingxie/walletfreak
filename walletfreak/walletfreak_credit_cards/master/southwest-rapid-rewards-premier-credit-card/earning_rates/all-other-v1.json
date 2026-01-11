@@ -1,0 +1,12 @@
+{
+    "rate_id": "all-other",
+    "multiplier": 1.0,
+    "category": [
+        "All Purchases"
+    ],
+    "additional_details": "on all other purchases",
+    "is_default": true,
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true
+}

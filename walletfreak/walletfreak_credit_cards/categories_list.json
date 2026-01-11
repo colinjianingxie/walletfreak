@@ -1,0 +1,428 @@
+[
+    {
+        "CategoryName": "Airlines",
+        "Icon": "fa-solid fa-plane",
+        "CategoryNameDetailed": [
+            "Atmos Rewards",
+            "Alaska Airlines",
+            "Hawaiian Airlines",
+            "American Airlines",
+            "Delta Air Lines",
+            "United Airlines",
+            "Southwest Airlines",
+            "JetBlue TrueBlue",
+            "Spirit Airlines",
+            "Frontier Airlines",
+            "Air France KLM Flying Blue",
+            "British Airways Executive Club",
+            "Virgin Atlantic",
+            "Singapore Airlines KrisFlyer",
+            "Emirates Skywards",
+            "Qatar Airways Privilege Club",
+            "Lufthansa",
+            "Air Canada Aeroplan",
+            "Turkish Airlines Miles and Smiles",
+            "Avios Redemptions",
+            "Direct Airline Bookings"
+        ]
+    },
+    {
+        "CategoryName": "Hotels",
+        "Icon": "fa-solid fa-hotel",
+        "CategoryNameDetailed": [
+            "Generic Hilton",
+            "Conrad Hotels",
+            "Waldorf Astoria",
+            "Generic World of Hyatt",
+            "Park Hyatt",
+            "Andaz",
+            "Generic Marriott Bonvoy",
+            "The Ritz-Carlton",
+            "St. Regis",
+            "JW Marriott",
+            "Edition Hotels",
+            "W Hotels",
+            "Generic IHG",
+            "InterContinental",
+            "Generic Wyndham",
+            "Generic Choice Hotels",
+            "Generic Accor",
+            "Fairmont Hotels",
+            "Vacation Rentals",
+            "Airbnb",
+            "Vrbo",
+            "Direct Hotel Bookings",
+            "AAdvantage Hotels",
+            "Delta Stays"
+        ]
+    },
+    {
+        "CategoryName": "Travel Portals",
+        "Icon": "fa-solid fa-suitcase-rolling",
+        "CategoryNameDetailed": [
+            "Amex Travel",
+            "Chase Travel",
+            "The Edit by Chase Travel",
+            "Capital One Travel",
+            "Citi Travel",
+            "Bank of America Travel Center",
+            "Wells Fargo Rewards Travel",
+            "U.S. Bank Altitude Center",
+            "Expedia",
+            "Booking.com",
+            "Priceline",
+            "Hopper"
+        ]
+    },
+    {
+        "CategoryName": "Lounges",
+        "Icon": "fa-solid fa-couch",
+        "CategoryNameDetailed": [
+            "Centurion Lounge",
+            "Priority Pass Select",
+            "Capital One Lounge",
+            "Capital One Landing",
+            "Chase Sapphire Lounge by The Club",
+            "Delta Sky Club",
+            "United Club",
+            "Admirals Club",
+            "Escape Lounges",
+            "Lufthansa Lounges",
+            "Plaza Premium Lounge",
+            "Aspire Lounges",
+            "Air France Lounge",
+            "Virgin Atlantic Clubhouse"
+        ]
+    },
+    {
+        "CategoryName": "Dining",
+        "Icon": "fa-solid fa-utensils",
+        "CategoryNameDetailed": [
+            "Fine Dining",
+            "Casual Dining",
+            "Fast Food",
+            "Coffee Shops",
+            "Bakeries",
+            "Bars",
+            "Taverns",
+            "Resy Bookings",
+            "OpenTable Bookings",
+            "Sapphire Reserve Exclusive Tables"
+        ]
+    },
+    {
+        "CategoryName": "Delivery",
+        "Icon": "fa-solid fa-truck-ramp-box",
+        "CategoryNameDetailed": [
+            "DoorDash",
+            "Uber Eats",
+            "Grubhub",
+            "Instacart",
+            "Postmates",
+            "Seamless"
+        ]
+    },
+    {
+        "CategoryName": "Groceries",
+        "Icon": "fa-solid fa-cart-shopping",
+        "CategoryNameDetailed": [
+            "Supermarkets",
+            "Wholesale Clubs",
+            "Costco",
+            "Sam's Club",
+            "Whole Foods Market",
+            "Amazon Fresh",
+            "Online Grocery Delivery",
+            "Meal Kit Services"
+        ]
+    },
+    {
+        "CategoryName": "Gas",
+        "Icon": "fa-solid fa-gas-pump",
+        "CategoryNameDetailed": [
+            "Gas Stations",
+            "EV Charging",
+            "International Gas Stations",
+            "Fuel Dispensers"
+        ]
+    },
+    {
+        "CategoryName": "Transit",
+        "Icon": "fa-solid fa-train-subway",
+        "CategoryNameDetailed": [
+            "Public Transportation",
+            "Trains",
+            "Subways",
+            "Buses",
+            "Ferries",
+            "Taxis",
+            "Uber",
+            "Lyft",
+            "Parking",
+            "Tolls",
+            "Bridges"
+        ]
+    },
+    {
+        "CategoryName": "Car Rentals",
+        "Icon": "fa-solid fa-car",
+        "CategoryNameDetailed": [
+            "Hertz",
+            "National Car Rental",
+            "Enterprise",
+            "Avis",
+            "Sixt",
+            "Generic Rental Cars",
+            "Turo"
+        ]
+    },
+    {
+        "CategoryName": "Retail Shopping",
+        "Icon": "fa-solid fa-bag-shopping",
+        "CategoryNameDetailed": [
+            "Amazon",
+            "Walmart",
+            "Target",
+            "Online Retail",
+            "Department Stores",
+            "Clothing Stores",
+            "Electronics Stores",
+            "Best Buy",
+            "Apple Store",
+            "Saks Fifth Avenue",
+            "lululemon",
+            "Macy's"
+        ]
+    },
+    {
+        "CategoryName": "Home Improvement",
+        "Icon": "fa-solid fa-hammer",
+        "CategoryNameDetailed": [
+            "Lowe's",
+            "The Home Depot",
+            "Hardware Stores",
+            "Lumber Yards",
+            "Landscaping",
+            "Interior Decorating",
+            "Furniture Stores"
+        ]
+    },
+    {
+        "CategoryName": "Utilities",
+        "Icon": "fa-solid fa-bolt",
+        "CategoryNameDetailed": [
+            "Electric Bills",
+            "Water",
+            "Sanitation",
+            "Natural Gas",
+            "Internet Services",
+            "Cable TV",
+            "Satellite TV",
+            "Trash Collection"
+        ]
+    },
+    {
+        "CategoryName": "Telecom",
+        "Icon": "fa-solid fa-mobile-screen",
+        "CategoryNameDetailed": [
+            "Verizon",
+            "AT&T",
+            "T-Mobile",
+            "Cell Phone Plans",
+            "Phone Equipment Purchases",
+            "Landline Services"
+        ]
+    },
+    {
+        "CategoryName": "Streaming",
+        "Icon": "fa-solid fa-clapperboard",
+        "CategoryNameDetailed": [
+            "Netflix",
+            "Disney Plus",
+            "Hulu",
+            "Max",
+            "YouTube TV",
+            "Apple TV Plus",
+            "Paramount Plus",
+            "Spotify",
+            "Apple Music",
+            "Peacock"
+        ]
+    },
+    {
+        "CategoryName": "Entertainment",
+        "Icon": "fa-solid fa-ticket",
+        "CategoryNameDetailed": [
+            "Movie Theaters",
+            "Ticketmaster",
+            "Live Nation",
+            "StubHub",
+            "Theme Parks",
+            "Disney Parks",
+            "Museums",
+            "Zoos",
+            "Aquariums",
+            "Tourist Attractions"
+        ]
+    },
+    {
+        "CategoryName": "Health",
+        "Icon": "fa-solid fa-heart-pulse",
+        "CategoryNameDetailed": [
+            "Drugstores",
+            "Pharmacy",
+            "CVS",
+            "Walgreens",
+            "Hospitals",
+            "Doctor Offices",
+            "Dentists",
+            "Optometrists"
+        ]
+    },
+    {
+        "CategoryName": "Wellness",
+        "Icon": "fa-solid fa-spa",
+        "CategoryNameDetailed": [
+            "Gym Memberships",
+            "Fitness Clubs",
+            "Equinox",
+            "Peloton",
+            "Spa Services",
+            "Hair Salons",
+            "Nail Salons"
+        ]
+    },
+    {
+        "CategoryName": "Business",
+        "Icon": "fa-solid fa-briefcase",
+        "CategoryNameDetailed": [
+            "Social Media Advertising",
+            "Search Engine Advertising",
+            "Google Ads",
+            "Meta Ads",
+            "Software as a Service",
+            "Cloud Infrastructure",
+            "AWS",
+            "Microsoft Azure",
+            "Office Supplies",
+            "Shipping",
+            "Freight",
+            "FedEx",
+            "UPS",
+            "USPS",
+            "Dell Technologies",
+            "Adobe",
+            "Indeed"
+        ]
+    },
+    {
+        "CategoryName": "Education",
+        "Icon": "fa-solid fa-graduation-cap",
+        "CategoryNameDetailed": [
+            "Tuition Payments",
+            "Student Loans",
+            "School Supplies",
+            "Vocational Schools",
+            "Universities"
+        ]
+    },
+    {
+        "CategoryName": "Pet Care",
+        "Icon": "fa-solid fa-paw",
+        "CategoryNameDetailed": [
+            "Veterinary Services",
+            "Pet Shops",
+            "Pet Insurance",
+            "Pet Grooming",
+            "Dog Walking",
+            "Pet Boarding"
+        ]
+    },
+    {
+        "CategoryName": "Fixed Expenses",
+        "Icon": "fa-solid fa-money-bill-transfer",
+        "CategoryNameDetailed": [
+            "Rent Payments",
+            "Bilt Rewards Rent",
+            "Insurance Premiums",
+            "Auto Insurance",
+            "Home Insurance",
+            "Life Insurance",
+            "IRS Tax Payments",
+            "State Taxes",
+            "Local Taxes"
+        ]
+    },
+    {
+        "CategoryName": "Charity",
+        "Icon": "fa-solid fa-hand-holding-heart",
+        "CategoryNameDetailed": [
+            "Non-profit Organizations",
+            "Religious Organizations",
+            "Social Services",
+            "Charitable Donations"
+        ]
+    },
+    {
+        "CategoryName": "Cruises",
+        "Icon": "fa-solid fa-ship",
+        "CategoryNameDetailed": [
+            "Norwegian Cruise Line",
+            "Royal Caribbean",
+            "Carnival",
+            "Celebrity Cruises",
+            "Disney Cruise Line",
+            "Holland America",
+            "Princess Cruises"
+        ]
+    },
+    {
+        "CategoryName": "Financial Rewards",
+        "Icon": "fa-solid fa-coins",
+        "CategoryNameDetailed": [
+            "All Purchases",
+            "Anniversary Bonus",
+            "Status Boost",
+            "Rotating Categories",
+            "Choice Category",
+            "Mobile Wallet",
+            "Apple Pay",
+            "Google Pay",
+            "Samsung Pay"
+        ]
+    },
+    {
+        "CategoryName": "Protection",
+        "Icon": "fa-solid fa-shield-halved",
+        "CategoryNameDetailed": [
+            "Cell Phone Protection",
+            "Purchase Protection",
+            "Extended Warranty",
+            "Trip Cancellation",
+            "Primary Rental Insurance",
+            "Fraud Protection",
+            "Return Protection",
+            "Baggage Delay Insurance"
+        ]
+    },
+    {
+        "CategoryName": "Travel Perks",
+        "Icon": "fa-solid fa-passport",
+        "CategoryNameDetailed": [
+            "Free Checked Bags",
+            "Upgrade Priority",
+            "Preferred Seating",
+            "Extra Legroom Upgrades",
+            "Priority Boarding",
+            "Companion Certificates",
+            "In-flight Discounts",
+            "Airline Incidental Credits",
+            "Hotel Experience Credits",
+            "Global Entry",
+            "TSA PreCheck",
+            "NEXUS",
+            "CLEAR Plus",
+            "Airport Security Credits"
+        ]
+    }
+]

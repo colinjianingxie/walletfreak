@@ -1,0 +1,15 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Gift Card",
+    "question": "How likely are you to use a $150 Amazon gift card immediately upon approval?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Shopping"
+}

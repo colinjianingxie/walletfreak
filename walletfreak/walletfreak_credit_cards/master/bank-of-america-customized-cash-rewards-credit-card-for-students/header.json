@@ -1,0 +1,25 @@
+{
+    "slug-id": "bank-of-america-customized-cash-rewards-credit-card-for-students",
+    "name": "Bank of America Customized Cash Rewards credit card for Students",
+    "image_url": "/static/images/credit_cards/bank-of-america-customized-cash-rewards-credit-card-for-students.png",
+    "issuer": "Bank of America",
+    "annual_fee": 0,
+    "application_link": "https://www.bankofamerica.com/upac/#/get-started?campaignId=4076372&productOfferCode=DA",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "No Freak verdict for this card yet",
+    "points_value_cpp": null,
+    "active_indices": {
+        "benefits": [
+            "flexible-bonus-v1",
+            "preferred-rewards-v1"
+        ],
+        "earning_rates": [
+            "choice-category-v1",
+            "groceries-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": []
+    }
+}

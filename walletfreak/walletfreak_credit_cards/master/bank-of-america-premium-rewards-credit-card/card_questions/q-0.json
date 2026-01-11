@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Rewards Boost",
+    "question": "Do you have significant balances with Bank of America or Merrill to unlock a 25%-75% points bonus?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "None",
+        "Some",
+        "High"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Bonus"
+}

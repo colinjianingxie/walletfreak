@@ -1,0 +1,19 @@
+{
+    "benefit_id": "bt-intro-apr",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "BT Intro APR",
+    "description": "0% Intro APR for 21 months on balance transfers",
+    "additional_details": "Transfers must be completed within 4 months of account opening",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 21,
+    "numeric_type": "Months",
+    "dollar_value": null,
+    "time_category": "Minimum 12 months",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

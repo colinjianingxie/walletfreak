@@ -1,0 +1,19 @@
+{
+    "benefit_id": "phone-protection",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Phone Protection",
+    "description": "Cell Phone Protection",
+    "additional_details": "Up to $600 per claim if you pay your monthly bill with the card",
+    "benefit_category": [
+        "Cell Phone Plans"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 600.0,
+    "numeric_type": "Cash",
+    "dollar_value": 600,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

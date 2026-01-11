@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Dining Rewards",
+    "question": "How often do you eat out or order from restaurants?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Rarely",
+        "Occasionally",
+        "Daily"
+    ],
+    "weights": [
+        0.0,
+        0.6,
+        1.0
+    ],
+    "benefit_category": "Dining"
+}

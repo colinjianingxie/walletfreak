@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Companion Travel",
+    "question": "Do you travel with a companion at least once a year on domestic or near-international flights?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": [
+        "Companion Certificates"
+    ]
+}

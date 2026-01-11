@@ -1,0 +1,14 @@
+{
+    "rate_id": "dining",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": [
+        "Dining",
+        "Travel Perks"
+    ],
+    "currency": "miles",
+    "additional_details": "other travel",
+    "is_default": false
+}

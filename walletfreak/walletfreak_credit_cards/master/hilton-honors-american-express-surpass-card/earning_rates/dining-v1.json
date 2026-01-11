@@ -1,0 +1,15 @@
+{
+    "rate_id": "dining",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 6,
+    "category": [
+        "Dining",
+        "Gas",
+        "Supermarkets"
+    ],
+    "currency": "points",
+    "additional_details": "U.S. restaurants, supermarkets, gas",
+    "is_default": false
+}

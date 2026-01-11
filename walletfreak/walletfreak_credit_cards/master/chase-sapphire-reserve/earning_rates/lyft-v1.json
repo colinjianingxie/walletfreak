@@ -1,0 +1,13 @@
+{
+    "rate_id": "lyft",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 5,
+    "category": [
+        "Lyft"
+    ],
+    "currency": "points",
+    "additional_details": "on Lyft rides through Sep 30, 2027",
+    "is_default": false
+}

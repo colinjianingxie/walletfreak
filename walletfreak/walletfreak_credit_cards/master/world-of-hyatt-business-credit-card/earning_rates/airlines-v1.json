@@ -1,0 +1,13 @@
+{
+    "rate_id": "airlines",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": [
+        "Airlines"
+    ],
+    "currency": "points",
+    "additional_details": "Top 3 category (Airlines)",
+    "is_default": false
+}

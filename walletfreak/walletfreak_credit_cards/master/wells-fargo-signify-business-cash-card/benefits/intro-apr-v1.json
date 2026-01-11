@@ -1,0 +1,14 @@
+{
+    "benefit_id": "intro-apr",
+    "short_description": "Intro APR on Purchases",
+    "description": "0% intro APR on purchases for a long period, making it ideal for financing business expenses.",
+    "value": 0,
+    "currency": "Cash",
+    "period": "Annually",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

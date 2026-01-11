@@ -1,0 +1,20 @@
+{
+    "benefit_id": "mqd-boost",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "MQD Boost",
+    "description": "Earn $1 MQD for each $20 spent",
+    "additional_details": "on purchases with the card",
+    "benefit_category": [
+        "Delta Air Lines",
+        "Status Boost"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": null
+}

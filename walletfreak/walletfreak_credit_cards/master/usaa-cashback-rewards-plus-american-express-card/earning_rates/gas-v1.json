@@ -1,0 +1,14 @@
+{
+    "rate_id": "gas",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 5,
+    "category": [
+        "Gas",
+        "Retail Shopping"
+    ],
+    "currency": "cash back",
+    "additional_details": "gas & military bases",
+    "is_default": false
+}

@@ -1,0 +1,17 @@
+{
+    "question_id": "q-2",
+    "short_desc": "High Spending Bonus",
+    "question": "What is your approximate monthly business credit card spend?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Under $10k",
+        "$10k - $50k",
+        "Over $50k"
+    ],
+    "weights": [
+        0.2,
+        0.7,
+        1.0
+    ],
+    "benefit_category": "All Purchases"
+}

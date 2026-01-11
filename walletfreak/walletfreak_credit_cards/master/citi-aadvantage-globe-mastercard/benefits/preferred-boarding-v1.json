@@ -1,0 +1,19 @@
+{
+    "benefit_id": "preferred-boarding",
+    "short_description": "Preferred Boarding",
+    "description": "Enjoy Group 5 preferred boarding on American Airlines flights for the primary cardmember and up to eight companions on the same reservation.",
+    "additional_details": "Group 5 is the first group in the second lane.",
+    "benefit_category": [
+        "Priority Boarding"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 0.0,
+    "numeric_type": "Cash",
+    "dollar_value": 0,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

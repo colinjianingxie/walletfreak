@@ -1,0 +1,19 @@
+{
+    "benefit_id": "inflight-discount",
+    "short_description": "In-flight Savings",
+    "description": "20% back on in-flight purchases",
+    "additional_details": "Receive a 20% statement credit on eligible Delta in-flight purchases of food and beverages.",
+    "benefit_category": [
+        "In-flight Discounts"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 20.0,
+    "numeric_type": "Percent",
+    "dollar_value": 20,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

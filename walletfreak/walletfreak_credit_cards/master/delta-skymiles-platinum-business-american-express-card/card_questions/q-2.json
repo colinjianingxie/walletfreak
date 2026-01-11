@@ -1,0 +1,17 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Business Spend Profile",
+    "question": "Does your business have significant spending on transit, shipping, or single transactions over $5,000?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": [
+        "Business"
+    ]
+}

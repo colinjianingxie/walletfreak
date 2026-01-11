@@ -1,0 +1,13 @@
+{
+    "rate_id": "shopping",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 10,
+    "category": [
+        "Amazon"
+    ],
+    "currency": "cash back",
+    "additional_details": "rotating items (distinct from generic Amazon)",
+    "is_default": false
+}

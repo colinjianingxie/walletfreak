@@ -1,0 +1,21 @@
+{
+    "benefit_id": "property-credit",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Property Credit",
+    "description": "$100 Property Credit",
+    "additional_details": "Waldorf Astoria/Conrad 2-night min",
+    "benefit_category": [
+        "Conrad Hotels",
+        "Hotels",
+        "Waldorf Astoria"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 100.0,
+    "numeric_type": "Cash",
+    "dollar_value": 100,
+    "time_category": "Per qualifying stay",
+    "enrollment_required": false,
+    "effective_date": "2025-12-25"
+}

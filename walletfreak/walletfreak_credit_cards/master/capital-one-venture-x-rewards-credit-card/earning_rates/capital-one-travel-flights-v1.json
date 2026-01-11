@@ -1,0 +1,13 @@
+{
+    "rate_id": "capital-one-travel-flights",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 5,
+    "category": [
+        "Capital One Travel"
+    ],
+    "currency": "miles",
+    "additional_details": "flights through portal",
+    "is_default": false
+}

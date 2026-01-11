@@ -1,0 +1,30 @@
+{
+    "slug-id": "us-bank-altitude-connect-visa-signature-card",
+    "name": "U.S. Bank Altitude Connect Visa Signature Card",
+    "image_url": "/static/images/credit_cards/us-bank-altitude-connect-visa-signature-card.png",
+    "issuer": "U.S. Bank",
+    "annual_fee": 0,
+    "application_link": "https://applications.usbank.com/oad/termsSimpleApply.controller?locationCode=18569&offerId=8BB5BD89H1&sourceCode=88416",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "10/10. Flat 50k points for $2k spend.",
+    "points_value_cpp": 1.0,
+    "active_indices": {
+        "benefits": [
+            "tsa-credit-v1",
+            "priority-pass-v1",
+            "gigsky-global-data-v1",
+            "smartdelay-v1"
+        ],
+        "earning_rates": [
+            "hotels-v1",
+            "travel-perks-v1",
+            "dining-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

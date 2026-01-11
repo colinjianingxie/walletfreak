@@ -1,0 +1,25 @@
+{
+    "slug-id": "discover-it-cash-back",
+    "name": "Discover it Cash Back",
+    "image_url": "/static/images/credit_cards/discover-it-cash-back.png",
+    "issuer": "Discover",
+    "annual_fee": 0,
+    "application_link": "https://www.discovercard.com/application/website/apply?srcCde=GJVP&adobe_mc=...",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "5/10. No upfront bonus. Cashback match arrives after 12 months.",
+    "points_value_cpp": null,
+    "active_indices": {
+        "benefits": [
+            "free-fico-score-v1"
+        ],
+        "earning_rates": [
+            "rotating-categories-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

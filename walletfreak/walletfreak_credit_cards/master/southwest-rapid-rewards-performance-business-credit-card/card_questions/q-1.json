@@ -1,0 +1,19 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Upgraded Boardings",
+    "question": "How many times a year would you appreciate better boarding position for yourself or your team?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "0",
+        "1-2",
+        "3-4",
+        "5+"
+    ],
+    "weights": [
+        0.0,
+        0.4,
+        0.9,
+        1.0
+    ],
+    "benefit_category": "Travel Perks"
+}

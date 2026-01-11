@@ -1,0 +1,20 @@
+{
+    "benefit_id": "upgrade-priority",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Upgrade Priority",
+    "description": "Complimentary upgrade eligibility",
+    "additional_details": "Added to upgrade list for Premium Select, First Class, or Delta One on U.S. flights",
+    "benefit_category": [
+        "Delta Air Lines",
+        "Upgrade Priority"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": null
+}

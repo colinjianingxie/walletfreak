@@ -1,0 +1,13 @@
+{
+    "rate_id": "dining",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Dining"
+    ],
+    "currency": "cash back",
+    "additional_details": "dining & takeout",
+    "is_default": false
+}

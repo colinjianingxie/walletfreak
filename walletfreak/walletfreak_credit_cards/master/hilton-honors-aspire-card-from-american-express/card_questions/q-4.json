@@ -1,0 +1,15 @@
+{
+    "question_id": "q-4",
+    "short_desc": "CLEAR Plus Credit",
+    "question": "Do you want up to $209 back annually for CLEAR Plus membership to expedite airport security?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Travel Security"
+}

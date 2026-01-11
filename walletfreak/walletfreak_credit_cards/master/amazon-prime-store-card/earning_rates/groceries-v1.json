@@ -1,0 +1,14 @@
+{
+    "rate_id": "groceries",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 5,
+    "category": [
+        "Amazon",
+        "Amazon Fresh"
+    ],
+    "currency": "cash back",
+    "additional_details": "with Prime, on Amazon Fresh",
+    "is_default": false
+}

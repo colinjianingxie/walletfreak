@@ -1,0 +1,17 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Preferred Rewards",
+    "question": "Are you interested in banking with Bank of America for extra rewards?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Maybe",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Financial"
+}

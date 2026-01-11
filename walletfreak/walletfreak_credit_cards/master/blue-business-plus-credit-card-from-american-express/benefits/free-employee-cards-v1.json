@@ -1,0 +1,19 @@
+{
+    "benefit_id": "free-employee-cards",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Free Employee Cards",
+    "description": "Free additional employee cards",
+    "additional_details": null,
+    "benefit_category": [
+        "Business"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": 25,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2025-12-08"
+}

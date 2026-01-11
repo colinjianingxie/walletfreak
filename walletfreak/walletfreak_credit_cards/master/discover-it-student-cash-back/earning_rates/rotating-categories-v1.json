@@ -1,0 +1,13 @@
+{
+    "rate_id": "rotating-categories",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 5,
+    "category": [
+        "Rotating Categories"
+    ],
+    "currency": "cash back",
+    "additional_details": "quarterly",
+    "is_default": false
+}

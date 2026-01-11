@@ -1,0 +1,17 @@
+{
+    "question_id": "q-7",
+    "short_desc": "Entertainment Credit",
+    "question": "How often do you buy tickets for live concerts, professional sports, or theater events via StubHub?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Entertainment"
+}

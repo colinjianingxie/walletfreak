@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Travel Rewards",
+    "question": "How many trips do you typically take in a year?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "0-2",
+        "3-5",
+        "6+"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Travel"
+}

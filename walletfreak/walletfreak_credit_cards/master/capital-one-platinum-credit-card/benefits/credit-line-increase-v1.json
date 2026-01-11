@@ -1,0 +1,19 @@
+{
+    "benefit_id": "credit-line-increase",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Credit Line Increase",
+    "description": "Automatic credit line reviews in as little as 6 months",
+    "additional_details": "Be automatically considered for a higher credit line with responsible use.",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
+    "benefit_type": "Upgrade",
+    "numeric_value": 6.0,
+    "numeric_type": "Months",
+    "dollar_value": null,
+    "time_category": "Minimum 12 months",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

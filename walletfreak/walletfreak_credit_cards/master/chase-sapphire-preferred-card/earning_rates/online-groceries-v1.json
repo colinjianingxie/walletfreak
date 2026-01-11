@@ -1,0 +1,13 @@
+{
+    "rate_id": "online-groceries",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 3,
+    "category": [
+        "Online Grocery Delivery"
+    ],
+    "currency": "points",
+    "additional_details": "online groceries",
+    "is_default": false
+}

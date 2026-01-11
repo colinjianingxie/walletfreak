@@ -1,0 +1,15 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Interest-Free Preference",
+    "question": "Would you prefer interest-free payment terms over earning cash back on purchases?",
+    "question_type": "boolean",
+    "choices": [
+        "Yes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.0
+    ],
+    "benefit_category": "Generic Financial & Rewards"
+}

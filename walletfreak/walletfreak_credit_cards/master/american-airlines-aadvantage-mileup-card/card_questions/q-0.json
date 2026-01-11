@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Grocery Rewards",
+    "question": "How would you describe your monthly spending on groceries?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Low",
+        "Moderate",
+        "High"
+    ],
+    "weights": [
+        0.2,
+        0.6,
+        1.0
+    ],
+    "benefit_category": "Groceries"
+}

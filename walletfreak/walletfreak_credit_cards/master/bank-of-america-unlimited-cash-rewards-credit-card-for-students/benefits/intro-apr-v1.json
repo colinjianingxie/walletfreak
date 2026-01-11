@@ -1,0 +1,19 @@
+{
+    "benefit_id": "intro-apr",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Intro APR",
+    "description": "0% Introductory APR for 15 billing cycles",
+    "additional_details": "Applies to purchases and balance transfers made within 60 days of account opening",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 15.0,
+    "numeric_type": "Months",
+    "dollar_value": null,
+    "time_category": "First year",
+    "enrollment_required": false,
+    "effective_date": "2025-12-28"
+}

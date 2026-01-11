@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Disney Perks",
+    "question": "How often do you visit Disney parks or shop at the Disney Store?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Occasionally",
+        "Frequently"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Disney"
+}

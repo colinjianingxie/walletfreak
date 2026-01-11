@@ -1,0 +1,17 @@
+{
+    "question_id": "q-11",
+    "short_desc": "Exclusive Tables",
+    "question": "Do you enjoy having special access to sought-after restaurant reservations and earning credits on dining?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Dining"
+}

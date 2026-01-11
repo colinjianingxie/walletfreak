@@ -1,0 +1,17 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Unlimited Cash Back",
+    "question": "What is your estimated annual spending on a credit card?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Less than $10,000",
+        "$10,000-$50,000",
+        "More than $50,000"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Cash Back"
+}

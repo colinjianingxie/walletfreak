@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Points Transfer",
+    "question": "Do you value transferring points to airline or hotel partners?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Sometimes",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        0.5,
+        1.0
+    ],
+    "benefit_category": "Travel Perks"
+}

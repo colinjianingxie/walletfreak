@@ -1,0 +1,15 @@
+{
+    "question_id": "q-3",
+    "short_desc": "SmartDelay",
+    "question": "Would you value free lounge access for you and guests if your flight is delayed?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Lounge Access"
+}

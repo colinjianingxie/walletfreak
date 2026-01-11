@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Flat Rate Cash Back",
+    "question": "Do you prefer a simple, flat-rate cash back percentage on every purchase?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Financial"
+}

@@ -1,0 +1,13 @@
+{
+    "rate_id": "dining",
+    "valid_from": "2020-01-01",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": [
+        "Dining"
+    ],
+    "currency": "cash back",
+    "additional_details": "automatic 2% rate (first $50,000 combined annual spend on choice + dining)",
+    "is_default": false
+}

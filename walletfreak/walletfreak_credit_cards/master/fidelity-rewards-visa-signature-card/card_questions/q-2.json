@@ -1,0 +1,17 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Spending Habits",
+    "question": "How often do you make everyday purchases where flat-rate cash back would benefit you?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Frequently",
+        "Sometimes",
+        "Rarely"
+    ],
+    "weights": [
+        1.0,
+        0.5,
+        0.0
+    ],
+    "benefit_category": "All Purchases"
+}

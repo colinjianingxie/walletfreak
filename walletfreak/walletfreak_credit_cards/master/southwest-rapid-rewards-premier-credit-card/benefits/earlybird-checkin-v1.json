@@ -1,0 +1,15 @@
+{
+    "benefit_id": "earlybird-checkin",
+    "short_description": "2 EarlyBird Check-Ins",
+    "description": "Enjoy 2 EarlyBird Check-Ins per year.",
+    "value": 2,
+    "currency": "Perks",
+    "period": "Annually",
+    "benefit_category": [
+        "Southwest Airlines",
+        "Travel Perks"
+    ],
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

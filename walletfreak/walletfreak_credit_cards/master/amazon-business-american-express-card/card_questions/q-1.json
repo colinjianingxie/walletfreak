@@ -1,0 +1,17 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Amazon Business Spending",
+    "question": "Do you frequently make business purchases on Amazon.com, Amazon Business, or AWS?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Yes",
+        "No",
+        "Sometimes"
+    ],
+    "weights": [
+        1.0,
+        0.0,
+        0.5
+    ],
+    "benefit_category": "Amazon"
+}

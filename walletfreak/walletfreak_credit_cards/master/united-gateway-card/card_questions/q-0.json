@@ -1,0 +1,15 @@
+{
+    "question_id": "q-0",
+    "short_desc": "Inflight Discount",
+    "question": "Do you frequently purchase Wi-Fi or snacks on United flights?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": "Airlines"
+}

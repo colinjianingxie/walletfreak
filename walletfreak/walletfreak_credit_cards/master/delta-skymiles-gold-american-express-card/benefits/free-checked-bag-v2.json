@@ -1,0 +1,19 @@
+{
+    "benefit_id": "free-checked-bag",
+    "short_description": "Free Checked Bag",
+    "description": "Your first checked bag is free on Delta flights for you and up to 8 companions traveling on the same reservation.",
+    "additional_details": "Benefit applies only to flights marketed and operated by Delta or Delta Connection.",
+    "benefit_category": [
+        "Free Checked Bags"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 1.0,
+    "numeric_type": "Passes",
+    "dollar_value": 70,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2026-01-11",
+    "valid_from": "2026-01-11",
+    "valid_until": null,
+    "is_active": true
+}

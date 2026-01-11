@@ -1,0 +1,19 @@
+{
+    "question_id": "q-3",
+    "short_desc": "Inflight Purchases",
+    "question": "Do you often make inflight purchases on Southwest flights?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Yes",
+        "No",
+        "Sometimes"
+    ],
+    "weights": [
+        1.0,
+        0.0,
+        0.5
+    ],
+    "benefit_category": [
+        "Travel Perks"
+    ]
+}

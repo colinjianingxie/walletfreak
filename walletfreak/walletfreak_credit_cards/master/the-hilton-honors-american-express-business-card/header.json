@@ -1,0 +1,27 @@
+{
+    "slug-id": "the-hilton-honors-american-express-business-card",
+    "name": "The Hilton Honors American Express Business Card",
+    "image_url": "/static/images/credit_cards/the-hilton-honors-american-express-business-card.jpeg",
+    "issuer": "American Express",
+    "annual_fee": 195,
+    "application_link": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/hilton-honors/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "9/10. With $240 in credits and automatic Gold status, this card pays for itself twice over if you stay at Hilton just once a quarter. The 5x flat rate on all business spend is also a massive sleeper hit.",
+    "points_value_cpp": 0.5,
+    "active_indices": {
+        "benefits": [
+            "hilton-credit-v1",
+            "gold-status-v1"
+        ],
+        "earning_rates": [
+            "hilton-v1",
+            "all-purchases-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "question_id": "q-4",
+    "short_desc": "Travel Protections",
+    "question": "Do you value travel-related protections like roadside assistance or travel emergency services?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "Yes",
+        "Sometimes",
+        "No"
+    ],
+    "weights": [
+        1.0,
+        0.5,
+        0.0
+    ],
+    "benefit_category": "Travel Security"
+}
