@@ -13,5 +13,7 @@
         0.2,
         1.0
     ],
-    "benefit_category": "Travel Security"
+    "benefit_category": [
+        "Travel Security"
+    ]
 }

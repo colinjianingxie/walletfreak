@@ -1,5 +1,4 @@
 {
-    "BenefitId": "hilton-credit",
     "benefit_id": "hilton-credit",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Hilton Credit",
     "description": "Up to $240 Hilton Credit back each year",
     "additional_details": "$60 back in statement credits per quarter",
-    "benefit_category": "Generic Hilton",
+    "benefit_category": [
+        "Generic Hilton"
+    ],
     "benefit_type": "Credit",
     "numeric_value": 240.0,
     "numeric_type": "Cash",

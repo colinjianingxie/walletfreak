@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 3,
-    "category": "Hotels",
+    "category": [
+        "Hotels"
+    ],
     "currency": "miles",
     "additional_details": "eligible hotel purchases",
     "is_default": false

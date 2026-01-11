@@ -5,7 +5,9 @@
     "value": 600,
     "currency": "Cash",
     "period": "Annually",
-    "benefit_category": "Cell Phone Protection",
+    "benefit_category": [
+        "Cell Phone Protection"
+    ],
     "version": "v1",
     "valid_from": "2026-01-10",
     "valid_until": null,

@@ -1,5 +1,4 @@
 {
-    "BenefitId": "4th-night-free",
     "benefit_id": "4th-night-free",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "4th Night Free",
     "description": "Redeem 3 Nights, Get 4th Night Free",
     "additional_details": "On award stays",
-    "benefit_category": "Generic IHG",
+    "benefit_category": [
+        "Generic IHG"
+    ],
     "benefit_type": "Perk",
     "numeric_value": 1,
     "numeric_type": "FreeNight",

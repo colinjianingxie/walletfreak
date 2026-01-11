@@ -1,5 +1,4 @@
 {
-    "BenefitId": "airline-fee-credit",
     "benefit_id": "airline-fee-credit",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Airline Fee Credit",
     "description": "$200 Airline Fee Credit",
     "additional_details": null,
-    "benefit_category": "Airlines",
+    "benefit_category": [
+        "Airlines"
+    ],
     "benefit_type": "Credit",
     "numeric_value": 200.0,
     "numeric_type": "Cash",

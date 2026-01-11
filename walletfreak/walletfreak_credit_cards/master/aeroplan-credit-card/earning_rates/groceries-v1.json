@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 3,
-    "category": "Groceries",
+    "category": [
+        "Groceries"
+    ],
     "currency": "points",
     "additional_details": "at grocery stores",
     "is_default": false

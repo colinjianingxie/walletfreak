@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 4,
-    "category": "Generic World of Hyatt",
+    "category": [
+        "Generic World of Hyatt"
+    ],
     "currency": "points",
     "additional_details": "Hyatt purchases",
     "is_default": false

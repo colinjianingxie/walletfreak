@@ -1,5 +1,4 @@
 {
-    "BenefitId": "vacation-financing",
     "benefit_id": "vacation-financing",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Vacation Financing",
     "description": "0% promo APR for 6 months on select Disney vacation packages",
     "additional_details": "From the date of purchase",
-    "benefit_category": "Disney Parks",
+    "benefit_category": [
+        "Disney Parks"
+    ],
     "benefit_type": "Perk",
     "numeric_value": 6.0,
     "numeric_type": "Months",

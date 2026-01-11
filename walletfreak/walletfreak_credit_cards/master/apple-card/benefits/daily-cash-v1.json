@@ -1,5 +1,4 @@
 {
-    "BenefitId": "daily-cash",
     "benefit_id": "daily-cash",
     "version": "v1",
     "valid_from": "2020-01-01",

@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 3,
-    "category": "Choice Category",
+    "category": [
+        "Choice Category"
+    ],
     "currency": "cash back",
     "additional_details": "choice category after first year, up to $2500 quarterly combined with 2% categories",
     "is_default": false

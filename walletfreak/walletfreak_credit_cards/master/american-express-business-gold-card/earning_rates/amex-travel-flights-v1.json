@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 3,
-    "category": "Amex Travel",
+    "category": [
+        "Amex Travel"
+    ],
     "currency": "points",
     "additional_details": "on flights and prepaid hotels booked on amextravel.com",
     "is_default": false

@@ -1,5 +1,4 @@
 {
-    "BenefitId": "preferred-boarding",
     "benefit_id": "preferred-boarding",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Preferred Boarding",
     "description": "Preferred Boarding",
     "additional_details": "Group 5 boarding on AA flights",
-    "benefit_category": "American Airlines",
+    "benefit_category": [
+        "American Airlines"
+    ],
     "benefit_type": "Perk",
     "numeric_value": null,
     "numeric_type": "Upgrade",

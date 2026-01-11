@@ -1,5 +1,4 @@
 {
-    "BenefitId": "presale-access",
     "benefit_id": "presale-access",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Presale Access",
     "description": "Citi Entertainment",
     "additional_details": null,
-    "benefit_category": "Entertainment",
+    "benefit_category": [
+        "Entertainment"
+    ],
     "benefit_type": "Perk",
     "numeric_value": 0,
     "numeric_type": null,

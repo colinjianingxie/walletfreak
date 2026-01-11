@@ -1,5 +1,4 @@
 {
-    "BenefitId": "no-fees",
     "benefit_id": "no-fees",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "No Fees",
     "description": "No late fees no penalty rate no annual fee",
     "additional_details": null,
-    "benefit_category": "Protection",
+    "benefit_category": [
+        "Protection"
+    ],
     "benefit_type": "Perk",
     "numeric_value": null,
     "numeric_type": null,

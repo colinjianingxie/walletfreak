@@ -1,5 +1,4 @@
 {
-    "BenefitId": "intro-apr",
     "benefit_id": "intro-apr",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Intro APR",
     "description": "0.99% introductory APR on purchases for the first 6 months",
     "additional_details": "Valid for accounts opened by 1/01/2026",
-    "benefit_category": "Financial Rewards",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
     "benefit_type": "Perk",
     "numeric_value": 6,
     "numeric_type": "Months",

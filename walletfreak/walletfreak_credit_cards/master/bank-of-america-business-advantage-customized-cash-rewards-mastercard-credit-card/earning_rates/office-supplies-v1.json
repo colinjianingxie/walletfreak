@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 3,
-    "category": "Office Supplies",
+    "category": [
+        "Office Supplies"
+    ],
     "currency": "cash back",
     "additional_details": "choice category: Office Supply Stores (first $50,000 combined annual spend on choice + dining)",
     "is_default": false

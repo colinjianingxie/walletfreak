@@ -13,5 +13,7 @@
         0.5,
         1.0
     ],
-    "benefit_category": "Travel"
+    "benefit_category": [
+        "Travel"
+    ]
 }

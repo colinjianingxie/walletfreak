@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 4,
-    "category": "American Airlines",
+    "category": [
+        "American Airlines"
+    ],
     "currency": "miles",
     "additional_details": "American Airlines purchases (5x after $150k spend in a calendar year)",
     "is_default": false

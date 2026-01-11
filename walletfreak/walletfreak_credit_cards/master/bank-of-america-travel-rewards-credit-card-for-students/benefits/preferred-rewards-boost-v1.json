@@ -1,5 +1,4 @@
 {
-    "BenefitId": "preferred-rewards-boost",
     "benefit_id": "preferred-rewards-boost",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Preferred Rewards Boost",
     "description": "Preferred Rewards bonus: 25% to 75% more points on purchases",
     "additional_details": "Requires qualifying Bank of America account balance",
-    "benefit_category": "Financial Rewards",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
     "benefit_type": "Bonus",
     "numeric_value": 75.0,
     "numeric_type": "Percent",

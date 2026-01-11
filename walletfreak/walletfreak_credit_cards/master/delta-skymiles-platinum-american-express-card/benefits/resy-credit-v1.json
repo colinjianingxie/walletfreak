@@ -1,5 +1,4 @@
 {
-    "BenefitId": "resy-credit",
     "benefit_id": "resy-credit",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Resy Credit",
     "description": "$120 Resy Credit",
     "additional_details": null,
-    "benefit_category": "Resy Bookings",
+    "benefit_category": [
+        "Resy Bookings"
+    ],
     "benefit_type": "Credit",
     "numeric_value": 120,
     "numeric_type": "Cash",

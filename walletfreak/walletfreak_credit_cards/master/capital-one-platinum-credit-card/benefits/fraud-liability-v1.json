@@ -1,5 +1,4 @@
 {
-    "BenefitId": "fraud-liability",
     "benefit_id": "fraud-liability",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Fraud Liability",
     "description": "$0 Fraud Liability for unauthorized charges",
     "additional_details": "You won't be responsible for unauthorized charges if your card is lost or stolen.",
-    "benefit_category": "Financial Rewards",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
     "benefit_type": "Perk",
     "numeric_value": 0.0,
     "numeric_type": "Cash",

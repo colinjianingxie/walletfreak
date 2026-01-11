@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 4,
-    "category": "Online Retail",
+    "category": [
+        "Online Retail"
+    ],
     "currency": "points",
     "additional_details": "U.S. online retail purchases",
     "is_default": false

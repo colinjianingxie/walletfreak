@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 5,
-    "category": "Supermarkets",
+    "category": [
+        "Supermarkets"
+    ],
     "currency": "points",
     "additional_details": "U.S. supermarkets",
     "is_default": false

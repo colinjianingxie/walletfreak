@@ -1,5 +1,4 @@
 {
-    "BenefitId": "extra-days-to-pay",
     "benefit_id": "extra-days-to-pay",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Extra Days to Pay",
     "description": "Take up to 60 days to pay without interest",
     "additional_details": "pay minimum due by date",
-    "benefit_category": "Financial Rewards",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
     "benefit_type": "Perk",
     "numeric_value": 60.0,
     "numeric_type": "Days",

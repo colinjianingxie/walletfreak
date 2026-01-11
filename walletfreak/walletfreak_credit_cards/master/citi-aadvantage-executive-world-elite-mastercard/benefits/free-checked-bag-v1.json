@@ -1,5 +1,4 @@
 {
-    "BenefitId": "free-checked-bag",
     "benefit_id": "free-checked-bag",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Free Checked Bag",
     "description": "First checked bag free for you and up to 8 companions",
     "additional_details": "On domestic American Airlines itineraries on the same reservation",
-    "benefit_category": "American Airlines",
+    "benefit_category": [
+        "American Airlines"
+    ],
     "benefit_type": "Perk",
     "numeric_value": 9,
     "numeric_type": "Perk",

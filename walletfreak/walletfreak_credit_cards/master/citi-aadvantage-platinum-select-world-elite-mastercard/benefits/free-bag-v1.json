@@ -1,5 +1,4 @@
 {
-    "BenefitId": "free-bag",
     "benefit_id": "free-bag",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Free Bag",
     "description": "First checked bag free",
     "additional_details": "On domestic AA itineraries for you and up to 4 companions",
-    "benefit_category": "American Airlines",
+    "benefit_category": [
+        "American Airlines"
+    ],
     "benefit_type": "Perk",
     "numeric_value": 1,
     "numeric_type": "Passes",

@@ -1,7 +1,9 @@
 {
     "rate_id": "all-purchases",
     "multiplier": 0.0,
-    "category": "Financial Rewards",
+    "category": [
+        "Financial Rewards"
+    ],
     "is_default": true,
     "version": "v1",
     "valid_from": "2026-01-10",

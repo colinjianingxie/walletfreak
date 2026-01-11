@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 3,
-    "category": "Airlines",
+    "category": [
+        "Airlines"
+    ],
     "currency": "points",
     "additional_details": "on purchases made directly with Air Canada",
     "is_default": false

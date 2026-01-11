@@ -1,5 +1,4 @@
 {
-    "BenefitId": "apr-reduction",
     "benefit_id": "apr-reduction",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "APR Reduction",
     "description": "0% intro APR offers",
     "additional_details": "potential APR reduction",
-    "benefit_category": "Financial Rewards",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
     "benefit_type": "Perk",
     "numeric_value": null,
     "numeric_type": null,

@@ -1,5 +1,4 @@
 {
-    "BenefitId": "car-rental-insurance",
     "benefit_id": "car-rental-insurance",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Car Rental Insurance",
     "description": "Car Rental Loss and Damage Insurance",
     "additional_details": "secondary coverage for damage or theft",
-    "benefit_category": "Car Rentals",
+    "benefit_category": [
+        "Car Rentals"
+    ],
     "benefit_type": "Perk",
     "numeric_value": 50000.0,
     "numeric_type": "Cash",

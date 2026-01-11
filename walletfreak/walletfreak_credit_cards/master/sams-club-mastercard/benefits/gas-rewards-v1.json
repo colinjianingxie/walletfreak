@@ -1,5 +1,4 @@
 {
-    "BenefitId": "gas-rewards",
     "benefit_id": "gas-rewards",
     "version": "v1",
     "valid_from": "2020-01-01",

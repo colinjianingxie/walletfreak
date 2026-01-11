@@ -1,5 +1,4 @@
 {
-    "BenefitId": "employee-cards",
     "benefit_id": "employee-cards",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Employee Cards",
     "description": "Free employee cards with individual spending limits",
     "additional_details": "Employee cards also earn 1.5% cash back",
-    "benefit_category": "Financial Rewards",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
     "benefit_type": "Perk",
     "numeric_value": null,
     "numeric_type": "Perk",

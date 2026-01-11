@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 2,
-    "category": "Direct Hotel Bookings",
+    "category": [
+        "Direct Hotel Bookings"
+    ],
     "currency": "points",
     "additional_details": "hotel accommodations booked directly with hotel",
     "is_default": false

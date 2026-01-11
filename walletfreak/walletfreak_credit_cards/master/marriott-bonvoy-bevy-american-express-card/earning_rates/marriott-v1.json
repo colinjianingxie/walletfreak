@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 6,
-    "category": "Generic Marriott Bonvoy",
+    "category": [
+        "Generic Marriott Bonvoy"
+    ],
     "currency": "points",
     "additional_details": "Marriott hotels",
     "is_default": false

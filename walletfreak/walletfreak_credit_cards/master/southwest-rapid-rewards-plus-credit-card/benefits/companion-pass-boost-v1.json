@@ -1,5 +1,4 @@
 {
-    "BenefitId": "companion-pass-boost",
     "benefit_id": "companion-pass-boost",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Companion Pass Boost",
     "description": "10,000 Companion Pass qualifying points boost each year",
     "additional_details": null,
-    "benefit_category": "Southwest Airlines",
+    "benefit_category": [
+        "Southwest Airlines"
+    ],
     "benefit_type": "Perk",
     "numeric_value": 10000.0,
     "numeric_type": "Points",

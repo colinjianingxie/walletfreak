@@ -1,5 +1,4 @@
 {
-    "BenefitId": "airline-credit",
     "benefit_id": "airline-credit",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Airline Credit",
     "description": "$50 Annual Airline Credit",
     "additional_details": "With minimum $50 airline purchase",
-    "benefit_category": "Airlines",
+    "benefit_category": [
+        "Airlines"
+    ],
     "benefit_type": "Credit",
     "numeric_value": 50,
     "numeric_type": "Cash",

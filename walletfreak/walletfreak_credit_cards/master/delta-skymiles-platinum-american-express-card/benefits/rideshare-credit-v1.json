@@ -1,5 +1,4 @@
 {
-    "BenefitId": "rideshare-credit",
     "benefit_id": "rideshare-credit",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Rideshare Credit",
     "description": "$120 Rideshare Credit",
     "additional_details": null,
-    "benefit_category": "Transit",
+    "benefit_category": [
+        "Transit"
+    ],
     "benefit_type": "Credit",
     "numeric_value": 120,
     "numeric_type": "Cash",

@@ -1,5 +1,4 @@
 {
-    "BenefitId": "dashpass",
     "benefit_id": "dashpass",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "DashPass",
     "description": "Complimentary DashPass membership",
     "additional_details": "12 months, $0 delivery fees on DoorDash/Caviar, activate by Dec 31, 2027",
-    "benefit_category": "DoorDash",
+    "benefit_category": [
+        "DoorDash"
+    ],
     "benefit_type": "Perk",
     "numeric_value": 120.0,
     "numeric_type": "Cash",

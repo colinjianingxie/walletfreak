@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 5,
-    "category": "Lyft",
+    "category": [
+        "Lyft"
+    ],
     "currency": "points",
     "additional_details": "on Lyft rides through Sep 30, 2027",
     "is_default": false

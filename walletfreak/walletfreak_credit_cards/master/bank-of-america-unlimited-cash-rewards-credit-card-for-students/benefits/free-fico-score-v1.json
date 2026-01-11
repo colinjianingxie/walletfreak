@@ -1,5 +1,4 @@
 {
-    "BenefitId": "free-fico-score",
     "benefit_id": "free-fico-score",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Free FICO Score",
     "description": "Free FICO\u00ae Score access",
     "additional_details": "Updated monthly for free through the Mobile Banking app or Online Banking",
-    "benefit_category": "Financial Rewards",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
     "benefit_type": "Perk",
     "numeric_value": 1.0,
     "numeric_type": "Perk",

@@ -1,5 +1,4 @@
 {
-    "BenefitId": "purchase-protection",
     "benefit_id": "purchase-protection",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Purchase Protection",
     "description": "Purchase Protection",
     "additional_details": "up to $1,000 per occurrence, $50,000 per year",
-    "benefit_category": "Retail Shopping",
+    "benefit_category": [
+        "Retail Shopping"
+    ],
     "benefit_type": "Perk",
     "numeric_value": 1000.0,
     "numeric_type": "Cash",

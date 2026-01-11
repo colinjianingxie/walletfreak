@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 4,
-    "category": "Cell Phone Plans",
+    "category": [
+        "Cell Phone Plans"
+    ],
     "currency": "points",
     "additional_details": "U.S. wireless phone services",
     "is_default": false

@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 5,
-    "category": "Lowe's",
+    "category": [
+        "Lowe's"
+    ],
     "currency": "cash back",
     "additional_details": "Lowe's purchases",
     "is_default": false

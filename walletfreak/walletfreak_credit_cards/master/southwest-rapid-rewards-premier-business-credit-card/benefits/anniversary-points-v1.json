@@ -1,5 +1,4 @@
 {
-    "BenefitId": "anniversary-points",
     "benefit_id": "anniversary-points",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Anniversary Points",
     "description": "6,000 anniversary points every year",
     "additional_details": null,
-    "benefit_category": "Anniversary Bonus",
+    "benefit_category": [
+        "Anniversary Bonus"
+    ],
     "benefit_type": "Bonus",
     "numeric_value": 6000.0,
     "numeric_type": "Points",

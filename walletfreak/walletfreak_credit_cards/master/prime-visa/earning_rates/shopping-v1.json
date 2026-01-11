@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 10,
-    "category": "Amazon",
+    "category": [
+        "Amazon"
+    ],
     "currency": "cash back",
     "additional_details": "rotating items (distinct from generic Amazon)",
     "is_default": false

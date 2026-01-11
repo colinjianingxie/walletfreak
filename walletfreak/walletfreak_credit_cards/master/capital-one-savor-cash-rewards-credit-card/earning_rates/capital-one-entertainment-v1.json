@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 8,
-    "category": "Entertainment",
+    "category": [
+        "Entertainment"
+    ],
     "currency": "cash back",
     "additional_details": "bookings",
     "is_default": false

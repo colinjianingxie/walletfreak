@@ -1,5 +1,4 @@
 {
-    "BenefitId": "takeoff-15",
     "benefit_id": "takeoff-15",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "TakeOff 15",
     "description": "15% discount on Delta award travel",
     "additional_details": "Discount applies to Delta-operated flights booked with miles via Delta website/app",
-    "benefit_category": "Delta Air Lines",
+    "benefit_category": [
+        "Delta Air Lines"
+    ],
     "benefit_type": "Perk",
     "numeric_value": 15.0,
     "numeric_type": "Percent",

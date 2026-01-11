@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 2,
-    "category": "Gas Stations",
+    "category": [
+        "Gas Stations"
+    ],
     "currency": "points",
     "additional_details": "gas stations",
     "is_default": false

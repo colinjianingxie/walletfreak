@@ -1,5 +1,4 @@
 {
-    "BenefitId": "room-discount",
     "benefit_id": "room-discount",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Room Discount",
     "description": "7% Room Rate Discount",
     "additional_details": "Book direct with Amex Business rate",
-    "benefit_category": "Generic Marriott Bonvoy",
+    "benefit_category": [
+        "Generic Marriott Bonvoy"
+    ],
     "benefit_type": "Perk",
     "numeric_value": 7.0,
     "numeric_type": "Percent",

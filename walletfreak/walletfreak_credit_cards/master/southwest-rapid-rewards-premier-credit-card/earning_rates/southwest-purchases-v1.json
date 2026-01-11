@@ -1,10 +1,13 @@
 {
     "rate_id": "southwest-purchases",
     "multiplier": 3.0,
-    "category": "Southwest Airlines",
+    "category": [
+        "Southwest Airlines"
+    ],
+    "additional_details": "on Southwest Airlines purchases",
     "is_default": false,
     "version": "v1",
-    "valid_from": "2026-01-10",
+    "valid_from": "2020-01-01",
     "valid_until": null,
     "is_active": true
 }

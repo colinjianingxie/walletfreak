@@ -1,5 +1,4 @@
 {
-    "BenefitId": "travel-credit",
     "benefit_id": "travel-credit",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Travel Credit",
     "description": "$300 Annual Travel Credit",
     "additional_details": "applies to broad travel purchases",
-    "benefit_category": "Travel Perks",
+    "benefit_category": [
+        "Travel Perks"
+    ],
     "benefit_type": "Credit",
     "numeric_value": 300.0,
     "numeric_type": "Cash",

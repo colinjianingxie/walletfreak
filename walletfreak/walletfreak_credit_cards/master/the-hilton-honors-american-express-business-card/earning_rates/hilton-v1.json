@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 12,
-    "category": "Generic Hilton",
+    "category": [
+        "Generic Hilton"
+    ],
     "currency": "points",
     "additional_details": "Hilton portfolio purchases",
     "is_default": false

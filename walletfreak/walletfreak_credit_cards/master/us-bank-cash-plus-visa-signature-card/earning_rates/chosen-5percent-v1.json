@@ -1,7 +1,9 @@
 {
     "rate_id": "chosen-5percent",
     "multiplier": 5.0,
-    "category": "Choice Category",
+    "category": [
+        "Choice Category"
+    ],
     "is_default": false,
     "version": "v1",
     "valid_from": "2026-01-10",

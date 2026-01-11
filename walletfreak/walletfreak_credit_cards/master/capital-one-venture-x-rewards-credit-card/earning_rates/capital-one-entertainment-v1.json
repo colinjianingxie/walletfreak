@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 10,
-    "category": "Entertainment",
+    "category": [
+        "Entertainment"
+    ],
     "currency": "miles",
     "additional_details": "Capital One Entertainment bookings",
     "is_default": false

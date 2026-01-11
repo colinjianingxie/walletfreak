@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 10,
-    "category": "Car Rentals",
+    "category": [
+        "Car Rentals"
+    ],
     "currency": "miles",
     "additional_details": "Car rentals booked through aadvantagecars.com",
     "is_default": false

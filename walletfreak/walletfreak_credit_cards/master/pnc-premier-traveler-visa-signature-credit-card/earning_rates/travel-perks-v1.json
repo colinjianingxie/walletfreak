@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 3,
-    "category": "Travel Perks",
+    "category": [
+        "Travel Perks"
+    ],
     "currency": "miles",
     "additional_details": null,
     "is_default": false

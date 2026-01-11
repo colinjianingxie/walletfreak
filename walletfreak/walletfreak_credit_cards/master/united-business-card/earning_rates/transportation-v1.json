@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 2,
-    "category": "Transit",
+    "category": [
+        "Transit"
+    ],
     "currency": "miles",
     "additional_details": "Local transit and commuting",
     "is_default": false

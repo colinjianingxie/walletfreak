@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 1.5,
-    "category": "Financial Rewards",
+    "category": [
+        "Financial Rewards"
+    ],
     "currency": "miles",
     "additional_details": "unlimited everything",
     "is_default": true

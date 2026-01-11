@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 2,
-    "category": "All Purchases",
+    "category": [
+        "All Purchases"
+    ],
     "currency": "cash back",
     "additional_details": "up to $50k annually",
     "is_default": false

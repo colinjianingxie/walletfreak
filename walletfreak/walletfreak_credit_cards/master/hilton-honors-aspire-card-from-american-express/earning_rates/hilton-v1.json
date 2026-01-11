@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 14,
-    "category": "Generic Hilton",
+    "category": [
+        "Generic Hilton"
+    ],
     "currency": "points",
     "additional_details": "total points",
     "is_default": false

@@ -1,5 +1,4 @@
 {
-    "BenefitId": "admirals-club",
     "benefit_id": "admirals-club",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Admirals Club",
     "description": "Complimentary Admirals Club\u00ae membership with guest privileges",
     "additional_details": "Value of up to $850; primary cardmember and immediate family or up to 2 guests",
-    "benefit_category": "Admirals Club",
+    "benefit_category": [
+        "Admirals Club"
+    ],
     "benefit_type": "Perk",
     "numeric_value": 1,
     "numeric_type": "Membership",

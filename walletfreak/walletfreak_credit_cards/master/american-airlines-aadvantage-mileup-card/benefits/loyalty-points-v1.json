@@ -1,5 +1,4 @@
 {
-    "BenefitId": "loyalty-points",
     "benefit_id": "loyalty-points",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Loyalty Points",
     "description": "Earn 1 Loyalty Point for every 1 eligible AAdvantage mile earned from purchases",
     "additional_details": "Loyalty Points count toward AAdvantage elite status",
-    "benefit_category": "Financial Rewards",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
     "benefit_type": "Perk",
     "numeric_value": 1.0,
     "numeric_type": "Points",

@@ -1,5 +1,4 @@
 {
-    "BenefitId": "walmart-credit",
     "benefit_id": "walmart-credit",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Walmart+ Credit",
     "description": "Walmart+ $98 statement credit",
     "additional_details": "One-time credit for annual membership",
-    "benefit_category": "Walmart",
+    "benefit_category": [
+        "Walmart"
+    ],
     "benefit_type": "Credit",
     "numeric_value": 98.0,
     "numeric_type": "Cash",

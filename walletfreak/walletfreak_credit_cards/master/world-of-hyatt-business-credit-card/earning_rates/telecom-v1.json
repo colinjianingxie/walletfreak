@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 2,
-    "category": "Telecom",
+    "category": [
+        "Telecom"
+    ],
     "currency": "points",
     "additional_details": "Top 3 category (Internet/Cable/Phone)",
     "is_default": false

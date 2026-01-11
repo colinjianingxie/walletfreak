@@ -1,5 +1,4 @@
 {
-    "BenefitId": "rental-car-insurance",
     "benefit_id": "rental-car-insurance",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Rental Car Insurance",
     "description": "Collision Damage Waiver for rental cars (secondary coverage)",
     "additional_details": "Covers physical damage and theft for rentals of 15 days or less",
-    "benefit_category": "Transit",
+    "benefit_category": [
+        "Transit"
+    ],
     "benefit_type": "Perk",
     "numeric_value": 1.0,
     "numeric_type": "Perk",

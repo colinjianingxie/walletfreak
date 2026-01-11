@@ -1,5 +1,4 @@
 {
-    "BenefitId": "overdraft-protection",
     "benefit_id": "overdraft-protection",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Overdraft Protection",
     "description": "Overdraft protection when linked to BoA business checking",
     "additional_details": null,
-    "benefit_category": "Financial Rewards",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
     "benefit_type": "Perk",
     "numeric_value": null,
     "numeric_type": "Perk",

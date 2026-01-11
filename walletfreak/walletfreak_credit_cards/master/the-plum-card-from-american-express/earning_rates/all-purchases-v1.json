@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 1.5,
-    "category": "All Purchases",
+    "category": [
+        "All Purchases"
+    ],
     "currency": "cash back",
     "additional_details": "when paid within 10 days of statement closing",
     "is_default": true

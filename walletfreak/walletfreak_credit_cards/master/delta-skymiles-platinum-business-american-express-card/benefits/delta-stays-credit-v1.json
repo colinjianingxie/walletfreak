@@ -1,5 +1,4 @@
 {
-    "BenefitId": "delta-stays-credit",
     "benefit_id": "delta-stays-credit",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Delta Stays Credit",
     "description": "$200 Delta Stays credit",
     "additional_details": "For prepaid hotel/vacation rental bookings via Delta Stays",
-    "benefit_category": "Hotels",
+    "benefit_category": [
+        "Hotels"
+    ],
     "benefit_type": "Credit",
     "numeric_value": 200.0,
     "numeric_type": "Cash",

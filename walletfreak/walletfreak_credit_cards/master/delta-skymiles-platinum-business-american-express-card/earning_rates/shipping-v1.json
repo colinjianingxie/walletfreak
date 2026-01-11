@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 1.5,
-    "category": "Shipping",
+    "category": [
+        "Shipping"
+    ],
     "currency": "miles",
     "additional_details": "U.S. shipping providers",
     "is_default": false

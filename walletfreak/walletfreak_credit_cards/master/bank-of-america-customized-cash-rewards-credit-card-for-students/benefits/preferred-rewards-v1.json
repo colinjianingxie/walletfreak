@@ -1,5 +1,4 @@
 {
-    "BenefitId": "preferred-rewards",
     "benefit_id": "preferred-rewards",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Preferred Rewards",
     "description": "Preferred Rewards Eligibility",
     "additional_details": null,
-    "benefit_category": "Financial Rewards",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
     "benefit_type": "Bonus",
     "numeric_value": 0,
     "numeric_type": null,

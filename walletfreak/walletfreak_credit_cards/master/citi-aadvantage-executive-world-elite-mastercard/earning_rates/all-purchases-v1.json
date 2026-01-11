@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 1,
-    "category": "All Purchases",
+    "category": [
+        "All Purchases"
+    ],
     "currency": "miles",
     "additional_details": "All other purchases",
     "is_default": true

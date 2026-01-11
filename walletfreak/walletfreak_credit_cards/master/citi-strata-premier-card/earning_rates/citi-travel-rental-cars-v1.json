@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 10,
-    "category": "Citi Travel",
+    "category": [
+        "Citi Travel"
+    ],
     "currency": "points",
     "additional_details": "rental cars through Citi Travel",
     "is_default": false

@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 2.5,
-    "category": "Financial Rewards",
+    "category": [
+        "Financial Rewards"
+    ],
     "currency": "cash back",
     "additional_details": "$5,000+ purchases",
     "is_default": false

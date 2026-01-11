@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 3,
-    "category": "Direct Airline Bookings",
+    "category": [
+        "Direct Airline Bookings"
+    ],
     "currency": "points",
     "additional_details": "flights booked direct",
     "is_default": false

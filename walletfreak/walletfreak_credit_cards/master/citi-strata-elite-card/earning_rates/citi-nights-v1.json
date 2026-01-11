@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 6,
-    "category": "Dining",
+    "category": [
+        "Dining"
+    ],
     "currency": "points",
     "additional_details": "Citi Nights (Fri/Sat)",
     "is_default": false

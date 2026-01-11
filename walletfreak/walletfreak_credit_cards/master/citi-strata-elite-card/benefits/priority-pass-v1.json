@@ -1,5 +1,4 @@
 {
-    "BenefitId": "priority-pass",
     "benefit_id": "priority-pass",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Priority Pass",
     "description": "Priority Pass Lounge Membership",
     "additional_details": null,
-    "benefit_category": "Priority Pass Select",
+    "benefit_category": [
+        "Priority Pass Select"
+    ],
     "benefit_type": "Membership",
     "numeric_value": 1.0,
     "numeric_type": "Membership",

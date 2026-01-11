@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 5,
-    "category": "Amazon",
+    "category": [
+        "Amazon"
+    ],
     "currency": "cash back",
     "additional_details": "with Prime on eligible purchases at Amazon.com",
     "is_default": false

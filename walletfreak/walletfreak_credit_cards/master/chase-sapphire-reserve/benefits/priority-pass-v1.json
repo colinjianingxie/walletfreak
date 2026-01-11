@@ -1,5 +1,4 @@
 {
-    "BenefitId": "priority-pass",
     "benefit_id": "priority-pass",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Priority Pass",
     "description": "Priority Pass Select airport lounge membership",
     "additional_details": "includes Chase Sapphire Lounges access",
-    "benefit_category": "Priority Pass Select",
+    "benefit_category": [
+        "Priority Pass Select"
+    ],
     "benefit_type": "Perk",
     "numeric_value": 3,
     "numeric_type": "Lounge",

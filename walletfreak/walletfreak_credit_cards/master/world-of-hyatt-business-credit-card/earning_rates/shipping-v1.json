@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 2,
-    "category": "Shipping",
+    "category": [
+        "Shipping"
+    ],
     "currency": "points",
     "additional_details": "Top 3 category (Shipping)",
     "is_default": false

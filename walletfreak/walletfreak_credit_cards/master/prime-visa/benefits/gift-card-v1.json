@@ -1,5 +1,4 @@
 {
-    "BenefitId": "gift-card",
     "benefit_id": "gift-card",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Gift Card",
     "description": "$150 Instant Amazon Gift Card",
     "additional_details": null,
-    "benefit_category": "Amazon",
+    "benefit_category": [
+        "Amazon"
+    ],
     "benefit_type": "Perk",
     "numeric_value": 150,
     "numeric_type": "Cash",

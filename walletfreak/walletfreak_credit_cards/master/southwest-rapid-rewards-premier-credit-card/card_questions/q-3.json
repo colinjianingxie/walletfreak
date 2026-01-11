@@ -13,5 +13,7 @@
         0.0,
         0.5
     ],
-    "benefit_category": "Generic Travel Perks"
+    "benefit_category": [
+        "Travel Perks"
+    ]
 }

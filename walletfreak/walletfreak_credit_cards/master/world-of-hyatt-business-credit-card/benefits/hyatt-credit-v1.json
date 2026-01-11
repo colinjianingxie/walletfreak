@@ -1,5 +1,4 @@
 {
-    "BenefitId": "hyatt-credit",
     "benefit_id": "hyatt-credit",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Hyatt Credit",
     "description": "$100 Annual Hyatt Credit",
     "additional_details": "$50 statement credit up to two times each anniversary year",
-    "benefit_category": "Generic World of Hyatt",
+    "benefit_category": [
+        "Generic World of Hyatt"
+    ],
     "benefit_type": "Credit",
     "numeric_value": 100,
     "numeric_type": "Cash",

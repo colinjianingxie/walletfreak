@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 26,
-    "category": "Generic IHG",
+    "category": [
+        "Generic IHG"
+    ],
     "currency": "points",
     "additional_details": "total points at IHG hotels",
     "is_default": false

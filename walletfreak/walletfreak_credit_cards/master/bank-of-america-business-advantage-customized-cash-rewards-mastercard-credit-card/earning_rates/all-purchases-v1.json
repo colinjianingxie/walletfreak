@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 1,
-    "category": "All Purchases",
+    "category": [
+        "All Purchases"
+    ],
     "currency": "cash back",
     "additional_details": "base rate for everything else",
     "is_default": true

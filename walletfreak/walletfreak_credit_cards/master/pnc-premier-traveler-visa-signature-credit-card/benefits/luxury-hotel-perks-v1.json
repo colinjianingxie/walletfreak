@@ -1,5 +1,4 @@
 {
-    "BenefitId": "luxury-hotel-perks",
     "benefit_id": "luxury-hotel-perks",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Luxury Hotel Perks",
     "description": "Visa Signature Luxury Hotel benefits",
     "additional_details": null,
-    "benefit_category": "Hotels",
+    "benefit_category": [
+        "Hotels"
+    ],
     "benefit_type": "Perk",
     "numeric_value": null,
     "numeric_type": null,

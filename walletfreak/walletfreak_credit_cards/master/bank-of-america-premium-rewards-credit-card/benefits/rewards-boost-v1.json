@@ -1,5 +1,4 @@
 {
-    "BenefitId": "rewards-boost",
     "benefit_id": "rewards-boost",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Rewards Boost",
     "description": "Rewards Boost",
     "additional_details": "Up to 75% more points",
-    "benefit_category": "Financial Rewards",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
     "benefit_type": "Bonus",
     "numeric_value": 75,
     "numeric_type": "Percent",

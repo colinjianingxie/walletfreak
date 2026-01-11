@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 1,
-    "category": "Rent Payments",
+    "category": [
+        "Rent Payments"
+    ],
     "currency": "points",
     "additional_details": "rent through Bilt app",
     "is_default": false

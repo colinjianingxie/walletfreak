@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 3,
-    "category": "Southwest Airlines",
+    "category": [
+        "Southwest Airlines"
+    ],
     "currency": "points",
     "additional_details": "Southwest flights",
     "is_default": false

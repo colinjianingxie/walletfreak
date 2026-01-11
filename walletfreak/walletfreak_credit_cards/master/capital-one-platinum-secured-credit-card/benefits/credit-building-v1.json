@@ -1,5 +1,4 @@
 {
-    "BenefitId": "credit-building",
     "benefit_id": "credit-building",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Credit Building",
     "description": "Credit line increase potential after on-time payments",
     "additional_details": null,
-    "benefit_category": "Financial Rewards",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
     "benefit_type": "Perk",
     "numeric_value": null,
     "numeric_type": null,

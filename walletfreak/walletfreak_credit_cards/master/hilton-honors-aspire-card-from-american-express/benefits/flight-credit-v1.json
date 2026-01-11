@@ -1,5 +1,4 @@
 {
-    "BenefitId": "flight-credit",
     "benefit_id": "flight-credit",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Flight Credit",
     "description": "$200 Flight Credit",
     "additional_details": "Up to $50 quarterly",
-    "benefit_category": "Airlines",
+    "benefit_category": [
+        "Airlines"
+    ],
     "benefit_type": "Credit",
     "numeric_value": 200.0,
     "numeric_type": "Cash",

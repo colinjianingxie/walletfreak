@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 6,
-    "category": "Citi Travel",
+    "category": [
+        "Citi Travel"
+    ],
     "currency": "points",
     "additional_details": "flights through Citi Travel",
     "is_default": false

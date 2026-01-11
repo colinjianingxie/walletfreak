@@ -26,6 +26,11 @@ class Command(BaseCommand):
             action='store_true',
             help='Only update premium tier cards (annual_fee > 0)',
         )
+        parser.add_argument(
+            '--dry-run',
+            action='store_true',
+            help='Show which cards would be updated without making API calls',
+        )
 
     def handle(self, *args, **options):
         api_key = os.environ.get('GROK_API_KEY')
@@ -38,8 +43,9 @@ class Command(BaseCommand):
             os.makedirs(self.master_dir)
 
         card_slugs_arg = options.get('cards')
-        auto_seed = options.get('auto-seed')
-        premium_only = options.get('premium-only')
+        auto_seed = options.get('auto_seed')
+        premium_only = options.get('premium_only')
+        dry_run = options.get('dry_run')  # Django converts --dry-run to dry_run
         
         if card_slugs_arg:
             slugs = [s.strip() for s in card_slugs_arg.split(',') if s.strip()]
@@ -56,7 +62,7 @@ class Command(BaseCommand):
                     try:
                         with open(header_path, 'r') as f:
                             header_data = json.load(f)
-                        annual_fee = header_data.get('annual_fee', 0)
+                        annual_fee = header_data.get('annual_fee') or 0
                         if annual_fee > 0:
                             filtered_slugs.append(slug)
                             self.stdout.write(f"✓ {slug} is premium (annual_fee: ${annual_fee})")
@@ -69,6 +75,23 @@ class Command(BaseCommand):
                     self.stdout.write(self.style.WARNING(f"✗ Skipping {slug} (no header.json found)"))
             slugs = filtered_slugs
             self.stdout.write(f"\nFiltered to {len(slugs)} premium cards")
+
+        # Dry-run mode: just show what would be updated
+        if dry_run:
+            self.stdout.write(self.style.SUCCESS(f"\n🔍 DRY RUN MODE - No API calls will be made\n"))
+            self.stdout.write(f"The following {len(slugs)} cards would be updated:\n")
+            for i, slug in enumerate(slugs, 1):
+                header_path = os.path.join(self.master_dir, slug, 'header.json')
+                if os.path.exists(header_path):
+                    with open(header_path, 'r') as f:
+                        header_data = json.load(f)
+                    name = header_data.get('name', slug)
+                    annual_fee = header_data.get('annual_fee') or 0
+                    self.stdout.write(f"  {i}. {name} (${annual_fee}/year)")
+                else:
+                    self.stdout.write(f"  {i}. {slug} (NEW CARD)")
+            self.stdout.write(f"\nTo actually update these cards, run without --dry-run flag")
+            return
 
         self.stdout.write(f"Processing {len(slugs)} cards...")
         updated_slugs = []

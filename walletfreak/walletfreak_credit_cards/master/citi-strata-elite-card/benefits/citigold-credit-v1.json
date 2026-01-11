@@ -1,5 +1,4 @@
 {
-    "BenefitId": "citigold-credit",
     "benefit_id": "citigold-credit",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Citigold Credit",
     "description": "Citigold Relationship Credit",
     "additional_details": null,
-    "benefit_category": "Financial Rewards",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
     "benefit_type": "Perk",
     "numeric_value": 145.0,
     "numeric_type": "Cash",

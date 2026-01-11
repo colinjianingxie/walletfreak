@@ -13,7 +13,7 @@
     "active_indices": {
         "benefits": [
             "uber-cash-v1",
-            "dining-credit-v2",
+            "dining-credit-v1",
             "resy-credit-v1",
             "dunkin-credit-v1",
             "hotel-credit-v1"

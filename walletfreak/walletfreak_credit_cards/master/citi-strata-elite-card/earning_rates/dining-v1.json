@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 3,
-    "category": "Dining",
+    "category": [
+        "Dining"
+    ],
     "currency": "points",
     "additional_details": "other restaurant spend",
     "is_default": false

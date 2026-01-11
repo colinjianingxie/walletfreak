@@ -1,7 +1,9 @@
 {
     "rate_id": "travel-portal",
     "multiplier": 5.0,
-    "category": "Travel Portals",
+    "category": [
+        "Travel Portals"
+    ],
     "is_default": false,
     "version": "v1",
     "valid_from": "2026-01-10",

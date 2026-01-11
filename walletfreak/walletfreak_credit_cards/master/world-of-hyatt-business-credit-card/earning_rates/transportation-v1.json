@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 2,
-    "category": "Transit",
+    "category": [
+        "Transit"
+    ],
     "currency": "points",
     "additional_details": "Top 3 category (Transit)",
     "is_default": false

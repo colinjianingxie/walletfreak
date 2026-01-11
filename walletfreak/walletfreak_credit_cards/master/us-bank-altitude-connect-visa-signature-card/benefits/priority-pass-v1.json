@@ -1,5 +1,4 @@
 {
-    "BenefitId": "priority-pass",
     "benefit_id": "priority-pass",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Priority Pass",
     "description": "4 Priority Pass Select visits per year",
     "additional_details": null,
-    "benefit_category": "Priority Pass Select",
+    "benefit_category": [
+        "Priority Pass Select"
+    ],
     "benefit_type": "Access",
     "numeric_value": 4.0,
     "numeric_type": "Lounge",

@@ -13,5 +13,7 @@
         0.0,
         0.5
     ],
-    "benefit_category": "Southwest"
+    "benefit_category": [
+        "Southwest Airlines"
+    ]
 }

@@ -1,5 +1,4 @@
 {
-    "BenefitId": "inflight-discount",
     "benefit_id": "inflight-discount",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Inflight Discount",
     "description": "25% back on United inflight purchases",
     "additional_details": "Includes food, beverages, and Wi-Fi",
-    "benefit_category": "United Airlines",
+    "benefit_category": [
+        "United Airlines"
+    ],
     "benefit_type": "Credit",
     "numeric_value": 25,
     "numeric_type": "Percent",

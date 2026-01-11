@@ -11,5 +11,7 @@
         0.0,
         1.0
     ],
-    "benefit_category": "Travel Perks"
+    "benefit_category": [
+        "Travel Perks"
+    ]
 }

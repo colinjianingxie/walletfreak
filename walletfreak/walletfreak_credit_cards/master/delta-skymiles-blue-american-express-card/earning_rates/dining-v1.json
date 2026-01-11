@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 2,
-    "category": "Dining",
+    "category": [
+        "Dining"
+    ],
     "currency": "miles",
     "additional_details": "at restaurants worldwide, plus takeout and delivery in the U.S.",
     "is_default": false

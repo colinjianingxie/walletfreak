@@ -5,7 +5,9 @@
     "valid_until": null,
     "is_active": true,
     "multiplier": 5,
-    "category": "Chase Travel",
+    "category": [
+        "Chase Travel"
+    ],
     "currency": "cash back",
     "additional_details": "flights through Chase Travel",
     "is_default": false

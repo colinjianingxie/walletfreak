@@ -1,5 +1,4 @@
 {
-    "BenefitId": "smartdelay",
     "benefit_id": "smartdelay",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "SmartDelay",
     "description": "SmartDelay Lounge Access",
     "additional_details": null,
-    "benefit_category": "Lounges",
+    "benefit_category": [
+        "Lounges"
+    ],
     "benefit_type": "Access",
     "numeric_value": 1,
     "numeric_type": "Lounge",

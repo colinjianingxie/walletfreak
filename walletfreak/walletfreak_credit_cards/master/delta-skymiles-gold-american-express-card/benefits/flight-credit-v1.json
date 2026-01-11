@@ -1,5 +1,4 @@
 {
-    "BenefitId": "flight-credit",
     "benefit_id": "flight-credit",
     "version": "v1",
     "valid_from": "2020-01-01",
@@ -8,7 +7,9 @@
     "short_description": "Flight Credit",
     "description": "$200 Delta Flight Credit",
     "additional_details": "Earn a $200 credit toward future travel after you spend $10,000 on your card in a calendar year",
-    "benefit_category": "Delta Air Lines",
+    "benefit_category": [
+        "Delta Air Lines"
+    ],
     "benefit_type": "Bonus",
     "numeric_value": 200.0,
     "numeric_type": "Cash",
