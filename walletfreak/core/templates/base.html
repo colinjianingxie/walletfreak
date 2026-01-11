@@ -28,56 +28,22 @@
         {{ firebase_config_json|safe }}
     </script>
     <script>
-        const firebaseConfig = JSON.parse(document.getElementById('firebase-config').textContent);
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-
-        // Global Logout Function
-        function handleLogout(e) {
+        // Define handleLogout globally first
+        window.handleLogout = function(e) {
             if (e) e.preventDefault();
             // Set flag to prevent base.html from auto-syncing logic re-logging us in
             sessionStorage.setItem('logging_out', 'true');
-            firebase.auth().signOut().then(() => {
-                window.location.href = "/logout/";
-            });
-        }
-
-        // Auth State Observer & Sync
-        auth.onAuthStateChanged(async (user) => {
-            const isDjangoAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}" === "true";
-
-            if (user) {
-                // User is signed in to Firebase
-                if (!isDjangoAuthenticated) {
-                    if (user.emailVerified || user.providerData[0].providerId === 'phone') {
-                        const idToken = await user.getIdToken();
-                         fetch('/accounts/api/login/', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({ idToken: idToken })
-                        }).then(res => {
-                            if (res.ok) window.location.reload();
-                        });
-                    }
-                }
+            if (window.firebase && firebase.auth) {
+                firebase.auth().signOut().then(() => {
+                    window.location.href = "/logout/";
+                }).catch((error) => {
+                    console.error("Firebase logout error:", error);
+                    window.location.href = "/logout/"; // Fallback logout
+                });
             } else {
-                // User is NOT signed in to Firebase
-                if (sessionStorage.getItem('logging_out') === 'true') {
-                    sessionStorage.removeItem('logging_out');
-                    return;
-                }
-
-                if (isDjangoAuthenticated) {
-                    console.log('Session mismatch detected. Logging out...');
-                    fetch('/accounts/api/logout/').then(() => {
-                        window.location.reload();
-                    });
-                }
+                window.location.href = "/logout/"; // Fallback if firebase not loaded
             }
-        });
+        };
 
         function toggleSidebar() {
           const sidebar = document.getElementById('sidebar');
@@ -89,6 +55,65 @@
             sidebar.classList.add('open');
             if(overlay) overlay.classList.add('visible');
           }
+        }
+
+        try {
+            const firebaseConfigElement = document.getElementById('firebase-config');
+            if (firebaseConfigElement) {
+                const firebaseConfig = JSON.parse(firebaseConfigElement.textContent);
+                
+                // Initialize Firebase only if not already initialized
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
+                } else {
+                    firebase.app(); // if already initialized, use that one
+                }
+                
+                window.auth = firebase.auth();
+                window.db = firebase.firestore();
+
+                // Auth State Observer & Sync
+                auth.onAuthStateChanged(async (user) => {
+                    const isDjangoAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}" === "true";
+
+                    if (user) {
+                        // User is signed in to Firebase
+                        if (!isDjangoAuthenticated) {
+                            if (user.emailVerified || user.providerData[0].providerId === 'phone') {
+                                try {
+                                    const idToken = await user.getIdToken();
+                                    fetch('/accounts/api/login/', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify({ idToken: idToken })
+                                    }).then(res => {
+                                        if (res.ok) window.location.reload();
+                                    });
+                                } catch (e) {
+                                    console.error("Token sync error:", e);
+                                }
+                            }
+                        }
+                    } else {
+                        // User is NOT signed in to Firebase
+                        if (sessionStorage.getItem('logging_out') === 'true') {
+                            sessionStorage.removeItem('logging_out');
+                            return;
+                        }
+
+                        if (isDjangoAuthenticated) {
+                            console.log('Session mismatch detected. Logging out...');
+                            fetch('/accounts/api/logout/').then(() => {
+                                window.location.reload();
+                            });
+                        }
+                    }
+                });
+            }
+        } catch (e) {
+            console.error("Firebase init error:", e);
         }
     </script>
 </head>

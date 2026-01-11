@@ -25,6 +25,23 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
+        // Define handleLogout globally
+        window.handleLogout = function(e) {
+            if (e) e.preventDefault();
+            // Set flag to prevent auth_base.html from auto-syncing logic re-logging us in
+            sessionStorage.setItem('logging_out', 'true');
+            if (firebase.auth) {
+                firebase.auth().signOut().then(() => {
+                    window.location.href = "/logout/";
+                }).catch((error) => {
+                    console.error("Firebase logout error:", error);
+                    window.location.href = "/logout/"; // Fallback logout
+                });
+            } else {
+                window.location.href = "/logout/"; // Fallback if firebase not loaded
+            }
+        };
+
         // Auth State Observer
         auth.onAuthStateChanged(async (user) => {
             if (user) {
@@ -51,6 +68,11 @@
                 }
             } else {
                 // User is NOT signed in to Firebase
+                if (sessionStorage.getItem('logging_out') === 'true') {
+                    sessionStorage.removeItem('logging_out');
+                    return;
+                }
+
                 const isDjangoAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}" === "true";
                 
                 if (isDjangoAuthenticated) {

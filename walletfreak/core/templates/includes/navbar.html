@@ -50,7 +50,6 @@
                 {% else %}
                 <a href="{% url 'features' %}" data-nav="features" class="{% if '/features' in request.path %}active{% endif %}">Features</a>
                 <a href="{% url 'card_list' %}" data-nav="explore" class="{% if '/cards' in request.path or '/explore' in request.path %}active{% endif %}">Explore</a>
-                <a href="{% url 'calculators_index' %}" data-nav="calculators" class="{% if '/calculators' in request.path %}active{% endif %}">Calculators</a>
                 <a href="{% url 'personality_list' %}" data-nav="personalities" class="{% if '/personalities' in request.path or '/freaks' in request.path %}active{% endif %}">Freaks</a>
                 <a href="{% url 'blog_list' %}" data-nav="blog" class="{% if '/blog' in request.path or '/ledger' in request.path %}active{% endif %}">Ledger</a>
                 <a href="{% url 'datapoint_list' %}" data-nav="datapoints" class="{% if '/datapoints' in request.path %}active{% endif %}">Data Points</a>
@@ -288,14 +287,6 @@
                 </div>
                 <span class="mobile-menu-text">Explore</span>
                 <span class="mobile-menu-indicator" style="{% if '/cards' in request.path or '/explore' in request.path %}display: block;{% endif %}"></span>
-            </a>
-
-            <a href="{% url 'calculators_index' %}" class="mobile-menu-item {% if '/calculators' in request.path %}active{% endif %}" data-nav="calculators">
-                <div class="mobile-menu-icon" style="{% if '/calculators' in request.path %}background: #EEF2FF; color: #4F46E5;{% endif %}">
-                    <span class="material-icons">calculate</span>
-                </div>
-                <span class="mobile-menu-text">Calculators</span>
-                <span class="mobile-menu-indicator" style="{% if '/calculators' in request.path %}display: block;{% endif %}"></span>
             </a>
 
             <a href="{% url 'personality_list' %}" class="mobile-menu-item {% if '/personalities' in request.path or '/freaks' in request.path %}active{% endif %}" data-nav="personalities">
