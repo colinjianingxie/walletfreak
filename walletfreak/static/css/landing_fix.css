@@ -20,6 +20,7 @@
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
+    justify-content: flex-end !important;
     gap: 1.5rem !important;
 }
 
@@ -162,7 +163,8 @@ input:focus {
         padding: 0;
         gap: 2rem;
         flex: 1;
-        justify-content: space-between;
+        justify-content: flex-end;
+        /* Changed from space-between to align right */
     }
 
     .public-nav-links .nav-items {
@@ -171,4 +173,21 @@ input:focus {
         align-items: center;
         gap: 1.5rem;
     }
+}
+
+/* --- FIXES START HERE --- */
+
+/* 1. Fix spacing under Explore page content (Logged OUT) */
+body:not(.user-is-authenticated) .main-content-wrapper {
+    padding-top: 2rem !important;
+}
+
+/* 2. Remove white background on Article page actions (Logged OUT) */
+.header-actions .action-btn {
+    background-color: transparent !important;
+}
+
+.header-actions .action-btn:hover {
+    background-color: #F3F4F6 !important;
+    /* Keep hover effect */
 }

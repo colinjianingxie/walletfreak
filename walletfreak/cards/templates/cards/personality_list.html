@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block breadcrumb_section %}Analysis{% endblock %}
+{% block page_title %}Freaks{% endblock %}
 
 {% block main_style %}padding: 0; background: #F7F7F7; min-height: calc(100vh - 70px);{% endblock %}
 
@@ -13,6 +14,10 @@
         grid-template-columns: auto 1fr auto;
         gap: 2rem;
         align-items: center;
+    }
+    /* Override global layout padding for full-width hero */
+    .content-scrollable {
+        padding: 0 !important;
     }
     @media (max-width: 768px) {
         .assigned-personality-grid {

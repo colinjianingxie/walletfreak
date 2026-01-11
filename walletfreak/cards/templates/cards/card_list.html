@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 {% load card_extras %}
 
-{% block breadcrumb_section %}Analysis{% endblock %}
+
 {% load static %}
+
+{% block breadcrumb_section %}Analysis{% endblock %}
+{% block page_title %}Explore{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/card_list.css' %}?v=1.8">

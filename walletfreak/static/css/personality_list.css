@@ -224,6 +224,15 @@
     margin-left: calc(-50vw + 50%);
     margin-right: calc(-50vw + 50%);
     width: 100vw;
+    margin-top: -1rem;
+    /* Fix gap on mobile */
+}
+
+@media (min-width: 1024px) {
+    .personality-hero-section {
+        margin-top: -2rem;
+        /* Fix gap on desktop */
+    }
 }
 
 .hero-blob-top {
