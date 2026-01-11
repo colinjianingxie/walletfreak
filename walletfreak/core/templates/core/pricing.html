@@ -24,6 +24,52 @@
             </header>
             
             <div class="pricing-grid">
+                {% if not user.is_authenticated %}
+                <!-- Free Plan -->
+                <div class="pricing-card pricing-card-free" style="border: 1px solid #e2e8f0; background: white;">
+                    <div class="card-header">
+                        <h3 class="card-title">The Freak</h3>
+                        <div class="price-container">
+                            <span class="price-amount">Free</span>
+                        </div>
+                    </div>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="check-icon-circle" style="background: #e0e7ff; color: #4f46e5;">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                            </div>
+                            <span class="feature-text">Subscribing to The Ledger</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="check-icon-circle" style="background: #e0e7ff; color: #4f46e5;">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                            </div>
+                            <span class="feature-text">Access to special calculators</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="check-icon-circle" style="background: #e0e7ff; color: #4f46e5;">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                            </div>
+                            <span class="feature-text">Dynamic Match Score</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="check-icon-circle" style="background: #e0e7ff; color: #4f46e5;">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                            </div>
+                            <span class="feature-text">Wallet benefits tracking</span>
+                        </div>
+                    </div>
+                    <a href="{% url 'login' %}?next={% url 'pricing' %}" class="pricing-btn w-full text-center block no-underline hover:no-underline" style="background: #0f172a; color: white;">Create an Account</a>
+                </div>
+                {% endif %}
                 <!-- Monthly Plan -->
                 <div class="pricing-card pricing-card-monthly">
                     <div class="card-header">

@@ -155,7 +155,10 @@
     <div class="sidebar-header">
         <div class="brand">
             <img src="{% static 'images/logo_main.png' %}" alt="WalletFreak" style="height: 2rem; width: auto;">
-            <span class="brand-text">WalletFreak</span>
+            <div style="display: flex; align-items: baseline; line-height: 1;">
+                <span style="font-weight: 700; font-size: 1.5rem; color: white; letter-spacing: -0.025em;">Wallet</span>
+                <span style="font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 1.5rem; color: transparent; background-clip: text; -webkit-background-clip: text; background-image: linear-gradient(to right, #2563eb, #9333ea); margin-left: 0.125rem; letter-spacing: -0.05em;">Freak</span>
+            </div>
         </div>
         <button class="mobile-toggle-btn icon-btn" onclick="toggleSidebar()" style="color: var(--slate-400);">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
@@ -249,7 +252,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap" aria-hidden="true" style="color: #fde047; fill: #fde047; width: 1.25rem; height: 1.25rem;"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>
                     <span style="font-size: 0.75rem; font-weight: 700; background-color: rgba(255,255,255,0.2); padding: 0.125rem 0.5rem; border-radius: 0.25rem;">PRO</span>
                 </div>
-                <h4 style="font-weight: 700; font-size: 0.875rem; margin-bottom: 0.25rem;">Upgrade to Premium</h4>
+                <h4 style="font-weight: 700; font-size: 0.875rem; margin-bottom: 0.25rem; color: white;">Upgrade to Premium</h4>
                 <p style="font-size: 0.75rem; color: #e0e7ff; margin-bottom: 0.75rem;">Unlock AI insights and unlimited ledgers.</p>
                 <a href="{% url 'pricing' %}" class="upgrade-btn">Upgrade Now</a>
             </div>
