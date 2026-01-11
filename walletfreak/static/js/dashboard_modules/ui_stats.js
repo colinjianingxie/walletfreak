@@ -87,19 +87,30 @@ function calculateCreditsUsed() {
                                     const slug = card.card_id || card.id;
                                     const staticCard = allCardsData.find(c => c.id === slug);
                                     if (staticCard && staticCard.benefits) {
-                                        // Find benefit index from key "benefit_X"
+                                        // Find benefit by ID (new system) or index (legacy system)
                                         const benefitKey = Object.keys(card.benefit_usage).find(k => card.benefit_usage[k] === benefit);
                                         if (benefitKey) {
-                                            // Fix: Handle both 'benefit_X' and 'X' keys
-                                            let benefitIndex;
-                                            if (benefitKey.startsWith('benefit_')) {
-                                                benefitIndex = parseInt(benefitKey.split('_')[1]);
-                                            } else {
-                                                benefitIndex = parseInt(benefitKey);
-                                            }
-                                            const staticBenefit = staticCard.benefits[benefitIndex];
+                                            let staticBenefit = null;
 
-                                            // Strict check and LOGGING
+                                            // Try new system: match by benefit ID
+                                            staticBenefit = staticCard.benefits.find(b =>
+                                                b.id === benefitKey || b.benefit_id === benefitKey
+                                            );
+
+                                            // Fallback to legacy system: match by array index
+                                            if (!staticBenefit) {
+                                                let benefitIndex;
+                                                if (benefitKey.startsWith('benefit_')) {
+                                                    benefitIndex = parseInt(benefitKey.split('_')[1]);
+                                                } else {
+                                                    benefitIndex = parseInt(benefitKey);
+                                                }
+                                                if (!isNaN(benefitIndex) && benefitIndex >= 0 && benefitIndex < staticCard.benefits.length) {
+                                                    staticBenefit = staticCard.benefits[benefitIndex];
+                                                }
+                                            }
+
+                                            // Strict check
                                             if (staticBenefit) {
                                                 const type = staticBenefit.benefit_type;
                                                 const val = parseFloat(staticBenefit.dollar_value);
@@ -107,10 +118,8 @@ function calculateCreditsUsed() {
 
                                                 // MATCH PY: benefit_type == 'Credit' OR 'Perk' AND dollar_value > 0
                                                 if ((type === 'Credit' || type === 'Perk') && val > 0) {
-
                                                     totalUsed += (data.used || 0);
                                                 }
-
                                             }
                                         }
                                     }
@@ -150,14 +159,21 @@ function updateYtdRewardsUI() {
                     staticCard.benefits.forEach((b, index) => {
                         // Filter out Protection and Bonus benefits
                         if (b.dollar_value && b.benefit_type !== 'Protection' && b.benefit_type !== 'Bonus') {
-                            // Fix: Support both legacy 'benefit_X' and new 'X' index keys
-                            const simpleKey = index.toString();
-                            const legacyKey = `benefit_${index}`;
-
+                            // Match by benefit ID (new system) or index (legacy system)
                             let benefitData = null;
                             if (userCard.benefit_usage) {
-                                if (userCard.benefit_usage[simpleKey]) benefitData = userCard.benefit_usage[simpleKey];
-                                else if (userCard.benefit_usage[legacyKey]) benefitData = userCard.benefit_usage[legacyKey];
+                                const benefitId = b.id || b.benefit_id;
+
+                                // Try new system: match by benefit ID
+                                if (benefitId && userCard.benefit_usage[benefitId]) {
+                                    benefitData = userCard.benefit_usage[benefitId];
+                                } else {
+                                    // Fallback to legacy system: match by index
+                                    const simpleKey = index.toString();
+                                    const legacyKey = `benefit_${index}`;
+                                    if (userCard.benefit_usage[simpleKey]) benefitData = userCard.benefit_usage[simpleKey];
+                                    else if (userCard.benefit_usage[legacyKey]) benefitData = userCard.benefit_usage[legacyKey];
+                                }
                             }
 
                             let isIgnored = benefitData ? benefitData.is_ignored : false;
