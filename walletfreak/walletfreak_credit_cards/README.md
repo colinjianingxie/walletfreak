@@ -68,3 +68,121 @@ To run the update on **ALL** cards in the `master/` directory:
 python manage.py update_cards_grok
 ```
 *(Note: This consumes significant API credits and takes time.)*
+
+## Command Reference
+
+### Basic Usage
+
+```bash
+# Update a single card
+python manage.py update_cards_grok --cards "card-slug"
+
+# Update multiple cards
+python manage.py update_cards_grok --cards "card-1,card-2,card-3"
+
+# Update all cards
+python manage.py update_cards_grok
+```
+
+### Available Flags
+
+#### `--cards` (Optional)
+Comma-separated list of card slugs to update. If omitted, updates all cards in `master/`.
+
+```bash
+python manage.py update_cards_grok --cards "chase-sapphire-reserve,amex-platinum"
+```
+
+#### `--update-types` (Optional, Default: `all`)
+Specify which components to update. Reduces API token usage by only updating selected components.
+
+**Valid types:** `bonus`, `benefits`, `rates`, `questions`, `all`
+
+```bash
+# Update only sign-up bonus
+python manage.py update_cards_grok --cards "card-slug" --update-types bonus
+
+# Update benefits and earning rates
+python manage.py update_cards_grok --cards "card-slug" --update-types benefits,rates
+
+# Update everything (default)
+python manage.py update_cards_grok --cards "card-slug" --update-types all
+```
+
+#### `--premium-only` (Optional)
+Only update premium tier cards (cards with `annual_fee > 0`). Useful for targeted updates.
+
+```bash
+# Update only premium cards
+python manage.py update_cards_grok --premium-only
+
+# Update premium cards, only their benefits
+python manage.py update_cards_grok --premium-only --update-types benefits
+```
+
+#### `--dry-run` (Optional)
+Preview which cards would be updated without making API calls or changes.
+
+```bash
+# See which cards would be updated
+python manage.py update_cards_grok --dry-run
+
+# See which premium cards would be updated
+python manage.py update_cards_grok --premium-only --dry-run
+```
+
+#### `--auto-seed` (Optional)
+Automatically seed the database after updating cards.
+
+```bash
+# Update and immediately seed to database
+python manage.py update_cards_grok --cards "card-slug" --auto-seed
+```
+
+### Common Workflows
+
+#### Add a New Card
+```bash
+# 1. Generate card data
+python manage.py update_cards_grok --cards "new-card-slug"
+
+# 2. Review the generated files in master/new-card-slug/
+
+# 3. Seed to database
+python manage.py seed_db --cards "new-card-slug"
+
+# OR do it all in one step
+python manage.py update_cards_grok --cards "new-card-slug" --auto-seed
+```
+
+#### Update Sign-Up Bonuses for All Premium Cards
+```bash
+# Dry run first to see what would be updated
+python manage.py update_cards_grok --premium-only --update-types bonus --dry-run
+
+# Run the actual update
+python manage.py update_cards_grok --premium-only --update-types bonus
+```
+
+#### Update Benefits for Specific Cards
+```bash
+python manage.py update_cards_grok --cards "amex-platinum,chase-sapphire-reserve" --update-types benefits
+```
+
+#### Refresh All Data for a Card
+```bash
+# Update everything (default behavior)
+python manage.py update_cards_grok --cards "card-slug"
+```
+
+### Requirements
+
+- **Environment Variable:** `GROK_API_KEY` must be set in your `.env` file
+- **API Credits:** Each update consumes Grok API credits based on the complexity of the card and components being updated
+
+### Tips
+
+1. **Use `--dry-run`** to preview updates before making actual API calls
+2. **Use `--update-types`** to reduce API costs when you only need to update specific components
+3. **Use `--premium-only`** to focus on high-value cards
+4. **Combine flags** for targeted updates: `--premium-only --update-types bonus --dry-run`

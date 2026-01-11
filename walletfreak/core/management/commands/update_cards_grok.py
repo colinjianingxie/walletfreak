@@ -31,6 +31,12 @@ class Command(BaseCommand):
             action='store_true',
             help='Show which cards would be updated without making API calls',
         )
+        parser.add_argument(
+            '--update-types',
+            type=str,
+            default='all',
+            help='Comma-separated list of components to update: bonus, benefits, rates, questions, all (default: all)',
+        )
 
     def handle(self, *args, **options):
         api_key = os.environ.get('GROK_API_KEY')
@@ -46,6 +52,24 @@ class Command(BaseCommand):
         auto_seed = options.get('auto_seed')
         premium_only = options.get('premium_only')
         dry_run = options.get('dry_run')  # Django converts --dry-run to dry_run
+        update_types_arg = options.get('update_types', 'all')
+        
+        # Parse and validate update_types
+        valid_types = {'bonus', 'benefits', 'rates', 'questions', 'all'}
+        update_types_list = [t.strip() for t in update_types_arg.split(',') if t.strip()]
+        
+        # Validate types
+        invalid_types = set(update_types_list) - valid_types
+        if invalid_types:
+            self.stdout.write(self.style.ERROR(f"Invalid update types: {', '.join(invalid_types)}"))
+            self.stdout.write(f"Valid types: {', '.join(valid_types)}")
+            return
+        
+        # If 'all' is specified, update everything
+        if 'all' in update_types_list:
+            update_types_list = ['bonus', 'benefits', 'rates', 'questions']
+        
+        self.stdout.write(f"Update types: {', '.join(update_types_list)}")
         
         if card_slugs_arg:
             slugs = [s.strip() for s in card_slugs_arg.split(',') if s.strip()]
@@ -100,10 +124,10 @@ class Command(BaseCommand):
             self.stdout.write(f"Processing {slug}...")
             
             # 1. Hydrate (Load existing data or create template)
-            current_data = self.hydrate_card_data(slug)
+            current_data = self.hydrate_card_data(slug, update_types_list)
             
             # 2. Construct Prompt
-            prompt = self.construction_prompt(current_data, slug)
+            prompt = self.construction_prompt(current_data, slug, update_types_list)
             
             # 3. Call API
             # For new cards, apply_url might be missing, Grok handles it via web search
@@ -113,7 +137,7 @@ class Command(BaseCommand):
             if new_data:
                 # 4. Dehydrate & Save (Versioning Logic)
                 try:
-                    self.dehydrate_and_save(slug, new_data)
+                    self.dehydrate_and_save(slug, new_data, update_types_list)
                     self.stdout.write(self.style.SUCCESS(f"Successfully updated/created {slug}"))
                     updated_slugs.append(slug)
                 except Exception as e:
@@ -135,11 +159,15 @@ class Command(BaseCommand):
             except Exception as e:
                 self.stdout.write(self.style.ERROR(f"Auto-seed failed: {e}"))
 
-    def hydrate_card_data(self, slug):
+    def hydrate_card_data(self, slug, update_types=None):
         """
         Reads the relational files for a card and re-assembles them into a single 
         monolithic JSON object for the LLM context.
+        Only loads components specified in update_types to reduce API token usage.
         """
+        if update_types is None:
+            update_types = ['bonus', 'benefits', 'rates', 'questions']
+        
         card_dir = os.path.join(self.master_dir, slug)
         header_path = os.path.join(card_dir, 'header.json')
 
@@ -157,10 +185,10 @@ class Command(BaseCommand):
                     "earning_rates": [],
                     "sign_up_bonus": []
                 },
-                "benefits": [],
-                "earning_rates": [],
-                "sign_up_bonus": [],
-                "questions": [] # We map 'card_questions' to 'questions' for LLM simplicity
+                "benefits": [] if 'benefits' in update_types else None,
+                "earning_rates": [] if 'rates' in update_types else None,
+                "sign_up_bonus": [] if 'bonus' in update_types else None,
+                "questions": [] if 'questions' in update_types else None
             }
 
         # Existing Card
@@ -183,32 +211,43 @@ class Command(BaseCommand):
                         items.append(json.load(f))
             return items
 
-        # Benefits
-        data['benefits'] = load_sub_items('benefits', 'benefits', active_indices.get('benefits', []))
+        # Only load components that will be updated
+        if 'benefits' in update_types:
+            data['benefits'] = load_sub_items('benefits', 'benefits', active_indices.get('benefits', []))
+        else:
+            data['benefits'] = None
         
-        # Earning Rates
-        data['earning_rates'] = load_sub_items('earning_rates', 'earning_rates', active_indices.get('earning_rates', []))
+        if 'rates' in update_types:
+            data['earning_rates'] = load_sub_items('earning_rates', 'earning_rates', active_indices.get('earning_rates', []))
+        else:
+            data['earning_rates'] = None
         
-        # Sign Up Bonuses
-        data['sign_up_bonus'] = load_sub_items('sign_up_bonus', 'sign_up_bonus', active_indices.get('sign_up_bonus', []))
+        if 'bonus' in update_types:
+            data['sign_up_bonus'] = load_sub_items('sign_up_bonus', 'sign_up_bonus', active_indices.get('sign_up_bonus', []))
+        else:
+            data['sign_up_bonus'] = None
         
-        # Questions (Load all from dir, as they don't have active_index usually, or implement index?)
-        # For now, let's load all .json in card_questions
-        questions = []
-        q_dir = os.path.join(card_dir, 'card_questions')
-        if os.path.exists(q_dir):
-            for fname in sorted(os.listdir(q_dir)):
-                if fname.endswith('.json'):
-                    with open(os.path.join(q_dir, fname), 'r') as f:
-                        questions.append(json.load(f))
-        data['questions'] = questions
+        if 'questions' in update_types:
+            questions = []
+            q_dir = os.path.join(card_dir, 'card_questions')
+            if os.path.exists(q_dir):
+                for fname in sorted(os.listdir(q_dir)):
+                    if fname.endswith('.json'):
+                        with open(os.path.join(q_dir, fname), 'r') as f:
+                            questions.append(json.load(f))
+            data['questions'] = questions
+        else:
+            data['questions'] = None
 
         return data
 
-    def dehydrate_and_save(self, slug, new_data):
+    def dehydrate_and_save(self, slug, new_data, update_types=None):
         """
         Splits the monolithic JSON from LLM into relational files with versioning.
+        Only processes components specified in update_types.
         """
+        if update_types is None:
+            update_types = ['bonus', 'benefits', 'rates', 'questions']
         card_dir = os.path.join(self.master_dir, slug)
         if not os.path.exists(card_dir):
             os.makedirs(card_dir)
@@ -374,25 +413,29 @@ class Command(BaseCommand):
             # Update header indices
             header_doc['active_indices'][directory] = new_active_indices
 
-        # Process Subcollections
-        process_sub_collection('benefits', 'benefits', 'benefit_id', 'benefit')
-        process_sub_collection('earning_rates', 'earning_rates', 'rate_id', 'rate')
-        process_sub_collection('sign_up_bonus', 'sign_up_bonus', 'offer_id', 'offer')
-
-        # questions - usually just overwrite logic or simple "get all"
-        # Let's simple overwrite/ensure existence for questions since they aren't strictly version-pointed in header
-        # (Though we might want to version them later, standard files is okay)
-        questions = new_data.get('questions', [])
-        q_dir = os.path.join(card_dir, 'card_questions')
-        if not os.path.exists(q_dir): os.makedirs(q_dir)
+        # Process Subcollections - only if specified in update_types
+        if 'benefits' in update_types:
+            process_sub_collection('benefits', 'benefits', 'benefit_id', 'benefit')
         
-        # Clean current questions?
-        # Maybe just write new ones.
-        for index, q in enumerate(questions):
-            q_id = q.get('question_id', f"q-{index}")
-            q['question_id'] = q_id
-            with open(os.path.join(q_dir, f"{q_id}.json"), 'w') as f:
-                json.dump(q, f, indent=4)
+        if 'rates' in update_types:
+            process_sub_collection('earning_rates', 'earning_rates', 'rate_id', 'rate')
+        
+        if 'bonus' in update_types:
+            process_sub_collection('sign_up_bonus', 'sign_up_bonus', 'offer_id', 'offer')
+
+        # Questions - only if specified in update_types
+        if 'questions' in update_types:
+            questions = new_data.get('questions', [])
+            q_dir = os.path.join(card_dir, 'card_questions')
+            if not os.path.exists(q_dir): os.makedirs(q_dir)
+            
+            # Clean current questions?
+            # Maybe just write new ones.
+            for index, q in enumerate(questions):
+                q_id = q.get('question_id', f"q-{index}")
+                q['question_id'] = q_id
+                with open(os.path.join(q_dir, f"{q_id}.json"), 'w') as f:
+                    json.dump(q, f, indent=4)
 
         # 3. Save Header
         with open(header_path, 'w') as f:
