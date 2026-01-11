@@ -149,6 +149,16 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
     }
+
+    /* Mobile Sidebar Adjustments */
+    @media (max-width: 1024px) {
+        .app-sidebar nav {
+            /* Add significant padding at bottom to account for mobile browser chrome */
+            padding-bottom: 8rem !important; 
+            /* Use dynamic viewport height to properly fit available screen space */
+            height: calc(100dvh - 4rem) !important;
+        }
+    }
 </style>
 
 <aside class="app-sidebar" id="sidebar">
