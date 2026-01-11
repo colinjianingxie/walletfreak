@@ -9,6 +9,13 @@
     flex-wrap: nowrap !important;
 }
 
+.nav-links.desktop-only .navbar .nav-items {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 1.5rem !important;
+}
+
 .nav-links.desktop-only {
     display: flex !important;
     flex-direction: row !important;
@@ -138,4 +145,30 @@ input:focus {
     outline-offset: 2px;
     border-color: #2563eb;
     box-shadow: 0 0 0 2px #bfdbfe;
+}
+
+@media (min-width: 769px) {
+    .navbar .nav-items {
+        gap: 1.5rem !important;
+    }
+
+    .public-nav-links {
+        display: flex;
+        flex-direction: row;
+        position: static;
+        width: auto;
+        height: auto;
+        background: transparent;
+        padding: 0;
+        gap: 2rem;
+        flex: 1;
+        justify-content: space-between;
+    }
+
+    .public-nav-links .nav-items {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1.5rem;
+    }
 }

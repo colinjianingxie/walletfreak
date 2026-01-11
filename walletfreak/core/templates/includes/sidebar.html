@@ -167,13 +167,9 @@
         
         <div style="display: flex; flex-direction: column; gap: 2rem;">
             <!-- Overview Group -->
+            <!-- My Wallet (Top Item, No Header) -->
             <div>
-                <div class="flex items-center justify-between px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider cursor-pointer hover-text-slate-300">
-                    Overview
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
-                </div>
                 <div class="space-y-1" style="display: flex; flex-direction: column; gap: 0.25rem;">
-                    <!-- Removed duplicate Dashboard link, kept My Wallet only -->
                     <a href="{% url 'dashboard' %}" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors {% if request.path == '/' or '/wallet/' in request.path %}bg-blue-600/10 text-blue-400 font-medium{% else %}hover-bg-slate-800 text-slate-400 hover-text-slate-200{% endif %}">
                         <div class="flex items-center gap-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallet {% if request.path == '/' or '/wallet/' in request.path %}text-blue-400{% else %}text-slate-500{% endif %}" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"></path><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path></svg>
@@ -196,6 +192,39 @@
                             Explore
                         </div>
                     </a>
+                    <a href="{% url 'personality_list' %}" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors {% if '/personalities' in request.path or '/freaks' in request.path %}bg-blue-600/10 text-blue-400 font-medium{% else %}hover-bg-slate-800 text-slate-400 hover-text-slate-200{% endif %}">
+                        <div class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users {% if '/personalities' in request.path or '/freaks' in request.path %}text-blue-400{% else %}text-slate-500{% endif %}" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                            Freaks
+                        </div>
+                        <span class="notification-badge">12</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Tools Group -->
+            <div>
+                <div class="flex items-center justify-between px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider cursor-pointer hover-text-slate-300">
+                    Tools
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+                </div>
+                <div class="space-y-1" style="display: flex; flex-direction: column; gap: 0.25rem;">
+                    <a href="{% url 'calculators_index' %}" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors {% if '/calculators' in request.path %}bg-blue-600/10 text-blue-400 font-medium{% else %}hover-bg-slate-800 text-slate-400 hover-text-slate-200{% endif %}">
+                        <div class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calculator {% if '/calculators' in request.path %}text-blue-400{% else %}text-slate-500{% endif %}" aria-hidden="true"><rect width="16" height="20" x="4" y="2" rx="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line><line x1="16" x2="16" y1="14" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></svg>
+                            Calculators
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Community Group -->
+            <div>
+                <div class="flex items-center justify-between px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider cursor-pointer hover-text-slate-300">
+                    Community
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+                </div>
+                <div class="space-y-1" style="display: flex; flex-direction: column; gap: 0.25rem;">
                     <a href="{% url 'datapoint_list' %}" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors {% if '/datapoints' in request.path %}bg-blue-600/10 text-blue-400 font-medium{% else %}hover-bg-slate-800 text-slate-400 hover-text-slate-200{% endif %}">
                         <div class="flex items-center gap-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-no-axes-column {% if '/datapoints' in request.path %}text-blue-400{% else %}text-slate-500{% endif %}" aria-hidden="true"><path d="M5 21v-6"></path><path d="M12 21V3"></path><path d="M19 21V9"></path></svg>
@@ -207,29 +236,6 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open {% if '/blog' in request.path or '/ledger' in request.path %}text-blue-400{% else %}text-slate-500{% endif %}" aria-hidden="true"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg>
                             Ledger
                         </div>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Tools & Community Group -->
-            <div>
-                <div class="flex items-center justify-between px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider cursor-pointer hover-text-slate-300">
-                    Tools &amp; Community
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
-                </div>
-                <div class="space-y-1" style="display: flex; flex-direction: column; gap: 0.25rem;">
-                    <a href="{% url 'calculators_index' %}" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors {% if '/calculators' in request.path %}bg-blue-600/10 text-blue-400 font-medium{% else %}hover-bg-slate-800 text-slate-400 hover-text-slate-200{% endif %}">
-                        <div class="flex items-center gap-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calculator {% if '/calculators' in request.path %}text-blue-400{% else %}text-slate-500{% endif %}" aria-hidden="true"><rect width="16" height="20" x="4" y="2" rx="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line><line x1="16" x2="16" y1="14" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></svg>
-                            Calculators
-                        </div>
-                    </a>
-                    <a href="{% url 'personality_list' %}" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors {% if '/personalities' in request.path or '/freaks' in request.path %}bg-blue-600/10 text-blue-400 font-medium{% else %}hover-bg-slate-800 text-slate-400 hover-text-slate-200{% endif %}">
-                        <div class="flex items-center gap-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users {% if '/personalities' in request.path or '/freaks' in request.path %}text-blue-400{% else %}text-slate-500{% endif %}" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg>
-                            Freaks
-                        </div>
-                        <span class="notification-badge">12</span>
                     </a>
                 </div>
             </div>

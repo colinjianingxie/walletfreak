@@ -6,6 +6,7 @@ from .forms import DataPointForm
 from core.services import db # Import shared DB service for getting cards
 import json
 
+@login_required
 def datapoint_list(request):
     sort_by = request.GET.get('sort', 'newest')
     filter_card_slug = request.GET.get('card', None)
