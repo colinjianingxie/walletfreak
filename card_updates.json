@@ -1,0 +1,393 @@
+
+I want to do a websearch to get the latest updates for the credit card: "Citi® / AAdvantage® Globe™ Mastercard®" (Slug: citi-aadvantage-globe-mastercard) as of 2026-01-11.
+
+**FOCUS**: This update is ONLY for: header (card metadata), sign-up bonus, benefits, earning rates, questions. Do NOT update other components.
+
+Here is the CURRENT known data (JSON):
+{
+    "slug-id": "citi-aadvantage-globe-mastercard",
+    "name": "Citi\u00ae / AAdvantage\u00ae Globe\u2122 Mastercard\u00ae",
+    "issuer": "Citi",
+    "image_url": "/static/images/credit_cards/citi-aadvantage-globe-mastercard.webp",
+    "annual_fee": 350,
+    "application_link": "https://www.citi.com/credit-cards/citi-aadvantage-globe-mastercard",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "A standout mid-tier card for American Airlines flyers who value lounge access, companion travel, and high earning rates on hotels and transit.",
+    "points_value_cpp": 1.5,
+    "benefits": [
+        {
+            "benefit_id": "admirals-club-passes",
+            "short_description": "Admirals Club Globe Passes",
+            "description": "Every calendar year, receive four Admirals Club Globe Passes, each valid for 24 hours of access to nearly 50 Admirals Club lounges worldwide.",
+            "additional_details": "Passes are valid for 24 hours and can be used at multiple lounges during that window when flying American or partners.",
+            "benefit_category": [
+                "Admirals Club"
+            ],
+            "benefit_type": "Perk",
+            "numeric_value": 4.0,
+            "numeric_type": "Points",
+            "dollar_value": 300,
+            "time_category": "Annually (calendar year)",
+            "enrollment_required": false,
+            "effective_date": "2026-01-11",
+            "version": "v1",
+            "valid_from": "2026-01-11",
+            "valid_until": null,
+            "is_active": true
+        },
+        {
+            "benefit_id": "companion-certificate",
+            "short_description": "Annual Companion Certificate",
+            "description": "Earn an American Airlines Companion Certificate each year after your account anniversary and card renewal, valid for a domestic round-trip in Main Cabin for $99 plus taxes and fees.",
+            "additional_details": "Eligible for use after the first year of cardmembership upon renewal.",
+            "benefit_category": [
+                "Companion Certificates"
+            ],
+            "benefit_type": "Perk",
+            "numeric_value": 1.0,
+            "numeric_type": "Points",
+            "dollar_value": 250,
+            "time_category": "Annually (calendar year)",
+            "enrollment_required": false,
+            "effective_date": "2026-01-11",
+            "version": "v1",
+            "valid_from": "2026-01-11",
+            "valid_until": null,
+            "is_active": true
+        },
+        {
+            "benefit_id": "checked-bag",
+            "short_description": "First Checked Bag Free",
+            "description": "Your first checked bag is free on domestic American Airlines itineraries for the primary cardmember and up to eight companions on the same reservation.",
+            "additional_details": "Valid on domestic itineraries only.",
+            "benefit_category": [
+                "Free Checked Bags"
+            ],
+            "benefit_type": "Perk",
+            "numeric_value": 0.0,
+            "numeric_type": "Cash",
+            "dollar_value": 60,
+            "time_category": "Per Use",
+            "enrollment_required": false,
+            "effective_date": "2026-01-11",
+            "version": "v1",
+            "valid_from": "2026-01-11",
+            "valid_until": null,
+            "is_active": true
+        },
+        {
+            "benefit_id": "preferred-boarding",
+            "short_description": "Preferred Boarding",
+            "description": "Enjoy Group 5 preferred boarding on American Airlines flights for the primary cardmember and up to eight companions on the same reservation.",
+            "additional_details": "Group 5 is the first group in the second lane.",
+            "benefit_category": [
+                "Priority Boarding"
+            ],
+            "benefit_type": "Perk",
+            "numeric_value": 0.0,
+            "numeric_type": "Cash",
+            "dollar_value": 0,
+            "time_category": "Per Use",
+            "enrollment_required": false,
+            "effective_date": "2026-01-11",
+            "version": "v1",
+            "valid_from": "2026-01-11",
+            "valid_until": null,
+            "is_active": true
+        }
+    ],
+    "earning_rates": [
+        {
+            "rate_id": "aadvantage-hotels",
+            "multiplier": 6.0,
+            "category": [
+                "AAdvantage Hotels"
+            ],
+            "additional_details": "on eligible AAdvantage Hotels bookings",
+            "is_default": false,
+            "version": "v1",
+            "valid_from": "2026-01-11",
+            "valid_until": null,
+            "is_active": true
+        },
+        {
+            "rate_id": "american-airlines",
+            "multiplier": 3.0,
+            "category": [
+                "American Airlines"
+            ],
+            "additional_details": "on eligible American Airlines purchases",
+            "is_default": false,
+            "version": "v1",
+            "valid_from": "2026-01-11",
+            "valid_until": null,
+            "is_active": true
+        },
+        {
+            "rate_id": "dining",
+            "multiplier": 2.0,
+            "category": [
+                "Dining"
+            ],
+            "additional_details": "at restaurants, including takeout and delivery",
+            "is_default": false,
+            "version": "v1",
+            "valid_from": "2026-01-11",
+            "valid_until": null,
+            "is_active": true
+        },
+        {
+            "rate_id": "transit",
+            "multiplier": 2.0,
+            "category": [
+                "Transit"
+            ],
+            "additional_details": "on eligible Rides and Rails purchases, including taxis, rideshares, and public transit",
+            "is_default": false,
+            "version": "v1",
+            "valid_from": "2026-01-11",
+            "valid_until": null,
+            "is_active": true
+        },
+        {
+            "rate_id": "all-other",
+            "multiplier": 1.0,
+            "category": [
+                "Financial Rewards",
+                "All Purchases"
+            ],
+            "additional_details": "on all other purchases",
+            "is_default": true,
+            "version": "v1",
+            "valid_from": "2026-01-11",
+            "valid_until": null,
+            "is_active": true
+        }
+    ],
+    "sign_up_bonus": [
+        {
+            "offer_id": "offer-1",
+            "value": 90000,
+            "terms": "Earn 90,000 AAdvantage bonus miles after $5,000 in purchases within the first 4 months of account opening.",
+            "currency": "Miles",
+            "version": "v1",
+            "valid_from": "2026-01-11",
+            "valid_until": null,
+            "is_active": true
+        }
+    ],
+    "questions": [
+        {
+            "question_id": "q-1",
+            "short_desc": "American Airlines Frequency",
+            "question": "Do you fly with American Airlines at least 4 times a year?",
+            "question_type": "boolean",
+            "choices": [
+                "Yes",
+                "No"
+            ],
+            "weights": [
+                1.0,
+                0.0
+            ],
+            "benefit_category": [
+                "American Airlines"
+            ]
+        },
+        {
+            "question_id": "q-2",
+            "short_desc": "Lounge Access",
+            "question": "Do you value occasional access to airport lounges during your travels?",
+            "question_type": "boolean",
+            "choices": [
+                "Yes",
+                "No"
+            ],
+            "weights": [
+                1.0,
+                0.0
+            ],
+            "benefit_category": [
+                "Admirals Club"
+            ]
+        },
+        {
+            "question_id": "q-3",
+            "short_desc": "Turo Car Sharing",
+            "question": "Do you use Turo for car rentals or car sharing services?",
+            "question_type": "multiple_choice",
+            "choices": [
+                "Yes, frequently",
+                "Sometimes",
+                "No"
+            ],
+            "weights": [
+                1.0,
+                0.5,
+                0.0
+            ],
+            "benefit_category": [
+                "Turo"
+            ]
+        },
+        {
+            "question_id": "q-4",
+            "short_desc": "Checked Bags",
+            "question": "Do you often check bags when flying domestic with American Airlines?",
+            "question_type": "boolean",
+            "choices": [
+                "Yes",
+                "No"
+            ],
+            "weights": [
+                1.0,
+                0.0
+            ],
+            "benefit_category": [
+                "Free Checked Bags"
+            ]
+        },
+        {
+            "question_id": "q-5",
+            "short_desc": "Companion Travel",
+            "question": "Do you frequently travel with a companion on domestic flights?",
+            "question_type": "boolean",
+            "choices": [
+                "Yes",
+                "No"
+            ],
+            "weights": [
+                1.0,
+                0.0
+            ],
+            "benefit_category": [
+                "Companion Certificates"
+            ]
+        }
+    ]
+}
+
+**TASK**:
+1. Search the web (official issuer site preferred) for the current details of this card.
+2. Return a JSON object with the UPDATED details for header (card metadata), sign-up bonus, benefits, earning rates, questions ONLY.
+3. Validate all fields against the schema below.
+
+**VALID CATEGORIES HIERARCHY**:
+- **Airlines**: Atmos Rewards, Alaska Airlines, Hawaiian Airlines, American Airlines, Delta Air Lines, United Airlines, Southwest Airlines, JetBlue TrueBlue, Spirit Airlines, Frontier Airlines, Air France KLM Flying Blue, British Airways Executive Club, Virgin Atlantic, Singapore Airlines KrisFlyer, Emirates Skywards, Qatar Airways Privilege Club, Lufthansa, Air Canada Aeroplan, Turkish Airlines Miles and Smiles, Avios Redemptions, Direct Airline Bookings
+- **Hotels**: Generic Hilton, Conrad Hotels, Waldorf Astoria, Generic World of Hyatt, Park Hyatt, Andaz, Generic Marriott Bonvoy, The Ritz-Carlton, St. Regis, JW Marriott, Edition Hotels, W Hotels, Generic IHG, InterContinental, Generic Wyndham, Generic Choice Hotels, Generic Accor, Fairmont Hotels, Vacation Rentals, Airbnb, Vrbo, Direct Hotel Bookings, AAdvantage Hotels, Delta Stays
+- **Travel Portals**: Amex Travel, Chase Travel, The Edit by Chase Travel, Capital One Travel, Citi Travel, Bank of America Travel Center, Wells Fargo Rewards Travel, U.S. Bank Altitude Center, Expedia, Booking.com, Priceline, Hopper
+- **Lounges**: Centurion Lounge, Priority Pass Select, Capital One Lounge, Capital One Landing, Chase Sapphire Lounge by The Club, Delta Sky Club, United Club, Admirals Club, Escape Lounges, Lufthansa Lounges, Plaza Premium Lounge, Aspire Lounges, Air France Lounge, Virgin Atlantic Clubhouse
+- **Dining**: Fine Dining, Casual Dining, Fast Food, Coffee Shops, Bakeries, Bars, Taverns, Resy Bookings, OpenTable Bookings, Sapphire Reserve Exclusive Tables
+- **Delivery**: DoorDash, Uber Eats, Grubhub, Instacart, Postmates, Seamless
+- **Groceries**: Supermarkets, Wholesale Clubs, Costco, Sam's Club, Whole Foods Market, Amazon Fresh, Online Grocery Delivery, Meal Kit Services
+- **Gas**: Gas Stations, EV Charging, International Gas Stations, Fuel Dispensers
+- **Transit**: Public Transportation, Trains, Subways, Buses, Ferries, Taxis, Uber, Lyft, Parking, Tolls, Bridges
+- **Car Rentals**: Hertz, National Car Rental, Enterprise, Avis, Sixt, Generic Rental Cars, Turo
+- **Retail Shopping**: Amazon, Walmart, Target, Online Retail, Department Stores, Clothing Stores, Electronics Stores, Best Buy, Apple Store, Saks Fifth Avenue, lululemon, Macy's
+- **Home Improvement**: Lowe's, The Home Depot, Hardware Stores, Lumber Yards, Landscaping, Interior Decorating, Furniture Stores
+- **Utilities**: Electric Bills, Water, Sanitation, Natural Gas, Internet Services, Cable TV, Satellite TV, Trash Collection
+- **Telecom**: Verizon, AT&T, T-Mobile, Cell Phone Plans, Phone Equipment Purchases, Landline Services
+- **Streaming**: Netflix, Disney Plus, Hulu, Max, YouTube TV, Apple TV Plus, Paramount Plus, Spotify, Apple Music, Peacock
+- **Entertainment**: Movie Theaters, Ticketmaster, Live Nation, StubHub, Theme Parks, Disney Parks, Museums, Zoos, Aquariums, Tourist Attractions
+- **Health**: Drugstores, Pharmacy, CVS, Walgreens, Hospitals, Doctor Offices, Dentists, Optometrists
+- **Wellness**: Gym Memberships, Fitness Clubs, Equinox, Peloton, Spa Services, Hair Salons, Nail Salons
+- **Business**: Social Media Advertising, Search Engine Advertising, Google Ads, Meta Ads, Software as a Service, Cloud Infrastructure, AWS, Microsoft Azure, Office Supplies, Shipping, Freight, FedEx, UPS, USPS, Dell Technologies, Adobe, Indeed
+- **Education**: Tuition Payments, Student Loans, School Supplies, Vocational Schools, Universities
+- **Pet Care**: Veterinary Services, Pet Shops, Pet Insurance, Pet Grooming, Dog Walking, Pet Boarding
+- **Fixed Expenses**: Rent Payments, Bilt Rewards Rent, Insurance Premiums, Auto Insurance, Home Insurance, Life Insurance, IRS Tax Payments, State Taxes, Local Taxes
+- **Charity**: Non-profit Organizations, Religious Organizations, Social Services, Charitable Donations
+- **Cruises**: Norwegian Cruise Line, Royal Caribbean, Carnival, Celebrity Cruises, Disney Cruise Line, Holland America, Princess Cruises
+- **Financial Rewards**: All Purchases, Anniversary Bonus, Status Boost, Rotating Categories, Choice Category, Mobile Wallet, Apple Pay, Google Pay, Samsung Pay
+- **Protection**: Cell Phone Protection, Purchase Protection, Extended Warranty, Trip Cancellation, Primary Rental Insurance, Fraud Protection, Return Protection, Baggage Delay Insurance
+- **Travel Perks**: Free Checked Bags, Upgrade Priority, Preferred Seating, Extra Legroom Upgrades, Priority Boarding, Companion Certificates, In-flight Discounts, Airline Incidental Credits, Hotel Experience Credits, Global Entry, TSA PreCheck, NEXUS, CLEAR Plus, Airport Security Credits
+
+**CRITICAL INSTRUCTIONS FOR UPDATES (READ CAREFULLY)**:
+1. **CONSERVATIVE UPDATES**: The "CURRENT known data" provided above is heavily curated. **DO NOT CHANGE** values (especially multipliers or credits) unless you find **EXPLICIT, RECENT EVIDENCE** in the web search results that contradicts it (e.g., a "devaluation" or "new offer").
+2. **Ambiguity**: If web results are ambiguous or unclear, **KEEP THE CURRENT VALUE**. Do not guess.
+3. **Categories**: You MUST choose categories ONLY from the "Valid Categories Hierarchy" above.
+4. **Specificity**: For `benefit_category` and `earning_rates.category`, select the most specific child category if applicable.
+5. **No Duplicates**: **DO NOT CREATE DUPLICATE CATEGORIES**.
+6. **No Inventions**: Do NOT invent new categories not in the list.
+
+**SCHEMA RULES (Snake Case)**:
+- **slug-id**: Must remain "citi-aadvantage-globe-mastercard".
+- **name**: Card Name.
+- **issuer**: e.g., "American Express", "Chase", "Capital One".
+- **image_url**: "/static/images/credit_cards/citi-aadvantage-globe-mastercard.webp" (Keep as provided).
+- **annual_fee**: Number (e.g. 95, 0 for no fee).
+- **application_link**: Official URL to apply for the card.
+- **min_credit_score**: Number (e.g. 670). Use 300 for secured cards.
+- **max_credit_score**: Number (e.g. 850).
+- **points_value_cpp**: Number or null (e.g. 1.5 for points cards, null for cash back).
+- **is_524**: Boolean (true if applies to Chase 5/24 rule).
+- **freak_verdict**: String: short opinion or "No Freak verdict for this card yet".
+
+**HEADER FIELDS** (REQUIRED TO UPDATE):
+ALL of these fields MUST be included in your response:
+- `slug-id`: String (keep as provided)
+- `name`: String (card name)
+- `issuer`: String (e.g. "Citi", "Chase", "American Express")
+- `image_url`: String (or null if not provided)
+- `annual_fee`: Number (e.g. 95, use 0 for no fee)
+- `application_link`: String (official application URL)
+- `min_credit_score`: Number (e.g. 670, use 300 for secured cards)
+- `max_credit_score`: Number (e.g. 850)
+- `points_value_cpp`: Number or null (cents per point, null for cash back)
+- `is_524`: Boolean (true/false), if having the card will affect chase 5/24 rule
+- `freak_verdict`: String (brief verdict or "No Freak verdict for this card yet")
+
+**BENEFITS** (REQUIRED TO UPDATE):
+- **benefits**: List of objects.
+- `benefit_id`: (IMPORTANT) Keep existing ID if updating an existing benefit (e.g. "dining-credit"). Create logical ID for new ones (e.g. "disney-bundle").
+- `short_description`: e.g. "Uber Cash"
+- `description`: Full text.
+- `additional_details`: Brief context (e.g. "For prepaid hotel/vacation rental bookings").
+- `benefit_category`: List of strings (e.g. ["Rideshare", "Dining"]).
+- `benefit_type`: "Credit", "Perk", "Insurance".
+- `numeric_value`: Float/Number (e.g. 200.0).
+- `numeric_type`: "Cash", "Points", "Miles".
+- `dollar_value`: Integer estimated dollar value (e.g. 200).
+- `time_category`: "Annually (calendar year)", "Monthly", "One-time", "Per Use", "Quarterly".
+- `enrollment_required`: Boolean.
+- `effective_date`: String (YYYY-MM-DD) or null.
+
+**CRITICAL FOR BENEFITS**:
+- **SPLIT BUNDLED CREDITS**: If a card has a "total annual credit" composed of distinct parts (e.g., "$400 total credit" = "$200 Hotel Credit" + "$200 Airline Fee Credit"), you **MUST** create separate benefit objects for each distinct part. Do not bundle them.
+- **Granularity**: We want detailed, separate benefits for tracking purposes.
+
+**EARNING RATES** (REQUIRED TO UPDATE):
+- **earning_rates**: List of objects. **EVERY card MUST have at least one earning rate** - at minimum an "All Other Purchases" default rate.
+- `rate_id`: (IMPORTANT) Keep existing ID (e.g. "dining"). For new cards, create logical IDs like "dining", "travel", "all-other".
+- `multiplier`: Number (e.g. 4.0, 1.5, 1.0 for base rate).
+- `category`: List of strings (e.g. ["Dining", "Resy Bookings"]). **Must be a list**. Use ["Financial Rewards", "All Purchases"] for the default rate.
+- `additional_details`: **REQUIRED**. Specific string detailing conditions (e.g. "on purchases made directly with airlines"). Use "on all other purchases" for default.
+- `is_default`: Boolean (True for "All other purchases" rate, False for bonus categories).
+
+**CRITICAL**: You MUST generate earning rates for new cards. Every card earns something on purchases - research and include:
+1. Bonus category rates (e.g., 3x on dining)
+2. Default "all other purchases" rate (usually 1x or 1% or 2%)
+
+**SIGN-UP BONUS** (REQUIRED TO UPDATE):
+- **sign_up_bonus**: List of objects (usually 1).
+- `offer_id`: (CRITICAL FOR VERSIONING) If an object exists in the current data's `sign_up_bonus`, you MUST maintain the SAME `offer_id` (e.g. "offer-1") when updating the value or terms of the current public offer. DO NOT create new IDs like "offer-75k" or "limited-time-offer". Only change the ID if this is a completely different promotion type (e.g., switching from points to cash back).
+- `value`: Number (integer).
+- `terms`: e.g. "Spend $4k in 3 months".
+- `currency`: Exactly one of: "Points", "Miles", "Cash".
+- If no sign-up bonus currently exists, return an empty list [].
+- If a bonus existed but has expired with no replacement, return an empty list [].
+
+**QUESTIONS** (REQUIRED TO UPDATE):
+- **questions**: List of objects. Generating 3-5 questions based on benefits is REQUIRED if list is empty.
+- `question_id`: e.g. "q-0".
+- `short_desc`: e.g. "Uber Cash".
+- `question`: "Do you use Uber...?"
+- `question_type`: "multiple_choice" or "boolean".
+- `choices`: ["Yes", "No", "Sometimes"].
+- `weights`: [1.0, 0.0, 0.5].
+- `benefit_category`: List of strings (e.g. ["Uber"]).
+- Generate 3-5 generic usage questions to gauge if the card fits the user (based on its benefits).
+
+**OUTPUT**:
+Return ONLY the strictly valid JSON object with these components: header (card metadata), sign-up bonus, benefits, earning rates, questions. Include the slug-id, name, and issuer fields as well. No markdown.
