@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.4">
+    <link rel="stylesheet" href="{% static 'css/layout.css' %}?v=1.1">
     {% block extra_css %}{% endblock %}
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
@@ -23,6 +24,23 @@
         const firebaseConfig = JSON.parse(document.getElementById('firebase-config').textContent);
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
+
+        // Define handleLogout globally
+        window.handleLogout = function(e) {
+            if (e) e.preventDefault();
+            // Set flag to prevent auth_base.html from auto-syncing logic re-logging us in
+            sessionStorage.setItem('logging_out', 'true');
+            if (firebase.auth) {
+                firebase.auth().signOut().then(() => {
+                    window.location.href = "/logout/";
+                }).catch((error) => {
+                    console.error("Firebase logout error:", error);
+                    window.location.href = "/logout/"; // Fallback logout
+                });
+            } else {
+                window.location.href = "/logout/"; // Fallback if firebase not loaded
+            }
+        };
 
         // Auth State Observer
         auth.onAuthStateChanged(async (user) => {
@@ -50,6 +68,11 @@
                 }
             } else {
                 // User is NOT signed in to Firebase
+                if (sessionStorage.getItem('logging_out') === 'true') {
+                    sessionStorage.removeItem('logging_out');
+                    return;
+                }
+
                 const isDjangoAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}" === "true";
                 
                 if (isDjangoAuthenticated) {
@@ -62,23 +85,61 @@
                 }
             }
         });
+
+        function toggleSidebar() {
+          const sidebar = document.getElementById('sidebar');
+          const overlay = document.getElementById('mobile-overlay');
+          if (sidebar.classList.contains('open')) {
+            sidebar.classList.remove('open');
+            if(overlay) overlay.classList.remove('visible');
+          } else {
+            sidebar.classList.add('open');
+            if(overlay) overlay.classList.add('visible');
+          }
+        }
     </script>
 </head>
 
-<body>
-    <!-- Top Navigation Bar -->
-    <!-- Top Navigation Bar -->
-    {% include 'includes/navbar.html' %}
+<body class="app-body">
+
+    <!-- Mobile Overlay -->
+    <div id="mobile-overlay" onclick="toggleSidebar()" class="mobile-overlay"></div>
+
+    <!-- Sidebar -->
+    {% include 'includes/sidebar.html' %}
 
     <!-- Main Content Area -->
-    <main style="padding: 3rem 0; background: #F7F7F7;">
-        <div class="container" style="max-width: 1400px;">
-            {% block content %}
-            {% endblock %}
+    <main class="app-main">
+        <!-- Top Application Header -->
+        <header class="top-header">
+            <div class="header-left">
+                <button class="mobile-toggle-btn icon-btn" onclick="toggleSidebar()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg>
+                </button>
+                <div class="breadcrumb">
+                    <span class="hover:text-slate-800 cursor-pointer">{% block breadcrumb_section %}App{% endblock %}</span>
+                    <span class="mx-2">/</span>
+                    <span class="font-semibold text-slate-800 capitalize">{% block page_title %}Wallet{% endblock %}</span>
+                </div>
+            </div>
+            
+            <div class="header-right">
+
+                <button class="icon-btn relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg>
+                    <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white"></span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Scrollable Content -->
+        <div class="content-scrollable">
+            <div class="content-container">
+                {% block content %}
+                {% endblock %}
+            </div>
         </div>
     </main>
-
-    {% include 'includes/footer.html' %}
     {% block extra_js %}{% endblock %}
 </body>
 

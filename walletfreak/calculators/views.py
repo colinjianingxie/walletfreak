@@ -11,6 +11,9 @@ from datetime import datetime, date
 from core.services import db
 from .services import OptimizerService
 
+from django.contrib.auth.decorators import login_required
+
+@login_required
 def index(request):
     """
     Renders the Calculators hub page.
@@ -23,6 +26,7 @@ def index(request):
 
 
 
+@login_required
 def worth_it_list(request):
     """
     Display a list of credit cards that have an annual fee > 0.
@@ -53,6 +57,7 @@ def worth_it_list(request):
         'cards': af_cards
     })
 
+@login_required
 def worth_it_audit(request, card_slug):
     """
     Display the questionnaire for the selected card.
@@ -122,6 +127,7 @@ def worth_it_audit(request, card_slug):
         'benefits': audit_benefits
     })
 
+@login_required
 def worth_it_calculate(request, card_slug):
     """
     Calculate the optimization score.
@@ -276,6 +282,7 @@ def worth_it_calculate(request, card_slug):
     
     return redirect('worth_it_audit', card_slug=card_slug)
 
+@login_required
 def optimizer_input(request):
     """
     Renders the SUB Optimizer input form.
@@ -345,6 +352,7 @@ def optimizer_calculate(request):
         'wallet_card_ids': list(user_wallet_slugs)
     })
 
+@login_required
 def spend_it_input(request):
     """
     Renders the Spend It Optimizer input form.
@@ -405,6 +413,7 @@ def spend_it_input(request):
     }
     return render(request, 'calculators/spend_it_input.html', context)
 
+@login_required
 def spend_it_calculate(request):
     """
     Calculates best cards for a specific purchase amount and category.

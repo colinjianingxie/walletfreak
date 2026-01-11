@@ -33,13 +33,10 @@
         </button>
 
         <!-- Desktop Nav Links -->
-        <div class="nav-links desktop-only" id="nav-links">
+        <div class="nav-links desktop-only {% if not user.is_authenticated %}public-nav-links{% endif %}" id="nav-links">
             <div class="nav-items">
                 {% if user.is_authenticated %}
                 <a href="{% url 'dashboard' %}" data-nav="wallet" class="{% if request.path == '/' or '/wallet/' in request.path %}active{% endif %}">Wallet</a>
-                {% else %}
-                <a href="{% url 'features' %}" data-nav="features" class="{% if '/features' in request.path %}active{% endif %}">Features</a>
-                {% endif %}
                 <a href="{% url 'card_list' %}" data-nav="explore" class="{% if '/cards' in request.path or '/explore' in request.path %}active{% endif %}">Explore</a>
                 <a href="{% url 'calculators_index' %}" data-nav="calculators" class="{% if '/calculators' in request.path %}active{% endif %}">Calculators</a>
                 <a href="{% url 'personality_list' %}" data-nav="personalities" class="{% if '/personalities' in request.path or '/freaks' in request.path %}active{% endif %}">Freaks</a>
@@ -48,6 +45,14 @@
                 <a href="{% url 'contact' %}" data-nav="contact" class="{% if '/contact' in request.path %}active{% endif %}">Contact</a>
                 
                 {% if not user_is_premium %}
+                <a href="{% url 'pricing' %}" data-nav="pricing" class="nav-item-premium {% if '/pricing' in request.path %}active{% endif %}">Premium</a>
+                {% endif %}
+                {% else %}
+                <a href="{% url 'features' %}" data-nav="features" class="{% if '/features' in request.path %}active{% endif %}">Features</a>
+                <a href="{% url 'card_list' %}" data-nav="explore" class="{% if '/cards' in request.path or '/explore' in request.path %}active{% endif %}">Explore</a>
+                <a href="{% url 'personality_list' %}" data-nav="personalities" class="{% if '/personalities' in request.path or '/freaks' in request.path %}active{% endif %}">Freaks</a>
+                <a href="{% url 'blog_list' %}" data-nav="blog" class="{% if '/blog' in request.path or '/ledger' in request.path %}active{% endif %}">Ledger</a>
+                <a href="{% url 'contact' %}" data-nav="contact" class="{% if '/contact' in request.path %}active{% endif %}">Contact</a>
                 <a href="{% url 'pricing' %}" data-nav="pricing" class="nav-item-premium {% if '/pricing' in request.path %}active{% endif %}">Premium</a>
                 {% endif %}
             </div>
@@ -222,7 +227,7 @@
                 <div class="mobile-menu-icon" style="{% if '/cards' in request.path or '/explore' in request.path %}background: #EFF6FF; color: #2563EB;{% endif %}">
                     <span class="material-icons">explore</span>
                 </div>
-                <span class="mobile-menu-text">Explore Cards</span>
+                <span class="mobile-menu-text">Explore</span>
                 <span class="mobile-menu-indicator" style="{% if '/cards' in request.path or '/explore' in request.path %}display: block;{% endif %}"></span>
             </a>
 
@@ -238,7 +243,7 @@
                 <div class="mobile-menu-icon" style="{% if '/personalities' in request.path or '/freaks' in request.path %}background: #FAF5FF; color: #A855F7;{% endif %}">
                     <span class="material-icons">auto_awesome</span>
                 </div>
-                <span class="mobile-menu-text">Personalities</span>
+                <span class="mobile-menu-text">Freaks</span>
                 <span class="mobile-menu-indicator" style="{% if '/personalities' in request.path or '/freaks' in request.path %}display: block;{% endif %}"></span>
             </a>
 
@@ -246,7 +251,7 @@
                 <div class="mobile-menu-icon" style="{% if '/blog' in request.path or '/ledger' in request.path %}background: #FFF7ED; color: #EA580C;{% endif %}">
                     <span class="material-icons">menu_book</span>
                 </div>
-                <span class="mobile-menu-text">Blog</span>
+                <span class="mobile-menu-text">Ledger</span>
                 <span class="mobile-menu-indicator" style="{% if '/blog' in request.path or '/ledger' in request.path %}display: block;{% endif %}"></span>
             </a>
 
@@ -265,7 +270,6 @@
                 <span class="mobile-menu-text">Contact</span>
                 <span class="mobile-menu-indicator" style="{% if '/contact' in request.path %}display: block;{% endif %}"></span>
             </a>
-
             {% else %}
             <!-- Logged Out State -->
             <a href="{% url 'features' %}" class="mobile-menu-item {% if '/features' in request.path %}active{% endif %}" data-nav="features">
@@ -280,23 +284,15 @@
                 <div class="mobile-menu-icon" style="{% if '/cards' in request.path or '/explore' in request.path %}background: #EFF6FF; color: #2563EB;{% endif %}">
                     <span class="material-icons">explore</span>
                 </div>
-                <span class="mobile-menu-text">Explore Cards</span>
+                <span class="mobile-menu-text">Explore</span>
                 <span class="mobile-menu-indicator" style="{% if '/cards' in request.path or '/explore' in request.path %}display: block;{% endif %}"></span>
-            </a>
-
-            <a href="{% url 'calculators_index' %}" class="mobile-menu-item {% if '/calculators' in request.path %}active{% endif %}" data-nav="calculators">
-                <div class="mobile-menu-icon" style="{% if '/calculators' in request.path %}background: #EEF2FF; color: #4F46E5;{% endif %}">
-                    <span class="material-icons">calculate</span>
-                </div>
-                <span class="mobile-menu-text">Calculators</span>
-                <span class="mobile-menu-indicator" style="{% if '/calculators' in request.path %}display: block;{% endif %}"></span>
             </a>
 
             <a href="{% url 'personality_list' %}" class="mobile-menu-item {% if '/personalities' in request.path or '/freaks' in request.path %}active{% endif %}" data-nav="personalities">
                 <div class="mobile-menu-icon" style="{% if '/personalities' in request.path or '/freaks' in request.path %}background: #FAF5FF; color: #A855F7;{% endif %}">
                     <span class="material-icons">auto_awesome</span>
                 </div>
-                <span class="mobile-menu-text">Personalities</span>
+                <span class="mobile-menu-text">Freaks</span>
                 <span class="mobile-menu-indicator" style="{% if '/personalities' in request.path or '/freaks' in request.path %}display: block;{% endif %}"></span>
             </a>
 
@@ -304,16 +300,8 @@
                 <div class="mobile-menu-icon" style="{% if '/blog' in request.path or '/ledger' in request.path %}background: #FFF7ED; color: #EA580C;{% endif %}">
                     <span class="material-icons">menu_book</span>
                 </div>
-                <span class="mobile-menu-text">Blog</span>
+                <span class="mobile-menu-text">Ledger</span>
                 <span class="mobile-menu-indicator" style="{% if '/blog' in request.path or '/ledger' in request.path %}display: block;{% endif %}"></span>
-            </a>
-
-            <a href="{% url 'datapoint_list' %}" class="mobile-menu-item {% if '/datapoints' in request.path %}active{% endif %}" data-nav="datapoints">
-                <div class="mobile-menu-icon" style="{% if '/datapoints' in request.path %}background: #F0F9FF; color: #0284C7;{% endif %}">
-                    <span class="material-icons">hub</span>
-                </div>
-                <span class="mobile-menu-text">Data Points</span>
-                <span class="mobile-menu-indicator" style="{% if '/datapoints' in request.path %}display: block;{% endif %}"></span>
             </a>
 
             <a href="{% url 'contact' %}" class="mobile-menu-item {% if '/contact' in request.path %}active{% endif %}" data-nav="contact">
@@ -322,6 +310,14 @@
                 </div>
                 <span class="mobile-menu-text">Contact</span>
                 <span class="mobile-menu-indicator" style="{% if '/contact' in request.path %}display: block;{% endif %}"></span>
+            </a>
+
+            <a href="{% url 'pricing' %}" class="mobile-menu-item {% if '/pricing' in request.path %}active{% endif %}" data-nav="pricing">
+                <div class="mobile-menu-icon" style="{% if '/pricing' in request.path %}background: #FFFBEB; color: #D97706;{% endif %}">
+                    <span class="material-icons">auto_awesome</span>
+                </div>
+                <span class="mobile-menu-text">Premium</span>
+                <span class="mobile-menu-indicator" style="{% if '/pricing' in request.path %}display: block;{% endif %}"></span>
             </a>
             {% endif %}
         </div>

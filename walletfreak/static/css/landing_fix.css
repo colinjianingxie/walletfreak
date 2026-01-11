@@ -1,0 +1,193 @@
+/* Emergency Fixes for Navbar and Public Pages */
+
+/* Navbar Layout */
+.navbar .container {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important;
+}
+
+.nav-links.desktop-only .navbar .nav-items {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 1.5rem !important;
+}
+
+.nav-links.desktop-only {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 1.5rem !important;
+}
+
+/* Hide Mobile Elements on Desktop */
+@media (min-width: 769px) {
+
+    .mobile-menu-toggle,
+    .mobile-menu-overlay,
+    .mobile-menu-close {
+        display: none !important;
+    }
+
+    .nav-links.desktop-only {
+        display: flex !important;
+    }
+}
+
+/* Hide Desktop Elements on Mobile */
+@media (max-width: 768px) {
+    .nav-links.desktop-only {
+        display: none !important;
+    }
+
+    .mobile-menu-toggle {
+        display: block !important;
+    }
+}
+
+/* Card Styles (Restore Login Page) */
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+}
+
+/* Container */
+.container {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+@media (min-width: 640px) {
+    .container {
+        max-width: 640px;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 768px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1024px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .container {
+        max-width: 1280px;
+    }
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    border: 1px solid transparent;
+}
+
+.btn-primary {
+    background-color: #2563eb;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #1d4ed8;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border-color: #e2e8f0;
+    color: #1e293b;
+}
+
+.btn-outline:hover {
+    background-color: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+/* Inputs */
+input,
+select,
+textarea {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid #e2e8f0;
+    background-color: white;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+input:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px #bfdbfe;
+}
+
+@media (min-width: 769px) {
+    .navbar .nav-items {
+        gap: 1.5rem !important;
+    }
+
+    .public-nav-links {
+        display: flex;
+        flex-direction: row;
+        position: static;
+        width: auto;
+        height: auto;
+        background: transparent;
+        padding: 0;
+        gap: 2rem;
+        flex: 1;
+        justify-content: flex-end;
+        /* Changed from space-between to align right */
+    }
+
+    .public-nav-links .nav-items {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1.5rem;
+    }
+}
+
+/* --- FIXES START HERE --- */
+
+/* 1. Fix spacing under Explore page content (Logged OUT) */
+body:not(.user-is-authenticated) .main-content-wrapper {
+    padding-top: 2rem !important;
+}
+
+/* 2. Remove white background on Article page actions (Logged OUT) */
+.header-actions .action-btn {
+    background-color: transparent !important;
+}
+
+.header-actions .action-btn:hover {
+    background-color: #F3F4F6 !important;
+    /* Keep hover effect */
+}
