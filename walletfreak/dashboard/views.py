@@ -35,9 +35,9 @@ def dashboard(request):
         print(f"Error fetching personality: {e}")
         assigned_personality = None
     
-    # Get all available cards for adding
+    # Get all available cards for adding (Optimized: Basic info only)
     try:
-        all_cards = db.get_cards()
+        all_cards = db.get_cards_basic()
     except Exception as e:
         print(f"Error fetching all cards: {e}")
         all_cards = []

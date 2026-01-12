@@ -13,7 +13,7 @@
     },
     "name": "Alliant Cashback Visa Signature Card",
     "issuer": "Alliant Credit Union",
-    "image_url": "/static/images/credit_cards/alliant-cashback-visa-signature-card.png",
+    "image_url": "/static/images/credit_cards/alliant-cashback-visa-signature-card.webp",
     "annual_fee": 0,
     "application_link": "https://www.alliantcreditunion.org/credit-cards/visa-signature-card",
     "min_credit_score": 670,

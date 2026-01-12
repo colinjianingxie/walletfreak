@@ -25,6 +25,10 @@ firebase.auth().onAuthStateChanged((user) => {
             walletListenerUnsubscribe();
             walletListenerUnsubscribe = null;
         }
+        if (userListenerUnsubscribe) {
+            userListenerUnsubscribe();
+            userListenerUnsubscribe = null;
+        }
     }
 });
 

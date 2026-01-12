@@ -17,7 +17,7 @@
     },
     "name": "Wells Fargo Signify Business Cash Card",
     "issuer": "Wells Fargo",
-    "image_url": "/static/images/credit_cards/wells-fargo-signify-business-cash-card.png",
+    "image_url": "/static/images/credit_cards/wells-fargo-signify-business-cash-card.jpeg",
     "annual_fee": 0,
     "application_link": "https://www.wellsfargo.com/biz/business-credit/credit-cards/signify-business-cash/",
     "min_credit_score": 670,

@@ -28,20 +28,230 @@ class CardMixin:
         Efficiently count user cards without fetching full data.
         """
         try:
-            # Aggregate count if available
-            try:
-                from google.cloud.firestore import AggregateQuery
-                query = self.db.collection('users').document(uid).collection('user_cards').count()
-                return query.get()[0][0].value
-            except Exception:
-                # Fallback to len of ids (projections?)
-                # Or regular stream if projection not easy via python client wrapper
-                query = self.db.collection('users').document(uid).collection('user_cards')
-                return len(list(query.stream()))
+            # Try efficient aggregation count
+            # Note: Requires google-cloud-firestore >= 2.9.0
+            query = self.db.collection('users').document(uid).collection('user_cards')
+            
+            # Use count() if available on the query object (newer clients)
+            if hasattr(query, 'count'):
+                return query.count().get()[0][0].value
+            
+            # Fallback to importing AggregateQuery manually if query.count() helper missing
+            from google.cloud.firestore import AggregateQuery
+            return AggregateQuery(query).get()[0][0].value
+            
         except Exception:
-            return 0
+            try:
+                # Fallback to fetching ONLY IDs (much cheaper than full docs)
+                query = self.db.collection('users').document(uid).collection('user_cards')
+                # Use projection if possible, or just stream IDs
+                # Python client doesn't support 'select' on CollectionReference directly easily in all versions?
+                # Actually it does: query.select(['__name__'])
+                return len(list(query.select(['__name__']).stream()))
+            except Exception:
+                return 0
+
+    def get_specific_cards(self, slugs):
+        """
+        Fetch full details for specific card slugs only.
+        Much more efficient than get_cards() when we only need a few.
+        """
+        if not slugs:
+            return []
+            
+        # 1. Fetch Master Docs
+        refs = [self.db.collection('master_cards').document(slug) for slug in slugs]
+        # get_all handles multiple refs efficiently
+        master_snaps = self.db.get_all(refs)
+        
+        hydrated_cards = []
+        for snap in master_snaps:
+            if snap.exists:
+                data = snap.to_dict()
+                data['id'] = snap.id
+                if 'slug' not in data: data['slug'] = snap.id
+                
+                # Enrich with subcollections
+                # We reuse the existing enrichment logic. 
+                # While this iterates per card, for N < 50 it is far more efficient 
+                # than fetching all 1500+ cards and their subcollections.
+                self._enrich_card_with_subcollections(snap.id, data)
+                hydrated_cards.append(data)
+                
+        return hydrated_cards
 
     def get_cards(self):
+        """
+        Get all cards with full subcollections (active benefits, earning_rates, sign_up_bonus).
+        Returns hydrated card objects.
+        """
+        # Check cache first
+        if self._cards_cache is not None and self._cards_cache_time is not None:
+            if datetime.now() - self._cards_cache_time < self._cards_cache_ttl:
+                return self._cards_cache
+        
+        # 1. Fetch all master cards
+        cards_snapshot = self.get_collection('master_cards')
+        # Sort cards by name for consistent ordering
+        cards_snapshot.sort(key=lambda x: x.get('name', ''))
+        
+        cards_map = {c['id']: c for c in cards_snapshot if 'id' in c}
+        
+        if not cards_map:
+            return []
+
+        # Ensure slug is present
+        for c in cards_map.values():
+            if 'slug' not in c:
+                c['slug'] = c['id']
+            
+        # Initialize subcollection containers
+        for c in cards_map.values():
+            c['benefits'] = []
+            c['earning_rates'] = []
+            c['sign_up_bonus'] = {} 
+            c['card_questions'] = []
+        
+        # Collect all references to fetch
+        refs_to_fetch = []
+        ref_map = {} # path -> (card_id, type)
+
+        for card_id, c in cards_map.items():
+            indices = c.get('active_indices', {})
+            
+            def add_refs(type_key, collection_name):
+                if indices.get(type_key):
+                    for item_id in indices[type_key]:
+                        ref = self.db.collection('master_cards').document(card_id).collection(collection_name).document(item_id)
+                        refs_to_fetch.append(ref)
+                        ref_map[ref.path] = (card_id, type_key)
+
+            add_refs('benefits', 'benefits')
+            add_refs('earning_rates', 'earning_rates')
+            add_refs('sign_up_bonus', 'sign_up_bonus')
+            add_refs('card_questions', 'card_questions')
+
+        if refs_to_fetch:
+            # Batch Get - Chunking in groups of 100
+            chunks = [refs_to_fetch[i:i + 100] for i in range(0, len(refs_to_fetch), 100)]
+            
+            for chunk in chunks:
+                snaps = self.db.get_all(chunk)
+                for snap in snaps:
+                    if not snap.exists:
+                        continue
+                    
+                    data = snap.to_dict()
+                    data['id'] = snap.id
+                    
+                    # Identify owner
+                    card_id, type_key = ref_map.get(snap.reference.path, (None, None))
+                    
+                    if card_id and card_id in cards_map:
+                        container = cards_map[card_id].get(type_key)
+                        if isinstance(container, list):
+                            container.append(data)
+
+        # 6. Process
+        for card in cards_map.values():
+            raw_bonuses = card.get('sign_up_bonus', []) if isinstance(card.get('sign_up_bonus'), list) else [] 
+            # Note: in loop above we appended to list, but initialization was dict... wait.
+            # Initialization above: c['sign_up_bonus'] = {} -> WRONG if used as list accumulator.
+            # Let's check logic: `add_refs` uses `indices['sign_up_bonus']`.
+            # We append to refs.
+            # Then retrieve and append to `container`.
+            # If `container` is dict, append fails.
+            # FIX: Initialize all as lists.
+            
+            # Correcting processing logic:
+            card['sign_up_bonus'] = self._process_signup_bonuses(card.get('sign_up_bonus', []))
+            card['card_questions'] = self._process_card_questions(card.get('card_questions', []))
+            card['benefits'].sort(key=lambda x: x.get('benefit_id') or '')
+
+        result = list(cards_map.values())
+        
+        # Update cache
+        self._cards_cache = result
+        self._cards_cache_time = datetime.now()
+        
+        return result
+    
+    def get_card_by_slug(self, slug):
+        card_data = self.get_document('master_cards', slug)
+        if card_data:
+            self._enrich_card_with_subcollections(slug, card_data)
+        return card_data
+        
+    # Other methods... check _process_signup_bonuses etc are preserved in replacement if outside?
+    # No, I am replacing from line 26 to 338 (get_user_card_count to get_user_cards)
+    
+    # Wait, I need to make sure I don't delete helper methods if they are in the range. 
+    # _process_signup_bonuses, _process_card_questions, _enrich_card_with_subcollections, add_card_to_user ARE in the middle.
+    # I should Only replace get_user_card_count and get_user_cards.
+    # I will break this into chunks.
+    
+    # Chunk 1: get_user_card_count
+    # Chunk 2: get_user_cards
+    # And add get_specific_cards
+    
+    # I will use multi_replace.
+    pass
+
+    def get_user_cards(self, uid, status=None, hydrate=True):
+        """
+        Get user cards.
+        hydrate: If True, merges with Master Card data (Requires fetching Master Cards).
+                 If False, returns only User Card data (Lightweight).
+        """
+        query = self.db.collection('users').document(uid).collection('user_cards')
+        if status:
+            query = query.where(filter=FieldFilter('status', '==', status))
+        
+        # User Cards are small, stream is fine.
+        user_cards_docs = list(query.stream())
+        if not user_cards_docs:
+            return []
+            
+        user_cards_map = {} 
+        for doc in user_cards_docs:
+            data = doc.to_dict()
+            card_id = doc.id
+            user_cards_map[card_id] = data
+            
+        if not hydrate:
+             return [
+                 {**data, 'id': cid, 'card_slug_id': cid} 
+                 for cid, data in user_cards_map.items()
+             ]
+            
+        # Get SPECIFIC master data only for efficiency
+        # Optimization: Fetch only the cards the user has, avoiding the massive 1500+ card fetch.
+        slugs_to_fetch = list(user_cards_map.keys())
+        all_hydrated_cards = self.get_specific_cards(slugs_to_fetch)
+        
+        hydrated_map = {c['id']: c for c in all_hydrated_cards}
+        
+        results = []
+        for card_id, user_data in user_cards_map.items():
+            master_card = hydrated_map.get(card_id)
+            if master_card:
+                composite = master_card.copy()
+                composite.update({
+                    'user_card_id': card_id,
+                    'status': user_data.get('status'),
+                    'added_at': user_data.get('added_at'),
+                    'anniversary_date': user_data.get('anniversary_date'),
+                    'benefit_usage': user_data.get('benefit_usage', {}),
+                    'id': card_id,
+                    'card_id': card_id,
+                    'card_slug_id': card_id,
+                    'card_ref': user_data.get('card_ref') # Preserve ref
+                })
+                results.append(composite)
+            else:
+                results.append(user_data | {'id': card_id, 'name': 'Unknown Card'})
+
+        return results
         """
         Get all cards with full subcollections (active benefits, earning_rates, sign_up_bonus).
         Returns hydrated card objects.

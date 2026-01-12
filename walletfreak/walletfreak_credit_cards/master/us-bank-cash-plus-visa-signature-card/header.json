@@ -19,7 +19,7 @@
     },
     "name": "U.S. Bank Cash+ Visa Signature Card",
     "issuer": "U.S. Bank",
-    "image_url": "/static/images/credit_cards/us-bank-cash-plus-visa-signature-card.png",
+    "image_url": "/static/images/credit_cards/us-bank-cash-plus-visa-signature-card.jpeg",
     "annual_fee": 0,
     "application_link": "https://www.usbank.com/credit-cards/cash-plus-visa-signature-credit-card.html",
     "min_credit_score": 670,

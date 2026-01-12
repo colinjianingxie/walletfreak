@@ -9,18 +9,17 @@
     padding: 0 1rem;
 }
 
-.detail-header {
-    background: white;
-    border-bottom: 1px solid #E5E7EB;
-    padding: 1rem 0;
-    position: relative;
-    z-index: 10;
-}
+/* detail-header removed */
+/* .detail-header { ... } */
 
 .header-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1rem 0 1rem;
+    /* Top padding for spacing */
 }
 
 .back-btn {

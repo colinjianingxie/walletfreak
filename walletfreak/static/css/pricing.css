@@ -113,6 +113,14 @@
     }
 }
 
+@media (min-width: 1024px) {
+    .pricing-grid {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 80rem;
+        /* Increased from 56rem to fit 3 columns */
+    }
+}
+
 /* Cards */
 .pricing-card {
     border-radius: 2.5rem;

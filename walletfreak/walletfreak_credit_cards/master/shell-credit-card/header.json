@@ -12,7 +12,7 @@
     },
     "name": "Shell Credit Card",
     "issuer": "Citi",
-    "image_url": "/static/images/credit_cards/shell-credit-card.png",
+    "image_url": "/static/images/credit_cards/shell-credit-card.webp",
     "annual_fee": 0,
     "application_link": "https://citiretailservices.citibankonline.com/RSnextgen/svc/launch/index.action?siteId=PLOC_SHELL",
     "min_credit_score": 670,
