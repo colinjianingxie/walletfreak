@@ -26,6 +26,33 @@
 <script src="{% static 'js/dashboard_modules/benefits_modal.js' %}"></script>
 <script src="{% static 'js/dashboard_modules/benefits_actions.js' %}"></script>
 <script src="{% static 'js/dashboard_modules/benefits.js' %}?v=1.6"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pulltorefreshjs/0.1.25/index.umd.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const ptr = PullToRefresh.init({
+            mainElement: '.content-scrollable',
+            onRefresh: function() {
+                window.location.reload();
+            },
+            distThreshold: 70, // Distance required to trigger refresh
+            distMax: 90,       // Max distance
+            distReload: 60,    // Distance to hold while loading
+            iconArrow: '<span class="material-icons" style="transform: rotate(180deg);">arrow_upward</span>',
+            iconRefreshing: '<span class="material-icons loop-animation">refresh</span>',
+            instructionsPullToRefresh: 'Pull down to refresh',
+            instructionsReleaseToRefresh: 'Release to refresh',
+            instructionsRefreshing: 'Refreshing...'
+        });
+    });
+</script>
+<style>
+    /* Simple rotation animation for the refresh icon */
+    @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+    .loop-animation { animation:spin 1s linear infinite; }
+    
+    /* Ensure the pull-to-refresh element is above other content */
+    .ptr--ptr { z-index: 100; }
+</style>
 {% endblock %}
 
 {% block content %}
