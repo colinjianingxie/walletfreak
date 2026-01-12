@@ -259,15 +259,25 @@ class DataPointMixin:
     def get_active_card_slugs(self):
         """
         Fetch distinct card slugs from valid datapoints.
-        Sorts alphabetically.
+        Sorts alphabetically. Cached for 1 hour.
         """
         try:
+            from django.core.cache import cache
+            cache_key = 'active_datapoint_card_slugs'
+            cached_slugs = cache.get(cache_key)
+            if cached_slugs is not None:
+                return cached_slugs
+
             # Projection query - only fetch card_slug
-            docs = self.db.collection('datapoints').select(['card_slug']).stream()
+            # Limit to 5000 to prevent explosion if collection grows huge
+            docs = self.db.collection('datapoints').select(['card_slug']).limit(5000).stream()
             slugs = {doc.to_dict().get('card_slug') for doc in docs}
             # Remove None if present
             slugs.discard(None)
-            return sorted(list(slugs))
+            result = sorted(list(slugs))
+            
+            cache.set(cache_key, result, 3600) # 1 hour cache
+            return result
         except Exception as e:
             print(f"Error fetching active card slugs: {e}")
             return []

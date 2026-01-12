@@ -39,23 +39,38 @@ class UserMixin:
         return data
 
     def get_total_user_count(self):
-        """Get total number of registered users"""
+        """Get total number of registered users using aggregation query or cached stream."""
         try:
-            # Using aggregation query for efficiency if available
-            # Note: count() aggregation is available in newer google-cloud-firestore
-            # Fallback to streaming stream() if count() not available in installed version
+            users_ref = self.db.collection('users')
+            # Check if count() is directly supported (newer SDKs)
+            if hasattr(users_ref, 'count'):
+                val = users_ref.count().get()[0][0].value
+                return int(val)
+            
+            # Fallback to AggregateQuery wrapper
+            from google.cloud.firestore import AggregateQuery
+            val = AggregateQuery(users_ref.count()).get()[0][0].value
+            return int(val)
+        except (ImportError, AttributeError, Exception) as e:
+            # Fallback to streaming BUT cache it to avoid 36k reads per request
             try:
-                from google.cloud.firestore import AggregateQuery
+                from django.core.cache import cache
+                cache_key = 'total_user_count_fallback'
+                cached_count = cache.get(cache_key)
+                if cached_count is not None:
+                    return cached_count
+                
+                # Expensive operation
+                print(f"Warning: Doing full user stream count due to: {e}")
                 users_ref = self.db.collection('users')
-                count_query = users_ref.count()
-                return count_query.get()[0][0].value
-            except Exception:
-                # Fallback slightly less efficient but works
-                users_ref = self.db.collection('users')
-                return len(list(users_ref.stream()))
-        except Exception as e:
-            print(f"Error getting total user count: {e}")
-            return 0
+                # Use select to minimize bandwidth at least
+                count = len(list(users_ref.select(['__name__']).limit(100000).stream()))
+                
+                cache.set(cache_key, count, 3600) # Cache for 1 hour
+                return count
+            except Exception as e2:
+                print(f"Error getting total user count fallback: {e2}")
+                return 0
 
     def get_user_profile(self, uid):
         return self.get_document('users', uid)
