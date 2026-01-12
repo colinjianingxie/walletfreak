@@ -12,7 +12,7 @@
     },
     "name": "Amazon Business American Express Card",
     "issuer": "American Express",
-    "image_url": "/static/images/credit_cards/amazon-business-american-express-card.png",
+    "image_url": "/static/images/credit_cards/amazon-business-american-express-card.avif",
     "annual_fee": 0,
     "application_link": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/amazon-business-card/",
     "min_credit_score": 670,

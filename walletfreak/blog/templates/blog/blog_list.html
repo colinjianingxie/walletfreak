@@ -198,10 +198,9 @@
                     btn.style.color = isSaved ? '#94A3B8' : 'var(--primary)'; // Reset to gray or set to primary
                 } else {
                     console.error('Action failed:', data.error);
-                    if (data.error === 'Not authenticated') {
-                         window.location.href = '/login/?next=' + window.location.pathname;
-                    }
                 }
+            } else if (response.status === 401) {
+                showLoginModal();
             } else {
                 console.error('Server error');
             }
@@ -244,11 +243,9 @@
                     
                 } else {
                     console.error('Vote failed:', data.error);
-                    if (data.error === 'Not authenticated') {
-                         // Redirect to login or show modal
-                         window.location.href = '/login/?next=' + window.location.pathname;
-                    }
                 }
+            } else if (response.status === 401) {
+                showLoginModal();
             } else {
                 console.error('Server error');
             }

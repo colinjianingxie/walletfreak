@@ -13,7 +13,7 @@
     },
     "name": "OpenSky\u00ae Secured Visa\u00ae Credit Card",
     "issuer": "Capital Bank",
-    "image_url": "/static/images/credit_cards/opensky-secured-visa-credit-card.png",
+    "image_url": "/static/images/credit_cards/opensky-secured-visa-credit-card.jpg",
     "annual_fee": 35,
     "application_link": "https://www.openskycc.com/",
     "min_credit_score": 300,

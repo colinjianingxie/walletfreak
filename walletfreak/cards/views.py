@@ -547,3 +547,24 @@ def report_card_issue(request):
     except Exception as e:
         print(f"Error processing report: {e}")
         return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
+def get_card_details_json(request, card_id):
+    """
+    API endpoint to fetch full card details (benefits, rates, etc.) on demand.
+    This replaces sending full details for all cards in the initial dashboard load.
+    """
+    try:
+        # Fetch directly using get_card_by_slug (which handles hydration)
+        card = db.get_card_by_slug(card_id)
+        
+        if not card:
+            return JsonResponse({'success': False, 'error': 'Card not found'}, status=404)
+        
+        # Ensure ID is present, though get_card_by_slug usually ensures it via hydration or doc id
+        if 'id' not in card:
+            card['id'] = card_id
+            
+        return JsonResponse({'success': True, 'card': card}, json_dumps_params={'default': str})
+    except Exception as e:
+        print(f"Error fetching card details: {e}")
+        return JsonResponse({'success': False, 'error': str(e)}, status=500)

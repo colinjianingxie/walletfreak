@@ -48,6 +48,62 @@ function selectCardForPreview(card, element) {
 
     // Render Earning Rates
     const earningContainer = document.getElementById('preview-earning-rates');
+    const creditsContainer = document.getElementById('preview-credits');
+
+    // Check if we need to fetch details
+    // Basic cards from optimized view won't have 'earning_rates' or 'benefits' populated fully
+    // But empty list is valid. Key check: do we have them defined?
+    // Basic fetch keeps them as empty lists or missing.
+    // Let's assume if it's not present or empty we *might* need to fetch.
+    // Better check: 'benefits' is usually a list. If it's missing or empty, AND we haven't fetched yet.
+    // We can add a flag `detailsLoaded` to the card object.
+
+    // Helper to check if details meaningful exist
+    const hasDetails = (c) => (c.benefits && c.benefits.length > 0) || (c.earning_rates && c.earning_rates.length > 0) || (c.credits && c.credits.length > 0) || c.detailsLoaded;
+
+    if (hasDetails(card)) {
+        renderCardDetails(card);
+    } else {
+        // Show loading state
+        if (earningContainer) earningContainer.innerHTML = '<div style="padding: 1rem; text-align: center; color: #94A3B8;">Loading rates...</div>';
+        if (creditsContainer) creditsContainer.innerHTML = '<div style="padding: 1rem; text-align: center; color: #94A3B8;">Loading credits...</div>';
+
+        // Fetch details
+        fetch(`/cards/details/${card.id || card.card_id}/`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.card) {
+                    // Update the local card object with new details
+                    Object.assign(card, data.card);
+                    card.detailsLoaded = true;
+
+                    // Update the global data source so we don't fetch again
+                    if (typeof allCardsData !== 'undefined') {
+                        const globalCard = allCardsData.find(c => c.id === card.id);
+                        if (globalCard) {
+                            Object.assign(globalCard, data.card);
+                            globalCard.detailsLoaded = true;
+                        }
+                    }
+
+                    // Render
+                    renderCardDetails(card);
+                } else {
+                    if (earningContainer) earningContainer.innerHTML = '<div style="color: #EF4444; font-size: 0.875rem;">Failed to load details.</div>';
+                    if (creditsContainer) creditsContainer.innerHTML = '<div style="color: #EF4444; font-size: 0.875rem;">Failed to load details.</div>';
+                }
+            })
+            .catch(err => {
+                console.error('Error fetching card details:', err);
+                if (earningContainer) earningContainer.innerHTML = '<div style="color: #EF4444; font-size: 0.875rem;">Error loading details.</div>';
+                if (creditsContainer) creditsContainer.innerHTML = '<div style="color: #EF4444; font-size: 0.875rem;">Error loading details.</div>';
+            });
+    }
+}
+
+function renderCardDetails(card) {
+    // Render Earning Rates
+    const earningContainer = document.getElementById('preview-earning-rates');
     if (earningContainer) {
         try {
             earningContainer.innerHTML = '';
