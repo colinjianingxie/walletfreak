@@ -258,8 +258,7 @@ def blog_list(request):
                 'contributors': top_contributors
             }, 60 * 15)
     
-    # Get total registered users count for the Ledger card
-    total_users = db.get_total_user_count()
+
     
     # Check subscription status
     is_subscribed = False
@@ -288,7 +287,7 @@ def blog_list(request):
         'trending_posts': trending_posts,
         'top_contributors': top_contributors,
         'now': datetime.now(),
-        'total_users': total_users,
+
         'is_subscribed': is_subscribed,
         'user_is_premium': user_is_premium,
         # Sidebar Context

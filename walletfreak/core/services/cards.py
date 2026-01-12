@@ -25,31 +25,20 @@ class CardMixin:
 
     def get_user_card_count(self, uid):
         """
-        Efficiently count user cards without fetching full data.
+        Efficiently count user cards using aggregation query.
         """
         try:
-            # Try efficient aggregation count
-            # Note: Requires google-cloud-firestore >= 2.9.0
             query = self.db.collection('users').document(uid).collection('user_cards')
-            
             # Use count() if available on the query object (newer clients)
             if hasattr(query, 'count'):
-                return query.count().get()[0][0].value
+                return int(query.count().get()[0][0].value)
             
-            # Fallback to importing AggregateQuery manually if query.count() helper missing
+            # Fallback to AggregateQuery wrapper
             from google.cloud.firestore import AggregateQuery
-            return AggregateQuery(query).get()[0][0].value
-            
-        except Exception:
-            try:
-                # Fallback to fetching ONLY IDs (much cheaper than full docs)
-                query = self.db.collection('users').document(uid).collection('user_cards')
-                # Use projection if possible, or just stream IDs
-                # Python client doesn't support 'select' on CollectionReference directly easily in all versions?
-                # Actually it does: query.select(['__name__'])
-                return len(list(query.select(['__name__']).stream()))
-            except Exception:
-                return 0
+            return int(AggregateQuery(query.count()).get()[0][0].value)
+        except Exception as e:
+            print(f"Error counting user cards for {uid}: {e}")
+            return 0
 
     def get_specific_cards(self, slugs):
         """

@@ -38,24 +38,7 @@ class UserMixin:
             data['author_avatar'] = None
         return data
 
-    def get_total_user_count(self):
-        """Get total number of registered users"""
-        try:
-            # Using aggregation query for efficiency if available
-            # Note: count() aggregation is available in newer google-cloud-firestore
-            # Fallback to streaming stream() if count() not available in installed version
-            try:
-                from google.cloud.firestore import AggregateQuery
-                users_ref = self.db.collection('users')
-                count_query = users_ref.count()
-                return count_query.get()[0][0].value
-            except Exception:
-                # Fallback slightly less efficient but works
-                users_ref = self.db.collection('users')
-                return len(list(users_ref.stream()))
-        except Exception as e:
-            print(f"Error getting total user count: {e}")
-            return 0
+
 
     def get_user_profile(self, uid):
         return self.get_document('users', uid)
