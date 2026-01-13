@@ -1,0 +1,14 @@
+{
+    "source_program_id": "cap1_miles",
+    "destination_program_id": "ba_avios",
+    "ratio": 1.0,
+    "transfer_time": "Instant",
+    "min_transfer_amount": 1000,
+    "transfer_increment": 1000,
+    "current_bonus": {
+        "is_active": true,
+        "bonus_multiplier": 1.30,
+        "expiry_date": "2026-02-01T00:00:00Z"
+    },
+    "is_one_way": true
+}

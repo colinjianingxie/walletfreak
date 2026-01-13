@@ -1,0 +1,9 @@
+{
+    "program_name": "American Express Membership Rewards",
+    "type": "bank",
+    "logo_url": "https://example.com/amex_logo.png",
+    "valuation": 2.0,
+    "iata_code": null,
+    "alliance": null,
+    "partner_hotel_brand": null
+}

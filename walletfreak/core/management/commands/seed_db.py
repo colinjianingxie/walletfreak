@@ -107,7 +107,7 @@ class Command(BaseCommand):
         """Seed categories and credit cards data from new relational structure"""
         
         # New Master Directory
-        updates_dir = os.path.join(base_dir, 'walletfreak_credit_cards', 'master')
+        updates_dir = os.path.join(base_dir, 'walletfreak_data', 'master_cards')
         # We might not check overrides in this pass if they are already baked in? 
         # Or should we apply overrides? The previous logic applied overrides to parsed data.
         # For now, let's assume raw data in master is source of truth.

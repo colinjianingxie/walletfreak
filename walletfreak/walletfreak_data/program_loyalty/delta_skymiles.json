@@ -1,0 +1,9 @@
+{
+    "program_name": "Delta SkyMiles",
+    "type": "airline",
+    "logo_url": "https://example.com/delta_logo.png",
+    "valuation": 1.2,
+    "iata_code": "DL",
+    "alliance": "SkyTeam",
+    "partner_hotel_brand": null
+}

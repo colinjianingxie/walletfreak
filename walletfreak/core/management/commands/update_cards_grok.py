@@ -48,7 +48,7 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR("GROK_API_KEY not found in environment variables"))
             return
 
-        self.master_dir = os.path.join(settings.BASE_DIR, 'walletfreak_credit_cards', 'master')
+        self.master_dir = os.path.join(settings.BASE_DIR, 'walletfreak_data', 'master_cards')
         if not os.path.exists(self.master_dir):
             os.makedirs(self.master_dir)
 
@@ -541,7 +541,7 @@ class Command(BaseCommand):
         Loads the structured unique categories from categories_list.json.
         Returns a formatted string describing the hierarchy to help the LLM.
         """
-        json_path = os.path.join(settings.BASE_DIR, 'walletfreak_credit_cards', 'categories_list.json')
+        json_path = os.path.join(settings.BASE_DIR, 'walletfreak_data', 'categories_list.json')
         if not os.path.exists(json_path):
              # Fallback to old behavior or empty
              return "No categories found."
@@ -748,7 +748,7 @@ Return ONLY the strictly valid JSON object with these components: {components_st
         """
         Load categories from categories_list.json and format for LLM prompt.
         """
-        categories_path = os.path.join(settings.BASE_DIR, 'walletfreak_credit_cards', 'categories_list.json')
+        categories_path = os.path.join(settings.BASE_DIR, 'walletfreak_data', 'categories_list.json')
         
         try:
             with open(categories_path, 'r') as f:

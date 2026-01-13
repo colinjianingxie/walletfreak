@@ -7,7 +7,7 @@ from django.conf import settings
 
 class PromptGenerator:
     def __init__(self):
-        self.cards_dir = os.path.join(settings.BASE_DIR, 'walletfreak_credit_cards')
+        self.cards_dir = os.path.join(settings.BASE_DIR, 'walletfreak_data')
         self.sample_card = os.path.join(self.cards_dir, 'chase-sapphire-preferred-card.json')
     
     def _load_sample_json(self):

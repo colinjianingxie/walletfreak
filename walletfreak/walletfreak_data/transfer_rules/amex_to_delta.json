@@ -1,0 +1,14 @@
+{
+    "source_program_id": "amex_mr",
+    "destination_program_id": "delta_skymiles",
+    "ratio": 1.0,
+    "transfer_time": "Instant",
+    "min_transfer_amount": 1000,
+    "transfer_increment": 1000,
+    "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+    },
+    "is_one_way": true
+}
