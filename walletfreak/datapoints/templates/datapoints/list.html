@@ -202,7 +202,7 @@
                     // For now, if we just voted, we update it.
                     // If we unvoted, we generally don't revert the timestamp because someone else might have voted?
                     // But here last_verified_str is returned only if updated_verified is true.
-                    label.textContent = `Last verified ${data.last_verified_str}`;
+                    label.textContent = `(Verified ${data.last_verified_str})`;
                 }
 
                 // Update sibling Outdated button

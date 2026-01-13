@@ -1,4 +1,5 @@
 {% load humanize %}
+{% load time_filters %}
 
 <!-- Loading Indicator Overlay -->
 <div class="dp-loading-overlay htmx-indicator">
@@ -99,7 +100,7 @@
                 </button>
                 <span class="last-verified-label" style="font-size: 0.65rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 1px;">
                     {% if dp.last_verified %}
-                    Last verified {{ dp.last_verified|naturaltime }}
+                    (Verified {{ dp.last_verified|naturaltime_short }})
                     {% endif %}
                 </span>
             </div>

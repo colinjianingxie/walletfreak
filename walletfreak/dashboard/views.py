@@ -944,3 +944,20 @@ def toggle_benefit_ignore_status(request, user_card_id, benefit_id):
         return JsonResponse({'success': True})
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
+
+@login_required
+def points_collection(request):
+    """Points Collection feature (Premium Only)"""
+    uid = request.session.get('uid')
+    if not uid:
+        return redirect('login')
+        
+    # Check premium status
+    if not db.is_premium(uid):
+        return redirect('pricing')
+        
+    context = {
+        'user': request.user,
+    }
+    return render(request, 'dashboard/points_collection.html', context)

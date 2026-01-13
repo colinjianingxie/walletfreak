@@ -226,7 +226,7 @@ def vote_datapoint(request, pk):
                 # without re-fetching.
                 # For UI responsiveness, let's return current time formatted.
                 from django.utils import timezone
-                response_data['last_verified_str'] = timezone.now().strftime('%b %d, %Y') # Simplified format for now?
+                response_data['last_verified_str'] = 'just now'
                 # Actually, naturaltime is used in templates usually.
                 # Let's just return a standard ISO timestamp or similar that JS can parse or simple text.
                 response_data['last_verified_timestamp'] = timezone.now().isoformat()
