@@ -9,7 +9,6 @@
     "max_credit_score": 850,
     "is_524": false,
     "freak_verdict": "6/10. This is the 'maintenance' card of the American Airlines portfolio. It's perfect for casual flyers who want to keep their AAdvantage miles from expiring or earn Loyalty Points on daily spends without paying an annual fee. However, the 2x grocery rate is easily beaten by other no-fee cards, and it lacks the free checked bag perk found on its premium siblings.",
-    "points_value_cpp": 1.4,
     "active_indices": {
         "benefits": [
             "in-flight-savings-v1",
@@ -24,5 +23,6 @@
             "offer-1",
             "offer-2"
         ]
-    }
+    },
+    "loyalty_program": "american_aadvantage"
 }

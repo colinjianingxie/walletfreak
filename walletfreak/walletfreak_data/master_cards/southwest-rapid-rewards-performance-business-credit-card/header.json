@@ -9,7 +9,6 @@
     "max_credit_score": 850,
     "is_524": true,
     "freak_verdict": "9.5/10. The ultimate choice for Southwest loyalists. The 9,000 anniversary points and $120 TSA/GE credit effectively wipe out a huge chunk of the annual fee, making the high-tier perks nearly free.",
-    "points_value_cpp": 1.5,
     "active_indices": {
         "benefits": [
             "anniversary-points-v1",
@@ -27,5 +26,6 @@
         "sign_up_bonus": [
             "offer-1"
         ]
-    }
+    },
+    "loyalty_program": "southwest_rapid_rewards"
 }

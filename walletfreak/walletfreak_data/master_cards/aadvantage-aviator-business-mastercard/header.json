@@ -24,5 +24,5 @@
     "max_credit_score": 850,
     "is_524": false,
     "freak_verdict": "Discontinued for new applicants; existing accounts transitioning to Citi in 2026.",
-    "points_value_cpp": 1.6
+    "loyalty_program": "american_aadvantage"
 }

@@ -9,7 +9,6 @@
     "max_credit_score": 850,
     "is_524": true,
     "freak_verdict": "8/10. Excellent for Air Canada loyalists with a strong tiered welcome bonus worth up to $1,400 and valuable elite status perks, though the benefits are niche if you don't fly with them often.",
-    "points_value_cpp": 1.4,
     "active_indices": {
         "benefits": [
             "global-entry-credit-v1",
@@ -28,5 +27,6 @@
         "sign_up_bonus": [
             "offer-1"
         ]
-    }
+    },
+    "loyalty_program": "aeroplan"
 }

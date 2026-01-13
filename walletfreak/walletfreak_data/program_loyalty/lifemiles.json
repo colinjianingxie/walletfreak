@@ -1,0 +1,11 @@
+{
+  "program_id": "lifemiles",
+  "program_name": "Avianca LifeMiles",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.7,
+  "iata_code": "AV",
+  "alliance": "Star Alliance",
+  "partner_hotel_brand": [],
+  "currency_group": "Miles"
+}

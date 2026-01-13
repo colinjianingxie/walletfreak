@@ -1,0 +1,11 @@
+{
+  "program_id": "miles_and_go",
+  "program_name": "TAP Air Portugal Miles&Go",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.4,
+  "iata_code": "TP",
+  "alliance": "Star Alliance",
+  "partner_hotel_brand": [],
+  "currency_group": "Miles"
+}

@@ -1,0 +1,11 @@
+{
+  "program_id": "volare",
+  "program_name": "ITA Airways Volare",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.0,
+  "iata_code": "AZ",
+  "alliance": "SkyTeam",
+  "partner_hotel_brand": [],
+  "currency_group": "Points"
+}

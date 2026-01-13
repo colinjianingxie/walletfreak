@@ -9,7 +9,6 @@
     "max_credit_score": 850,
     "is_524": false,
     "freak_verdict": "7/10. A solid no-annual-fee starter card for military members. While the 3x dining is good, the More Rewards card usually offers better value for the same fee.",
-    "points_value_cpp": 1.0,
     "active_indices": {
         "benefits": [
             "intro-apr-v1"
@@ -20,5 +19,6 @@
             "financial-&-rewards-v1"
         ],
         "sign_up_bonus": []
-    }
+    },
+    "loyalty_program": null
 }

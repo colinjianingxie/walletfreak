@@ -9,7 +9,6 @@
     "max_credit_score": 850,
     "is_524": true,
     "freak_verdict": "9/10. The 4th night free benefit alone makes this a must-have for IHG loyalists. The 140k bonus is a strong entry point.",
-    "points_value_cpp": 0.5,
     "active_indices": {
         "benefits": [
             "free-night-v1",
@@ -24,5 +23,6 @@
         "sign_up_bonus": [
             "offer-1"
         ]
-    }
+    },
+    "loyalty_program": "ihg_one_rewards"
 }

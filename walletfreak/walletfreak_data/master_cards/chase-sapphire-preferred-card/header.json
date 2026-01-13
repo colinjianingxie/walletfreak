@@ -9,7 +9,6 @@
     "max_credit_score": 850,
     "is_524": true,
     "freak_verdict": "10/10. Simple and clean. No tiered spending or hidden boosts. $5,000 in 3 months gets you the full 75k points.",
-    "points_value_cpp": 1.25,
     "active_indices": {
         "benefits": [
             "hotel-credit-v1",
@@ -29,5 +28,6 @@
         "sign_up_bonus": [
             "offer-1"
         ]
-    }
+    },
+    "loyalty_program": "chase_ur"
 }

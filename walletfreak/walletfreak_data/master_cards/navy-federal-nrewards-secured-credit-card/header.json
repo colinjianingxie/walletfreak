@@ -9,7 +9,6 @@
     "max_credit_score": 579,
     "is_524": true,
     "freak_verdict": "No Freak verdict for this card yet",
-    "points_value_cpp": 1.0,
     "active_indices": {
         "benefits": [
             "no-ftf-v1",
@@ -19,5 +18,6 @@
             "financial-&-rewards-v1"
         ],
         "sign_up_bonus": []
-    }
+    },
+    "loyalty_program": null
 }

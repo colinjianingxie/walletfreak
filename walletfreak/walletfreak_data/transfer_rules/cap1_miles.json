@@ -1,0 +1,239 @@
+{
+  "source_program_id": "cap1_miles",
+  "transfer_partners": [
+    {
+      "destination_program_id": "accor_all",
+      "ratio": 0.5,
+      "transfer_time": "1-2 days",
+      "min_transfer_amount": 2000,
+      "transfer_increment": 2000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "aeromexico_premier",
+      "ratio": 1.0,
+      "transfer_time": "1-2 days",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "aircanada_aeroplan",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "airfranceklm_flyingblue",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "avianca_lifemiles",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "britishairways_executiveclub",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "cathaypacific_asiamiles",
+      "ratio": 1.0,
+      "transfer_time": "1 day",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "choice_privileges",
+      "ratio": 1.0,
+      "transfer_time": "1 day",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "emirates_skywards",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": true,
+        "bonus_multiplier": 1.2,
+        "expiry_date": "2026-03-15"
+      }
+    },
+    {
+      "destination_program_id": "etihad_guest",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "evaair_infinitymileagelands",
+      "ratio": 0.75,
+      "transfer_time": "1-2 days",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "finnair_plus",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "qantas_frequentflyer",
+      "ratio": 1.0,
+      "transfer_time": "1 day",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "singapore_krisflyer",
+      "ratio": 1.0,
+      "transfer_time": "1-2 days",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "tapairportugal_milesandgo",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "turkish_milesandsmiles",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "virginatlantic_flyingclub",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "wyndham_rewards",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "program_id": "virgin_flying_club",
+  "program_name": "Virgin Atlantic Flying Club",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.5,
+  "iata_code": "VS",
+  "alliance": "SkyTeam",
+  "partner_hotel_brand": [
+    "Hilton"
+  ],
+  "currency_group": "Points"
+}

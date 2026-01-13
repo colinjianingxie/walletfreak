@@ -1,0 +1,13 @@
+{
+  "program_id": "krisflyer",
+  "program_name": "Singapore Airlines KrisFlyer",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.5,
+  "iata_code": "SQ",
+  "alliance": "Star Alliance",
+  "partner_hotel_brand": [
+    "Marriott"
+  ],
+  "currency_group": "Miles"
+}

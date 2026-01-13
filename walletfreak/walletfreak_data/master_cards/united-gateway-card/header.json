@@ -9,7 +9,6 @@
     "max_credit_score": 850,
     "is_524": true,
     "freak_verdict": "6/10. A solid no-annual-fee option for occasional United flyers. It keeps your miles from expiring but lacks major perks like free bags.",
-    "points_value_cpp": 1.2,
     "active_indices": {
         "benefits": [
             "inflight-discount-v1"
@@ -23,5 +22,6 @@
         "sign_up_bonus": [
             "offer-1"
         ]
-    }
+    },
+    "loyalty_program": "chase_ur"
 }

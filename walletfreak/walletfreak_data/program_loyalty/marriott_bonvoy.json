@@ -1,0 +1,11 @@
+{
+  "program_id": "marriott_bonvoy",
+  "program_name": "Marriott Bonvoy",
+  "type": "hotel",
+  "logo_url": null,
+  "valuation": 0.8,
+  "iata_code": null,
+  "alliance": null,
+  "partner_hotel_brand": [],
+  "currency_group": "Points"
+}

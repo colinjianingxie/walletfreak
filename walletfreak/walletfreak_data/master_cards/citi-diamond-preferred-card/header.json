@@ -9,7 +9,6 @@
     "max_credit_score": 850,
     "is_524": false,
     "freak_verdict": "4/10. This is a debt-repayment tool, not a rewards card. Use it for the 21-month 0% APR on balance transfers, then put it in a drawer once you're debt-free.",
-    "points_value_cpp": 0.0,
     "active_indices": {
         "benefits": [
             "bt-intro-apr-v1",
@@ -19,5 +18,6 @@
             "no-rewards-v1"
         ],
         "sign_up_bonus": []
-    }
+    },
+    "loyalty_program": "citi_ty"
 }

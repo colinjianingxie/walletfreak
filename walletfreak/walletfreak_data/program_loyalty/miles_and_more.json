@@ -1,0 +1,11 @@
+{
+  "program_id": "miles_and_more",
+  "program_name": "Lufthansa Miles & More",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.4,
+  "iata_code": "LH",
+  "alliance": "Star Alliance",
+  "partner_hotel_brand": [],
+  "currency_group": "Miles"
+}

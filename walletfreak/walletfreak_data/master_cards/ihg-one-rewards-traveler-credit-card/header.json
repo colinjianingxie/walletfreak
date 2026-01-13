@@ -9,7 +9,6 @@
     "max_credit_score": 850,
     "is_524": true,
     "freak_verdict": "No Freak verdict for this card yet",
-    "points_value_cpp": 0.6,
     "active_indices": {
         "benefits": [
             "silver-status-v1",
@@ -21,5 +20,6 @@
             "financial-&-rewards-v1"
         ],
         "sign_up_bonus": []
-    }
+    },
+    "loyalty_program": "ihg_one_rewards"
 }

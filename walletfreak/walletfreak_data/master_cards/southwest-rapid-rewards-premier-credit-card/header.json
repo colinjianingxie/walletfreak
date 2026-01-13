@@ -23,5 +23,5 @@
     "max_credit_score": 850,
     "is_524": true,
     "freak_verdict": "Solid for Southwest loyalists seeking anniversary points and travel perks without a high annual fee.",
-    "points_value_cpp": 1.5
+    "loyalty_program": "southwest_rapid_rewards"
 }

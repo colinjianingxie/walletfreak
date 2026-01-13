@@ -1,0 +1,11 @@
+{
+  "program_id": "connectmiles",
+  "program_name": "Copa Airlines ConnectMiles",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.3,
+  "iata_code": "CM",
+  "alliance": "Star Alliance",
+  "partner_hotel_brand": [],
+  "currency_group": "Miles"
+}

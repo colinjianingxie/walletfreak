@@ -9,7 +9,6 @@
     "max_credit_score": 850,
     "is_524": false,
     "freak_verdict": "8.5/10. One of the best no-annual-fee travel cards. The current 100k bonus is extremely generous for zero cost.",
-    "points_value_cpp": 0.5,
     "active_indices": {
         "benefits": [
             "silver-status-v1"
@@ -24,5 +23,6 @@
         "sign_up_bonus": [
             "offer-1"
         ]
-    }
+    },
+    "loyalty_program": "hilton_honors"
 }

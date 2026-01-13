@@ -101,7 +101,13 @@ class Command(BaseCommand):
         if seed_all or seed_quiz_questions:
             self._seed_quiz_questions()
         
-        self.stdout.write(self.style.SUCCESS('Successfully seeded database'))
+        # Seed Loyalty Programs
+        self._seed_loyalty_programs()
+        
+        # Seed Transfer Rules
+        self._seed_transfer_rules()
+
+        self.stdout.write(self.style.SUCCESS('Database seeding completed successfully.'))
 
     def _seed_categories_and_cards(self, base_dir, card_slugs_list, types_list, seed_categories):
         """Seed categories and credit cards data from new relational structure"""
@@ -120,6 +126,22 @@ class Command(BaseCommand):
 
         # Prepare for category aggregation
         all_categories = {}
+
+        # Load Loyalty Valuations
+        loyalty_dir = os.path.join(base_dir, 'walletfreak_data', 'program_loyalty')
+        loyalty_valuations = {}
+        if os.path.exists(loyalty_dir):
+            for fname in os.listdir(loyalty_dir):
+                if fname.endswith('.json'):
+                    try:
+                        with open(os.path.join(loyalty_dir, fname), 'r') as f:
+                            l_data = json.load(f)
+                            pid = l_data.get('program_id')
+                            val = l_data.get('valuation')
+                            if pid and val:
+                                loyalty_valuations[pid] = val
+                    except:
+                        pass
 
         # Iterate over card directories
         try:
@@ -161,6 +183,13 @@ class Command(BaseCommand):
             should_merge = bool(types_list)
             
             # Create/Update Master Card Header
+            # Derive points_value_cpp from loyalty_program
+            l_prog = card_data.get('loyalty_program')
+            if l_prog and l_prog in loyalty_valuations:
+                card_data['points_value_cpp'] = loyalty_valuations[l_prog]
+            else:
+                card_data['points_value_cpp'] = 1.0
+
             db.create_document('master_cards', card_data, doc_id=card_slug, merge=should_merge)
             
             seeded_types = []
@@ -172,23 +201,34 @@ class Command(BaseCommand):
                     return 0
 
                 sub_path = os.path.join(card_path, sub_json_dir)
-                coll_ref_path = f'master_cards/{card_slug}/{sub_name}'
+                coll_ref = db.db.collection(f'master_cards/{card_slug}/{sub_name}')
                 
                 if not os.path.exists(sub_path):
                     return 0
 
-                # Check if we should delete existing docs (clean slate for this subcollection)
-                # But careful: delete logic needs to be safe.
+                # Batch Delete
                 if delete_existing:
-                     # Simple delete all in subcollection
                      try:
-                        existing_docs = list(db.db.collection(coll_ref_path).stream())
+                        delete_batch = db.db.batch()
+                        delete_count = 0
+                        existing_docs = list(coll_ref.stream())
                         for d in existing_docs:
-                            d.reference.delete()
+                            delete_batch.delete(d.reference)
+                            delete_count += 1
+                            if delete_count >= 400:
+                                delete_batch.commit()
+                                delete_batch = db.db.batch()
+                                delete_count = 0
+                        if delete_count > 0:
+                            delete_batch.commit()
                      except Exception as e:
-                        pass
+                        print(f"Error purging {sub_name}: {e}")
                 
-                count = 0
+                # Batch Write
+                write_batch = db.db.batch()
+                write_count = 0
+                total_items = 0
+                
                 for fname in os.listdir(sub_path):
                     if not fname.endswith('.json'):
                         continue
@@ -197,15 +237,26 @@ class Command(BaseCommand):
                     with open(f_full_path, 'r') as f:
                         try:
                             item_data = json.load(f)
-                            # Use filename as ID (minus .json) or rely on field?
-                            # Filename is usually reliable as we generated it to be unique (e.g. uber-cash_v1)
+                            # Filename as ID
                             doc_id = fname.replace('.json', '')
                              
-                            db.create_document(coll_ref_path, item_data, doc_id=doc_id)
-                            count += 1
+                            doc_ref = coll_ref.document(doc_id)
+                            write_batch.set(doc_ref, item_data)
+                            write_count += 1
+                            total_items += 1
+                            
+                            if write_count >= 400:
+                                write_batch.commit()
+                                write_batch = db.db.batch()
+                                write_count = 0
+                                
                         except json.JSONDecodeError:
                             print(f"Error decoding {fname}")
-                return count
+                            
+                if write_count > 0:
+                    write_batch.commit()
+                    
+                return total_items
 
             # Seed Subcollections
             
@@ -218,7 +269,6 @@ class Command(BaseCommand):
             if c_rates: seeded_types.append(f'{c_rates} rates')
             
             # 3. Sign Up Bonus
-            # Note: seed_subcollection deletes existing by default, which is fine as we are re-seeding from source of truth
             c_subs = seed_subcollection('sign_up_bonus', 'sign_up_bonus', 'sign_up_bonus')
             if c_subs: seeded_types.append(f'{c_subs} bonuses')
             
@@ -305,3 +355,79 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR(f'Could not find {quiz_json_path}'))
         except json.JSONDecodeError:
             self.stdout.write(self.style.ERROR(f'Invalid JSON in {quiz_json_path}'))
+
+    def _seed_loyalty_programs(self):
+        self.stdout.write("\nSeeding loyalty programs...")
+        loyalty_dir = os.path.join(settings.BASE_DIR, 'walletfreak_data', 'program_loyalty')
+        if not os.path.exists(loyalty_dir):
+            self.stdout.write(self.style.WARNING(f"Loyalty directory not found: {loyalty_dir}"))
+            return
+
+        batch = db.db.batch()
+        count = 0
+        
+        for filename in os.listdir(loyalty_dir):
+            if not filename.endswith('.json'):
+                continue
+                
+            with open(os.path.join(loyalty_dir, filename), 'r') as f:
+                try:
+                    data = json.load(f)
+                except json.JSONDecodeError:
+                    self.stdout.write(self.style.ERROR(f"Error decoding {filename}"))
+                    continue
+                
+            pid = data.get('program_id')
+            if not pid:
+                continue
+                
+            doc_ref = db.db.collection('program_loyalty').document(pid)
+            batch.set(doc_ref, data)
+            count += 1
+            
+            if count % 400 == 0:
+                batch.commit()
+                batch = db.db.batch()
+                
+        if count % 400 != 0:
+            batch.commit()
+            
+        self.stdout.write(f"Seeded {count} loyalty programs.")
+
+    def _seed_transfer_rules(self):
+        self.stdout.write("Seeding transfer rules...")
+        transfers_dir = os.path.join(settings.BASE_DIR, 'walletfreak_data', 'transfer_rules')
+        if not os.path.exists(transfers_dir):
+            self.stdout.write(self.style.WARNING(f"Transfer rules directory not found: {transfers_dir}"))
+            return
+
+        batch = db.db.batch()
+        count = 0
+        
+        for filename in os.listdir(transfers_dir):
+            if not filename.endswith('.json'):
+                continue
+                
+            with open(os.path.join(transfers_dir, filename), 'r') as f:
+                try:
+                    data = json.load(f)
+                except json.JSONDecodeError:
+                    self.stdout.write(self.style.ERROR(f"Error decoding {filename}"))
+                    continue
+                
+            source_id = data.get('source_program_id')
+            if not source_id:
+                continue
+                
+            doc_ref = db.db.collection('transfer_rules').document(source_id)
+            batch.set(doc_ref, data)
+            count += 1
+            
+            if count % 400 == 0:
+                batch.commit()
+                batch = db.db.batch()
+                
+        if count % 400 != 0:
+            batch.commit()
+            
+        self.stdout.write(f"Seeded transfer rules for {count} source programs.")

@@ -1,0 +1,11 @@
+{
+  "program_id": "miles_plus_bonus",
+  "program_name": "Aegean Airlines Miles+Bonus",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.2,
+  "iata_code": "A3",
+  "alliance": "Star Alliance",
+  "partner_hotel_brand": [],
+  "currency_group": "Miles"
+}

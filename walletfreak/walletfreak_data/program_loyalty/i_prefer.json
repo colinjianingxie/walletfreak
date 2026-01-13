@@ -1,0 +1,11 @@
+{
+  "program_id": "i_prefer",
+  "program_name": "I Prefer Hotel Rewards",
+  "type": "hotel",
+  "logo_url": null,
+  "valuation": 1.0,
+  "iata_code": null,
+  "alliance": null,
+  "partner_hotel_brand": [],
+  "currency_group": "Points"
+}

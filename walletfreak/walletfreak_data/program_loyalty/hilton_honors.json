@@ -1,0 +1,11 @@
+{
+  "program_id": "hilton_honors",
+  "program_name": "Hilton Honors",
+  "type": "hotel",
+  "logo_url": null,
+  "valuation": 0.6,
+  "iata_code": null,
+  "alliance": null,
+  "partner_hotel_brand": [],
+  "currency_group": "Points"
+}

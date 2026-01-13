@@ -1,0 +1,11 @@
+{
+  "program_id": "finnair_plus",
+  "program_name": "Finnair Plus",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.5,
+  "iata_code": "AY",
+  "alliance": "Oneworld",
+  "partner_hotel_brand": [],
+  "currency_group": "Avios"
+}

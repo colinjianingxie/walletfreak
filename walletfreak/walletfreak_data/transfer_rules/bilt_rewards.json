@@ -1,0 +1,200 @@
+{
+  "source_program_id": "bilt_rewards",
+  "transfer_partners": [
+    {
+      "destination_program_id": "aircanada_aeroplan",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "airfranceklm_flyingblue",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "alaska_mileageplan",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "american_aadvantage",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "britishairways_executiveclub",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "cathaypacific_asiamiles",
+      "ratio": 1.0,
+      "transfer_time": "1 day",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "emirates_skywards",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "hawaiian_hawaiianmiles",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "hyatt_worldofhyatt",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "iberia_plus",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "ihg_rewards",
+      "ratio": 1.0,
+      "transfer_time": "1 day",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "marriott_bonvoy",
+      "ratio": 1.0,
+      "transfer_time": "1-2 days",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "turkish_milesandsmiles",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "united_mileageplus",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "virginatlantic_flyingclub",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    }
+  ]
+}

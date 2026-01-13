@@ -9,7 +9,6 @@
     "max_credit_score": 850,
     "is_524": false,
     "freak_verdict": "7/10. A no-frills workhorse for credit builders. While it completely lacks rewards and signup bonuses, its $0 annual fee and no foreign transaction fees make it a safe and inexpensive tool for establishing a credit history. The automatic credit line reviews are a great incentive for consistent, responsible use.",
-    "points_value_cpp": 0,
     "active_indices": {
         "benefits": [
             "credit-line-increase-v1",
@@ -21,5 +20,6 @@
             "financial-&-rewards-v1"
         ],
         "sign_up_bonus": []
-    }
+    },
+    "loyalty_program": "cap1_miles"
 }

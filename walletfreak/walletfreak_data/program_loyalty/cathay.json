@@ -1,0 +1,11 @@
+{
+  "program_id": "cathay",
+  "program_name": "Cathay (Asia Miles)",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.3,
+  "iata_code": "CX",
+  "alliance": "Oneworld",
+  "partner_hotel_brand": [],
+  "currency_group": "Miles"
+}

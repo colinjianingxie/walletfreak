@@ -21,10 +21,23 @@ class Command(BaseCommand):
             action='store_true',
             help='Preview changes without saving files'
         )
+        parser.add_argument(
+            '--fix-iata',
+            action='store_true',
+            help='Backfill missing IATA codes for non-airline programs'
+        )
+        parser.add_argument(
+            '--fix-hotels',
+            action='store_true',
+            help='Backfill partner hotel brands as a list for airline programs'
+        )
 
     def handle(self, *args, **options):
         self.api_key = os.environ.get('GROK_API_KEY')
         if not self.api_key:
+            # allow fix-iata without api key? No, fix-hotels needs API.
+            # but fix-iata technically didn't use API in the logic I wrote (it was heuristic/random).
+            # But let's keep the check for simplified flow.
             self.stdout.write(self.style.ERROR("GROK_API_KEY not found in environment variables"))
             return
 
@@ -39,11 +52,17 @@ class Command(BaseCommand):
         if not os.path.exists(self.loyalty_dir): os.makedirs(self.loyalty_dir)
         if not os.path.exists(self.transfers_dir): os.makedirs(self.transfers_dir)
 
-        if update_type in ['loyalty', 'all']:
+        if update_type in ['loyalty', 'all'] and not (options.get('fix_iata') or options.get('fix_hotels')):
             self.update_loyalty_programs()
         
-        if update_type in ['transfers', 'all']:
+        if update_type in ['transfers', 'all'] and not (options.get('fix_iata') or options.get('fix_hotels')):
             self.update_transfer_rules()
+            
+        if options.get('fix_iata'):
+            self.fix_missing_iata_codes()
+            
+        if options.get('fix_hotels'):
+            self.fix_hotel_partners()
 
     def call_grok_api(self, prompt):
         url = "https://api.x.ai/v1/chat/completions"
@@ -63,9 +82,9 @@ class Command(BaseCommand):
                     "content": prompt
                 }
             ],
-            "model": "grok-2-1212", # Using latest model
+            "model": "grok-4", # Updated to match update_cards_grok.py
             "stream": False,
-            "temperature": 0.1, # Low temp for factual data
+            "temperature": 0.1, 
             "search_parameters": {
                 "mode": "on", 
                 "sources": [{"type": "web"}],
@@ -76,6 +95,9 @@ class Command(BaseCommand):
         
         try:
             response = requests.post(url, headers=headers, json=data)
+            if response.status_code == 404:
+                self.stdout.write(self.style.ERROR(f"API 404 Not Found. URL: {url}"))
+            
             response.raise_for_status()
             result = response.json()
             content = result['choices'][0]['message']['content']
@@ -89,6 +111,8 @@ class Command(BaseCommand):
             return json.loads(content)
         except Exception as e:
             self.stdout.write(self.style.ERROR(f"API Request Failed: {e}"))
+            if 'response' in locals() and hasattr(response, 'text'):
+                 self.stdout.write(self.style.ERROR(f"Response Body: {response.text}"))
             return None
 
     def update_loyalty_programs(self):
@@ -184,8 +208,8 @@ class Command(BaseCommand):
         - `valuation`: (Number) Approximate cents per point (cpp) value (e.g. 2.0, 1.2). Use reputable blogs (TPG, OMAAT) for valuation.
         - `iata_code`: (String) 2-letter code for airlines (e.g. "DL"), null for banks/hotels.
         - `alliance`: (String) Airline alliance (e.g. "Star Alliance", "Oneworld", "SkyTeam") or null.
-        - `partner_hotel_brand`: (String) Hotel brand (e.g. "Marriott") or null.
-        - `currency_group`: (String) "avios" if the currency is commonly called Avios (BA, Qatar, Iberia, Finnair, Aer Lingus), otherwise null.
+        - `partner_hotel_brand`: (List of Strings) List of hotel brands this airline partners with for earning/status (e.g. ["Marriott", "Hyatt"]). Return empty list [] if none or for non-airlines.
+        - `currency_group`: (String) "Avios", "Miles", or "Points" based on the currency name. Default to "Points" if unclear.
 
         **Output:**
         Return a single JSON list containing objects for ALL requested programs.
@@ -247,21 +271,35 @@ class Command(BaseCommand):
         Find ALL active transfer partners for the following source programs:
         {json.dumps(sources, indent=2)}
 
-        **Schema for each transfer rule:**
-        - `source_program_id`: (String) The ID of the bank as provided above (e.g. `chase_ur`, `amex_mr`).
-        - `destination_program_id`: (String) The ID of the partner program. You MUST use IDs consistent with standard loyalty program IDs (e.g., `united_mileageplus`, `ba_avios`, `marriott_bonvoy`).
-        - `ratio`: (Number) Transfer ratio (e.g. 1.0, 0.5, 2.0). 1.0 means 1:1.
-        - `transfer_time`: (String) e.g., "Instant", "24 hours", "2 days".
-        - `min_transfer_amount`: (Number) Usually 1000.
-        - `transfer_increment`: (Number) Usually 1000.
-        - `current_bonus`: (Object)
-            - `is_active`: (Boolean)
-            - `bonus_multiplier`: (Number) e.g. 1.25 for 25% bonus. or 1.0 if none.
-            - `expiry_date`: (String YYYY-MM-DD or null).
-        - `is_one_way`: (Boolean) true.
+        **Output Schema:**
+        Return a JSON LIST of objects, where each object represents one Source Program and contains all its transfer rules.
+        
+        [
+          {{
+            "source_program_id": "amex_mr",
+            "transfer_partners": [
+              {{
+                "destination_program_id": "delta_skymiles",
+                "ratio": 1.0,
+                "transfer_time": "Instant",
+                "min_transfer_amount": 1000,
+                "transfer_increment": 1000,
+                "is_one_way": true,
+                "current_bonus": {{
+                   "is_active": false,
+                   "bonus_multiplier": 1.0,
+                   "expiry_date": null
+                }}
+              }},
+              ...
+            ]
+          }},
+          ...
+        ]
 
-        **Output:**
-        Return a single JSON list containing ALL transfer rules found for ALL source programs.
+        **Rules:**
+        - `destination_program_id`: Use consistent IDs (e.g. `united_mileageplus`, `ba_executive_club`).
+        - `ratio`: Number (1.0 for 1:1).
         """
 
         if self.dry_run:
@@ -276,6 +314,7 @@ class Command(BaseCommand):
             return
 
         if isinstance(data, dict):
+             # check if wrapped
              for k, v in data.items():
                 if isinstance(v, list):
                     data = v
@@ -287,15 +326,172 @@ class Command(BaseCommand):
 
         for item in data:
             src = item.get('source_program_id')
-            dst = item.get('destination_program_id')
+            partners = item.get('transfer_partners', [])
             
-            if not src or not dst:
+            if not src:
                 continue
                 
-            filename = f"{src}_to_{dst}.json"
+            filename = f"{src}.json"
             file_path = os.path.join(self.transfers_dir, filename)
+            
+            # Sort partners by ID for consistency
+            partners.sort(key=lambda x: x.get('destination_program_id', ''))
+            item['transfer_partners'] = partners
             
             if not self.dry_run:
                 with open(file_path, 'w') as f:
                     json.dump(item, f, indent=2)
-                self.stdout.write(self.style.SUCCESS(f"Saved {filename}"))
+                self.stdout.write(self.style.SUCCESS(f"Saved {filename} with {len(partners)} partners"))
+
+    def fix_missing_iata_codes(self):
+        self.stdout.write(self.style.HTTP_INFO("\n=== Backfilling Missing IATA Codes ==="))
+        
+        files = [f for f in os.listdir(self.loyalty_dir) if f.endswith('.json')]
+        existing_codes = set()
+        programs_to_udpate = []
+        
+        # First pass: collect existing codes
+        for fname in files:
+            with open(os.path.join(self.loyalty_dir, fname), 'r') as f:
+                data = json.load(f)
+                code = data.get('iata_code')
+                if code:
+                    existing_codes.add(code.upper())
+                else:
+                    programs_to_udpate.append((fname, data))
+
+        self.stdout.write(f"Found {len(existing_codes)} existing IATA codes.")
+        self.stdout.write(f"Found {len(programs_to_udpate)} programs needing codes.")
+        
+        for fname, data in programs_to_udpate:
+            program_name = data.get('program_name', 'Unknown')
+            pid = data.get('program_id', fname.replace('.json', ''))
+            
+            # Generate code logic
+            candidate = None
+            
+            # Strategy 1: First letter of first two words
+            parts = program_name.split()
+            if len(parts) >= 2:
+                candidate = (parts[0][0] + parts[1][0]).upper()
+            
+            # Strategy 2: First two letters of first word (if still collision or < 2 words)
+            if not candidate or candidate in existing_codes:
+                candidate = program_name[:2].upper()
+            
+            # Strategy 3: First letter + Second letter of ID
+            if candidate in existing_codes:
+                 candidate = pid[:2].upper()
+
+            # Strategy 4: Brute force variations
+            if candidate in existing_codes:
+                # Try combinations of letters from name
+                name_clean = program_name.replace(' ', '').upper()
+                found = False
+                for i in range(len(name_clean)):
+                    for j in range(i + 1, len(name_clean)):
+                        test = name_clean[i] + name_clean[j]
+                        if test not in existing_codes:
+                            candidate = test
+                            found = True
+                            break
+                    if found: break
+            
+            # Last resort: Random letters (shouldn't happen with 2 chars and only 50 programs, 26*26=676 combos)
+            import random
+            import string
+            while candidate in existing_codes:
+                candidate = ''.join(random.choices(string.ascii_uppercase, k=2))
+
+            existing_codes.add(candidate)
+            data['iata_code'] = candidate
+            
+            self.stdout.write(f"Assigned {candidate} to {program_name} ({fname})")
+            
+            if not self.dry_run:
+                with open(os.path.join(self.loyalty_dir, fname), 'w') as f:
+                    json.dump(data, f, indent=2)
+
+    def fix_hotel_partners(self):
+        self.stdout.write(self.style.HTTP_INFO("\n=== Backfilling Hotel Partners ==="))
+        
+        files = [f for f in sorted(os.listdir(self.loyalty_dir)) if f.endswith('.json')]
+        airlines = []
+        
+        # Load all programs
+        for fname in files:
+            with open(os.path.join(self.loyalty_dir, fname), 'r') as f:
+                data = json.load(f)
+                if data.get('type') == 'airline':
+                    airlines.append((fname, data))
+
+        if not airlines:
+            self.stdout.write("No airlines found.")
+            return
+
+        self.stdout.write(f"Refining hotel partners for {len(airlines)} airlines...")
+
+        # Batch them to save API calls? No, specific search per airline is safer for "partner_hotel_brand" specificity
+        # Or batch of ~10. Let's do batch of 10.
+        
+        batch_size = 15
+        for i in range(0, len(airlines), batch_size):
+            batch = airlines[i:i + batch_size]
+            program_list = "\n".join([f"- {d.get('program_name')} (ID: {d.get('program_id')})" for _, d in batch])
+            
+            prompt = f"""
+            I am updating my database of airline loyalty programs.
+            For the following airlines, list the **Hotel Loyalty Programs** they partner with for **hotel point transfers to the airline** or **rewards/status matching**.
+            
+            Airlines:
+            {program_list}
+
+            return a JSON list of objects:
+            [
+              {{
+                "program_id": "airline_program_id",
+                "partner_hotel_brand": ["Marriott", "Hyatt", "Hilton"] (List of strings, empty if none known)
+              }}
+            ]
+            """
+            
+            if self.dry_run:
+                self.stdout.write(f"Would request updates for batch {i//batch_size + 1}")
+                continue
+
+            self.stdout.write(f"Fetching hotel partners for batch {i//batch_size + 1}...")
+            result = self.call_grok_api(prompt)
+            
+            if not result or not isinstance(result, list):
+                self.stdout.write(self.style.ERROR("Failed to get response for hotel partners batch"))
+                continue
+            
+            # Map results back
+            result_map = {r.get('program_id'): r.get('partner_hotel_brand', []) for r in result}
+            
+            for fname, data in batch:
+                pid = data.get('program_id')
+                partners = result_map.get(pid)
+                
+                # Check for updates
+                # Ensure partner_hotel_brand is a list
+                current_partners = data.get('partner_hotel_brand')
+                
+                # Normalize current to list if it was a string
+                if isinstance(current_partners, str):
+                    if current_partners:
+                        current_partners = [current_partners]
+                    else:
+                        current_partners = []
+                elif current_partners is None:
+                    current_partners = []
+                
+                if partners is not None:
+                     # Merge or replace? Replace with better LLM data usually better.
+                     # Remove duplicates
+                     final_list = sorted(list(set(partners)))
+                     data['partner_hotel_brand'] = final_list
+                     self.stdout.write(f"Updated {data.get('program_name')}: {final_list}")
+                     
+                     with open(os.path.join(self.loyalty_dir, fname), 'w') as f:
+                        json.dump(data, f, indent=2)

@@ -9,7 +9,6 @@
     "max_credit_score": 850,
     "is_524": true,
     "freak_verdict": "2/10. Bonus mirage. 30k after $3k then requires heavy spend with a 2x boost to earn the rest.",
-    "points_value_cpp": 1.8,
     "active_indices": {
         "benefits": [
             "free-night-v1",
@@ -24,5 +23,6 @@
         "sign_up_bonus": [
             "offer-1"
         ]
-    }
+    },
+    "loyalty_program": "world_of_hyatt"
 }

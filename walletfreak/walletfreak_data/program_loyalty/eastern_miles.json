@@ -1,0 +1,11 @@
+{
+  "program_id": "eastern_miles",
+  "program_name": "China Eastern Eastern Miles",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.0,
+  "iata_code": "MU",
+  "alliance": "SkyTeam",
+  "partner_hotel_brand": [],
+  "currency_group": "Miles"
+}

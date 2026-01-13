@@ -9,7 +9,6 @@
     "max_credit_score": 850,
     "is_524": true,
     "freak_verdict": "8/10. The upgraded free night award to 50k points boosts value significantly, paired with the limited-time 2026 airline credits and strong sign-up offer of 5 free nights. Excellent for Marriott loyalists, though earning rates remain middling outside of hotels.",
-    "points_value_cpp": 0.8,
     "active_indices": {
         "benefits": [
             "free-night-v1",
@@ -27,5 +26,6 @@
         "sign_up_bonus": [
             "offer-1"
         ]
-    }
+    },
+    "loyalty_program": "marriott_bonvoy"
 }

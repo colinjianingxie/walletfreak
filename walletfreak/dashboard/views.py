@@ -953,9 +953,9 @@ def points_collection(request):
     if not uid:
         return redirect('login')
         
-    # Check premium status
-    if not db.is_premium(uid):
-        return redirect('pricing')
+    # Premium check removed
+    # if not db.is_premium(uid):
+    #     return redirect('pricing')
         
     context = {
         'user': request.user,
