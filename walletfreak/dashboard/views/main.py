@@ -8,7 +8,12 @@ from cards.templatetags.card_extras import resolve_card_image_url
 
 @login_required
 def coming_soon(request):
-    return render(request, 'dashboard/coming_soon.html')
+    feature = request.GET.get('feature', 'Coming Soon')
+    context = {
+        'page_title': feature,
+        'feature_name': feature
+    }
+    return render(request, 'dashboard/coming_soon.html', context)
 
 @login_required
 def dashboard(request):

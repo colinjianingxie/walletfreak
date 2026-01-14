@@ -1,10 +1,11 @@
 {% extends 'auth_base.html' %}
 
-{% block breadcrumb_section %}Coming Soon{% endblock %}
+{% block breadcrumb_section %}Tools{% endblock %}
+{% block page_title %}{{ feature_name }}{% endblock %}
 
 {% block content %}
 <div class="coming-soon-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 70vh; text-align: center; gap: 1rem;">
-    <h1 style="font-size: 2.5rem; font-weight: 700; color: #1e293b;">Coming Soon</h1>
+    <h1 style="font-size: 2.5rem; font-weight: 700; color: #1e293b;">{{ feature_name }}</h1>
     <p style="color: #64748b; font-size: 1.125rem; max-width: 400px;">
         This feature is currently under development. Stay tuned for updates!
     </p>
