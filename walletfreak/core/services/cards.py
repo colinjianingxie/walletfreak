@@ -7,13 +7,17 @@ class CardMixin:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._cards_cache = None
-        self._cards_cache_time = None
-        self._cards_cache_ttl = timedelta(minutes=5)  # Cache for 5 minutes
+from django.core.cache import cache
+
+class CardMixin:
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Removed instance level cache attributes as we use django cache now
     
     def _invalidate_cards_cache(self):
         """Invalidate the cards cache (call this when cards are updated)"""
-        self._cards_cache = None
-        self._cards_cache_time = None
+        cache.delete('all_cards')
+
     
     def get_cards_basic(self):
         """
@@ -48,12 +52,35 @@ class CardMixin:
         if not slugs:
             return []
             
-        # 1. Fetch Master Docs
-        refs = [self.db.collection('master_cards').document(slug) for slug in slugs]
+        hydrated_cards = []
+        slugs_to_fetch = []
+        
+        # 0. Check cache for each slug
+        cached_cards_all = cache.get('all_cards')
+        all_cards_map = {c['id']: c for c in cached_cards_all} if cached_cards_all else {}
+        
+        for slug in slugs:
+            # Check Full List Cache first
+            if slug in all_cards_map:
+                hydrated_cards.append(all_cards_map[slug])
+                continue
+                
+            # Check individual cache
+            cache_key = f'card_{slug}'
+            cached_single = cache.get(cache_key)
+            if cached_single:
+                hydrated_cards.append(cached_single)
+            else:
+                slugs_to_fetch.append(slug)
+        
+        if not slugs_to_fetch:
+            return hydrated_cards
+
+        # 1. Fetch Master Docs for remaining
+        refs = [self.db.collection('master_cards').document(slug) for slug in slugs_to_fetch]
         # get_all handles multiple refs efficiently
         master_snaps = self.db.get_all(refs)
         
-        hydrated_cards = []
         for snap in master_snaps:
             if snap.exists:
                 data = snap.to_dict()
@@ -67,6 +94,9 @@ class CardMixin:
                 self._enrich_card_with_subcollections(snap.id, data)
                 hydrated_cards.append(data)
                 
+                # Update individual cache
+                cache.set(f'card_{snap.id}', data, timeout=86400)
+                
         return hydrated_cards
 
     def get_cards(self):
@@ -75,9 +105,9 @@ class CardMixin:
         Returns hydrated card objects.
         """
         # Check cache first
-        if self._cards_cache is not None and self._cards_cache_time is not None:
-            if datetime.now() - self._cards_cache_time < self._cards_cache_ttl:
-                return self._cards_cache
+        cached_cards = cache.get('all_cards')
+        if cached_cards:
+            return cached_cards
         
         # 1. Fetch all master cards
         cards_snapshot = self.get_collection('master_cards')
@@ -161,15 +191,34 @@ class CardMixin:
         result = list(cards_map.values())
         
         # Update cache
-        self._cards_cache = result
-        self._cards_cache_time = datetime.now()
+        # Update cache (Cache for 24 hours as per user request: "does not change very often")
+        cache.set('all_cards', result, timeout=86400)
         
         return result
     
     def get_card_by_slug(self, slug):
+        if not slug:
+            return None
+            
+        # 1. Try to find in full cache first
+        cached_cards = cache.get('all_cards')
+        if cached_cards:
+            for c in cached_cards:
+                if c.get('slug') == slug or c.get('id') == slug:
+                    return c
+        
+        # 2. Try specific cache
+        cache_key = f'card_{slug}'
+        cached_card = cache.get(cache_key)
+        if cached_card:
+            return cached_card
+
+        # 3. Fetch from DB
         card_data = self.get_document('master_cards', slug)
         if card_data:
             self._enrich_card_with_subcollections(slug, card_data)
+            cache.set(cache_key, card_data, timeout=86400)
+            
         return card_data
         
     # Other methods... check _process_signup_bonuses etc are preserved in replacement if outside?

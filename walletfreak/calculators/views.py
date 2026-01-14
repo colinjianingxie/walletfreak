@@ -10,6 +10,7 @@ import ast
 from datetime import datetime, date
 from core.services import db
 from .services import OptimizerService
+from core.decorators import cache_control_header
 
 from django.contrib.auth.decorators import login_required
 
@@ -353,6 +354,7 @@ def optimizer_calculate(request):
     })
 
 @login_required
+@cache_control_header(max_age=300, private=True)
 def spend_it_input(request):
     """
     Renders the Spend It Optimizer input form.

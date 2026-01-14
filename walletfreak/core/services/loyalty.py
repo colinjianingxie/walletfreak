@@ -1,21 +1,20 @@
+from django.core.cache import cache
 from firebase_admin import firestore
 from datetime import datetime, timedelta
 
 class LoyaltyMixin:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._loyalty_programs_cache = None
-        self._loyalty_programs_cache_time = None
-        self._loyalty_programs_cache_ttl = timedelta(minutes=60) # Cache for 1 hour
-
+        # Removed instance cache attributes
+    
     def get_all_loyalty_programs(self):
         """
         Fetch all loyalty programs from 'program_loyalty' collection.
         Cached for performance as this data changes rarely.
         """
-        if self._loyalty_programs_cache and self._loyalty_programs_cache_time:
-             if datetime.now() - self._loyalty_programs_cache_time < self._loyalty_programs_cache_ttl:
-                 return self._loyalty_programs_cache
+        cached = cache.get('all_loyalty_programs')
+        if cached:
+            return cached
         
         try:
             programs_ref = self.db.collection('program_loyalty')
@@ -29,11 +28,34 @@ class LoyaltyMixin:
             # Sort by name
             programs.sort(key=lambda x: x.get('program_name', ''))
             
-            self._loyalty_programs_cache = programs
-            self._loyalty_programs_cache_time = datetime.now()
+            cache.set('all_loyalty_programs', programs, timeout=86400)
             return programs
         except Exception as e:
             print(f"Error fetching loyalty programs: {e}")
+            return []
+
+    def get_all_transfer_rules(self):
+        """
+        Fetch all transfer rules.
+        Schema: Each document is a source program with a list of partners inside.
+        """
+        cached = cache.get('all_transfer_rules')
+        if cached:
+            return cached
+            
+        try:
+            rules_ref = self.db.collection('transfer_rules')
+            docs = rules_ref.stream()
+            rules = []
+            for doc in docs:
+                data = doc.to_dict()
+                data['id'] = doc.id
+                rules.append(data)
+                
+            cache.set('all_transfer_rules', rules, timeout=86400)
+            return rules
+        except Exception as e:
+            print(f"Error fetching transfer rules: {e}")
             return []
 
     def get_user_loyalty_balances(self, uid):

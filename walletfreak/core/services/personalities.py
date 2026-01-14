@@ -1,8 +1,18 @@
-from firebase_admin import firestore
+from django.core.cache import cache
 
 class PersonalityMixin:
     def get_personalities(self):
-        return self.get_collection('personalities')
+        # 1. Check cache
+        cached = cache.get('all_personalities')
+        if cached:
+            return cached
+            
+        # 2. Fetch
+        result = self.get_collection('personalities')
+        
+        # 3. Set Cache (24h)
+        cache.set('all_personalities', result, timeout=86400)
+        return result
 
     def get_personality_by_slug(self, slug):
         return self.get_document('personalities', slug)
@@ -105,8 +115,15 @@ class PersonalityMixin:
 
     def get_quiz_questions(self):
         """Get all quiz questions sorted by stage"""
+        cached = cache.get('all_quiz_questions')
+        if cached:
+            return cached
+            
         query = self.db.collection('quiz_questions').order_by('stage')
-        return [doc.to_dict() | {'id': doc.id} for doc in query.stream()]
+        result = [doc.to_dict() | {'id': doc.id} for doc in query.stream()]
+        
+        cache.set('all_quiz_questions', result, timeout=86400)
+        return result
 
     # Personality Survey Methods
     def save_personality_survey(self, uid, personality_id, responses, card_ids, is_published=False):
