@@ -1,0 +1,37 @@
+{
+    "slug-id": "prime-visa",
+    "name": "Prime Visa",
+    "image_url": "/static/images/credit_cards/prime-visa.png",
+    "issuer": "Prime Visa",
+    "annual_fee": 0,
+    "application_link": "https://creditcards.chase.com/rewards-credit-cards/amazon-rewards/prime-visa",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "7/10. Instant bonus on approval is great but requires a $139 per year Prime membership. Membership gated bonus.",
+    "active_indices": {
+        "benefits": [
+            "grubhub-membership-v1",
+            "gift-card-v1"
+        ],
+        "earning_rates": [
+            "amazon-v1",
+            "whole-foods-v1",
+            "chase-travel-flights-v1",
+            "chase-travel-hotels-v1",
+            "chase-travel-rental-cars-v1",
+            "shopping-v1",
+            "gas-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ],
+        "card_questions": [
+            "q-0",
+            "q-1",
+            "q-2"
+        ]
+    },
+    "loyalty_program": null
+}

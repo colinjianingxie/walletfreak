@@ -1,0 +1,27 @@
+{
+    "slug-id": "capital-one-quicksilver-secured-cash-rewards-credit-card",
+    "name": "Capital One Quicksilver Secured Cash Rewards Credit Card",
+    "image_url": "/static/images/credit_cards/capital-one-quicksilver-secured-cash-rewards-credit-card.webp",
+    "issuer": "Capital One",
+    "annual_fee": 0,
+    "application_link": "https://www.capitalone.com/credit-cards/apply/quicksilver-secured-rewards/",
+    "min_credit_score": 300,
+    "max_credit_score": 579,
+    "is_524": true,
+    "freak_verdict": "No Freak verdict for this card yet",
+    "active_indices": {
+        "benefits": [
+            "credit-review-v1"
+        ],
+        "earning_rates": [
+            "capital-one-travel-hotels-v1",
+            "capital-one-travel-rental-cars-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [],
+        "card_questions": [
+            "q-0"
+        ]
+    },
+    "loyalty_program": "cap1_miles"
+}

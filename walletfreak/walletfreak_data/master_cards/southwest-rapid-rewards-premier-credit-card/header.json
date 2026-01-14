@@ -1,0 +1,33 @@
+{
+    "slug-id": "southwest-rapid-rewards-premier-credit-card",
+    "active_indices": {
+        "benefits": [
+            "anniversary-points-v1",
+            "earlybird-checkin-v1",
+            "inflight-discount-v1"
+        ],
+        "earning_rates": [
+            "southwest-purchases-v1",
+            "all-other-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1-v1"
+        ],
+        "card_questions": [
+            "q-1",
+            "q-2",
+            "q-3",
+            "q-4"
+        ]
+    },
+    "name": "Southwest Rapid Rewards Premier Credit Card",
+    "issuer": "Chase",
+    "image_url": "/static/images/credit_cards/southwest-rapid-rewards-premier-credit-card.png",
+    "annual_fee": 99,
+    "application_link": "https://creditcards.chase.com/southwest/premier-credit-card",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "Solid for Southwest loyalists seeking anniversary points and travel perks without a high annual fee.",
+    "loyalty_program": "southwest_rapid_rewards"
+}

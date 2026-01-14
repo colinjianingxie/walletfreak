@@ -1,0 +1,11 @@
+{
+  "program_id": "eurobonus",
+  "program_name": "SAS EuroBonus",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.2,
+  "iata_code": "SK",
+  "alliance": "Star Alliance",
+  "partner_hotel_brand": [],
+  "currency_group": "Points"
+}

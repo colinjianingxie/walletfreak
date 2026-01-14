@@ -1,0 +1,35 @@
+{
+    "slug-id": "southwest-rapid-rewards-priority-credit-card",
+    "name": "Southwest Rapid Rewards Priority Credit Card",
+    "image_url": "/static/images/credit_cards/southwest-rapid-rewards-priority-credit-card.png",
+    "issuer": "Chase",
+    "annual_fee": 149,
+    "application_link": "https://creditcards.chase.com/rewards-credit-cards/southwest/priority",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "10/10. Flat 85k points for $3,000 spend. Excellent for Companion Pass chasers.",
+    "active_indices": {
+        "benefits": [
+            "anniversary-points-v1",
+            "southwest-credit-v1",
+            "upgraded-boardings-v1",
+            "inflight-savings-v1"
+        ],
+        "earning_rates": [
+            "southwest-v1",
+            "dining-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ],
+        "card_questions": [
+            "q-0",
+            "q-1",
+            "q-2",
+            "q-3"
+        ]
+    },
+    "loyalty_program": "southwest_rapid_rewards"
+}

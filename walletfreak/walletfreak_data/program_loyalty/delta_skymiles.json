@@ -1,0 +1,13 @@
+{
+  "program_id": "delta_skymiles",
+  "program_name": "Delta SkyMiles",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.2,
+  "iata_code": "DL",
+  "alliance": "SkyTeam",
+  "partner_hotel_brand": [
+    "Hilton"
+  ],
+  "currency_group": "Miles"
+}

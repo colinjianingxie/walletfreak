@@ -1,0 +1,20 @@
+{
+    "slug-id": "wells-fargo-active-cash-secured-credit-card",
+    "name": "Wells Fargo Active Cash Secured Credit Card",
+    "image_url": "/static/images/credit_cards/wells-fargo-active-cash-secured-credit-card.png",
+    "issuer": "Wells Fargo",
+    "annual_fee": null,
+    "application_link": "https://creditcards.wellsfargo.com/active-cash-secured-credit-card",
+    "min_credit_score": 300,
+    "max_credit_score": 579,
+    "is_524": true,
+    "freak_verdict": "No Freak verdict for this card yet",
+    "active_indices": {
+        "benefits": [],
+        "earning_rates": [
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": []
+    },
+    "loyalty_program": "wells_fargo"
+}

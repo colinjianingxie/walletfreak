@@ -1,0 +1,11 @@
+{
+  "program_id": "turkish_miles_smiles",
+  "program_name": "Turkish Airlines Miles&Smiles",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.3,
+  "iata_code": "TK",
+  "alliance": "Star Alliance",
+  "partner_hotel_brand": [],
+  "currency_group": "Miles"
+}

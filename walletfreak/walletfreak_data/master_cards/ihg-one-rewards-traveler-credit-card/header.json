@@ -1,0 +1,29 @@
+{
+    "slug-id": "ihg-one-rewards-traveler-credit-card",
+    "name": "IHG One Rewards Traveler Credit Card",
+    "image_url": "/static/images/credit_cards/ihg-one-rewards-traveler-credit-card.png",
+    "issuer": "Chase",
+    "annual_fee": 0,
+    "application_link": "https://creditcards.chase.com/rewards-credit-cards/ihg/traveler",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "No Freak verdict for this card yet",
+    "active_indices": {
+        "benefits": [
+            "silver-status-v1",
+            "fourth-night-free-v1"
+        ],
+        "earning_rates": [
+            "ihg-v1",
+            "travel-perks-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [],
+        "card_questions": [
+            "q-0",
+            "q-1"
+        ]
+    },
+    "loyalty_program": "ihg_one_rewards"
+}

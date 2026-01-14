@@ -1,0 +1,31 @@
+{
+    "slug-id": "wells-fargo-autograph-journey-card",
+    "name": "Wells Fargo Autograph Journey Card",
+    "image_url": "/static/images/credit_cards/wells-fargo-autograph-journey-card.png",
+    "issuer": "Wells Fargo",
+    "annual_fee": 95,
+    "application_link": "https://creditcards.wellsfargo.com/autograph-journey-visa-credit-card/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "9/10. A travel powerhouse for a low fee. 5x on hotels and 4x on airlines (uncapped) is industry-leading for a $95 card. The $50 airline credit effectively brings the fee down to $45.",
+    "active_indices": {
+        "benefits": [
+            "airline-credit-v1"
+        ],
+        "earning_rates": [
+            "hotels-v1",
+            "airlines-v1",
+            "travel-perks-v1",
+            "dining-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ],
+        "card_questions": [
+            "q-0"
+        ]
+    },
+    "loyalty_program": "wells_fargo"
+}

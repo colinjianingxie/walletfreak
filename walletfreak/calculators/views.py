@@ -10,6 +10,7 @@ import ast
 from datetime import datetime, date
 from core.services import db
 from .services import OptimizerService
+from core.decorators import cache_control_header
 
 from django.contrib.auth.decorators import login_required
 
@@ -353,13 +354,14 @@ def optimizer_calculate(request):
     })
 
 @login_required
+@cache_control_header(max_age=300, private=True)
 def spend_it_input(request):
     """
     Renders the Spend It Optimizer input form.
     Loads category structure from default_category_mapping.json
     """
     # Load Category Mapping
-    json_path = os.path.join(settings.BASE_DIR, 'default_category_mapping.json')
+    json_path = os.path.join(settings.BASE_DIR, 'walletfreak_data', 'categories_list.json')
     categories = []
     
     if os.path.exists(json_path):
@@ -370,25 +372,42 @@ def spend_it_input(request):
             print(f"Error loading category mapping: {e}")
 
     # Filter out ignored categories
-    ignored_categories = ["Financial & Rewards", "Protection", "Travel Perks"]
+    ignored_categories = ["Financial & Rewards", "Protection", "Travel Perks", "Financial Rewards", "Charity"]
     categories = [cat for cat in categories if cat.get('CategoryName') not in ignored_categories]
 
     # Map Categories to SVGs (using the keys from the JSON)
     # We'll inject the SVG content or ID directly into the dict for the template
     icon_mapping = {
+        # Original & Mapped
         "Airlines": "plane",
         "Hotels": "building-2",
-        "Dining & Delivery": "utensils",
+        "Dining": "utensils",
         "Groceries": "store",
-        "Transportation": "fuel",
-        "Shopping": "shopping-bag",
+        "Gas": "fuel",
+        "Transit": "train",
+        "Car Rentals": "car",
+        "Retail Shopping": "shopping-bag",
         "Entertainment": "ticket",
-        "Business & Tech": "laptop",
-        "Health & Wellness": "heart-pulse",
+        "Business": "briefcase",
+        "Health": "heart-pulse",
+        "Wellness": "spa",
         "Travel Perks": "passport",
-        "Large Expenses": "landmark",
-        "Financial & Rewards": "coins",
+        "Financial Rewards": "coins",
         "Protection": "shield",
+        
+        # New Additions
+        "Travel Portals": "globe",
+        "Lounges": "armchair",
+        "Delivery": "truck",
+        "Home Improvement": "hammer",
+        "Utilities": "zap",
+        "Telecom": "smartphone",
+        "Streaming": "tv", 
+        "Education": "graduation-cap",
+        "Pet Care": "paw",
+        "Fixed Expenses": "calendar",
+        "Charity": "heart-handshake",
+        "Cruises": "anchor",
     }
 
     # Get valid categories from CSV (already filtered for generics by service)
@@ -402,7 +421,8 @@ def spend_it_input(request):
         
         # Filter details to only include those present in active rates
         details = cat.get('CategoryNameDetailed', [])
-        filtered_details = [d for d in details if d.lower() in valid_categories]
+        # removed filtering to show all categories from list
+        filtered_details = details 
         
         # Serialize details for safe JS usage in template data attributes
         cat['json_details'] = json.dumps(filtered_details)
@@ -441,7 +461,7 @@ def spend_it_calculate(request):
             user_wallet_slugs = {c.get('card_id') for c in owned_cards}
 
     # Resolve Parent Category and Siblings using the mapping file
-    json_path = os.path.join(settings.BASE_DIR, 'default_category_mapping.json')
+    json_path = os.path.join(settings.BASE_DIR, 'walletfreak_data', 'categories_list.json')
     parent_category = None
     specific_category = input_category
     sibling_categories = []

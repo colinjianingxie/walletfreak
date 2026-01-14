@@ -1,0 +1,35 @@
+{
+    "slug-id": "apple-card",
+    "name": "Apple Card",
+    "image_url": "/static/images/credit_cards/apple-card.png",
+    "issuer": "Goldman Sachs",
+    "annual_fee": 0,
+    "application_link": "https://card.apple.com/apply/application?referrer=cid%3Dapy-200-10000036&start=false",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "0/10. No welcome bonus. Weak signup value.",
+    "active_indices": {
+        "benefits": [
+            "daily-cash-v1",
+            "hysa-access-v1",
+            "0-financing-v1"
+        ],
+        "earning_rates": [
+            "apple-v1",
+            "mobile-wallet-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ],
+        "card_questions": [
+            "q-0",
+            "q-1",
+            "q-2",
+            "q-3",
+            "q-4"
+        ]
+    },
+    "loyalty_program": null
+}

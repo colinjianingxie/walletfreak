@@ -1,0 +1,38 @@
+{
+    "slug-id": "bank-of-america-business-advantage-customized-cash-rewards-mastercard-credit-card",
+    "name": "Bank of America Business Advantage Customized Cash Rewards Mastercard\u00ae credit card",
+    "image_url": "/static/images/credit_cards/bank-of-america-business-advantage-customized-cash-rewards-mastercard-credit-card.png",
+    "issuer": "Bank of America",
+    "annual_fee": 0,
+    "application_link": "https://www.bankofamerica.com/smallbusiness/credit-cards/products/cash-rewards-business-credit-card/",
+    "min_credit_score": 700,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "8.7/10. This card remains a powerhouse for small businesses that can leverage the Bank of America Preferred Rewards for Business ecosystem. While the base 3% is solid, the potential for 5.25% cash back in a category of your choice makes it arguably the best no-annual-fee business card for targeted spending, provided you can park $100k in the BofA/Merrill ecosystem.",
+    "active_indices": {
+        "benefits": [
+            "preferred-rewards-bonus-v1",
+            "travel-insurance-v1"
+        ],
+        "earning_rates": [
+            "gas-v1",
+            "office-supplies-v1",
+            "airlines-v1",
+            "hotels-v1",
+            "transportation-v1",
+            "telecom-v1",
+            "software-v1",
+            "business-consulting-v1",
+            "dining-v1",
+            "all-purchases-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ],
+        "card_questions": [
+            "q-0",
+            "q-1"
+        ]
+    },
+    "loyalty_program": null
+}

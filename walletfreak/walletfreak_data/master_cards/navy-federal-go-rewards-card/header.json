@@ -1,0 +1,27 @@
+{
+    "slug-id": "navy-federal-go-rewards-card",
+    "name": "GO REWARDS\u00ae Credit Card",
+    "image_url": "/static/images/credit_cards/navy-federal-go-rewards-card.jpeg",
+    "issuer": "Navy Federal Credit Union",
+    "annual_fee": 0,
+    "application_link": "https://www.navyfederal.org/loans-cards/credit-cards/go-rewards.html",
+    "min_credit_score": 630,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "7/10. A solid no-annual-fee starter card for military members. While the 3x dining is good, the More Rewards card usually offers better value for the same fee.",
+    "active_indices": {
+        "benefits": [
+            "intro-apr-v1"
+        ],
+        "earning_rates": [
+            "dining-v1",
+            "gas-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [],
+        "card_questions": [
+            "q-0"
+        ]
+    },
+    "loyalty_program": null
+}

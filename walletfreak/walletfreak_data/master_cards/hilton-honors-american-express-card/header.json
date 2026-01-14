@@ -1,0 +1,31 @@
+{
+    "slug-id": "hilton-honors-american-express-card",
+    "name": "Hilton Honors American Express Card",
+    "image_url": "/static/images/credit_cards/hilton-honors-american-express-card.jpeg",
+    "issuer": "American Express",
+    "annual_fee": 0,
+    "application_link": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "8.5/10. One of the best no-annual-fee travel cards. The current 100k bonus is extremely generous for zero cost.",
+    "active_indices": {
+        "benefits": [
+            "silver-status-v1"
+        ],
+        "earning_rates": [
+            "hilton-v1",
+            "dining-v1",
+            "gas-v1",
+            "groceries-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ],
+        "card_questions": [
+            "q-0"
+        ]
+    },
+    "loyalty_program": "hilton_honors"
+}

@@ -1,0 +1,34 @@
+{
+    "slug-id": "aadvantage-aviator-business-mastercard",
+    "active_indices": {
+        "benefits": [
+            "companion-certificate-v1",
+            "checked-bag-v1",
+            "preferred-boarding-v1",
+            "inflight-savings-v1",
+            "no-foreign-fees-v1"
+        ],
+        "earning_rates": [
+            "american-airlines-v1",
+            "office-supplies-v1",
+            "all-purchases-v1"
+        ],
+        "sign_up_bonus": [],
+        "card_questions": [
+            "q-1",
+            "q-2",
+            "q-3",
+            "q-4"
+        ]
+    },
+    "name": "AAdvantage Aviator World Elite Business Mastercard",
+    "issuer": "Barclays",
+    "image_url": "/static/images/credit_cards/aadvantage-aviator-business-mastercard.jpeg",
+    "annual_fee": 95,
+    "application_link": "",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "Discontinued for new applicants; existing accounts transitioning to Citi in 2026.",
+    "loyalty_program": "american_aadvantage"
+}

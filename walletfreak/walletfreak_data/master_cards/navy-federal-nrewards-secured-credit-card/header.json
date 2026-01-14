@@ -1,0 +1,27 @@
+{
+    "slug-id": "navy-federal-nrewards-secured-credit-card",
+    "name": "Navy Federal nRewards Secured Credit Card",
+    "image_url": "/static/images/credit_cards/navy-federal-nrewards-secured-credit-card.jpg",
+    "issuer": "Navy Federal",
+    "annual_fee": 0,
+    "application_link": "https://links.navyfederal.org/cc?productId=NFCC02",
+    "min_credit_score": 300,
+    "max_credit_score": 579,
+    "is_524": true,
+    "freak_verdict": "No Freak verdict for this card yet",
+    "active_indices": {
+        "benefits": [
+            "no-ftf-v1",
+            "no-advance-fees-v1"
+        ],
+        "earning_rates": [
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [],
+        "card_questions": [
+            "q-0",
+            "q-1"
+        ]
+    },
+    "loyalty_program": null
+}

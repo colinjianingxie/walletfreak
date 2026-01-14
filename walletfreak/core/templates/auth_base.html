@@ -116,7 +116,7 @@
                 <button class="mobile-toggle-btn icon-btn" onclick="toggleSidebar()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg>
                 </button>
-                <div class="breadcrumb">
+                <div class="hidden md:flex items-center text-sm text-slate-500">
                     <span class="hover:text-slate-800 cursor-pointer">{% block breadcrumb_section %}App{% endblock %}</span>
                     <span class="mx-2">/</span>
                     <span class="font-semibold text-slate-800 capitalize">{% block page_title %}Wallet{% endblock %}</span>
@@ -141,6 +141,24 @@
         </div>
     </main>
     {% block extra_js %}{% endblock %}
+    <script>
+        // Pull to refresh
+        let touchStart = 0;
+        const p2rThreshold = 150;
+        
+        window.addEventListener('touchstart', e => {
+            if (window.scrollY === 0) {
+                touchStart = e.changedTouches[0].screenY;
+            }
+        }, {passive: true});
+
+        window.addEventListener('touchend', e => {
+            const touchEnd = e.changedTouches[0].screenY;
+            if (window.scrollY === 0 && touchEnd - touchStart > p2rThreshold) {
+                window.location.reload();
+            }
+        });
+    </script>
 </body>
 
 </html>

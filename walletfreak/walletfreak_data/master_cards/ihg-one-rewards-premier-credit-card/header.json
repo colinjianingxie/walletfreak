@@ -1,0 +1,35 @@
+{
+    "slug-id": "ihg-one-rewards-premier-credit-card",
+    "name": "IHG One Rewards Premier Credit Card",
+    "image_url": "/static/images/credit_cards/ihg-one-rewards-premier-credit-card.png",
+    "issuer": "Chase",
+    "annual_fee": 99,
+    "application_link": "https://creditcards.chase.com/rewards-credit-cards/ihg/premier",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "10/10. Straightforward 140k points after $3,000 spend. No tiers.",
+    "active_indices": {
+        "benefits": [
+            "free-night-v1",
+            "spend-bonus-v1",
+            "tsa-credit-v1",
+            "platinum-status-v1"
+        ],
+        "earning_rates": [
+            "ihg-v1",
+            "travel-perks-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ],
+        "card_questions": [
+            "q-0",
+            "q-1",
+            "q-2",
+            "q-3"
+        ]
+    },
+    "loyalty_program": "ihg_one_rewards"
+}

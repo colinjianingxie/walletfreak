@@ -307,52 +307,72 @@ class OptimizerService:
             best_rate_data = None
             match_type = 'Default' # 'Specific', 'Generic', 'Default'
             
-            # 1. Try Specific Match
-            if specific_category:
-                for r in rates_list:
-                    cat_data = r['category']
-                    # Parse JSON list
-                    if isinstance(cat_data, str):
-                        try:
-                            cat_list = json.loads(cat_data)
-                        except json.JSONDecodeError:
-                            cat_list = [cat_data]
-                    else:
-                        cat_list = cat_data if isinstance(cat_data, list) else [str(cat_data)]
-                    
-                    for c_str in cat_list:
-                        # Exact match or case-insensitive? Strict for now.
-                        if c_str.lower() == specific_category.lower():
-                            if float(r.get('multiplier') or r.get('rate') or 0.0) > best_rate:
-                                best_rate = float(r.get('multiplier') or r.get('rate') or 0.0)
-                                best_rate_data = r
-                                match_type = 'Specific'
-                                # Found specific match, keep looking? 
-                                # If there are multiple specific matches (unlikely), take max.
-            
-            if match_type == 'Specific':
-                return best_rate, best_rate_data, 'Specific'
+            # Helper to check if a rate's category list contains a target string
+            def rate_matches(r, target):
+                if not target: return False, 0.0
+                cat_data = r['category']
+                if isinstance(cat_data, str):
+                    try:
+                        cat_list = json.loads(cat_data)
+                    except json.JSONDecodeError:
+                        cat_list = [cat_data]
+                else:
+                    cat_list = cat_data if isinstance(cat_data, list) else [str(cat_data)]
+                
+                for c_str in cat_list:
+                    if c_str.lower() == target.lower():
+                        return True, float(r.get('multiplier') or r.get('rate') or 0.0)
+                return False, 0.0
 
-            # 2. Try Parent Match (if specific didn't hit)
-            if parent_category:
+            # 1. Try Specific Match (Step 2)
+            if specific_category:
+                # 1a. Exact Brand Match
+                for r in rates_list:
+                    is_match, val = rate_matches(r, specific_category)
+                    if is_match and val > best_rate:
+                        best_rate = val
+                        best_rate_data = r
+                        match_type = 'Specific'
+
+                # 1b. Hardcoded Fallbacks (Direct Airline / Hotel)
+                # If we haven't found a match yet (or want to maximize? User said "Direct Airline should also apply")
+                # We should check this and take the higher of the two? Or just treat it as a valid specific match.
+                
+                fallback_target = None
+                if parent_category:
+                     if parent_category.lower() == 'airlines':
+                         fallback_target = "Direct Airline Bookings"
+                     elif parent_category.lower() == 'hotels':
+                         fallback_target = "Direct Hotel Bookings"
+                
+                if fallback_target:
+                    for r in rates_list:
+                        is_match, val = rate_matches(r, fallback_target)
+                        if is_match and val > best_rate:
+                            best_rate = val
+                            best_rate_data = r
+                            match_type = 'Specific' # Count as specific per user intent
+
+                # If found specific match (either brand or direct fallback), return it
+                if match_type == 'Specific':
+                    return best_rate, best_rate_data, 'Specific'
+                
+                # If specific category was provided but NO match found (and no fallback match),
+                # User request: "does not match exactly ... always use the default rate."
+                # This implies we SKIP the "Parent Match" step below for this case.
+                pass 
+
+            # 2. Try Parent Match (Step 1 - Only if Step 2 wasn't provided)
+            # If specific_category IS provided, we skip this to enforce strictness + default fallback.
+            elif parent_category:
                 parent_best_rate = 0.0
                 parent_match_data = None
                 
                 for r in rates_list:
-                    cat_data = r['category']
-                    if isinstance(cat_data, str):
-                        try:
-                            cat_list = json.loads(cat_data)
-                        except json.JSONDecodeError:
-                            cat_list = [cat_data]
-                    else:
-                        cat_list = cat_data if isinstance(cat_data, list) else [str(cat_data)]
-                        
-                    for c_str in cat_list:
-                        if c_str.lower() == parent_category.lower():
-                             if float(r.get('multiplier') or r.get('rate') or 0.0) > parent_best_rate:
-                                 parent_best_rate = float(r.get('multiplier') or r.get('rate') or 0.0)
-                                 parent_match_data = r
+                    is_match, val = rate_matches(r, parent_category)
+                    if is_match and val > parent_best_rate:
+                        parent_best_rate = val
+                        parent_match_data = r
                 
                 if parent_match_data:
                     return parent_best_rate, parent_match_data, 'Generic'
@@ -362,19 +382,14 @@ class OptimizerService:
             default_match_data = None
             
             for r in rates_list:
-                # Check for explicit 'All Purchases' or IsDefault flag
                 is_base = r['is_default']
-                is_all_purchases = False
+                is_match, val = rate_matches(r, 'All Purchases')
                 
-                cat_data = r['category']
-                if isinstance(cat_data, str):
-                    if 'All Purchases' in cat_data: is_all_purchases = True
-                elif isinstance(cat_data, list):
-                    if 'All Purchases' in cat_data: is_all_purchases = True
-                    
-                if is_base or is_all_purchases:
-                    if float(r.get('multiplier') or r.get('rate') or 0.0) > default_best_rate:
-                        default_best_rate = float(r.get('multiplier') or r.get('rate') or 0.0)
+                current_val = float(r.get('multiplier') or r.get('rate') or 0.0)
+                
+                if is_base or is_match:
+                    if current_val > default_best_rate:
+                        default_best_rate = current_val
                         default_match_data = r
             
             return default_best_rate, default_match_data, 'Default'

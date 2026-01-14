@@ -1,170 +1,4 @@
 {% load static %}
-<style>
-    /* Mimic Tailwind Utilities for Sidebar */
-    .app-sidebar .space-y-8 > * + * {
-        margin-top: 2rem;
-    }
-    .app-sidebar .space-y-1 > * + * {
-        margin-top: 0.25rem;
-    }
-    .app-sidebar .flex {
-        display: flex;
-    }
-    .app-sidebar .items-center {
-        align-items: center;
-    }
-    .app-sidebar .justify-between {
-        justify-content: space-between;
-    }
-    .app-sidebar .gap-3 {
-        gap: 0.75rem;
-    }
-    .app-sidebar .px-3 {
-        padding-left: 0.75rem;
-        padding-right: 0.75rem;
-    }
-    .app-sidebar .py-6 {
-        padding-top: 1.5rem;
-        padding-bottom: 1.5rem;
-    }
-    .app-sidebar .py-2 {
-        padding-top: 0.5rem;
-        padding-bottom: 0.5rem;
-    }
-    .app-sidebar .mb-2 {
-        margin-bottom: 0.5rem;
-    }
-    .app-sidebar .w-full {
-        width: 100%;
-    }
-    .app-sidebar .text-xs {
-        font-size: 0.75rem;
-        line-height: 1rem;
-    }
-    .app-sidebar .text-sm {
-        font-size: 0.875rem;
-        line-height: 1.25rem;
-    }
-    .app-sidebar .font-semibold {
-        font-weight: 600;
-    }
-    .app-sidebar .font-bold {
-        font-weight: 700;
-    }
-    .app-sidebar .uppercase {
-        text-transform: uppercase;
-    }
-    .app-sidebar .tracking-wider {
-        letter-spacing: 0.05em;
-    }
-    .app-sidebar .cursor-pointer {
-        cursor: pointer;
-    }
-    .app-sidebar .rounded-lg {
-        border-radius: 0.5rem;
-    }
-    .app-sidebar .rounded-full {
-        border-radius: 9999px;
-    }
-    .app-sidebar .transition-colors {
-        transition-property: background-color, border-color, color, fill, stroke;
-        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        transition-duration: 150ms;
-    }
-    
-    /* Mock Colors */
-    .app-sidebar .bg-blue-600-10 {
-        background-color: rgba(37, 99, 235, 0.1);
-    }
-    .app-sidebar .hover-bg-slate-800:hover {
-        background-color: var(--slate-800, #1e293b);
-    }
-    .app-sidebar .text-slate-500 {
-        color: var(--slate-500, #64748b);
-    }
-    .app-sidebar .text-slate-400 {
-        color: var(--slate-400, #94a3b8);
-    }
-    .app-sidebar .text-slate-200 {
-        color: var(--slate-200, #e2e8f0);
-    }
-    .app-sidebar .hover-text-slate-300:hover {
-        color: var(--slate-300, #cbd5e1);
-    }
-    .app-sidebar .hover-text-slate-200:hover {
-        color: var(--slate-200, #e2e8f0);
-    }
-    .app-sidebar .text-blue-400 {
-        color: var(--blue-400, #60a5fa);
-    }
-    .app-sidebar .bg-blue-500 {
-        background-color: var(--blue-500, #3b82f6);
-    }
-    .app-sidebar .text-white {
-        color: #ffffff;
-    }
-
-    /* Active/Highlight Utilities */
-    .app-sidebar .bg-blue-600\/10 {
-        background-color: rgba(37, 99, 235, 0.1);
-    }
-
-    /* Logout Button Specifics */
-    .btn-logout-sidebar {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 0.5rem 0.75rem;
-        margin-top: 1rem;
-        color: #ef4444; /* red-500 */
-        font-size: 0.875rem;
-        font-weight: 500;
-        background: transparent;
-        border: 1px solid rgba(239, 68, 68, 0.2);
-        border-radius: 0.5rem;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-    .btn-logout-sidebar:hover {
-        background: rgba(239, 68, 68, 0.1);
-        border-color: #ef4444;
-    }
-    
-    /* Notification Badge */
-    .notification-badge {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 1.25rem;
-        height: 1.25rem;
-        padding: 0 0.25rem;
-        font-size: 0.75rem; 
-        font-weight: 700; 
-        background-color: var(--blue-500, #3b82f6); 
-        color: white; 
-        border-radius: 9999px;
-    }
-
-    /* Scrollbar Styling Inside Nav */
-    .no-scrollbar::-webkit-scrollbar {
-        display: none;
-    }
-    .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
-
-    /* Mobile Sidebar Adjustments */
-    @media (max-width: 1024px) {
-        .app-sidebar nav {
-            /* Add significant padding at bottom to account for mobile browser chrome */
-            padding-bottom: 8rem !important; 
-            /* Use dynamic viewport height to properly fit available screen space */
-            height: calc(100dvh - 4rem) !important;
-        }
-    }
-</style>
 
 <aside class="app-sidebar" id="sidebar">
     <div class="sidebar-header">
@@ -180,60 +14,80 @@
         </button>
     </div>
 
-    <!-- Main Navigation (Includes Footer Content for Scrolling) -->
+    <!-- Main Navigation -->
     <nav class="flex-1 overflow-y-auto py-6 px-3 space-y-8 no-scrollbar" style="display: flex; flex-direction: column; padding: 1.5rem 0.75rem; height: calc(100vh - 4rem); overflow-y: auto;">
         
-        <div style="display: flex; flex-direction: column; gap: 2rem;">
-            <!-- Overview Group -->
-            <!-- My Wallet (Top Item, No Header) -->
+        <div class="sb-group">
+            <!-- Dashboard Group -->
             <div>
-                <div class="space-y-1" style="display: flex; flex-direction: column; gap: 0.25rem;">
-                    <a href="{% url 'dashboard' %}" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors {% if request.path == '/' or '/wallet/' in request.path %}bg-blue-600/10 text-blue-400 font-medium{% else %}hover-bg-slate-800 text-slate-400 hover-text-slate-200{% endif %}">
-                        <div class="flex items-center gap-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallet {% if request.path == '/' or '/wallet/' in request.path %}text-blue-400{% else %}text-slate-500{% endif %}" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"></path><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path></svg>
+                <div class="nav-group-label" style="display: flex; justify-content: space-between; align-items: center; padding: 0 0.75rem; margin-bottom: 0.5rem; font-size: 0.75rem; font-weight: 600; color: var(--slate-500); text-transform: uppercase;">
+                    Dashboard
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+                </div>
+                <div class="sb-menu-list">
+                    <a href="{% url 'dashboard' %}" class="nav-link {% if request.path == '/' or '/wallet/' in request.path and '/points-collection/' not in request.path %}active{% endif %}">
+                        <div class="nav-link-content">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"></path><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path></svg>
                             My Wallet
                         </div>
                         {% if wallet_count and wallet_count > 0 %}
                         <span class="notification-badge">{{ wallet_count }}</span>
                         {% endif %}
                     </a>
+                    <a href="{% url 'points_collection' %}" class="nav-link {% if '/points-collection/' in request.path %}active{% endif %}">
+                        <div class="nav-link-content">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon" aria-hidden="true"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg>
+                            Points Collection
+                        </div>
+                    </a>
                 </div>
             </div>
 
             <!-- Analysis Group -->
             <div>
-                <div class="flex items-center justify-between px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider cursor-pointer hover-text-slate-300">
+                <div class="nav-group-label" style="display: flex; justify-content: space-between; align-items: center; padding: 0 0.75rem; margin-bottom: 0.5rem; font-size: 0.75rem; font-weight: 600; color: var(--slate-500); text-transform: uppercase;">
                     Analysis
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
                 </div>
-                <div class="space-y-1" style="display: flex; flex-direction: column; gap: 0.25rem;">
-                    <a href="{% url 'card_list' %}" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors {% if '/cards' in request.path or '/explore' in request.path %}bg-blue-600/10 text-blue-400 font-medium{% else %}hover-bg-slate-800 text-slate-400 hover-text-slate-200{% endif %}">
-                        <div class="flex items-center gap-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe {% if '/cards' in request.path or '/explore' in request.path %}text-blue-400{% else %}text-slate-500{% endif %}" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+                <div class="sb-menu-list">
+                    <a href="{% url 'card_list' %}" class="nav-link {% if '/cards' in request.path or '/explore' in request.path %}active{% endif %}">
+                        <div class="nav-link-content">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
                             Explore
                         </div>
                     </a>
-                    <a href="{% url 'personality_list' %}" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors {% if '/personalities' in request.path or '/freaks' in request.path %}bg-blue-600/10 text-blue-400 font-medium{% else %}hover-bg-slate-800 text-slate-400 hover-text-slate-200{% endif %}">
-                        <div class="flex items-center gap-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users {% if '/personalities' in request.path or '/freaks' in request.path %}text-blue-400{% else %}text-slate-500{% endif %}" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                    <a href="{% url 'personality_list' %}" class="nav-link {% if '/personalities' in request.path or '/freaks' in request.path %}active{% endif %}">
+                        <div class="nav-link-content">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg>
                             Freaks
                         </div>
-
                     </a>
                 </div>
             </div>
 
             <!-- Tools Group -->
             <div>
-                <div class="flex items-center justify-between px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider cursor-pointer hover-text-slate-300">
+                <div class="nav-group-label" style="display: flex; justify-content: space-between; align-items: center; padding: 0 0.75rem; margin-bottom: 0.5rem; font-size: 0.75rem; font-weight: 600; color: var(--slate-500); text-transform: uppercase;">
                     Tools
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
                 </div>
-                <div class="space-y-1" style="display: flex; flex-direction: column; gap: 0.25rem;">
-                    <a href="{% url 'calculators_index' %}" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors {% if '/calculators' in request.path %}bg-blue-600/10 text-blue-400 font-medium{% else %}hover-bg-slate-800 text-slate-400 hover-text-slate-200{% endif %}">
-                        <div class="flex items-center gap-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calculator {% if '/calculators' in request.path %}text-blue-400{% else %}text-slate-500{% endif %}" aria-hidden="true"><rect width="16" height="20" x="4" y="2" rx="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line><line x1="16" x2="16" y1="14" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></svg>
+                <div class="sb-menu-list">
+                    <a href="{% url 'calculators_index' %}" class="nav-link {% if '/calculators' in request.path %}active{% endif %}">
+                        <div class="nav-link-content">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon" aria-hidden="true"><rect width="16" height="20" x="4" y="2" rx="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line><line x1="16" x2="16" y1="14" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></svg>
                             Calculators
+                        </div>
+                    </a>
+                    <a href="{% url 'coming_soon' %}?feature=Flight Finder" class="nav-link">
+                        <div class="nav-link-content">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"></path></svg>
+                            Flight Finder
+                        </div>
+                    </a>
+                    <a href="{% url 'coming_soon' %}?feature=Hotel Hunter" class="nav-link">
+                        <div class="nav-link-content">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon" aria-hidden="true"><path d="M2 4v16"></path><path d="M2 8h18a2 2 0 0 1 2 2v10"></path><path d="M2 17h20"></path><path d="M6 8v9"></path></svg>
+                            Hotel Hunter
                         </div>
                     </a>
                 </div>
@@ -241,27 +95,25 @@
 
             <!-- Community Group -->
             <div>
-                <div class="flex items-center justify-between px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider cursor-pointer hover-text-slate-300">
+                <div class="nav-group-label" style="display: flex; justify-content: space-between; align-items: center; padding: 0 0.75rem; margin-bottom: 0.5rem; font-size: 0.75rem; font-weight: 600; color: var(--slate-500); text-transform: uppercase;">
                     Community
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
                 </div>
-                <div class="space-y-1" style="display: flex; flex-direction: column; gap: 0.25rem;">
-                    <a href="{% url 'datapoint_list' %}" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors {% if '/datapoints' in request.path %}bg-blue-600/10 text-blue-400 font-medium{% else %}hover-bg-slate-800 text-slate-400 hover-text-slate-200{% endif %}">
-                        <div class="flex items-center gap-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-no-axes-column {% if '/datapoints' in request.path %}text-blue-400{% else %}text-slate-500{% endif %}" aria-hidden="true"><path d="M5 21v-6"></path><path d="M12 21V3"></path><path d="M19 21V9"></path></svg>
+                <div class="sb-menu-list">
+                    <a href="{% url 'datapoint_list' %}" class="nav-link {% if '/datapoints' in request.path %}active{% endif %}">
+                        <div class="nav-link-content">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon" aria-hidden="true"><path d="M5 21v-6"></path><path d="M12 21V3"></path><path d="M19 21V9"></path></svg>
                             Data Points
                         </div>
                     </a>
-                    <a href="{% url 'blog_list' %}" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors {% if '/blog' in request.path or '/ledger' in request.path %}bg-blue-600/10 text-blue-400 font-medium{% else %}hover-bg-slate-800 text-slate-400 hover-text-slate-200{% endif %}">
-                        <div class="flex items-center gap-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open {% if '/blog' in request.path or '/ledger' in request.path %}text-blue-400{% else %}text-slate-500{% endif %}" aria-hidden="true"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg>
+                    <a href="{% url 'blog_list' %}" class="nav-link {% if '/blog' in request.path or '/ledger' in request.path %}active{% endif %}">
+                        <div class="nav-link-content">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon" aria-hidden="true"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg>
                             Ledger
                         </div>
                     </a>
                 </div>
             </div>
-
-
 
             <!-- Premium Upgrade Card (Conditional) -->
             {% if not user_is_premium %}
@@ -278,7 +130,7 @@
         </div>
 
         <!-- User Profile & Logout (Pushed to bottom, but scrollable if needed) -->
-        <div class="sidebar-user" style="margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--slate-800);">
+        <div class="sidebar-user" style="margin-top: auto;">
             {% if user.is_authenticated %}
             <a href="{% url 'profile' %}" class="user-profile-link">
                 {% if user_profile.photo_url %}

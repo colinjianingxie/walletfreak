@@ -392,7 +392,34 @@ function openCardModal(cardId) {
 
     // Credits
     // Credits
-    document.getElementById('modal-credits-value').textContent = '$' + (card.creditsValue || 0);
+    // Credits Value Calculation
+    // Calculate Credits Value
+    let calculatedCreditsValue = 0;
+    const creditsBenefits = card.benefits || [];
+    creditsBenefits.forEach(b => {
+        // Skip types that shouldn't count towards credits
+        const bType = b.benefit_type || '';
+        // Explicitly allowed types: Credit, Perk, Security, etc.
+        // Excluded:
+        if (['Multiplier', 'Cashback', 'Protection', 'Insurance', 'Bonus', 'Financing', 'Deferred Interest'].includes(bType)) return;
+
+        // Use dollar_value from backend if available
+        if (b.dollar_value) {
+            let rawVal = String(b.dollar_value).replace(/[$,]/g, '').trim();
+            let val = parseFloat(rawVal);
+            if (!isNaN(val)) {
+                calculatedCreditsValue += val;
+            }
+        }
+    });
+
+    // Use backend value if present and non-zero, otherwise use calculated
+    // Check both camelCase and snake_case keys
+    let finalCreditsValue = (card.creditsValue || card.credits_value || 0);
+    // If backend value is 0 (or missing), use calculated value
+    if (finalCreditsValue == 0) finalCreditsValue = calculatedCreditsValue;
+
+    document.getElementById('modal-credits-value').textContent = '$' + finalCreditsValue.toLocaleString();
     
     // APR removed
     

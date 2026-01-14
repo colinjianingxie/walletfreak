@@ -1,0 +1,26 @@
+{
+    "slug-id": "citi-diamond-preferred-card",
+    "name": "Citi Diamond Preferred Card",
+    "image_url": "/static/images/credit_cards/citi-diamond-preferred-card.png",
+    "issuer": "Citi",
+    "annual_fee": 0,
+    "application_link": "https://www.citi.com/credit-cards/citi-diamond-preferred-credit-card",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "4/10. This is a debt-repayment tool, not a rewards card. Use it for the 21-month 0% APR on balance transfers, then put it in a drawer once you're debt-free.",
+    "active_indices": {
+        "benefits": [
+            "bt-intro-apr-v1",
+            "purchase-intro-apr-v1"
+        ],
+        "earning_rates": [
+            "no-rewards-v1"
+        ],
+        "sign_up_bonus": [],
+        "card_questions": [
+            "q-0"
+        ]
+    },
+    "loyalty_program": "citi_ty"
+}

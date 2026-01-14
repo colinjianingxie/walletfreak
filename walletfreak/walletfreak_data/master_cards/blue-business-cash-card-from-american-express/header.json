@@ -1,0 +1,28 @@
+{
+    "slug-id": "blue-business-cash-card-from-american-express",
+    "name": "Blue Business Cash\u2122 Card from American Express",
+    "image_url": "/static/images/credit_cards/blue-business-cash-card-from-american-express.png",
+    "issuer": "American Express",
+    "annual_fee": 0,
+    "application_link": "https://www.americanexpress.com/en-us/business/credit-cards/blue-business-cash/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "10/10. Flat $250 for $3k spend.",
+    "active_indices": {
+        "benefits": [
+            "buying-power-v1"
+        ],
+        "earning_rates": [
+            "all-purchases-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ],
+        "card_questions": [
+            "q-0"
+        ]
+    },
+    "loyalty_program": "amex_mr"
+}

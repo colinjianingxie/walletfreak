@@ -1,0 +1,11 @@
+{
+  "program_id": "flying_blue",
+  "program_name": "Air France / KLM Flying Blue",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.2,
+  "iata_code": "AF",
+  "alliance": "SkyTeam",
+  "partner_hotel_brand": [],
+  "currency_group": "Miles"
+}

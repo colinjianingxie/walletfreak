@@ -48,7 +48,7 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR("GROK_API_KEY not found in environment variables"))
             return
 
-        self.master_dir = os.path.join(settings.BASE_DIR, 'walletfreak_credit_cards', 'master')
+        self.master_dir = os.path.join(settings.BASE_DIR, 'walletfreak_data', 'master_cards')
         if not os.path.exists(self.master_dir):
             os.makedirs(self.master_dir)
 
@@ -276,7 +276,7 @@ class Command(BaseCommand):
         header_keys = [
             "slug-id", "name", "issuer", "image_url", "annual_fee",
             "application_link", "min_credit_score", "max_credit_score",
-            "is_524", "freak_verdict", "points_value_cpp", "show_in_calculators",
+            "is_524", "freak_verdict", "show_in_calculators",
             "referral_links"
         ]
         
@@ -541,7 +541,7 @@ class Command(BaseCommand):
         Loads the structured unique categories from categories_list.json.
         Returns a formatted string describing the hierarchy to help the LLM.
         """
-        json_path = os.path.join(settings.BASE_DIR, 'walletfreak_credit_cards', 'categories_list.json')
+        json_path = os.path.join(settings.BASE_DIR, 'walletfreak_data', 'categories_list.json')
         if not os.path.exists(json_path):
              # Fallback to old behavior or empty
              return "No categories found."
@@ -649,7 +649,6 @@ Here is the CURRENT known data (JSON):
 - **application_link**: Official URL to apply for the card.
 - **min_credit_score**: Number (e.g. 670). Use 300 for secured cards.
 - **max_credit_score**: Number (e.g. 850).
-- **points_value_cpp**: Number or null (e.g. 1.5 for points cards, null for cash back).
 - **is_524**: Boolean (true if applies to Chase 5/24 rule).
 - **freak_verdict**: String: short opinion or "No Freak verdict for this card yet".
 """
@@ -667,7 +666,6 @@ ALL of these fields MUST be included in your response:
 - `application_link`: String (official application URL)
 - `min_credit_score`: Number (e.g. 670, use 300 for secured cards)
 - `max_credit_score`: Number (e.g. 850)
-- `points_value_cpp`: Number or null (cents per point, null for cash back)
 - `is_524`: Boolean (true/false), if having the card will affect chase 5/24 rule
 - `freak_verdict`: String (brief verdict or "No Freak verdict for this card yet")
 """
@@ -748,7 +746,7 @@ Return ONLY the strictly valid JSON object with these components: {components_st
         """
         Load categories from categories_list.json and format for LLM prompt.
         """
-        categories_path = os.path.join(settings.BASE_DIR, 'walletfreak_credit_cards', 'categories_list.json')
+        categories_path = os.path.join(settings.BASE_DIR, 'walletfreak_data', 'categories_list.json')
         
         try:
             with open(categories_path, 'r') as f:

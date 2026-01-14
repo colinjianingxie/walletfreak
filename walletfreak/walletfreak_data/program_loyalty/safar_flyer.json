@@ -1,0 +1,11 @@
+{
+  "program_id": "safar_flyer",
+  "program_name": "Royal Air Maroc Safar Flyer",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.0,
+  "iata_code": "AT",
+  "alliance": "Oneworld",
+  "partner_hotel_brand": [],
+  "currency_group": "Points"
+}

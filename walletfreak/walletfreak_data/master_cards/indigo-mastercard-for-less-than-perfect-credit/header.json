@@ -1,0 +1,30 @@
+{
+    "slug-id": "indigo-mastercard-for-less-than-perfect-credit",
+    "active_indices": {
+        "benefits": [
+            "credit-building-v1",
+            "fraud-protection-v1",
+            "unsecured-card-v1"
+        ],
+        "earning_rates": [
+            "no-rewards-v1"
+        ],
+        "sign_up_bonus": [],
+        "card_questions": [
+            "q-1",
+            "q-2",
+            "q-3",
+            "q-4"
+        ]
+    },
+    "name": "Indigo Mastercard For Less Than Perfect Credit",
+    "issuer": "Celtic Bank",
+    "image_url": "/static/images/credit_cards/indigo-mastercard-for-less-than-perfect-credit.png",
+    "annual_fee": 99,
+    "application_link": "https://www.indigocard.com/apply-form",
+    "min_credit_score": 300,
+    "max_credit_score": 669,
+    "is_524": false,
+    "freak_verdict": "Solid option for building credit without a security deposit, though high fees apply.",
+    "loyalty_program": null
+}

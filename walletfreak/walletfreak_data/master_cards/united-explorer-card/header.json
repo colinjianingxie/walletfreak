@@ -1,0 +1,36 @@
+{
+    "slug-id": "united-explorer-card",
+    "name": "United Explorer Card",
+    "image_url": "/static/images/credit_cards/united-explorer-card.png",
+    "issuer": "Chase",
+    "annual_fee": 95,
+    "application_link": "https://secure.chase.com/web/oao/application/card?sourceCode=HRYN&action=guest#/origination/cardDetails/index/index;cellCode=61DS;combo=Y",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "10/10. Flat 70k miles for $3,000 spend. United bonuses are very transparent.",
+    "active_indices": {
+        "benefits": [
+            "free-bag-v1",
+            "priority-boarding-v1",
+            "club-passes-v1",
+            "tsa-credit-v1",
+            "inflight-savings-v1"
+        ],
+        "earning_rates": [
+            "united-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ],
+        "card_questions": [
+            "q-0",
+            "q-1",
+            "q-2",
+            "q-3",
+            "q-4"
+        ]
+    },
+    "loyalty_program": "united_mileageplus"
+}

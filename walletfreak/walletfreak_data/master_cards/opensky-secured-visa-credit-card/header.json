@@ -1,0 +1,30 @@
+{
+    "slug-id": "opensky-secured-visa-credit-card",
+    "active_indices": {
+        "benefits": [
+            "credit-building-v1",
+            "no-credit-check-v1",
+            "choose-limit-v1"
+        ],
+        "earning_rates": [
+            "all-purchases-v1"
+        ],
+        "sign_up_bonus": [],
+        "card_questions": [
+            "q-1",
+            "q-2",
+            "q-3",
+            "q-4"
+        ]
+    },
+    "name": "OpenSky\u00ae Secured Visa\u00ae Credit Card",
+    "issuer": "Capital Bank",
+    "image_url": "/static/images/credit_cards/opensky-secured-visa-credit-card.jpg",
+    "annual_fee": 35,
+    "application_link": "https://www.openskycc.com/",
+    "min_credit_score": 300,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "Excellent for building or rebuilding credit without a credit check, though it lacks rewards.",
+    "loyalty_program": null
+}

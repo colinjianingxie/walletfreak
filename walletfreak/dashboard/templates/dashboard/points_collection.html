@@ -1,0 +1,321 @@
+{% extends 'auth_base.html' %}
+{% block breadcrumb_section %}Dashboard{% endblock %}
+{% block page_title %}Points Collection{% endblock %}
+{% load static %}
+{% load humanize %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/points_collection.css' %}?v=1.1">
+{% endblock %}
+
+{% block content %}
+<main class="points-collection-container">
+    
+    <!-- Header -->
+    <header class="pc-header">
+        <div>
+            <h1 class="pc-title">My Points Collection</h1>
+            <p class="pc-subtitle">Manage your stack and loyalty portfolio.</p>
+        </div>
+    </header>
+
+    {% include 'dashboard/partials/_loyalty_balances.html' %}
+
+    {% include 'dashboard/partials/_active_cards_list.html' %}
+
+    {% include 'dashboard/modals/_add_loyalty_program.html' %}
+
+</main>
+
+<script>
+    // Data passed from Django
+    const allPrograms = {{ all_programs_json|default:"[]"|safe }};
+    const csrfToken = '{{ csrf_token }}';
+    let isEditMode = false;
+    let currentFilter = 'all';
+    let selectedProgramId = null;
+
+    // List of program IDs already in user's portfolio
+    const userProgramIds = new Set([
+        {% for p in display_programs %}
+            "{{ p.program_id }}",
+        {% endfor %}
+    ]);
+
+    // --- Modal & View Logic ---
+    function toggleModal(show) {
+        const modal = document.getElementById('add-program-modal');
+        if (show) {
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            switchView('list');
+            renderProgramsList(); 
+        } else {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+            // Reset state
+            setFilter('all');
+            document.getElementById('program-search').value = '';
+        }
+    }
+
+    function switchView(viewName) {
+        const listEl = document.getElementById('view-list');
+        const detailEl = document.getElementById('view-detail');
+        if (viewName === 'list') {
+            listEl.style.display = 'block';
+            detailEl.style.display = 'none';
+            selectedProgramId = null;
+        } else {
+            listEl.style.display = 'none';
+            detailEl.style.display = 'block';
+            // Focus input
+            setTimeout(() => document.getElementById('new-program-balance').focus(), 100);
+        }
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('add-program-modal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            toggleModal(false);
+        }
+    });
+
+    // Wire up Add Buttons
+    document.querySelectorAll('.btn-add-program').forEach(btn => {
+        btn.onclick = () => toggleModal(true);
+    });
+
+    // --- Filtering & Search ---
+    function setFilter(filterType) {
+        currentFilter = filterType;
+        
+        // Update Buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            if (btn.dataset.filter === filterType) {
+                btn.classList.add('active');
+                btn.classList.remove('inactive');
+            } else {
+                btn.classList.add('inactive');
+                btn.classList.remove('active');
+            }
+        });
+        
+        renderProgramsList(document.getElementById('program-search').value);
+    }
+
+    const searchInput = document.getElementById('program-search');
+    searchInput.addEventListener('input', function(e) {
+        renderProgramsList(e.target.value);
+    });
+
+    function getIconForProgram(type) {
+        const t = (type || '').toLowerCase();
+        if (t.includes('hotel')) return { icon: '🏨', class: 'icon-box-hotel' };
+        if (t.includes('card') || t.includes('bank')) return { icon: '💳', class: 'icon-box-credit' };
+        return { icon: '✈️', class: 'icon-box-airline' }; // default and airline
+    }
+
+    function renderProgramsList(query = '') {
+        const list = document.getElementById('programs-list');
+        list.innerHTML = '';
+        
+        const q = query.toLowerCase();
+        
+        const filtered = allPrograms.filter(p => {
+            // EXCLUDE programs already in portfolio
+            if (userProgramIds.has(p.id)) return false;
+
+            const matchesSearch = (p.program_name && p.program_name.toLowerCase().includes(q)) || 
+                                  (p.id && p.id.toLowerCase().includes(q));
+            
+            let matchesFilter = true;
+            const pType = (p.type || '').toLowerCase();
+            
+            if (currentFilter === 'airline') matchesFilter = pType.includes('airline') || (!pType.includes('hotel') && !pType.includes('bank')); 
+            if (currentFilter === 'hotel') matchesFilter = pType.includes('hotel');
+            // 'all' matches everything
+            
+            return matchesSearch && matchesFilter;
+        });
+        
+        if (filtered.length === 0) {
+            list.innerHTML = '<div style="padding: 1rem; text-align: center; color: #94a3b8;">No programs found.</div>';
+            return;
+        }
+        
+        filtered.forEach(p => {
+            const iconData = getIconForProgram(p.type);
+            const btn = document.createElement('div'); // Using div as row container
+            btn.className = 'program-item-new group';
+            btn.innerHTML = `
+                <div class="program-icon-box ${iconData.class}">
+                    ${p.logo_url ? `<img src="${p.logo_url}" class="pi-logo-img">` : iconData.icon}
+                </div>
+                <div class="flex-1">
+                    <div class="program-name-new">${p.program_name}</div>
+                    <div class="program-type-new">${p.type || 'Program'}</div>
+                </div>
+                <div class="program-arrow-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+                </div>
+            `;
+            btn.onclick = () => selectProgram(p);
+            list.appendChild(btn);
+        });
+    }
+
+    // --- Selection & Adding ---
+    function selectProgram(program) {
+        selectedProgramId = program.id;
+        
+        // Populate Detail View
+        const iconData = getIconForProgram(program.type);
+        const iconContainer = document.getElementById('selected-icon');
+        iconContainer.className = `selected-icon-box ${iconData.class}`;
+        
+        if (program.logo_url) {
+             iconContainer.innerHTML = `<img src="${program.logo_url}" style="width:100%; height:100%; object-fit:cover; border-radius:0.75rem;">`;
+        } else {
+             iconContainer.innerText = iconData.icon;
+        }
+        
+        document.getElementById('selected-name').innerText = program.program_name;
+        document.getElementById('new-program-balance').value = ''; // Reset input
+        
+        switchView('detail');
+    }
+
+    async function confirmAddProgram() {
+        if (!selectedProgramId) return;
+        
+        const btn = document.getElementById('btn-confirm-add');
+        const input = document.getElementById('new-program-balance');
+        const balanceVal = input.value.replace(/,/g, '');
+        const balance = parseFloat(balanceVal) || 0;
+        
+        btn.disabled = true;
+        btn.innerHTML = 'Adding...';
+        
+        try {
+            // First add program
+            const addResp = await fetch('{% url "add_loyalty_program" %}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
+                body: JSON.stringify({ program_id: selectedProgramId })
+            });
+            const addData = await addResp.json();
+            
+            if (!addData.success) {
+                throw new Error(addData.error || 'Failed to add program');
+            }
+
+            // If balance > 0, update it immediately
+            if (balance > 0) {
+                 await fetch('{% url "update_loyalty_balance" %}', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
+                    body: JSON.stringify({ program_id: selectedProgramId, balance: balance })
+                });
+            }
+            
+            window.location.reload();
+            
+        } catch (e) {
+            console.error(e);
+            alert('Error: ' + e.message);
+            btn.disabled = false;
+            btn.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg> 
+                Add to Portfolio
+            `;
+        }
+    }
+
+    // Input formatting for balance
+    const balanceInput = document.getElementById('new-program-balance');
+    balanceInput.addEventListener('input', function(e) {
+        // Simple numeric handling + commas could be added here
+        let val = e.target.value.replace(/[^0-9]/g, '');
+        if (val) {
+            e.target.value = parseInt(val).toLocaleString();
+        } else {
+            e.target.value = '';
+        }
+    });
+
+
+    // --- Existing Edit Mode Logic ---
+    function toggleEditMode() {
+        isEditMode = !isEditMode;
+        const btn = document.getElementById('toggle-edit-btn');
+        const inputs = document.querySelectorAll('.balance-input');
+        
+        if (isEditMode) {
+            btn.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+                Done
+            `;
+            btn.classList.remove('btn-secondary');
+            btn.classList.add('btn-primary');
+            
+            inputs.forEach(input => {
+                input.removeAttribute('readonly');
+                input.style.border = '1px solid #e2e8f0';
+                input.style.padding = '0.25rem 0.5rem';
+                input.style.borderRadius = '0.5rem';
+            });
+            
+        } else {
+            btn.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pen" aria-hidden="true"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path></svg>
+                Update Balances
+            `;
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-secondary');
+            
+            inputs.forEach(input => {
+                input.setAttribute('readonly', 'true');
+                input.style.border = 'none';
+                input.style.padding = '0';
+            });
+            
+             window.location.reload();
+        }
+    }
+    
+    async function saveBalance(programId, inputEl) {
+        if (!isEditMode) return;
+        
+        const newBalance = parseFloat(inputEl.value.replace(/,/g, ''));
+        const originalBalance = parseFloat(inputEl.dataset.original.replace(/,/g, ''));
+        
+        if (newBalance === originalBalance) return; 
+        
+        try {
+            const response = await fetch('{% url "update_loyalty_balance" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({ 
+                    program_id: programId, 
+                    balance: newBalance 
+                })
+            });
+            const data = await response.json();
+            if (data.success) {
+                inputEl.dataset.original = newBalance;
+            } else {
+                alert('Error saving balance: ' + data.error);
+                inputEl.value = originalBalance; 
+            }
+        } catch (e) {
+            console.error(e);
+            alert('Failed to save balance');
+            inputEl.value = originalBalance;
+        }
+    }
+</script>
+{% endblock %}

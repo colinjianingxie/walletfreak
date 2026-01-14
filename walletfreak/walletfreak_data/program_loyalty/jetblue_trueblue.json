@@ -1,0 +1,13 @@
+{
+  "program_id": "jetblue_trueblue",
+  "program_name": "JetBlue TrueBlue",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.3,
+  "iata_code": "B6",
+  "alliance": null,
+  "partner_hotel_brand": [
+    "IHG"
+  ],
+  "currency_group": "Points"
+}

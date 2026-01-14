@@ -1,0 +1,31 @@
+{
+    "slug-id": "aadvantage-aviator-silver-mastercard",
+    "active_indices": {
+        "benefits": [
+            "free-checked-bags-v1",
+            "companion-certificate-v1",
+            "inflight-rebates-v1"
+        ],
+        "earning_rates": [
+            "american-airlines-v1",
+            "default-v1"
+        ],
+        "sign_up_bonus": [],
+        "card_questions": [
+            "q-1",
+            "q-2",
+            "q-3",
+            "q-4"
+        ]
+    },
+    "name": "Aadvantage Aviator Silver Mastercard",
+    "issuer": "Barclays",
+    "image_url": "/static/images/credit_cards/aadvantage-aviator-silver-mastercard.jpg",
+    "annual_fee": 195,
+    "application_link": "",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "Solid for AA loyalists with premium perks, but not available for new applicants; upgrades possible for existing cardholders.",
+    "loyalty_program": "american_aadvantage"
+}

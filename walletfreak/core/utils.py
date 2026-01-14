@@ -11,11 +11,7 @@ def get_all_card_vendors():
     
     # Path to credit cards directory relative to project root
     # Assuming standard django layout where settings.BASE_DIR is 'walletfreak/walletfreak'
-    # and credit cards dir is 'walletfreak/walletfreak/walletfreak_credit_cards'
-    # Check if BASE_DIR is project root or app root. Usually BASE_DIR is project root.
-    # Let's try to find it relative to manage.py which is usually at BASE_DIR.
-    
-    cards_dir = os.path.join(settings.BASE_DIR, 'walletfreak_credit_cards')
+    cards_dir = os.path.join(settings.BASE_DIR, 'walletfreak_data', 'master_cards')
     
     if not os.path.exists(cards_dir):
         # Fallback for different project structures or if dir is missing

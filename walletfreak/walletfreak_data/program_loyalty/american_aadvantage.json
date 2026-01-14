@@ -1,0 +1,13 @@
+{
+  "program_id": "american_aadvantage",
+  "program_name": "American Airlines AAdvantage",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.4,
+  "iata_code": "AA",
+  "alliance": "Oneworld",
+  "partner_hotel_brand": [
+    "Hyatt"
+  ],
+  "currency_group": "Miles"
+}

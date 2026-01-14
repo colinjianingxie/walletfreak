@@ -299,7 +299,7 @@ def admin_save_card_json(request):
         if email != 'colinjianingxie@gmail.com' or not is_super:
             return JsonResponse({'error': 'Unauthorized: Restricted access'}, status=403)
         
-        cards_dir = os.path.join(settings.BASE_DIR, 'walletfreak_credit_cards')
+        cards_dir = os.path.join(settings.BASE_DIR, 'walletfreak_data')
         
         # Handle multiple slug-ids
         if len(slug_ids) > 1:

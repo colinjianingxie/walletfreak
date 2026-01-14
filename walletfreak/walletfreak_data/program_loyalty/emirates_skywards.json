@@ -1,0 +1,13 @@
+{
+  "program_id": "emirates_skywards",
+  "program_name": "Emirates Skywards",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.0,
+  "iata_code": "EK",
+  "alliance": null,
+  "partner_hotel_brand": [
+    "Marriott"
+  ],
+  "currency_group": "Miles"
+}

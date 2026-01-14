@@ -1,0 +1,11 @@
+{
+  "program_id": "qantas_frequent_flyer",
+  "program_name": "Qantas Frequent Flyer",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.4,
+  "iata_code": "QF",
+  "alliance": "Oneworld",
+  "partner_hotel_brand": [],
+  "currency_group": "Points"
+}

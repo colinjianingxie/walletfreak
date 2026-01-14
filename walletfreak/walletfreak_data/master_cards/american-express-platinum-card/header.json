@@ -1,0 +1,50 @@
+{
+    "slug-id": "american-express-platinum-card",
+    "name": "American Express Platinum Card",
+    "image_url": "/static/images/credit_cards/american-express-platinum-card.jpg",
+    "issuer": "American Express",
+    "annual_fee": 895,
+    "application_link": "https://www.americanexpress.com/us/credit-cards/card/platinum/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "10/10. Clear terms. $8,000 spend for 175k points with no hoops.",
+    "active_indices": {
+        "benefits": [
+            "airline-credit-v1",
+            "hotel-credit-v1",
+            "clear-credit-v1",
+            "uber-cash-v1",
+            "entertainment-credit-v1",
+            "resy-credit-v1",
+            "lululemon-credit-v1",
+            "walmart-credit-v1",
+            "saks-credit-v1",
+            "equinox-credit-v1",
+            "oura-credit-v1"
+        ],
+        "earning_rates": [
+            "airlines-v1",
+            "amex-travel-hotels-v1",
+            "amex-travel-flights-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ],
+        "card_questions": [
+            "q-0",
+            "q-1",
+            "q-10",
+            "q-2",
+            "q-3",
+            "q-4",
+            "q-5",
+            "q-6",
+            "q-7",
+            "q-8",
+            "q-9"
+        ]
+    },
+    "loyalty_program": "amex_mr"
+}

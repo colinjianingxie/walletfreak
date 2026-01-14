@@ -1,0 +1,32 @@
+{
+    "slug-id": "citi-aadvantage-platinum-select-world-elite-mastercard",
+    "name": "Citi / AAdvantage Platinum Select World Elite Mastercard",
+    "image_url": "/static/images/credit_cards/citi-aadvantage-platinum-select-world-elite-mastercard.webp",
+    "issuer": "Citi",
+    "annual_fee": 99,
+    "application_link": "https://www.citi.com/credit-cards/citi-aadvantage-platinum-select-world-elite-mastercard",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "7/10. The 50k mile bonus and $0 intro annual fee make the first year a no-brainer. After that, it's essentially a $99 'baggage fee insurance' card for AA flyers.",
+    "active_indices": {
+        "benefits": [
+            "free-bag-v1",
+            "flight-discount-v1",
+            "preferred-boarding-v1"
+        ],
+        "earning_rates": [
+            "american-airlines-v1",
+            "dining-v1",
+            "gas-v1",
+            "all-purchases-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ],
+        "card_questions": [
+            "q-0"
+        ]
+    },
+    "loyalty_program": "american_aadvantage"
+}

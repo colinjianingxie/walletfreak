@@ -1,0 +1,30 @@
+{
+    "slug-id": "american-express-green-card",
+    "name": "American Express Green Card",
+    "image_url": "/static/images/credit_cards/american-express-green-card.jpg",
+    "issuer": "American Express",
+    "annual_fee": 150,
+    "application_link": "https://www.americanexpress.com/us/credit-cards/card/green/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "10/10. Flat 40k points for $3k spend. No caveats.",
+    "active_indices": {
+        "benefits": [
+            "clear-credit-v1",
+            "loungebuddy-credit-v1"
+        ],
+        "earning_rates": [
+            "travel-perks-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ],
+        "card_questions": [
+            "q-0",
+            "q-1"
+        ]
+    },
+    "loyalty_program": "amex_mr"
+}

@@ -1,0 +1,29 @@
+{
+    "slug-id": "capital-one-spark-cash-plus",
+    "name": "Capital One Spark Cash Plus",
+    "image_url": "/static/images/credit_cards/capital-one-spark-cash-plus.webp",
+    "issuer": "Capital One",
+    "annual_fee": 150,
+    "application_link": "https://www.capitalone.com/small-business/credit-cards/spark-cash-plus/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "1/10. Whale bait. Extra rewards only matter at extreme spend levels.",
+    "active_indices": {
+        "benefits": [
+            "fee-waiver-v1"
+        ],
+        "earning_rates": [
+            "capital-one-travel-hotels-v1",
+            "capital-one-travel-rental-cars-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ],
+        "card_questions": [
+            "q-0"
+        ]
+    },
+    "loyalty_program": "cap1_miles"
+}

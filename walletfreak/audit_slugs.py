@@ -8,7 +8,7 @@ from collections import defaultdict
 # to keep this script standalone and fast.
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CARDS_DIR = os.path.join(BASE_DIR, 'walletfreak_credit_cards')
+CARDS_DIR = os.path.join(BASE_DIR, 'walletfreak_data', 'master_cards')
 
 def parse_header_line(line):
     return [h.strip() for h in line.split('|')]

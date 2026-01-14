@@ -1,0 +1,20 @@
+{
+    "slug-id": "pnc-core-visa-credit-card",
+    "name": "PNC Core Visa Credit Card",
+    "image_url": "/static/images/credit_cards/pnc-core-visa-credit-card.jpg",
+    "issuer": "PNC",
+    "annual_fee": null,
+    "application_link": "https://lending.pnc.com/ccsw/getting-started?promoCode=base",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "No Freak verdict for this card yet",
+    "active_indices": {
+        "benefits": [],
+        "earning_rates": [
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": []
+    },
+    "loyalty_program": null
+}

@@ -1,0 +1,29 @@
+{
+    "slug-id": "capital-one-venture-rewards-credit-card",
+    "name": "Capital One Venture Rewards Credit Card",
+    "image_url": "/static/images/credit_cards/capital-one-venture-rewards-credit-card.webp",
+    "issuer": "Capital One",
+    "annual_fee": 95,
+    "application_link": "https://www.capitalone.com/credit-cards/apply/venture-rewards/",
+    "min_credit_score": 700,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "10/10. Flat 75k miles for $4k spend.",
+    "active_indices": {
+        "benefits": [
+            "tsa-credit-v1"
+        ],
+        "earning_rates": [
+            "capital-one-travel-hotels-v1",
+            "capital-one-travel-rental-cars-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ],
+        "card_questions": [
+            "q-0"
+        ]
+    },
+    "loyalty_program": "cap1_miles"
+}

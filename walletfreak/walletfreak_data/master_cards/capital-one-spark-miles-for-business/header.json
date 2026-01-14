@@ -1,0 +1,31 @@
+{
+    "slug-id": "capital-one-spark-miles-for-business",
+    "name": "Capital One Spark Miles for Business",
+    "image_url": "/static/images/credit_cards/capital-one-spark-miles-for-business.webp",
+    "issuer": "Capital One",
+    "annual_fee": 95,
+    "application_link": "https://www.capitalone.com/small-business/credit-cards/spark-miles/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "10/10. Flat 50k miles for $4,500 spend.",
+    "active_indices": {
+        "benefits": [
+            "tsaglobal-entry-credit-v1",
+            "hertz-status-v1"
+        ],
+        "earning_rates": [
+            "capital-one-travel-hotels-v1",
+            "capital-one-travel-rental-cars-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ],
+        "card_questions": [
+            "q-0",
+            "q-1"
+        ]
+    },
+    "loyalty_program": "cap1_miles"
+}

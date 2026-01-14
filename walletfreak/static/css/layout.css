@@ -395,3 +395,172 @@ body.app-body,
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
+/* --- MERGED FROM SIDEBAR.HTML --- */
+
+/* Sidebar Utility Helpers */
+.sb-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.sb-menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+/* Logout Button Specifics */
+.btn-logout-sidebar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    margin-top: 1rem;
+    color: #ef4444;
+    /* red-500 */
+    font-size: 0.875rem;
+    font-weight: 500;
+    background: transparent;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-logout-sidebar:hover {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: #ef4444;
+}
+
+/* Notification Badge */
+.notification-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    padding: 0 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    background-color: var(--blue-500);
+    color: white;
+    border-radius: 9999px;
+}
+
+/* Mobile Sidebar Adjustments */
+@media (max-width: 1024px) {
+    .app-sidebar nav {
+        padding-bottom: 8rem !important;
+        height: calc(100dvh - 4rem) !important;
+    }
+}
+
+/* --- UTILITY CLASSES REPLACING TAILWIND --- */
+.relative {
+    position: relative;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.fixed {
+    position: fixed;
+}
+
+.bg-red-500 {
+    background-color: #ef4444;
+}
+
+.text-red-500 {
+    color: #ef4444;
+}
+
+.rounded-full {
+    border-radius: 9999px;
+}
+
+.w-2 {
+    width: 0.5rem;
+}
+
+.h-2 {
+    height: 0.5rem;
+}
+
+.w-5 {
+    width: 1.25rem;
+}
+
+.h-5 {
+    height: 1.25rem;
+}
+
+.top-2 {
+    top: 0.5rem;
+}
+
+.right-2 {
+    right: 0.5rem;
+}
+
+.ring-2 {
+    box-shadow: 0 0 0 2px var(--tw-ring-color);
+}
+
+.ring-white {
+    --tw-ring-color: #ffffff;
+}
+
+/* Text Utilities for Sidebar Text */
+.text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
+}
+
+.text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.font-semibold {
+    font-weight: 600;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.tracking-wider {
+    letter-spacing: 0.05em;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Flex Utilities needed if not using flexbox classes directly */
+.items-center {
+    align-items: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.gap-3 {
+    gap: 0.75rem;
+}

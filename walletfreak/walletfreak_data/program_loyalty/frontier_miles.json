@@ -1,0 +1,11 @@
+{
+  "program_id": "frontier_miles",
+  "program_name": "Frontier Airlines FRONTIER Miles",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.0,
+  "iata_code": "F9",
+  "alliance": null,
+  "partner_hotel_brand": [],
+  "currency_group": "Miles"
+}

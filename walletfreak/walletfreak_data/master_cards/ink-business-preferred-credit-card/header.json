@@ -1,0 +1,39 @@
+{
+    "slug-id": "ink-business-preferred-credit-card",
+    "name": "Ink Business Preferred Credit Card",
+    "image_url": "/static/images/credit_cards/ink-business-preferred-credit-card.png",
+    "issuer": "Chase",
+    "annual_fee": 95,
+    "application_link": "https://secure.chase.com/web/oao/application/card?sourceCode=HXTD&action=guest#/origination/cardDetails/index/index;cellCode=61DS;combo=Y",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "10/10. Flat 100k points for $8k spend.",
+    "active_indices": {
+        "benefits": [
+            "dashpass-v1",
+            "doordash-nr-credit-v1",
+            "cell-phone-protection-v1",
+            "primary-rental-coverage-v1",
+            "no-ftf-v1"
+        ],
+        "earning_rates": [
+            "chase-travel-flights-v1",
+            "chase-travel-hotels-v1",
+            "chase-travel-rental-cars-v1",
+            "advertising-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ],
+        "card_questions": [
+            "q-0",
+            "q-1",
+            "q-2",
+            "q-3",
+            "q-4"
+        ]
+    },
+    "loyalty_program": "chase_ur"
+}

@@ -1,0 +1,11 @@
+{
+  "program_id": "matmid",
+  "program_name": "El Al Matmid",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.0,
+  "iata_code": "LY",
+  "alliance": null,
+  "partner_hotel_brand": [],
+  "currency_group": "Points"
+}

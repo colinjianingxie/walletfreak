@@ -1,0 +1,83 @@
+{
+  "source_program_id": "wells_fargo",
+  "transfer_partners": [
+    {
+      "destination_program_id": "aerlingus_aerclub",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "airfranceklm_flyingblue",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "avianca_lifemiles",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "britishairways_executiveclub",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "choice_privileges",
+      "ratio": 1.0,
+      "transfer_time": "1 day",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    },
+    {
+      "destination_program_id": "iberia_plus",
+      "ratio": 1.0,
+      "transfer_time": "Instant",
+      "min_transfer_amount": 1000,
+      "transfer_increment": 1000,
+      "is_one_way": true,
+      "current_bonus": {
+        "is_active": false,
+        "bonus_multiplier": 1.0,
+        "expiry_date": null
+      }
+    }
+  ]
+}

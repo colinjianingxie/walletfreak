@@ -5,7 +5,7 @@ import os
 import json
 from collections import OrderedDict
 
-CARDS_DIR = os.path.join(os.path.dirname(__file__), 'walletfreak_credit_cards')
+CARDS_DIR = os.path.join(os.path.dirname(__file__), 'walletfreak_data', 'master_cards')
 
 def extract_slugs():
     """Extract slug IDs from filenames in the credit cards directory."""

@@ -1,0 +1,22 @@
+{
+    "slug-id": "capital-one-quicksilverone-cash-rewards-credit-card",
+    "name": "Capital One QuicksilverOne Cash Rewards Credit Card",
+    "image_url": "/static/images/credit_cards/capital-one-quicksilverone-cash-rewards-credit-card.webp",
+    "issuer": "Capital One",
+    "annual_fee": null,
+    "application_link": "https://www.capitalone.com/credit-cards/apply/quicksilverone-rewards/",
+    "min_credit_score": 580,
+    "max_credit_score": 669,
+    "is_524": true,
+    "freak_verdict": "10/10. Flat $200 for $500 spend.",
+    "active_indices": {
+        "benefits": [],
+        "earning_rates": [
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ]
+    },
+    "loyalty_program": "cap1_miles"
+}

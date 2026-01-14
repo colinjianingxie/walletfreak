@@ -1,0 +1,33 @@
+{
+    "slug-id": "marriott-bonvoy-business-american-express-card",
+    "name": "Marriott Bonvoy Business American Express Card",
+    "image_url": "/static/images/credit_cards/marriott-bonvoy-business-american-express-card.avif",
+    "issuer": "American Express",
+    "annual_fee": 125,
+    "application_link": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/marriott-bonvoy-business/",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": false,
+    "freak_verdict": "9.5/10. One of the best Marriott cards. The 7% discount and the automatic free night make the $125 fee an absolute steal.",
+    "active_indices": {
+        "benefits": [
+            "free-night-v1",
+            "room-discount-v1"
+        ],
+        "earning_rates": [
+            "marriott-v1",
+            "dining-v1",
+            "gas-v1",
+            "shipping-v1",
+            "phone-plans-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-1"
+        ],
+        "card_questions": [
+            "q-0"
+        ]
+    },
+    "loyalty_program": "marriott_bonvoy"
+}

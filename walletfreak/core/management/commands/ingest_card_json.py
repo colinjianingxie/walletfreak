@@ -44,7 +44,7 @@ class Command(BaseCommand):
              self.stdout.write(self.style.ERROR("Input JSON must contain 'slug-id' field"))
              return
 
-        self.master_dir = os.path.join(settings.BASE_DIR, 'walletfreak_credit_cards', 'master')
+        self.master_dir = os.path.join(settings.BASE_DIR, 'walletfreak_data', 'master_cards')
         if not os.path.exists(self.master_dir):
             if dry_run:
                 self.stdout.write(self.style.WARNING(f"Would create master directory: {self.master_dir}"))

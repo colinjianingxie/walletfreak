@@ -1,0 +1,13 @@
+{
+  "program_id": "united_mileageplus",
+  "program_name": "United MileagePlus",
+  "type": "airline",
+  "logo_url": null,
+  "valuation": 1.5,
+  "iata_code": "UA",
+  "alliance": "Star Alliance",
+  "partner_hotel_brand": [
+    "Marriott"
+  ],
+  "currency_group": "Miles"
+}
