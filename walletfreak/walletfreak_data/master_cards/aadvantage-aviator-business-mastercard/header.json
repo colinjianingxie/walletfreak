@@ -13,7 +13,13 @@
             "office-supplies-v1",
             "all-purchases-v1"
         ],
-        "sign_up_bonus": []
+        "sign_up_bonus": [],
+        "card_questions": [
+            "q-1",
+            "q-2",
+            "q-3",
+            "q-4"
+        ]
     },
     "name": "AAdvantage Aviator World Elite Business Mastercard",
     "issuer": "Barclays",

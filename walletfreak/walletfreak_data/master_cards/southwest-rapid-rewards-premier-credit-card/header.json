@@ -12,6 +12,12 @@
         ],
         "sign_up_bonus": [
             "offer-1-v1"
+        ],
+        "card_questions": [
+            "q-1",
+            "q-2",
+            "q-3",
+            "q-4"
         ]
     },
     "name": "Southwest Rapid Rewards Premier Credit Card",

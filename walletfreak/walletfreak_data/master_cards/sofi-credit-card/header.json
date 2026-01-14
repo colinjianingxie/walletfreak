@@ -5,7 +5,14 @@
         "earning_rates": [
             "all-purchases-v1"
         ],
-        "sign_up_bonus": []
+        "sign_up_bonus": [],
+        "card_questions": [
+            "q-1",
+            "q-2",
+            "q-3",
+            "q-4",
+            "q-5"
+        ]
     },
     "name": "SoFi Unlimited 2% Credit Card",
     "issuer": "SoFi",

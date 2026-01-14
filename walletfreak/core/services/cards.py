@@ -98,7 +98,7 @@ class CardMixin:
         for c in cards_map.values():
             c['benefits'] = []
             c['earning_rates'] = []
-            c['sign_up_bonus'] = {} 
+            c['sign_up_bonus'] = [] 
             c['card_questions'] = []
         
         # Collect all references to fetch
@@ -118,7 +118,8 @@ class CardMixin:
             add_refs('benefits', 'benefits')
             add_refs('earning_rates', 'earning_rates')
             add_refs('sign_up_bonus', 'sign_up_bonus')
-            add_refs('card_questions', 'card_questions')
+            # Removed card_questions from batch fetch based on indices
+            # add_refs('card_questions', 'card_questions')
 
         if refs_to_fetch:
             # Batch Get - Chunking in groups of 100
@@ -330,7 +331,7 @@ class CardMixin:
             add_refs('benefits', 'benefits')
             add_refs('earning_rates', 'earning_rates')
             add_refs('sign_up_bonus', 'sign_up_bonus')
-            add_refs('card_questions', 'card_questions')
+            # card_questions fetched directly below
 
             if refs_to_fetch:
                 snaps = self.db.get_all(refs_to_fetch)
@@ -350,6 +351,16 @@ class CardMixin:
 
             # Process processed fields
             card_data['sign_up_bonus'] = self._process_signup_bonuses(bonuses)
+            
+            # Direct Fetch for Questions (Source of Truth: Firestore Subcollection)
+            # This bypasses active_indices completely for questions.
+            questions_ref = card_ref.collection('card_questions')
+            questions_docs = questions_ref.stream()
+            for q_doc in questions_docs:
+                q_data = q_doc.to_dict()
+                q_data['id'] = q_doc.id
+                questions.append(q_data)
+                
             card_data['card_questions'] = self._process_card_questions(questions)
 
         except Exception as e:

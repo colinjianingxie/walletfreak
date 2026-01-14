@@ -8,7 +8,13 @@
             "gas-v1",
             "default-v1"
         ],
-        "sign_up_bonus": []
+        "sign_up_bonus": [],
+        "card_questions": [
+            "q-0",
+            "q-1",
+            "q-2",
+            "q-3"
+        ]
     },
     "name": "Shell Credit Card",
     "issuer": "Citi",

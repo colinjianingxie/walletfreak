@@ -19,7 +19,11 @@
             "groceries-v1",
             "financial-&-rewards-v1"
         ],
-        "sign_up_bonus": []
+        "sign_up_bonus": [],
+        "card_questions": [
+            "q-0",
+            "q-1"
+        ]
     },
     "loyalty_program": null
 }

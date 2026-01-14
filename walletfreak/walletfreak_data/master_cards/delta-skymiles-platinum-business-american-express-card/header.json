@@ -32,6 +32,13 @@
         ],
         "sign_up_bonus": [
             "offer-1-v2"
+        ],
+        "card_questions": [
+            "q-0",
+            "q-1",
+            "q-2",
+            "q-3",
+            "q-4"
         ]
     },
     "loyalty_program": "delta_skymiles"

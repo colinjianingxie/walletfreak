@@ -20,6 +20,9 @@
         ],
         "sign_up_bonus": [
             "offer-1"
+        ],
+        "card_questions": [
+            "q-0"
         ]
     },
     "loyalty_program": "cap1_miles"

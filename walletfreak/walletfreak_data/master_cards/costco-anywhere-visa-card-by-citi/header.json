@@ -20,7 +20,10 @@
             "costco-v1",
             "financial-&-rewards-v1"
         ],
-        "sign_up_bonus": []
+        "sign_up_bonus": [],
+        "card_questions": [
+            "q-0"
+        ]
     },
     "loyalty_program": "citi_ty"
 }
