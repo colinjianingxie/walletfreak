@@ -535,21 +535,14 @@ def dashboard(request):
                 
     chase_eligible = chase_524_count < 5
     
-    try:
-        user_data = db.get_user_profile(uid) or {}
-    except Exception as e:
-        print(f"Error fetching user profile: {e}")
-        user_data = {}
+
 
     visible_filter_card_ids = set()
     for benefit in action_needed_benefits + maxed_out_benefits + ignored_benefits:
         visible_filter_card_ids.add(benefit.get('card_id'))
         
     context = {
-        'user_profile': {
-            'photo_url': user_data.get('photo_url') or request.session.get('user_photo'),
-            'email': user_data.get('email') or request.session.get('user_email')
-        },
+
         'user': request.user,
         'active_cards': active_cards,
         'inactive_cards': inactive_cards,

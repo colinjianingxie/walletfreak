@@ -90,14 +90,16 @@ def points_collection(request):
         if pid and pid in programs_to_display:
             card['program_balance'] = programs_to_display[pid].get('balance', 0)
 
+
+
+
+    
+
     context = {
         'display_programs': display_programs,
         'all_programs_json': json.dumps(all_programs, default=str),
         'total_est_value': total_est_value,
-        'user_profile': {
-            'photo_url': request.session.get('user_photo'),
-            'email': request.session.get('user_email')
-        },
+
         'active_cards': active_cards
     }
     
