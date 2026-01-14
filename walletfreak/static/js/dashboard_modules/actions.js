@@ -233,7 +233,7 @@ function saveAnniversaryDate() {
 let cardToRemoveForm = null;
 let cardToRemoveId = null;
 
-function openRemoveCardModal(e, form, cardName, cardId) {
+async function openRemoveCardModal(e, form, cardName, cardId) {
     if (e) e.preventDefault();
     cardToRemoveForm = form;
     cardToRemoveId = cardId;
@@ -243,8 +243,44 @@ function openRemoveCardModal(e, form, cardName, cardId) {
 
     const modal = document.getElementById('remove-card-modal');
     if (modal) {
+        // Reset warnings
+        const warningEl = document.getElementById('remove-loyalty-warning');
+        const checkbox = document.getElementById('confirm-remove-loyalty');
+        if (warningEl) warningEl.style.display = 'none';
+        if (checkbox) checkbox.checked = true;
+
         modal.style.display = 'flex';
-        // modal.classList.add('active'); 
+
+        // --- CHECK CONSEQUENCES ---
+        // Extract ID if not passed directly
+        if (!cardId) {
+            const actionParts = form.action.split('/');
+            // Expected format: /wallet/remove-card/DOCUMENT_ID/
+            cardId = actionParts[actionParts.length - 2] || actionParts[actionParts.length - 1];
+        }
+
+        if (cardId) {
+            try {
+                // Show a mini loader or just wait?
+                // Just wait, it's fast usually.
+                const res = await fetch(`/wallet/cards/check-delete/${cardId}/`);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.will_be_removed) {
+                        // HIT! Show warning
+                        if (warningEl) {
+                            document.getElementById('remove-loyalty-name').textContent = data.program_name || 'Associated';
+                            warningEl.style.display = 'block';
+                        }
+                    } else if (data.program_id) {
+                        // Has program, but won't be removed
+                        // Optional: Show "Loyalty program retained via X other cards"
+                    }
+                }
+            } catch (err) {
+                console.error("Error checking delete consequences:", err);
+            }
+        }
     }
     return false;
 }
@@ -262,21 +298,47 @@ function closeRemoveCardModal() {
 async function confirmRemoveCard() {
     if (!cardToRemoveForm) return;
     const form = cardToRemoveForm;
+
+    // Check loyalty preference
+    const checkbox = document.getElementById('confirm-remove-loyalty');
+    const deleteLoyalty = checkbox && checkbox.checked && document.getElementById('remove-loyalty-warning').style.display !== 'none';
+
     closeRemoveCardModal();
-    await executeRemoveCard(form);
+    await executeRemoveCard(form, deleteLoyalty);
 }
 
-async function executeRemoveCard(form) {
+async function executeRemoveCard(form, deleteLoyalty = false) {
     showLoader();
     try {
         const formData = new FormData(form);
         formData.append('ajax', 'true'); // Explicitly signal AJAX in case headers fail
+        if (deleteLoyalty) {
+            formData.append('delete_loyalty_program', 'true');
+        } else {
+            // To be explicit, we can send JSON body instead of FormData if we want types
+            // or just handle it in backend as string 'true'
+            // formData automatically handles it as string.
+        }
+
+        // Need to send as JSON if we want to send boolean properly or stick to form data?
+        // Backend: json.loads(request.body) checks for JSON body.
+        // FormData is not JSON body.
+        // So we should switch to JSON fetch for this to match backend logic
+
+        const payload = {
+            delete_loyalty_program: deleteLoyalty
+        };
+
+        // Grab CSRF from form
+        const csrf = formData.get('csrfmiddlewaretoken');
 
         const res = await fetch(form.action, {
             method: 'POST',
-            body: formData,
+            body: JSON.stringify(payload),
             headers: {
-                'X-Requested-With': 'XMLHttpRequest'
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrf
             }
         });
 

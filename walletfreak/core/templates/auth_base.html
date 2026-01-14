@@ -10,7 +10,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.4">
     <link rel="stylesheet" href="{% static 'css/layout.css' %}?v=1.1">
     {% block extra_css %}{% endblock %}
@@ -142,6 +141,24 @@
         </div>
     </main>
     {% block extra_js %}{% endblock %}
+    <script>
+        // Pull to refresh
+        let touchStart = 0;
+        const p2rThreshold = 150;
+        
+        window.addEventListener('touchstart', e => {
+            if (window.scrollY === 0) {
+                touchStart = e.changedTouches[0].screenY;
+            }
+        }, {passive: true});
+
+        window.addEventListener('touchend', e => {
+            const touchEnd = e.changedTouches[0].screenY;
+            if (window.scrollY === 0 && touchEnd - touchStart > p2rThreshold) {
+                window.location.reload();
+            }
+        });
+    </script>
 </body>
 
 </html>

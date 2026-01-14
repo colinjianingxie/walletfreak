@@ -2,14 +2,15 @@
  * Benefits Actions (API) Logic
  */
 
-function markAsFull() {
+async function markAsFull() {
     const period = currentBenefitPeriods[currentPeriodIndex];
     // Fix: Allow 0 as valid value (don't falback to amount if 0)
     const maxVal = (period.max_value !== undefined && period.max_value !== null) ? period.max_value : currentBenefitData.amount;
 
     const btn = document.getElementById('mark-full-btn');
     const originalText = btn.innerHTML;
-    btn.innerHTML = '<span class="loader"></span> Marking...';
+    // Standard loader with margin
+    btn.innerHTML = '<span class="loader" style="margin-right: 8px;"></span> Marking...';
     btn.disabled = true;
 
     const formData = new FormData();
@@ -18,66 +19,55 @@ function markAsFull() {
     formData.append('is_full', 'true');
     formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
 
-    fetch(`/wallet/update-benefit/${currentBenefitData.cardId}/${currentBenefitData.benefitId}/`, {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-        }
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+    try {
+        const response = await fetch(`/wallet/update-benefit/${currentBenefitData.cardId}/${currentBenefitData.benefitId}/`, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
             }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                // success - update local state
-                period.status = 'full';
-                period.is_full = true; // ensure consistency
-                // Assume full means used all
-                // Note: The backend logic should set 'used' to max. We simulate it here.
-                // We don't have 'used' property on period object usually (it's in benefit_usage map), 
-                // but updateBenefitModalUI uses a check: if status=='full' usedVal=maxVal.
-
-                // Update ytdUsed to reflect that benefit has been used
-                currentBenefitData.ytdUsed = (currentBenefitData.ytdUsed || 0) + maxVal;
-
-                updateBenefitModalUI();
-
-                // Persist update to DOM script tag
-                if (currentBenefitData.scriptId) {
-                    const script = document.getElementById(currentBenefitData.scriptId);
-                    if (script) {
-                        script.textContent = JSON.stringify(currentBenefitPeriods);
-                    }
-                }
-
-                // Show success feedback
-                if (typeof showToast === 'function') showToast('Marked as full!');
-
-                // Refresh dashboard to update top stats
-                refreshDashboardBenefits();
-
-                // Close modal on success
-                closeBenefitModal();
-            } else {
-                alert('Error: ' + (data.error || 'Unknown error'));
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error marking as full: ' + error.message);
-            btn.innerHTML = originalText;
-            btn.disabled = false;
         });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            // success - update local state
+            period.status = 'full';
+            period.is_full = true;
+            // Update ytdUsed to reflect that benefit has been used
+            currentBenefitData.ytdUsed = (currentBenefitData.ytdUsed || 0) + maxVal;
+
+            updateBenefitModalUI();
+
+            // Persist update to DOM script tag
+            if (currentBenefitData.scriptId) {
+                const script = document.getElementById(currentBenefitData.scriptId);
+                if (script) {
+                    script.textContent = JSON.stringify(currentBenefitPeriods);
+                }
+            }
+
+            // Refresh dashboard to update top stats FIRST
+            await refreshDashboardBenefits();
+
+            // THEN Show success feedback
+            if (typeof showToast === 'function') showToast('Marked as full!');
+
+            // THEN Close modal
+            closeBenefitModal();
+        } else {
+            throw new Error(data.error || 'Unknown error');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error marking as full: ' + error.message);
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }
 }
 
-function saveBenefitUsage() {
+async function saveBenefitUsage() {
     const input = document.getElementById('benefit-amount-input');
     const amount = parseFloat(input.value);
     if (isNaN(amount) || amount < 0) return;
@@ -85,6 +75,7 @@ function saveBenefitUsage() {
     const period = currentBenefitPeriods[currentPeriodIndex];
     const btn = document.getElementById('btn-log-usage');
     const originalText = btn.innerHTML;
+    // Add loader
     btn.innerHTML = '<span class="loader"></span>';
     btn.disabled = true;
 
@@ -94,65 +85,59 @@ function saveBenefitUsage() {
     formData.append('increment', 'false'); // user requested overwrite logic
     formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
 
-    fetch(`/wallet/update-benefit/${currentBenefitData.cardId}/${currentBenefitData.benefitId}/`, {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-        }
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+    try {
+        const response = await fetch(`/wallet/update-benefit/${currentBenefitData.cardId}/${currentBenefitData.benefitId}/`, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
             }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                // ... (previous code)
-
-                // Update local state - OVERWRITE logic
-                const newUsed = amount; // Was: (period.used || 0) + amount;
-                period.used = newUsed;
-
-                // Update ytdUsed to reflect that benefit has been used
-                currentBenefitData.ytdUsed = (currentBenefitData.ytdUsed || 0) + amount;
-
-                // Check if maxed out
-                const maxVal = (period.max_value !== undefined && period.max_value !== null) ? period.max_value : currentBenefitData.amount;
-                if (newUsed >= maxVal) {
-                    period.status = 'full';
-                    period.is_full = true;
-                    if (typeof showToast === 'function') showToast('Benefit maxed out!');
-                } else {
-                    period.status = 'partial';
-                    if (typeof showToast === 'function') showToast('Usage logged!');
-                }
-
-                // Persist update to DOM
-                if (currentBenefitData.scriptId && document.getElementById(currentBenefitData.scriptId)) {
-                    document.getElementById(currentBenefitData.scriptId).textContent = JSON.stringify(currentBenefitPeriods);
-                }
-
-                // Refresh dashboard to update top stats
-                refreshDashboardBenefits();
-
-                // Close modal on success
-                closeBenefitModal();
-
-            } else {
-                alert('Error: ' + (data.error || 'Unknown error'));
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error logging usage: ' + error.message);
-            btn.innerHTML = originalText;
-            btn.disabled = false;
         });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            // Update local state - OVERWRITE logic
+            const newUsed = amount;
+            period.used = newUsed;
+
+            // Update ytdUsed to reflect that benefit has been used
+            currentBenefitData.ytdUsed = (currentBenefitData.ytdUsed || 0) + amount;
+
+            // Check if maxed out
+            const maxVal = (period.max_value !== undefined && period.max_value !== null) ? period.max_value : currentBenefitData.amount;
+
+            // Persist update to DOM
+            if (currentBenefitData.scriptId && document.getElementById(currentBenefitData.scriptId)) {
+                document.getElementById(currentBenefitData.scriptId).textContent = JSON.stringify(currentBenefitPeriods);
+            }
+
+            // Refresh dashboard to update top stats FIRST
+            await refreshDashboardBenefits();
+
+            // Determine toast message
+            if (newUsed >= maxVal) {
+                period.status = 'full';
+                period.is_full = true;
+                if (typeof showToast === 'function') showToast('Benefit maxed out!');
+            } else {
+                period.status = 'partial';
+                if (typeof showToast === 'function') showToast('Usage logged!');
+            }
+
+            // Close modal
+            closeBenefitModal();
+
+        } else {
+            throw new Error(data.error || 'Unknown error');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error logging usage: ' + error.message);
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }
 }
 
 function toggleIgnoreBenefit() {
@@ -320,7 +305,8 @@ function resetBenefit() {
 async function markFullToDate() {
     const btn = document.getElementById('mark-full-date-btn');
     const originalText = btn.innerHTML;
-    btn.innerHTML = '<span class="loader"></span> Marking...';
+    // Standard loader with margin
+    btn.innerHTML = '<span class="loader" style="margin-right: 8px;"></span> Marking...';
     btn.disabled = true;
 
     // Identify periods to update
@@ -358,74 +344,62 @@ async function markFullToDate() {
         return;
     }
 
-    // Process them sequentially
-    let errorCount = 0;
-
-    const updates = periodsToUpdate.map(p => {
-        const formData = new FormData();
-        formData.append('amount', p.amount);
-        formData.append('period_key', p.key);
-        formData.append('is_full', 'true');
-        formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
-
-        return fetch(`/wallet/update-benefit/${currentBenefitData.cardId}/${currentBenefitData.benefitId}/`, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-            }
-        }).then(res => {
-            if (!res.ok) throw new Error('Update failed');
-            return res.json();
-        }).then(data => {
-            if (data.success) {
-                // Update local model
-                const period = currentBenefitPeriods.find(per => per.key === p.key);
-                if (period) {
-                    period.status = 'full';
-                    period.is_full = true;
-                }
-            } else {
-                throw new Error(data.error);
-            }
-        }).catch(err => {
-            console.error(err);
-            errorCount++;
-        });
-    });
-
     try {
-        await Promise.all(updates);
+        // Process them sequentially for safety or parallel? Prompt logic implies waiting for completion.
+        // Parallel is fine for backend but we want to know when ALL are done.
+        const promises = periodsToUpdate.map(async (p) => {
+            const formData = new FormData();
+            formData.append('amount', p.amount);
+            formData.append('period_key', p.key);
+            formData.append('is_full', 'true');
+            formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
 
-        if (errorCount === 0) {
-            if (typeof showToast === 'function') showToast('All benefits marked full!');
+            const res = await fetch(`/wallet/update-benefit/${currentBenefitData.cardId}/${currentBenefitData.benefitId}/`, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            });
+            if (!res.ok) throw new Error('Update failed for ' + p.key);
+            const data = await res.json();
+            if (!data.success) throw new Error(data.error);
 
-            // Update ytdUsed
-            currentBenefitData.ytdUsed = (currentBenefitData.ytdUsed || 0) + totalAdded;
-
-            // Persist script
-            if (currentBenefitData.scriptId && document.getElementById(currentBenefitData.scriptId)) {
-                document.getElementById(currentBenefitData.scriptId).textContent = JSON.stringify(currentBenefitPeriods);
+            // Update local model for this period
+            const period = currentBenefitPeriods.find(per => per.key === p.key);
+            if (period) {
+                period.status = 'full';
+                period.is_full = true;
             }
+            return data;
+        });
 
-            // Refresh dashboard
-            refreshDashboardBenefits();
+        await Promise.all(promises);
 
-            // Close modal on success
-            closeBenefitModal();
-        } else {
-            alert(`Completed with ${errorCount} errors. Please check connection.`);
-            // Still try update UI
-            updateBenefitModalUI();
+        // Update ytdUsed
+        currentBenefitData.ytdUsed = (currentBenefitData.ytdUsed || 0) + totalAdded;
+
+        // Persist script
+        if (currentBenefitData.scriptId && document.getElementById(currentBenefitData.scriptId)) {
+            document.getElementById(currentBenefitData.scriptId).textContent = JSON.stringify(currentBenefitPeriods);
         }
+
+        // Refresh dashboard FIRST
+        await refreshDashboardBenefits();
+
+        // THEN show toast
+        if (typeof showToast === 'function') showToast('All benefits marked full!');
+
+        // THEN close modal
+        closeBenefitModal();
 
     } catch (e) {
-        alert("Critical error during update.");
-    } finally {
-        if (btn) {
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        }
+        console.error(e);
+        alert("Completed with errors or failed. Please check connection.");
+        // Still try update UI
+        updateBenefitModalUI();
+        btn.innerHTML = originalText;
+        btn.disabled = false;
     }
 }

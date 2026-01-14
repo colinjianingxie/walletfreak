@@ -1,0 +1,40 @@
+{% load humanize %}
+    <!-- Active Cards Section -->
+    <section class="pc-section">
+        <h2 class="pc-section-title" style="margin-bottom: 1.5rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallet" aria-hidden="true" style="color: #94a3b8;"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"></path><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path></svg> 
+            Active Cards
+        </h2>
+        <div class="active-cards-grid">
+            {% for card in active_cards %}
+            <div class="pc-ac-card group">
+                <div class="pc-ac-lift">
+                    <div class="pc-ac-visual" style="background-image: url('{{ card.image_url|default:'https://placehold.co/600x400' }}');">
+                        <div class="pc-ac-glow"></div>
+                    </div>
+                    {% if card.program_balance and card.program_balance > 0 %}
+                    <div class="pc-ac-balance-badge">
+                        <div class="pc-ac-balance-label">Balance</div>
+                        <div class="pc-ac-balance-value">{{ card.program_balance|floatformat:"0"|intcomma }}</div>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="pc-ac-meta">
+                    <div>
+                        <h3 class="pc-ac-title">{{ card.name }}</h3>
+                        <p class="pc-ac-subtitle">•••• {{ card.last_4|default:"****" }}</p>
+                    </div>
+
+                </div>
+            </div>
+            {% empty %}
+             <div class="ac-empty">
+                 No active cards found. (Count: {{ active_cards|length }}) <br>
+                 <small style="color:red;">If you see this but have cards, please check if they are marked as Active.</small>
+             </div>
+            {% endfor %}
+
+
+        </div>
+    </section>

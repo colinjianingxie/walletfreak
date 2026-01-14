@@ -6,6 +6,23 @@
             <button class="modal-close" onclick="closeRemoveCardModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #94A3B8;">×</button>
         </div>
         <p style="color: #475569; margin-bottom: 1.5rem; font-size: 1rem; line-height: 1.5;">Are you sure you want to remove <strong id="remove-card-name" style="color: #1F2937;">this card</strong> from your wallet?</p>
+        
+        <!-- Loyalty Warning -->
+        <div id="remove-loyalty-warning" style="display: none; background: #FFF7ED; border: 1px solid #FFEDD5; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
+            <div style="display: flex; gap: 0.75rem;">
+                <span class="material-icons" style="font-size: 20px; color: #EA580C;">warning</span>
+                <div>
+                    <div style="font-weight: 700; color: #9A3412; font-size: 0.9rem; margin-bottom: 0.25rem;">Loyalty Program Warning</div>
+                    <p style="font-size: 0.85rem; color: #9A3412; margin: 0; line-height: 1.4;">
+                        Removing this card will also remove the <strong id="remove-loyalty-name">Program Name</strong> loyalty program since you have no other linked cards.
+                    </p>
+                    <div style="margin-top: 0.75rem; display: flex; align-items: center; gap: 0.5rem;" id="loyalty-checkbox-container">
+                         <input type="checkbox" id="confirm-remove-loyalty" checked style="width: 16px; height: 16px; accent-color: #EA580C; cursor: pointer;">
+                         <label for="confirm-remove-loyalty" style="font-size: 0.85rem; color: #9A3412; cursor: pointer; font-weight: 600;">Remove loyalty program & balances?</label>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div style="display: flex; gap: 0.75rem;">
             <button onclick="closeRemoveCardModal()" style="flex: 1; background: #F3F4F6; color: #64748B; border: none; padding: 0.875rem; border-radius: 10px; font-weight: 600; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#E5E7EB'" onmouseout="this.style.background='#F3F4F6'">Cancel</button>
             <button onclick="confirmRemoveCard()" style="flex: 1; background: #EF4444; color: white; border: none; padding: 0.875rem; border-radius: 10px; font-weight: 600; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#DC2626'" onmouseout="this.style.background='#EF4444'">Remove</button>

@@ -241,100 +241,7 @@ class CardMixin:
                 results.append(user_data | {'id': card_id, 'name': 'Unknown Card'})
 
         return results
-        """
-        Get all cards with full subcollections (active benefits, earning_rates, sign_up_bonus).
-        Returns hydrated card objects.
-        """
-        # Check cache first
-        if self._cards_cache is not None and self._cards_cache_time is not None:
-            if datetime.now() - self._cards_cache_time < self._cards_cache_ttl:
-                return self._cards_cache
-        
-        # 1. Fetch all master cards
-        cards_snapshot = self.get_collection('master_cards')
-        # Sort cards by name for consistent ordering
-        cards_snapshot.sort(key=lambda x: x.get('name', ''))
-        
-        cards_map = {c['id']: c for c in cards_snapshot if 'id' in c}
-        
-        if not cards_map:
-            return []
 
-        # Ensure slug is present
-        for c in cards_map.values():
-            if 'slug' not in c:
-                c['slug'] = c['id']
-            
-        # Initialize subcollection containers
-        for c in cards_map.values():
-            c['benefits'] = []
-            c['earning_rates'] = []
-            c['sign_up_bonus'] = {} 
-            c['card_questions'] = []
-        
-        # Collect all references to fetch
-        refs_to_fetch = []
-        ref_map = {} # path -> (card_id, type)
-
-        for card_id, c in cards_map.items():
-            indices = c.get('active_indices', {})
-            
-            def add_refs(type_key, collection_name):
-                if indices.get(type_key):
-                    for item_id in indices[type_key]:
-                        ref = self.db.collection('master_cards').document(card_id).collection(collection_name).document(item_id)
-                        refs_to_fetch.append(ref)
-                        ref_map[ref.path] = (card_id, type_key)
-
-            add_refs('benefits', 'benefits')
-            add_refs('earning_rates', 'earning_rates')
-            add_refs('sign_up_bonus', 'sign_up_bonus')
-            add_refs('card_questions', 'card_questions')
-
-        if refs_to_fetch:
-            # Batch Get - Chunking in groups of 100
-            chunks = [refs_to_fetch[i:i + 100] for i in range(0, len(refs_to_fetch), 100)]
-            
-            for chunk in chunks:
-                snaps = self.db.get_all(chunk)
-                for snap in snaps:
-                    if not snap.exists:
-                        continue
-                    
-                    data = snap.to_dict()
-                    data['id'] = snap.id
-                    
-                    # Identify owner
-                    card_id, type_key = ref_map.get(snap.reference.path, (None, None))
-                    
-                    if card_id and card_id in cards_map:
-                        container = cards_map[card_id].get(type_key)
-                        if isinstance(container, list):
-                            container.append(data)
-
-        # 6. Process
-        for card in cards_map.values():
-            raw_bonuses = card.get('sign_up_bonus', []) if isinstance(card.get('sign_up_bonus'), list) else [] 
-            # Note: in loop above we appended to list, but initialization was dict... wait.
-            # Initialization above: c['sign_up_bonus'] = {} -> WRONG if used as list accumulator.
-            # Let's check logic: `add_refs` uses `indices['sign_up_bonus']`.
-            # We append to refs.
-            # Then retrieve and append to `container`.
-            # If `container` is dict, append fails.
-            # FIX: Initialize all as lists.
-            
-            # Correcting processing logic:
-            card['sign_up_bonus'] = self._process_signup_bonuses(card.get('sign_up_bonus', []))
-            card['card_questions'] = self._process_card_questions(card.get('card_questions', []))
-            card['benefits'].sort(key=lambda x: x.get('benefit_id') or '')
-
-        result = list(cards_map.values())
-        
-        # Update cache
-        self._cards_cache = result
-        self._cards_cache_time = datetime.now()
-        
-        return result
     
     def get_card_by_slug(self, slug):
         card_data = self.get_document('master_cards', slug)
@@ -481,60 +388,30 @@ class CardMixin:
         except Exception as e:
             print(f"Error auto-evaluating personality: {e}")
             
+        try:
+            # Auto-add loyalty program if applicable
+            loyalty_program = master_snap.get('loyalty_program')
+            if loyalty_program and hasattr(self, 'update_user_loyalty_balance'):
+                # Initialize with 0 balance if not exists (merge=True in update_user_loyalty_balance handles preservation)
+                # But wait, update_user_loyalty_balance overwrites balance if provided?
+                # Let's check update_user_loyalty_balance implementation.
+                # It does doc_ref.set(data, merge=True).
+                # If I pass balance=0, it might overwrite existing balance if the user already had it?
+                # Actually, if the user already has the program, we probably shouldn't reset it to 0.
+                # We should check existence first or use a method that only adds if missing.
+                # Since update_user_loyalty_balance sets 'balance': balance, it WOULD overwrite.
+                # We need a safe add.
+                
+                # Let's do a direct check here or add a new method? direct check is fine.
+                loyalty_ref = self.db.collection('users').document(uid).collection('loyalty_balances').document(loyalty_program)
+                if not loyalty_ref.get().exists:
+                    self.update_user_loyalty_balance(uid, loyalty_program, 0)
+        except Exception as e:
+            print(f"Error auto-adding loyalty program: {e}")
+
         return True
 
-    def get_user_cards(self, uid, status=None, hydrate=True):
-        """
-        Get user cards.
-        hydrate: If True, merges with Master Card data (Requires fetching Master Cards).
-                 If False, returns only User Card data (Lightweight).
-        """
-        query = self.db.collection('users').document(uid).collection('user_cards')
-        if status:
-            query = query.where(filter=FieldFilter('status', '==', status))
-        
-        # User Cards are small, stream is fine.
-        user_cards_docs = list(query.stream())
-        if not user_cards_docs:
-            return []
-            
-        user_cards_map = {} 
-        for doc in user_cards_docs:
-            data = doc.to_dict()
-            card_id = doc.id
-            user_cards_map[card_id] = data
-            
-        if not hydrate:
-             return [
-                 {**data, 'id': cid, 'card_slug_id': cid} 
-                 for cid, data in user_cards_map.items()
-             ]
-            
-        # Get cached master data for efficiency
-        all_hydrated_cards = self.get_cards() 
-        hydrated_map = {c['id']: c for c in all_hydrated_cards}
-        
-        results = []
-        for card_id, user_data in user_cards_map.items():
-            master_card = hydrated_map.get(card_id)
-            if master_card:
-                composite = master_card.copy()
-                composite.update({
-                    'user_card_id': card_id,
-                    'status': user_data.get('status'),
-                    'added_at': user_data.get('added_at'),
-                    'anniversary_date': user_data.get('anniversary_date'),
-                    'benefit_usage': user_data.get('benefit_usage', {}),
-                    'id': card_id,
-                    'card_id': card_id,
-                    'card_slug_id': card_id,
-                    'card_ref': user_data.get('card_ref') # Preserve ref
-                })
-                results.append(composite)
-            else:
-                results.append(user_data | {'id': card_id, 'name': 'Unknown Card'})
 
-        return results
 
     def update_card_status(self, uid, user_card_id, new_status):
         ref = self.db.collection('users').document(uid).collection('user_cards').document(user_card_id)
