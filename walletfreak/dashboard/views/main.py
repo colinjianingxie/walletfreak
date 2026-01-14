@@ -7,6 +7,10 @@ import json
 from cards.templatetags.card_extras import resolve_card_image_url
 
 @login_required
+def coming_soon(request):
+    return render(request, 'dashboard/coming_soon.html')
+
+@login_required
 def dashboard(request):
     """Main dashboard view showing user's cards and personality"""
     uid = request.session.get('uid')

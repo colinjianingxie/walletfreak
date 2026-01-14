@@ -1,0 +1,15 @@
+{% extends 'auth_base.html' %}
+
+{% block breadcrumb_section %}Coming Soon{% endblock %}
+
+{% block content %}
+<div class="coming-soon-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 70vh; text-align: center; gap: 1rem;">
+    <h1 style="font-size: 2.5rem; font-weight: 700; color: #1e293b;">Coming Soon</h1>
+    <p style="color: #64748b; font-size: 1.125rem; max-width: 400px;">
+        This feature is currently under development. Stay tuned for updates!
+    </p>
+    <a href="{% url 'dashboard' %}" class="btn-primary" style="margin-top: 1rem; padding: 0.75rem 1.5rem; border-radius: 0.5rem; background-color: #4f46e5; color: white; text-decoration: none; font-weight: 600;">
+        Back to Dashboard
+    </a>
+</div>
+{% endblock %}

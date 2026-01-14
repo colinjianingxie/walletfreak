@@ -24,4 +24,5 @@ urlpatterns = [
     path('personality/submit/', views.submit_personality_survey, name='submit_personality_survey'),
 
     path('personality/publish/', views.publish_personality, name='publish_personality'),
+    path('coming-soon/', views.coming_soon, name='coming_soon'),
 ]
