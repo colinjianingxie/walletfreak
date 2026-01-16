@@ -514,4 +514,7 @@ def spend_it_calculate(request):
         'parent_category': parent_category
     }
     
+    
     return render(request, 'calculators/spend_it_results.html', context)
+
+

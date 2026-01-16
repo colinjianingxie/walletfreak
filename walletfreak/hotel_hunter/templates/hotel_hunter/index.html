@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block breadcrumb_section %}Tools / Hotel Hunter{% endblock %}
+{% block page_title %}Hotel Hunter{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/calculators.css' %}">
+{% endblock %}
+
+{% block full_width_content %}
+<div class="lab-container">
+    <div class="hotel-hunter-wrapper animation-fade-in">
+        <!-- Header -->
+        <div class="hh-header">
+            <div>
+                <h1 class="lab-title">Hotel Hunter</h1>
+                <p class="lab-subtitle">Optimize your stay using your specific credit cards and points.</p>
+            </div>
+            
+            <div class="hh-points-summary">
+                {% if points_list %}
+                    {% for p in points_list %}
+                    <div class="point-badge">
+                        <div class="dot {{ p.dot_class }}"></div>
+                        <span class="point-text">{{ p.name }}: {{ p.balance }}</span>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <!-- Fallback or Empty State -->
+                    <div class="point-badge">
+                        <div class="dot dot-blue"></div>
+                        <span class="point-text">No Points Linked</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Search Form -->
+        <div class="hh-search-container">
+            <form class="hh-search-grid" method="GET" action="">
+                <div class="input-wrapper">
+                    <div class="input-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    </div>
+                    <input name="location" placeholder="Where to? (e.g. Tokyo)" class="hh-input" type="text" value="{{ location|default:'' }}">
+                </div>
+                
+                <div class="input-wrapper">
+                    <div class="input-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>
+                    </div>
+                    <input name="dates" placeholder="Check-in - Check-out" class="hh-input" type="text" value="{{ dates|default:'Oct 12 - Oct 16' }}">
+                </div>
+                
+                <div class="input-wrapper">
+                    <div class="input-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                    </div>
+                    <input name="guests" placeholder="Guests" class="hh-input" type="number" value="{{ guests|default:'2' }}">
+                </div>
+                
+                <button type="submit" class="hh-submit-btn">Find Hotels</button>
+            </form>
+        </div>
+
+        <!-- Results Section -->
+        <div class="hh-results-section">
+            <div class="hh-results-header">
+                <h2 class="hh-section-title">Top Recommendations for You</h2>
+                <span class="hh-subtitle">Based on your {{ active_cards_count|default:"8" }} active cards</span>
+            </div>
+
+            {% if hotels %}
+                {% for hotel in hotels %}
+                <div class="hh-card">
+                    <div class="hh-card-image-wrapper">
+                        <!-- Placeholder div since we don't have images yet -->
+                        <div class="hh-card-image-placeholder"></div> 
+                        <div class="hh-rating-badge">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star fill-yellow text-yellow" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                            {{ hotel.rating|default:"4.5" }}
+                        </div>
+                    </div>
+                    
+                    <div class="hh-card-content">
+                        <div>
+                            <div class="hh-card-top-row">
+                                <div>
+                                    <h3 class="hh-hotel-name">{{ hotel.name }}</h3>
+                                    <p class="hh-hotel-loc">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg> 
+                                        {{ hotel.location }}
+                                    </p>
+                                </div>
+                                <div class="hh-price-box">
+                                    <p class="hh-price">${{ hotel.price|default:"Unknown" }}</p>
+                                    <p class="hh-night">per night</p>
+                                </div>
+                            </div>
+                            
+                            <div class="hh-tags">
+                                {% for tag in hotel.tags %}
+                                <span class="hh-tag">{{ tag }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                        {% if hotel.recommendation %}
+                        <div class="hh-rec-box {{ hotel.recommendation.bg_color }} {{ hotel.recommendation.text_color }} {{ hotel.recommendation.border_color }}">
+                            <div class="hh-rec-label">WalletFreak Pick</div>
+                            <div class="hh-rec-inner">
+                                <div class="hh-rec-icon">
+                                    {% if hotel.recommendation.icon == 'transfer' %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-left" aria-hidden="true"><path d="m16 3 4 4-4 4"></path><path d="M20 7H4"></path><path d="m8 21-4-4 4-4"></path><path d="M4 17h16"></path></svg>
+                                    {% elif hotel.recommendation.icon == 'shield' %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                                    {% elif hotel.recommendation.icon == 'credit-card' %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line></svg>
+                                    {% endif %}
+                                </div>
+                                <div class="hh-rec-content">
+                                    <div class="hh-rec-title-row">
+                                        <h4 class="hh-rec-title">{{ hotel.recommendation.title }}</h4>
+                                        {% if hotel.recommendation.badge %}
+                                        <span class="hh-rec-badge">{{ hotel.recommendation.badge }}</span>
+                                        {% endif %}
+                                    </div>
+                                    <p class="hh-rec-desc">{{ hotel.recommendation.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="hh-empty-state">
+                    No hotels found for your search.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

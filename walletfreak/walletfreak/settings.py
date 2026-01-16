@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'calculators',
     'datapoints',
     'subscriptions',
+    'hotel_hunter',
 ]
 
 MIDDLEWARE = [

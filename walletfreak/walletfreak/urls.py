@@ -32,6 +32,7 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('datapoints/', include('datapoints.urls')),
     path('calculators/', include('calculators.urls')),
+    path('hotel-hunter/', include('hotel_hunter.urls')),
     path('subscriptions/', include('subscriptions.urls')),
     path('custom-admin/', include('custom_admin.urls')),
 ]
