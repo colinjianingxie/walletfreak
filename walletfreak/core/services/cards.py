@@ -44,10 +44,13 @@ class CardMixin:
             print(f"Error counting user cards for {uid}: {e}")
             return 0
 
-    def get_specific_cards(self, slugs):
+    def get_specific_cards(self, slugs, include_subcollections=None):
         """
         Fetch full details for specific card slugs only.
         Much more efficient than get_cards() when we only need a few.
+        include_subcollections: Optional list of subcollections to fetch. 
+                               e.g. ['benefits']. specific others will be skipped.
+                               If None, fetches ALL (default).
         """
         if not slugs:
             return []
@@ -55,7 +58,13 @@ class CardMixin:
         hydrated_cards = []
         slugs_to_fetch = []
         
-        # 0. Check cache for each slug
+        # 0. Check cache for each slug (ONLY IF we want FULL cards or if cache supports partial... 
+        # For now, let's assume cache is always full card. 
+        # If we request partial, using full cache is fine (oversupply is okay).
+        # But if we rely on partial fetch to save reads, we must be careful not to trigger full fetch on miss if we only wanted partial.
+        # But `get_structure` is complex. 
+        # Simplification: If cache has it, return it (it's full). If not, we fetch what we asked.
+        
         cached_cards_all = cache.get('all_cards')
         all_cards_map = {c['id']: c for c in cached_cards_all} if cached_cards_all else {}
         
@@ -91,11 +100,13 @@ class CardMixin:
                 # We reuse the existing enrichment logic. 
                 # While this iterates per card, for N < 50 it is far more efficient 
                 # than fetching all 1500+ cards and their subcollections.
-                self._enrich_card_with_subcollections(snap.id, data)
+                self._enrich_card_with_subcollections(snap.id, data, include_subcollections=include_subcollections)
                 hydrated_cards.append(data)
                 
-                # Update individual cache
-                cache.set(f'card_{snap.id}', data, timeout=86400)
+                # Update individual cache ONLY IF full fetch
+                # If partial, we shouldn't cache it as "the card" otherwise future requests might get incomplete data.
+                if include_subcollections is None:
+                    cache.set(f'card_{snap.id}', data, timeout=86400)
                 
         return hydrated_cards
 
@@ -236,11 +247,12 @@ class CardMixin:
     # I will use multi_replace.
     pass
 
-    def get_user_cards(self, uid, status=None, hydrate=True):
+    def get_user_cards(self, uid, status=None, hydrate=True, include_subcollections=None):
         """
         Get user cards.
         hydrate: If True, merges with Master Card data (Requires fetching Master Cards).
                  If False, returns only User Card data (Lightweight).
+        include_subcollections: passed to get_specific_cards if hydrate is True.
         """
         query = self.db.collection('users').document(uid).collection('user_cards')
         if status:
@@ -266,7 +278,7 @@ class CardMixin:
         # Get SPECIFIC master data only for efficiency
         # Optimization: Fetch only the cards the user has, avoiding the massive 1500+ card fetch.
         slugs_to_fetch = list(user_cards_map.keys())
-        all_hydrated_cards = self.get_specific_cards(slugs_to_fetch)
+        all_hydrated_cards = self.get_specific_cards(slugs_to_fetch, include_subcollections=include_subcollections)
         
         hydrated_map = {c['id']: c for c in all_hydrated_cards}
         
@@ -355,14 +367,23 @@ class CardMixin:
             processed.append(item)
         return processed
 
-    def _enrich_card_with_subcollections(self, card_id, card_data):
+    def _enrich_card_with_subcollections(self, card_id, card_data, include_subcollections=None):
         try:
             card_ref = self.db.collection('master_cards').document(card_id)
             indices = card_data.get('active_indices', {})
             
             # Prepare result containers
-            card_data['benefits'] = []
-            card_data['earning_rates'] = []
+            if include_subcollections is None or 'benefits' in include_subcollections:
+                card_data['benefits'] = []
+            if include_subcollections is None or 'earning_rates' in include_subcollections:
+                card_data['earning_rates'] = []
+            if include_subcollections is None or 'sign_up_bonus' in include_subcollections:
+                # bonuses list for processing
+                pass # Initialized below if needed
+            if include_subcollections is None or 'card_questions' in include_subcollections:
+                # questions list for processing
+                pass
+
             # Intermediate lists for bonuses/questions
             bonuses = []
             questions = []
@@ -377,9 +398,14 @@ class CardMixin:
                         refs_to_fetch.append(ref)
                         ref_type_map[ref.path] = type_key
             
-            add_refs('benefits', 'benefits')
-            add_refs('earning_rates', 'earning_rates')
-            add_refs('sign_up_bonus', 'sign_up_bonus')
+            if include_subcollections is None or 'benefits' in include_subcollections:
+                add_refs('benefits', 'benefits')
+            
+            if include_subcollections is None or 'earning_rates' in include_subcollections:
+                add_refs('earning_rates', 'earning_rates')
+            
+            if include_subcollections is None or 'sign_up_bonus' in include_subcollections:
+                add_refs('sign_up_bonus', 'sign_up_bonus')
             # card_questions fetched directly below
 
             if refs_to_fetch:
@@ -399,18 +425,20 @@ class CardMixin:
                             questions.append(data)
 
             # Process processed fields
-            card_data['sign_up_bonus'] = self._process_signup_bonuses(bonuses)
+            if include_subcollections is None or 'sign_up_bonus' in include_subcollections:
+                card_data['sign_up_bonus'] = self._process_signup_bonuses(bonuses)
             
             # Direct Fetch for Questions (Source of Truth: Firestore Subcollection)
             # This bypasses active_indices completely for questions.
-            questions_ref = card_ref.collection('card_questions')
-            questions_docs = questions_ref.stream()
-            for q_doc in questions_docs:
-                q_data = q_doc.to_dict()
-                q_data['id'] = q_doc.id
-                questions.append(q_data)
-                
-            card_data['card_questions'] = self._process_card_questions(questions)
+            if include_subcollections is None or 'card_questions' in include_subcollections:
+                questions_ref = card_ref.collection('card_questions')
+                questions_docs = questions_ref.stream()
+                for q_doc in questions_docs:
+                    q_data = q_doc.to_dict()
+                    q_data['id'] = q_doc.id
+                    questions.append(q_data)
+                    
+                card_data['card_questions'] = self._process_card_questions(questions)
 
         except Exception as e:
             print(f"Error enriching card {card_id}: {e}")
