@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_title %}Notifications{% endblock %}
+{% block breadcrumb_section %}Settings{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/history.css' %}?v=1.0">
+{% endblock %}
+
+{% block content %}
+<div class="history-container">
+    <div class="history-content-wrapper">
+        <div class="history-main-column">
+            
+            <!-- Header -->
+            <div class="history-header">
+                <div class="header-text-group">
+                    <h1>Notifications</h1>
+                    <p>Stay updated with your wallet activity, research, and alerts.</p>
+                </div>
+                <button class="mark-all-btn-history" onclick="markAllReadHistory()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 7 17l-5-5"></path><path d="m22 10-7.5 7.5L13 16"></path></svg>
+                    <span>Mark all as read</span>
+                </button>
+            </div>
+
+            <!-- Controls -->
+            <div class="history-controls">
+                <div class="filter-chips">
+                    <button class="chip active" data-filter="all">all</button>
+                    <button class="chip" data-filter="unread">unread</button>
+                    <button class="chip" data-filter="blog">ledger</button>
+                    <button class="chip" data-filter="update">data point</button>
+                </div>
+                <div class="search-wrapper">
+                    <input type="text" id="history-search" placeholder="Search history...">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
+                </div>
+            </div>
+
+            <!-- List -->
+            <div class="history-list space-y-3" id="history-list-container">
+                {% for notif in notifications %}
+                <div class="history-item-card group {% if not notif.is_read %}unread{% endif %}" 
+                     data-type="{{ notif.notification_type }}" 
+                     data-read="{{ notif.is_read|yesno:'true,false' }}"
+                     data-search="{{ notif.title|lower }} {{ notif.message|lower }}">
+                     
+                    <!-- Unread Dot -->
+                    {% if not notif.is_read %}
+                    <div class="unread-indicator"></div>
+                    {% endif %}
+
+                    <!-- Icon -->
+                    <div class="history-icon-box icon-{{ notif.notification_type }}">
+                        {% if notif.notification_type == 'blog' %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg>
+                        {% elif notif.notification_type == 'update' %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21v-6"></path><path d="M12 21V3"></path><path d="M19 21V9"></path></svg>
+                        {% elif notif.notification_type == 'system' %}
+                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-alert"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+                        {% else %}
+                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                        {% endif %}
+                    </div>
+
+                    <!-- Content -->
+                    <div class="history-content">
+                        <div class="h-header">
+                            <h3>{{ notif.title }}</h3>
+                            <span class="h-time">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="10"></circle></svg> 
+                                {{ notif.created_at|timesince }} ago
+                            </span>
+                        </div>
+                        <p>{{ notif.message }}</p>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="history-actions hidden group-hover:flex">
+                        <button class="more-options-btn" title="More options">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+                        </button>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="empty-state">
+                    <p>No notifications found.</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Footer -->
+            <div class="history-footer">
+                <p>End of History</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    // Client-side filtering logic
+    document.addEventListener('DOMContentLoaded', () => {
+        const chips = document.querySelectorAll('.chip');
+        const searchInput = document.getElementById('history-search');
+        const items = document.querySelectorAll('.history-item-card');
+
+        let activeFilter = 'all';
+        let searchQuery = '';
+
+        function filterItems() {
+            items.forEach(item => {
+                const type = item.getAttribute('data-type');
+                const isRead = item.getAttribute('data-read') === 'true'; // 'true' string from django yesno
+                const searchText = item.getAttribute('data-search');
+                
+                let matchesFilter = true;
+                if (activeFilter === 'unread') {
+                    matchesFilter = !isRead;
+                } else if (activeFilter !== 'all') {
+                    matchesFilter = (type === activeFilter);
+                }
+
+                let matchesSearch = true;
+                if (searchQuery) {
+                    matchesSearch = searchText.includes(searchQuery);
+                }
+
+                if (matchesFilter && matchesSearch) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        chips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                chips.forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                activeFilter = chip.getAttribute('data-filter');
+                filterItems();
+            });
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value.toLowerCase();
+            filterItems();
+        });
+        
+        // Mark All Read logic specifically for this page
+        window.markAllReadHistory = function() {
+            window.markAllRead(); // Call the global one from notifications.js
+            // UI update: remove unread indicators and update data-read
+            // Wait a sec for the fetch to likely succeed
+            setTimeout(() => {
+                document.querySelectorAll('.history-item-card.unread').forEach(el => {
+                    el.classList.remove('unread');
+                    el.querySelector('.unread-indicator')?.remove();
+                    el.setAttribute('data-read', 'true');
+                });
+                // If filter is unread, re-filter (all items will hide)
+                if (activeFilter === 'unread') filterItems();
+            }, 300);
+        }
+    });
+</script>
+{% endblock %}

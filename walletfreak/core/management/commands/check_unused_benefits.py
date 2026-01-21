@@ -17,37 +17,148 @@ class Command(BaseCommand):
         target_email = options.get('email')
         should_send = options.get('send_email')
 
-        # 1. Fetch Users
-        if target_uid:
-            user = db.get_user_profile(target_uid)
-            users = [user] if user else []
-        elif target_email:
-            # Not efficient but fine for tool
-            all_users = db.db.collection('users').stream()
+        # Container for our working data
+        # Structure: { uid: { 'profile': user_dict, 'cards': [card_dicts] } }
+        work_data = {}
+
+        # 1. Fetch Data
+        if target_uid or target_email:
+            # --- TARGETED MODE (Existing Logic) ---
             users = []
-            for doc in all_users:
-                u = doc.to_dict() | {'id': doc.id}
-                if u.get('email') == target_email:
-                    users.append(u)
-                    break
+            if target_uid:
+                user = db.get_user_profile(target_uid)
+                if user: users.append(user)
+            elif target_email:
+                # Still doing a scan for email if ID not provided, but it's rare operation
+                all_users = db.db.collection('users').stream()
+                for doc in all_users:
+                    u = doc.to_dict() | {'id': doc.id}
+                    if u.get('email') == target_email:
+                        users.append(u)
+                        break
+            
+            for user in users:
+                uid = user['id']
+                # Fetch active cards for this specific user
+                raw_cards = db.get_user_cards(uid, status='active', hydrate=False) # Get lightweight first
+                work_data[uid] = {
+                    'profile': user,
+                    'cards': raw_cards
+                }
         else:
-            users_ref = db.db.collection('users')
-            users = [doc.to_dict() | {'id': doc.id} for doc in users_ref.stream()]
+            # --- BULK MODE (Optimized) ---
+            self.stdout.write("Running in BULK optimization mode...")
+            
+            # A. Collection Group Query for ALL active cards
+            # Requires composite index on user_cards collection for 'status'
+            from google.cloud.firestore import FieldFilter
+            
+            try:
+                cards_query = db.db.collection_group('user_cards').where(filter=FieldFilter('status', '==', 'active'))
+                active_card_docs = list(cards_query.stream())
+            except Exception as e:
+                self.stdout.write(self.style.ERROR(f"Error executing Collection Group Query: {e}"))
+                self.stdout.write(self.style.WARNING("Ensure a Composite Index exists for 'user_cards' collection on field 'status'."))
+                return
 
-        self.stdout.write(f"Found {len(users)} users to check.")
+            self.stdout.write(f"Found {len(active_card_docs)} active cards across system.")
+
+            # B. Group by User and Collect Slugs to Hydrate
+            all_slugs_to_hydrate = set()
+            user_cards_map = {} # uid -> list of card data
+
+            for doc in active_card_docs:
+                # Path: users/{uid}/user_cards/{card_id}
+                # parent is user_cards col, parent.parent is user doc
+                uid = doc.reference.parent.parent.id
+                data = doc.to_dict()
+                card_id = doc.id 
+                
+                # Normalize data structure similar to get_user_cards(hydrate=False)
+                card_entry = {**data, 'id': card_id, 'card_slug_id': card_id}
+                
+                if uid not in user_cards_map:
+                    user_cards_map[uid] = []
+                user_cards_map[uid].append(card_entry)
+                
+                all_slugs_to_hydrate.add(card_id)
+
+            # C. Batch Fetch Users
+            uids_to_fetch = list(user_cards_map.keys())
+            users_map = {}
+            
+            # Fetch users in batches of 100
+            for i in range(0, len(uids_to_fetch), 100):
+                 batch_uids = uids_to_fetch[i:i + 100]
+                 user_refs = [db.db.collection('users').document(uid) for uid in batch_uids]
+                 user_snaps = db.db.get_all(user_refs)
+                 for snap in user_snaps:
+                     if snap.exists:
+                         users_map[snap.id] = snap.to_dict() | {'id': snap.id}
+
+            # Assemble Work Data
+            for uid, cards in user_cards_map.items():
+                if uid in users_map:
+                    work_data[uid] = {
+                        'profile': users_map[uid],
+                        'cards': cards
+                    }
+
+            # D. Pre-Hydrate Master Cards Cache
+            # This ensures subsequent get_specific_cards calls (or internal logic) hits cache
+            if all_slugs_to_hydrate:
+                self.stdout.write(f"Pre-hydrating {len(all_slugs_to_hydrate)} master cards...")
+                db.get_specific_cards(list(all_slugs_to_hydrate))
+
+
+        self.stdout.write(f"checking {len(work_data)} users with active cards.")
         
+        # 2. Process Results
+        
+        # We need to manually hydrate the cards now using our efficient cache
+        # Since we have the raw user card data, we need to merge it with master data
+        # We can use db.get_specific_cards logic but efficiently
+        
+        # Gather all unique slugs again from the final work_set (redundant but safe)
+        unique_slugs_in_batch = set()
+        for data in work_data.values():
+            for c in data['cards']:
+                unique_slugs_in_batch.add(c['card_slug_id'])
+        
+        # Fetch all needed master data (should be cached now from step D)
+        master_cards = db.get_specific_cards(list(unique_slugs_in_batch))
+        master_map = {c['id']: c for c in master_cards}
 
 
-        for user in users:
-            uid = user['id']
+        for uid, data in work_data.items():
+            user = data['profile']
+            raw_cards = data['cards']
+            
             username = user.get('username', 'Unknown')
             first_name = user.get('first_name', '').strip()
             last_name = user.get('last_name', '').strip()
             user_email = user.get('email')
             
-            # Fetch active cards
-            user_cards = db.get_user_cards(uid, status='active')
-            
+            # Hydrate cards manually
+            user_cards = []
+            for rc in raw_cards:
+                 cid = rc['card_slug_id']
+                 master = master_map.get(cid)
+                 if master:
+                     composite = master.copy()
+                     composite.update({
+                        'user_card_id': rc.get('id'), # doc id
+                        'status': rc.get('status'),
+                        'added_at': rc.get('added_at'),
+                        'anniversary_date': rc.get('anniversary_date'),
+                        'benefit_usage': rc.get('benefit_usage', {}),
+                        'id': cid, # keep master id as main id
+                        'card_id': cid,
+                        'card_slug_id': cid
+                     })
+                     user_cards.append(composite)
+                 # If master not found, skip or log (we skip to avoid errors)
+
             if not user_cards:
                 continue
 

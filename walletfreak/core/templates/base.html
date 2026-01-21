@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{% static 'css/landing_fix.css' %}?v=1.0">
     {% endif %}
     <!-- Tailwind removed -->
+    <link rel="stylesheet" href="{% static 'css/notifications.css' %}?v=1.0">
     {% block extra_css %}{% endblock %}
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
@@ -144,11 +145,28 @@
                     </div>
                 </div>
                 
-                <div class="header-right">
-                    <button class="icon-btn relative">
+                <div class="header-right relative">
+                    <button id="notification-bell-btn" class="icon-btn relative">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg>
-                        <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white"></span>
+                        <span id="notification-badge" class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white" style="display: none;"></span>
                     </button>
+
+                    <!-- User Notification Popup -->
+                    <div id="notification-popup" class="notification-popup">
+                        <div class="notification-header">
+                            <h3 class="notification-title">Notifications</h3>
+                            <button class="mark-all-btn" onclick="markAllRead()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-check" aria-hidden="true"><path d="M18 6 7 17l-5-5"></path><path d="m22 10-7.5 7.5L13 16"></path></svg>
+                                Mark all read
+                            </button>
+                        </div>
+                        <div id="notification-list" class="notification-list custom-scrollbar">
+                            <!-- JS injected items -->
+                        </div>
+                        <div class="notification-footer">
+                            <a href="{% url 'notifications_history' %}" class="view-all-btn">View All History</a>
+                        </div>
+                    </div>
                 </div>
             </header>
 
@@ -211,6 +229,7 @@
             });
         }
     </script>
+    <script src="{% static 'js/notifications.js' %}?v=1.0"></script>
     {% block extra_js %}{% endblock %}
 </body>
 

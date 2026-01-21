@@ -33,6 +33,7 @@ urlpatterns = [
     path('datapoints/', include('datapoints.urls')),
     path('calculators/', include('calculators.urls')),
     path('subscriptions/', include('subscriptions.urls')),
+    path('notifications/', include('notifications.urls')),
     path('custom-admin/', include('custom_admin.urls')),
 ]
 
