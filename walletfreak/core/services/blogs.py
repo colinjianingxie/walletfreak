@@ -2,10 +2,18 @@ from firebase_admin import firestore
 import uuid
 from datetime import datetime
 import threading
+from django.core.cache import cache
 
 class BlogMixin:
     def get_blogs(self, status=None, limit=None):
         """Get blogs, optionally filtered by status, with dynamic author info"""
+        # Try cache first if requesting all published blogs (common path)
+        if status == 'published' and limit is None:
+            cache_key = 'all_published_blogs'
+            cached_blogs = cache.get(cache_key)
+            if cached_blogs:
+                return cached_blogs
+
         from google.cloud.firestore import FieldFilter
         query = self.db.collection('blogs')
         if status:
@@ -27,11 +35,20 @@ class BlogMixin:
                     self._enrich_with_author_data(blog, user)
                 else:
                     self._enrich_with_author_data(blog, None)
-                    
+        
+        # Set cache if this was the published list
+        if status == 'published' and limit is None:
+            cache.set('all_published_blogs', blogs, 60 * 60)
+            
         return blogs
     
     def get_blog_by_slug(self, slug):
         """Get blog post by slug with dynamic author info"""
+        cache_key = f'blog_slug_{slug}'
+        cached_blog = cache.get(cache_key)
+        if cached_blog:
+            return cached_blog
+
         blogs = self.db.collection('blogs').where('slug', '==', slug).limit(1).stream()
         for blog in blogs:
             data = blog.to_dict() | {'id': blog.id}
@@ -42,6 +59,9 @@ class BlogMixin:
                 self._enrich_with_author_data(data, user)
             else:
                 self._enrich_with_author_data(data, None)
+            
+            # Cache the result
+            cache.set(cache_key, data, 60 * 60)
             return data
         return None
     
@@ -73,10 +93,22 @@ class BlogMixin:
              # Let's use threading to be safe.
              threading.Thread(target=self._trigger_blog_notification, args=(data,)).start()
 
+        # Invalidate cache for blog list
+        cache.delete('all_published_blogs')
+
         return self.create_document('blogs', data, doc_id=doc_id)
 
     def update_blog(self, blog_id, data):
         """Update an existing blog post"""
+        # Get current blog data for cache invalidation
+        # We need the slug to invalidate the specific blog cache
+        # We can avoid a full fetch if we trust we don't need author data, but get_blog_by_id does enriching.
+        # Let's just do a direct document get to be efficient
+        current_doc = self.db.collection('blogs').document(blog_id).get()
+        current_slug = None
+        if current_doc.exists:
+             current_slug = current_doc.to_dict().get('slug')
+
         # Check if we are publishing
         # We rely on the caller to set 'published_at' or we can check status transition if we fetched validation.
         # But 'data' here is the *update* dict.
@@ -108,10 +140,32 @@ class BlogMixin:
              threading.Thread(target=notify_after_update).start()
 
         self.update_document('blogs', blog_id, data)
+        
+        # Invalidate caches
+        cache.delete('all_published_blogs')
+        if current_slug:
+            cache.delete(f'blog_slug_{current_slug}')
+        
+        # If the slug is being updated, we should also invalidate the new slug (though unlikely to be cached yet)
+        if 'slug' in data and data['slug'] != current_slug:
+             cache.delete(f'blog_slug_{data["slug"]}')
 
     def delete_blog(self, blog_id):
         """Delete a blog post"""
+        # Get slug for cache invalidation
+        # Direct document get for efficiency
+        # We must do this BEFORE deletion
+        doc = self.db.collection('blogs').document(blog_id).get()
+        slug = None
+        if doc.exists:
+             slug = doc.to_dict().get('slug')
+
         self.delete_document('blogs', blog_id)
+        
+        # Invalidate caches
+        cache.delete('all_published_blogs')
+        if slug:
+            cache.delete(f'blog_slug_{slug}')
         
     def _trigger_blog_notification(self, blog_data):
         """

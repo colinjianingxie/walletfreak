@@ -45,8 +45,8 @@ class Command(BaseCommand):
             last_name = user.get('last_name', '').strip()
             user_email = user.get('email')
             
-            # Fetch active cards
-            user_cards = db.get_user_cards(uid, status='active')
+            # Fetch active cards (Optimized: Only fetching benefits subcollection)
+            user_cards = db.get_user_cards(uid, status='active', include_subcollections=['benefits'])
             
             if not user_cards:
                 continue
