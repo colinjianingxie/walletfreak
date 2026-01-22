@@ -1,0 +1,21 @@
+{
+    "benefit_id": "lounge-access",
+    "valid_from": "2026-01-22",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Lounge Access",
+    "description": "Unlimited access to Capital One Lounges, Landings, and 1,300+ Priority Pass lounges worldwide",
+    "additional_details": "Current: 2 free guests. Starting Feb 1, 2026: Guests cost $45/visit (Lounges) or $35/visit (Priority Pass) unless $75k annual spend is met.",
+    "benefit_category": [
+        "Capital One Lounge",
+        "Priority Pass Select",
+        "Lounges"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": 400,
+    "time_category": "Permanent",
+    "enrollment_required": true,
+    "effective_date": "2026-01-22"
+}

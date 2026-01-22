@@ -1,10 +1,11 @@
 {
     "offer_id": "offer",
-    "is_active": true,
+    "is_active": false,
     "value": 100000,
     "terms": "Spend $10000 in 6 months",
     "currency": "Miles",
     "spend_amount": 10000,
     "duration_months": 6,
-    "effective_date": "2025-11-12"
+    "effective_date": "2025-11-12",
+    "valid_until": "2026-01-21"
 }

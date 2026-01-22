@@ -1,8 +1,8 @@
 {
     "benefit_id": "hertz-status",
     "valid_from": "2020-01-01",
-    "valid_until": null,
-    "is_active": true,
+    "valid_until": "2026-01-21",
+    "is_active": false,
     "short_description": "Hertz Status",
     "description": "Hertz President's Circle elite status",
     "additional_details": "enrollment required",

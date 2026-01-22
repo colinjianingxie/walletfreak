@@ -1,0 +1,15 @@
+{
+    "rate_id": "capital-one-entertainment",
+    "valid_from": "2026-01-22",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 5.0,
+    "category": [
+        "Entertainment",
+        "Ticketmaster",
+        "Live Nation"
+    ],
+    "currency": "miles",
+    "additional_details": "on tickets purchased through Capital One Entertainment",
+    "is_default": false
+}

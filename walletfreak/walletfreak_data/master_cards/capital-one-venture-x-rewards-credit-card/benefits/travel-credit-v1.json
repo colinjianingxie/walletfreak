@@ -1,8 +1,8 @@
 {
     "benefit_id": "travel-credit",
     "valid_from": "2020-01-01",
-    "valid_until": null,
-    "is_active": true,
+    "valid_until": "2026-01-21",
+    "is_active": false,
     "short_description": "Travel Credit",
     "description": "$300 annual travel credit for bookings through Capital One Travel",
     "additional_details": null,

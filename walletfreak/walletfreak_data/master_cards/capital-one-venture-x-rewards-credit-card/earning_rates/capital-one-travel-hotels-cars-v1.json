@@ -1,0 +1,15 @@
+{
+    "rate_id": "capital-one-travel-hotels-cars",
+    "valid_from": "2026-01-22",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 10.0,
+    "category": [
+        "Capital One Travel",
+        "Hotels",
+        "Car Rentals"
+    ],
+    "currency": "miles",
+    "additional_details": "on hotels and rental cars booked through Capital One Travel",
+    "is_default": false
+}

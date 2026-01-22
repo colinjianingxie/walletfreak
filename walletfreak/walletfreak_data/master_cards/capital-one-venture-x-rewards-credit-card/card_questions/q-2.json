@@ -1,19 +1,19 @@
 {
     "question_id": "q-2",
-    "short_desc": "Lounge Access",
-    "question": "How many times a year do you wish you had a quiet place with free food and drinks at the airport?",
+    "short_desc": "Lounge Use",
+    "question": "Do you travel frequently enough to value unlimited airport lounge access for yourself?",
     "question_type": "multiple_choice",
     "choices": [
         "Never",
-        "1-2 times",
-        "3+ times"
+        "1-3 times / year",
+        "4+ times / year"
     ],
     "weights": [
         0.0,
-        0.6,
+        0.5,
         1.0
     ],
     "benefit_category": [
-        "Lounge Access"
+        "Lounges"
     ]
 }

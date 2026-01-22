@@ -1,19 +1,17 @@
 {
     "question_id": "q-4",
-    "short_desc": "Hertz Status",
-    "question": "Do you rent cars frequently enough to benefit from skipping the counter and getting free upgrades?",
+    "short_desc": "Cell Protection",
+    "question": "Do you pay a monthly cell phone bill and want up to $800 in protection against theft or damage?",
     "question_type": "multiple_choice",
     "choices": [
         "No",
-        "Sometimes",
         "Yes"
     ],
     "weights": [
         0.0,
-        0.5,
         1.0
     ],
     "benefit_category": [
-        "Rental Cars"
+        "Cell Phone Protection"
     ]
 }

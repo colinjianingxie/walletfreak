@@ -1,8 +1,8 @@
 {
     "benefit_id": "tsa-credit",
     "valid_from": "2020-01-01",
-    "valid_until": null,
-    "is_active": true,
+    "valid_until": "2026-01-21",
+    "is_active": false,
     "short_description": "TSA Credit",
     "description": "Global Entry or TSA PreCheck application fee credit",
     "additional_details": "up to $120",

@@ -1,19 +1,17 @@
 {
     "question_id": "q-3",
-    "short_desc": "TSA Credit",
-    "question": "Do you want a credit for Global Entry or TSA PreCheck to expedite your airport experience?",
+    "short_desc": "TSA/Global Entry",
+    "question": "Do you need a credit to cover the cost of Global Entry or TSA PreCheck for faster airport security?",
     "question_type": "multiple_choice",
     "choices": [
         "No",
-        "Already Have It",
         "Yes"
     ],
     "weights": [
         0.0,
-        0.2,
         1.0
     ],
     "benefit_category": [
-        "Travel Security"
+        "Airport Security Credits"
     ]
 }

@@ -1,0 +1,12 @@
+{
+    "offer_id": "offer",
+    "is_active": true,
+    "value": 75000,
+    "terms": "Spend $4,000 on purchases within the first 3 months from account opening",
+    "currency": "Miles",
+    "spend_amount": 4000,
+    "duration_months": 3,
+    "effective_date": "2026-01-22",
+    "valid_from": "2026-01-22",
+    "valid_until": null
+}

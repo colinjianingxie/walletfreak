@@ -1,16 +1,14 @@
 {
     "question_id": "q-1",
-    "short_desc": "Anniversary Miles",
-    "question": "Do you value receiving 10,000 bonus miles every year to offset the cost of your future trips?",
+    "short_desc": "Anniversary Loyalty",
+    "question": "Will you keep the card for more than a year to benefit from the 10,000 annual bonus miles?",
     "question_type": "multiple_choice",
     "choices": [
         "No",
-        "Sometimes",
         "Yes"
     ],
     "weights": [
         0.0,
-        0.5,
         1.0
     ],
     "benefit_category": [

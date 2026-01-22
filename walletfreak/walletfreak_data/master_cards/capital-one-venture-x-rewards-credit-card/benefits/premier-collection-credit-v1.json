@@ -1,0 +1,20 @@
+{
+    "benefit_id": "premier-collection-credit",
+    "valid_from": "2026-01-22",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Premier Collection Credit",
+    "description": "$100 experience credit for every stay booked at a Premier Collection hotel",
+    "additional_details": "Used for dining, spa, or activities at the property",
+    "benefit_category": [
+        "Hotels",
+        "Hotel Experience Credits"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 100.0,
+    "numeric_type": "Cash",
+    "dollar_value": 100,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": "2026-01-22"
+}
