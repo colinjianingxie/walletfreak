@@ -154,13 +154,13 @@ class AmadeusService:
         Ref: https://test.api.amadeus.com/v2/e-reputation/hotel-sentiments
         """
         try:
-             # Limit to 20 IDs as per API best practices
-            ids_str = ",".join(hotel_ids[:20])
+             # Limit to 10 IDs as per API best practices/limitations
+            ids_str = ",".join(hotel_ids[:10])
             if not ids_str:
                 return []
                 
             response = self.client.e_reputation.hotel_sentiments.get(hotelIds=ids_str)
-            return response.data
+            return response.data or []
         except ResponseError as error:
             logger.error(f"Amadeus API Error (Sentiments): {repr(error)}")
             # Sentiment API might not be available for all hotels or might return 404 for some.

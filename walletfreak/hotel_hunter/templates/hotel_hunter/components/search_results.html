@@ -28,7 +28,7 @@
                 {% endif %}
                 
                 <div class="hh-img-badge-bottom">
-                    <span class="hh-brand-pill">{{ hotel.brand }}</span>
+                    <span class="hh-brand-pill">{{ hotel.loyalty_program|default:hotel.brand }}</span>
                 </div>
             </div>
 
@@ -88,13 +88,15 @@
             <h4 class="hh-options-header">All Booking Methods</h4>
             <div class="hh-options-list">
                 {% for opt in hotel.options %}
-                <div class="hh-option-row">
+                <div class="hh-option-row {% if opt.type == 'cobrand' %}hh-cobrand-row{% endif %}">
                     <div class="hh-opt-left">
                         <div class="hh-opt-icon {{ opt.badge_class }}">
                             {% if opt.type == 'transfer' %}
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 3 4 4-4 4"></path><path d="M20 7H4"></path><path d="m8 21-4-4 4-4"></path><path d="M4 17h16"></path></svg>
                             {% elif opt.type == 'credit-card' %}
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line></svg>
+                            {% elif opt.type == 'cobrand' %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
                             {% else %}
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>
                             {% endif %}
@@ -107,10 +109,23 @@
                                 {% endif %}
                             </div>
                             <p class="hh-opt-desc">{{ opt.description }}</p>
-                            {% if opt.needed %}
+                            
+                            {% if opt.tags %}
+                            <div class="hh-tag-row">
+                                {% for tag in opt.tags %}
+                                <span class="hh-opt-tag {{ tag.class }}">
+                                    {% if 'Multiplier' in tag.text %}<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"></line><path d="m17 5-9.5 14"></path></svg>{% endif %}
+                                    {% if 'Status' in tag.text %}<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"></path><path d="M5 21h14"></path></svg>{% endif %}
+                                    {{ tag.text }}
+                                </span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+
+                            {% if opt.current_balance is not None %}
                             <div class="hh-opt-meta">
-                                <span>Current: {{ opt.current_balance|intcomma }}</span>
-                                <span>Needed: {{ opt.needed|intcomma }}</span>
+                                <span style="background-color: #f1f5f9; padding: 2px 6px; border-radius: 4px;">Current: {{ opt.current_balance|intcomma }}</span>
+                                <span style="background-color: #f1f5f9; padding: 2px 6px; border-radius: 4px;">Needed: {{ opt.needed|intcomma }}</span>
                             </div>
                             {% endif %}
                         </div>
