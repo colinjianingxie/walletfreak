@@ -1,0 +1,10 @@
+{
+    "offer_id": "offer",
+    "is_active": true,
+    "value": 175000,
+    "terms": "Spend $8000 in 6 months",
+    "currency": "Points",
+    "spend_amount": 8000,
+    "duration_months": 6,
+    "effective_date": "2025-09-18"
+}

@@ -1,0 +1,9 @@
+{
+    "offer_id": "offer",
+    "value": 500,
+    "terms": "Spend $5,000 in the first 3 months",
+    "currency": "Cash",
+    "valid_from": "2026-01-10",
+    "valid_until": null,
+    "is_active": true
+}

@@ -714,10 +714,10 @@ ALL of these fields MUST be included in your response:
             prompt += """
 **SIGN-UP BONUS** (REQUIRED TO UPDATE):
 - **sign_up_bonus**: List of objects (usually 1).
-- `offer_id`: (CRITICAL FOR VERSIONING) If an object exists in the current data's `sign_up_bonus`, you MUST maintain the SAME `offer_id` (e.g. "offer-1") when updating the value or terms of the current public offer. DO NOT create new IDs like "offer-75k" or "limited-time-offer". Only change the ID if this is a completely different promotion type (e.g., switching from points to cash back).
+- `offer_id`: (CRITICAL FOR VERSIONING) If an object exists in the current data's `sign_up_bonus`, you MUST maintain the SAME `offer_id` (e.g. "offer") when updating the value or terms of the current public offer. DO NOT create new IDs like "offer-75k" or "limited-time-offer". Only change the ID if this is a completely different promotion type (e.g., switching from points to cash back).
 - `value`: Number (integer).
 - `terms`: e.g. "Spend $4k in 3 months".
-- `currency`: Exactly one of: "Points", "Miles", "Cash".
+- `currency`: String. Usually "Points", "Miles", or "Cash", but can be flexible for unique offers (e.g., "Free Night Awards", "Statement Credit", "First Year Free").
 - If no sign-up bonus currently exists, return an empty list [].
 - If a bonus existed but has expired with no replacement, return an empty list [].
 """

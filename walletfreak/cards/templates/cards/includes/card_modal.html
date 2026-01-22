@@ -352,35 +352,53 @@ function openCardModal(cardId) {
         bonusValue = 0;
     }
     
-    if (bonusValue && bonusValue !== 0 && bonusValue !== "0") {
-        let displayValue = bonusValue.toLocaleString ? bonusValue.toLocaleString() : bonusValue;
+    if (bonusTerms || (bonusValue && bonusValue !== 0 && bonusValue !== "0")) {
+        let finalBonusString = "";
         
-        // Determine type/currency
-        let displayType = 'Points'; // Default
-        
-        if (bonusCurrency) {
-            if (String(bonusCurrency).toLowerCase() === 'cash') {
-                if (!String(displayValue).startsWith('$')) {
-                    displayValue = `$${displayValue}`;
-                }
-                displayType = ''; 
-            } else {
-                displayType = bonusCurrency; // Miles, Points
-            }
-        } else {
-            // Infer
-             const termsLower = String(bonusTerms || '').toLowerCase();
-             if (termsLower.includes('miles')) displayType = 'Miles';
-             else if (termsLower.includes('cash')) {
-                 if (!String(displayValue).startsWith('$')) displayValue = `$${displayValue}`;
-                 displayType = '';
+        if (bonusValue && bonusValue !== 0 && bonusValue !== "0") {
+             let displayValue = bonusValue.toLocaleString ? bonusValue.toLocaleString() : bonusValue;
+             
+             // Determine type/currency
+             let displayType = 'Points'; // Default fallback
+             
+             if (bonusCurrency) {
+                 const currencyLower = String(bonusCurrency).toLowerCase();
+                 if (currencyLower === 'cash') {
+                     if (!String(displayValue).startsWith('$')) {
+                         displayValue = `$${displayValue}`;
+                     }
+                     displayType = ''; 
+                 } else if (currencyLower === 'points' || currencyLower === 'miles') {
+                     displayType = bonusCurrency;
+                 } else {
+                     // Custom currency string (e.g. "Free Night Awards")
+                     displayType = bonusCurrency;
+                 }
+             } else {
+                 // Infer from terms if currency missing
+                  const termsLower = String(bonusTerms || '').toLowerCase();
+                  if (termsLower.includes('miles')) displayType = 'Miles';
+                  else if (termsLower.includes('cash')) {
+                      if (!String(displayValue).startsWith('$')) displayValue = `$${displayValue}`;
+                      displayType = '';
+                  }
              }
-        }
-        
-        // Final string assembly
-        let finalBonusString = `${displayValue}`;
-        if (displayType) {
-            finalBonusString += ` ${displayType}`;
+             
+             // Final string assembly
+             finalBonusString = `${displayValue}`;
+             if (displayType) {
+                 finalBonusString += ` ${displayType}`;
+             }
+        } else {
+            // Text only offer (e.g. "First Year Free")
+            // We might want to use the Terms as the main headline if Value is missing?
+            // Or just leave Value empty.
+            // Let's use "Special Offer" or similar as headline if value missing?
+            // User request: "For example: The World of Hyatt Credit Card has a sign up bonus" implies they want to see IT.
+            // If value is 0, maybe the "value" field IS the text? 
+            // In Hyatt case: Value=5, Currency="Free Night Awards" -> "5 Free Night Awards". Handled above.
+            // Case: Value=0, Terms="First year free". -> Display "Special Offer"?
+            if (!finalBonusString) finalBonusString = "Welcome Offer";
         }
         
         document.getElementById('modal-bonus-value').textContent = finalBonusString;
