@@ -1,0 +1,14 @@
+{
+    "rate_id": "airlines",
+    "valid_from": "2026-01-22",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": [
+        "Airlines",
+        "Direct Airline Bookings"
+    ],
+    "currency": "points",
+    "additional_details": "on airline tickets purchased directly from the airline",
+    "is_default": false
+}

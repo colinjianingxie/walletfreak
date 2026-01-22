@@ -4,24 +4,29 @@
     "image_url": "/static/images/credit_cards/the-world-of-hyatt-credit-card.png",
     "issuer": "Chase",
     "annual_fee": 95,
-    "application_link": "https://creditcards.chase.com/rewards-credit-cards/world-of-hyatt",
-    "min_credit_score": 670,
+    "application_link": "[https://creditcards.chase.com/travel-credit-cards/world-of-hyatt-credit-card](https://creditcards.chase.com/travel-credit-cards/world-of-hyatt-credit-card)",
+    "min_credit_score": 690,
     "max_credit_score": 850,
     "is_524": true,
-    "freak_verdict": "2/10. Bonus mirage. 30k after $3k then requires heavy spend with a 2x boost to earn the rest.",
+    "freak_verdict": "A top-tier hotel card for Hyatt loyalists. The annual Category 1-4 free night easily offsets the $95 fee, and the limited-time 5-night welcome bonus offers exceptional value for those who can meet the $15,000 spend requirement.",
     "active_indices": {
         "benefits": [
-            "free-night-v1",
-            "spend-free-night-v1",
-            "discoverist-status-v1"
+            "free-night-v2",
+            "spend-free-night-v2",
+            "discoverist-status-v2",
+            "elite-night-credits-v1",
+            "elite-night-spend-v1"
         ],
         "earning_rates": [
-            "hyatt-v1",
-            "dining-v1",
-            "financial-&-rewards-v1"
+            "hyatt-v2",
+            "dining-v2",
+            "airlines-v1",
+            "transit-v1",
+            "wellness-v1",
+            "financial-&-rewards-v2"
         ],
         "sign_up_bonus": [
-            "offer-1"
+            "offer-1-v2"
         ],
         "card_questions": [
             "q-0",

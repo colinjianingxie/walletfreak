@@ -1,10 +1,10 @@
 {
     "benefit_id": "discoverist-status",
-    "valid_from": "2020-01-01",
-    "valid_until": "2026-01-21",
-    "is_active": false,
+    "valid_from": "2026-01-22",
+    "valid_until": null,
+    "is_active": true,
     "short_description": "Discoverist Status",
-    "description": "Discoverist status",
+    "description": "Complimentary World of Hyatt Discoverist status for as long as your account is open.",
     "additional_details": null,
     "benefit_category": [
         "Generic World of Hyatt",
@@ -14,8 +14,8 @@
     "benefit_type": "Status",
     "numeric_value": null,
     "numeric_type": null,
-    "dollar_value": null,
+    "dollar_value": 50,
     "time_category": "Permanent",
     "enrollment_required": false,
-    "effective_date": "2025-11-29"
+    "effective_date": "2026-01-22"
 }

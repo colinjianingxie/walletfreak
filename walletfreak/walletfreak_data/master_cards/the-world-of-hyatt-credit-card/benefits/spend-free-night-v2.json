@@ -1,10 +1,10 @@
 {
     "benefit_id": "spend-free-night",
-    "valid_from": "2020-01-01",
-    "valid_until": "2026-01-21",
-    "is_active": false,
+    "valid_from": "2026-01-22",
+    "valid_until": null,
+    "is_active": true,
     "short_description": "Spend Free Night",
-    "description": "Additional Free Night Award after $15,000 spend annually",
+    "description": "Earn an extra free night at any Category 1-4 Hyatt hotel or resort if you spend $15,000 in a calendar year.",
     "additional_details": null,
     "benefit_category": [
         "Generic World of Hyatt",
@@ -13,8 +13,8 @@
     "benefit_type": "Perk",
     "numeric_value": 1,
     "numeric_type": "FreeNight",
-    "dollar_value": null,
+    "dollar_value": 200,
     "time_category": "Annually (calendar year)",
     "enrollment_required": false,
-    "effective_date": "2025-11-29"
+    "effective_date": "2026-01-22"
 }

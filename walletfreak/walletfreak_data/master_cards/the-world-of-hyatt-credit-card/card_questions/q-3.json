@@ -1,7 +1,7 @@
 {
-    "question_id": "q-0",
-    "short_desc": "Free Night",
-    "question": "Would you use a Free Night Award at a Hyatt Category 1-4 property annually?",
+    "question_id": "q-3",
+    "short_desc": "Fitness & Gyms",
+    "question": "Do you have monthly spending on gym memberships or fitness clubs?",
     "question_type": "multiple_choice",
     "choices": [
         "No",
@@ -12,6 +12,6 @@
         1.0
     ],
     "benefit_category": [
-        "Hotels"
+        "Wellness"
     ]
 }

@@ -1,0 +1,12 @@
+{
+    "offer_id": "offer-1",
+    "is_active": true,
+    "value": 5,
+    "terms": "Earn 3 Free Night Awards (Category 1-4) after spending $5,000 on purchases in the first 3 months from account opening, plus 2 more Free Night Awards after spending $15,000 total in the first 6 months. Offer ends February 26, 2026.",
+    "currency": "Points",
+    "spend_amount": 15000,
+    "duration_months": 6,
+    "effective_date": "2026-01-15",
+    "valid_from": "2026-01-22",
+    "valid_until": null
+}

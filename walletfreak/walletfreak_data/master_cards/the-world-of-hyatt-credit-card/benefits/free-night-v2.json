@@ -1,10 +1,10 @@
 {
     "benefit_id": "free-night",
-    "valid_from": "2020-01-01",
-    "valid_until": "2026-01-21",
-    "is_active": false,
-    "short_description": "Free Night",
-    "description": "Anniversary Free Night Award",
+    "valid_from": "2026-01-22",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Annual Free Night",
+    "description": "Receive one free night at any Category 1-4 Hyatt hotel or resort every year after your cardmember anniversary.",
     "additional_details": "Category 1-4",
     "benefit_category": [
         "Generic World of Hyatt",
@@ -13,8 +13,8 @@
     "benefit_type": "Perk",
     "numeric_value": 1,
     "numeric_type": "FreeNight",
-    "dollar_value": null,
+    "dollar_value": 200,
     "time_category": "Annually (anniversary year)",
     "enrollment_required": false,
-    "effective_date": "2025-11-29"
+    "effective_date": "2026-01-22"
 }
