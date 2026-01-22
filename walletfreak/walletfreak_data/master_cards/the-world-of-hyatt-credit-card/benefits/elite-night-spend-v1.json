@@ -1,0 +1,20 @@
+{
+    "benefit_id": "elite-night-spend",
+    "valid_from": "2026-01-22",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Spend for Elite Nights",
+    "description": "Earn 2 additional qualifying night credits toward your next tier status every time you spend $5,000 on your card.",
+    "additional_details": null,
+    "benefit_category": [
+        "Generic World of Hyatt",
+        "Status Boost"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 2,
+    "numeric_type": "Points",
+    "dollar_value": 0,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": "2026-01-22"
+}

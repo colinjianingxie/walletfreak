@@ -1,0 +1,10 @@
+{
+    "offer_id": "offer",
+    "is_active": true,
+    "value": 300,
+    "terms": "Spend $1000 in 3 months",
+    "currency": "Cash",
+    "spend_amount": 1000,
+    "duration_months": 3,
+    "effective_date": "2025-12-28"
+}

@@ -1,0 +1,20 @@
+{
+    "benefit_id": "elite-night-credits",
+    "valid_from": "2026-01-22",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "5 Elite Night Credits",
+    "description": "Receive 5 qualifying night credits towards your next tier status every year.",
+    "additional_details": null,
+    "benefit_category": [
+        "Generic World of Hyatt",
+        "Status Boost"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 5,
+    "numeric_type": "Points",
+    "dollar_value": 0,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-01-22"
+}

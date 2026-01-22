@@ -13,5 +13,7 @@
         0.5,
         1.0
     ],
-    "benefit_category": "Hotel Status"
+    "benefit_category": [
+        "Hotels"
+    ]
 }

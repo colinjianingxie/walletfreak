@@ -1,0 +1,17 @@
+{
+    "question_id": "q-3",
+    "short_desc": "Fitness & Gyms",
+    "question": "Do you have monthly spending on gym memberships or fitness clubs?",
+    "question_type": "multiple_choice",
+    "choices": [
+        "No",
+        "Yes"
+    ],
+    "weights": [
+        0.0,
+        1.0
+    ],
+    "benefit_category": [
+        "Wellness"
+    ]
+}

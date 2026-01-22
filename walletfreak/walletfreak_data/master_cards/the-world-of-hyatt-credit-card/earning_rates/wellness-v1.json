@@ -1,0 +1,15 @@
+{
+    "rate_id": "wellness",
+    "valid_from": "2026-01-22",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": [
+        "Wellness",
+        "Gym Memberships",
+        "Fitness Clubs"
+    ],
+    "currency": "points",
+    "additional_details": "on fitness club and gym memberships",
+    "is_default": false
+}

@@ -1,0 +1,106 @@
+Chain Code,Chain Name,Loyalty Program,Program ID
+AK,AUTOGRAPH COLLECTION,Marriott Bonvoy,marriott_bonvoy
+AL,ALOFT HOTELS,Marriott Bonvoy,marriott_bonvoy
+AR,AC HOTELES,Marriott Bonvoy,marriott_bonvoy
+AW,AMERICINN BY WYNDHAM,Wyndham Rewards,wyndham_rewards
+BC,PREFERRED AFF HOTELS,I Prefer Hotel Rewards,i_prefer
+BG,BULGARI HOTELS,Marriott Bonvoy,marriott_bonvoy
+BH,HAWTHORN SUITES,Wyndham Rewards,wyndham_rewards
+BR,RENAISSANCE HTL RSRT,Marriott Bonvoy,marriott_bonvoy
+BU,BAYMONT BY WYNDHAM,Wyndham Rewards,wyndham_rewards
+BW,BEST WESTERN,Best Western Rewards,best_western_rewards
+CC,CLARION HOTELS,Choice Privileges,choice_privileges
+CI,COMFORT INN,Choice Privileges,choice_privileges
+CN,CONRAD,Hilton Honors,hilton_honors
+CP,CROWNE PLAZA HOTELS,IHG One Rewards,ihg_one_rewards
+CX,COUNTRY INN SUITES,Choice Privileges,choice_privileges
+CY,COURTYARD HOTELS,Marriott Bonvoy,marriott_bonvoy
+DE,DELTA HOTELS,Marriott Bonvoy,marriott_bonvoy
+DI,DAYS INN BY WYNDHAM,Wyndham Rewards,wyndham_rewards
+DN,DESTINATION HOTELS,World of Hyatt,world_of_hyatt
+DS,DESIGN HOTELS,Marriott Bonvoy,marriott_bonvoy
+DT,DOUBLETREE HOTELS,Hilton Honors,hilton_honors
+DW,DUSIT HTLS & RESORTS,GHA Discovery,gha_discovery
+DX,DOLCE HOTELS/RESORTS,Wyndham Rewards,wyndham_rewards
+EB,EDITION BRAND,Marriott Bonvoy,marriott_bonvoy
+EL,ELEMENT HOTELS,Marriott Bonvoy,marriott_bonvoy
+EO,ECONOLODGE,Choice Privileges,choice_privileges
+ES,EMBASSY SUITES,Hilton Honors,hilton_honors
+ET,MARRIOTT CONF CNTRS,Marriott Bonvoy,marriott_bonvoy
+EZ,CAMBRIA SUITES,Choice Privileges,choice_privileges
+FA,FAIRMONT HOTELS,Accor Live Limitless,accor_all
+FN,FAIRFIELD INN HOTELS,Marriott Bonvoy,marriott_bonvoy
+GA,GLOBALHOTEL ALLIANCE,GHA Discovery,gha_discovery
+GE,GAYLORD ENTERTAINMEN,Hilton Honors,hilton_honors
+GI,HILTON GARDEN INNS,Hilton Honors,hilton_honors
+GP,GRADUATE HOTELS,Hilton Honors,hilton_honors
+HE,HISTORIC HOTELS,I Prefer Hotel Rewards,i_prefer
+HG,HOMEWOOD SUITES,Hilton Honors,hilton_honors
+HH,HILTON HOTELS CORPO,Hilton Honors,hilton_honors
+HI,HOLIDAY INN,IHG One Rewards,ihg_one_rewards
+HJ,HOWARD JOHNSON,Wyndham Rewards,wyndham_rewards
+HL,HILTON HOTELS,Hilton Honors,hilton_honors
+HX,HAMPTON INNS,Hilton Honors,hilton_honors
+HY,HYATT HOTELS,World of Hyatt,world_of_hyatt
+IC,INTERCONTINENTAL,IHG One Rewards,ihg_one_rewards
+IN,HOTEL INDIGO,IHG One Rewards,ihg_one_rewards
+JV,JOIE DE VIVRE,World of Hyatt,world_of_hyatt
+KC,KIMPTON HOTELS,IHG One Rewards,ihg_one_rewards
+KI,KEMPINSKI HOTELS,GHA Discovery,gha_discovery
+LC,LUXURY COLLECTION,Marriott Bonvoy,marriott_bonvoy
+LQ,LA QUINTA BY WYNDHAM,Wyndham Rewards,wyndham_rewards
+LW,THE LEADING HOTELS,Leading Hotels of the World Leaders Club,leaders_club
+MC,MARRIOTT HTLS RSTS,Marriott Bonvoy,marriott_bonvoy
+MD,LE MERIDIEN,Marriott Bonvoy,marriott_bonvoy
+MH,MARCO POLO HOTELS,GHA Discovery,gha_discovery
+MK,MOVENPICK HTLS&RSTS,Accor Live Limitless,accor_all
+MT,MICROTEL BY WYNDHAM,Wyndham Rewards,wyndham_rewards
+MZ,MAINSTAY SUITES,Choice Privileges,choice_privileges
+NN,LOUVRE HOTELS,Accor Live Limitless,accor_all
+NZ,ASCEND COLLECTION,Choice Privileges,choice_privileges
+OH,MINOR HOTELS,GHA Discovery,gha_discovery
+OM,OMNI,GHA Discovery,gha_discovery
+OR,OUTRIGGER HTLS&RSRTS,GHA Discovery,gha_discovery
+OX,MOXY HOTELS,Marriott Bonvoy,marriott_bonvoy
+OZ,SUPER 8 BY WYNDHAM,Wyndham Rewards,wyndham_rewards
+PD,PARK INN,Choice Privileges,choice_privileges
+PF,PAN PACIFIC,GHA Discovery,gha_discovery
+PH,PREFERRED HOTELS,I Prefer Hotel Rewards,i_prefer
+PK,PARK PLAZA,Choice Privileges,choice_privileges
+PR,PROTEA HOTELS,Marriott Bonvoy,marriott_bonvoy
+PU,PULLMAN,Accor Live Limitless,accor_all
+PY,CANOPY BY HILTON,Hilton Honors,hilton_honors
+QI,QUALITY INNS,Choice Privileges,choice_privileges
+QQ,CURIO COLLECTION,Hilton Honors,hilton_honors
+RA,RAMADA BY WYNDHAM,Wyndham Rewards,wyndham_rewards
+RC,RESIDENCE INN HOTELS,Marriott Bonvoy,marriott_bonvoy
+RD,RADISSON HOTELS,Choice Privileges,choice_privileges
+RE,REGENT HOTELS,IHG One Rewards,ihg_one_rewards
+RT,ACCOR HOTELS,Accor Live Limitless,accor_all
+RU,TRU BY HILTON,Hilton Honors,hilton_honors
+RY,RODEWAY INNS,Choice Privileges,choice_privileges
+RZ,RITZ CARLTON HOTELS,Marriott Bonvoy,marriott_bonvoy
+SB,SOFITEL,Accor Live Limitless,accor_all
+SI,SHERATON,Marriott Bonvoy,marriott_bonvoy
+SL,SWISSOTEL,Accor Live Limitless,accor_all
+SN,SONESTA COLLECTION,Sonesta Travel Pass,sonesta_travel_pass
+SZ,SLEEP INN,Choice Privileges,choice_privileges
+TL,TRAVELODGE HOTELS,Wyndham Rewards,wyndham_rewards
+TM,THOMPSON HOTELS,World of Hyatt,world_of_hyatt
+TO,TOWNEPLACE SUITES,Marriott Bonvoy,marriott_bonvoy
+UB,SUBURBAN EXTENDED ST,Choice Privileges,choice_privileges
+UL,HUALUXE,IHG One Rewards,ihg_one_rewards
+VC,MARRIOTT VACATION CL,Marriott Bonvoy,marriott_bonvoy
+VN,EVEN HOTELS,IHG One Rewards,ihg_one_rewards
+WA,WALDORF ASTORIA,Hilton Honors,hilton_honors
+WG,WINGATE BY WYNDHAM,Wyndham Rewards,wyndham_rewards
+WH,W HOTELS,Marriott Bonvoy,marriott_bonvoy
+WI,WESTIN HOTELS,Marriott Bonvoy,marriott_bonvoy
+WO,WYNDHAM XTRA HOLIDAY,Wyndham Rewards,wyndham_rewards
+WT,TRYP BY WYNDHAM,Wyndham Rewards,wyndham_rewards
+WY,WYNDHAM HOTELS,Wyndham Rewards,wyndham_rewards
+XR,ST. REGIS,Marriott Bonvoy,marriott_bonvoy
+XV,SPRINGHILL SUITES,Marriott Bonvoy,marriott_bonvoy
+YO,CANDLEWOOD SUITES,IHG One Rewards,ihg_one_rewards
+YR,RAFFLES HOTELS,Accor Live Limitless,accor_all
+YZ,STAYBRIDGE SUITES,IHG One Rewards,ihg_one_rewards

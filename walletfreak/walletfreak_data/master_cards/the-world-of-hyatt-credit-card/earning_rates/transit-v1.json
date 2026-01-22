@@ -1,0 +1,17 @@
+{
+    "rate_id": "transit",
+    "valid_from": "2026-01-22",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": [
+        "Transit",
+        "Public Transportation",
+        "Taxis",
+        "Uber",
+        "Lyft"
+    ],
+    "currency": "points",
+    "additional_details": "on local transit and commuting",
+    "is_default": false
+}

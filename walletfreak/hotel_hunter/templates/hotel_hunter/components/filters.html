@@ -1,0 +1,50 @@
+<div class="hh-filter-grid">
+    <!-- Price Filter -->
+    <div>
+        <div class="hh-filter-header">
+            <label class="hh-label">Max Price (Cash)</label>
+            <span id="price-val" class="hh-value-display">${{ request.GET.maxPrice|default:2000 }}</span>
+        </div>
+        <input type="range" min="100" max="3000" step="50" value="{{ request.GET.maxPrice|default:2000 }}" class="hh-range-input" id="price-range" name="maxPrice">
+        <div class="hh-range-labels">
+            <span>$100</span>
+            <span>$3000+</span>
+        </div>
+    </div>
+
+    <!-- Brands Filter -->
+    <div>
+        <label class="hh-label" style="display:block; margin-bottom: 0.75rem;">Hotel Brands</label>
+        <div class="hh-filter-group" id="brand-group">
+            <input type="hidden" name="chainCodes" id="chain-codes-input" value="{{ request.GET.chainCodes }}">
+            
+            <button type="button" class="hh-filter-btn" data-group="hyatt">Hyatt</button>
+            <button type="button" class="hh-filter-btn" data-group="hilton">Hilton</button>
+            <button type="button" class="hh-filter-btn" data-group="marriott">Marriott</button>
+            <button type="button" class="hh-filter-btn" data-group="ihg">IHG</button>
+            <button type="button" class="hh-filter-btn" data-group="independent">Independent</button>
+        </div>
+    </div>
+
+    <!-- Rating Filter -->
+    <div>
+        <label class="hh-label" style="display:block; margin-bottom: 0.75rem;">Min Rating</label>
+        <div class="hh-filter-group" id="rating-group">
+            <input type="hidden" name="ratings" id="rating-input" value="{{ request.GET.ratings }}">
+            
+            <button type="button" class="hh-filter-btn-rect" data-rating="3">
+                3+ <svg xmlns="http://www.w3.org/2000/svg" class="hh-star-mini" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </button>
+            <button type="button" class="hh-filter-btn-rect" data-rating="4">
+                4+ <svg xmlns="http://www.w3.org/2000/svg" class="hh-star-mini" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </button>
+            <button type="button" class="hh-filter-btn-rect" data-rating="5">
+                5+ <svg xmlns="http://www.w3.org/2000/svg" class="hh-star-mini" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="hh-filter-footer">
+    <span class="hh-count-text"></span>
+</div>

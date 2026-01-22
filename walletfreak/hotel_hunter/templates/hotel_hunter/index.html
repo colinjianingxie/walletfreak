@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block page_title %}Hotel Hunter{% endblock %}
+{% block breadcrumb_section %}Tools{% endblock %}
+
+{% block extra_css %}
+<!-- Custom V2 CSS (No Tailwind) -->
+<link rel="stylesheet" href="{% static 'css/hotel_hunter_v2.css' %}">
+<link rel="stylesheet" href="{% static 'css/hotel_hunter_filters.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="hh-main-content" style="padding: 2rem;">
+    <div class="hh-container" style="max-width: 80rem; margin: 0 auto; padding-bottom: 6rem;">
+        
+        <!-- Header Section -->
+        <div class="hh-flex hh-flex-col md:flex-row hh-justify-between hh-items-center hh-gap-4" style="margin-bottom: 2rem;">
+            <div>
+                <h1 class="hh-text-2xl hh-font-bold hh-text-slate-900">Hotel Hunter</h1>
+                <p class="hh-text-slate-500">Compare cash vs. points strategies based on your wallet's Opportunity Cost.</p>
+            </div>
+            
+            <!-- Points Balance Summary -->
+            {% if loyalty_points %}
+            <div class="hh-flex" style="gap: 0.5rem; flex-wrap: wrap;">
+                {% for point in loyalty_points %}
+                <div class="hh-tag" style="padding: 0.25rem 0.5rem; background: var(--hh-white);">
+                    <div class="hh-dot {{ point.color_class }}" style="width: 6px; height: 6px; border-radius: 50%; background-color: var(--hh-slate-400);"></div>
+                    <!-- Override dot colors via inline or helper if strictly needed, or rely on filter css if loaded -->
+                    <span class="hh-font-bold">{{ point.name }}: {{ point.balance|intcomma }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Search Form (New Grid Design) -->
+        <div class="hh-card" style="padding: 1.25rem;">
+            <form id="hh-search-form" method="GET" class="hh-grid-form">
+                <!-- Location -->
+                <div class="hh-relative hh-span-4">
+                    <div class="hh-input-icon hh-absolute" style="top: 0.85rem; left: 0.75rem; color: var(--hh-slate-400);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    </div>
+                    <input name="location" placeholder="Where to? (e.g. Tokyo)" class="hh-input-field" type="text" value="{{ request.GET.location }}">
+                </div>
+
+                <!-- Check In -->
+                <div class="hh-relative hh-span-2">
+                    <input name="checkInDate" required class="hh-input-field" type="date" value="{{ request.GET.checkInDate|default:default_check_in }}" style="padding-left: 1rem; color: var(--hh-slate-600);">
+                    <span class="hh-input-label">Check In</span>
+                </div>
+
+                <!-- Check Out -->
+                <div class="hh-relative hh-span-2">
+                    <input name="checkOutDate" required class="hh-input-field" type="date" value="{{ request.GET.checkOutDate|default:default_check_out }}" style="padding-left: 1rem; color: var(--hh-slate-600);">
+                    <span class="hh-input-label">Check Out</span>
+                </div>
+
+                <!-- Guests -->
+                <div class="hh-relative hh-span-2">
+                    <input name="guests" min="1" class="hh-input-field" type="number" value="{{ request.GET.guests|default:2 }}" style="padding-left: 1rem; color: var(--hh-slate-600);">
+                    <span class="hh-input-label">Guests</span>
+                </div>
+
+                <!-- Actions -->
+                <div class="hh-span-2 hh-flex hh-gap-2">
+                    <button type="button" id="hh-toggle-filters" class="hh-btn-hunt" style="background-color: var(--hh-white); color: var(--hh-slate-600); border: 1px solid var(--hh-slate-200); width: 3rem; flex-shrink: 0; box-shadow: none;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 5H3"></path><path d="M12 19H3"></path><path d="M14 3v4"></path><path d="M16 17v4"></path><path d="M21 12h-9"></path><path d="M21 19h-5"></path><path d="M21 5h-7"></path><path d="M8 10v4"></path><path d="M8 12H3"></path></svg>
+                    </button>
+                    <button type="submit" class="hh-btn-hunt">Hunt</button>
+                </div>
+
+                <!-- Filter Section (Hidden by default or toggled) -->
+                <div id="hh-filters" class="hh-span-12" style="display: none; border-top: 1px solid var(--hh-slate-100); padding-top: 1rem; margin-top: 0.5rem;">
+                     {% include 'hotel_hunter/components/filters.html' with request=request %} 
+                     <!-- Reusing existing filter structure/logic if possible by extracting it? 
+                          Or just copy the logic here. Let's inline simplified filters for now to match the user's specific request structure 
+                          Actually, user didn't request filters in the mock, but the functionality exists. I'll minimize it. -->
+                     <button type="button" class="hh-text-sm hh-text-slate-500" style="text-decoration: underline;" id="clear-filters">Clear Filters</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Results Area -->
+        <div class="hh-results-area">
+             <!-- Loader -->
+             <div id="hh-loading-indicator" style="display: none; text-align: center; padding: 4rem;">
+                <div class="hh-spinner" style="width: 2rem; height: 2rem; border: 3px solid var(--hh-slate-200); border-top-color: var(--hh-slate-900); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem;"></div>
+                <p class="hh-text-slate-500">Hunting for best strategies...</p>
+             </div>
+             <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+
+            <div id="hh-results-content">
+                {% if hotels %}
+                    <div class="hh-flex hh-flex-col hh-gap-4">
+                        {% for hotel in hotels %}
+                            {% include 'hotel_hunter/components/hotel_card_v2.html' with hotel=hotel %}
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <!-- Empty State -->
+                    {% if request.GET.location %}
+                         <div style="text-align: center; padding: 4rem; opacity: 0.6;">
+                            <h3 class="hh-text-xl hh-font-bold hh-text-slate-900">No hotels found</h3>
+                            <p>Try adjusting your search or filters.</p>
+                         </div>
+                    {% else %}
+                        <div style="text-align: center; padding: 4rem; opacity: 0.6;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 1rem; color: var(--hh-slate-300);"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
+                            <h3 class="hh-text-xl hh-font-bold hh-text-slate-900">Start Hunting</h3>
+                            <p>Enter a destination to compare Cash vs. Points.</p>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- UI Elements ---
+        const form = document.getElementById('hh-search-form');
+        const filterToggle = document.getElementById('hh-toggle-filters');
+        const filtersDiv = document.getElementById('hh-filters');
+        
+        const brandGroup = document.getElementById('brand-group');
+        const ratingGroup = document.getElementById('rating-group');
+        const chainInput = document.getElementById('chain-codes-input');
+        const ratingInput = document.getElementById('rating-input');
+        
+        // 1. Filter Toggle
+        if(filterToggle && filtersDiv) {
+            filterToggle.addEventListener('click', () => {
+                filtersDiv.style.display = filtersDiv.style.display === 'none' ? 'block' : 'none';
+            });
+        }
+        
+        // 2. Initialize Brand Buttons
+        if (chainInput && brandGroup) {
+             const currentChains = chainInput.value.split(',').filter(c => c);
+             brandGroup.querySelectorAll('.hh-filter-btn').forEach(btn => {
+                 const group = btn.dataset.group;
+                 if (currentChains.includes(group)) {
+                     btn.classList.add('active');
+                 }
+                 
+                 btn.addEventListener('click', () => {
+                     btn.classList.toggle('active');
+                     updateChainInput();
+                 });
+             });
+        }
+        
+        function updateChainInput() {
+             const actives = [];
+             brandGroup.querySelectorAll('.hh-filter-btn.active').forEach(b => actives.push(b.dataset.group));
+             chainInput.value = actives.join(',');
+        }
+
+        // 3. Initialize Rating Buttons
+        if (ratingInput && ratingGroup) {
+             const currentRatings = ratingInput.value.split(',').filter(r => r);
+             ratingGroup.querySelectorAll('.hh-filter-btn-rect').forEach(btn => {
+                 const r = btn.dataset.rating;
+                 if (currentRatings.includes(r)) {
+                     btn.classList.add('active');
+                 }
+                 
+                 btn.addEventListener('click', () => {
+                     btn.classList.toggle('active');
+                     updateRatingInput();
+                 });
+             });
+        }
+        
+        function updateRatingInput() {
+             const actives = [];
+             ratingGroup.querySelectorAll('.hh-filter-btn-rect.active').forEach(b => actives.push(b.dataset.rating));
+             ratingInput.value = actives.join(',');
+        }
+        
+        // 4. Accordion Logic (Exclusive)
+        // Use document delegation to handle potential dynamic inserts or simple robustness
+        document.body.addEventListener('click', function(e) {
+            const trigger = e.target.closest('.hh-accordion-trigger');
+            if(trigger) {
+                const targetId = trigger.dataset.target;
+                const targetContent = document.getElementById(targetId);
+                
+                // Toggle current while handling exclusive logic
+                const isClosed = !targetContent.classList.contains('open');
+
+                if (isClosed) {
+                    // Close others if opening
+                    document.querySelectorAll('.hh-strategies.open').forEach(strat => {
+                        if (strat.id !== targetId) {
+                            strat.classList.remove('open');
+                            strat.style.display = 'none'; // Ensure CSS transition base logic
+                            // Reset icon logic if manually modifying styles (CSS handles rotation via class usually)
+                        }
+                    });
+                    targetContent.classList.add('open');
+                    targetContent.style.display = 'block';
+                } else {
+                    targetContent.classList.remove('open');
+                    targetContent.style.display = 'none';
+                }
+            }
+        });
+        
+        // 5. Loading State
+        if(form) {
+            form.addEventListener('submit', function() {
+                const btn = this.querySelector('button[type="submit"]');
+                const loader = document.getElementById('hh-loading-indicator');
+                const content = document.getElementById('hh-results-content');
+                
+                if(btn) {
+                    btn.innerHTML = '...';
+                    btn.disabled = true;
+                }
+                
+                if(content) content.style.display = 'none';
+                if(loader) loader.style.display = 'block';
+            });
+        }
+    });
+</script>
+{% endblock %}
+

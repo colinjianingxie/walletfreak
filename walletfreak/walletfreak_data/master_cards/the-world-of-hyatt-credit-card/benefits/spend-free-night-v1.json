@@ -1,8 +1,8 @@
 {
     "benefit_id": "spend-free-night",
     "valid_from": "2020-01-01",
-    "valid_until": null,
-    "is_active": true,
+    "valid_until": "2026-01-21",
+    "is_active": false,
     "short_description": "Spend Free Night",
     "description": "Additional Free Night Award after $15,000 spend annually",
     "additional_details": null,

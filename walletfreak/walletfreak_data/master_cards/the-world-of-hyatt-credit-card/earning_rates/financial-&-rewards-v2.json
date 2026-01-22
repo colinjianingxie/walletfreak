@@ -1,0 +1,14 @@
+{
+    "rate_id": "financial-&-rewards",
+    "valid_from": "2026-01-22",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 1,
+    "category": [
+        "Financial Rewards",
+        "All Purchases"
+    ],
+    "currency": "points",
+    "additional_details": "on all other purchases",
+    "is_default": true
+}
