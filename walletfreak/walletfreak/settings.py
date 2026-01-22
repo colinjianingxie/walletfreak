@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import certifi
+
+# Fix for Amadeus/SSL issues on macOS
+os.environ['SSL_CERT_FILE'] = certifi.where()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -68,6 +72,7 @@ INSTALLED_APPS = [
     'calculators',
     'datapoints',
     'subscriptions',
+    'hotel_hunter',
 ]
 
 MIDDLEWARE = [
@@ -236,7 +241,11 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER or 'notifications@walletfreak.com'
 
 
-# Stripe Configuration
+
+# Amadeus API Configuration
+AMADEUS_CLIENT_ID = os.environ.get('AMADEUS_CLIENT_ID')
+AMADEUS_CLIENT_SECRET = os.environ.get('AMADEUS_CLIENT_SECRET')
+
 # Stripe Configuration
 # Check if live mode is enabled (default to False)
 STRIPE_LIVE_MODE = os.environ.get('STRIPE_LIVE_MODE', 'False').lower() == 'true'

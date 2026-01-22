@@ -10,3 +10,7 @@ python-dotenv
 stripe
 psycopg2-binary
 dj-database-url
+
+amadeus
+selenium
+webdriver-manager
