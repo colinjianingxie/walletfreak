@@ -125,54 +125,112 @@
 {% block extra_js %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // --- UI Elements ---
         const form = document.getElementById('hh-search-form');
         const filterToggle = document.getElementById('hh-toggle-filters');
         const filtersDiv = document.getElementById('hh-filters');
         
-        // Filter Toggle
+        const brandGroup = document.getElementById('brand-group');
+        const ratingGroup = document.getElementById('rating-group');
+        const chainInput = document.getElementById('chain-codes-input');
+        const ratingInput = document.getElementById('rating-input');
+        
+        // 1. Filter Toggle
         if(filterToggle && filtersDiv) {
             filterToggle.addEventListener('click', () => {
                 filtersDiv.style.display = filtersDiv.style.display === 'none' ? 'block' : 'none';
             });
         }
+        
+        // 2. Initialize Brand Buttons
+        if (chainInput && brandGroup) {
+             const currentChains = chainInput.value.split(',').filter(c => c);
+             brandGroup.querySelectorAll('.hh-filter-btn').forEach(btn => {
+                 const group = btn.dataset.group;
+                 if (currentChains.includes(group)) {
+                     btn.classList.add('active');
+                 }
+                 
+                 btn.addEventListener('click', () => {
+                     btn.classList.toggle('active');
+                     updateChainInput();
+                 });
+             });
+        }
+        
+        function updateChainInput() {
+             const actives = [];
+             brandGroup.querySelectorAll('.hh-filter-btn.active').forEach(b => actives.push(b.dataset.group));
+             chainInput.value = actives.join(',');
+        }
 
-        // Accordion Logic
-        // We use event delegation on the document or results wrapper
+        // 3. Initialize Rating Buttons
+        if (ratingInput && ratingGroup) {
+             const currentRatings = ratingInput.value.split(',').filter(r => r);
+             ratingGroup.querySelectorAll('.hh-filter-btn-rect').forEach(btn => {
+                 const r = btn.dataset.rating;
+                 if (currentRatings.includes(r)) {
+                     btn.classList.add('active');
+                 }
+                 
+                 btn.addEventListener('click', () => {
+                     btn.classList.toggle('active');
+                     updateRatingInput();
+                 });
+             });
+        }
+        
+        function updateRatingInput() {
+             const actives = [];
+             ratingGroup.querySelectorAll('.hh-filter-btn-rect.active').forEach(b => actives.push(b.dataset.rating));
+             ratingInput.value = actives.join(',');
+        }
+        
+        // 4. Accordion Logic (Exclusive)
+        // Use document delegation to handle potential dynamic inserts or simple robustness
         document.body.addEventListener('click', function(e) {
             const trigger = e.target.closest('.hh-accordion-trigger');
             if(trigger) {
                 const targetId = trigger.dataset.target;
-                const content = document.getElementById(targetId);
+                const targetContent = document.getElementById(targetId);
                 
-                // Close ALL others first (Exclusive behavior)
-                document.querySelectorAll('.hh-strategies').forEach(strat => {
-                    if (strat.id !== targetId && strat.classList.contains('open')) {
-                        strat.classList.remove('open');
-                        // Also reset chev on the trigger for this one
-                         // Since triggers aren't strictly linked by ID in reverse easily without query
-                         // We can rely on css or simplistic reset if needed, but for now just closing content suffices visually
-                    }
-                });
+                // Toggle current while handling exclusive logic
+                const isClosed = !targetContent.classList.contains('open');
 
-                // Toggle current
-                if(content) {
-                    content.classList.toggle('open');
+                if (isClosed) {
+                    // Close others if opening
+                    document.querySelectorAll('.hh-strategies.open').forEach(strat => {
+                        if (strat.id !== targetId) {
+                            strat.classList.remove('open');
+                            strat.style.display = 'none'; // Ensure CSS transition base logic
+                            // Reset icon logic if manually modifying styles (CSS handles rotation via class usually)
+                        }
+                    });
+                    targetContent.classList.add('open');
+                    targetContent.style.display = 'block';
+                } else {
+                    targetContent.classList.remove('open');
+                    targetContent.style.display = 'none';
                 }
             }
         });
-
-        // Loading State
-        form.addEventListener('submit', function() {
-            const btn = this.querySelector('button[type="submit"]');
-            const loader = document.getElementById('hh-loading-indicator');
-            const content = document.getElementById('hh-results-content');
-            
-            btn.innerHTML = '...';
-            btn.disabled = true;
-            
-            if(content) content.style.display = 'none';
-            if(loader) loader.style.display = 'block';
-        });
+        
+        // 5. Loading State
+        if(form) {
+            form.addEventListener('submit', function() {
+                const btn = this.querySelector('button[type="submit"]');
+                const loader = document.getElementById('hh-loading-indicator');
+                const content = document.getElementById('hh-results-content');
+                
+                if(btn) {
+                    btn.innerHTML = '...';
+                    btn.disabled = true;
+                }
+                
+                if(content) content.style.display = 'none';
+                if(loader) loader.style.display = 'block';
+            });
+        }
     });
 </script>
 {% endblock %}

@@ -375,10 +375,25 @@ def index(request):
                                             
                                         # Details Text Loginc
                                         details = f"Est. based on {source_val_cpp}cpp."
+                                        
+                                        # Check structural valuation (Program vs Program)
+                                        dest_val_cpp = get_valuation(program_id)
+                                        ideal_ratio = 0
+                                        if dest_val_cpp > 0:
+                                            ideal_ratio = source_val_cpp / dest_val_cpp
+                                            
+                                        # If Good Value
                                         if redemption_cpp > source_val_cpp:
                                             details += " Strong redemption value."
                                         else:
-                                            details += f" Only worth if < {source_points_needed:,} pts."
+                                            # Poor/Neutral Value: Show Ideal Ratio if current ratio is structurally bad?
+                                            # User request: "Only worth if we can transfer 1:(1.7/0.8) rate"
+                                            # We show this if the specific redemption isn't "Strong".
+                                            if ideal_ratio > 0:
+                                                 details += f" Need transfer ratio 1:{ideal_ratio:.1f} to break even on value."
+                                            else:
+                                                 # Fallback
+                                                 details += f" Only worth if < {source_points_needed:,} pts."
                                         
                                         src_name_map = {'chase_ur': 'Chase', 'amex_mr': 'Amex', 'bilt_rewards': 'Bilt', 'citi_ty': 'Citi', 'cap1_miles': 'Capital One'}
                                         src_display = src_name_map.get(source_id, source_id.title())

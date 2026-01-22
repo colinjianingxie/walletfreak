@@ -1,5 +1,5 @@
 {
-    "rate_id": "airlines",
+    "rate_id": "travel",
     "valid_from": "2020-01-01",
     "valid_until": null,
     "is_active": true,
