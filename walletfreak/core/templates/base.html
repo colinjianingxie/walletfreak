@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{% static 'css/landing_fix.css' %}?v=1.0">
     {% endif %}
     <!-- Tailwind removed -->
+    {% block extra_head %}{% endblock %}
     {% block extra_css %}{% endblock %}
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
