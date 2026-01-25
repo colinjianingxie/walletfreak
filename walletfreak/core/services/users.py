@@ -208,3 +208,35 @@ class UserMixin:
             data['subscription_period_end'] = current_period_end
             
         self.db.collection('users').document(uid).set(data, merge=True)
+
+    # Hotel Strategy Methods
+    def save_hotel_strategy(self, uid, strategy_data):
+        """
+        Save a generated hotel strategy optimization result.
+        """
+        # Add metadata
+        strategy_data['created_at'] = firestore.SERVER_TIMESTAMP
+        strategy_data['uid'] = uid
+        
+        # Save to subcollection
+        doc_ref = self.db.collection('users').document(uid).collection('hotel_strategies').add(strategy_data)
+        return doc_ref[1].id
+
+    def get_user_hotel_strategies(self, uid, limit=20):
+        """
+        Fetch recent hotel strategies for a user.
+        """
+        strategies_ref = self.db.collection('users').document(uid).collection('hotel_strategies')
+        query = strategies_ref.order_by('created_at', direction=firestore.Query.DESCENDING).limit(limit)
+        docs = query.stream()
+        return [{**doc.to_dict(), 'id': doc.id} for doc in docs]
+
+    def get_hotel_strategy(self, uid, strategy_id):
+        """
+        Fetch a specific strategy result.
+        """
+        doc_ref = self.db.collection('users').document(uid).collection('hotel_strategies').document(strategy_id)
+        doc = doc_ref.get()
+        if doc.exists:
+            return {**doc.to_dict(), 'id': doc.id}
+        return None
