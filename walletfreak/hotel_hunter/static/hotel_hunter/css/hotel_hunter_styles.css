@@ -1235,6 +1235,7 @@ body {
     /* w-16 */
     text-align: right;
 }
+
 /* --- Strategy History & Navigation --- */
 
 /* Navigation Tabs */
@@ -1534,9 +1535,20 @@ body {
     margin-top: 0.25rem;
 }
 
-.hh-rec-trophy.green { color: #16a34a; border: 1px solid #dcfce7; }
-.hh-rec-trophy.blue { color: #2563eb; border: 1px solid #dbeafe; }
-.hh-rec-trophy.yellow { color: #eab308; border: 1px solid #fef9c3; }
+.hh-rec-trophy.green {
+    color: #16a34a;
+    border: 1px solid #dcfce7;
+}
+
+.hh-rec-trophy.blue {
+    color: #2563eb;
+    border: 1px solid #dbeafe;
+}
+
+.hh-rec-trophy.yellow {
+    color: #eab308;
+    border: 1px solid #fef9c3;
+}
 
 .hh-rec-content {
     z-index: 10;
@@ -1565,9 +1577,17 @@ body {
     margin-bottom: 0.25rem;
 }
 
-.text-green-700 { color: #15803d; }
-.text-blue-700 { color: #1d4ed8; }
-.text-yellow-700 { color: #a16207; }
+.text-green-700 {
+    color: #15803d;
+}
+
+.text-blue-700 {
+    color: #1d4ed8;
+}
+
+.text-yellow-700 {
+    color: #a16207;
+}
 
 .hh-rec-title {
     font-size: 1.125rem;
@@ -1596,15 +1616,24 @@ body {
     padding: 0.375rem 0.75rem;
     background-color: rgba(255, 255, 255, 0.6);
     border-radius: 0.5rem;
-    border: 1px solid; /* color via subclass */
+    border: 1px solid;
+    /* color via subclass */
     font-size: 0.75rem;
     color: var(--text-slate-700);
     font-family: monospace;
 }
 
-.hh-detail-badge.green { border-color: #dcfce7; }
-.hh-detail-badge.blue { border-color: #dbeafe; }
-.hh-detail-badge.yellow { border-color: #fef9c3; }
+.hh-detail-badge.green {
+    border-color: #dcfce7;
+}
+
+.hh-detail-badge.blue {
+    border-color: #dbeafe;
+}
+
+.hh-detail-badge.yellow {
+    border-color: #fef9c3;
+}
 
 .hh-badge-label {
     display: block;
@@ -1627,6 +1656,7 @@ body {
     font-weight: 600;
     text-transform: uppercase;
 }
+
 .hh-fin-val-cancel {
     font-size: 0.875rem;
     font-weight: 700;
@@ -1634,14 +1664,20 @@ body {
     text-decoration: line-through;
     text-decoration-color: rgba(148, 163, 184, 0.5);
 }
+
 .hh-fin-val-big {
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--text-slate-900);
 }
 
-.text-slate-400 { color: #94a3b8; }
-.text-green-600 { color: #16a34a; }
+.text-slate-400 {
+    color: #94a3b8;
+}
+
+.text-green-600 {
+    color: #16a34a;
+}
 
 /* Options Grid */
 .hh-grid-header {
@@ -1682,7 +1718,9 @@ body {
 }
 
 @media (min-width: 768px) {
-    .hh-opt-col-method { grid-column: span 4 / span 4; }
+    .hh-opt-col-method {
+        grid-column: span 4 / span 4;
+    }
 }
 
 .hh-opt-col-breakdown {
@@ -1703,13 +1741,23 @@ body {
     grid-column: span 3 / span 3;
     text-align: right;
 }
-@media (min-width: 768px) { .hh-opt-col-upfront { grid-column: span 2 / span 2; } }
+
+@media (min-width: 768px) {
+    .hh-opt-col-upfront {
+        grid-column: span 2 / span 2;
+    }
+}
 
 .hh-opt-col-effective {
     grid-column: span 3 / span 3;
     text-align: right;
 }
-@media (min-width: 768px) { .hh-opt-col-effective { grid-column: span 2 / span 2; } }
+
+@media (min-width: 768px) {
+    .hh-opt-col-effective {
+        grid-column: span 2 / span 2;
+    }
+}
 
 .hh-opt-icon-box {
     padding: 0.5rem;
@@ -1719,6 +1767,7 @@ body {
     flex-shrink: 0;
     transition: background-color 0.2s;
 }
+
 .hh-opt-row:hover .hh-opt-icon-box {
     background-color: white;
     border-color: var(--border-slate-200);
@@ -1729,6 +1778,7 @@ body {
     font-weight: 700;
     color: var(--text-slate-700);
 }
+
 .hh-opt-subtitle {
     font-size: 0.75rem;
     color: var(--text-slate-500);
@@ -1739,6 +1789,7 @@ body {
     color: var(--text-slate-500);
     font-weight: 500;
 }
+
 .hh-opt-val-pri {
     font-size: 0.875rem;
     color: var(--text-slate-900);
@@ -1751,6 +1802,7 @@ body {
     color: var(--text-slate-500);
     margin-bottom: 0.25rem;
 }
+
 .hh-tag-cpp {
     padding: 0.125rem 0.375rem;
     border-radius: 0.25rem;
@@ -1798,11 +1850,25 @@ body {
     }
 }
 
-.hh-brand-stripe.hyatt { background-color: #2563eb; }
-.hh-brand-stripe.hilton { background-color: #0ea5e9; }
-.hh-brand-stripe.marriott { background-color: #ea580c; }
-.hh-brand-stripe.ihg { background-color: #f97316; }
-.hh-brand-stripe.independent { background-color: #1e293b; }
+.hh-brand-stripe.hyatt {
+    background-color: #2563eb;
+}
+
+.hh-brand-stripe.hilton {
+    background-color: #0ea5e9;
+}
+
+.hh-brand-stripe.marriott {
+    background-color: #ea580c;
+}
+
+.hh-brand-stripe.ihg {
+    background-color: #f97316;
+}
+
+.hh-brand-stripe.independent {
+    background-color: #1e293b;
+}
 
 /* Card Content Area */
 .hh-hotel-card-content {
@@ -2002,7 +2068,8 @@ body {
 .hh-earning-pts {
     font-size: 0.75rem;
     font-weight: 700;
-    color: #059669; /* emerald-600 */
+    color: #059669;
+    /* emerald-600 */
 }
 
 .hh-earning-pts.neutral {
@@ -2020,13 +2087,17 @@ body {
 }
 
 .hh-earning-badge.cash {
-    background-color: #d1fae5; /* emerald-100 */
-    color: #047857; /* emerald-700 */
+    background-color: #d1fae5;
+    /* emerald-100 */
+    color: #047857;
+    /* emerald-700 */
 }
 
 .hh-earning-badge.cpp {
-    background-color: #dbeafe; /* blue-100 */
-    color: #1d4ed8; /* blue-700 */
+    background-color: #dbeafe;
+    /* blue-100 */
+    color: #1d4ed8;
+    /* blue-700 */
 }
 
 /* Effective Column */
@@ -2041,10 +2112,21 @@ body {
 }
 
 /* Icon Colors */
-.hh-icon-yellow { color: #eab308; }
-.hh-icon-blue { color: #3b82f6; }
-.hh-icon-indigo { color: #4f46e5; }
-.hh-icon-slate { color: #94a3b8; }
+.hh-icon-yellow {
+    color: #eab308;
+}
+
+.hh-icon-blue {
+    color: #3b82f6;
+}
+
+.hh-icon-indigo {
+    color: #4f46e5;
+}
+
+.hh-icon-slate {
+    color: #94a3b8;
+}
 
 
 /* Download Prompt Link */
@@ -2066,4 +2148,121 @@ body {
 .hh-download-prompt-link:hover {
     background-color: var(--border-slate-200);
     color: var(--text-slate-900);
+}
+
+/* Prompt Modal */
+.hh-prompt-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 0.2s;
+    padding: 1rem;
+}
+
+.hh-prompt-modal-overlay.hh-hidden {
+    opacity: 0;
+    pointer-events: none;
+    display: flex !important;
+    /* Override base hh-hidden display:none */
+}
+
+.hh-prompt-modal-content {
+    background-color: white;
+    border-radius: 1rem;
+    max-width: 56rem;
+    width: 100%;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    transform: scale(0.95);
+    transition: transform 0.2s;
+}
+
+.hh-prompt-modal-overlay.hh-hidden .hh-prompt-modal-content {
+    transform: scale(0.95);
+}
+
+.hh-prompt-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-slate-200);
+}
+
+.hh-prompt-modal-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-slate-900);
+    margin: 0;
+}
+
+.hh-prompt-modal-close {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: var(--text-slate-400);
+    border-radius: 0.5rem;
+    transition: all 0.15s;
+}
+
+.hh-prompt-modal-close:hover {
+    background-color: var(--bg-slate-100);
+    color: var(--text-slate-600);
+}
+
+.hh-prompt-modal-body {
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.hh-prompt-text {
+    background-color: var(--bg-slate-50);
+    border: 1px solid var(--border-slate-200);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: var(--text-slate-700);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin: 0;
+}
+
+.hh-prompt-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border-slate-200);
+}
+
+.hh-btn-secondary {
+    background-color: var(--bg-slate-100);
+    color: var(--text-slate-700);
+    border: 1px solid var(--border-slate-200);
+}
+
+.hh-btn-secondary:hover {
+    background-color: var(--border-slate-200);
+}
+
+.hh-btn svg {
+    flex-shrink: 0;
 }

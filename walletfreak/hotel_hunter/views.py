@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from core.services import db
 from core.services.amadeus_service import AmadeusService
 from django.conf import settings
@@ -38,8 +38,6 @@ VALUATIONS = {
     'sonesta_travel_pass': 0.8,
 }
 
-def get_valuation(program_id):
-    return VALUATIONS.get(program_id, 1.0)
 
 def load_hotel_mapping():
     mapping = {}
@@ -56,24 +54,6 @@ def load_hotel_mapping():
                     }
     return mapping
 
-def identify_user_cards(user_cards):
-    inventory = {
-        'has_amex_plat': False, 'has_amex_gold': False,
-        'has_chase_csr': False, 'has_chase_csp': False, 'has_chase_cip': False,
-        'has_capital_one_vx': False,
-    }
-    for c in user_cards:
-        name = c.get('name', '').lower()
-        issuer = c.get('issuer', '').lower()
-        if 'american express' in issuer or 'amex' in name:
-            if 'platinum' in name: inventory['has_amex_plat'] = True
-            if 'gold' in name: inventory['has_amex_gold'] = True
-        if 'chase' in issuer:
-            if 'reserve' in name: inventory['has_chase_csr'] = True
-            if 'preferred' in name: inventory['has_chase_csp'] = True
-            if 'ink business preferred' in name: inventory['has_chase_cip'] = True
-        if 'venture x' in name: inventory['has_capital_one_vx'] = True
-    return inventory
 
 def get_brand_class(program_id):
     """Maps loyalty program to CSS class name for color bars."""
@@ -424,6 +404,13 @@ def strategy_report(request, strategy_id):
         # Handle not found or unauthorized
         return render(request, 'hotel_hunter/index.html', {'error': 'Report not found'})
         
+    # Check if user is super staff
+    is_super_staff = False
+    if uid:
+        user_profile = db.get_user_profile(uid)
+        if user_profile:
+            is_super_staff = user_profile.get('is_super_staff', False)
+
     context = {
         'analysis': {'analysis_results': strategy.get('analysis_results', [])},
         'search_params': {
@@ -433,7 +420,9 @@ def strategy_report(request, strategy_id):
             'guests': strategy.get('guests', '1')
         },
         'strategy_id': strategy_id,
-        'is_history_view': True
+        'is_history_view': True,
+        'prompt_used': strategy.get('prompt_used', ''),
+        'is_super_staff': is_super_staff
     }
     
     return render(request, 'hotel_hunter/strategy_report.html', context)

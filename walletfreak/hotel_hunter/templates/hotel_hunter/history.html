@@ -209,62 +209,123 @@ function closeProcessingModal(event) {
     }
 }
 
-// Live Status Polling
-(function() {
+function updateRowStatus(id, newStatus) {
+    const row = document.querySelector(`tr[data-strategy-id="${id}"]`);
+    if (!row) return;
+    
+    // Skip if status hasn't changed
+    if (row.dataset.status === newStatus) return;
+    
+    console.log(`🔄 Strategy ${id} status changed to: ${newStatus}`);
+    row.dataset.status = newStatus;
+    
+    // Update onclick handler
+    if (newStatus === 'ready') {
+        row.setAttribute('onclick', `window.location='/tools/hotel-hunter/report/${id}/'`);
+    } else if (newStatus === 'failed') {
+        row.removeAttribute('onclick');
+    }
+    
+    // Update status badge
+    const statusCell = row.querySelector('td:nth-child(4)');
+    if (statusCell && newStatus === 'ready') {
+        statusCell.innerHTML = `
+            <span class="hh-status-badge hh-status-ready">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-big"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg> 
+                Ready
+            </span>
+        `;
+    } else if (statusCell && newStatus === 'failed') {
+        statusCell.innerHTML = `
+            <span class="hh-status-badge" style="background-color: #fef2f2; color: #dc2626; border-color: #fecaca;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-circle"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg> 
+                Failed
+            </span>
+        `;
+    }
+    
+    // Update action column
+    const actionCell = row.querySelector('td:nth-child(5)');
+    if (actionCell && newStatus === 'ready') {
+        actionCell.innerHTML = `
+            <div class="hh-tr-action-link">
+                View Report 
+                <svg class="hh-tr-action-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"></path></svg>
+            </div>
+        `;
+    } else if (actionCell && newStatus === 'failed') {
+        actionCell.innerHTML = `<span style="font-size: 0.75rem; color: #dc2626; font-weight: 500;">Error</span>`;
+    }
+}
+</script>
+
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+import { getFirestore, collection, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
+
+// Firebase config from Django
+const firebaseConfig = {{ firebase_config_json|safe }};
+const uid = '{{ request.session.uid|default:"" }}';
+
+// Check if config has required fields (invalid config might be empty object or missing keys)
+const isValidConfig = firebaseConfig && firebaseConfig.apiKey && firebaseConfig.projectId;
+
+if (isValidConfig && uid) {
+    try {
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        // Set up real-time listener for hotel_strategies subcollection
+        const strategiesRef = collection(db, 'users', uid, 'hotel_strategies');
+        
+        console.log('🔥 Setting up Firestore real-time listener...');
+        
+        const unsubscribe = onSnapshot(strategiesRef, (snapshot) => {
+            snapshot.docChanges().forEach((change) => {
+                if (change.type === 'modified' || change.type === 'added') {
+                    const data = change.doc.data();
+                    const docId = change.doc.id;
+                    const newStatus = data.status;
+                    
+                    console.log(`📡 Real-time update: ${docId} -> ${newStatus}`);
+                    updateRowStatus(docId, newStatus);
+                }
+            });
+        }, (error) => {
+            console.error('Firestore listener error:', error);
+            // Fallback to polling if real-time fails
+            startPollingFallback();
+        });
+        
+        // Clean up on page unload
+        window.addEventListener('beforeunload', () => {
+            unsubscribe();
+        });
+    } catch (e) {
+        console.error('Firebase init error:', e);
+        startPollingFallback();
+    }
+} else {
+    console.log('No valid Firebase config or UID, using polling fallback');
+    startPollingFallback();
+}
+
+// Fallback polling if Firebase fails
+function startPollingFallback() {
+    console.log('🔄 Starting polling fallback...');
     const STATUS_CHECK_URL = '{% url "hotel_hunter:check_status" %}';
-    const POLL_INTERVAL = 3000; // 3 seconds
+    const POLL_INTERVAL = 3000;
     
     function getProcessingIds() {
         const rows = document.querySelectorAll('tr[data-status="processing"]');
         return Array.from(rows).map(row => row.dataset.strategyId);
     }
     
-    function updateRowStatus(id, newStatus) {
-        const row = document.querySelector(`tr[data-strategy-id="${id}"]`);
-        if (!row) return;
-        
-        row.dataset.status = newStatus;
-        
-        // Update onclick handler
-        if (newStatus === 'ready') {
-            row.setAttribute('onclick', `window.location='/tools/hotel-hunter/report/${id}/'`);
-        }
-        
-        // Update status badge
-        const statusCell = row.querySelector('td:nth-child(4)');
-        if (statusCell && newStatus === 'ready') {
-            statusCell.innerHTML = `
-                <span class="hh-status-badge hh-status-ready">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-big"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg> 
-                    Ready
-                </span>
-            `;
-        } else if (statusCell && newStatus === 'failed') {
-            statusCell.innerHTML = `
-                <span class="hh-status-badge" style="background-color: #fef2f2; color: #dc2626; border-color: #fecaca;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-circle"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg> 
-                    Failed
-                </span>
-            `;
-        }
-        
-        // Update action column
-        const actionCell = row.querySelector('td:nth-child(5)');
-        if (actionCell && newStatus === 'ready') {
-            actionCell.innerHTML = `
-                <div class="hh-tr-action-link">
-                    View Report 
-                    <svg class="hh-tr-action-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"></path></svg>
-                </div>
-            `;
-        } else if (actionCell && newStatus === 'failed') {
-            actionCell.innerHTML = `<span style="font-size: 0.75rem; color: #dc2626; font-weight: 500;">Error</span>`;
-        }
-    }
-    
     async function pollStatuses() {
         const ids = getProcessingIds();
-        if (ids.length === 0) return; // No processing items, stop polling
+        if (ids.length === 0) return;
         
         try {
             const response = await fetch(STATUS_CHECK_URL + '?ids=' + ids.join(','));
@@ -281,15 +342,13 @@ function closeProcessingModal(event) {
             console.error('Status poll error:', err);
         }
         
-        // Continue polling if there are still processing items
         if (getProcessingIds().length > 0) {
             setTimeout(pollStatuses, POLL_INTERVAL);
         }
     }
     
-    // Start polling if there are processing items
     if (getProcessingIds().length > 0) {
         setTimeout(pollStatuses, POLL_INTERVAL);
     }
-})();
+}
 </script>
