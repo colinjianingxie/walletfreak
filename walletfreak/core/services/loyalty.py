@@ -34,6 +34,28 @@ class LoyaltyMixin:
             print(f"Error fetching loyalty programs: {e}")
             return []
 
+    def get_loyalty_valuations(self):
+        """
+        Returns a dictionary of program_id -> valuation (float).
+        """
+        cached = cache.get('loyalty_valuations')
+        if cached:
+            return cached
+
+        programs = self.get_all_loyalty_programs()
+        valuations = {}
+        for p in programs:
+            pid = p.get('program_id') or p.get('id')
+            val = p.get('valuation')
+            if pid:
+                try:
+                    valuations[pid] = float(val) if val is not None else 0.0
+                except (ValueError, TypeError):
+                    valuations[pid] = 0.0
+        
+        cache.set('loyalty_valuations', valuations, timeout=3600)
+        return valuations
+
     def get_all_transfer_rules(self):
         """
         Fetch all transfer rules.
