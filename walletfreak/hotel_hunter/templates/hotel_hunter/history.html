@@ -1,0 +1,295 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block breadcrumb_section %}Tools / Hotel Hunter{% endblock %}
+{% block page_title %}Strategy History{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'hotel_hunter/css/hotel_hunter_styles.css' %}?v=4.1">
+{% endblock %}
+
+{% block main_style %}padding: 0; margin: 0; max-width: 100%; width: 100%; height: 100%;{% endblock %}
+
+{% block content %}
+<div class="hh-layout">
+    <!-- Header -->
+    <div class="hh-header-outer">
+        <div class="hh-header-inner">
+            <!-- Nav Tabs -->
+            <div class="hh-nav-tabs">
+                <a href="{% url 'hotel_hunter:index' %}" class="hh-nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg> 
+                    Find Hotels
+                </a>
+                <a href="{% url 'hotel_hunter:history' %}" class="hh-nav-link active">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-history"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M12 7v5l4 2"></path></svg> 
+                    Strategy History
+                </a>
+            </div>
+        </div>
+    </div>
+            
+    <div class="hh-history-layout">
+        <div class="hh-history-container">
+            <div class="hh-page-header">
+                <div>
+                    <h2 class="hh-page-title">Strategy Dashboard</h2>
+                    <p class="hh-page-subtitle">Manage and review your AI-powered redemption analyses.</p>
+                </div>
+            </div>
+            
+            {% if strategies %}
+            <div class="hh-table-card">
+                <table class="hh-table">
+                    <thead>
+                        <tr>
+                            <th class="hh-th">Destination</th>
+                            <th class="hh-th">Properties</th>
+                            <th class="hh-th">Date</th>
+                            <th class="hh-th">Status</th>
+                            <th class="hh-th" style="text-align: right;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for strat in strategies %}
+                        <tr class="hh-tr group" data-strategy-id="{{ strat.id }}" data-status="{{ strat.status }}" {% if strat.status != 'processing' %}onclick="window.location='{% url 'hotel_hunter:strategy_report' strat.id %}'"{% else %}onclick="showProcessingModal()"{% endif %}>
+                            <td class="hh-td">
+                                <div style="font-weight: 700; color: var(--text-slate-900);">{{ strat.location_text|default:"Unknown Location" }}</div>
+                                <div style="font-size: 0.75rem; color: var(--text-slate-500);">
+                                    {% if strat.check_in %}
+                                    {{ strat.check_in|date:"M d" }} - {{ strat.check_out|date:"M d" }} • {{ strat.guests }} Guests
+                                    {% else %}
+                                    Date Unknown
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td class="hh-td">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <div class="hh-avatar-stack">
+                                        <!-- Placeholder avatars since we don't save full hotel details in summary yet -->
+                                        <div class="hh-avatar-circle" style="background-color: var(--slate-800);">
+                                            {{ strat.hotel_count }}
+                                        </div>
+                                    </div>
+                                    <span style="font-size: 0.75rem; font-weight: 500; color: var(--text-slate-500);">{{ strat.hotel_count }} Hotels</span>
+                                </div>
+                            </td>
+                            <td class="hh-td" style="font-size: 0.875rem; color: var(--text-slate-600);">
+                                {{ strat.created_at|date:"n/j/Y" }} 
+                                <span style="color: var(--text-slate-400);">{{ strat.created_at|date:"h:i A" }}</span>
+                            </td>
+                            <td class="hh-td">
+                                {% if strat.status == 'processing' %}
+                                <span class="hh-status-badge hh-status-processing">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-circle animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg> 
+                                    Processing AI
+                                </span>
+                                {% else %}
+                                <span class="hh-status-badge hh-status-ready">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-big"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg> 
+                                    Ready
+                                </span>
+                                {% endif %}
+                            </td>
+                            <td class="hh-td" style="text-align: right;">
+                                {% if strat.status == 'processing' %}
+                                <span style="font-size: 0.75rem; color: var(--text-slate-400); font-weight: 500;">Please wait...</span>
+                                {% else %}
+                                <div class="hh-tr-action-link">
+                                    View Report 
+                                    <svg class="hh-tr-action-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"></path></svg>
+                                </div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="hh-empty-state">
+                <div class="hh-empty-icon-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-history"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M12 7v5l4 2"></path></svg>
+                </div>
+                <h3 class="hh-empty-title">No Strategies Yet</h3>
+                <p class="hh-empty-text">Run your first hotel search and analysis to see it appear here.</p>
+                <a href="{% url 'hotel_hunter:index' %}" class="hh-btn" style="display: inline-flex;">Find Hotels</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<!-- Processing Modal -->
+<div id="processingModal" class="hh-modal-overlay hh-hidden" onclick="closeProcessingModal(event)">
+    <div class="hh-modal-content">
+        <div class="hh-modal-icon-circle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-circle animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
+        </div>
+        <h3 class="hh-modal-title">Analysis in Progress</h3>
+        <p class="hh-modal-text">Our AI is currently analyzing thousands of data points to find the best strategy for you. This usually takes about 30 seconds.</p>
+        <button class="hh-btn" onclick="closeProcessingModal(event)" style="width: 100%;">Got it</button>
+    </div>
+</div>
+
+<style>
+.hh-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
+.hh-modal-overlay:not(.hh-hidden) {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.hh-modal-content {
+    background-color: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    max-width: 24rem;
+    text-align: center;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    transform: scale(0.95);
+    transition: transform 0.2s;
+}
+
+.hh-modal-overlay:not(.hh-hidden) .hh-modal-content {
+    transform: scale(1);
+}
+
+.hh-modal-icon-circle {
+    width: 4rem;
+    height: 4rem;
+    background-color: #eff6ff;
+    color: #2563eb;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.hh-modal-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-slate-900);
+    margin-bottom: 0.5rem;
+}
+
+.hh-modal-text {
+    font-size: 0.875rem;
+    color: var(--text-slate-500);
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+</style>
+
+<script>
+function showProcessingModal() {
+    document.getElementById('processingModal').classList.remove('hh-hidden');
+}
+
+function closeProcessingModal(event) {
+    if (event.target === document.getElementById('processingModal') || event.target.tagName === 'BUTTON') {
+        document.getElementById('processingModal').classList.add('hh-hidden');
+    }
+}
+
+// Live Status Polling
+(function() {
+    const STATUS_CHECK_URL = '{% url "hotel_hunter:check_status" %}';
+    const POLL_INTERVAL = 3000; // 3 seconds
+    
+    function getProcessingIds() {
+        const rows = document.querySelectorAll('tr[data-status="processing"]');
+        return Array.from(rows).map(row => row.dataset.strategyId);
+    }
+    
+    function updateRowStatus(id, newStatus) {
+        const row = document.querySelector(`tr[data-strategy-id="${id}"]`);
+        if (!row) return;
+        
+        row.dataset.status = newStatus;
+        
+        // Update onclick handler
+        if (newStatus === 'ready') {
+            row.setAttribute('onclick', `window.location='/tools/hotel-hunter/report/${id}/'`);
+        }
+        
+        // Update status badge
+        const statusCell = row.querySelector('td:nth-child(4)');
+        if (statusCell && newStatus === 'ready') {
+            statusCell.innerHTML = `
+                <span class="hh-status-badge hh-status-ready">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-big"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg> 
+                    Ready
+                </span>
+            `;
+        } else if (statusCell && newStatus === 'failed') {
+            statusCell.innerHTML = `
+                <span class="hh-status-badge" style="background-color: #fef2f2; color: #dc2626; border-color: #fecaca;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-circle"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg> 
+                    Failed
+                </span>
+            `;
+        }
+        
+        // Update action column
+        const actionCell = row.querySelector('td:nth-child(5)');
+        if (actionCell && newStatus === 'ready') {
+            actionCell.innerHTML = `
+                <div class="hh-tr-action-link">
+                    View Report 
+                    <svg class="hh-tr-action-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"></path></svg>
+                </div>
+            `;
+        } else if (actionCell && newStatus === 'failed') {
+            actionCell.innerHTML = `<span style="font-size: 0.75rem; color: #dc2626; font-weight: 500;">Error</span>`;
+        }
+    }
+    
+    async function pollStatuses() {
+        const ids = getProcessingIds();
+        if (ids.length === 0) return; // No processing items, stop polling
+        
+        try {
+            const response = await fetch(STATUS_CHECK_URL + '?ids=' + ids.join(','));
+            const data = await response.json();
+            
+            if (data.statuses) {
+                for (const [id, status] of Object.entries(data.statuses)) {
+                    if (status !== 'processing') {
+                        updateRowStatus(id, status);
+                    }
+                }
+            }
+        } catch (err) {
+            console.error('Status poll error:', err);
+        }
+        
+        // Continue polling if there are still processing items
+        if (getProcessingIds().length > 0) {
+            setTimeout(pollStatuses, POLL_INTERVAL);
+        }
+    }
+    
+    // Start polling if there are processing items
+    if (getProcessingIds().length > 0) {
+        setTimeout(pollStatuses, POLL_INTERVAL);
+    }
+})();
+</script>

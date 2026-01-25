@@ -1,0 +1,229 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block breadcrumb_section %}Tools / Hotel Hunter{% endblock %}
+{% block page_title %}Strategy Report{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'hotel_hunter/css/hotel_hunter_styles.css' %}?v=5.1">
+{% endblock %}
+
+{% block main_style %}padding: 0; margin: 0; max-width: 100%; width: 100%; height: 100%;{% endblock %}
+
+{% block content %}
+<div class="hh-report-layout">
+    <div class="hh-report-container animate-in">
+        <div class="hh-report-inner">
+            
+            <!-- Header -->
+            <div class="hh-report-header-row" style="margin-bottom: 2rem;">
+                <div>
+                    <a href="{% url 'hotel_hunter:history' %}" class="hh-back-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg> Back to History
+                    </a>
+                    <h2 class="hh-page-title">Strategy Report</h2>
+                    <p class="hh-page-subtitle">Analysis for {{ analysis.analysis_results|length }} properties in {{ search_params.location }} for {{ search_params.nights|default:'3' }} nights between {{ search_params.checkInDate }} and {{ search_params.checkOutDate }}</p>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 0.75rem;">
+                    <div class="hh-valuation-badge">
+                        <div class="hh-val-label">Valuation Model</div>
+                        <div class="hh-val-value">Custom (AI Analysis)</div>
+                    </div>
+                    <a href="{% url 'hotel_hunter:download_prompt' strategy_id %}" class="hh-download-prompt-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code"><path d="m16 18 6-6-6-6"></path><path d="m8 6-6 6 6 6"></path></svg>
+                        Download Prompt
+                    </a>
+                </div>
+            </div>
+
+            <!-- Results List -->
+            <div style="display: flex; flex-direction: column; gap: 2rem;">
+                {% for result in analysis.analysis_results %}
+                {% with strat=result.recommended_strategy %}
+                
+                <!-- Hotel Card -->
+                <div class="hh-hotel-card">
+                    <div class="hh-hotel-card-inner">
+                        
+                        <!-- Brand Color Stripe -->
+                        {% with brand=result.brand_name|lower|default:"" %}
+                        <div class="hh-brand-stripe 
+                            {% if 'hyatt' in brand or 'hyatt' in result.hotel_name|lower %}hyatt
+                            {% elif 'hilton' in brand or 'hilton' in result.hotel_name|lower %}hilton
+                            {% elif 'marriott' in brand or 'marriott' in result.hotel_name|lower %}marriott
+                            {% elif 'ihg' in brand or 'ihg' in result.hotel_name|lower %}ihg
+                            {% else %}independent{% endif %}">
+                        </div>
+                        {% endwith %}
+
+                        <div class="hh-hotel-card-content">
+                            
+                            <!-- Hotel Header -->
+                            <div class="hh-hotel-header">
+                                <div>
+                                    <h3 class="hh-hotel-title">{{ result.hotel_name }}</h3>
+                                    <div class="hh-hotel-meta">{{ result.brand_name }} • {{ result.star_rating }}</div>
+                                </div>
+                                <div class="hh-hotel-price-box">
+                                    <div class="hh-hotel-price">${{ result.cash_price|floatformat:0 }}</div>
+                                    <div class="hh-hotel-price-label">Cash Total</div>
+                                </div>
+                            </div>
+
+                            <!-- Recommended Strategy Card -->
+                            <div class="hh-rec-card 
+                                {% if strat.label_color == 'green' %}hh-rec-card-green
+                                {% elif strat.label_color == 'blue' %}hh-rec-card-blue
+                                {% else %}hh-rec-card-yellow{% endif %}">
+                                
+                                <!-- Background Icon -->
+                                <div class="hh-rec-bg-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line></svg>
+                                </div>
+
+                                <!-- Trophy Icon -->
+                                <div class="hh-rec-trophy 
+                                    {% if strat.label_color == 'green' %}green
+                                    {% elif strat.label_color == 'blue' %}blue
+                                    {% else %}yellow{% endif %}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trophy"><path d="M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978"></path><path d="M14 14.66v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978"></path><path d="M18 9h1.5a1 1 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"></path><path d="M6 9H4.5a1 1 0 0 1 0-5H6"></path></svg>
+                                </div>
+
+                                <!-- Content Flex -->
+                                <div class="hh-rec-content">
+                                    <div class="hh-rec-flex-row">
+                                        <div style="flex: 1;">
+                                            <div class="hh-rec-label 
+                                                {% if strat.label_color == 'green' %}text-green-700
+                                                {% elif strat.label_color == 'blue' %}text-blue-700
+                                                {% else %}text-yellow-700{% endif %}">
+                                                Recommended Strategy
+                                            </div>
+                                            <div class="hh-rec-title">{{ strat.title }}</div>
+                                            <div class="hh-rec-subtitle">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line></svg> 
+                                                {{ strat.description }}
+                                            </div>
+
+                                            <!-- Badges: Flow & Value -->
+                                            <div class="hh-badges-row">
+                                                {% if strat.flow %}
+                                                <div class="hh-detail-badge 
+                                                    {% if strat.label_color == 'green' %}green
+                                                    {% elif strat.label_color == 'blue' %}blue
+                                                    {% else %}yellow{% endif %}">
+                                                    <span class="hh-badge-label 
+                                                        {% if strat.label_color == 'green' %}text-green-700
+                                                        {% elif strat.label_color == 'blue' %}text-blue-700
+                                                        {% else %}text-yellow-700{% endif %}">Flow</span>
+                                                    {{ strat.flow }}
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+
+                                        <!-- Financials -->
+                                        <div class="hh-rec-financials">
+                                            <div>
+                                                <div class="hh-fin-label text-slate-400">Upfront</div>
+                                                <div class="hh-fin-val-cancel">
+                                                    {% if strat.upfront > 0 %}
+                                                        {% if strat.upfront_currency == 'pts' %}{{ strat.upfront|intcomma }} pts{% else %}${{ strat.upfront|intcomma }}{% endif %}
+                                                    {% else %}--{% endif %}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="hh-fin-label text-green-600">Effective Price</div>
+                                                <div class="hh-fin-val-big">${{ strat.effective|intcomma }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Options Grid -->
+                            <div class="hh-options-grid-container">
+                                <div class="hh-options-grid-header">
+                                    <div>Method</div>
+                                    <div class="text-center">Breakdown</div>
+                                    <div class="text-right">Upfront</div>
+                                    <div class="text-right">Earning</div>
+                                    <div class="text-right">Effective</div>
+                                </div>
+                                
+                                <div class="hh-options-list">
+                                    {% for option in result.all_options %}
+                                    <div class="hh-option-item">
+                                        
+                                        <!-- Method Col -->
+                                        <div class="hh-opt-method">
+                                            <div class="hh-opt-icon-wrap">
+                                                {% if option.icon == 'star' %}
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hh-icon-yellow"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                                                {% elif option.icon == 'arrow-right-left' %}
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hh-icon-blue"><path d="m16 3 4 4-4 4"></path><path d="M20 7H4"></path><path d="m8 21-4-4 4-4"></path><path d="M4 17h16"></path></svg>
+                                                {% else %}
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hh-icon-slate"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line></svg>
+                                                {% endif %}
+                                            </div>
+                                            <div class="hh-opt-info">
+                                                <div class="hh-opt-label">{{ option.label }}</div>
+                                                <div class="hh-opt-sublabel">{{ option.sub_label }}</div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Breakdown Col -->
+                                        <div class="hh-opt-breakdown">
+                                            <span class="hh-opt-breakdown-text">{{ option.strategy_summary }}</span>
+                                        </div>
+
+                                        <!-- Upfront Col -->
+                                        <div class="hh-opt-upfront">
+                                            <div class="hh-opt-upfront-val">
+                                                {% if option.upfront > 0 %}
+                                                    {% if option.upfront_currency == 'pts' %}{{ option.upfront|intcomma }} pts
+                                                    {% elif option.upfront_currency == 'MR' %}{{ option.upfront|intcomma }} MR
+                                                    {% elif option.upfront_currency == 'miles' %}{{ option.upfront|intcomma }} mi
+                                                    {% else %}${{ option.upfront|intcomma }}{% endif %}
+                                                {% else %}--{% endif %}
+                                            </div>
+                                        </div>
+
+                                        <!-- Earning Col -->
+                                        <div class="hh-opt-earning">
+                                            {% if option.earning_nominal_currency == 'CPP' %}
+                                            <!-- Points redemption - show CPP badge -->
+                                            <div class="hh-earning-pts neutral">0 pts</div>
+                                            <div class="hh-earning-badge cpp">{{ option.earning_nominal }} cpp</div>
+                                            {% elif option.earning_nominal and option.earning_value %}
+                                            <!-- Cash booking - show points earned and value -->
+                                            <div class="hh-earning-pts">+{{ option.earning_nominal|intcomma }} {% if option.earning_nominal_currency == 'miles' %}mi{% else %}pts{% endif %}</div>
+                                            <div class="hh-earning-badge cash">~${{ option.earning_value|floatformat:0 }}</div>
+                                            {% else %}
+                                            <div class="hh-earning-pts neutral">--</div>
+                                            {% endif %}
+                                        </div>
+
+                                        <!-- Effective Col -->
+                                        <div class="hh-opt-effective">
+                                            <div class="hh-opt-effective-val">${{ option.effective|intcomma }}</div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                
+                {% endwith %}
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
