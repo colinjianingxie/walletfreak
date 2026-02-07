@@ -132,8 +132,8 @@ def dashboard(request):
                 benefit_type = benefit.get('benefit_type')
 
                 # Filter out non-trackable benefits for display lists
-                # We only want to show "Use it or Lose it" credits or capped insurance
-                if benefit_type in ['Protection', 'Bonus', 'Perk', 'Lounge', 'Status']:
+                # We only want to show "Use it or Lose it" credits
+                if benefit_type in ['Protection', 'Bonus', 'Perk', 'Lounge', 'Status', 'Insurance']:
                     continue
 
                 dollar_value = benefit.get('dollar_value')
