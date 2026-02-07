@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
-class HotelHunterConfig(AppConfig):
+class BookingOptimizerConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'hotel_hunter'
+    name = 'booking_optimizer'

@@ -2,11 +2,11 @@
 {% load humanize %}
 {% load static %}
 
-{% block breadcrumb_section %}Tools / Hotel Hunter{% endblock %}
+{% block breadcrumb_section %}Tools / Booking Optimizer{% endblock %}
 {% block page_title %}Strategy History{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'hotel_hunter/css/hotel_hunter_styles.css' %}?v=4.1">
+<link rel="stylesheet" href="{% static 'booking_optimizer/css/booking_optimizer_styles.css' %}?v=4.1">
 {% endblock %}
 
 {% block main_style %}padding: 0; margin: 0; max-width: 100%; width: 100%; height: 100%;{% endblock %}
@@ -18,11 +18,11 @@
         <div class="hh-header-inner">
             <!-- Nav Tabs -->
             <div class="hh-nav-tabs">
-                <a href="{% url 'hotel_hunter:index' %}" class="hh-nav-link">
+                <a href="{% url 'booking_optimizer:index' %}" class="hh-nav-link">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg> 
                     Find Hotels
                 </a>
-                <a href="{% url 'hotel_hunter:history' %}" class="hh-nav-link active">
+                <a href="{% url 'booking_optimizer:history' %}" class="hh-nav-link active">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-history"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M12 7v5l4 2"></path></svg> 
                     Strategy History
                 </a>
@@ -53,7 +53,7 @@
                     </thead>
                     <tbody>
                         {% for strat in strategies %}
-                        <tr class="hh-tr group" data-strategy-id="{{ strat.id }}" data-status="{{ strat.status }}" {% if strat.status != 'processing' %}onclick="window.location='{% url 'hotel_hunter:strategy_report' strat.id %}'"{% else %}onclick="showProcessingModal()"{% endif %}>
+                        <tr class="hh-tr group" data-strategy-id="{{ strat.id }}" data-status="{{ strat.status }}" {% if strat.status != 'processing' %}onclick="window.location='{% url 'booking_optimizer:strategy_report' strat.id %}'"{% else %}onclick="showProcessingModal()"{% endif %}>
                             <td class="hh-td">
                                 <div style="font-weight: 700; color: var(--text-slate-900);">{{ strat.location_text|default:"Unknown Location" }}</div>
                                 <div style="font-size: 0.75rem; color: var(--text-slate-500);">
@@ -114,7 +114,7 @@
                 </div>
                 <h3 class="hh-empty-title">No Strategies Yet</h3>
                 <p class="hh-empty-text">Run your first hotel search and analysis to see it appear here.</p>
-                <a href="{% url 'hotel_hunter:index' %}" class="hh-btn" style="display: inline-flex;">Find Hotels</a>
+                <a href="{% url 'booking_optimizer:index' %}" class="hh-btn" style="display: inline-flex;">Find Hotels</a>
             </div>
             {% endif %}
         </div>
@@ -221,7 +221,7 @@ function updateRowStatus(id, newStatus) {
     
     // Update onclick handler
     if (newStatus === 'ready') {
-        row.setAttribute('onclick', `window.location='/tools/hotel-hunter/report/${id}/'`);
+        row.setAttribute('onclick', `window.location='/tools/booking-optimizer/report/${id}/'`);
     } else if (newStatus === 'failed') {
         row.removeAttribute('onclick');
     }
@@ -315,7 +315,7 @@ if (isValidConfig && uid) {
 // Fallback polling if Firebase fails
 function startPollingFallback() {
     console.log('🔄 Starting polling fallback...');
-    const STATUS_CHECK_URL = '{% url "hotel_hunter:check_status" %}';
+    const STATUS_CHECK_URL = '{% url "booking_optimizer:check_status" %}';
     const POLL_INTERVAL = 3000;
     
     function getProcessingIds() {

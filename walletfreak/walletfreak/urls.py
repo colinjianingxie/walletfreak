@@ -35,7 +35,8 @@ urlpatterns = [
     path('datapoints/', include('datapoints.urls')),
     path('calculators/', include('calculators.urls')),
     path('subscriptions/', include('subscriptions.urls')),
-    path('tools/hotel-hunter/', include('hotel_hunter.urls')),
+    path('tools/booking-optimizer/', include('booking_optimizer.urls')),
+    path('tools/award-scout/', include('award_scout.urls')),
     path('custom-admin/', include('custom_admin.urls')),
 ]
 
