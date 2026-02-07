@@ -2,11 +2,11 @@
 {% load static %}
 {% load humanize %}
 
-{% block breadcrumb_section %}Tools / Hotel Hunter{% endblock %}
+{% block breadcrumb_section %}Tools / Booking Optimizer{% endblock %}
 {% block page_title %}Strategy Report{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'hotel_hunter/css/hotel_hunter_styles.css' %}?v=5.1">
+<link rel="stylesheet" href="{% static 'booking_optimizer/css/booking_optimizer_styles.css' %}?v=5.1">
 {% endblock %}
 
 {% block main_style %}padding: 0; margin: 0; max-width: 100%; width: 100%; height: 100%;{% endblock %}
@@ -19,7 +19,7 @@
             <!-- Header -->
             <div class="hh-report-header-row" style="margin-bottom: 2rem;">
                 <div>
-                    <a href="{% url 'hotel_hunter:history' %}" class="hh-back-link">
+                    <a href="{% url 'booking_optimizer:history' %}" class="hh-back-link">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg> Back to History
                     </a>
                     <h2 class="hh-page-title">Strategy Report</h2>
@@ -251,7 +251,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
                 Copy
             </button>
-            <a href="{% url 'hotel_hunter:download_prompt' strategy_id %}" class="hh-btn">
+            <a href="{% url 'booking_optimizer:download_prompt' strategy_id %}" class="hh-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
                 Download
             </a>

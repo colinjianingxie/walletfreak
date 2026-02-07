@@ -42,7 +42,7 @@ def index(request):
         )
         context['hotels'] = hotels
 
-    return render(request, 'hotel_hunter/index.html', context)
+    return render(request, 'booking_optimizer/index.html', context)
 
 
 @login_required
@@ -72,7 +72,7 @@ def compare(request):
             )
             
             # Redirect to History
-            return redirect('hotel_hunter:history')
+            return redirect('booking_optimizer:history')
             
         except Exception as e:
             print(f"Error initiating strategy: {e}")
@@ -92,7 +92,7 @@ def compare(request):
             'guests': guests
         }
     }
-    return render(request, 'hotel_hunter/strategy_report.html', context)
+    return render(request, 'booking_optimizer/strategy_report.html', context)
 
 @login_required
 def history(request):
@@ -113,7 +113,7 @@ def history(request):
             except:
                 pass
     
-    return render(request, 'hotel_hunter/history.html', {'strategies': strategies})
+    return render(request, 'booking_optimizer/history.html', {'strategies': strategies})
 
 @login_required
 def strategy_report(request, strategy_id):
@@ -128,7 +128,7 @@ def strategy_report(request, strategy_id):
         
     if not strategy:
         # Handle not found or unauthorized
-        return render(request, 'hotel_hunter/index.html', {'error': 'Report not found'})
+        return render(request, 'booking_optimizer/index.html', {'error': 'Report not found'})
         
     # Check if user is super staff
     is_super_staff = False
@@ -151,7 +151,7 @@ def strategy_report(request, strategy_id):
         'is_super_staff': is_super_staff
     }
     
-    return render(request, 'hotel_hunter/strategy_report.html', context)
+    return render(request, 'booking_optimizer/strategy_report.html', context)
 
 
 @login_required

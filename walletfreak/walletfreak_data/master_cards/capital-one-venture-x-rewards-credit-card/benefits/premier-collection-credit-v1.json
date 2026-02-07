@@ -10,7 +10,7 @@
         "Hotels",
         "Hotel Experience Credits"
     ],
-    "benefit_type": "Credit",
+    "benefit_type": "Perk",
     "numeric_value": 100.0,
     "numeric_type": "Cash",
     "dollar_value": 100,

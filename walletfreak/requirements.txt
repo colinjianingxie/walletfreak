@@ -15,3 +15,6 @@ amadeus
 selenium
 webdriver-manager
 xai-sdk
+beautifulsoup4
+playwright
+playwright-stealth

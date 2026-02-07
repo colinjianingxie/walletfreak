@@ -66,13 +66,14 @@ INSTALLED_APPS = [
     'accounts',
     'cards',
     'dashboard',
+    'award_scout',
     'blog',
     'custom_admin',
     'firestore',
     'calculators',
     'datapoints',
     'subscriptions',
-    'hotel_hunter',
+    'booking_optimizer',
 ]
 
 MIDDLEWARE = [

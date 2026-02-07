@@ -10,7 +10,7 @@
         "Capital One Lounge",
         "Priority Pass Select"
     ],
-    "benefit_type": "Access",
+    "benefit_type": "Lounge",
     "numeric_value": 3,
     "numeric_type": "Lounge",
     "dollar_value": null,

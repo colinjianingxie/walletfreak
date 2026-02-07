@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block breadcrumb_section %}Tools{% endblock %}
-{% block page_title %}Hotel Hunter{% endblock %}
+{% block breadcrumb_section %}Tools / Booking Optimizer{% endblock %}
+{% block page_title %}Booking Optimizer{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'hotel_hunter/css/hotel_hunter_styles.css' %}?v=3.5">
+<link rel="stylesheet" href="{% static 'booking_optimizer/css/booking_optimizer_styles.css' %}?v=3.5">
 {% endblock %}
 
 {# Override main_style to allow full width and zero padding #}
@@ -18,18 +18,18 @@
         <div class="hh-header-inner">
             <!-- Nav Tabs -->
             <div class="hh-nav-tabs" style="margin-right: 2rem;">
-                <a href="{% url 'hotel_hunter:index' %}" class="hh-nav-link active">
+                <a href="{% url 'booking_optimizer:index' %}" class="hh-nav-link active">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg> 
                     Find Hotels
                 </a>
-                <a href="{% url 'hotel_hunter:history' %}" class="hh-nav-link">
+                <a href="{% url 'booking_optimizer:history' %}" class="hh-nav-link">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-history"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M12 7v5l4 2"></path></svg> 
                     Strategy History
                 </a>
             </div>
 
             <div class="hh-search-row">
-                <form id="searchForm" method="GET" action="{% url 'hotel_hunter:index' %}" style="display:contents;" onsubmit="showLoader()">
+                <form id="searchForm" method="GET" action="{% url 'booking_optimizer:index' %}" style="display:contents;" onsubmit="showLoader()">
                     
                     <!-- Location -->
                     <div class="hh-input-wrapper-loc">
@@ -147,7 +147,7 @@
                         <span class="hh-subtext">Select up to 5 to compare</span>
                     </div>
 
-                    <form id="compareForm" method="POST" action="{% url 'hotel_hunter:compare' %}" onsubmit="showAnalysisLoader()">
+                    <form id="compareForm" method="POST" action="{% url 'booking_optimizer:compare' %}" onsubmit="showAnalysisLoader()">
                         {% csrf_token %}
                         <input type="hidden" name="location" value="{{ request.GET.location }}">
                         <input type="hidden" name="checkInDate" value="{{ request.GET.checkInDate|default:default_check_in }}">

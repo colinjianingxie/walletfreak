@@ -131,8 +131,9 @@ def dashboard(request):
             for idx, benefit in enumerate(card_details.get('benefits', [])):
                 benefit_type = benefit.get('benefit_type')
 
-                # Filter out Protection and Bonus benefits for display lists
-                if benefit_type in ['Protection', 'Bonus']:
+                # Filter out non-trackable benefits for display lists
+                # We only want to show "Use it or Lose it" credits
+                if benefit_type in ['Protection', 'Bonus', 'Perk', 'Lounge', 'Status', 'Insurance']:
                     continue
 
                 dollar_value = benefit.get('dollar_value')
