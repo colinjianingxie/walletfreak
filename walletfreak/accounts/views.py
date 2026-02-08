@@ -47,11 +47,32 @@ def firebase_login(request):
         # Always update email
         user.email = email
         
-        # Only update name if it's currently empty or user is new
-        if not user.first_name:
-            user.first_name = first_name
-        if not user.last_name:
-            user.last_name = last_name
+        # SOURCE OF TRUTH: Firestore Profile
+        # Fetch profile early to respect existing names
+        existing_profile = db.get_user_profile(uid)
+        
+        if existing_profile:
+            fs_first = existing_profile.get('first_name')
+            fs_last = existing_profile.get('last_name')
+            
+            # If Firestore has names, force sync them to Django User
+            # This fixes the issue where login overwrites with Google Name if Django User somehow lost the name
+            if fs_first:
+                user.first_name = fs_first
+            if fs_last:
+                user.last_name = fs_last
+                
+            # If Firestore is empty, AND Django is empty, try Token
+            if not user.first_name:
+                user.first_name = first_name
+            if not user.last_name:
+                user.last_name = last_name
+        else:
+            # No profile yet, use token defaults if Django user is empty
+            if not user.first_name:
+                user.first_name = first_name
+            if not user.last_name:
+                user.last_name = last_name
             
         if created:
             user.set_unusable_password()
@@ -63,7 +84,7 @@ def firebase_login(request):
             
         # Create or Update Firestore profile
         # Check if exists to preserve other fields like personality and is_super_staff
-        existing_profile = db.get_user_profile(uid)
+        # Note: existing_profile is already fetched above
         
         if not existing_profile:
             # New user - set defaults
