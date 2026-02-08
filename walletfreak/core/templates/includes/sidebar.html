@@ -123,6 +123,7 @@
             </div>
 
             <!-- Premium Upgrade Card (Conditional) -->
+            {% comment %}
             {% if not user_is_premium %}
             <div class="upgrade-card" style="margin-top: 2rem;">
                 <div style="display: flex; align-items: start; justify-content: space-between; margin-bottom: 0.75rem;">
@@ -134,6 +135,7 @@
                 <a href="{% url 'pricing' %}" class="upgrade-btn">Upgrade Now</a>
             </div>
             {% endif %}
+            {% endcomment %}
         </div>
 
         <!-- User Profile & Logout (Pushed to bottom, but scrollable if needed) -->

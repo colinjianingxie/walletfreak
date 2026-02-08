@@ -44,16 +44,18 @@
                 <a href="{% url 'datapoint_list' %}" data-nav="datapoints" class="{% if '/datapoints' in request.path %}active{% endif %}">Data Points</a>
                 <a href="{% url 'contact' %}" data-nav="contact" class="{% if '/contact' in request.path %}active{% endif %}">Contact</a>
                 
+                {% comment %}
                 {% if not user_is_premium %}
                 <a href="{% url 'pricing' %}" data-nav="pricing" class="nav-item-premium {% if '/pricing' in request.path %}active{% endif %}">Premium</a>
                 {% endif %}
+                {% endcomment %}
                 {% else %}
                 <a href="{% url 'features' %}" data-nav="features" class="{% if '/features' in request.path %}active{% endif %}">Features</a>
                 <a href="{% url 'card_list' %}" data-nav="explore" class="{% if '/cards' in request.path or '/explore' in request.path %}active{% endif %}">Explore</a>
                 <a href="{% url 'personality_list' %}" data-nav="personalities" class="{% if '/personalities' in request.path or '/freaks' in request.path %}active{% endif %}">Freaks</a>
                 <a href="{% url 'blog_list' %}" data-nav="blog" class="{% if '/blog' in request.path or '/ledger' in request.path %}active{% endif %}">Ledger</a>
                 <a href="{% url 'contact' %}" data-nav="contact" class="{% if '/contact' in request.path %}active{% endif %}">Contact</a>
-                <a href="{% url 'pricing' %}" data-nav="pricing" class="nav-item-premium {% if '/pricing' in request.path %}active{% endif %}">Premium</a>
+                <!-- <a href="{% url 'pricing' %}" data-nav="pricing" class="nav-item-premium {% if '/pricing' in request.path %}active{% endif %}">Premium</a> -->
                 {% endif %}
             </div>
 
@@ -110,6 +112,7 @@
                     <div style="padding: 0.75rem;">
                         <div style="display: flex; flex-direction: column; gap: 0.75rem;">
                             
+                            {% comment %}
                             {% if not user_is_premium %}
                             <!-- Upgrade to Premium -->
                             <a href="{% url 'pricing' %}" class="user-dropdown-item" style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1.25rem; border-radius: 1rem; color: #F59E0B; text-decoration: none; transition: background-color 0.2s, color 0.2s; background-color: #FFFBEB;">
@@ -120,6 +123,7 @@
                             </a>
                             <div style="height: 1px; background: #f1f5f9; margin: 0 1rem;"></div>
                             {% endif %}
+                            {% endcomment %}
 
                             <!-- My Profile -->
                             <a href="{% url 'profile' %}" class="user-dropdown-item" style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1.25rem; border-radius: 1rem; color: #475569; text-decoration: none; transition: background-color 0.2s, color 0.2s;">
@@ -312,13 +316,13 @@
                 <span class="mobile-menu-indicator" style="{% if '/contact' in request.path %}display: block;{% endif %}"></span>
             </a>
 
-            <a href="{% url 'pricing' %}" class="mobile-menu-item {% if '/pricing' in request.path %}active{% endif %}" data-nav="pricing">
+            <!-- <a href="{% url 'pricing' %}" class="mobile-menu-item {% if '/pricing' in request.path %}active{% endif %}" data-nav="pricing">
                 <div class="mobile-menu-icon" style="{% if '/pricing' in request.path %}background: #FFFBEB; color: #D97706;{% endif %}">
                     <span class="material-icons">auto_awesome</span>
                 </div>
                 <span class="mobile-menu-text">Premium</span>
                 <span class="mobile-menu-indicator" style="{% if '/pricing' in request.path %}display: block;{% endif %}"></span>
-            </a>
+            </a> -->
             {% endif %}
         </div>
 
