@@ -1,0 +1,115 @@
+import { Platform } from 'react-native';
+
+const fontFamily = Platform.select({
+  ios: 'Outfit',
+  android: 'Outfit',
+  default: 'Outfit',
+});
+
+export const typography = {
+  displayLarge: {
+    fontFamily,
+    fontSize: 57,
+    fontWeight: '400' as const,
+    lineHeight: 64,
+    letterSpacing: -0.25,
+  },
+  displayMedium: {
+    fontFamily,
+    fontSize: 45,
+    fontWeight: '400' as const,
+    lineHeight: 52,
+    letterSpacing: 0,
+  },
+  displaySmall: {
+    fontFamily,
+    fontSize: 36,
+    fontWeight: '400' as const,
+    lineHeight: 44,
+    letterSpacing: 0,
+  },
+  headlineLarge: {
+    fontFamily,
+    fontSize: 32,
+    fontWeight: '400' as const,
+    lineHeight: 40,
+    letterSpacing: 0,
+  },
+  headlineMedium: {
+    fontFamily,
+    fontSize: 28,
+    fontWeight: '400' as const,
+    lineHeight: 36,
+    letterSpacing: 0,
+  },
+  headlineSmall: {
+    fontFamily,
+    fontSize: 24,
+    fontWeight: '400' as const,
+    lineHeight: 32,
+    letterSpacing: 0,
+  },
+  titleLarge: {
+    fontFamily,
+    fontSize: 22,
+    fontWeight: '500' as const,
+    lineHeight: 28,
+    letterSpacing: 0,
+  },
+  titleMedium: {
+    fontFamily,
+    fontSize: 16,
+    fontWeight: '500' as const,
+    lineHeight: 24,
+    letterSpacing: 0.15,
+  },
+  titleSmall: {
+    fontFamily,
+    fontSize: 14,
+    fontWeight: '500' as const,
+    lineHeight: 20,
+    letterSpacing: 0.1,
+  },
+  bodyLarge: {
+    fontFamily,
+    fontSize: 16,
+    fontWeight: '400' as const,
+    lineHeight: 24,
+    letterSpacing: 0.5,
+  },
+  bodyMedium: {
+    fontFamily,
+    fontSize: 14,
+    fontWeight: '400' as const,
+    lineHeight: 20,
+    letterSpacing: 0.25,
+  },
+  bodySmall: {
+    fontFamily,
+    fontSize: 12,
+    fontWeight: '400' as const,
+    lineHeight: 16,
+    letterSpacing: 0.4,
+  },
+  labelLarge: {
+    fontFamily,
+    fontSize: 14,
+    fontWeight: '500' as const,
+    lineHeight: 20,
+    letterSpacing: 0.1,
+  },
+  labelMedium: {
+    fontFamily,
+    fontSize: 12,
+    fontWeight: '500' as const,
+    lineHeight: 16,
+    letterSpacing: 0.5,
+  },
+  labelSmall: {
+    fontFamily,
+    fontSize: 11,
+    fontWeight: '500' as const,
+    lineHeight: 16,
+    letterSpacing: 0.5,
+  },
+} as const;

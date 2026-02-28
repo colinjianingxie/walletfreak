@@ -7,7 +7,9 @@ python-dateutil
 markdown>=3.9
 whitenoise
 python-dotenv
+django-ninja>=1.0
 stripe
+certifi
 psycopg2-binary
 dj-database-url
 

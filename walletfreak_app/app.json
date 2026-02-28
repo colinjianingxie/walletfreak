@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "WalletFreak",
+    "slug": "walletfreak",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "scheme": "walletfreak",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#6750A4"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.walletfreak.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#6750A4",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "package": "com.walletfreak.app"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      "expo-image",
+      "expo-web-browser",
+      "expo-font"
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "walletfreak"
+      }
+    }
+  }
+}

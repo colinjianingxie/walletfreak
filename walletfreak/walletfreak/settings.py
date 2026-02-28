@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'datapoints',
     'subscriptions',
     'booking_optimizer',
+    'api',
 ]
 
 MIDDLEWARE = [
