@@ -4,6 +4,7 @@ import { Text, Avatar, Surface, Button, Divider, useTheme } from 'react-native-p
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ScreenContainer } from '../../src/components/layout/ScreenContainer';
+import { PersonalityAvatar } from '../../src/components/personality/PersonalityAvatar';
 import { useAuthStore } from '../../src/stores/authStore';
 import { logout } from '../../src/firebase/auth';
 
@@ -66,16 +67,23 @@ export default function ProfileScreen() {
     <ScreenContainer>
       {/* Profile Header */}
       <View style={styles.header}>
-        <Avatar.Text
-          size={72}
-          label={
-            profile?.first_name
-              ? `${profile.first_name[0]}${profile.last_name?.[0] || ''}`
-              : '?'
-          }
-          style={{ backgroundColor: theme.colors.primaryContainer }}
-          labelStyle={{ color: theme.colors.onPrimaryContainer }}
-        />
+        {profile?.photo_url ? (
+          <PersonalityAvatar
+            slug={profile.photo_url.replace('/static/images/personalities/', '').replace('.png', '')}
+            size={72}
+          />
+        ) : (
+          <Avatar.Text
+            size={72}
+            label={
+              profile?.first_name
+                ? `${profile.first_name[0]}${profile.last_name?.[0] || ''}`
+                : '?'
+            }
+            style={{ backgroundColor: theme.colors.primaryContainer }}
+            labelStyle={{ color: theme.colors.onPrimaryContainer }}
+          />
+        )}
         <Text variant="titleLarge" style={styles.name}>
           {profile?.first_name} {profile?.last_name}
         </Text>

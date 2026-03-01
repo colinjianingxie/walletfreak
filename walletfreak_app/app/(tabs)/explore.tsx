@@ -12,6 +12,7 @@ import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LoadingState } from '../../src/components/layout/LoadingState';
 import { EmptyState } from '../../src/components/layout/EmptyState';
+import { CardImage } from '../../src/components/ui/CardImage';
 import { useCardList } from '../../src/hooks/useCards';
 import { useCardsStore } from '../../src/stores/cardsStore';
 import { formatCurrency } from '../../src/utils/formatters';
@@ -41,6 +42,7 @@ export default function ExploreScreen() {
           onPress={() => router.push(`/stacks/card-detail/${item.slug || item.id}` as any)}
           style={styles.cardPressable}
         >
+          <CardImage slug={item.slug || item.id} size="small" style={{ marginRight: 12 }} />
           <View style={styles.cardContent}>
             <Text variant="titleSmall" numberOfLines={1}>
               {item.name}
@@ -55,7 +57,17 @@ export default function ExploreScreen() {
               <Text variant="labelSmall" style={{ color: theme.colors.primary }}>
                 {formatCurrency(item.annual_fee)}/yr
               </Text>
-              {item.match_score !== undefined && (
+              {item.in_wallet && (
+                <Chip
+                  compact
+                  icon="check-circle"
+                  style={[styles.matchChip, { backgroundColor: theme.colors.secondaryContainer }]}
+                  textStyle={{ fontSize: 10, color: theme.colors.onSecondaryContainer }}
+                >
+                  In Wallet
+                </Chip>
+              )}
+              {item.match_score !== undefined && !item.in_wallet && (
                 <Chip
                   compact
                   style={[styles.matchChip, { backgroundColor: theme.colors.primaryContainer }]}

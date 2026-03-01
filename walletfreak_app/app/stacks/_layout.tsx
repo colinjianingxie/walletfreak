@@ -1,8 +1,11 @@
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
+import { Pressable } from 'react-native';
 import { useTheme } from 'react-native-paper';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function StacksLayout() {
   const theme = useTheme();
+  const router = useRouter();
 
   return (
     <Stack
@@ -11,6 +14,11 @@ export default function StacksLayout() {
         headerTintColor: theme.colors.onSurface,
         headerTitleStyle: { fontFamily: 'Outfit-Medium' },
         headerShadowVisible: false,
+        headerLeft: () => (
+          <Pressable onPress={() => router.back()} style={{ marginLeft: 8, padding: 4 }}>
+            <MaterialCommunityIcons name="arrow-left" size={24} color={theme.colors.onSurface} />
+          </Pressable>
+        ),
       }}
     >
       <Stack.Screen name="card-detail/[slug]" options={{ title: 'Card Details' }} />
@@ -29,6 +37,7 @@ export default function StacksLayout() {
       <Stack.Screen name="points-collection" options={{ title: 'Points Collection' }} />
       <Stack.Screen name="compare-cards" options={{ title: 'Compare Cards' }} />
       <Stack.Screen name="settings" options={{ title: 'Settings' }} />
+      <Stack.Screen name="wallet-card/[userCardId]" options={{ title: 'Card Benefits' }} />
     </Stack>
   );
 }

@@ -5,16 +5,23 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import { LoadingState } from '../../../src/components/layout/LoadingState';
+import { CardImage } from '../../../src/components/ui/CardImage';
 import { useCardDetail } from '../../../src/hooks/useCards';
-import { useAddCard } from '../../../src/hooks/useWallet';
+import { useAddCard, useWallet } from '../../../src/hooks/useWallet';
 import { formatCurrency } from '../../../src/utils/formatters';
 
 export default function CardDetailScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const { data: card, isLoading } = useCardDetail(slug);
+  const { data: walletData } = useWallet();
   const addCard = useAddCard();
   const router = useRouter();
   const theme = useTheme();
+
+  const isInWallet = walletData
+    ? [...(walletData.active_cards || []), ...(walletData.inactive_cards || []), ...(walletData.eyeing_cards || [])]
+        .some((c: any) => c.card_id === (card?.id || slug))
+    : false;
 
   if (isLoading || !card) {
     return <LoadingState message="Loading card..." />;
@@ -25,6 +32,9 @@ export default function CardDetailScreen() {
       style={[styles.container, { backgroundColor: theme.colors.background }]}
       contentContainerStyle={styles.content}
     >
+      {/* Card Image */}
+      <CardImage slug={slug || ''} size="large" style={{ marginBottom: 16 }} />
+
       {/* Card Header */}
       <View style={styles.header}>
         <Text variant="headlineSmall" style={styles.cardName}>
@@ -103,17 +113,28 @@ export default function CardDetailScreen() {
 
       {/* Actions */}
       <View style={styles.actions}>
-        <Button
-          mode="contained"
-          onPress={() =>
-            addCard.mutate({ cardId: card.id || slug })
-          }
-          loading={addCard.isPending}
-          style={styles.actionButton}
-          icon="plus"
-        >
-          Add to Wallet
-        </Button>
+        {isInWallet ? (
+          <Button
+            mode="contained"
+            disabled
+            style={styles.actionButton}
+            icon="check-circle"
+          >
+            Already in Wallet
+          </Button>
+        ) : (
+          <Button
+            mode="contained"
+            onPress={() =>
+              addCard.mutate({ cardId: card.id || slug })
+            }
+            loading={addCard.isPending}
+            style={styles.actionButton}
+            icon="plus"
+          >
+            Add to Wallet
+          </Button>
+        )}
         {card.referral_url && (
           <Button
             mode="outlined"

@@ -16,6 +16,8 @@ export interface CreditCard {
   is_524: boolean;
   loyalty_program: string | null;
   category: string;
+  in_wallet?: boolean;
+  match_score?: number;
 }
 
 export interface Benefit {

@@ -3,6 +3,7 @@ import { useColorScheme } from 'react-native';
 import { Stack, useRouter, useSegments } from 'expo-router';
 import { PaperProvider } from 'react-native-paper';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
   useFonts,
@@ -84,8 +85,10 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <QueryClientProvider client={queryClient}>
         <PaperProvider theme={theme}>
-          <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-          <InitialLayout />
+          <BottomSheetModalProvider>
+            <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+            <InitialLayout />
+          </BottomSheetModalProvider>
         </PaperProvider>
       </QueryClientProvider>
     </GestureHandlerRootView>
