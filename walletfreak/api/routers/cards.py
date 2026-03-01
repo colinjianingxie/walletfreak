@@ -1,3 +1,5 @@
+import random
+
 from ninja import Router, Query
 from django.http import JsonResponse
 from core.services import db
@@ -5,6 +7,24 @@ from api.auth_middleware import BearerAuth
 from api.schemas.cards import CardListParams
 
 router = Router(tags=["cards"])
+
+
+def _pick_referral_url(card: dict) -> str:
+    """Pick a referral URL using weighted random selection, falling back to application_link."""
+    referral_links = card.get("referral_links")
+    if referral_links:
+        population = []
+        weights = []
+        for item in referral_links:
+            if isinstance(item, str):
+                population.append(item)
+                weights.append(1)
+            elif isinstance(item, dict) and item.get("link"):
+                population.append(item["link"])
+                weights.append(item.get("weight", 1))
+        if population:
+            return random.choices(population, weights=weights, k=1)[0]
+    return card.get("application_link", "")
 
 
 @router.get("/", auth=BearerAuth())
@@ -183,7 +203,7 @@ def card_detail(request, slug: str):
             "welcome_requirement": card.get("welcome_requirement", ""),
             "loyalty_program": card.get("loyalty_program"),
             "is_524": card.get("is_524", True),
-            "referral_url": card.get("referral_url", ""),
+            "referral_url": _pick_referral_url(card),
             "freak_verdict": card.get("freak_verdict", ""),
             "match_score": match_score,
             "credits_value": credits_value,

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, Pressable } from 'react-native';
+import React, { useState, useCallback, useMemo } from 'react';
+import { View, StyleSheet, ScrollView, Pressable, Modal, Alert } from 'react-native';
 import { Text, Button, useTheme, Surface } from 'react-native-paper';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -13,6 +13,14 @@ import { formatCurrency } from '../../../src/utils/formatters';
 
 type TabKey = 'overview' | 'earning' | 'benefits';
 
+const MONTHS = [
+  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+];
+
+const currentYear = new Date().getFullYear();
+const YEARS = Array.from({ length: 15 }, (_, i) => currentYear - i);
+
 export default function CardDetailScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const { data: card, isLoading } = useCardDetail(slug);
@@ -22,11 +30,52 @@ export default function CardDetailScreen() {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
   const [activeTab, setActiveTab] = useState<TabKey>('overview');
+  const [showAnniversaryModal, setShowAnniversaryModal] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
+  const [selectedDay, setSelectedDay] = useState<number | null>(null);
+  const [selectedYear, setSelectedYear] = useState<number | null>(null);
+  const [useDefault, setUseDefault] = useState(false);
 
   const isInWallet = walletData
     ? [...(walletData.active_cards || []), ...(walletData.inactive_cards || []), ...(walletData.eyeing_cards || [])]
         .some((c: any) => c.card_id === (card?.id || slug))
     : false;
+
+  const handleOpenAnniversaryModal = useCallback(() => {
+    setSelectedMonth(null);
+    setSelectedDay(null);
+    setSelectedYear(null);
+    setUseDefault(false);
+    setShowAnniversaryModal(true);
+  }, []);
+
+  const daysInMonth = useMemo(() => {
+    if (selectedMonth === null || selectedYear === null) return 31;
+    return new Date(selectedYear, selectedMonth + 1, 0).getDate();
+  }, [selectedMonth, selectedYear]);
+
+  const handleAddWithAnniversary = useCallback(() => {
+    const cardId = card?.id || slug;
+    let anniversaryDate: string | undefined;
+    if (useDefault) {
+      anniversaryDate = 'default';
+    } else if (selectedMonth !== null && selectedYear !== null && selectedDay !== null) {
+      const mm = String(selectedMonth + 1).padStart(2, '0');
+      const dd = String(selectedDay).padStart(2, '0');
+      anniversaryDate = `${selectedYear}-${mm}-${dd}`;
+    }
+
+    addCard.mutate({ cardId, anniversaryDate }, {
+      onSuccess: () => {
+        setShowAnniversaryModal(false);
+        Alert.alert(
+          'Card Added',
+          `${card?.name || 'Card'} has been added to your wallet.`,
+          [{ text: 'OK' }]
+        );
+      },
+    });
+  }, [card, slug, useDefault, selectedMonth, selectedDay, selectedYear, addCard]);
 
   if (isLoading || !card) {
     return <LoadingState message="Loading card..." />;
@@ -251,13 +300,10 @@ export default function CardDetailScreen() {
         ) : (
           <Pressable
             style={styles.footerBtnPrimary}
-            onPress={() => addCard.mutate({ cardId: card.id || slug })}
-            disabled={addCard.isPending}
+            onPress={handleOpenAnniversaryModal}
           >
             <MaterialCommunityIcons name="plus" size={18} color="#FFFFFF" />
-            <Text style={styles.footerBtnText}>
-              {addCard.isPending ? 'Adding...' : 'Add to Wallet'}
-            </Text>
+            <Text style={styles.footerBtnText}>Add to Wallet</Text>
           </Pressable>
         )}
         <Pressable
@@ -272,6 +318,166 @@ export default function CardDetailScreen() {
           <Text style={[styles.footerBtnText, { color: '#0F172A' }]}>Apply Now</Text>
         </Pressable>
       </View>
+
+      {/* Anniversary Date Modal */}
+      <Modal
+        visible={showAnniversaryModal}
+        animationType="slide"
+        presentationStyle="pageSheet"
+        onRequestClose={() => setShowAnniversaryModal(false)}
+      >
+        <View style={[styles.modalContainer, { backgroundColor: theme.colors.surface }]}>
+          <View style={styles.modalHeader}>
+            <Text style={styles.modalTitle}>Set Anniversary Date</Text>
+            <Pressable onPress={() => setShowAnniversaryModal(false)} style={styles.modalClose}>
+              <MaterialCommunityIcons name="close" size={24} color={theme.colors.onSurface} />
+            </Pressable>
+          </View>
+
+          <View style={[styles.modalDivider, { backgroundColor: theme.colors.outlineVariant }]} />
+
+          <ScrollView showsVerticalScrollIndicator={false}>
+
+          <Text style={[styles.anniversaryHint, { color: theme.colors.onSurfaceVariant }]}>
+            When did you open this card? This helps track your annual benefits.
+          </Text>
+
+          <Text style={[styles.pickerLabel, { color: theme.colors.onSurface }]}>Month</Text>
+          <View style={styles.monthGrid}>
+            {MONTHS.map((m, i) => (
+              <Pressable
+                key={m}
+                style={[
+                  styles.monthChip,
+                  {
+                    backgroundColor: selectedMonth === i ? theme.colors.primary : theme.colors.surfaceVariant,
+                    borderColor: selectedMonth === i ? theme.colors.primary : theme.colors.outlineVariant,
+                  },
+                ]}
+                onPress={() => {
+                  setSelectedMonth(i);
+                  setUseDefault(false);
+                  if (selectedDay !== null && selectedYear !== null) {
+                    const maxDay = new Date(selectedYear, i + 1, 0).getDate();
+                    if (selectedDay > maxDay) setSelectedDay(maxDay);
+                  }
+                }}
+              >
+                <Text
+                  style={[
+                    styles.chipText,
+                    { color: selectedMonth === i ? '#FFFFFF' : theme.colors.onSurface },
+                  ]}
+                >
+                  {m}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+
+          <Text style={[styles.pickerLabel, { color: theme.colors.onSurface }]}>Day</Text>
+          <View style={styles.dayGrid}>
+            {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((d) => (
+              <Pressable
+                key={d}
+                style={[
+                  styles.dayChip,
+                  {
+                    backgroundColor: selectedDay === d ? theme.colors.primary : theme.colors.surfaceVariant,
+                    borderColor: selectedDay === d ? theme.colors.primary : theme.colors.outlineVariant,
+                  },
+                ]}
+                onPress={() => { setSelectedDay(d); setUseDefault(false); }}
+              >
+                <Text
+                  style={[
+                    styles.chipText,
+                    { color: selectedDay === d ? '#FFFFFF' : theme.colors.onSurface },
+                  ]}
+                >
+                  {d}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+
+          <Text style={[styles.pickerLabel, { color: theme.colors.onSurface }]}>Year</Text>
+          <View style={styles.yearGrid}>
+            {YEARS.map((y) => (
+              <Pressable
+                key={y}
+                style={[
+                  styles.yearChip,
+                  {
+                    backgroundColor: selectedYear === y ? theme.colors.primary : theme.colors.surfaceVariant,
+                    borderColor: selectedYear === y ? theme.colors.primary : theme.colors.outlineVariant,
+                  },
+                ]}
+                onPress={() => {
+                  setSelectedYear(y);
+                  setUseDefault(false);
+                  if (selectedDay !== null && selectedMonth !== null) {
+                    const maxDay = new Date(y, selectedMonth + 1, 0).getDate();
+                    if (selectedDay > maxDay) setSelectedDay(maxDay);
+                  }
+                }}
+              >
+                <Text
+                  style={[
+                    styles.chipText,
+                    { color: selectedYear === y ? '#FFFFFF' : theme.colors.onSurface },
+                  ]}
+                >
+                  {y}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+
+          <Pressable
+            style={[
+              styles.defaultOption,
+              {
+                backgroundColor: useDefault ? theme.colors.primaryContainer : theme.colors.surfaceVariant,
+                borderColor: useDefault ? theme.colors.primary : theme.colors.outlineVariant,
+              },
+            ]}
+            onPress={() => {
+              const next = !useDefault;
+              setUseDefault(next);
+              if (next) {
+                setSelectedMonth(null);
+                setSelectedDay(null);
+                setSelectedYear(null);
+              }
+            }}
+          >
+            <MaterialCommunityIcons
+              name={useDefault ? 'checkbox-marked-circle' : 'checkbox-blank-circle-outline'}
+              size={20}
+              color={useDefault ? theme.colors.primary : theme.colors.onSurfaceVariant}
+              style={{ marginRight: 8 }}
+            />
+            <Text style={[styles.defaultOptionText, { color: theme.colors.onSurface }]}>
+              I don't know my anniversary date
+            </Text>
+          </Pressable>
+
+          <Button
+            mode="contained"
+            onPress={handleAddWithAnniversary}
+            loading={addCard.isPending}
+            disabled={addCard.isPending || (!useDefault && (selectedMonth === null || selectedDay === null || selectedYear === null))}
+            style={styles.addButton}
+            contentStyle={{ paddingVertical: 6 }}
+            icon="plus"
+          >
+            Add to Wallet
+          </Button>
+
+          </ScrollView>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -571,5 +777,98 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Outfit-SemiBold',
     color: '#FFFFFF',
+  },
+  // Anniversary Modal
+  modalContainer: {
+    flex: 1,
+    padding: 24,
+    paddingTop: 16,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontFamily: 'Outfit-SemiBold',
+    color: '#1C1B1F',
+  },
+  modalClose: {
+    padding: 4,
+  },
+  modalDivider: {
+    height: 1,
+    marginVertical: 16,
+  },
+  anniversaryHint: {
+    fontSize: 13,
+    fontFamily: 'Outfit',
+    marginBottom: 20,
+    lineHeight: 18,
+  },
+  pickerLabel: {
+    fontSize: 14,
+    fontFamily: 'Outfit-Medium',
+    marginBottom: 8,
+  },
+  monthGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 20,
+  },
+  monthChip: {
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 1,
+  },
+  dayGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+    marginBottom: 20,
+  },
+  dayChip: {
+    width: 40,
+    height: 36,
+    borderRadius: 18,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  yearGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 20,
+  },
+  yearChip: {
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 1,
+  },
+  chipText: {
+    fontSize: 13,
+    fontFamily: 'Outfit-Medium',
+  },
+  defaultOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 14,
+    borderRadius: 12,
+    borderWidth: 1,
+    marginTop: 4,
+    marginBottom: 24,
+  },
+  defaultOptionText: {
+    fontSize: 14,
+    fontFamily: 'Outfit-Medium',
+  },
+  addButton: {
+    borderRadius: 12,
   },
 });

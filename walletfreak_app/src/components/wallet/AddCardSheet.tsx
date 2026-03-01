@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useCallback } from 'react';
-import { View, StyleSheet, Pressable, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Pressable, ActivityIndicator, Alert } from 'react-native';
 import { Text, Searchbar, Button, useTheme } from 'react-native-paper';
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView, BottomSheetFlatList, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -32,6 +32,7 @@ export const AddCardSheet: React.FC<AddCardSheetProps> = ({
   const [search, setSearch] = useState('');
   const [selectedCard, setSelectedCard] = useState<any>(null);
   const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
+  const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
   const [useDefault, setUseDefault] = useState(false);
   const addCard = useAddCard();
@@ -57,6 +58,7 @@ export const AddCardSheet: React.FC<AddCardSheetProps> = ({
   const resetPreview = useCallback(() => {
     setSelectedCard(null);
     setSelectedMonth(null);
+    setSelectedDay(null);
     setSelectedYear(null);
     setUseDefault(false);
   }, []);
@@ -69,20 +71,32 @@ export const AddCardSheet: React.FC<AddCardSheetProps> = ({
     resetPreview();
   };
 
+  const daysInMonth = useMemo(() => {
+    if (selectedMonth === null || selectedYear === null) return 31;
+    return new Date(selectedYear, selectedMonth + 1, 0).getDate();
+  }, [selectedMonth, selectedYear]);
+
   const handleAdd = () => {
     const cardId = selectedCard?.id || selectedCard?.slug;
     let anniversaryDate: string | undefined;
     if (useDefault) {
       anniversaryDate = 'default';
-    } else if (selectedMonth !== null && selectedYear !== null) {
+    } else if (selectedMonth !== null && selectedYear !== null && selectedDay !== null) {
       const mm = String(selectedMonth + 1).padStart(2, '0');
-      anniversaryDate = `${selectedYear}-${mm}-01`;
+      const dd = String(selectedDay).padStart(2, '0');
+      anniversaryDate = `${selectedYear}-${mm}-${dd}`;
     }
 
+    const cardName = selectedCard?.name || 'Card';
     addCard.mutate({ cardId, anniversaryDate }, {
       onSuccess: () => {
         resetPreview();
         onDismiss();
+        Alert.alert(
+          'Card Added',
+          `${cardName} has been added to your wallet.`,
+          [{ text: 'OK' }]
+        );
       },
     });
   };
@@ -186,63 +200,100 @@ export const AddCardSheet: React.FC<AddCardSheetProps> = ({
                   When did you open this card? This helps track your annual benefits.
                 </Text>
 
-                {!useDefault && (
-                  <>
-                    {/* Month Picker */}
-                    <Text style={[styles.pickerLabel, { color: theme.colors.onSurface }]}>Month</Text>
-                    <View style={styles.monthGrid}>
-                      {MONTHS.map((m, i) => (
-                        <Pressable
-                          key={m}
-                          style={[
-                            styles.monthChip,
-                            {
-                              backgroundColor: selectedMonth === i ? theme.colors.primary : theme.colors.surfaceVariant,
-                              borderColor: selectedMonth === i ? theme.colors.primary : theme.colors.outlineVariant,
-                            },
-                          ]}
-                          onPress={() => setSelectedMonth(i)}
-                        >
-                          <Text
-                            style={[
-                              styles.monthChipText,
-                              { color: selectedMonth === i ? '#FFFFFF' : theme.colors.onSurface },
-                            ]}
-                          >
-                            {m}
-                          </Text>
-                        </Pressable>
-                      ))}
-                    </View>
+                {/* Month Picker */}
+                <Text style={[styles.pickerLabel, { color: theme.colors.onSurface }]}>Month</Text>
+                <View style={styles.monthGrid}>
+                  {MONTHS.map((m, i) => (
+                    <Pressable
+                      key={m}
+                      style={[
+                        styles.monthChip,
+                        {
+                          backgroundColor: selectedMonth === i ? theme.colors.primary : theme.colors.surfaceVariant,
+                          borderColor: selectedMonth === i ? theme.colors.primary : theme.colors.outlineVariant,
+                        },
+                      ]}
+                      onPress={() => {
+                        setSelectedMonth(i);
+                        setUseDefault(false);
+                        if (selectedDay !== null && selectedYear !== null) {
+                          const maxDay = new Date(selectedYear, i + 1, 0).getDate();
+                          if (selectedDay > maxDay) setSelectedDay(maxDay);
+                        }
+                      }}
+                    >
+                      <Text
+                        style={[
+                          styles.monthChipText,
+                          { color: selectedMonth === i ? '#FFFFFF' : theme.colors.onSurface },
+                        ]}
+                      >
+                        {m}
+                      </Text>
+                    </Pressable>
+                  ))}
+                </View>
 
-                    {/* Year Picker */}
-                    <Text style={[styles.pickerLabel, { color: theme.colors.onSurface }]}>Year</Text>
-                    <View style={styles.yearGrid}>
-                      {YEARS.map((y) => (
-                        <Pressable
-                          key={y}
-                          style={[
-                            styles.yearChip,
-                            {
-                              backgroundColor: selectedYear === y ? theme.colors.primary : theme.colors.surfaceVariant,
-                              borderColor: selectedYear === y ? theme.colors.primary : theme.colors.outlineVariant,
-                            },
-                          ]}
-                          onPress={() => setSelectedYear(y)}
-                        >
-                          <Text
-                            style={[
-                              styles.yearChipText,
-                              { color: selectedYear === y ? '#FFFFFF' : theme.colors.onSurface },
-                            ]}
-                          >
-                            {y}
-                          </Text>
-                        </Pressable>
-                      ))}
-                    </View>
-                  </>
-                )}
+                {/* Day Picker */}
+                <Text style={[styles.pickerLabel, { color: theme.colors.onSurface }]}>Day</Text>
+                <View style={styles.dayGrid}>
+                  {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((d) => (
+                    <Pressable
+                      key={d}
+                      style={[
+                        styles.dayChip,
+                        {
+                          backgroundColor: selectedDay === d ? theme.colors.primary : theme.colors.surfaceVariant,
+                          borderColor: selectedDay === d ? theme.colors.primary : theme.colors.outlineVariant,
+                        },
+                      ]}
+                      onPress={() => { setSelectedDay(d); setUseDefault(false); }}
+                    >
+                      <Text
+                        style={[
+                          styles.monthChipText,
+                          { color: selectedDay === d ? '#FFFFFF' : theme.colors.onSurface },
+                        ]}
+                      >
+                        {d}
+                      </Text>
+                    </Pressable>
+                  ))}
+                </View>
+
+                {/* Year Picker */}
+                <Text style={[styles.pickerLabel, { color: theme.colors.onSurface }]}>Year</Text>
+                <View style={styles.yearGrid}>
+                  {YEARS.map((y) => (
+                    <Pressable
+                      key={y}
+                      style={[
+                        styles.yearChip,
+                        {
+                          backgroundColor: selectedYear === y ? theme.colors.primary : theme.colors.surfaceVariant,
+                          borderColor: selectedYear === y ? theme.colors.primary : theme.colors.outlineVariant,
+                        },
+                      ]}
+                      onPress={() => {
+                        setSelectedYear(y);
+                        setUseDefault(false);
+                        if (selectedDay !== null && selectedMonth !== null) {
+                          const maxDay = new Date(y, selectedMonth + 1, 0).getDate();
+                          if (selectedDay > maxDay) setSelectedDay(maxDay);
+                        }
+                      }}
+                    >
+                      <Text
+                        style={[
+                          styles.yearChipText,
+                          { color: selectedYear === y ? '#FFFFFF' : theme.colors.onSurface },
+                        ]}
+                      >
+                        {y}
+                      </Text>
+                    </Pressable>
+                  ))}
+                </View>
 
                 {/* Default Option */}
                 <Pressable
@@ -254,9 +305,11 @@ export const AddCardSheet: React.FC<AddCardSheetProps> = ({
                     },
                   ]}
                   onPress={() => {
-                    setUseDefault(!useDefault);
-                    if (!useDefault) {
+                    const next = !useDefault;
+                    setUseDefault(next);
+                    if (next) {
                       setSelectedMonth(null);
+                      setSelectedDay(null);
                       setSelectedYear(null);
                     }
                   }}
@@ -278,7 +331,7 @@ export const AddCardSheet: React.FC<AddCardSheetProps> = ({
                 mode="contained"
                 onPress={handleAdd}
                 loading={addCard.isPending}
-                disabled={addCard.isPending || (!useDefault && (selectedMonth === null || selectedYear === null))}
+                disabled={addCard.isPending || (!useDefault && (selectedMonth === null || selectedDay === null || selectedYear === null))}
                 style={styles.addButton}
                 contentStyle={styles.addButtonContent}
                 icon="plus"
@@ -489,6 +542,20 @@ const styles = StyleSheet.create({
   monthChipText: {
     fontSize: 13,
     fontFamily: 'Outfit-Medium',
+  },
+  dayGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+    marginBottom: 16,
+  },
+  dayChip: {
+    width: 40,
+    height: 36,
+    borderRadius: 18,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   yearGrid: {
     flexDirection: 'row',

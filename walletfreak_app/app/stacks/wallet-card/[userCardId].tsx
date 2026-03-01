@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { View, StyleSheet, Pressable, Alert, Modal } from 'react-native';
+import { View, StyleSheet, Pressable, Alert, Modal, ScrollView } from 'react-native';
 import { Text, Button, useTheme } from 'react-native-paper';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -44,6 +44,7 @@ export default function WalletCardDetailScreen() {
 
   const [showAnniversaryModal, setShowAnniversaryModal] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
+  const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
   const [useDefault, setUseDefault] = useState(false);
 
@@ -81,27 +82,40 @@ export default function WalletCardDetailScreen() {
   const handleOpenAnniversaryModal = useCallback(() => {
     if (card?.anniversary_date && card.anniversary_date !== 'default') {
       const parts = card.anniversary_date.split('-');
-      if (parts.length >= 2) {
+      if (parts.length >= 3) {
         setSelectedYear(parseInt(parts[0], 10));
         setSelectedMonth(parseInt(parts[1], 10) - 1);
+        setSelectedDay(parseInt(parts[2], 10));
+        setUseDefault(false);
+      } else {
+        setSelectedMonth(null);
+        setSelectedDay(null);
+        setSelectedYear(null);
         setUseDefault(false);
       }
     } else {
       setSelectedMonth(null);
+      setSelectedDay(null);
       setSelectedYear(null);
-      setUseDefault(false);
+      setUseDefault(card?.anniversary_date === 'default');
     }
     setShowAnniversaryModal(true);
   }, [card]);
+
+  const daysInMonth = useMemo(() => {
+    if (selectedMonth === null || selectedYear === null) return 31;
+    return new Date(selectedYear, selectedMonth + 1, 0).getDate();
+  }, [selectedMonth, selectedYear]);
 
   const handleSaveAnniversary = useCallback(() => {
     if (!userCardId) return;
     let anniversaryDate: string;
     if (useDefault) {
       anniversaryDate = 'default';
-    } else if (selectedMonth !== null && selectedYear !== null) {
+    } else if (selectedMonth !== null && selectedYear !== null && selectedDay !== null) {
       const mm = String(selectedMonth + 1).padStart(2, '0');
-      anniversaryDate = `${selectedYear}-${mm}-01`;
+      const dd = String(selectedDay).padStart(2, '0');
+      anniversaryDate = `${selectedYear}-${mm}-${dd}`;
     } else {
       return;
     }
@@ -114,7 +128,7 @@ export default function WalletCardDetailScreen() {
         },
       }
     );
-  }, [userCardId, useDefault, selectedMonth, selectedYear, updateAnniversary]);
+  }, [userCardId, useDefault, selectedMonth, selectedDay, selectedYear, updateAnniversary]);
 
   const handleDeleteCard = useCallback(() => {
     if (!card) return;
@@ -154,12 +168,6 @@ export default function WalletCardDetailScreen() {
     fontSize: interpolate(scrollY.value, [0, COLLAPSE_DISTANCE], [22, 16], Extrapolation.CLAMP),
   }));
 
-  const animatedStatusBadge = useAnimatedStyle(() => ({
-    opacity: interpolate(scrollY.value, [0, COLLAPSE_DISTANCE], [1, 0], Extrapolation.CLAMP),
-    width: interpolate(scrollY.value, [0, COLLAPSE_DISTANCE], [80, 0], Extrapolation.CLAMP),
-    overflow: 'hidden' as const,
-  }));
-
   const animatedHeaderPadding = useAnimatedStyle(() => ({
     paddingBottom: interpolate(scrollY.value, [0, COLLAPSE_DISTANCE], [24, 12], Extrapolation.CLAMP),
   }));
@@ -197,23 +205,13 @@ export default function WalletCardDetailScreen() {
 
         {/* Back button — collapses away */}
         <Animated.View style={animatedBackButton}>
-          <View style={styles.topRow}>
-            <Pressable
-              style={styles.backButton}
-              onPress={() => router.back()}
-            >
-              <MaterialCommunityIcons name="arrow-left" size={20} color="#94A3B8" />
-              <Text style={styles.backText}>Back to Wallet</Text>
-            </Pressable>
-            <View style={styles.actionButtons}>
-              <Pressable style={styles.actionBtn} onPress={handleOpenAnniversaryModal}>
-                <MaterialCommunityIcons name="calendar-edit" size={20} color="#94A3B8" />
-              </Pressable>
-              <Pressable style={styles.actionBtn} onPress={handleDeleteCard}>
-                <MaterialCommunityIcons name="delete-outline" size={20} color="#EF4444" />
-              </Pressable>
-            </View>
-          </View>
+          <Pressable
+            style={styles.backButton}
+            onPress={() => router.back()}
+          >
+            <MaterialCommunityIcons name="arrow-left" size={20} color="#94A3B8" />
+            <Text style={styles.backText}>Back to Wallet</Text>
+          </Pressable>
         </Animated.View>
 
         {/* Card Info Row */}
@@ -222,19 +220,45 @@ export default function WalletCardDetailScreen() {
             <CardImage slug={card.card_id} size="medium" />
           </Animated.View>
           <View style={{ flex: 1 }}>
-            <Animated.Text style={[styles.cardName, animatedCardName]} numberOfLines={1}>
+            <Animated.Text style={[styles.cardName, animatedCardName]} numberOfLines={2}>
               {card.name}
             </Animated.Text>
             <Text style={styles.cardIssuer}>
               {card.issuer} · {formatCurrency(card.annual_fee)}/yr
             </Text>
           </View>
-          <Animated.View style={[styles.statusBadge, { borderColor: statusColor }, animatedStatusBadge]}>
+        </View>
+
+        {/* Status + Actions Row */}
+        <View style={styles.statusActionsRow}>
+          <View style={[styles.statusBadge, { borderColor: statusColor }]}>
             <Text style={[styles.statusText, { color: statusColor }]}>
               {card.status?.toUpperCase() || 'ACTIVE'}
             </Text>
-          </Animated.View>
+          </View>
+          <View style={styles.actionButtons}>
+            <Pressable style={styles.actionBtn} onPress={handleOpenAnniversaryModal}>
+              <MaterialCommunityIcons name="calendar-edit" size={18} color="#94A3B8" />
+              <Text style={styles.actionBtnLabel}>
+                {card.anniversary_date && card.anniversary_date !== 'default'
+                  ? (() => {
+                      const parts = card.anniversary_date.split('-');
+                      if (parts.length >= 3) {
+                        const monthIdx = parseInt(parts[1], 10) - 1;
+                        return `${MONTHS[monthIdx]} ${parseInt(parts[2], 10)}, ${parts[0]}`;
+                      }
+                      return 'Set Date';
+                    })()
+                  : 'Set Date'}
+              </Text>
+            </Pressable>
+            <Pressable style={[styles.actionBtn, styles.actionBtnDanger]} onPress={handleDeleteCard}>
+              <MaterialCommunityIcons name="delete-outline" size={18} color="#EF4444" />
+              <Text style={[styles.actionBtnLabel, { color: '#EF4444' }]}>Remove</Text>
+            </Pressable>
+          </View>
         </View>
+
       </AnimatedLinearGradient>
 
       {/* Benefits List */}
@@ -281,6 +305,8 @@ export default function WalletCardDetailScreen() {
 
           <View style={[styles.modalDivider, { backgroundColor: theme.colors.outlineVariant }]} />
 
+          <ScrollView showsVerticalScrollIndicator={false}>
+
           <View style={styles.warningBox}>
             <MaterialCommunityIcons name="alert-circle-outline" size={20} color="#F59E0B" style={{ marginRight: 8 }} />
             <Text style={styles.warningText}>
@@ -288,61 +314,97 @@ export default function WalletCardDetailScreen() {
             </Text>
           </View>
 
-          {!useDefault && (
-            <>
-              <Text style={[styles.pickerLabel, { color: theme.colors.onSurface }]}>Month</Text>
-              <View style={styles.monthGrid}>
-                {MONTHS.map((m, i) => (
-                  <Pressable
-                    key={m}
-                    style={[
-                      styles.monthChip,
-                      {
-                        backgroundColor: selectedMonth === i ? theme.colors.primary : theme.colors.surfaceVariant,
-                        borderColor: selectedMonth === i ? theme.colors.primary : theme.colors.outlineVariant,
-                      },
-                    ]}
-                    onPress={() => setSelectedMonth(i)}
-                  >
-                    <Text
-                      style={[
-                        styles.chipText,
-                        { color: selectedMonth === i ? '#FFFFFF' : theme.colors.onSurface },
-                      ]}
-                    >
-                      {m}
-                    </Text>
-                  </Pressable>
-                ))}
-              </View>
+          <Text style={[styles.pickerLabel, { color: theme.colors.onSurface }]}>Month</Text>
+          <View style={styles.monthGrid}>
+            {MONTHS.map((m, i) => (
+              <Pressable
+                key={m}
+                style={[
+                  styles.monthChip,
+                  {
+                    backgroundColor: selectedMonth === i ? theme.colors.primary : theme.colors.surfaceVariant,
+                    borderColor: selectedMonth === i ? theme.colors.primary : theme.colors.outlineVariant,
+                  },
+                ]}
+                onPress={() => {
+                  setSelectedMonth(i);
+                  setUseDefault(false);
+                  if (selectedDay !== null && selectedYear !== null) {
+                    const maxDay = new Date(selectedYear, i + 1, 0).getDate();
+                    if (selectedDay > maxDay) setSelectedDay(maxDay);
+                  }
+                }}
+              >
+                <Text
+                  style={[
+                    styles.chipText,
+                    { color: selectedMonth === i ? '#FFFFFF' : theme.colors.onSurface },
+                  ]}
+                >
+                  {m}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
 
-              <Text style={[styles.pickerLabel, { color: theme.colors.onSurface }]}>Year</Text>
-              <View style={styles.yearGrid}>
-                {YEARS.map((y) => (
-                  <Pressable
-                    key={y}
-                    style={[
-                      styles.yearChip,
-                      {
-                        backgroundColor: selectedYear === y ? theme.colors.primary : theme.colors.surfaceVariant,
-                        borderColor: selectedYear === y ? theme.colors.primary : theme.colors.outlineVariant,
-                      },
-                    ]}
-                    onPress={() => setSelectedYear(y)}
-                  >
-                    <Text
-                      style={[
-                        styles.chipText,
-                        { color: selectedYear === y ? '#FFFFFF' : theme.colors.onSurface },
-                      ]}
-                    >
-                      {y}
-                    </Text>
-                  </Pressable>
-                ))}
-              </View>
-            </>
-          )}
+          <Text style={[styles.pickerLabel, { color: theme.colors.onSurface }]}>Day</Text>
+          <View style={styles.dayGrid}>
+            {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((d) => (
+              <Pressable
+                key={d}
+                style={[
+                  styles.dayChip,
+                  {
+                    backgroundColor: selectedDay === d ? theme.colors.primary : theme.colors.surfaceVariant,
+                    borderColor: selectedDay === d ? theme.colors.primary : theme.colors.outlineVariant,
+                  },
+                ]}
+                onPress={() => { setSelectedDay(d); setUseDefault(false); }}
+              >
+                <Text
+                  style={[
+                    styles.chipText,
+                    { color: selectedDay === d ? '#FFFFFF' : theme.colors.onSurface },
+                  ]}
+                >
+                  {d}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+
+          <Text style={[styles.pickerLabel, { color: theme.colors.onSurface }]}>Year</Text>
+          <View style={styles.yearGrid}>
+            {YEARS.map((y) => (
+              <Pressable
+                key={y}
+                style={[
+                  styles.yearChip,
+                  {
+                    backgroundColor: selectedYear === y ? theme.colors.primary : theme.colors.surfaceVariant,
+                    borderColor: selectedYear === y ? theme.colors.primary : theme.colors.outlineVariant,
+                  },
+                ]}
+                onPress={() => {
+                  setSelectedYear(y);
+                  setUseDefault(false);
+                  if (selectedDay !== null && selectedMonth !== null) {
+                    const maxDay = new Date(y, selectedMonth + 1, 0).getDate();
+                    if (selectedDay > maxDay) setSelectedDay(maxDay);
+                  }
+                }}
+              >
+                <Text
+                  style={[
+                    styles.chipText,
+                    { color: selectedYear === y ? '#FFFFFF' : theme.colors.onSurface },
+                  ]}
+                >
+                  {y}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
 
           <Pressable
             style={[
@@ -353,9 +415,11 @@ export default function WalletCardDetailScreen() {
               },
             ]}
             onPress={() => {
-              setUseDefault(!useDefault);
-              if (!useDefault) {
+              const next = !useDefault;
+              setUseDefault(next);
+              if (next) {
                 setSelectedMonth(null);
+                setSelectedDay(null);
                 setSelectedYear(null);
               }
             }}
@@ -375,12 +439,14 @@ export default function WalletCardDetailScreen() {
             mode="contained"
             onPress={handleSaveAnniversary}
             loading={updateAnniversary.isPending}
-            disabled={updateAnniversary.isPending || (!useDefault && (selectedMonth === null || selectedYear === null))}
+            disabled={updateAnniversary.isPending || (!useDefault && (selectedMonth === null || selectedDay === null || selectedYear === null))}
             style={styles.saveButton}
             contentStyle={{ paddingVertical: 6 }}
           >
             Save Anniversary Date
           </Button>
+
+          </ScrollView>
         </View>
       </Modal>
     </View>
@@ -421,34 +487,20 @@ const styles = StyleSheet.create({
     borderRadius: 90,
     backgroundColor: 'rgba(124, 58, 237, 0.12)',
   },
-  topRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
   backButton: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
+    marginBottom: 16,
   },
   backText: {
     fontSize: 14,
     fontFamily: 'Outfit',
     color: '#94A3B8',
   },
-  actionButtons: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  actionBtn: {
-    padding: 6,
-    borderRadius: 20,
-    backgroundColor: 'rgba(255,255,255,0.1)',
-  },
   cardInfoRow: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
   cardName: {
     fontFamily: 'Outfit-Bold',
@@ -459,6 +511,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Outfit',
     color: '#94A3B8',
     marginTop: 2,
+  },
+  statusActionsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 14,
   },
   statusBadge: {
     borderWidth: 1.5,
@@ -471,6 +529,27 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontFamily: 'Outfit-SemiBold',
     letterSpacing: 0.5,
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+  actionBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255,255,255,0.1)',
+  },
+  actionBtnDanger: {
+    backgroundColor: 'rgba(239,68,68,0.1)',
+  },
+  actionBtnLabel: {
+    fontSize: 12,
+    fontFamily: 'Outfit-Medium',
+    color: '#94A3B8',
   },
   emptyContainer: {
     flex: 1,
@@ -535,6 +614,20 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 20,
     borderWidth: 1,
+  },
+  dayGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+    marginBottom: 20,
+  },
+  dayChip: {
+    width: 40,
+    height: 36,
+    borderRadius: 18,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   yearGrid: {
     flexDirection: 'row',
