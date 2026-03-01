@@ -260,15 +260,17 @@ export default function CardDetailScreen() {
             </Text>
           </Pressable>
         )}
-        {card.referral_url ? (
-          <Pressable
-            style={styles.footerBtnSecondary}
-            onPress={() => WebBrowser.openBrowserAsync(card.referral_url)}
-          >
-            <MaterialCommunityIcons name="open-in-new" size={18} color="#0F172A" />
-            <Text style={[styles.footerBtnText, { color: '#0F172A' }]}>Apply Now</Text>
-          </Pressable>
-        ) : null}
+        <Pressable
+          style={styles.footerBtnSecondary}
+          onPress={() => {
+            const url = card.referral_url
+              || `https://www.google.com/search?q=${encodeURIComponent(card.name + ' apply')}`;
+            WebBrowser.openBrowserAsync(url);
+          }}
+        >
+          <MaterialCommunityIcons name="open-in-new" size={18} color="#0F172A" />
+          <Text style={[styles.footerBtnText, { color: '#0F172A' }]}>Apply Now</Text>
+        </Pressable>
       </View>
     </View>
   );

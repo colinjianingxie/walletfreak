@@ -159,9 +159,14 @@ export default function CommunityScreen() {
 
         <View style={styles.articleContent}>
           <View style={styles.articleMeta}>
-            <View style={[styles.categoryBadge, { backgroundColor: theme.colors.surfaceVariant }]}>
-              <Text style={[styles.categoryBadgeText, { color: theme.colors.onSurface }]}>
-                {(item.category || '').toUpperCase()}
+            <View style={[styles.categoryBadge, { backgroundColor: '#4338CA' }]}>
+              <Text style={[styles.categoryBadgeText, { color: '#FFFFFF' }]}>
+                {(() => {
+                  const tags = item.tags;
+                  if (Array.isArray(tags) && tags.length > 0) return tags[0].toUpperCase();
+                  if (typeof tags === 'string' && tags.trim()) return tags.split(',')[0].trim().toUpperCase();
+                  return (item.category || '').toUpperCase();
+                })()}
               </Text>
             </View>
             <Text variant="labelSmall" style={{ color: theme.colors.onSurfaceVariant }}>
@@ -200,72 +205,76 @@ export default function CommunityScreen() {
   };
 
   const renderDatapointItem = ({ item }: { item: any }) => {
-    const tags = [
-      item.card_name,
-      item.benefit,
-      ...(item.tags || []),
-    ].filter(Boolean).slice(0, 3);
-
     return (
       <View style={[styles.dpCard, { backgroundColor: theme.colors.elevation.level1 }]}>
-        {/* Header: Avatar + Card Image + Name + Tags */}
-        <View style={styles.dpHeader}>
-          <View style={styles.dpUserInfo}>
-            {item.card_slug ? (
-              <CardImage slug={item.card_slug} size="small" />
-            ) : (
-              <View style={[styles.dpAvatar, { backgroundColor: theme.colors.surfaceVariant }]}>
-                <MaterialCommunityIcons name="account-outline" size={18} color={theme.colors.onSurfaceVariant} />
-              </View>
-            )}
-            <View>
-              <Text variant="labelLarge" style={{ fontFamily: 'Outfit-SemiBold' }}>
-                {item.author_name || 'Anonymous'}
+        <View style={styles.dpRow}>
+          {/* Left Column: User + Card + Benefit */}
+          <View style={styles.dpLeftCol}>
+            <Text style={styles.dpUsername}>@{item.author_name || 'Anonymous'}</Text>
+            <View style={styles.dpCardRow}>
+              {item.card_slug ? (
+                <CardImage slug={item.card_slug} size="small" />
+              ) : null}
+              <Text style={styles.dpCardName} numberOfLines={1}>
+                {item.card_name || 'Unknown Card'}
               </Text>
-              <Text variant="labelSmall" style={{ color: theme.colors.onSurfaceVariant }}>
+            </View>
+            {item.benefit ? (
+              <View style={styles.dpBenefitTag}>
+                <MaterialCommunityIcons name="lightning-bolt" size={12} color="#4F46E5" />
+                <Text style={styles.dpBenefitTagText}>{item.benefit.toUpperCase()}</Text>
+              </View>
+            ) : null}
+          </View>
+
+          {/* Right Column: Status + Content + Timestamp */}
+          <View style={styles.dpRightCol}>
+            <View style={styles.dpStatusRow}>
+              <View style={[
+                styles.dpStatusBadge,
+                { backgroundColor: item.status === 'Success' ? '#ECFDF5' : '#FEF2F2' },
+              ]}>
+                <MaterialCommunityIcons
+                  name={item.status === 'Success' ? 'check-circle' : 'close-circle'}
+                  size={12}
+                  color={item.status === 'Success' ? '#16A34A' : '#DC2626'}
+                />
+                <Text style={[
+                  styles.dpStatusText,
+                  { color: item.status === 'Success' ? '#16A34A' : '#DC2626' },
+                ]}>
+                  {item.status || 'Success'}
+                </Text>
+              </View>
+              <Text style={styles.dpTimestamp}>
                 {formatRelativeTime(item.created_at)}
               </Text>
             </View>
-          </View>
-          <View style={styles.dpTags}>
-            {tags.map((tag: string, i: number) => (
-              <View key={i} style={[styles.dpTag, { borderColor: theme.colors.outlineVariant }]}>
-                <Text style={[styles.dpTagText, { color: theme.colors.onSurfaceVariant }]}>
-                  {tag}
-                </Text>
-              </View>
-            ))}
+
+            {item.data ? (
+              <Text style={styles.dpContent} numberOfLines={3}>
+                {item.data}
+              </Text>
+            ) : null}
           </View>
         </View>
 
-        {/* Title */}
-        <Text variant="titleSmall" style={styles.dpTitle} numberOfLines={2}>
-          {item.benefit || item.title || 'Data Point'}
-        </Text>
-
-        {/* Description */}
-        {item.data && (
-          <Text variant="bodySmall" style={{ color: theme.colors.onSurface, marginBottom: 12 }} numberOfLines={3}>
-            {item.data}
-          </Text>
-        )}
-
-        {/* Footer */}
+        {/* Footer: Votes */}
         <View style={styles.dpFooter}>
           <Pressable style={styles.dpFooterItem} onPress={() => voteDatapoint.mutate(item.id)}>
             <MaterialCommunityIcons
               name={item.user_voted ? 'thumb-up' : 'thumb-up-outline'}
               size={16}
-              color={item.user_voted ? theme.colors.primary : '#94A3B8'}
+              color={item.user_voted ? '#16A34A' : '#94A3B8'}
             />
-            <Text variant="labelMedium" style={{ color: item.user_voted ? theme.colors.primary : '#94A3B8' }}>
-              {item.upvotes ?? 0} Helpful
+            <Text style={[styles.dpFooterText, { color: item.user_voted ? '#16A34A' : '#94A3B8' }]}>
+              Works {item.upvotes ?? 0}
             </Text>
           </Pressable>
           <View style={styles.dpFooterItem}>
-            <MaterialCommunityIcons name="comment-outline" size={16} color="#94A3B8" />
-            <Text variant="labelMedium" style={{ color: '#94A3B8' }}>
-              {item.comment_count ?? 0} Comments
+            <MaterialCommunityIcons name="thumb-down-outline" size={16} color="#94A3B8" />
+            <Text style={styles.dpFooterText}>
+              Outdated {item.outdated_count ?? 0}
             </Text>
           </View>
         </View>
@@ -458,7 +467,7 @@ export default function CommunityScreen() {
       <BottomSheet
         ref={filterSheetRef}
         index={-1}
-        snapPoints={['50%']}
+        snapPoints={['65%']}
         enablePanDownToClose
         backgroundStyle={{ backgroundColor: theme.colors.surface }}
         handleIndicatorStyle={{ backgroundColor: theme.colors.outlineVariant }}
@@ -471,60 +480,174 @@ export default function CommunityScreen() {
             </Pressable>
           </View>
 
-          {availableCategories.length > 0 && (
-            <View style={styles.filterSection}>
-              <Text style={styles.filterSectionTitle}>Category</Text>
-              <View style={styles.chipGrid}>
-                {availableCategories.map((cat: string) => (
-                  <Pressable
-                    key={cat}
+          {segment === 'blog' ? (
+            <>
+              {/* Saved Toggle */}
+              <View style={styles.filterSection}>
+                <Pressable
+                  style={[
+                    styles.filterChip,
+                    showSaved && { backgroundColor: theme.colors.primaryContainer, borderColor: theme.colors.primary },
+                    { borderColor: theme.colors.outlineVariant },
+                  ]}
+                  onPress={() => setShowSaved(!showSaved)}
+                >
+                  <Text
                     style={[
-                      styles.filterChip,
-                      category === cat && { backgroundColor: theme.colors.primaryContainer, borderColor: theme.colors.primary },
-                      { borderColor: theme.colors.outlineVariant },
+                      styles.filterChipText,
+                      { color: showSaved ? theme.colors.onPrimaryContainer : theme.colors.onSurface },
                     ]}
-                    onPress={() => setCategory(category === cat ? '' : cat)}
                   >
-                    <Text
-                      style={[
-                        styles.filterChipText,
-                        { color: category === cat ? theme.colors.onPrimaryContainer : theme.colors.onSurface },
-                      ]}
-                    >
-                      {cat}
-                    </Text>
-                  </Pressable>
-                ))}
+                    Saved Posts
+                  </Text>
+                </Pressable>
               </View>
-            </View>
-          )}
 
-          {availableTags.length > 0 && (
-            <View style={styles.filterSection}>
-              <Text style={styles.filterSectionTitle}>Tags</Text>
-              <View style={styles.chipGrid}>
-                {availableTags.map((tag: string) => (
-                  <Pressable
-                    key={tag}
-                    style={[
-                      styles.filterChip,
-                      selectedTag === tag && { backgroundColor: theme.colors.primaryContainer, borderColor: theme.colors.primary },
-                      { borderColor: theme.colors.outlineVariant },
-                    ]}
-                    onPress={() => setSelectedTag(selectedTag === tag ? '' : tag)}
-                  >
-                    <Text
+              {/* Category */}
+              {availableCategories.length > 0 && (
+                <View style={styles.filterSection}>
+                  <Text style={styles.filterSectionTitle}>Category</Text>
+                  <View style={styles.chipGrid}>
+                    {availableCategories.map((cat: string) => (
+                      <Pressable
+                        key={cat}
+                        style={[
+                          styles.filterChip,
+                          category === cat && { backgroundColor: theme.colors.primaryContainer, borderColor: theme.colors.primary },
+                          { borderColor: theme.colors.outlineVariant },
+                        ]}
+                        onPress={() => setCategory(category === cat ? '' : cat)}
+                      >
+                        <Text
+                          style={[
+                            styles.filterChipText,
+                            { color: category === cat ? theme.colors.onPrimaryContainer : theme.colors.onSurface },
+                          ]}
+                        >
+                          {cat}
+                        </Text>
+                      </Pressable>
+                    ))}
+                  </View>
+                </View>
+              )}
+
+              {/* Tag Groups */}
+              {TAG_GROUPS.map((group) => (
+                <View key={group.label} style={styles.filterSection}>
+                  <Text style={styles.filterSectionTitle}>{group.label}</Text>
+                  <View style={styles.chipGrid}>
+                    {group.tags.map((tag) => (
+                      <Pressable
+                        key={tag}
+                        style={[
+                          styles.filterChip,
+                          selectedTag === tag && { backgroundColor: theme.colors.primaryContainer, borderColor: theme.colors.primary },
+                          { borderColor: theme.colors.outlineVariant },
+                        ]}
+                        onPress={() => setSelectedTag(selectedTag === tag ? '' : tag)}
+                      >
+                        <Text
+                          style={[
+                            styles.filterChipText,
+                            { color: selectedTag === tag ? theme.colors.onPrimaryContainer : theme.colors.onSurface },
+                          ]}
+                        >
+                          {tag}
+                        </Text>
+                      </Pressable>
+                    ))}
+                  </View>
+                </View>
+              ))}
+            </>
+          ) : (
+            <>
+              {/* Datapoint Filters */}
+              <View style={styles.filterSection}>
+                <Text style={styles.filterSectionTitle}>Sort By</Text>
+                <View style={styles.chipGrid}>
+                  {DP_SORT_OPTIONS.map((opt) => (
+                    <Pressable
+                      key={opt.value}
                       style={[
-                        styles.filterChipText,
-                        { color: selectedTag === tag ? theme.colors.onPrimaryContainer : theme.colors.onSurface },
+                        styles.filterChip,
+                        dpSort === opt.value && { backgroundColor: theme.colors.primaryContainer, borderColor: theme.colors.primary },
+                        { borderColor: theme.colors.outlineVariant },
                       ]}
+                      onPress={() => setDpSort(opt.value)}
                     >
-                      {tag}
-                    </Text>
-                  </Pressable>
-                ))}
+                      <Text
+                        style={[
+                          styles.filterChipText,
+                          { color: dpSort === opt.value ? theme.colors.onPrimaryContainer : theme.colors.onSurface },
+                        ]}
+                      >
+                        {opt.label}
+                      </Text>
+                    </Pressable>
+                  ))}
+                </View>
               </View>
-            </View>
+
+              {dpFilterOptions.cards.length > 0 && (
+                <View style={styles.filterSection}>
+                  <Text style={styles.filterSectionTitle}>Card</Text>
+                  <View style={styles.chipGrid}>
+                    {dpFilterOptions.cards.map((card) => (
+                      <Pressable
+                        key={card}
+                        style={[
+                          styles.filterChip,
+                          dpCard === card && { backgroundColor: theme.colors.primaryContainer, borderColor: theme.colors.primary },
+                          { borderColor: theme.colors.outlineVariant },
+                        ]}
+                        onPress={() => setDpCard(dpCard === card ? '' : card)}
+                      >
+                        <Text
+                          style={[
+                            styles.filterChipText,
+                            { color: dpCard === card ? theme.colors.onPrimaryContainer : theme.colors.onSurface },
+                          ]}
+                          numberOfLines={1}
+                        >
+                          {card}
+                        </Text>
+                      </Pressable>
+                    ))}
+                  </View>
+                </View>
+              )}
+
+              {dpFilterOptions.benefits.length > 0 && (
+                <View style={styles.filterSection}>
+                  <Text style={styles.filterSectionTitle}>Benefit Type</Text>
+                  <View style={styles.chipGrid}>
+                    {dpFilterOptions.benefits.map((b) => (
+                      <Pressable
+                        key={b}
+                        style={[
+                          styles.filterChip,
+                          dpBenefit === b && { backgroundColor: theme.colors.primaryContainer, borderColor: theme.colors.primary },
+                          { borderColor: theme.colors.outlineVariant },
+                        ]}
+                        onPress={() => setDpBenefit(dpBenefit === b ? '' : b)}
+                      >
+                        <Text
+                          style={[
+                            styles.filterChipText,
+                            { color: dpBenefit === b ? theme.colors.onPrimaryContainer : theme.colors.onSurface },
+                          ]}
+                          numberOfLines={1}
+                        >
+                          {b}
+                        </Text>
+                      </Pressable>
+                    ))}
+                  </View>
+                </View>
+              )}
+            </>
           )}
         </BottomSheetScrollView>
       </BottomSheet>
@@ -700,45 +823,80 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E5E7EB',
   },
-  dpHeader: {
+  dpRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: 10,
+    gap: 14,
+    marginBottom: 12,
   },
-  dpUserInfo: {
+  dpLeftCol: {
+    width: 140,
+  },
+  dpUsername: {
+    fontSize: 14,
+    fontFamily: 'Outfit-Bold',
+    color: '#1C1B1F',
+    marginBottom: 4,
+  },
+  dpCardRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: 6,
+    marginBottom: 6,
+  },
+  dpCardName: {
+    fontSize: 12,
+    fontFamily: 'Outfit',
+    color: '#64748B',
     flex: 1,
   },
-  dpAvatar: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  dpTags: {
+  dpBenefitTag: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    alignItems: 'center',
     gap: 4,
-    maxWidth: '55%',
-    justifyContent: 'flex-end',
-  },
-  dpTag: {
-    borderWidth: 1,
-    borderRadius: 6,
+    backgroundColor: '#EEF2FF',
     paddingHorizontal: 8,
-    paddingVertical: 2,
+    paddingVertical: 4,
+    borderRadius: 6,
+    alignSelf: 'flex-start',
   },
-  dpTagText: {
+  dpBenefitTagText: {
+    fontSize: 10,
+    fontFamily: 'Outfit-Bold',
+    color: '#4F46E5',
+    letterSpacing: 0.3,
+  },
+  dpRightCol: {
+    flex: 1,
+  },
+  dpStatusRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  dpStatusBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 6,
+  },
+  dpStatusText: {
+    fontSize: 11,
+    fontFamily: 'Outfit-SemiBold',
+    letterSpacing: 0.3,
+  },
+  dpTimestamp: {
     fontSize: 11,
     fontFamily: 'Outfit',
+    color: '#94A3B8',
   },
-  dpTitle: {
-    fontFamily: 'Outfit-SemiBold',
-    marginBottom: 4,
+  dpContent: {
+    fontSize: 14,
+    fontFamily: 'Outfit',
+    color: '#1C1B1F',
+    lineHeight: 20,
   },
   dpFooter: {
     flexDirection: 'row',
@@ -751,6 +909,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
+  },
+  dpFooterText: {
+    fontSize: 13,
+    fontFamily: 'Outfit-Medium',
+    color: '#94A3B8',
   },
   // Filter Bottom Sheet
   filterSheetContent: {

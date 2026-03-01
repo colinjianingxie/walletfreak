@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, StyleSheet, Pressable, TextInput, ActivityIndicator, Animated } from 'react-native';
+import { View, StyleSheet, Pressable, TextInput, ActivityIndicator, Animated, ScrollView } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { formatCurrency } from '../../utils/formatters';
@@ -41,15 +41,18 @@ export const BenefitPeriodTracker: React.FC<BenefitPeriodTrackerProps> = ({
     : currentPeriod;
 
   const totalAmount = benefit.amount ?? 0;
-  const usedAmount = activePeriod?.used ?? 0;
-  const remainingAmount = Math.max(0, totalAmount - usedAmount);
-  const progressPct = totalAmount > 0 ? Math.min((usedAmount / totalAmount) * 100, 100) : 0;
-
-  const isExpiring = benefit.days_until_expiration != null && benefit.days_until_expiration <= 30;
   const isMonthly = benefit.frequency?.toLowerCase() === 'monthly';
   const isSemiAnnual = benefit.frequency?.toLowerCase().includes('semi');
   const isQuarterly = benefit.frequency?.toLowerCase().includes('quarter');
   const hasMultiplePeriods = isMonthly || isSemiAnnual || isQuarterly;
+
+  // For multi-period benefits, use the active period's max_value for display
+  const periodAmount = hasMultiplePeriods && activePeriod ? activePeriod.max_value : totalAmount;
+  const usedAmount = activePeriod?.used ?? 0;
+  const remainingAmount = Math.max(0, periodAmount - usedAmount);
+  const progressPct = periodAmount > 0 ? Math.min((usedAmount / periodAmount) * 100, 100) : 0;
+
+  const isExpiring = benefit.days_until_expiration != null && benefit.days_until_expiration <= 30;
 
   // Determine progress bar color
   const getProgressColor = () => {
@@ -118,23 +121,6 @@ export const BenefitPeriodTracker: React.FC<BenefitPeriodTrackerProps> = ({
       { borderColor: isExpiring ? '#F59E0B' : '#E5E7EB' },
       benefit.is_ignored && { opacity: 0.5 },
     ]}>
-      {/* Ignore Button - Top Right */}
-      <Pressable
-        onPress={() => onToggleIgnore(benefit)}
-        style={styles.ignoreCornerButton}
-        hitSlop={8}
-      >
-        {isIgnoring ? (
-          <ActivityIndicator size={14} color="#94A3B8" />
-        ) : (
-          <MaterialCommunityIcons
-            name={benefit.is_ignored ? 'eye-outline' : 'eye-off-outline'}
-            size={16}
-            color="#94A3B8"
-          />
-        )}
-      </Pressable>
-
       {/* Header Row */}
       <View style={styles.headerRow}>
         <View style={{ flex: 1, marginRight: 12 }}>
@@ -156,7 +142,7 @@ export const BenefitPeriodTracker: React.FC<BenefitPeriodTrackerProps> = ({
           )}
         </View>
         <View style={styles.amountCol}>
-          <Text style={styles.amountValue}>{formatCurrency(totalAmount)}</Text>
+          <Text style={styles.amountValue}>{formatCurrency(periodAmount)}</Text>
           <Text style={styles.frequencyLabel}>
             {benefit.frequency?.toUpperCase() || 'ANNUAL'}
           </Text>
@@ -179,9 +165,17 @@ export const BenefitPeriodTracker: React.FC<BenefitPeriodTrackerProps> = ({
         />
       </View>
 
-      {/* Period Circles (for monthly/quarterly/semi-annual) */}
+      {/* Period Blocks (for monthly/quarterly/semi-annual) */}
       {hasMultiplePeriods && benefit.periods.length > 0 && (
-        <View style={styles.periodsRow}>
+        <ScrollView
+          horizontal={isMonthly}
+          showsHorizontalScrollIndicator={false}
+          style={styles.periodsScroll}
+          contentContainerStyle={[
+            styles.periodsRow,
+            !isMonthly && { justifyContent: 'center' },
+          ]}
+        >
           {benefit.periods.map((period) => {
             const isSelected = period.key === selectedPeriodKey;
             const isFull = period.status === 'full';
@@ -192,36 +186,38 @@ export const BenefitPeriodTracker: React.FC<BenefitPeriodTrackerProps> = ({
             return (
               <Pressable
                 key={period.key}
-                style={styles.periodItem}
+                style={[
+                  styles.periodBlock,
+                  isMonthly && styles.periodBlockMonthly,
+                  !isMonthly && styles.periodBlockWide,
+                  isFull && styles.periodBlockFull,
+                  (isSelected || isCurrent) && !isFull && styles.periodBlockSelected,
+                  !isPast && !isCurrent && !isFull && !isPartial && styles.periodBlockFuture,
+                ]}
                 onPress={() => handlePeriodPress(period)}
               >
-                <View
+                <Text
                   style={[
-                    styles.periodCircle,
-                    isFull && styles.periodCircleFull,
-                    isPartial && styles.periodCirclePartial,
-                    isSelected && styles.periodCircleSelected,
-                    isCurrent && !isFull && !isPartial && styles.periodCircleCurrent,
+                    styles.periodLabel,
+                    (isPast || isCurrent) && styles.periodLabelActive,
+                    isFull && { color: '#FFFFFF' },
                   ]}
                 >
-                  {isFull ? (
-                    <MaterialCommunityIcons name="check" size={14} color="#FFFFFF" />
-                  ) : (
-                    <Text
-                      style={[
-                        styles.periodLabel,
-                        (isPast || isCurrent) && styles.periodLabelActive,
-                        isFull && { color: '#FFFFFF' },
-                      ]}
-                    >
-                      {period.label}
-                    </Text>
-                  )}
-                </View>
+                  {period.label}
+                </Text>
+                <Text
+                  style={[
+                    styles.periodValue,
+                    (isPast || isCurrent) && styles.periodValueActive,
+                    isFull && { color: '#FFFFFF' },
+                  ]}
+                >
+                  {formatCurrency(period.max_value)}
+                </Text>
               </Pressable>
             );
           })}
-        </View>
+        </ScrollView>
       )}
 
       {/* Edit Mode: Inline Amount Input */}
@@ -254,7 +250,7 @@ export const BenefitPeriodTracker: React.FC<BenefitPeriodTrackerProps> = ({
           </Pressable>
         </View>
       ) : (
-        /* Action Buttons */
+        /* Action Buttons + Ignore */
         <View style={styles.actionsRow}>
           <Pressable
             style={[styles.actionButton, styles.updateButton, { backgroundColor: '#F1F5F9' }]}
@@ -283,6 +279,21 @@ export const BenefitPeriodTracker: React.FC<BenefitPeriodTrackerProps> = ({
               </>
             )}
           </Pressable>
+          <Pressable
+            style={styles.ignoreInlineButton}
+            onPress={() => onToggleIgnore(benefit)}
+            hitSlop={4}
+          >
+            {isIgnoring ? (
+              <ActivityIndicator size={16} color="#94A3B8" />
+            ) : (
+              <MaterialCommunityIcons
+                name={benefit.is_ignored ? 'eye-outline' : 'eye-off-outline'}
+                size={20}
+                color="#94A3B8"
+              />
+            )}
+          </Pressable>
         </View>
       )}
 
@@ -308,7 +319,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexWrap: 'wrap',
     gap: 8,
-    marginBottom: 4,
+    marginBottom: 2,
   },
   benefitName: {
     fontSize: 16,
@@ -376,52 +387,62 @@ const styles = StyleSheet.create({
     height: '100%',
     borderRadius: 3,
   },
-  // Period circles
+  // Period blocks
+  periodsScroll: {
+    marginBottom: 14,
+  },
   periodsRow: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 4,
-    marginBottom: 14,
-    flexWrap: 'wrap',
+    gap: 6,
   },
-  periodItem: {
-    alignItems: 'center',
-  },
-  periodCircle: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    justifyContent: 'center',
+  periodBlock: {
+    borderRadius: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 6,
     alignItems: 'center',
     backgroundColor: '#F1F5F9',
+    borderWidth: 1,
+    borderColor: 'transparent',
   },
-  periodCircleFull: {
+  periodBlockMonthly: {
+    minWidth: 48,
+  },
+  periodBlockWide: {
+    flex: 1,
+  },
+  periodBlockFull: {
     backgroundColor: '#4F46E5',
-  },
-  periodCirclePartial: {
-    backgroundColor: '#818CF8',
-  },
-  periodCircleSelected: {
-    borderWidth: 2,
     borderColor: '#4F46E5',
   },
-  periodCircleCurrent: {
-    borderWidth: 1.5,
-    borderColor: '#94A3B8',
+  periodBlockSelected: {
+    borderColor: '#4F46E5',
+    backgroundColor: '#EEF2FF',
+  },
+  periodBlockFuture: {
+    opacity: 0.5,
   },
   periodLabel: {
-    fontSize: 10,
+    fontSize: 11,
     fontFamily: 'Outfit-Medium',
     color: '#94A3B8',
   },
   periodLabelActive: {
-    color: '#64748B',
+    color: '#334155',
+  },
+  periodValue: {
+    fontSize: 12,
+    fontFamily: 'Outfit-SemiBold',
+    color: '#94A3B8',
+    marginTop: 2,
+  },
+  periodValueActive: {
+    color: '#1C1B1F',
   },
   // Actions
   actionsRow: {
     flexDirection: 'row',
-    gap: 10,
-    marginBottom: 8,
+    gap: 8,
+    alignItems: 'center',
   },
   actionButton: {
     flex: 1,
@@ -443,6 +464,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Outfit-SemiBold',
     color: '#4F46E5',
+  },
+  // Ignore inline button (end of actions row)
+  ignoreInlineButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F1F5F9',
   },
   // Edit mode
   editRow: {
@@ -480,16 +510,5 @@ const styles = StyleSheet.create({
   cancelButtonText: {
     fontSize: 14,
     fontFamily: 'Outfit-SemiBold',
-  },
-  // Ignore corner button
-  ignoreCornerButton: {
-    position: 'absolute',
-    top: 12,
-    right: 12,
-    width: 24,
-    height: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 1,
   },
 });

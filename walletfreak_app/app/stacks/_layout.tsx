@@ -30,7 +30,10 @@ export default function StacksLayout() {
       <Stack.Screen name="worth-it-list" options={{ title: 'Worth It? Calculator' }} />
       <Stack.Screen name="worth-it-audit" options={{ title: 'Worth It? Audit' }} />
       <Stack.Screen name="spend-optimizer" options={{ title: 'Spend Optimizer' }} />
+      <Stack.Screen name="spend-optimizer-step2" options={{ title: 'Spend Optimizer' }} />
+      <Stack.Screen name="spend-optimizer-results" options={{ title: 'Results' }} />
       <Stack.Screen name="sub-optimizer" options={{ title: 'SUB Optimizer' }} />
+      <Stack.Screen name="sub-optimizer-results" options={{ title: 'Results' }} />
       <Stack.Screen name="booking-optimizer" options={{ title: 'Booking Optimizer' }} />
       <Stack.Screen name="booking-strategy/[id]" options={{ title: 'Strategy Report' }} />
       <Stack.Screen name="booking-history" options={{ title: 'Booking History' }} />

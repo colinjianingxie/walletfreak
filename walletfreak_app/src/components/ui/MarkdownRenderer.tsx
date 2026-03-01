@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Linking } from 'react-native';
+import { View, Text, StyleSheet, Linking, ScrollView } from 'react-native';
 
 interface MarkdownRendererProps {
   children: string;
@@ -133,6 +133,50 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ children }) 
       continue;
     }
 
+    // Table (lines starting with |)
+    if (line.trim().startsWith('|')) {
+      const tableLines: string[] = [];
+      while (i < lines.length && lines[i].trim().startsWith('|')) {
+        tableLines.push(lines[i]);
+        i++;
+      }
+      if (tableLines.length >= 2) {
+        const parseRow = (row: string): string[] =>
+          row.split('|').slice(1, -1).map((c) => c.trim());
+
+        const headerCells = parseRow(tableLines[0]);
+        // Skip separator row (index 1 which is |---|---|)
+        const startIdx = tableLines.length > 1 && /^[\s|:-]+$/.test(tableLines[1]) ? 2 : 1;
+        const dataRows = tableLines.slice(startIdx).map(parseRow);
+
+        elements.push(
+          <ScrollView key={`table-${i}`} horizontal showsHorizontalScrollIndicator={true} style={styles.tableScroll}>
+            <View>
+              {/* Header row */}
+              <View style={styles.tableRow}>
+                {headerCells.map((cell, ci) => (
+                  <View key={ci} style={[styles.tableHeaderCell]}>
+                    <Text style={styles.tableHeaderText}>{cell}</Text>
+                  </View>
+                ))}
+              </View>
+              {/* Data rows */}
+              {dataRows.map((row, ri) => (
+                <View key={ri} style={[styles.tableRow, ri % 2 === 1 && styles.tableRowAlt]}>
+                  {row.map((cell, ci) => (
+                    <View key={ci} style={styles.tableCell}>
+                      <Text style={styles.tableCellText}>{cell}</Text>
+                    </View>
+                  ))}
+                </View>
+              ))}
+            </View>
+          </ScrollView>
+        );
+        continue;
+      }
+    }
+
     // Paragraph — collect consecutive non-special lines
     const paraLines: string[] = [];
     while (
@@ -143,6 +187,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ children }) 
       !lines[i].match(/^\s*[-*+]\s+/) &&
       !lines[i].match(/^\s*\d+[.)]\s+/) &&
       !lines[i].trimStart().startsWith('```') &&
+      !lines[i].trim().startsWith('|') &&
       !/^(-{3,}|_{3,}|\*{3,})\s*$/.test(lines[i].trim())
     ) {
       paraLines.push(lines[i]);
@@ -334,5 +379,45 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: '#E5E7EB',
     marginVertical: 16,
+  },
+  // Table
+  tableScroll: {
+    marginVertical: 12,
+  },
+  tableRow: {
+    flexDirection: 'row',
+  },
+  tableRowAlt: {
+    backgroundColor: '#F8FAFC',
+  },
+  tableHeaderCell: {
+    minWidth: 100,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    backgroundColor: '#F1F5F9',
+    borderBottomWidth: 2,
+    borderBottomColor: '#CBD5E1',
+    borderRightWidth: 1,
+    borderRightColor: '#E2E8F0',
+  },
+  tableHeaderText: {
+    fontSize: 14,
+    fontFamily: 'Outfit-SemiBold',
+    color: '#334155',
+  },
+  tableCell: {
+    minWidth: 100,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E5E7EB',
+    borderRightWidth: 1,
+    borderRightColor: '#E2E8F0',
+  },
+  tableCellText: {
+    fontSize: 14,
+    fontFamily: 'Outfit',
+    color: '#1C1B1F',
+    lineHeight: 20,
   },
 });

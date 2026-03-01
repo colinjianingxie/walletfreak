@@ -190,6 +190,7 @@ export default function WalletScreen() {
           onPress={() => router.push(`/stacks/wallet-card/${item.user_card_id}` as any)}
         >
           <View style={styles.benefitInfo}>
+            <CardImage slug={item.card_id} size="small" style={{ marginRight: 10 }} />
             <View style={{ flex: 1 }}>
               <Text variant="bodyMedium" style={{ fontFamily: 'Outfit' }}>
                 {item.benefit_name}
@@ -202,7 +203,7 @@ export default function WalletScreen() {
               {formatCurrency(usedAmount)} / {formatCurrency(totalAmount)}
             </Text>
           </View>
-          <View style={styles.progressBarBg}>
+          <View style={[styles.progressBarBg, { marginLeft: 58 }]}>
             <View
               style={[
                 styles.progressBarFill,
@@ -751,7 +752,6 @@ const styles = StyleSheet.create({
   },
   benefitInfo: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 6,
   },

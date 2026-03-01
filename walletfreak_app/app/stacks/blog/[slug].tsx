@@ -76,13 +76,33 @@ export default function BlogDetailScreen() {
         {/* Title + Metadata below hero */}
         <View style={styles.titleSection}>
           <Text style={styles.title}>{post.title}</Text>
+
+          {/* All tags/categories row */}
+          {(() => {
+            const tagList: string[] = Array.isArray(post.tags)
+              ? post.tags
+              : typeof post.tags === 'string' && post.tags.trim()
+                ? post.tags.split(',').map((t: string) => t.trim())
+                : [];
+            return (tagList.length > 0 || post.category) ? (
+              <View style={styles.tagsRow}>
+                {post.category ? (
+                  <View style={styles.categoryBadge}>
+                    <Text style={styles.categoryText}>
+                      {post.category.toUpperCase()}
+                    </Text>
+                  </View>
+                ) : null}
+                {tagList.map((tag: string, idx: number) => (
+                  <View key={idx} style={styles.tagBadge}>
+                    <Text style={styles.tagBadgeText}>{tag}</Text>
+                  </View>
+                ))}
+              </View>
+            ) : null;
+          })()}
+
           <View style={styles.metaRow}>
-            <View style={styles.categoryBadge}>
-              <Text style={styles.categoryText}>
-                {(post.category || '').toUpperCase()}
-              </Text>
-            </View>
-            <Text style={styles.metaDot}>·</Text>
             <Text style={styles.metaText}>{post.author_name}</Text>
             <Text style={styles.metaDot}>·</Text>
             <Text style={styles.metaText}>{formatDate(post.created_at)}</Text>
@@ -248,6 +268,23 @@ const styles = StyleSheet.create({
     lineHeight: 34,
     marginBottom: 12,
   },
+  tagsRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+    marginBottom: 10,
+  },
+  tagBadge: {
+    backgroundColor: '#F1F5F9',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 6,
+  },
+  tagBadgeText: {
+    fontSize: 11,
+    fontFamily: 'Outfit-Medium',
+    color: '#475569',
+  },
   metaRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -257,7 +294,7 @@ const styles = StyleSheet.create({
   categoryBadge: {
     backgroundColor: '#4338CA',
     paddingHorizontal: 10,
-    paddingVertical: 3,
+    paddingVertical: 4,
     borderRadius: 6,
   },
   categoryText: {

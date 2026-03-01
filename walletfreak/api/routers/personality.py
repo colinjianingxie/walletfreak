@@ -58,6 +58,7 @@ def personality_detail(request, slug: str):
             for card_slug in slot.get("cards", []):
                 card = cards_map.get(card_slug)
                 if card:
+                    benefits = card.get("benefits", [])
                     hydrated_cards.append({
                         "id": card.get("id"),
                         "slug": card.get("id"),
@@ -65,6 +66,10 @@ def personality_detail(request, slug: str):
                         "issuer": card.get("issuer"),
                         "annual_fee": card.get("annual_fee", 0),
                         "image_url": card.get("image_url", ""),
+                        "benefits": benefits,
+                        "credits_value": sum(
+                            (b.get("dollar_value", 0) or 0) for b in benefits
+                        ),
                     })
             slot["hydrated_cards"] = hydrated_cards
 

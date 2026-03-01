@@ -15,6 +15,10 @@ import Animated, {
   useAnimatedScrollHandler,
   interpolate,
   Extrapolation,
+  FadeIn,
+  FadeOut,
+  SlideInDown,
+  SlideOutDown,
 } from 'react-native-reanimated';
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -57,7 +61,7 @@ export default function ExploreScreen() {
   const router = useRouter();
   const theme = useTheme();
   const insets = useSafeAreaInsets();
-  const { selectedCards, toggleCompareCard } = useCardsStore();
+  const { selectedCards, toggleCompareCard, clearCompare } = useCardsStore();
   const filterSheetRef = useRef<BottomSheet>(null);
   const filterSnapPoints = useMemo(() => ['75%'], []);
 
@@ -148,6 +152,16 @@ export default function ExploreScreen() {
     return tags;
   };
 
+  // Build a map of slug->card for compare bar previews
+  const cardsMap = useMemo(() => {
+    const map = new Map<string, any>();
+    allCards.forEach((c: any) => {
+      map.set(c.slug || c.id, c);
+      map.set(c.id, c);
+    });
+    return map;
+  }, [allCards]);
+
   // --- Animated Styles ---
   const animatedTitle = useAnimatedStyle(() => ({
     fontSize: interpolate(scrollY.value, [0, COLLAPSE_DISTANCE], [28, 20], Extrapolation.CLAMP),
@@ -170,13 +184,15 @@ export default function ExploreScreen() {
       const rating = item.match_score ? (item.match_score / 20).toFixed(1) : null;
       const benefitTags = getBenefitTags(item);
       const extraCount = (item.benefits?.length ?? 0) - benefitTags.length;
+      const cardSlug = item.slug || item.id;
+      const isCompareSelected = selectedCards.includes(cardSlug);
 
       return (
         <Pressable
           style={[styles.cardItem, { borderColor: theme.colors.outlineVariant }]}
-          onPress={() => router.push(`/stacks/card-detail/${item.slug || item.id}` as any)}
+          onPress={() => router.push(`/stacks/card-detail/${cardSlug}` as any)}
         >
-          <CardImage slug={item.slug || item.id} size="medium" style={styles.cardImage} />
+          <CardImage slug={cardSlug} size="medium" style={styles.cardImage} />
           <View style={styles.cardContent}>
             <View style={styles.cardNameRow}>
               <View style={{ flex: 1 }}>
@@ -213,10 +229,22 @@ export default function ExploreScreen() {
               </View>
             )}
           </View>
+          {/* Compare toggle button */}
+          <Pressable
+            style={styles.compareToggle}
+            onPress={() => toggleCompareCard(cardSlug)}
+            hitSlop={8}
+          >
+            <MaterialCommunityIcons
+              name={isCompareSelected ? 'checkbox-marked' : 'checkbox-blank-outline'}
+              size={22}
+              color={isCompareSelected ? '#4F46E5' : theme.colors.onSurfaceVariant}
+            />
+          </Pressable>
         </Pressable>
       );
     },
-    [router, theme]
+    [router, theme, selectedCards, toggleCompareCard]
   );
 
   return (
@@ -271,11 +299,51 @@ export default function ExploreScreen() {
           data={filteredCards}
           renderItem={renderCardItem}
           keyExtractor={(item) => item.id || item.slug}
-          contentContainerStyle={styles.listContent}
+          contentContainerStyle={[
+            styles.listContent,
+            selectedCards.length > 0 && { paddingBottom: 96 },
+          ]}
           showsVerticalScrollIndicator={false}
           onScroll={scrollHandler}
           scrollEventThrottle={16}
         />
+      )}
+
+      {/* Floating Compare Bar */}
+      {selectedCards.length > 0 && (
+        <Animated.View
+          entering={SlideInDown.duration(250)}
+          exiting={SlideOutDown.duration(200)}
+          style={[styles.compareBar, { bottom: insets.bottom + 2 }]}
+        >
+          <View style={styles.compareBarInner}>
+            <View style={styles.compareCardPreviews}>
+              {selectedCards.map((cardSlug) => {
+                const card = cardsMap.get(cardSlug);
+                return (
+                  <View key={cardSlug} style={styles.comparePreviewItem}>
+                    <CardImage slug={cardSlug} size="tiny" />
+                  </View>
+                );
+              })}
+            </View>
+            <Text style={styles.compareBarText}>
+              {selectedCards.length} selected
+            </Text>
+            <View style={styles.compareBarActions}>
+              <Pressable onPress={clearCompare} style={styles.compareClearButton}>
+                <MaterialCommunityIcons name="close" size={18} color="#64748B" />
+              </Pressable>
+              <Pressable
+                style={styles.compareButton}
+                onPress={() => router.push('/stacks/compare-cards' as any)}
+              >
+                <Text style={styles.compareButtonText}>Compare</Text>
+                <MaterialCommunityIcons name="arrow-right" size={16} color="#FFFFFF" />
+              </Pressable>
+            </View>
+          </View>
+        </Animated.View>
       )}
 
       {/* Filter Bottom Sheet */}
@@ -486,6 +554,77 @@ const styles = StyleSheet.create({
   benefitTagText: {
     fontSize: 11,
     fontFamily: 'Outfit',
+  },
+  // Compare toggle on card row
+  compareToggle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingLeft: 8,
+  },
+  // Floating compare bar
+  compareBar: {
+    position: 'absolute',
+    left: 12,
+    right: 12,
+  },
+  compareBarInner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#1C1B1F',
+    borderRadius: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    gap: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  compareCardPreviews: {
+    flexDirection: 'row',
+    gap: -8,
+  },
+  comparePreviewItem: {
+    width: 32,
+    height: 22,
+    borderRadius: 4,
+    overflow: 'hidden',
+    borderWidth: 1.5,
+    borderColor: '#FFFFFF',
+  },
+  compareBarText: {
+    flex: 1,
+    fontSize: 13,
+    fontFamily: 'Outfit-Medium',
+    color: '#FFFFFF',
+  },
+  compareBarActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  compareClearButton: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  compareButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: '#4F46E5',
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 10,
+  },
+  compareButtonText: {
+    fontSize: 13,
+    fontFamily: 'Outfit-SemiBold',
+    color: '#FFFFFF',
   },
   // Filter sheet styles
   filterContent: {

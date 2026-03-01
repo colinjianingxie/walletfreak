@@ -160,6 +160,15 @@ export default function PersonalityQuizScreen() {
         >
           Start Over
         </Button>
+        <Button
+          mode="outlined"
+          onPress={() => router.push('/stacks/personality-list' as any)}
+          style={{ marginTop: 8, borderRadius: 12 }}
+          labelStyle={{ fontFamily: 'Outfit-Medium' }}
+          icon="account-group"
+        >
+          Browse All Freaks
+        </Button>
       </View>
     );
   }
@@ -247,7 +256,13 @@ export default function PersonalityQuizScreen() {
             Back
           </Button>
         ) : (
-          <View />
+          <Button
+            mode="text"
+            onPress={() => router.push('/stacks/personality-list' as any)}
+            labelStyle={{ fontFamily: 'Outfit' }}
+          >
+            Browse All
+          </Button>
         )}
         <Button
           mode="contained"

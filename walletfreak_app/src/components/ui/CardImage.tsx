@@ -8,6 +8,7 @@ import { getCardImage } from '../../utils/images';
 const CARD_ASPECT_RATIO = 1.586;
 
 const SIZES: Record<string, { width: number | string; height?: number; aspectRatio?: number }> = {
+  tiny: { width: 32, height: 32 / CARD_ASPECT_RATIO },
   small: { width: 48, height: 48 / CARD_ASPECT_RATIO },
   medium: { width: 80, height: 80 / CARD_ASPECT_RATIO },
   large: { width: '100%', aspectRatio: CARD_ASPECT_RATIO },
@@ -15,7 +16,7 @@ const SIZES: Record<string, { width: number | string; height?: number; aspectRat
 
 interface CardImageProps {
   slug: string;
-  size?: 'small' | 'medium' | 'large';
+  size?: 'tiny' | 'small' | 'medium' | 'large';
   style?: any;
 }
 
@@ -40,7 +41,7 @@ export const CardImage: React.FC<CardImageProps> = ({ slug, size = 'medium', sty
       >
         <MaterialCommunityIcons
           name="credit-card-outline"
-          size={size === 'small' ? 20 : size === 'medium' ? 32 : 48}
+          size={size === 'tiny' ? 14 : size === 'small' ? 20 : size === 'medium' ? 32 : 48}
           color={theme.colors.onSurfaceVariant}
         />
       </View>

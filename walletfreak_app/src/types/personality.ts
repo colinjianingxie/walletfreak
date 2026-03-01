@@ -24,4 +24,6 @@ export interface HydratedCard {
   annual_fee: number;
   image_url: string;
   slug?: string;
+  credits_value?: number;
+  benefits?: { dollar_value?: number; [key: string]: any }[];
 }

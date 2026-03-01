@@ -1,10 +1,17 @@
 import React, { useCallback } from 'react';
-import { View, StyleSheet, FlatList, Pressable } from 'react-native';
+import { View, StyleSheet, Pressable } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  useAnimatedScrollHandler,
+  interpolate,
+  Extrapolation,
+} from 'react-native-reanimated';
 import { LoadingState } from '../../../src/components/layout/LoadingState';
 import { EmptyState } from '../../../src/components/layout/EmptyState';
 import { CardImage } from '../../../src/components/ui/CardImage';
@@ -13,6 +20,10 @@ import { useWallet, useToggleIgnoreBenefit } from '../../../src/hooks/useWallet'
 import { formatCurrency } from '../../../src/utils/formatters';
 import type { BenefitDisplay } from '../../../src/types/card';
 
+const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
+
+const COLLAPSE_DISTANCE = 80;
+
 export default function WalletCardDetailScreen() {
   const { userCardId } = useLocalSearchParams<{ userCardId: string }>();
   const { data: walletData, isLoading } = useWallet();
@@ -20,6 +31,13 @@ export default function WalletCardDetailScreen() {
   const theme = useTheme();
   const router = useRouter();
   const insets = useSafeAreaInsets();
+
+  const scrollY = useSharedValue(0);
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollY.value = event.contentOffset.y;
+    },
+  });
 
   const allCards = [
     ...(walletData?.active_cards ?? []),
@@ -45,6 +63,34 @@ export default function WalletCardDetailScreen() {
     });
   }, [toggleIgnore]);
 
+  // Animated styles for collapsible header
+  const animatedBackButton = useAnimatedStyle(() => ({
+    opacity: interpolate(scrollY.value, [0, COLLAPSE_DISTANCE * 0.5], [1, 0], Extrapolation.CLAMP),
+    height: interpolate(scrollY.value, [0, COLLAPSE_DISTANCE * 0.5], [36, 0], Extrapolation.CLAMP),
+    overflow: 'hidden' as const,
+  }));
+
+  const animatedCardImage = useAnimatedStyle(() => ({
+    opacity: interpolate(scrollY.value, [0, COLLAPSE_DISTANCE], [1, 0], Extrapolation.CLAMP),
+    width: interpolate(scrollY.value, [0, COLLAPSE_DISTANCE], [80, 0], Extrapolation.CLAMP),
+    marginRight: interpolate(scrollY.value, [0, COLLAPSE_DISTANCE], [16, 0], Extrapolation.CLAMP),
+    overflow: 'hidden' as const,
+  }));
+
+  const animatedCardName = useAnimatedStyle(() => ({
+    fontSize: interpolate(scrollY.value, [0, COLLAPSE_DISTANCE], [22, 16], Extrapolation.CLAMP),
+  }));
+
+  const animatedStatusBadge = useAnimatedStyle(() => ({
+    opacity: interpolate(scrollY.value, [0, COLLAPSE_DISTANCE], [1, 0], Extrapolation.CLAMP),
+    width: interpolate(scrollY.value, [0, COLLAPSE_DISTANCE], [80, 0], Extrapolation.CLAMP),
+    overflow: 'hidden' as const,
+  }));
+
+  const animatedHeaderPadding = useAnimatedStyle(() => ({
+    paddingBottom: interpolate(scrollY.value, [0, COLLAPSE_DISTANCE], [24, 12], Extrapolation.CLAMP),
+  }));
+
   if (isLoading) {
     return <LoadingState message="Loading card..." />;
   }
@@ -65,10 +111,10 @@ export default function WalletCardDetailScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Dark Gradient Header */}
-      <LinearGradient
+      {/* Collapsible Dark Gradient Header */}
+      <AnimatedLinearGradient
         colors={['#0F1629', '#1A2332', '#1E293B']}
-        style={[styles.gradientHeader, { paddingTop: insets.top + 12 }]}
+        style={[styles.gradientHeader, { paddingTop: insets.top + 12 }, animatedHeaderPadding]}
       >
         {/* Background orbs */}
         <View style={styles.orbContainer} pointerEvents="none">
@@ -76,31 +122,37 @@ export default function WalletCardDetailScreen() {
           <View style={styles.purpleOrb} />
         </View>
 
-        {/* Back button */}
-        <Pressable
-          style={styles.backButton}
-          onPress={() => router.back()}
-        >
-          <MaterialCommunityIcons name="arrow-left" size={20} color="#94A3B8" />
-          <Text style={styles.backText}>Back to Wallet</Text>
-        </Pressable>
+        {/* Back button — collapses away */}
+        <Animated.View style={animatedBackButton}>
+          <Pressable
+            style={styles.backButton}
+            onPress={() => router.back()}
+          >
+            <MaterialCommunityIcons name="arrow-left" size={20} color="#94A3B8" />
+            <Text style={styles.backText}>Back to Wallet</Text>
+          </Pressable>
+        </Animated.View>
 
         {/* Card Info Row */}
         <View style={styles.cardInfoRow}>
-          <CardImage slug={card.card_id} size="medium" style={{ marginRight: 16 }} />
+          <Animated.View style={animatedCardImage}>
+            <CardImage slug={card.card_id} size="medium" />
+          </Animated.View>
           <View style={{ flex: 1 }}>
-            <Text style={styles.cardName}>{card.name}</Text>
+            <Animated.Text style={[styles.cardName, animatedCardName]} numberOfLines={1}>
+              {card.name}
+            </Animated.Text>
             <Text style={styles.cardIssuer}>
               {card.issuer} · {formatCurrency(card.annual_fee)}/yr
             </Text>
           </View>
-          <View style={[styles.statusBadge, { borderColor: statusColor }]}>
+          <Animated.View style={[styles.statusBadge, { borderColor: statusColor }, animatedStatusBadge]}>
             <Text style={[styles.statusText, { color: statusColor }]}>
               {card.status?.toUpperCase() || 'ACTIVE'}
             </Text>
-          </View>
+          </Animated.View>
         </View>
-      </LinearGradient>
+      </AnimatedLinearGradient>
 
       {/* Benefits List */}
       {allBenefits.length === 0 ? (
@@ -112,7 +164,7 @@ export default function WalletCardDetailScreen() {
           />
         </View>
       ) : (
-        <FlatList
+        <Animated.FlatList
           data={allBenefits}
           renderItem={({ item }) => (
             <BenefitPeriodTracker
@@ -124,6 +176,8 @@ export default function WalletCardDetailScreen() {
           keyExtractor={(item) => `${item.user_card_id}-${item.benefit_id}`}
           contentContainerStyle={styles.listContent}
           showsVerticalScrollIndicator={false}
+          onScroll={scrollHandler}
+          scrollEventThrottle={16}
         />
       )}
     </View>
@@ -180,7 +234,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cardName: {
-    fontSize: 22,
     fontFamily: 'Outfit-Bold',
     color: '#FFFFFF',
   },
@@ -195,6 +248,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 12,
     paddingVertical: 4,
+    alignItems: 'center',
   },
   statusText: {
     fontSize: 11,
