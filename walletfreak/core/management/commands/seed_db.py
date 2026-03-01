@@ -107,6 +107,14 @@ class Command(BaseCommand):
         # Seed Transfer Rules
         self._seed_transfer_rules()
 
+        # Invalidate Django cache so stale card data doesn't persist
+        try:
+            from django.core.cache import cache
+            cache.delete('all_cards')
+            self.stdout.write('Invalidated cards cache.')
+        except Exception:
+            pass
+
         self.stdout.write(self.style.SUCCESS('Database seeding completed successfully.'))
 
     def _seed_categories_and_cards(self, base_dir, card_slugs_list, types_list, seed_categories):

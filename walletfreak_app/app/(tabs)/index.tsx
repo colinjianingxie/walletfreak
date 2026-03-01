@@ -159,11 +159,23 @@ export default function WalletScreen() {
           onLongPress={() => handleLongPress(item)}
           style={styles.cardPressable}
         >
-          <CardImage slug={item.card_id} size="small" style={{ marginRight: 12 }} />
+          <View style={{ position: 'relative' }}>
+            <CardImage slug={item.card_id} size="small" style={{ marginRight: 12, opacity: item.is_active === false ? 0.5 : 1 }} />
+            {item.is_active === false && (
+              <View style={styles.deprecatedDot} />
+            )}
+          </View>
           <View style={styles.cardInfo}>
-            <Text variant="titleSmall" numberOfLines={1} style={{ fontFamily: 'Outfit-SemiBold' }}>
-              {item.name}
-            </Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+              <Text variant="titleSmall" numberOfLines={1} style={{ fontFamily: 'Outfit-SemiBold', flex: 1 }}>
+                {item.name}
+              </Text>
+              {item.is_active === false && (
+                <View style={styles.deprecatedBadge}>
+                  <Text style={styles.deprecatedBadgeText}>DISCONTINUED</Text>
+                </View>
+              )}
+            </View>
             <Text
               variant="bodySmall"
               style={{ color: theme.colors.onSurfaceVariant }}
@@ -730,6 +742,27 @@ const styles = StyleSheet.create({
   },
   cardInfo: {
     flex: 1,
+  },
+  deprecatedDot: {
+    position: 'absolute',
+    top: -2,
+    right: 8,
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#EF4444',
+  },
+  deprecatedBadge: {
+    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+  },
+  deprecatedBadgeText: {
+    fontSize: 9,
+    fontFamily: 'Outfit-SemiBold',
+    color: '#EF4444',
+    letterSpacing: 0.5,
   },
   // Benefits styles
   benefitSectionHeader: {

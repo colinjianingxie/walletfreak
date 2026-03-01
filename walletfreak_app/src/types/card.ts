@@ -50,6 +50,11 @@ export interface UserCard {
   image_url: string;
   benefits: Benefit[];
   loyalty_program: string | null;
+  // Deprecation fields (from master card data)
+  is_active: boolean;
+  deprecated_at?: string;
+  superseded_by?: string[];
+  deprecation_reason?: string;
 }
 
 export interface BenefitUsage {

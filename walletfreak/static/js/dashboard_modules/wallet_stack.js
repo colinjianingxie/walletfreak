@@ -22,7 +22,10 @@ function renderWalletStack() {
         <div class="card-item-container" style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: white; border: 1px solid #E5E7EB; border-radius: 12px; margin-bottom: 0.75rem;">
             <img src="${card.image_url || '/static/images/card_placeholder.png'}" style="width: 60px; height: auto; object-fit: contain; border-radius: 4px;" alt="${card.name}">
             <div style="flex: 1;">
-                <div style="font-weight: 700; color: #1F2937; font-size: 1rem; margin-bottom: 0.25rem;">${card.name || 'Unknown Card'}</div>
+                <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; color: #1F2937; font-size: 1rem; margin-bottom: 0.25rem;">
+                    ${card.name || 'Unknown Card'}
+                    ${card.is_active === false ? '<span style="background: #FEE2E2; color: #DC2626; font-size: 0.6rem; font-weight: 700; padding: 0.15rem 0.4rem; border-radius: 99px;">Discontinued</span>' : ''}
+                </div>
                 <div style="color: #64748B; font-size: 0.875rem;">•••• ****</div>
                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.25rem; font-size: 0.8rem; color: #64748B;">
                     <span class="material-icons" style="font-size: 14px; opacity: 0.7;">event</span>
@@ -61,7 +64,10 @@ function renderWalletStack() {
             </div>
             
             <div style="margin-left: auto; display: flex; align-items: center; gap: 1rem;">
-                <span style="background: #DCFCE7; color: #16A34A; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 99px;">Active</span>
+                ${card.is_active === false
+                    ? '<span style="background: #FEE2E2; color: #DC2626; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 99px;">Discontinued</span>'
+                    : '<span style="background: #DCFCE7; color: #16A34A; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 99px;">Active</span>'
+                }
                 
                 <form method="POST" action="/wallet/remove-card/${card.id}/" style="margin: 0;" onsubmit="return openRemoveCardModal(event, this, '${(card.name || '').replace(/'/g, "\\'")}', '${card.id}');">
                     <input type="hidden" name="csrfmiddlewaretoken" value="${document.querySelector('[name=csrfmiddlewaretoken]').value}">

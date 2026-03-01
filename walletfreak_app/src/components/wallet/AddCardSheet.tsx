@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import { View, StyleSheet, Pressable, ActivityIndicator, Alert } from 'react-native';
-import { Text, Searchbar, Button, useTheme } from 'react-native-paper';
-import BottomSheet, { BottomSheetBackdrop, BottomSheetView, BottomSheetFlatList, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { Text, Button, useTheme } from 'react-native-paper';
+import BottomSheet, { BottomSheetBackdrop, BottomSheetSectionList, BottomSheetScrollView, BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { CardImage } from '../ui/CardImage';
 import { useCardList, useCardDetail } from '../../hooks/useCards';
@@ -22,14 +22,17 @@ const MONTHS = [
 const currentYear = new Date().getFullYear();
 const YEARS = Array.from({ length: 15 }, (_, i) => currentYear - i);
 
+const ISSUER_FILTERS = ['All', 'Chase', 'Amex', 'Capital One', 'Citi', 'Discover'];
+
 export const AddCardSheet: React.FC<AddCardSheetProps> = ({
   sheetRef,
   existingCardIds,
   onDismiss,
 }) => {
   const theme = useTheme();
-  const snapPoints = useMemo(() => ['85%'], []);
+  const snapPoints = useMemo(() => ['92%'], []);
   const [search, setSearch] = useState('');
+  const [issuerFilter, setIssuerFilter] = useState('All');
   const [selectedCard, setSelectedCard] = useState<any>(null);
   const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
@@ -42,9 +45,22 @@ export const AddCardSheet: React.FC<AddCardSheetProps> = ({
 
   const { data: cardDetail, isLoading: detailLoading } = useCardDetail(selectedCard?.slug || selectedCard?.id || '');
 
-  const availableCards = useMemo(() => {
+  // Group available cards by issuer into sections
+  const sections = useMemo(() => {
     const existing = new Set(existingCardIds);
     let filtered = allCards.filter((c: any) => !existing.has(c.id) && !existing.has(c.slug));
+
+    // Apply issuer filter
+    if (issuerFilter !== 'All') {
+      const filterLower = issuerFilter.toLowerCase();
+      filtered = filtered.filter((c: any) => {
+        const issuer = (c.issuer || '').toLowerCase();
+        if (filterLower === 'amex') return issuer.includes('american express') || issuer.includes('amex');
+        return issuer.includes(filterLower);
+      });
+    }
+
+    // Apply search
     if (search) {
       const q = search.toLowerCase();
       filtered = filtered.filter((c: any) =>
@@ -52,8 +68,25 @@ export const AddCardSheet: React.FC<AddCardSheetProps> = ({
         (c.issuer || '').toLowerCase().includes(q)
       );
     }
-    return filtered;
-  }, [allCards, existingCardIds, search]);
+
+    // Group by issuer
+    const groups: Record<string, any[]> = {};
+    filtered.forEach((c: any) => {
+      const issuer = c.issuer || 'Other';
+      if (!groups[issuer]) groups[issuer] = [];
+      groups[issuer].push(c);
+    });
+
+    // Sort issuers alphabetically, cards within each group by name
+    return Object.keys(groups)
+      .sort()
+      .map((issuer) => ({
+        title: issuer,
+        data: groups[issuer].sort((a: any, b: any) => (a.name || '').localeCompare(b.name || '')),
+      }));
+  }, [allCards, existingCardIds, search, issuerFilter]);
+
+  const totalCards = useMemo(() => sections.reduce((sum, s) => sum + s.data.length, 0), [sections]);
 
   const resetPreview = useCallback(() => {
     setSelectedCard(null);
@@ -104,11 +137,39 @@ export const AddCardSheet: React.FC<AddCardSheetProps> = ({
   const handleClose = () => {
     resetPreview();
     setSearch('');
+    setIssuerFilter('All');
     onDismiss();
   };
 
   const detail = cardDetail;
   const benefits = detail?.benefits?.slice(0, 4) ?? [];
+
+  const renderSectionHeader = useCallback(({ section }: { section: { title: string; data: any[] } }) => (
+    <View style={styles.sectionHeaderRow}>
+      <Text style={styles.sectionHeaderText}>{section.title}</Text>
+      <View style={styles.sectionHeaderCount}>
+        <Text style={styles.sectionHeaderCountText}>{section.data.length}</Text>
+      </View>
+    </View>
+  ), []);
+
+  const renderCardRow = useCallback(({ item }: { item: any }) => (
+    <Pressable
+      style={styles.cardRow}
+      onPress={() => handleSelectCard(item)}
+    >
+      <CardImage slug={item.slug || item.id} size="small" style={{ marginRight: 12 }} />
+      <View style={{ flex: 1 }}>
+        <Text variant="titleSmall" numberOfLines={1} style={{ fontFamily: 'Outfit-SemiBold' }}>
+          {item.name}
+        </Text>
+        <Text variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>
+          {item.issuer}{item.annual_fee ? ` · ${formatCurrency(item.annual_fee)}/yr` : ''}
+        </Text>
+      </View>
+      <MaterialCommunityIcons name="chevron-right" size={20} color={theme.colors.onSurfaceVariant} />
+    </Pressable>
+  ), [theme]);
 
   return (
     <BottomSheet
@@ -117,6 +178,9 @@ export const AddCardSheet: React.FC<AddCardSheetProps> = ({
       snapPoints={snapPoints}
       enablePanDownToClose
       onClose={handleClose}
+      keyboardBehavior="interactive"
+      keyboardBlurBehavior="restore"
+      android_keyboardInputMode="adjustResize"
       backdropComponent={(props) => (
         <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />
       )}
@@ -342,73 +406,94 @@ export const AddCardSheet: React.FC<AddCardSheetProps> = ({
           )}
         </BottomSheetScrollView>
       ) : (
-        /* Step 1: Search + Card List */
-        <BottomSheetView style={styles.container}>
-          {/* Header */}
-          <View style={styles.header}>
-            <Text style={styles.headerTitle}>Add Credit Card</Text>
-            <Pressable onPress={handleClose} style={styles.closeButton}>
-              <MaterialCommunityIcons name="close" size={22} color={theme.colors.onSurfaceVariant} />
-            </Pressable>
-          </View>
+        /* Step 1: Search + Card List — BottomSheetSectionList as direct child for proper scroll gestures */
+        <BottomSheetSectionList
+          sections={sections}
+          keyExtractor={(item: any) => item.id || item.slug}
+          renderItem={renderCardRow}
+          renderSectionHeader={renderSectionHeader}
+          stickySectionHeadersEnabled={false}
+          showsVerticalScrollIndicator={true}
+          contentContainerStyle={styles.listContentContainer}
+          ListHeaderComponent={
+            <View style={styles.listHeader}>
+              {/* Header */}
+              <View style={styles.header}>
+                <Text style={styles.headerTitle}>Add Credit Card</Text>
+                <Pressable onPress={handleClose} style={styles.closeButton}>
+                  <MaterialCommunityIcons name="close" size={22} color={theme.colors.onSurfaceVariant} />
+                </Pressable>
+              </View>
 
-          <View style={[styles.divider, { backgroundColor: theme.colors.outlineVariant }]} />
+              <View style={[styles.divider, { backgroundColor: theme.colors.outlineVariant }]} />
 
-          {/* Search */}
-          <Searchbar
-            placeholder="Search cards (e.g. Gold, Sapphire)..."
-            onChangeText={setSearch}
-            value={search}
-            style={[styles.searchbar, { borderColor: theme.colors.primary }]}
-            inputStyle={{ fontFamily: 'Outfit', fontSize: 14 }}
-          />
+              {/* Search Input using BottomSheetTextInput for proper keyboard handling */}
+              <View style={[styles.searchContainer, { borderColor: theme.colors.primary }]}>
+                <MaterialCommunityIcons name="magnify" size={20} color={theme.colors.primary} style={{ marginRight: 8 }} />
+                <BottomSheetTextInput
+                  placeholder="Search cards (e.g. Gold, Sapphire)..."
+                  placeholderTextColor={theme.colors.onSurfaceVariant}
+                  onChangeText={setSearch}
+                  value={search}
+                  style={[styles.searchInput, { color: theme.colors.onSurface }]}
+                  autoCorrect={false}
+                />
+                {search.length > 0 && (
+                  <Pressable onPress={() => setSearch('')} hitSlop={8}>
+                    <MaterialCommunityIcons name="close-circle" size={18} color={theme.colors.onSurfaceVariant} />
+                  </Pressable>
+                )}
+              </View>
 
-          {/* Suggested Label */}
-          <Text style={[styles.suggestedLabel, { color: theme.colors.onSurfaceVariant }]}>
-            SUGGESTED
-          </Text>
+              {/* Issuer Filter Chips */}
+              <View style={styles.filterRow}>
+                {ISSUER_FILTERS.map((f) => (
+                  <Pressable
+                    key={f}
+                    style={[
+                      styles.filterChip,
+                      issuerFilter === f && { backgroundColor: theme.colors.primary },
+                    ]}
+                    onPress={() => setIssuerFilter(f)}
+                  >
+                    <Text style={[
+                      styles.filterChipText,
+                      issuerFilter === f && { color: '#FFFFFF' },
+                    ]}>
+                      {f}
+                    </Text>
+                  </Pressable>
+                ))}
+              </View>
 
-          {/* Card List */}
-          <BottomSheetFlatList
-            data={availableCards}
-            keyExtractor={(item: any) => item.id || item.slug}
-            renderItem={({ item }: { item: any }) => (
-              <Pressable
-                style={styles.cardRow}
-                onPress={() => handleSelectCard(item)}
-              >
-                <CardImage slug={item.slug || item.id} size="small" style={{ marginRight: 12 }} />
-                <View style={{ flex: 1 }}>
-                  <Text variant="titleSmall" numberOfLines={1} style={{ fontFamily: 'Outfit-SemiBold' }}>
-                    {item.name}
-                  </Text>
-                  <Text variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>
-                    {item.issuer}
-                  </Text>
-                </View>
-                <MaterialCommunityIcons name="chevron-right" size={20} color={theme.colors.onSurfaceVariant} />
-              </Pressable>
-            )}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: 20 }}
-            ListEmptyComponent={
+              {/* Results count */}
+              <Text style={[styles.resultsLabel, { color: theme.colors.onSurfaceVariant }]}>
+                {totalCards} {totalCards === 1 ? 'card' : 'cards'} available
+              </Text>
+            </View>
+          }
+          ListEmptyComponent={
+            <View style={styles.emptyContainer}>
+              <MaterialCommunityIcons name="credit-card-search-outline" size={48} color={theme.colors.onSurfaceVariant} style={{ opacity: 0.4, marginBottom: 12 }} />
               <Text
                 variant="bodyMedium"
-                style={{ color: theme.colors.onSurfaceVariant, textAlign: 'center', marginTop: 24 }}
+                style={{ color: theme.colors.onSurfaceVariant, textAlign: 'center' }}
               >
-                {search ? 'No cards found' : 'All cards already added'}
+                {search || issuerFilter !== 'All' ? 'No cards match your search' : 'All cards already added'}
               </Text>
-            }
-          />
-        </BottomSheetView>
+            </View>
+          }
+        />
       )}
     </BottomSheet>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  listContentContainer: {
+    paddingBottom: 40,
+  },
+  listHeader: {
     paddingHorizontal: 20,
   },
   previewContainer: {
@@ -443,23 +528,77 @@ const styles = StyleSheet.create({
     height: 1,
     marginVertical: 12,
   },
-  searchbar: {
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     borderRadius: 12,
-    elevation: 0,
-    backgroundColor: '#F5F5F5',
     borderWidth: 1,
-    marginBottom: 16,
+    backgroundColor: '#F5F5F5',
+    paddingHorizontal: 12,
+    height: 48,
+    marginBottom: 12,
   },
-  suggestedLabel: {
+  searchInput: {
+    flex: 1,
+    fontFamily: 'Outfit',
+    fontSize: 14,
+    paddingVertical: 0,
+  },
+  filterRow: {
+    flexDirection: 'row',
+    gap: 6,
+    marginBottom: 12,
+    flexWrap: 'wrap',
+  },
+  filterChip: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+    backgroundColor: '#F1F5F9',
+  },
+  filterChipText: {
+    fontSize: 12,
+    fontFamily: 'Outfit-Medium',
+    color: '#64748B',
+  },
+  resultsLabel: {
     fontSize: 11,
     fontFamily: 'Outfit-SemiBold',
-    letterSpacing: 1,
-    marginBottom: 12,
+    letterSpacing: 0.5,
+    marginBottom: 8,
+  },
+  sectionHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    gap: 8,
+  },
+  sectionHeaderText: {
+    fontSize: 13,
+    fontFamily: 'Outfit-SemiBold',
+    color: '#6366F1',
+  },
+  sectionHeaderCount: {
+    backgroundColor: '#EEF2FF',
+    paddingHorizontal: 6,
+    paddingVertical: 1,
+    borderRadius: 8,
+  },
+  sectionHeaderCountText: {
+    fontSize: 11,
+    fontFamily: 'Outfit-SemiBold',
+    color: '#6366F1',
   },
   cardRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  emptyContainer: {
+    alignItems: 'center',
+    paddingTop: 40,
   },
   loadingContainer: {
     alignItems: 'center',

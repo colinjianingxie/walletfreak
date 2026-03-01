@@ -186,9 +186,11 @@ export default function WalletCardDetailScreen() {
     );
   }
 
-  const statusColor =
+  const isDeprecated = card.is_active === false;
+  const statusColor = isDeprecated ? '#EF4444' :
     card.status === 'active' ? '#10B981' :
     card.status === 'inactive' ? '#94A3B8' : '#60A5FA';
+  const statusLabel = isDeprecated ? 'DISCONTINUED' : (card.status?.toUpperCase() || 'ACTIVE');
 
   return (
     <View style={styles.container}>
@@ -230,10 +232,19 @@ export default function WalletCardDetailScreen() {
         </View>
 
         {/* Status + Actions Row */}
+        {isDeprecated && (
+          <View style={styles.deprecationBanner}>
+            <MaterialCommunityIcons name="alert-circle-outline" size={16} color="#FCA5A5" />
+            <Text style={styles.deprecationText}>
+              {card.deprecation_reason || 'This card has been discontinued'}
+            </Text>
+          </View>
+        )}
+
         <View style={styles.statusActionsRow}>
           <View style={[styles.statusBadge, { borderColor: statusColor }]}>
             <Text style={[styles.statusText, { color: statusColor }]}>
-              {card.status?.toUpperCase() || 'ACTIVE'}
+              {statusLabel}
             </Text>
           </View>
           <View style={styles.actionButtons}>
@@ -550,6 +561,23 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'Outfit-Medium',
     color: '#94A3B8',
+  },
+  deprecationBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: 'rgba(239, 68, 68, 0.15)',
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginTop: 12,
+  },
+  deprecationText: {
+    flex: 1,
+    fontSize: 13,
+    fontFamily: 'Outfit',
+    color: '#FCA5A5',
+    lineHeight: 18,
   },
   emptyContainer: {
     flex: 1,

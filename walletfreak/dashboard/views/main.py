@@ -41,14 +41,18 @@ def dashboard(request):
         assigned_personality = None
     
     # Get all available cards for adding (Optimized: Basic info only)
+    # Use include_deprecated=True for the lookup map so user's deprecated cards still resolve
     try:
-        all_cards = db.get_cards()
+        all_cards_with_deprecated = db.get_cards(include_deprecated=True)
     except Exception as e:
         print(f"Error fetching all cards: {e}")
-        all_cards = []
-    
-    # Create lookup map for efficient access
-    cards_map = {c['id']: c for c in all_cards}
+        all_cards_with_deprecated = []
+
+    # Create lookup map for efficient access (includes deprecated cards for name/image sync)
+    cards_map = {c['id']: c for c in all_cards_with_deprecated}
+
+    # Filter out deprecated cards for the "add card" list
+    all_cards = [c for c in all_cards_with_deprecated if c.get('is_active', True)]
     
     # Get IDs of cards already in user's wallet
     user_card_ids = set()
@@ -58,7 +62,7 @@ def dashboard(request):
     # Filter out cards already in wallet
     available_cards = [card for card in all_cards if card['id'] not in user_card_ids]
     
-    # Prepare available cards JSON for JavaScript with full details
+    # Prepare cards JSON for JavaScript - include ALL cards (even deprecated) so wallet lookup works
     available_cards_json = json.dumps([{
         'id': card.get('id', ''),
         'name': card.get('name', 'Unknown Card'),
@@ -74,7 +78,8 @@ def dashboard(request):
         'image_url': resolve_card_image_url(card.get('id')) if card.get('id') else '',
         'earning_rates': card.get('earning_rates', []),
         'earning': card.get('earning', []),
-    } for card in all_cards], default=str)
+        'is_active': card.get('is_active', True),
+    } for card in all_cards_with_deprecated], default=str)
     
     # Calculate benefits and values
     all_benefits = []
@@ -93,15 +98,22 @@ def dashboard(request):
         try:
             # Get full card details - OPTIMIZED: Use cached map instead of DB call
             card_details = cards_map.get(card['card_id'])
-            
-            # Fallback if somehow not in map (e.g. card deleted but user has it)
-            if not card_details:
-                 continue
 
-            # SYNC: Update active card with canonical details to fix stale images/names
-            card['image_url'] = card_details.get('image_url')
-            card['name'] = card_details.get('name')
-            
+            if card_details:
+                # SYNC: Update active card with canonical details to fix stale images/names
+                card['image_url'] = card_details.get('image_url')
+                card['name'] = card_details.get('name')
+                card['is_active'] = card_details.get('is_active', True)
+                card['deprecated_at'] = card_details.get('deprecated_at')
+                card['superseded_by'] = card_details.get('superseded_by')
+                card['deprecation_reason'] = card_details.get('deprecation_reason')
+
+            # Skip benefit calculations for deprecated cards or cards without master data
+            if not card.get('is_active', True):
+                continue
+            if not card_details:
+                continue
+
             total_annual_fee += (card_details.get('annual_fee') or 0)
             
             # Get card anniversary date (when user added the card)

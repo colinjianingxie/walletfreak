@@ -73,6 +73,10 @@ def get_wallet(request):
             card["image_url"] = card_details.get("image_url")
             card["name"] = card_details.get("name")
 
+            # Skip benefit calculations for deprecated cards
+            if not card_details.get("is_active", True):
+                continue
+
             total_annual_fee += card_details.get("annual_fee") or 0
 
             anniversary_date_str = card.get("anniversary_date", "")
@@ -383,7 +387,7 @@ def get_wallet(request):
 
     # Serialize cards for response
     def serialize_card(c):
-        return {
+        data = {
             "id": c.get("id"),
             "user_card_id": c.get("id"),
             "card_id": c.get("card_id"),
@@ -393,7 +397,13 @@ def get_wallet(request):
             "anniversary_date": c.get("anniversary_date", ""),
             "annual_fee": c.get("annual_fee", 0),
             "image_url": c.get("image_url", ""),
+            "is_active": c.get("is_active", True),
         }
+        if not data["is_active"]:
+            data["deprecated_at"] = c.get("deprecated_at")
+            data["superseded_by"] = c.get("superseded_by")
+            data["deprecation_reason"] = c.get("deprecation_reason")
+        return data
 
     return {
         "active_cards": [serialize_card(c) for c in active_cards],

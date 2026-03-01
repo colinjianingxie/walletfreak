@@ -25,7 +25,9 @@
                         <h3 class="pc-ac-title">{{ card.name }}</h3>
                         <p class="pc-ac-subtitle">•••• {{ card.last_4|default:"****" }}</p>
                     </div>
-
+                    {% if card.is_active == False %}
+                    <span style="background: #FEE2E2; color: #DC2626; font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 99px;">Discontinued</span>
+                    {% endif %}
                 </div>
             </div>
             {% empty %}
