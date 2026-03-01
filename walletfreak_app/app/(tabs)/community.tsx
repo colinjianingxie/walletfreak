@@ -162,8 +162,8 @@ export default function CommunityScreen() {
             <View style={[styles.categoryBadge, { backgroundColor: '#4338CA' }]}>
               <Text style={[styles.categoryBadgeText, { color: '#FFFFFF' }]}>
                 {(() => {
-                  const tags = item.tags;
-                  if (Array.isArray(tags) && tags.length > 0) return tags[0].toUpperCase();
+                  const tags: any = item.tags;
+                  if (Array.isArray(tags) && tags.length > 0) return String(tags[0]).toUpperCase();
                   if (typeof tags === 'string' && tags.trim()) return tags.split(',')[0].trim().toUpperCase();
                   return (item.category || '').toUpperCase();
                 })()}

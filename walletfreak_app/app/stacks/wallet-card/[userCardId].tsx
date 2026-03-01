@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
-import { View, StyleSheet, Pressable } from 'react-native';
-import { Text, useTheme } from 'react-native-paper';
+import React, { useCallback, useMemo, useState } from 'react';
+import { View, StyleSheet, Pressable, Alert, Modal } from 'react-native';
+import { Text, Button, useTheme } from 'react-native-paper';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -16,7 +16,7 @@ import { LoadingState } from '../../../src/components/layout/LoadingState';
 import { EmptyState } from '../../../src/components/layout/EmptyState';
 import { CardImage } from '../../../src/components/ui/CardImage';
 import { BenefitPeriodTracker } from '../../../src/components/wallet/BenefitPeriodTracker';
-import { useWallet, useToggleIgnoreBenefit } from '../../../src/hooks/useWallet';
+import { useWallet, useToggleIgnoreBenefit, useUpdateAnniversary, useRemoveCard } from '../../../src/hooks/useWallet';
 import { formatCurrency } from '../../../src/utils/formatters';
 import type { BenefitDisplay } from '../../../src/types/card';
 
@@ -24,13 +24,28 @@ const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 
 const COLLAPSE_DISTANCE = 80;
 
+const MONTHS = [
+  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+];
+
+const currentYear = new Date().getFullYear();
+const YEARS = Array.from({ length: 15 }, (_, i) => currentYear - i);
+
 export default function WalletCardDetailScreen() {
   const { userCardId } = useLocalSearchParams<{ userCardId: string }>();
   const { data: walletData, isLoading } = useWallet();
   const toggleIgnore = useToggleIgnoreBenefit();
+  const updateAnniversary = useUpdateAnniversary();
+  const removeCard = useRemoveCard();
   const theme = useTheme();
   const router = useRouter();
   const insets = useSafeAreaInsets();
+
+  const [showAnniversaryModal, setShowAnniversaryModal] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
+  const [selectedYear, setSelectedYear] = useState<number | null>(null);
+  const [useDefault, setUseDefault] = useState(false);
 
   const scrollY = useSharedValue(0);
   const scrollHandler = useAnimatedScrollHandler({
@@ -62,6 +77,64 @@ export default function WalletCardDetailScreen() {
       isIgnored: !benefit.is_ignored,
     });
   }, [toggleIgnore]);
+
+  const handleOpenAnniversaryModal = useCallback(() => {
+    if (card?.anniversary_date && card.anniversary_date !== 'default') {
+      const parts = card.anniversary_date.split('-');
+      if (parts.length >= 2) {
+        setSelectedYear(parseInt(parts[0], 10));
+        setSelectedMonth(parseInt(parts[1], 10) - 1);
+        setUseDefault(false);
+      }
+    } else {
+      setSelectedMonth(null);
+      setSelectedYear(null);
+      setUseDefault(false);
+    }
+    setShowAnniversaryModal(true);
+  }, [card]);
+
+  const handleSaveAnniversary = useCallback(() => {
+    if (!userCardId) return;
+    let anniversaryDate: string;
+    if (useDefault) {
+      anniversaryDate = 'default';
+    } else if (selectedMonth !== null && selectedYear !== null) {
+      const mm = String(selectedMonth + 1).padStart(2, '0');
+      anniversaryDate = `${selectedYear}-${mm}-01`;
+    } else {
+      return;
+    }
+
+    updateAnniversary.mutate(
+      { userCardId, anniversaryDate },
+      {
+        onSuccess: () => {
+          setShowAnniversaryModal(false);
+        },
+      }
+    );
+  }, [userCardId, useDefault, selectedMonth, selectedYear, updateAnniversary]);
+
+  const handleDeleteCard = useCallback(() => {
+    if (!card) return;
+    Alert.alert(
+      'Remove Card',
+      `Are you sure you want to remove ${card.name} from your wallet? This will delete all benefit tracking data.`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Remove',
+          style: 'destructive',
+          onPress: () =>
+            removeCard.mutate(
+              { userCardId: card.user_card_id },
+              { onSuccess: () => router.back() }
+            ),
+        },
+      ]
+    );
+  }, [card, removeCard, router]);
 
   // Animated styles for collapsible header
   const animatedBackButton = useAnimatedStyle(() => ({
@@ -124,13 +197,23 @@ export default function WalletCardDetailScreen() {
 
         {/* Back button — collapses away */}
         <Animated.View style={animatedBackButton}>
-          <Pressable
-            style={styles.backButton}
-            onPress={() => router.back()}
-          >
-            <MaterialCommunityIcons name="arrow-left" size={20} color="#94A3B8" />
-            <Text style={styles.backText}>Back to Wallet</Text>
-          </Pressable>
+          <View style={styles.topRow}>
+            <Pressable
+              style={styles.backButton}
+              onPress={() => router.back()}
+            >
+              <MaterialCommunityIcons name="arrow-left" size={20} color="#94A3B8" />
+              <Text style={styles.backText}>Back to Wallet</Text>
+            </Pressable>
+            <View style={styles.actionButtons}>
+              <Pressable style={styles.actionBtn} onPress={handleOpenAnniversaryModal}>
+                <MaterialCommunityIcons name="calendar-edit" size={20} color="#94A3B8" />
+              </Pressable>
+              <Pressable style={styles.actionBtn} onPress={handleDeleteCard}>
+                <MaterialCommunityIcons name="delete-outline" size={20} color="#EF4444" />
+              </Pressable>
+            </View>
+          </View>
         </Animated.View>
 
         {/* Card Info Row */}
@@ -180,6 +263,126 @@ export default function WalletCardDetailScreen() {
           scrollEventThrottle={16}
         />
       )}
+
+      {/* Anniversary Edit Modal */}
+      <Modal
+        visible={showAnniversaryModal}
+        animationType="slide"
+        presentationStyle="pageSheet"
+        onRequestClose={() => setShowAnniversaryModal(false)}
+      >
+        <View style={[styles.modalContainer, { backgroundColor: theme.colors.surface }]}>
+          <View style={styles.modalHeader}>
+            <Text style={styles.modalTitle}>Edit Anniversary Date</Text>
+            <Pressable onPress={() => setShowAnniversaryModal(false)} style={styles.modalClose}>
+              <MaterialCommunityIcons name="close" size={24} color={theme.colors.onSurface} />
+            </Pressable>
+          </View>
+
+          <View style={[styles.modalDivider, { backgroundColor: theme.colors.outlineVariant }]} />
+
+          <View style={styles.warningBox}>
+            <MaterialCommunityIcons name="alert-circle-outline" size={20} color="#F59E0B" style={{ marginRight: 8 }} />
+            <Text style={styles.warningText}>
+              Changing your anniversary date will reset benefit tracking for this card.
+            </Text>
+          </View>
+
+          {!useDefault && (
+            <>
+              <Text style={[styles.pickerLabel, { color: theme.colors.onSurface }]}>Month</Text>
+              <View style={styles.monthGrid}>
+                {MONTHS.map((m, i) => (
+                  <Pressable
+                    key={m}
+                    style={[
+                      styles.monthChip,
+                      {
+                        backgroundColor: selectedMonth === i ? theme.colors.primary : theme.colors.surfaceVariant,
+                        borderColor: selectedMonth === i ? theme.colors.primary : theme.colors.outlineVariant,
+                      },
+                    ]}
+                    onPress={() => setSelectedMonth(i)}
+                  >
+                    <Text
+                      style={[
+                        styles.chipText,
+                        { color: selectedMonth === i ? '#FFFFFF' : theme.colors.onSurface },
+                      ]}
+                    >
+                      {m}
+                    </Text>
+                  </Pressable>
+                ))}
+              </View>
+
+              <Text style={[styles.pickerLabel, { color: theme.colors.onSurface }]}>Year</Text>
+              <View style={styles.yearGrid}>
+                {YEARS.map((y) => (
+                  <Pressable
+                    key={y}
+                    style={[
+                      styles.yearChip,
+                      {
+                        backgroundColor: selectedYear === y ? theme.colors.primary : theme.colors.surfaceVariant,
+                        borderColor: selectedYear === y ? theme.colors.primary : theme.colors.outlineVariant,
+                      },
+                    ]}
+                    onPress={() => setSelectedYear(y)}
+                  >
+                    <Text
+                      style={[
+                        styles.chipText,
+                        { color: selectedYear === y ? '#FFFFFF' : theme.colors.onSurface },
+                      ]}
+                    >
+                      {y}
+                    </Text>
+                  </Pressable>
+                ))}
+              </View>
+            </>
+          )}
+
+          <Pressable
+            style={[
+              styles.defaultOption,
+              {
+                backgroundColor: useDefault ? theme.colors.primaryContainer : theme.colors.surfaceVariant,
+                borderColor: useDefault ? theme.colors.primary : theme.colors.outlineVariant,
+              },
+            ]}
+            onPress={() => {
+              setUseDefault(!useDefault);
+              if (!useDefault) {
+                setSelectedMonth(null);
+                setSelectedYear(null);
+              }
+            }}
+          >
+            <MaterialCommunityIcons
+              name={useDefault ? 'checkbox-marked-circle' : 'checkbox-blank-circle-outline'}
+              size={20}
+              color={useDefault ? theme.colors.primary : theme.colors.onSurfaceVariant}
+              style={{ marginRight: 8 }}
+            />
+            <Text style={[styles.defaultOptionText, { color: theme.colors.onSurface }]}>
+              I don't know my anniversary date
+            </Text>
+          </Pressable>
+
+          <Button
+            mode="contained"
+            onPress={handleSaveAnniversary}
+            loading={updateAnniversary.isPending}
+            disabled={updateAnniversary.isPending || (!useDefault && (selectedMonth === null || selectedYear === null))}
+            style={styles.saveButton}
+            contentStyle={{ paddingVertical: 6 }}
+          >
+            Save Anniversary Date
+          </Button>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -218,16 +421,30 @@ const styles = StyleSheet.create({
     borderRadius: 90,
     backgroundColor: 'rgba(124, 58, 237, 0.12)',
   },
+  topRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
   backButton: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
-    marginBottom: 16,
   },
   backText: {
     fontSize: 14,
     fontFamily: 'Outfit',
     color: '#94A3B8',
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  actionBtn: {
+    padding: 6,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255,255,255,0.1)',
   },
   cardInfoRow: {
     flexDirection: 'row',
@@ -262,5 +479,93 @@ const styles = StyleSheet.create({
   listContent: {
     padding: 16,
     paddingBottom: 32,
+  },
+  // Modal styles
+  modalContainer: {
+    flex: 1,
+    padding: 24,
+    paddingTop: 16,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontFamily: 'Outfit-SemiBold',
+    color: '#1C1B1F',
+  },
+  modalClose: {
+    padding: 4,
+  },
+  modalDivider: {
+    height: 1,
+    marginVertical: 16,
+  },
+  warningBox: {
+    flexDirection: 'row',
+    backgroundColor: '#FEF3C7',
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 24,
+    alignItems: 'flex-start',
+  },
+  warningText: {
+    flex: 1,
+    fontSize: 13,
+    fontFamily: 'Outfit',
+    color: '#92400E',
+    lineHeight: 18,
+  },
+  pickerLabel: {
+    fontSize: 14,
+    fontFamily: 'Outfit-Medium',
+    marginBottom: 8,
+  },
+  monthGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 20,
+  },
+  monthChip: {
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 1,
+  },
+  yearGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 20,
+  },
+  yearChip: {
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 1,
+  },
+  chipText: {
+    fontSize: 13,
+    fontFamily: 'Outfit-Medium',
+  },
+  defaultOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 14,
+    borderRadius: 12,
+    borderWidth: 1,
+    marginTop: 4,
+    marginBottom: 24,
+  },
+  defaultOptionText: {
+    fontSize: 14,
+    fontFamily: 'Outfit-Medium',
+  },
+  saveButton: {
+    borderRadius: 12,
   },
 });

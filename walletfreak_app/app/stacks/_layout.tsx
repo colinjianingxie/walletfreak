@@ -45,6 +45,8 @@ export default function StacksLayout() {
       <Stack.Screen name="notifications" options={{ title: 'Notifications' }} />
       <Stack.Screen name="personality-quiz" options={{ title: 'Personality Quiz' }} />
       <Stack.Screen name="wallet-card/[userCardId]" options={{ title: 'Card Benefits', headerShown: false }} />
+      <Stack.Screen name="privacy-policy" options={{ title: 'Privacy Policy' }} />
+      <Stack.Screen name="terms-of-service" options={{ title: 'Terms of Service' }} />
     </Stack>
   );
 }

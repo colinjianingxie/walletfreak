@@ -302,7 +302,9 @@ export default function WalletScreen() {
               <Text style={styles.subtitleDot}> · </Text>
               <View style={styles.statusBadge}>
                 <View style={[styles.statusDot, { backgroundColor: chaseEligible ? '#34D399' : '#EF4444' }]} />
-                <Text style={[styles.statusText, { color: chaseEligible ? '#E2E8F0' : '#FCA5A5' }]}>{chase524Count}/24 Status</Text>
+                <Text style={[styles.statusText, { color: chaseEligible ? '#E2E8F0' : '#FCA5A5' }]}>
+                  {chaseEligible ? 'Chase Eligible' : 'Chase Ineligible'} ({chase524Count}/24)
+                </Text>
               </View>
             </Animated.View>
           </View>

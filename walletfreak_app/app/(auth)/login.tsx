@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -16,17 +16,78 @@ import {
 } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { loginWithEmail } from '../../src/firebase/auth';
+import {
+  useAuthRequest,
+  exchangeCodeAsync,
+} from 'expo-auth-session';
+import * as WebBrowser from 'expo-web-browser';
+import {
+  loginWithEmail,
+  loginWithGoogleCredential,
+  GOOGLE_IOS_CLIENT_ID,
+} from '../../src/firebase/auth';
 import { isValidEmail } from '../../src/utils/validators';
+
+WebBrowser.maybeCompleteAuthSession();
+
+const googleDiscovery = {
+  authorizationEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
+  tokenEndpoint: 'https://oauth2.googleapis.com/token',
+  revocationEndpoint: 'https://oauth2.googleapis.com/revoke',
+};
+
+// iOS client redirect URI: reverse-DNS of the client ID
+const IOS_REDIRECT_URI =
+  `com.googleusercontent.apps.${GOOGLE_IOS_CLIENT_ID.split('.apps.googleusercontent.com')[0]}:/oauthredirect`;
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
   const theme = useTheme();
+
+  const [request, response, promptAsync] = useAuthRequest(
+    {
+      clientId: GOOGLE_IOS_CLIENT_ID,
+      redirectUri: IOS_REDIRECT_URI,
+      scopes: ['openid', 'profile', 'email'],
+    },
+    googleDiscovery,
+  );
+
+  useEffect(() => {
+    if (response?.type === 'success' && request?.codeVerifier) {
+      const { code } = response.params;
+      setGoogleLoading(true);
+      setError('');
+
+      exchangeCodeAsync(
+        {
+          clientId: GOOGLE_IOS_CLIENT_ID,
+          code,
+          redirectUri: IOS_REDIRECT_URI,
+          extraParams: { code_verifier: request.codeVerifier },
+        },
+        googleDiscovery,
+      )
+        .then((tokenResponse) => {
+          if (tokenResponse.idToken) {
+            return loginWithGoogleCredential(tokenResponse.idToken);
+          }
+          throw new Error('No ID token received from Google.');
+        })
+        .catch((err: any) => {
+          setError(err?.message || 'Google sign-in failed. Please try again.');
+        })
+        .finally(() => setGoogleLoading(false));
+    } else if (response?.type === 'error') {
+      setError(response.error?.message || 'Google sign-in failed.');
+    }
+  }, [response]);
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -48,7 +109,6 @@ export default function LoginScreen() {
         router.replace('/verify-email' as any);
         return;
       }
-      // Auth state listener in useAuth will handle navigation
     } catch (err: any) {
       const code = err?.code;
       if (code === 'auth/user-not-found' || code === 'auth/wrong-password') {
@@ -63,6 +123,11 @@ export default function LoginScreen() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleGoogleSignIn = () => {
+    setError('');
+    promptAsync();
   };
 
   return (
@@ -152,28 +217,14 @@ export default function LoginScreen() {
             <Button
               mode="outlined"
               icon="google"
-              onPress={() => {
-                // Google Sign-In will be implemented with expo-auth-session
-              }}
+              onPress={handleGoogleSignIn}
+              loading={googleLoading}
+              disabled={!request || googleLoading || loading}
               style={styles.socialButton}
               contentStyle={styles.buttonContent}
             >
               Continue with Google
             </Button>
-
-            {Platform.OS === 'ios' && (
-              <Button
-                mode="outlined"
-                icon="apple"
-                onPress={() => {
-                  // Apple Sign-In will be implemented with expo-apple-authentication
-                }}
-                style={styles.socialButton}
-                contentStyle={styles.buttonContent}
-              >
-                Continue with Apple
-              </Button>
-            )}
 
             <View style={styles.registerRow}>
               <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant }}>

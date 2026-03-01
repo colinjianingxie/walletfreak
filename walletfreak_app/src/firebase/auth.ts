@@ -45,3 +45,7 @@ export const loginWithGoogleCredential = async (idToken: string) => {
   const credential = GoogleAuthProvider.credential(idToken);
   return signInWithCredential(firebaseAuth, credential);
 };
+
+// Google OAuth client IDs
+export const GOOGLE_WEB_CLIENT_ID = '99478632058-t7t9qrbug3hm2k20mv7tu1gh3apb08d7.apps.googleusercontent.com';
+export const GOOGLE_IOS_CLIENT_ID = '99478632058-htadqp97ehht9um8b5sp3r83jklitv9q.apps.googleusercontent.com';
