@@ -1,31 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Alert, ScrollView } from 'react-native';
-import { Text, TextInput, Button, Switch, Divider, useTheme } from 'react-native-paper';
+import { Text, TextInput, Button, useTheme } from 'react-native-paper';
 import { PersonalityAvatar } from '../../src/components/personality/PersonalityAvatar';
-import { useProfile, useSyncProfile, useUpdateNotifications } from '../../src/hooks/useProfile';
-import { usePersonalities } from '../../src/hooks/usePersonality';
+import { useProfile, useSyncProfile } from '../../src/hooks/useProfile';
 import { LoadingState } from '../../src/components/layout/LoadingState';
 
 export default function SettingsScreen() {
   const theme = useTheme();
   const { data: profile, isLoading } = useProfile();
-  const { data: personalityData } = usePersonalities();
   const syncProfile = useSyncProfile();
-  const updateNotifications = useUpdateNotifications();
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
-  const [emailUpdates, setEmailUpdates] = useState(true);
-  const [pushNotifications, setPushNotifications] = useState(true);
 
   useEffect(() => {
     if (profile) {
       setFirstName(profile.first_name || '');
       setLastName(profile.last_name || '');
       setUsername(profile.username || '');
-      setEmailUpdates(profile.notification_preferences?.email_updates ?? true);
-      setPushNotifications(profile.notification_preferences?.push_notifications ?? true);
     }
   }, [profile]);
 
@@ -37,13 +30,6 @@ export default function SettingsScreen() {
         onError: (err: any) =>
           Alert.alert('Error', err?.response?.data?.detail || 'Failed to update profile.'),
       }
-    );
-  };
-
-  const handleSaveNotifications = () => {
-    updateNotifications.mutate(
-      { email_updates: emailUpdates, push_notifications: pushNotifications },
-      { onSuccess: () => Alert.alert('Saved', 'Notification preferences updated.') }
     );
   };
 
@@ -97,27 +83,6 @@ export default function SettingsScreen() {
       >
         Save Profile
       </Button>
-
-      <Divider style={styles.divider} />
-
-      {/* Notifications */}
-      <Text variant="titleMedium" style={styles.sectionTitle}>Notifications</Text>
-      <View style={styles.switchRow}>
-        <Text variant="bodyMedium">Email Updates</Text>
-        <Switch value={emailUpdates} onValueChange={setEmailUpdates} />
-      </View>
-      <View style={styles.switchRow}>
-        <Text variant="bodyMedium">Push Notifications</Text>
-        <Switch value={pushNotifications} onValueChange={setPushNotifications} />
-      </View>
-      <Button
-        mode="contained-tonal"
-        onPress={handleSaveNotifications}
-        loading={updateNotifications.isPending}
-        style={styles.saveButton}
-      >
-        Save Notifications
-      </Button>
     </ScrollView>
   );
 }
@@ -144,14 +109,5 @@ const styles = StyleSheet.create({
   saveButton: {
     borderRadius: 12,
     marginTop: 8,
-  },
-  divider: {
-    marginVertical: 24,
-  },
-  switchRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 12,
   },
 });

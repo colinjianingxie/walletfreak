@@ -6,14 +6,12 @@ interface CardsState {
   issuers: string[];
   categories: string[];
   selectedCards: string[]; // for compare
-  viewMode: 'grid' | 'list';
 
   setCards: (cards: CreditCard[]) => void;
   setIssuers: (issuers: string[]) => void;
   setCategories: (categories: string[]) => void;
   toggleCompareCard: (cardId: string) => void;
   clearCompare: () => void;
-  setViewMode: (mode: 'grid' | 'list') => void;
 }
 
 export const useCardsStore = create<CardsState>((set) => ({
@@ -21,7 +19,6 @@ export const useCardsStore = create<CardsState>((set) => ({
   issuers: [],
   categories: [],
   selectedCards: [],
-  viewMode: 'list',
 
   setCards: (cards) => set({ cards }),
   setIssuers: (issuers) => set({ issuers }),
@@ -35,5 +32,4 @@ export const useCardsStore = create<CardsState>((set) => ({
       return { selectedCards: [...state.selectedCards, cardId] };
     }),
   clearCompare: () => set({ selectedCards: [] }),
-  setViewMode: (viewMode) => set({ viewMode }),
 }));

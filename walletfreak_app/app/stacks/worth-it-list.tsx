@@ -1,93 +1,68 @@
 import React from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
+import { View, StyleSheet, FlatList, Pressable } from 'react-native';
 import { Text, Surface, useTheme } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LoadingState } from '../../src/components/layout/LoadingState';
 import { EmptyState } from '../../src/components/layout/EmptyState';
 import { CardImage } from '../../src/components/ui/CardImage';
-import { useWallet } from '../../src/hooks/useWallet';
+import { useWorthItCards } from '../../src/hooks/useCalculators';
 import { formatCurrency } from '../../src/utils/formatters';
-import { colors } from '../../src/theme';
+import type { WorthItCardItem } from '../../src/api/endpoints/calculators';
 
 export default function WorthItListScreen() {
-  const { data: walletData, isLoading } = useWallet();
+  const { data, isLoading } = useWorthItCards();
   const router = useRouter();
   const theme = useTheme();
 
   if (isLoading) {
-    return <LoadingState message="Calculating..." />;
+    return <LoadingState message="Loading cards..." />;
   }
 
-  const allCards = [
-    ...(walletData?.active_cards ?? []),
-    ...(walletData?.inactive_cards ?? []),
-  ];
+  const cards = data?.cards ?? [];
 
-  // Calculate net value per card (extracted value - annual fee)
-  const cardValues = allCards.map((card: any) => {
-    const cardBenefits = [
-      ...(walletData?.action_needed_benefits ?? []),
-      ...(walletData?.maxed_out_benefits ?? []),
-      ...(walletData?.ignored_benefits ?? []),
-    ].filter((b: any) => b.user_card_id === card.user_card_id);
-
-    const totalBenefitValue = cardBenefits.reduce((sum: number, b: any) => sum + (b.amount || 0), 0);
-    const extractedValue = cardBenefits.reduce((sum: number, b: any) => sum + (b.ytd_used || 0), 0);
-    const netValue = totalBenefitValue - (card.annual_fee || 0);
-
-    return {
-      ...card,
-      totalBenefitValue,
-      extractedValue,
-      netValue,
-      worthIt: netValue >= 0,
-    };
-  }).sort((a: any, b: any) => b.netValue - a.netValue);
-
-  if (cardValues.length === 0) {
+  if (cards.length === 0) {
     return (
       <EmptyState
         icon="scale-balance"
         title="No cards to analyze"
-        message="Add cards to your wallet to see if they're worth keeping."
-        actionLabel="Go to Explore"
-        onAction={() => router.push('/(tabs)/explore' as any)}
+        message="No cards with annual fees found."
       />
     );
   }
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Text
+        variant="bodyMedium"
+        style={{ color: theme.colors.onSurfaceVariant, paddingHorizontal: 4, paddingTop: 16, paddingBottom: 8 }}
+      >
+        Which annual fee are we auditing today?
+      </Text>
       <FlatList
-        data={cardValues}
-        renderItem={({ item }) => (
+        data={cards}
+        renderItem={({ item }: { item: WorthItCardItem }) => (
           <Surface style={[styles.card, { backgroundColor: theme.colors.elevation.level1 }]} elevation={1}>
-            <View style={styles.cardRow}>
+            <Pressable
+              onPress={() => router.push(`/stacks/worth-it-audit?slug=${item.card_id}` as any)}
+              style={styles.cardRow}
+            >
               <CardImage slug={item.card_id} size="small" style={{ marginRight: 12 }} />
               <View style={{ flex: 1 }}>
                 <Text variant="titleSmall" numberOfLines={1}>{item.name}</Text>
                 <Text variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>
-                  Fee: {formatCurrency(item.annual_fee)} · Benefits: {formatCurrency(item.totalBenefitValue)}
+                  {formatCurrency(item.annual_fee)} / YEAR
                 </Text>
               </View>
-              <View style={{ alignItems: 'flex-end' }}>
-                <Text
-                  variant="titleSmall"
-                  style={{ color: item.worthIt ? colors.success : theme.colors.error }}
-                >
-                  {item.netValue >= 0 ? '+' : ''}{formatCurrency(item.netValue)}
-                </Text>
-                <MaterialCommunityIcons
-                  name={item.worthIt ? 'thumb-up-outline' : 'thumb-down-outline'}
-                  size={16}
-                  color={item.worthIt ? colors.success : theme.colors.error}
-                />
-              </View>
-            </View>
+              <MaterialCommunityIcons
+                name="chevron-right"
+                size={20}
+                color={theme.colors.onSurfaceVariant}
+              />
+            </Pressable>
           </Surface>
         )}
-        keyExtractor={(item) => item.user_card_id || item.id}
+        keyExtractor={(item) => item.card_id}
         contentContainerStyle={styles.list}
       />
     </View>
@@ -100,7 +75,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   list: {
-    paddingTop: 16,
     paddingBottom: 16,
   },
   card: {

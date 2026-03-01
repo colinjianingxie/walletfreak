@@ -44,6 +44,11 @@ def personality_detail(request, slug: str):
 
         personality["slug"] = personality["id"]
 
+        # Ensure tagline, rules, and categories are present
+        personality.setdefault("tagline", "")
+        personality.setdefault("rules", [])
+        personality.setdefault("categories", [])
+
         # Hydrate card slots
         all_cards = db.get_cards()
         cards_map = {c["id"]: c for c in all_cards}
@@ -55,6 +60,7 @@ def personality_detail(request, slug: str):
                 if card:
                     hydrated_cards.append({
                         "id": card.get("id"),
+                        "slug": card.get("id"),
                         "name": card.get("name"),
                         "issuer": card.get("issuer"),
                         "annual_fee": card.get("annual_fee", 0),

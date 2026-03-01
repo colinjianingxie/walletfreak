@@ -24,11 +24,13 @@ export default function StacksLayout() {
       <Stack.Screen name="card-detail/[slug]" options={{ title: 'Card Details' }} />
       <Stack.Screen name="personality/[slug]" options={{ title: 'Personality' }} />
       <Stack.Screen name="personality-list" options={{ title: 'Personalities' }} />
-      <Stack.Screen name="blog/[slug]" options={{ title: 'Blog Post' }} />
+      <Stack.Screen name="blog/[slug]" options={{ title: 'Blog Post', headerShown: false }} />
       <Stack.Screen name="datapoint-submit" options={{ title: 'Submit Data Point' }} />
       <Stack.Screen name="worth-it/[slug]" options={{ title: 'Worth It?' }} />
       <Stack.Screen name="worth-it-list" options={{ title: 'Worth It? Calculator' }} />
+      <Stack.Screen name="worth-it-audit" options={{ title: 'Worth It? Audit' }} />
       <Stack.Screen name="spend-optimizer" options={{ title: 'Spend Optimizer' }} />
+      <Stack.Screen name="sub-optimizer" options={{ title: 'SUB Optimizer' }} />
       <Stack.Screen name="booking-optimizer" options={{ title: 'Booking Optimizer' }} />
       <Stack.Screen name="booking-strategy/[id]" options={{ title: 'Strategy Report' }} />
       <Stack.Screen name="booking-history" options={{ title: 'Booking History' }} />
@@ -37,7 +39,9 @@ export default function StacksLayout() {
       <Stack.Screen name="points-collection" options={{ title: 'Points Collection' }} />
       <Stack.Screen name="compare-cards" options={{ title: 'Compare Cards' }} />
       <Stack.Screen name="settings" options={{ title: 'Settings' }} />
-      <Stack.Screen name="wallet-card/[userCardId]" options={{ title: 'Card Benefits' }} />
+      <Stack.Screen name="notifications" options={{ title: 'Notifications' }} />
+      <Stack.Screen name="personality-quiz" options={{ title: 'Personality Quiz' }} />
+      <Stack.Screen name="wallet-card/[userCardId]" options={{ title: 'Card Benefits', headerShown: false }} />
     </Stack>
   );
 }

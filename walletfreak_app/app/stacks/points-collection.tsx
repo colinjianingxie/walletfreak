@@ -6,6 +6,7 @@ import { LoadingState } from '../../src/components/layout/LoadingState';
 import { EmptyState } from '../../src/components/layout/EmptyState';
 import { LoyaltyProgramCard } from '../../src/components/loyalty/LoyaltyProgramCard';
 import { EditBalanceSheet } from '../../src/components/loyalty/EditBalanceSheet';
+import { AddProgramSheet } from '../../src/components/loyalty/AddProgramSheet';
 import { useLoyaltyPrograms } from '../../src/hooks/useLoyalty';
 import { formatCurrency } from '../../src/utils/formatters';
 import type { LoyaltyProgram } from '../../src/types/loyalty';
@@ -13,12 +14,13 @@ import type { LoyaltyProgram } from '../../src/types/loyalty';
 export default function PointsCollectionScreen() {
   const { data, isLoading } = useLoyaltyPrograms();
   const theme = useTheme();
-  const sheetRef = useRef<BottomSheet>(null);
+  const editSheetRef = useRef<BottomSheet>(null);
+  const addSheetRef = useRef<BottomSheet>(null);
   const [selectedProgram, setSelectedProgram] = useState<LoyaltyProgram | null>(null);
 
   const handleProgramPress = (program: LoyaltyProgram) => {
     setSelectedProgram(program);
-    sheetRef.current?.snapToIndex(0);
+    editSheetRef.current?.snapToIndex(0);
   };
 
   if (isLoading) {
@@ -26,7 +28,9 @@ export default function PointsCollectionScreen() {
   }
 
   const programs = data?.programs ?? [];
+  const allPrograms = data?.all_programs ?? [];
   const totalValue = data?.total_est_value ?? 0;
+  const existingProgramIds = programs.map((p: LoyaltyProgram) => p.program_id);
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
@@ -62,18 +66,23 @@ export default function PointsCollectionScreen() {
         icon="plus"
         style={[styles.fab, { backgroundColor: theme.colors.primary }]}
         color={theme.colors.onPrimary}
-        onPress={() => {
-          // TODO: Show add program picker
-        }}
+        onPress={() => addSheetRef.current?.snapToIndex(0)}
       />
 
       <EditBalanceSheet
         program={selectedProgram}
-        sheetRef={sheetRef}
+        sheetRef={editSheetRef}
         onDismiss={() => {
           setSelectedProgram(null);
-          sheetRef.current?.close();
+          editSheetRef.current?.close();
         }}
+      />
+
+      <AddProgramSheet
+        sheetRef={addSheetRef}
+        allPrograms={allPrograms}
+        existingProgramIds={existingProgramIds}
+        onDismiss={() => addSheetRef.current?.close()}
       />
     </View>
   );

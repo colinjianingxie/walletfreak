@@ -9,6 +9,7 @@ from api.routers.datapoints import router as datapoints_router
 from api.routers.subscriptions import router as subscriptions_router
 from api.routers.loyalty import router as loyalty_router
 from api.routers.profile import router as profile_router
+from api.routers.calculators import router as calculators_router
 
 api = NinjaAPI(
     title="WalletFreak API",
@@ -29,3 +30,4 @@ api.add_router("/datapoints/", datapoints_router)
 api.add_router("/subscriptions/", subscriptions_router)
 api.add_router("/loyalty/", loyalty_router)
 api.add_router("/profile/", profile_router)
+api.add_router("/calculators/", calculators_router)

@@ -48,7 +48,7 @@ export default function ProfileScreen() {
     {
       icon: 'bell-outline',
       label: 'Notifications',
-      onPress: () => router.push('/stacks/settings' as any),
+      onPress: () => router.push('/stacks/notifications' as any),
       dividerAfter: true,
     },
     {

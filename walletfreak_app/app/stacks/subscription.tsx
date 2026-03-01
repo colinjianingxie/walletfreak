@@ -86,7 +86,7 @@ export default function SubscriptionScreen() {
             <MaterialCommunityIcons
               name={feat.free ? 'check-circle' : 'close-circle-outline'}
               size={20}
-              color={feat.free ? theme.colors.primary : theme.colors.outlineVariant}
+              color={feat.free ? theme.colors.primary : theme.colors.onSurfaceVariant}
               style={styles.colIcon}
             />
             <MaterialCommunityIcons

@@ -148,6 +148,7 @@ def get_wallet(request):
                             q_available = q >= anniversary_q and q <= curr_q
                         q_data = benefit_usage_data.get("periods", {}).get(q_key, {})
                         p_used = q_data.get("used") or 0
+                        ytd_used += p_used
                         q_status = "full" if (q_data.get("is_full") or p_used >= q_max) else ("partial" if p_used > 0 else "empty")
                         periods.append({
                             "label": f"Q{q}", "key": q_key, "status": q_status,
@@ -181,6 +182,45 @@ def get_wallet(request):
                         current_period_status = h2_status
                         current_period_used = h2_data.get("used") or 0
                     ytd_used = (h1_data.get("used") or 0) + (h2_data.get("used") or 0)
+
+                elif "every 4 years" in frequency.lower():
+                    # Every 4 years frequency
+                    if anniversary_date:
+                        this_year_anniv = datetime(current_year, anniversary_month, anniversary_date.day)
+                        if datetime.now() < this_year_anniv:
+                            annual_start_year = current_year - 1
+                        else:
+                            annual_start_year = current_year
+                    else:
+                        annual_start_year = current_year
+
+                    base_year = anniversary_year if anniversary_year else 2020
+                    block_idx = (annual_start_year - base_year) // 4
+                    block_start_year = base_year + (block_idx * 4)
+                    block_end_year = block_start_year + 4
+
+                    period_key = f"{block_start_year}_{block_end_year}"
+
+                    if anniversary_date:
+                        reset_date_obj = datetime(block_end_year, anniversary_month, anniversary_date.day)
+                        reset_date_str = reset_date_obj.strftime("%b %d, %Y")
+                    else:
+                        reset_date_str = f"Dec 31, {block_end_year}"
+
+                    p_data = benefit_usage_data.get("periods", {}).get(period_key, {})
+                    p_used = p_data.get("used") or 0
+                    p_full = p_data.get("is_full", False)
+
+                    status = "full" if (p_full or p_used >= dollar_value) else ("partial" if p_used > 0 else "empty")
+                    periods.append({
+                        "label": f"{block_start_year}-{block_end_year}",
+                        "key": period_key, "status": status,
+                        "is_current": True, "max_value": dollar_value, "used": p_used,
+                        "reset_date": reset_date_str,
+                    })
+                    current_period_status = status
+                    current_period_used = p_used
+                    ytd_used = p_used
 
                 else:
                     # Annual / Anniversary
@@ -249,6 +289,7 @@ def get_wallet(request):
                     "is_ignored": is_ignored,
                     "ytd_used": ytd_used,
                     "additional_details": benefit.get("additional_details"),
+                    "benefit_type": benefit_type,
                 }
 
                 if is_ignored:

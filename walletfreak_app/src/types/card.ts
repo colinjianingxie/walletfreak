@@ -78,6 +78,7 @@ export interface BenefitDisplay {
   is_ignored: boolean;
   ytd_used: number;
   additional_details?: string;
+  benefit_type?: string;
 }
 
 export interface PeriodDisplay {

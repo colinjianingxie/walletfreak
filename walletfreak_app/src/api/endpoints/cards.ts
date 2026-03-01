@@ -2,6 +2,7 @@ import apiClient from '../client';
 
 export interface CardListParams {
   page?: number;
+  page_size?: number;
   issuer?: string;
   category?: string;
   min_fee?: number;

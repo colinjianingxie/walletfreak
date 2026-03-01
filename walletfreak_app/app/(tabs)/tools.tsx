@@ -9,6 +9,13 @@ type ToolIconName = React.ComponentProps<typeof MaterialCommunityIcons>['name'];
 
 const tools = [
   {
+    id: 'personality-quiz',
+    title: 'Personality Quiz',
+    description: 'Discover your card personality archetype',
+    icon: 'head-lightbulb-outline' as ToolIconName,
+    route: '/stacks/personality-quiz',
+  },
+  {
     id: 'worth-it',
     title: 'Worth It?',
     description: 'Calculate if your card is worth the annual fee',
@@ -21,7 +28,13 @@ const tools = [
     description: 'Find the best card for each spending category',
     icon: 'chart-donut' as ToolIconName,
     route: '/stacks/spend-optimizer',
-    premium: true,
+  },
+  {
+    id: 'sub-optimizer',
+    title: 'SUB Optimizer',
+    description: 'Analyze sign-up bonus ROI for new cards',
+    icon: 'rocket-launch' as ToolIconName,
+    route: '/stacks/sub-optimizer',
   },
   {
     id: 'booking-optimizer',
@@ -38,13 +51,6 @@ const tools = [
     icon: 'magnify' as ToolIconName,
     route: '/stacks/award-scout',
     premium: true,
-  },
-  {
-    id: 'points',
-    title: 'Points Collection',
-    description: 'Track your loyalty program balances',
-    icon: 'star-circle-outline' as ToolIconName,
-    route: '/stacks/points-collection',
   },
 ];
 

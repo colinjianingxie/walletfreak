@@ -148,6 +148,23 @@ def card_detail(request, slug: str):
         if not card:
             return JsonResponse({"error": "Card not found"}, status=404)
 
+        # Calculate match score if user is authenticated
+        match_score = None
+        uid = request.auth  # BearerAuth returns uid string directly
+        if uid:
+            try:
+                scores = db.calculate_match_scores(uid)
+                card_id = card.get("id") or card.get("slug")
+                match_score = scores.get(card_id)
+            except Exception:
+                pass  # Non-critical - skip match score on error
+
+        # Calculate credits value from benefits
+        credits_value = 0
+        for b in card.get("benefits", []):
+            dv = b.get("dollar_value", 0) or 0
+            credits_value += dv
+
         return {
             "id": card.get("id"),
             "slug": card.get("slug", card.get("id")),
@@ -162,10 +179,14 @@ def card_detail(request, slug: str):
             "welcome_bonus": card.get("welcome_bonus", ""),
             "welcome_offer": card.get("welcome_offer", ""),
             "signup_bonus": card.get("signup_bonus", ""),
+            "sign_up_bonus": card.get("sign_up_bonus"),
             "welcome_requirement": card.get("welcome_requirement", ""),
             "loyalty_program": card.get("loyalty_program"),
             "is_524": card.get("is_524", True),
             "referral_url": card.get("referral_url", ""),
+            "freak_verdict": card.get("freak_verdict", ""),
+            "match_score": match_score,
+            "credits_value": credits_value,
         }
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)

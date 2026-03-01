@@ -1,12 +1,13 @@
-import { Tabs } from 'expo-router';
+import { Tabs, useRouter } from 'expo-router';
 import { useTheme } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Platform } from 'react-native';
+import { Platform, Pressable } from 'react-native';
 
 type TabIconName = React.ComponentProps<typeof MaterialCommunityIcons>['name'];
 
 export default function TabLayout() {
   const theme = useTheme();
+  const router = useRouter();
 
   return (
     <Tabs
@@ -37,38 +38,10 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Wallet',
-          headerTitle: 'My Wallet',
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name={'wallet-outline' as TabIconName}
-              size={size}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          headerTitle: 'Explore Cards',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name={'credit-card-search-outline' as TabIconName}
-              size={size}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="community"
-        options={{
-          title: 'Community',
-          headerTitle: 'Community',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name={'account-group-outline' as TabIconName}
               size={size}
               color={color}
             />
@@ -90,13 +63,41 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="community"
+        options={{
+          title: 'Community',
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              name={'account-group-outline' as TabIconName}
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="explore"
+        options={{
+          title: 'Explore',
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              name={'compass-outline' as TabIconName}
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{
           title: 'Profile',
           headerTitle: 'Profile',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
-              name={'account-circle-outline' as TabIconName}
+              name={'account-outline' as TabIconName}
               size={size}
               color={color}
             />

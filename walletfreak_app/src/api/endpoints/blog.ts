@@ -5,6 +5,7 @@ export interface BlogListParams {
   page_size?: number;
   search?: string;
   category?: string;
+  tag?: string;
   saved?: boolean;
 }
 

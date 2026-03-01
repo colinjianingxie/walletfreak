@@ -25,7 +25,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       <MaterialCommunityIcons
         name={icon as any}
         size={64}
-        color={theme.colors.outlineVariant}
+        color={theme.colors.onSurfaceVariant}
       />
       <Text variant="titleMedium" style={[styles.title, { color: theme.colors.onSurface }]}>
         {title}

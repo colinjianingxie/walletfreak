@@ -7,6 +7,9 @@ export interface BlogPost {
   author: string;
   author_name: string;
   category: string;
+  image_url?: string;
+  tags?: string[];
+  vendor?: string;
   created_at: string;
   updated_at: string;
   upvotes: number;
