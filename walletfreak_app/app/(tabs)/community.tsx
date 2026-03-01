@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback, useMemo } from 'react';
-import { View, StyleSheet, Pressable, Image, ScrollView } from 'react-native';
+import { View, StyleSheet, Pressable, Image, ScrollView, RefreshControl } from 'react-native';
 import { Text, Searchbar, useTheme } from 'react-native-paper';
 import Animated, {
   useSharedValue,
@@ -64,7 +64,7 @@ export default function CommunityScreen() {
     },
   });
 
-  const { data: blogData, isLoading: blogLoading } = useBlogPosts({
+  const { data: blogData, isLoading: blogLoading, isFetching: blogFetching, refetch: refetchBlogs } = useBlogPosts({
     search: search || undefined,
     category: category || undefined,
     tag: selectedTag || undefined,
@@ -434,6 +434,14 @@ export default function CommunityScreen() {
               showsVerticalScrollIndicator={false}
               onScroll={scrollHandler}
               scrollEventThrottle={16}
+              refreshControl={
+                <RefreshControl
+                  refreshing={blogFetching && !blogLoading}
+                  onRefresh={refetchBlogs}
+                  tintColor={theme.colors.primary}
+                  colors={[theme.colors.primary]}
+                />
+              }
             />
           )}
         </>

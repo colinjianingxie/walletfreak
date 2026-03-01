@@ -16,5 +16,6 @@
     "dollar_value": 400,
     "time_category": "Semi-annually",
     "enrollment_required": true,
-    "effective_date": "2025-12-07"
+    "effective_date": "2025-12-07",
+    "benefit_main_category": "Business"
 }

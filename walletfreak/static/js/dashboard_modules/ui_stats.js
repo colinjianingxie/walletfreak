@@ -2,6 +2,88 @@
  * UI Stats Logic (YTD, Credits, Fees, Net Perf)
  */
 
+/**
+ * Check if an is_ignored flag is stale (set in a previous benefit period).
+ * Matches the Python logic in dashboard/views/main.py and api/routers/wallet.py.
+ * Returns true if the benefit should be treated as ignored, false if stale (reset).
+ */
+function isEffectivelyIgnored(benefitData, frequency, anniversaryDateStr) {
+    if (!benefitData || !benefitData.is_ignored) return false;
+
+    const lastUpdated = benefitData.last_updated;
+    if (!lastUpdated) return false; // No timestamp → treat as not ignored
+
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth() + 1;
+
+    let annMonth = 1;
+    let annYear = currentYear;
+    let annDay = 1;
+    if (anniversaryDateStr && anniversaryDateStr !== 'default') {
+        const parts = anniversaryDateStr.split('-');
+        if (parts.length >= 3) {
+            annYear = parseInt(parts[0]);
+            annMonth = parseInt(parts[1]);
+            annDay = parseInt(parts[2]);
+        }
+    }
+
+    let periodStart = null;
+    const lowerFreq = (frequency || '').toLowerCase();
+
+    if (lowerFreq.includes('monthly')) {
+        periodStart = new Date(currentYear, currentMonth - 1, 1);
+    } else if (lowerFreq.includes('quarterly')) {
+        const currQ = Math.ceil(currentMonth / 3);
+        const qStartMonth = (currQ - 1) * 3 + 1;
+        periodStart = new Date(currentYear, qStartMonth - 1, 1);
+    } else if (lowerFreq.includes('semi-annually')) {
+        const hStartMonth = currentMonth <= 6 ? 1 : 7;
+        periodStart = new Date(currentYear, hStartMonth - 1, 1);
+    } else if (lowerFreq.includes('every 4 years')) {
+        let annualStartYear = currentYear;
+        if (annMonth) {
+            const thisYearAnniv = new Date(currentYear, annMonth - 1, annDay);
+            if (now < thisYearAnniv) annualStartYear = currentYear - 1;
+        }
+        const baseYear = annYear || 2020;
+        const blockIdx = Math.floor((annualStartYear - baseYear) / 4);
+        const blockStartYear = baseYear + (blockIdx * 4);
+        periodStart = annMonth ? new Date(blockStartYear, annMonth - 1, annDay) : new Date(blockStartYear, 0, 1);
+    } else if (lowerFreq.includes('anniversary')) {
+        if (annMonth) {
+            const thisYearAnniv = new Date(currentYear, annMonth - 1, annDay);
+            const pStartYear = now < thisYearAnniv ? currentYear - 1 : currentYear;
+            periodStart = new Date(pStartYear, annMonth - 1, annDay);
+        } else {
+            periodStart = new Date(currentYear, 0, 1);
+        }
+    } else {
+        // Annual / calendar year
+        periodStart = new Date(currentYear, 0, 1);
+    }
+
+    if (!periodStart) return true;
+
+    // Convert Firestore timestamp to Date
+    let lastUpdatedDate;
+    if (lastUpdated.toDate) {
+        lastUpdatedDate = lastUpdated.toDate(); // Firestore Timestamp
+    } else if (lastUpdated instanceof Date) {
+        lastUpdatedDate = lastUpdated;
+    } else if (typeof lastUpdated === 'string') {
+        lastUpdatedDate = new Date(lastUpdated);
+    } else if (lastUpdated.seconds) {
+        lastUpdatedDate = new Date(lastUpdated.seconds * 1000); // Firestore-like
+    } else {
+        return true; // Can't parse, keep ignored
+    }
+
+    // If last_updated is before the current period started, the ignore is stale
+    return lastUpdatedDate >= periodStart;
+}
+
 function updateNetPerformanceUI() {
     const display = document.getElementById('net-performance-val');
     const pill = document.getElementById('net-performance-badge');
@@ -69,6 +151,25 @@ function updateTotalAnnualFeeUI() {
     displayElement.innerHTML = `$${intPart}<span style="font-size: 1.25rem; font-weight: 500; opacity: 0.5;">${decimalPart}</span>`;
 }
 
+// Helper to resolve a benefit key to its static benefit data
+function resolveStaticBenefit(benefitKey, staticCard) {
+    if (!staticCard || !staticCard.benefits) return null;
+    // Try new system: match by benefit ID
+    let staticBenefit = staticCard.benefits.find(b => b.id === benefitKey || b.benefit_id === benefitKey);
+    if (staticBenefit) return staticBenefit;
+    // Fallback to legacy system: match by array index
+    let benefitIndex;
+    if (benefitKey.startsWith('benefit_')) {
+        benefitIndex = parseInt(benefitKey.split('_')[1]);
+    } else {
+        benefitIndex = parseInt(benefitKey);
+    }
+    if (!isNaN(benefitIndex) && benefitIndex >= 0 && benefitIndex < staticCard.benefits.length) {
+        return staticCard.benefits[benefitIndex];
+    }
+    return null;
+}
+
 // Helper to calculate total credits used (shared logic)
 function calculateCreditsUsed() {
     const currentYear = new Date().getFullYear().toString();
@@ -76,59 +177,31 @@ function calculateCreditsUsed() {
 
     if (typeof walletCards !== 'undefined' && Array.isArray(walletCards)) {
         walletCards.forEach(card => {
-            if (card.benefit_usage) {
-                Object.values(card.benefit_usage).forEach(benefit => {
-                    if (benefit.periods) {
-                        Object.entries(benefit.periods).forEach(([key, data]) => {
-                            if (key.startsWith(currentYear)) {
-                                // ALWAYS verify against static data (Source of Truth) to match Backend logic
-                                // Ignore benefit.benefit_type on the user object as it may be stale or incorrect
-                                if (typeof allCardsData !== 'undefined') {
-                                    const slug = card.card_id || card.id;
-                                    const staticCard = allCardsData.find(c => c.id === slug);
-                                    if (staticCard && staticCard.benefits) {
-                                        // Find benefit by ID (new system) or index (legacy system)
-                                        const benefitKey = Object.keys(card.benefit_usage).find(k => card.benefit_usage[k] === benefit);
-                                        if (benefitKey) {
-                                            let staticBenefit = null;
+            if (!card.benefit_usage || typeof allCardsData === 'undefined') return;
+            const slug = card.card_id || card.id;
+            const staticCard = allCardsData.find(c => c.id === slug);
+            if (!staticCard) return;
 
-                                            // Try new system: match by benefit ID
-                                            staticBenefit = staticCard.benefits.find(b =>
-                                                b.id === benefitKey || b.benefit_id === benefitKey
-                                            );
+            Object.entries(card.benefit_usage).forEach(([benefitKey, benefit]) => {
+                const staticBenefit = resolveStaticBenefit(benefitKey, staticCard);
+                if (!staticBenefit) return;
 
-                                            // Fallback to legacy system: match by array index
-                                            if (!staticBenefit) {
-                                                let benefitIndex;
-                                                if (benefitKey.startsWith('benefit_')) {
-                                                    benefitIndex = parseInt(benefitKey.split('_')[1]);
-                                                } else {
-                                                    benefitIndex = parseInt(benefitKey);
-                                                }
-                                                if (!isNaN(benefitIndex) && benefitIndex >= 0 && benefitIndex < staticCard.benefits.length) {
-                                                    staticBenefit = staticCard.benefits[benefitIndex];
-                                                }
-                                            }
+                const type = staticBenefit.benefit_type;
+                const val = parseFloat(staticBenefit.dollar_value);
+                if (!((type === 'Credit' || type === 'Perk') && val > 0)) return;
 
-                                            // Strict check
-                                            if (staticBenefit) {
-                                                const type = staticBenefit.benefit_type;
-                                                const val = parseFloat(staticBenefit.dollar_value);
-                                                const name = staticBenefit.description || staticBenefit.name || 'Unnamed';
+                // Check is_ignored with stale-period reset
+                const frequency = staticBenefit.time_category || 'Annually';
+                if (isEffectivelyIgnored(benefit, frequency, card.anniversary_date)) return;
 
-                                                // MATCH PY: benefit_type == 'Credit' OR 'Perk' AND dollar_value > 0
-                                                if ((type === 'Credit' || type === 'Perk') && val > 0) {
-                                                    totalUsed += (data.used || 0);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        });
-                    }
-                });
-            }
+                if (benefit.periods) {
+                    Object.entries(benefit.periods).forEach(([key, data]) => {
+                        if (key.startsWith(currentYear)) {
+                            totalUsed += (data.used || 0);
+                        }
+                    });
+                }
+            });
         });
     }
     return totalUsed;
@@ -156,9 +229,10 @@ function updateYtdRewardsUI() {
                 const slug = userCard.card_id || userCard.id;
                 const staticCard = allCardsData.find(c => c.id === slug);
                 if (staticCard && staticCard.benefits) {
+                    const EXCLUDED_TYPES = ['Protection', 'Bonus', 'Perk', 'Lounge', 'Status', 'Insurance'];
                     staticCard.benefits.forEach((b, index) => {
-                        // Filter out Protection and Bonus benefits
-                        if (b.dollar_value && b.benefit_type !== 'Protection' && b.benefit_type !== 'Bonus') {
+                        // Filter out non-trackable benefit types (must match Python backend)
+                        if (b.dollar_value && !EXCLUDED_TYPES.includes(b.benefit_type)) {
                             // Match by benefit ID (new system) or index (legacy system)
                             let benefitData = null;
                             if (userCard.benefit_usage) {
@@ -176,12 +250,12 @@ function updateYtdRewardsUI() {
                                 }
                             }
 
-                            let isIgnored = benefitData ? benefitData.is_ignored : false;
+                            // Check is_ignored with stale-period reset
+                            const frequency = b.time_category || 'Annually';
+                            if (isEffectivelyIgnored(benefitData, frequency, userCard.anniversary_date)) return;
 
-                            if (!isIgnored) {
-                                // Calculate available potential
-                                totalPotential += calculateAvailablePotential(b, userCard.anniversary_date);
-                            }
+                            // Calculate available potential
+                            totalPotential += calculateAvailablePotential(b, userCard.anniversary_date);
                         }
                     });
                 }

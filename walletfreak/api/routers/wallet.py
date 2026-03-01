@@ -273,6 +273,60 @@ def get_wallet(request):
                     days_until_expiration = (period_end - now).days
 
                 is_ignored = benefit_usage_data.get("is_ignored", False)
+                if is_ignored:
+                    last_updated = benefit_usage_data.get("last_updated")
+                    period_start_date = None
+                    try:
+                        if "monthly" in frequency.lower():
+                            period_start_date = datetime(current_year, current_month, 1)
+                        elif "quarterly" in frequency.lower():
+                            curr_q = (current_month - 1) // 3 + 1
+                            q_start_month = (curr_q - 1) * 3 + 1
+                            period_start_date = datetime(current_year, q_start_month, 1)
+                        elif "semi-annually" in frequency.lower():
+                            h_start_month = 1 if current_month <= 6 else 7
+                            period_start_date = datetime(current_year, h_start_month, 1)
+                        elif "every 4 years" in frequency.lower():
+                            if anniversary_month:
+                                this_year_anniv = datetime(current_year, anniversary_month, anniversary_date.day if anniversary_date_str else 1)
+                                if datetime.now() < this_year_anniv:
+                                    annual_start_year = current_year - 1
+                                else:
+                                    annual_start_year = current_year
+                            else:
+                                annual_start_year = current_year
+                            base_year = anniversary_year if anniversary_year else 2020
+                            block_idx = (annual_start_year - base_year) // 4
+                            block_start_year = base_year + (block_idx * 4)
+                            if anniversary_month:
+                                period_start_date = datetime(block_start_year, anniversary_month, anniversary_date.day if anniversary_date_str else 1)
+                            else:
+                                period_start_date = datetime(block_start_year, 1, 1)
+                        elif "anniversary" in frequency.lower():
+                            if anniversary_month:
+                                this_year_anniv = datetime(current_year, anniversary_month, anniversary_date.day if anniversary_date_str else 1)
+                                if datetime.now() < this_year_anniv:
+                                    p_start_year = current_year - 1
+                                else:
+                                    p_start_year = current_year
+                                period_start_date = datetime(p_start_year, anniversary_month, anniversary_date.day if anniversary_date_str else 1)
+                            else:
+                                period_start_date = datetime(current_year, 1, 1)
+                        else:
+                            period_start_date = datetime(current_year, 1, 1)
+
+                        if period_start_date:
+                            if last_updated:
+                                if hasattr(last_updated, "tzinfo") and last_updated.tzinfo:
+                                    last_updated_naive = last_updated.replace(tzinfo=None)
+                                else:
+                                    last_updated_naive = last_updated
+                                if last_updated_naive < period_start_date:
+                                    is_ignored = False
+                            else:
+                                is_ignored = False
+                    except Exception:
+                        pass
 
                 benefit_obj = {
                     "user_card_id": card["id"],

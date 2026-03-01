@@ -1,0 +1,11 @@
+{
+    "rate_id": "travel",
+    "valid_from": "2026-02-06",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": ["Travel Portals", "Airlines", "Hotels"],
+    "currency": "points",
+    "additional_details": "2X on travel purchases",
+    "is_default": false
+}

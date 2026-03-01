@@ -15,5 +15,6 @@
     "dollar_value": 250,
     "time_category": "One Time",
     "enrollment_required": false,
-    "effective_date": "2026-01-01"
+    "effective_date": "2026-01-01",
+    "benefit_main_category": "Travel Perks"
 }

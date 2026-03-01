@@ -1,8 +1,8 @@
 {
     "benefit_id": "lyft-credit",
     "valid_from": "2020-01-01",
-    "valid_until": null,
-    "is_active": true,
+    "valid_until": "2026-02-06",
+    "is_active": false,
     "short_description": "Lyft Credit",
     "description": "$60 annual Lyft credit",
     "additional_details": null,
@@ -15,5 +15,6 @@
     "dollar_value": 60,
     "time_category": "Monthly",
     "enrollment_required": false,
-    "effective_date": "2025-12-24"
+    "effective_date": "2025-12-24",
+    "benefit_main_category": "Rideshare"
 }

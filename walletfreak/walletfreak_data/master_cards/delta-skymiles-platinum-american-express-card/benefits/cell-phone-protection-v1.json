@@ -16,5 +16,6 @@
     "dollar_value": 800,
     "time_category": "Per Use",
     "enrollment_required": false,
-    "effective_date": null
+    "effective_date": null,
+    "benefit_main_category": "Protection"
 }

@@ -1,0 +1,9 @@
+{
+    "question_id": "q-2",
+    "short_desc": "Lounge Access",
+    "question": "Do you value Priority Pass airport lounge access when traveling?",
+    "question_type": "multiple_choice",
+    "choices": ["No", "Sometimes", "Yes"],
+    "weights": [0.0, 0.5, 1.0],
+    "benefit_category": "Lounges,Travel Perks"
+}

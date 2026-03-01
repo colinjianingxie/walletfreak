@@ -1,0 +1,10 @@
+{
+    "offer_id": "offer",
+    "is_active": true,
+    "value": 50000,
+    "terms": "Spend $4,000 in 90 days. Also earn Gold Status and $300 Bilt Cash.",
+    "currency": "Points",
+    "spend_amount": 4000,
+    "duration_months": 3,
+    "effective_date": "2026-02-06"
+}

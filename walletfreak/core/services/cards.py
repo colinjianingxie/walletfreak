@@ -110,21 +110,26 @@ class CardMixin:
                 
         return hydrated_cards
 
-    def get_cards(self):
+    def get_cards(self, include_deprecated=False):
         """
         Get all cards with full subcollections (active benefits, earning_rates, sign_up_bonus).
         Returns hydrated card objects.
+
+        Args:
+            include_deprecated: If True, include cards with is_active=False.
         """
         # Check cache first
         cached_cards = cache.get('all_cards')
         if cached_cards:
-            return cached_cards
-        
+            if include_deprecated:
+                return cached_cards
+            return [c for c in cached_cards if c.get('is_active', True)]
+
         # 1. Fetch all master cards
         cards_snapshot = self.get_collection('master_cards')
         # Sort cards by name for consistent ordering
         cards_snapshot.sort(key=lambda x: x.get('name', ''))
-        
+
         cards_map = {c['id']: c for c in cards_snapshot if 'id' in c}
         
         if not cards_map:

@@ -5,8 +5,29 @@ from api.auth_middleware import BearerAuth
 from ninja import Schema
 from typing import Optional
 import json
+import ast
 
 router = Router(tags=["blog"])
+
+
+def parse_string_list(value):
+    """Parse Firestore fields stored as stringified Python lists.
+    e.g. "['Reviews', 'Strategy', 'Tips']" -> ['Reviews', 'Strategy', 'Tips']
+    """
+    if isinstance(value, list):
+        return value
+    if not isinstance(value, str) or not value.strip():
+        return []
+    s = value.strip()
+    if s.startswith("[") and s.endswith("]"):
+        try:
+            parsed = ast.literal_eval(s)
+            if isinstance(parsed, list):
+                return [str(item).strip() for item in parsed if item]
+        except (ValueError, SyntaxError):
+            pass
+    # Fallback: treat as single value
+    return [s] if s else []
 
 
 class BlogListParams(Schema):
@@ -25,6 +46,10 @@ def normalize_post(post, uid=None):
     post["downvotes"] = post.get("downvote_count", 0) or 0
     post["comment_count"] = post.get("comment_count", 0) or 0
     post["image_url"] = post.get("featured_image", "") or post.get("image_url", "") or ""
+
+    # Parse stringified list fields from Firestore
+    post["tags"] = parse_string_list(post.get("tags", []))
+    post["category"] = post.get("category", "")
 
     # Check if user has upvoted
     if uid:
@@ -47,9 +72,18 @@ def blog_list(request, params: Query[BlogListParams]):
         posts = []
 
     # Extract unique categories and tags from all posts before filtering
-    all_categories = sorted(set(p.get("category", "") for p in posts if p.get("category")))
+    # Parse stringified list fields from Firestore (e.g. "['Reviews', 'Strategy']")
+    all_categories = sorted(set(
+        cat
+        for p in posts
+        for cat in parse_string_list(p.get("category", ""))
+        if cat
+    ))
     all_tags = sorted(set(
-        tag for p in posts for tag in p.get("tags", []) if tag
+        tag
+        for p in posts
+        for tag in parse_string_list(p.get("tags", []))
+        if tag
     ))
 
     # Get user saved posts
@@ -67,13 +101,16 @@ def blog_list(request, params: Query[BlogListParams]):
         posts = [p for p in posts if q in p.get("title", "").lower()]
 
     if params.category:
-        posts = [p for p in posts if p.get("category") == params.category]
+        posts = [
+            p for p in posts
+            if params.category in parse_string_list(p.get("category", ""))
+        ]
 
     if params.tag:
         tag_lower = params.tag.lower()
         posts = [
             p for p in posts
-            if any(tag_lower in t.lower() for t in p.get("tags", []))
+            if any(tag_lower in t.lower() for t in parse_string_list(p.get("tags", [])))
         ]
 
     if params.saved:

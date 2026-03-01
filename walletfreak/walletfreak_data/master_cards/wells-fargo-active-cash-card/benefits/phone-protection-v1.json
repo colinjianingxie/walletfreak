@@ -16,5 +16,6 @@
     "dollar_value": 600,
     "time_category": "Permanent (per claim)",
     "enrollment_required": false,
-    "effective_date": "2025-11-29"
+    "effective_date": "2025-11-29",
+    "benefit_main_category": "Protection"
 }

@@ -16,5 +16,6 @@
     "dollar_value": 50,
     "time_category": "Ongoing",
     "enrollment_required": false,
-    "effective_date": "2025-12-08"
+    "effective_date": "2025-12-08",
+    "benefit_main_category": "Financial Rewards"
 }

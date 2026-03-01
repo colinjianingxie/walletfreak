@@ -1,6 +1,7 @@
 {
     "offer_id": "offer",
-    "is_active": true,
+    "valid_until": "2026-02-06",
+    "is_active": false,
     "value": 0,
     "terms": "No public sign up bonus or welcome offer",
     "currency": "Points",

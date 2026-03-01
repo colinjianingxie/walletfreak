@@ -16,5 +16,6 @@
     "dollar_value": 200,
     "time_category": "Annually (calendar year)",
     "enrollment_required": false,
-    "effective_date": "2026-01-22"
+    "effective_date": "2026-01-22",
+    "benefit_main_category": "Hotels"
 }

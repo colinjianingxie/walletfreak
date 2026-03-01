@@ -15,5 +15,6 @@
     "dollar_value": 50000,
     "time_category": "Per Trip",
     "enrollment_required": false,
-    "effective_date": "2025-01-01"
+    "effective_date": "2025-01-01",
+    "benefit_main_category": "Travel Perks"
 }

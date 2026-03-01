@@ -15,5 +15,6 @@
     "dollar_value": 350,
     "time_category": "Annually (calendar year)",
     "enrollment_required": false,
-    "effective_date": "2025-01-01"
+    "effective_date": "2025-01-01",
+    "benefit_main_category": "Financial Rewards"
 }

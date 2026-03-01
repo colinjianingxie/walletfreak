@@ -16,5 +16,6 @@
     "dollar_value": null,
     "time_category": "Per year",
     "enrollment_required": false,
-    "effective_date": "2025-11-29"
+    "effective_date": "2025-11-29",
+    "benefit_main_category": "Airlines"
 }

@@ -236,17 +236,13 @@ def dashboard(request):
                             else:
                                 q_available = q >= anniversary_q and q <= curr_q
                             
-                            has_periods_data = bool(benefit_usage_data.get('periods'))
                             q_data = benefit_usage_data.get('periods', {}).get(q_key, {})
-                            
-                            if has_periods_data:
-                                p_used = (q_data.get('used') or 0)
-                            else:
-                                p_used = (q_data.get('used') or 0)
+                            p_used = (q_data.get('used') or 0)
+                            ytd_used += p_used
 
                             q_status = 'full' if (q_data.get('is_full') or p_used >= q_max) else ('partial' if p_used > 0 else 'empty')
                             periods.append({'label': f'Q{q}', 'key': q_key, 'status': q_status, 'is_current': q == curr_q, 'max_value': q_max, 'is_available': q_available, 'used': p_used})
-                            
+
                             if q == curr_q:
                                 current_period_status = q_status
                                 current_period_used = p_used

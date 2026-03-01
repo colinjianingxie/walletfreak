@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react';
-import { View, StyleSheet, Pressable, SectionList } from 'react-native';
+import { View, StyleSheet, Pressable, SectionList, RefreshControl } from 'react-native';
 import {
   Text,
   useTheme,
@@ -58,7 +58,8 @@ export default function WalletScreen() {
   const [selectedCard, setSelectedCard] = useState<any>(null);
   const [selectedLoyaltyProgram, setSelectedLoyaltyProgram] = useState<LoyaltyProgram | null>(null);
   const { data, isLoading, refetch } = useWallet();
-  const { data: loyaltyData } = useLoyaltyPrograms();
+  const { data: loyaltyData, refetch: refetchLoyalty } = useLoyaltyPrograms();
+  const [refreshing, setRefreshing] = useState(false);
   const router = useRouter();
   const theme = useTheme();
   const insets = useSafeAreaInsets();
@@ -92,6 +93,12 @@ export default function WalletScreen() {
     setViewMode(mode);
     scrollY.value = 0;
   }, [scrollY]);
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await Promise.all([refetch(), refetchLoyalty()]);
+    setRefreshing(false);
+  }, [refetch, refetchLoyalty]);
 
   // Group benefits by benefit_type, sorted by expiring soon
   const benefitsByCategory = useCallback(() => {
@@ -424,6 +431,7 @@ export default function WalletScreen() {
                   showsVerticalScrollIndicator={false}
                   onScroll={scrollHandler}
                   scrollEventThrottle={16}
+                  refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={theme.colors.primary} />}
                 />
               </>
             ) : (
@@ -455,6 +463,7 @@ export default function WalletScreen() {
                 showsVerticalScrollIndicator={false}
                 onScroll={scrollHandler}
                 scrollEventThrottle={16}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={theme.colors.primary} />}
               />
             )}
           </>
@@ -479,6 +488,7 @@ export default function WalletScreen() {
                 stickySectionHeadersEnabled={false}
                 onScroll={scrollHandler}
                 scrollEventThrottle={16}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={theme.colors.primary} />}
               />
             );
           })()

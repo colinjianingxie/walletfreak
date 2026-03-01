@@ -17,5 +17,6 @@
     "dollar_value": 1500,
     "time_category": "Per Claim",
     "enrollment_required": false,
-    "effective_date": "2025-01-01"
+    "effective_date": "2025-01-01",
+    "benefit_main_category": "Business"
 }

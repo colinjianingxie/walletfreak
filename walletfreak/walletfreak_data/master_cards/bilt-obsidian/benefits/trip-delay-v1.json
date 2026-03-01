@@ -1,0 +1,21 @@
+{
+    "benefit_id": "trip-delay",
+    "valid_from": "2026-02-06",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Trip Delay Insurance",
+    "description": "Trip delay insurance coverage",
+    "additional_details": "Covers expenses due to trip delays",
+    "benefit_category": [
+        "Travel Perks",
+        "Protection"
+    ],
+    "benefit_type": "Insurance",
+    "numeric_value": 0,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": "2026-02-06",
+    "benefit_main_category": "Travel Perks"
+}

@@ -1,0 +1,11 @@
+{
+    "rate_id": "everyday",
+    "valid_from": "2026-02-06",
+    "valid_until": null,
+    "is_active": true,
+    "multiplier": 2,
+    "category": ["All Purchases"],
+    "currency": "points",
+    "additional_details": "2X points on everyday spend",
+    "is_default": false
+}

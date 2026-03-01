@@ -190,6 +190,10 @@ class Command(BaseCommand):
             else:
                 card_data['points_value_cpp'] = 1.0
 
+            # Ensure is_active is explicitly set (defaults to True for cards without the field)
+            if 'is_active' not in card_data:
+                card_data['is_active'] = True
+
             db.create_document('master_cards', card_data, doc_id=card_slug, merge=should_merge)
             
             seeded_types = []

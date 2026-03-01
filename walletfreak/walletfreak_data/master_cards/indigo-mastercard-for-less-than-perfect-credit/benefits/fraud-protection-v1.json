@@ -10,5 +10,7 @@
     ],
     "valid_from": "2026-01-10",
     "valid_until": null,
-    "is_active": true
+    "is_active": true,
+    "benefit_type": "Protection",
+    "benefit_main_category": "Protection"
 }
