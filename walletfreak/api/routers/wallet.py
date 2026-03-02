@@ -348,6 +348,7 @@ def get_wallet(request):
                     "ytd_used": ytd_used,
                     "additional_details": benefit.get("additional_details"),
                     "benefit_type": benefit_type,
+                    "benefit_main_category": benefit.get("benefit_main_category", ""),
                 }
 
                 if is_ignored:

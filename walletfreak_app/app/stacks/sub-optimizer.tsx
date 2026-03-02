@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, TextInput as RNTextInput, Pressable } from 'react-native';
+import { View, StyleSheet, TextInput as RNTextInput, Pressable, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -27,147 +27,155 @@ export default function SubOptimizerScreen() {
   };
 
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={{ paddingBottom: 40 }}
+    <LinearGradient
+      colors={['#0F0F1A', '#1A1A2E', '#16213E']}
+      style={styles.gradient}
     >
-      {/* Dark Hero Section */}
-      <LinearGradient
-        colors={['#0F0F1A', '#1A1A2E', '#16213E']}
-        style={styles.heroSection}
+      <KeyboardAvoidingView
+        style={styles.flex}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
-        {/* Background orbs */}
-        <View style={styles.orbContainer} pointerEvents="none">
-          <View style={styles.yellowOrb} />
-          <View style={styles.blueOrb} />
-        </View>
-
-        {/* Badge */}
-        <View style={styles.heroBadge}>
-          <MaterialCommunityIcons name="lightning-bolt" size={14} color="#FACC15" />
-          <Text style={styles.heroBadgeText}>SIGN-UP BONUS INTEL</Text>
-        </View>
-
-        {/* Headline */}
-        <Text style={styles.heroHeadline}>Target your next{'\n'}big haul.</Text>
-        <Text style={styles.heroSubheadline}>
-          Analyze sign-up bonus ROI across all cards and find the best value for your spend.
-        </Text>
-
-        {/* Glass Form */}
-        <View style={styles.glassForm}>
-          {/* Planned Spend */}
-          <Text style={styles.formLabel}>Planned Spend</Text>
-          <View style={styles.darkInput}>
-            <Text style={styles.dollarPrefix}>$</Text>
-            <RNTextInput
-              style={styles.darkInputText}
-              value={spend}
-              onChangeText={setSpend}
-              keyboardType="numeric"
-              placeholder="4000"
-              placeholderTextColor="rgba(255,255,255,0.3)"
-            />
+        <ScrollView
+          style={styles.flex}
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+          bounces={false}
+        >
+          {/* Background orbs */}
+          <View style={styles.orbContainer} pointerEvents="none">
+            <View style={styles.yellowOrb} />
+            <View style={styles.blueOrb} />
           </View>
 
-          {/* Timeframe */}
-          <Text style={[styles.formLabel, { marginTop: 16 }]}>Timeframe</Text>
-          <View style={styles.timeframeRow}>
-            {TIMEFRAME_OPTIONS.map((opt) => (
+          {/* Badge */}
+          <View style={styles.heroBadge}>
+            <MaterialCommunityIcons name="lightning-bolt" size={14} color="#FACC15" />
+            <Text style={styles.heroBadgeText}>SIGN-UP BONUS INTEL</Text>
+          </View>
+
+          {/* Headline */}
+          <Text style={styles.heroHeadline}>Target your next{'\n'}big haul.</Text>
+          <Text style={styles.heroSubheadline}>
+            Analyze sign-up bonus ROI across all cards and find the best value for your spend.
+          </Text>
+
+          {/* Spacer to push form down */}
+          <View style={styles.spacer} />
+
+          {/* Form */}
+          <View style={styles.formSection}>
+            {/* Planned Spend */}
+            <Text style={styles.formLabel}>Planned Spend</Text>
+            <View style={styles.darkInput}>
+              <Text style={styles.dollarPrefix}>$</Text>
+              <RNTextInput
+                style={styles.darkInputText}
+                value={spend}
+                onChangeText={setSpend}
+                keyboardType="numeric"
+                placeholder="4000"
+                placeholderTextColor="rgba(255,255,255,0.3)"
+              />
+            </View>
+
+            {/* Timeframe */}
+            <Text style={[styles.formLabel, { marginTop: 20 }]}>Timeframe</Text>
+            <View style={styles.timeframeRow}>
+              {TIMEFRAME_OPTIONS.map((opt) => (
+                <Pressable
+                  key={opt.value}
+                  style={[
+                    styles.timeframeButton,
+                    timeframe === opt.value && styles.timeframeButtonActive,
+                  ]}
+                  onPress={() => setTimeframe(opt.value)}
+                >
+                  <Text
+                    style={[
+                      styles.timeframeButtonText,
+                      timeframe === opt.value && styles.timeframeButtonTextActive,
+                    ]}
+                  >
+                    {opt.label}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
+
+            {/* Strategy */}
+            <Text style={[styles.formLabel, { marginTop: 20 }]}>Strategy</Text>
+            <View style={styles.strategyRow}>
               <Pressable
-                key={opt.value}
                 style={[
-                  styles.timeframeButton,
-                  timeframe === opt.value && styles.timeframeButtonActive,
+                  styles.strategyCard,
+                  sortBy === 'recommended' && styles.strategyCardActive,
                 ]}
-                onPress={() => setTimeframe(opt.value)}
+                onPress={() => setSortBy('recommended')}
               >
+                <MaterialCommunityIcons
+                  name="lightning-bolt"
+                  size={20}
+                  color={sortBy === 'recommended' ? '#0F0F1A' : 'rgba(255,255,255,0.6)'}
+                />
                 <Text
                   style={[
-                    styles.timeframeButtonText,
-                    timeframe === opt.value && styles.timeframeButtonTextActive,
+                    styles.strategyCardText,
+                    sortBy === 'recommended' && styles.strategyCardTextActive,
                   ]}
                 >
-                  {opt.label}
+                  Freak Score
                 </Text>
               </Pressable>
-            ))}
-          </View>
+              <Pressable
+                style={[
+                  styles.strategyCard,
+                  sortBy === 'value' && styles.strategyCardActive,
+                ]}
+                onPress={() => setSortBy('value')}
+              >
+                <MaterialCommunityIcons
+                  name="diamond-stone"
+                  size={20}
+                  color={sortBy === 'value' ? '#0F0F1A' : 'rgba(255,255,255,0.6)'}
+                />
+                <Text
+                  style={[
+                    styles.strategyCardText,
+                    sortBy === 'value' && styles.strategyCardTextActive,
+                  ]}
+                >
+                  Pure Value
+                </Text>
+              </Pressable>
+            </View>
 
-          {/* Strategy */}
-          <Text style={[styles.formLabel, { marginTop: 16 }]}>Strategy</Text>
-          <View style={styles.strategyRow}>
+            {/* CTA Button */}
             <Pressable
-              style={[
-                styles.strategyCard,
-                sortBy === 'recommended' && styles.strategyCardActive,
-              ]}
-              onPress={() => setSortBy('recommended')}
+              style={styles.ctaButton}
+              onPress={handleCalculate}
             >
-              <MaterialCommunityIcons
-                name="lightning-bolt"
-                size={20}
-                color={sortBy === 'recommended' ? '#0F0F1A' : 'rgba(255,255,255,0.6)'}
-              />
-              <Text
-                style={[
-                  styles.strategyCardText,
-                  sortBy === 'recommended' && styles.strategyCardTextActive,
-                ]}
-              >
-                Freak Score
-              </Text>
-            </Pressable>
-            <Pressable
-              style={[
-                styles.strategyCard,
-                sortBy === 'value' && styles.strategyCardActive,
-              ]}
-              onPress={() => setSortBy('value')}
-            >
-              <MaterialCommunityIcons
-                name="diamond-stone"
-                size={20}
-                color={sortBy === 'value' ? '#0F0F1A' : 'rgba(255,255,255,0.6)'}
-              />
-              <Text
-                style={[
-                  styles.strategyCardText,
-                  sortBy === 'value' && styles.strategyCardTextActive,
-                ]}
-              >
-                Pure Value
-              </Text>
+              <MaterialCommunityIcons name="target" size={18} color="#0F0F1A" />
+              <Text style={styles.ctaButtonText}>Scan ROI Leaderboard</Text>
             </Pressable>
           </View>
-
-          {/* CTA Button */}
-          <Pressable
-            style={styles.ctaButton}
-            onPress={handleCalculate}
-          >
-            <MaterialCommunityIcons name="target" size={18} color="#0F0F1A" />
-            <Text style={styles.ctaButtonText}>Scan ROI Leaderboard</Text>
-          </Pressable>
-        </View>
-      </LinearGradient>
-
-    </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  flex: {
     flex: 1,
-    backgroundColor: '#F8FAFC',
   },
-  // Hero Section
-  heroSection: {
+  gradient: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
     paddingHorizontal: 20,
     paddingTop: 24,
-    paddingBottom: 28,
-    position: 'relative',
-    overflow: 'hidden',
+    paddingBottom: 40,
   },
   orbContainer: {
     ...StyleSheet.absoluteFillObject,
@@ -219,15 +227,14 @@ const styles = StyleSheet.create({
     fontFamily: 'Outfit',
     color: 'rgba(255,255,255,0.5)',
     lineHeight: 20,
-    marginBottom: 24,
   },
-  // Glass Form
-  glassForm: {
-    backgroundColor: 'rgba(255,255,255,0.05)',
-    borderRadius: 16,
-    padding: 20,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.08)',
+  spacer: {
+    flex: 1,
+    minHeight: 24,
+  },
+  // Form (no glass container — fields sit directly on the gradient)
+  formSection: {
+    paddingTop: 8,
   },
   formLabel: {
     fontSize: 12,
@@ -323,7 +330,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FACC15',
     borderRadius: 12,
     paddingVertical: 16,
-    marginTop: 20,
+    marginTop: 24,
   },
   ctaButtonText: {
     fontSize: 16,

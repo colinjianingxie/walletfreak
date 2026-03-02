@@ -32,7 +32,9 @@ def normalize_datapoint(dp, uid=None):
 
     # Check if current user has voted
     upvoted_by = dp.get("upvoted_by", []) or []
+    outdated_by = dp.get("outdated_by", []) or []
     dp["user_voted"] = uid in upvoted_by if uid else False
+    dp["user_outdated"] = uid in outdated_by if uid else False
 
     return dp
 
@@ -85,7 +87,17 @@ def submit_datapoint(request):
 def vote_datapoint(request, pk: str):
     uid = request.auth
     try:
-        db.vote_on_datapoint(uid, pk)
+        db.vote_datapoint(pk, uid)
+        return {"success": True}
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+
+@router.post("/{pk}/outdated/", auth=BearerAuth())
+def mark_datapoint_outdated(request, pk: str):
+    uid = request.auth
+    try:
+        db.mark_outdated(pk, uid)
         return {"success": True}
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)

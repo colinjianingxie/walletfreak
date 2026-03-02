@@ -10,7 +10,7 @@ type ToolIconName = React.ComponentProps<typeof MaterialCommunityIcons>['name'];
 const tools = [
   {
     id: 'personality-quiz',
-    title: 'Personality Quiz',
+    title: 'Freak Quiz',
     description: 'Discover your card personality archetype',
     icon: 'head-lightbulb-outline' as ToolIconName,
     route: '/stacks/personality-quiz',
@@ -43,6 +43,7 @@ const tools = [
     icon: 'bed-outline' as ToolIconName,
     route: '/stacks/booking-optimizer',
     premium: true,
+    disabled: true,
   },
   {
     id: 'award-scout',
@@ -51,6 +52,7 @@ const tools = [
     icon: 'magnify' as ToolIconName,
     route: '/stacks/award-scout',
     premium: true,
+    disabled: true,
   },
 ];
 
@@ -64,17 +66,22 @@ export default function ToolsScreen() {
         {tools.map((tool) => (
           <Surface
             key={tool.id}
-            style={[styles.toolCard, { backgroundColor: theme.colors.elevation.level1 }]}
+            style={[
+              styles.toolCard,
+              { backgroundColor: theme.colors.elevation.level1 },
+              tool.disabled && { opacity: 0.45 },
+            ]}
             elevation={1}
           >
             <Pressable
-              onPress={() => router.push(tool.route as any)}
+              onPress={() => !tool.disabled && router.push(tool.route as any)}
+              disabled={tool.disabled}
               style={styles.toolPressable}
             >
               <MaterialCommunityIcons
                 name={tool.icon}
                 size={32}
-                color={theme.colors.primary}
+                color={tool.disabled ? theme.colors.onSurfaceDisabled : theme.colors.primary}
               />
               <Text variant="titleSmall" style={styles.toolTitle}>
                 {tool.title}
@@ -86,13 +93,19 @@ export default function ToolsScreen() {
               >
                 {tool.description}
               </Text>
-              {tool.premium && (
+              {tool.disabled ? (
+                <View style={[styles.premiumBadge, { backgroundColor: theme.colors.surfaceDisabled }]}>
+                  <Text variant="labelSmall" style={{ color: theme.colors.onSurfaceDisabled }}>
+                    Coming Soon
+                  </Text>
+                </View>
+              ) : tool.premium ? (
                 <View style={[styles.premiumBadge, { backgroundColor: theme.colors.tertiaryContainer }]}>
                   <Text variant="labelSmall" style={{ color: theme.colors.onTertiaryContainer }}>
                     Premium
                   </Text>
                 </View>
-              )}
+              ) : null}
             </Pressable>
           </Surface>
         ))}

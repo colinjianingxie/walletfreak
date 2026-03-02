@@ -3,6 +3,7 @@ import {
   getDatapoints,
   submitDatapoint,
   voteDatapoint,
+  markDatapointOutdated,
   DatapointListParams,
 } from '../api/endpoints/datapoints';
 
@@ -27,6 +28,16 @@ export const useVoteDatapoint = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => voteDatapoint(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['datapoints'] });
+    },
+  });
+};
+
+export const useMarkOutdated = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => markDatapointOutdated(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['datapoints'] });
     },

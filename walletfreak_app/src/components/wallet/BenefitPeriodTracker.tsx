@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, StyleSheet, Pressable, TextInput, ActivityIndicator, Animated, ScrollView } from 'react-native';
+import { View, StyleSheet, Pressable, TextInput, ActivityIndicator, Animated } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { formatCurrency } from '../../utils/formatters';
@@ -23,6 +23,7 @@ export const BenefitPeriodTracker: React.FC<BenefitPeriodTrackerProps> = ({
   const [editAmount, setEditAmount] = useState('');
   const [selectedPeriodKey, setSelectedPeriodKey] = useState<string | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [optimisticOverride, setOptimisticOverride] = useState<{ isFull: boolean; used: number } | null>(null);
   const successOpacity = useRef(new Animated.Value(0)).current;
 
   const flashSuccess = () => {
@@ -48,17 +49,20 @@ export const BenefitPeriodTracker: React.FC<BenefitPeriodTrackerProps> = ({
 
   // For multi-period benefits, use the active period's max_value for display
   const periodAmount = hasMultiplePeriods && activePeriod ? activePeriod.max_value : totalAmount;
-  const usedAmount = activePeriod?.used ?? 0;
+  const rawUsed = activePeriod?.used ?? 0;
+  const usedAmount = optimisticOverride != null ? optimisticOverride.used : rawUsed;
   const remainingAmount = Math.max(0, periodAmount - usedAmount);
   const progressPct = periodAmount > 0 ? Math.min((usedAmount / periodAmount) * 100, 100) : 0;
 
-  const isExpiring = benefit.days_until_expiration != null && benefit.days_until_expiration <= 30;
+  // Only show EXPIRING if the current period is NOT full
+  const currentPeriodFull = currentPeriod?.status === 'full' || (optimisticOverride != null && optimisticOverride.isFull && !selectedPeriodKey);
+  const isExpiring = benefit.days_until_expiration != null && benefit.days_until_expiration <= 30 && !currentPeriodFull;
 
   // Determine progress bar color
   const getProgressColor = () => {
-    if (activePeriod?.status === 'full') return '#4A90D9';
+    if (isPeriodFull) return '#16A34A';
     if (usedAmount > 0) return '#E67E22';
-    return '#4A90D9';
+    return '#16A34A';
   };
 
   const handleUpdateAmount = () => {
@@ -93,36 +97,60 @@ export const BenefitPeriodTracker: React.FC<BenefitPeriodTrackerProps> = ({
     setEditAmount('');
   };
 
+  const isPeriodFull = optimisticOverride != null ? optimisticOverride.isFull : activePeriod?.status === 'full';
+
   const handleMarkFull = () => {
     if (!activePeriod) return;
-    updateBenefit.mutate(
-      {
-        userCardId: benefit.user_card_id,
-        benefitId: benefit.benefit_id,
-        amount: activePeriod.max_value,
-        periodKey: activePeriod.key,
-        isFull: true,
-        increment: false,
-      },
-      {
-        onSuccess: () => flashSuccess(),
-      }
-    );
+    const clearOptimistic = () => setOptimisticOverride(null);
+    if (isPeriodFull) {
+      // Optimistically show empty bar immediately
+      setOptimisticOverride({ isFull: false, used: 0 });
+      updateBenefit.mutate(
+        {
+          userCardId: benefit.user_card_id,
+          benefitId: benefit.benefit_id,
+          amount: 0,
+          periodKey: activePeriod.key,
+          isFull: false,
+          increment: false,
+        },
+        {
+          onSuccess: () => { clearOptimistic(); flashSuccess(); },
+          onError: clearOptimistic,
+        }
+      );
+    } else {
+      // Optimistically show full bar immediately
+      setOptimisticOverride({ isFull: true, used: activePeriod.max_value });
+      updateBenefit.mutate(
+        {
+          userCardId: benefit.user_card_id,
+          benefitId: benefit.benefit_id,
+          amount: activePeriod.max_value,
+          periodKey: activePeriod.key,
+          isFull: true,
+          increment: false,
+        },
+        {
+          onSuccess: () => { clearOptimistic(); flashSuccess(); },
+          onError: clearOptimistic,
+        }
+      );
+    }
   };
 
   const handlePeriodPress = (period: PeriodDisplay) => {
-    if (!period.is_available && !period.is_current) return;
+    setOptimisticOverride(null);
     setSelectedPeriodKey(period.key === selectedPeriodKey ? null : period.key);
   };
 
   return (
     <View style={[
       styles.container,
-      { borderColor: isExpiring ? '#F59E0B' : '#E5E7EB' },
-      benefit.is_ignored && { opacity: 0.5 },
+      { borderColor: isExpiring && !benefit.is_ignored ? '#F59E0B' : '#E5E7EB' },
     ]}>
       {/* Header Row */}
-      <View style={styles.headerRow}>
+      <View style={[styles.headerRow, benefit.is_ignored && { opacity: 0.4 }]}>
         <View style={{ flex: 1, marginRight: 12 }}>
           <View style={styles.titleRow}>
             <Text style={styles.benefitName}>
@@ -135,11 +163,6 @@ export const BenefitPeriodTracker: React.FC<BenefitPeriodTrackerProps> = ({
               </View>
             )}
           </View>
-          {benefit.additional_details && (
-            <Text style={[styles.description, { color: theme.colors.onSurfaceVariant }]} numberOfLines={2}>
-              {benefit.additional_details}
-            </Text>
-          )}
         </View>
         <View style={styles.amountCol}>
           <Text style={styles.amountValue}>{formatCurrency(periodAmount)}</Text>
@@ -150,13 +173,13 @@ export const BenefitPeriodTracker: React.FC<BenefitPeriodTrackerProps> = ({
       </View>
 
       {/* Usage Progress */}
-      <View style={styles.usageRow}>
+      <View style={[styles.usageRow, benefit.is_ignored && { opacity: 0.4 }]}>
         <Text style={styles.usedText}>{formatCurrency(usedAmount)} used</Text>
         <Text style={[styles.remainingText, { color: theme.colors.onSurfaceVariant }]}>
           {formatCurrency(remainingAmount)} remaining
         </Text>
       </View>
-      <View style={styles.progressBarBg}>
+      <View style={[styles.progressBarBg, benefit.is_ignored && { opacity: 0.4 }]}>
         <View
           style={[
             styles.progressBarFill,
@@ -167,35 +190,39 @@ export const BenefitPeriodTracker: React.FC<BenefitPeriodTrackerProps> = ({
 
       {/* Period Blocks (for monthly/quarterly/semi-annual) */}
       {hasMultiplePeriods && benefit.periods.length > 0 && (
-        <ScrollView
-          horizontal={isMonthly}
-          showsHorizontalScrollIndicator={false}
-          style={styles.periodsScroll}
-          contentContainerStyle={[
-            styles.periodsRow,
-            !isMonthly && { justifyContent: 'center' },
-          ]}
-        >
+        <View style={[styles.periodsGrid, benefit.is_ignored && { opacity: 0.4 }]}>
           {benefit.periods.map((period) => {
             const isSelected = period.key === selectedPeriodKey;
             const isFull = period.status === 'full';
             const isPartial = period.status === 'partial';
             const isCurrent = period.is_current;
             const isPast = !isCurrent && period.is_available;
+            const isFuture = !isPast && !isCurrent;
+            const fillPct = isPartial && period.max_value > 0
+              ? Math.min((period.used / period.max_value) * 100, 100)
+              : 0;
 
             return (
               <Pressable
                 key={period.key}
                 style={[
                   styles.periodBlock,
-                  isMonthly && styles.periodBlockMonthly,
+                  isMonthly && styles.periodBlockMonthlyGrid,
                   !isMonthly && styles.periodBlockWide,
                   isFull && styles.periodBlockFull,
-                  (isSelected || isCurrent) && !isFull && styles.periodBlockSelected,
-                  !isPast && !isCurrent && !isFull && !isPartial && styles.periodBlockFuture,
+                  (isSelected || (isCurrent && !selectedPeriodKey)) && !isFull && styles.periodBlockSelected,
+                  isFuture && !isFull && !isPartial && styles.periodBlockFuture,
                 ]}
                 onPress={() => handlePeriodPress(period)}
               >
+                {isPartial && fillPct > 0 && (
+                  <View
+                    style={[
+                      styles.periodFill,
+                      { width: `${fillPct}%` },
+                    ]}
+                  />
+                )}
                 <Text
                   style={[
                     styles.periodLabel,
@@ -205,19 +232,10 @@ export const BenefitPeriodTracker: React.FC<BenefitPeriodTrackerProps> = ({
                 >
                   {period.label}
                 </Text>
-                <Text
-                  style={[
-                    styles.periodValue,
-                    (isPast || isCurrent) && styles.periodValueActive,
-                    isFull && { color: '#FFFFFF' },
-                  ]}
-                >
-                  {formatCurrency(period.max_value)}
-                </Text>
               </Pressable>
             );
           })}
-        </ScrollView>
+        </View>
       )}
 
       {/* Edit Mode: Inline Amount Input */}
@@ -253,24 +271,37 @@ export const BenefitPeriodTracker: React.FC<BenefitPeriodTrackerProps> = ({
         /* Action Buttons + Ignore */
         <View style={styles.actionsRow}>
           <Pressable
-            style={[styles.actionButton, styles.updateButton, { backgroundColor: '#F1F5F9' }]}
+            style={[styles.actionButton, styles.updateButton, { backgroundColor: '#F1F5F9' }, benefit.is_ignored && { opacity: 0.35 }]}
             onPress={handleUpdateAmount}
+            disabled={benefit.is_ignored}
           >
             <Text style={styles.updateButtonText}>Update Amount</Text>
           </Pressable>
           <Pressable
-            style={[styles.actionButton, styles.markFullButton, { backgroundColor: showSuccess ? '#DCFCE7' : '#EEF2FF', opacity: updateBenefit.isPending ? 0.7 : 1 }]}
+            style={[
+              styles.actionButton,
+              styles.markFullButton,
+              {
+                backgroundColor: showSuccess ? '#DCFCE7' : isPeriodFull ? '#FEF2F2' : '#EEF2FF',
+                opacity: benefit.is_ignored ? 0.35 : updateBenefit.isPending ? 0.7 : 1,
+              },
+            ]}
             onPress={handleMarkFull}
-            disabled={updateBenefit.isPending}
+            disabled={updateBenefit.isPending || benefit.is_ignored}
           >
             {updateBenefit.isPending ? (
-              <ActivityIndicator size="small" color="#4F46E5" />
+              <ActivityIndicator size="small" color={isPeriodFull ? '#DC2626' : '#4F46E5'} />
             ) : showSuccess ? (
               <>
                 <Animated.View style={{ opacity: successOpacity }}>
                   <MaterialCommunityIcons name="check-circle" size={18} color="#16A34A" />
                 </Animated.View>
                 <Text style={[styles.markFullButtonText, { color: '#16A34A' }]}>Done!</Text>
+              </>
+            ) : isPeriodFull ? (
+              <>
+                <MaterialCommunityIcons name="close-circle-outline" size={18} color="#DC2626" />
+                <Text style={[styles.markFullButtonText, { color: '#DC2626' }]}>Unmark Full</Text>
               </>
             ) : (
               <>
@@ -341,11 +372,6 @@ const styles = StyleSheet.create({
     color: '#DC2626',
     letterSpacing: 0.5,
   },
-  description: {
-    fontSize: 13,
-    fontFamily: 'Outfit',
-    lineHeight: 18,
-  },
   amountCol: {
     alignItems: 'flex-end',
   },
@@ -388,31 +414,32 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
   // Period blocks
-  periodsScroll: {
-    marginBottom: 14,
-  },
-  periodsRow: {
+  periodsGrid: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: 6,
+    marginBottom: 14,
   },
   periodBlock: {
     borderRadius: 10,
     paddingVertical: 8,
     paddingHorizontal: 6,
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#F1F5F9',
     borderWidth: 1,
     borderColor: 'transparent',
+    overflow: 'hidden',
   },
-  periodBlockMonthly: {
-    minWidth: 48,
+  periodBlockMonthlyGrid: {
+    width: '23%',
   },
   periodBlockWide: {
     flex: 1,
   },
   periodBlockFull: {
-    backgroundColor: '#4F46E5',
-    borderColor: '#4F46E5',
+    backgroundColor: '#16A34A',
+    borderColor: '#16A34A',
   },
   periodBlockSelected: {
     borderColor: '#4F46E5',
@@ -421,6 +448,14 @@ const styles = StyleSheet.create({
   periodBlockFuture: {
     opacity: 0.5,
   },
+  periodFill: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    bottom: 0,
+    backgroundColor: '#FDE68A',
+    borderRadius: 10,
+  },
   periodLabel: {
     fontSize: 11,
     fontFamily: 'Outfit-Medium',
@@ -428,15 +463,6 @@ const styles = StyleSheet.create({
   },
   periodLabelActive: {
     color: '#334155',
-  },
-  periodValue: {
-    fontSize: 12,
-    fontFamily: 'Outfit-SemiBold',
-    color: '#94A3B8',
-    marginTop: 2,
-  },
-  periodValueActive: {
-    color: '#1C1B1F',
   },
   // Actions
   actionsRow: {

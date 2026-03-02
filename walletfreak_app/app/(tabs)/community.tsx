@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback, useMemo } from 'react';
-import { View, StyleSheet, Pressable, Image, ScrollView, RefreshControl } from 'react-native';
+import { View, StyleSheet, Pressable, Image, ScrollView, RefreshControl, ActivityIndicator } from 'react-native';
 import { Text, Searchbar, useTheme } from 'react-native-paper';
 import Animated, {
   useSharedValue,
@@ -16,7 +16,7 @@ import { EmptyState } from '../../src/components/layout/EmptyState';
 import { LoadingState } from '../../src/components/layout/LoadingState';
 import { CardImage } from '../../src/components/ui/CardImage';
 import { useBlogPosts } from '../../src/hooks/useBlog';
-import { useDatapoints, useVoteDatapoint } from '../../src/hooks/useDatapoints';
+import { useDatapoints, useVoteDatapoint, useMarkOutdated } from '../../src/hooks/useDatapoints';
 import { formatDate, formatRelativeTime } from '../../src/utils/formatters';
 import type { BlogPost } from '../../src/types/blog';
 
@@ -76,6 +76,7 @@ export default function CommunityScreen() {
     benefit: dpBenefit || undefined,
   });
   const voteDatapoint = useVoteDatapoint();
+  const markOutdated = useMarkOutdated();
 
   const availableCategories = useMemo(() => {
     return blogData?.categories ?? [];
@@ -207,76 +208,91 @@ export default function CommunityScreen() {
   const renderDatapointItem = ({ item }: { item: any }) => {
     return (
       <View style={[styles.dpCard, { backgroundColor: theme.colors.elevation.level1 }]}>
-        <View style={styles.dpRow}>
-          {/* Left Column: User + Card + Benefit */}
-          <View style={styles.dpLeftCol}>
-            <Text style={styles.dpUsername}>@{item.author_name || 'Anonymous'}</Text>
-            <View style={styles.dpCardRow}>
-              {item.card_slug ? (
-                <CardImage slug={item.card_slug} size="small" />
-              ) : null}
-              <Text style={styles.dpCardName} numberOfLines={1}>
-                {item.card_name || 'Unknown Card'}
-              </Text>
-            </View>
-            {item.benefit ? (
-              <View style={styles.dpBenefitTag}>
-                <MaterialCommunityIcons name="lightning-bolt" size={12} color="#4F46E5" />
-                <Text style={styles.dpBenefitTagText}>{item.benefit.toUpperCase()}</Text>
-              </View>
-            ) : null}
-          </View>
+        {/* Header: User + Date */}
+        <View style={styles.dpHeader}>
+          <Text style={styles.dpUsername}>@{item.author_name || 'Anonymous'}</Text>
+          <Text style={styles.dpTimestamp}>{formatRelativeTime(item.created_at)}</Text>
+        </View>
 
-          {/* Right Column: Status + Content + Timestamp */}
-          <View style={styles.dpRightCol}>
-            <View style={styles.dpStatusRow}>
-              <View style={[
-                styles.dpStatusBadge,
-                { backgroundColor: item.status === 'Success' ? '#ECFDF5' : '#FEF2F2' },
-              ]}>
-                <MaterialCommunityIcons
-                  name={item.status === 'Success' ? 'check-circle' : 'close-circle'}
-                  size={12}
-                  color={item.status === 'Success' ? '#16A34A' : '#DC2626'}
-                />
-                <Text style={[
-                  styles.dpStatusText,
-                  { color: item.status === 'Success' ? '#16A34A' : '#DC2626' },
-                ]}>
-                  {item.status || 'Success'}
-                </Text>
-              </View>
-              <Text style={styles.dpTimestamp}>
-                {formatRelativeTime(item.created_at)}
-              </Text>
-            </View>
+        {/* Card row */}
+        <View style={styles.dpCardBenefitRow}>
+          {item.card_slug ? (
+            <CardImage slug={item.card_slug} size="small" />
+          ) : null}
+          <Text style={styles.dpCardName} numberOfLines={1} ellipsizeMode="tail">
+            {item.card_name || 'Unknown Card'}
+          </Text>
+        </View>
 
-            {item.data ? (
-              <Text style={styles.dpContent} numberOfLines={3}>
-                {item.data}
-              </Text>
-            ) : null}
+        {/* Benefit tag + Status badge on same row */}
+        <View style={styles.dpBenefitStatusRow}>
+          {item.benefit ? (
+            <View style={styles.dpBenefitTag}>
+              <MaterialCommunityIcons name="lightning-bolt" size={12} color="#4F46E5" />
+              <Text style={styles.dpBenefitTagText}>{item.benefit.toUpperCase()}</Text>
+            </View>
+          ) : <View />}
+          <View style={[
+            styles.dpStatusBadge,
+            { backgroundColor: item.status === 'Success' ? '#ECFDF5' : '#FEF2F2' },
+          ]}>
+            <MaterialCommunityIcons
+              name={item.status === 'Success' ? 'check-circle' : 'close-circle'}
+              size={12}
+              color={item.status === 'Success' ? '#16A34A' : '#DC2626'}
+            />
+            <Text style={[
+              styles.dpStatusText,
+              { color: item.status === 'Success' ? '#16A34A' : '#DC2626' },
+            ]}>
+              {item.status || 'Success'}
+            </Text>
           </View>
         </View>
 
+        {/* Full content text on its own line */}
+        {item.data ? (
+          <Text style={styles.dpContent}>{item.data}</Text>
+        ) : null}
+
         {/* Footer: Votes */}
         <View style={styles.dpFooter}>
-          <Pressable style={styles.dpFooterItem} onPress={() => voteDatapoint.mutate(item.id)}>
-            <MaterialCommunityIcons
-              name={item.user_voted ? 'thumb-up' : 'thumb-up-outline'}
-              size={16}
-              color={item.user_voted ? '#16A34A' : '#94A3B8'}
-            />
+          <Pressable
+            style={styles.dpFooterItem}
+            onPress={() => voteDatapoint.mutate(item.id)}
+            disabled={voteDatapoint.isPending && voteDatapoint.variables === item.id}
+          >
+            {voteDatapoint.isPending && voteDatapoint.variables === item.id ? (
+              <ActivityIndicator size={14} color="#16A34A" />
+            ) : (
+              <MaterialCommunityIcons
+                name={item.user_voted ? 'thumb-up' : 'thumb-up-outline'}
+                size={16}
+                color={item.user_voted ? '#16A34A' : '#94A3B8'}
+              />
+            )}
             <Text style={[styles.dpFooterText, { color: item.user_voted ? '#16A34A' : '#94A3B8' }]}>
               Works {item.upvotes ?? 0}
             </Text>
           </Pressable>
-          <View style={styles.dpFooterItem}>
-            <MaterialCommunityIcons name="thumb-down-outline" size={16} color="#94A3B8" />
-            <Text style={styles.dpFooterText}>
+          <Pressable
+            style={styles.dpFooterItem}
+            onPress={() => markOutdated.mutate(item.id)}
+            disabled={markOutdated.isPending && markOutdated.variables === item.id}
+          >
+            {markOutdated.isPending && markOutdated.variables === item.id ? (
+              <ActivityIndicator size={14} color="#DC2626" />
+            ) : (
+              <MaterialCommunityIcons
+                name={item.user_outdated ? 'thumb-down' : 'thumb-down-outline'}
+                size={16}
+                color={item.user_outdated ? '#DC2626' : '#94A3B8'}
+              />
+            )}
+            <Text style={[styles.dpFooterText, { color: item.user_outdated ? '#DC2626' : '#94A3B8' }]}>
               Outdated {item.outdated_count ?? 0}
             </Text>
-          </View>
+          </Pressable>
         </View>
       </View>
     );
@@ -468,6 +484,13 @@ export default function CommunityScreen() {
               scrollEventThrottle={16}
             />
           )}
+          {/* FAB for submitting data points */}
+          <Pressable
+            style={[styles.fab, { backgroundColor: theme.colors.primary }]}
+            onPress={() => router.push('/stacks/datapoint-submit' as any)}
+          >
+            <MaterialCommunityIcons name="plus" size={28} color="#FFFFFF" />
+          </Pressable>
         </>
       )}
 
@@ -831,56 +854,32 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E5E7EB',
   },
-  dpRow: {
+  dpHeader: {
     flexDirection: 'row',
-    gap: 14,
-    marginBottom: 12,
-  },
-  dpLeftCol: {
-    width: 140,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
   },
   dpUsername: {
     fontSize: 14,
     fontFamily: 'Outfit-Bold',
     color: '#1C1B1F',
-    marginBottom: 4,
   },
-  dpCardRow: {
+  dpTimestamp: {
+    fontSize: 11,
+    fontFamily: 'Outfit',
+    color: '#94A3B8',
+  },
+  dpCardBenefitRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
-    marginBottom: 6,
+    gap: 8,
+    marginBottom: 8,
   },
   dpCardName: {
-    fontSize: 12,
-    fontFamily: 'Outfit',
+    fontSize: 13,
+    fontFamily: 'Outfit-Medium',
     color: '#64748B',
-    flex: 1,
-  },
-  dpBenefitTag: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    backgroundColor: '#EEF2FF',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 6,
-    alignSelf: 'flex-start',
-  },
-  dpBenefitTagText: {
-    fontSize: 10,
-    fontFamily: 'Outfit-Bold',
-    color: '#4F46E5',
-    letterSpacing: 0.3,
-  },
-  dpRightCol: {
-    flex: 1,
-  },
-  dpStatusRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 8,
   },
   dpStatusBadge: {
     flexDirection: 'row',
@@ -895,16 +894,33 @@ const styles = StyleSheet.create({
     fontFamily: 'Outfit-SemiBold',
     letterSpacing: 0.3,
   },
-  dpTimestamp: {
-    fontSize: 11,
-    fontFamily: 'Outfit',
-    color: '#94A3B8',
+  dpBenefitStatusRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  dpBenefitTag: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: '#EEF2FF',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
+  },
+  dpBenefitTagText: {
+    fontSize: 10,
+    fontFamily: 'Outfit-Bold',
+    color: '#4F46E5',
+    letterSpacing: 0.3,
   },
   dpContent: {
     fontSize: 14,
     fontFamily: 'Outfit',
     color: '#1C1B1F',
     lineHeight: 20,
+    marginBottom: 12,
   },
   dpFooter: {
     flexDirection: 'row',
@@ -922,6 +938,21 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontFamily: 'Outfit-Medium',
     color: '#94A3B8',
+  },
+  fab: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   // Filter Bottom Sheet
   filterSheetContent: {

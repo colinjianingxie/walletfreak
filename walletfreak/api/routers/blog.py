@@ -39,7 +39,7 @@ class BlogListParams(Schema):
     saved: bool = False
 
 
-def normalize_post(post, uid=None):
+def normalize_post(post, uid=None, saved_ids=None):
     """Normalize blog post fields for consistent mobile API response."""
     # Map Firestore field names to what the mobile app expects
     post["upvotes"] = post.get("upvote_count", 0) or 0
@@ -57,6 +57,12 @@ def normalize_post(post, uid=None):
         post["user_vote"] = "up" if uid in users_upvoted else None
     else:
         post["user_vote"] = None
+
+    # Check if user has saved this post
+    if saved_ids is not None:
+        post["is_saved"] = post.get("id") in saved_ids
+    else:
+        post["is_saved"] = False
 
     return post
 
@@ -86,14 +92,12 @@ def blog_list(request, params: Query[BlogListParams]):
         if tag
     ))
 
-    # Get user saved posts
+    # Get user saved post IDs (always fetch to populate is_saved)
     saved_ids = set()
-    if params.saved:
-        try:
-            saved = db.get_user_saved_posts(uid)
-            saved_ids = {s.get("post_id") for s in saved}
-        except Exception:
-            pass
+    try:
+        saved_ids = set(db.get_user_saved_post_ids(uid))
+    except Exception:
+        pass
 
     # Filter
     if params.search:
@@ -117,7 +121,7 @@ def blog_list(request, params: Query[BlogListParams]):
         posts = [p for p in posts if p.get("id") in saved_ids]
 
     # Normalize posts
-    posts = [normalize_post(p, uid) for p in posts]
+    posts = [normalize_post(p, uid, saved_ids) for p in posts]
 
     # Paginate
     total = len(posts)
@@ -143,8 +147,15 @@ def blog_detail(request, slug: str):
         if not post:
             return JsonResponse({"error": "Post not found"}, status=404)
 
+        # Get saved IDs
+        saved_ids = set()
+        try:
+            saved_ids = set(db.get_user_saved_post_ids(uid))
+        except Exception:
+            pass
+
         # Normalize fields
-        post = normalize_post(post, uid)
+        post = normalize_post(post, uid, saved_ids)
 
         # Get comments
         try:
@@ -163,14 +174,14 @@ def vote_post(request, slug: str):
     uid = request.auth
     try:
         body = json.loads(request.body)
-        vote_type = body.get("vote_type")  # "up" or "down"
+        vote_type = body.get("vote_type", "")
         post = db.get_blog_by_slug(slug)
         if not post:
             return JsonResponse({"error": "Post not found"}, status=404)
 
         post_id = post["id"]
 
-        if vote_type == "up":
+        if vote_type in ("up", "upvote"):
             # Check if already voted
             existing = db.get_user_vote_on_blog(uid, post_id)
             if existing == "upvote":
@@ -179,7 +190,7 @@ def vote_post(request, slug: str):
             else:
                 # Add upvote
                 db.add_user_vote_on_blog(uid, post_id, "upvote")
-        elif vote_type == "down":
+        elif vote_type in ("down", "downvote"):
             # Remove upvote if exists
             existing = db.get_user_vote_on_blog(uid, post_id)
             if existing == "upvote":
@@ -221,7 +232,7 @@ def save_post(request, slug: str):
         post = db.get_blog_by_slug(slug)
         if not post:
             return JsonResponse({"error": "Post not found"}, status=404)
-        db.save_blog_post(uid, post["id"])
+        db.save_post_for_user(uid, post["id"])
         return {"success": True}
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
@@ -234,7 +245,7 @@ def unsave_post(request, slug: str):
         post = db.get_blog_by_slug(slug)
         if not post:
             return JsonResponse({"error": "Post not found"}, status=404)
-        db.unsave_blog_post(uid, post["id"])
+        db.unsave_post_for_user(uid, post["id"])
         return {"success": True}
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)

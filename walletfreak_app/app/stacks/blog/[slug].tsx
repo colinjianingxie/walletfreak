@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, Image, Dimensions, TextInput, Pressable } from 'react-native';
+import { View, StyleSheet, ScrollView, Image, Dimensions, TextInput, Pressable, ActivityIndicator } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -34,10 +34,29 @@ export default function BlogDetailScreen() {
     return <LoadingState message="Loading post..." />;
   }
 
-  const netVotes = (post.upvotes ?? 0) - (post.downvotes ?? 0);
   const readTime = estimateReadTime(post.content);
 
+  // Optimistic state for vote
+  const isVoting = voteBlog.isPending;
+  const votingType = voteBlog.variables?.voteType;
+  const optimisticUserVote = isVoting
+    ? (votingType === 'upvote'
+      ? (post.user_vote === 'up' ? null : 'up')
+      : (post.user_vote === 'down' ? null : 'down'))
+    : post.user_vote;
+  const optimisticUpvotes = isVoting
+    ? (votingType === 'upvote'
+      ? (post.user_vote === 'up' ? (post.upvotes ?? 1) - 1 : (post.upvotes ?? 0) + 1)
+      : (post.user_vote === 'up' ? (post.upvotes ?? 1) - 1 : (post.upvotes ?? 0)))
+    : (post.upvotes ?? 0);
+  const netVotes = optimisticUpvotes - (post.downvotes ?? 0);
+
+  // Optimistic state for save
+  const isSaving = saveBlog.isPending;
+  const optimisticIsSaved = isSaving ? !post.is_saved : post.is_saved;
+
   const handleVote = (voteType: 'upvote' | 'downvote') => {
+    if (isVoting) return;
     voteBlog.mutate({ slug, voteType });
   };
 
@@ -50,6 +69,7 @@ export default function BlogDetailScreen() {
   };
 
   const handleSave = () => {
+    if (isSaving) return;
     saveBlog.mutate({ slug, save: !post.is_saved });
   };
 
@@ -117,31 +137,43 @@ export default function BlogDetailScreen() {
         {/* Action Bar */}
         <View style={[styles.actionBar, { borderBottomColor: theme.colors.outlineVariant }]}>
           <View style={styles.actionGroup}>
-            <Pressable style={styles.actionButton} onPress={() => handleVote('upvote')}>
-              <MaterialCommunityIcons
-                name={post.user_vote === 'up' ? 'thumb-up' : 'thumb-up-outline'}
-                size={22}
-                color={post.user_vote === 'up' ? theme.colors.primary : '#94A3B8'}
-              />
+            <Pressable style={styles.actionButton} onPress={() => handleVote('upvote')} disabled={isVoting}>
+              {isVoting && votingType === 'upvote' ? (
+                <ActivityIndicator size={18} color={theme.colors.primary} />
+              ) : (
+                <MaterialCommunityIcons
+                  name={optimisticUserVote === 'up' ? 'thumb-up' : 'thumb-up-outline'}
+                  size={22}
+                  color={optimisticUserVote === 'up' ? theme.colors.primary : '#94A3B8'}
+                />
+              )}
             </Pressable>
             <Text style={styles.actionCount}>{netVotes}</Text>
-            <Pressable style={styles.actionButton} onPress={() => handleVote('downvote')}>
-              <MaterialCommunityIcons
-                name={post.user_vote === 'down' ? 'thumb-down' : 'thumb-down-outline'}
-                size={22}
-                color={post.user_vote === 'down' ? theme.colors.error : '#94A3B8'}
-              />
+            <Pressable style={styles.actionButton} onPress={() => handleVote('downvote')} disabled={isVoting}>
+              {isVoting && votingType === 'downvote' ? (
+                <ActivityIndicator size={18} color={theme.colors.error} />
+              ) : (
+                <MaterialCommunityIcons
+                  name={optimisticUserVote === 'down' ? 'thumb-down' : 'thumb-down-outline'}
+                  size={22}
+                  color={optimisticUserVote === 'down' ? theme.colors.error : '#94A3B8'}
+                />
+              )}
             </Pressable>
             <View style={styles.actionDivider} />
             <MaterialCommunityIcons name="comment-outline" size={20} color="#94A3B8" />
             <Text style={styles.actionCount}>{post.comments?.length ?? 0}</Text>
           </View>
-          <Pressable style={styles.actionButton} onPress={handleSave}>
-            <MaterialCommunityIcons
-              name={post.is_saved ? 'bookmark' : 'bookmark-outline'}
-              size={22}
-              color="#94A3B8"
-            />
+          <Pressable style={styles.actionButton} onPress={handleSave} disabled={isSaving}>
+            {isSaving ? (
+              <ActivityIndicator size={18} color={theme.colors.primary} />
+            ) : (
+              <MaterialCommunityIcons
+                name={optimisticIsSaved ? 'bookmark' : 'bookmark-outline'}
+                size={22}
+                color={optimisticIsSaved ? theme.colors.primary : '#94A3B8'}
+              />
+            )}
           </Pressable>
         </View>
 

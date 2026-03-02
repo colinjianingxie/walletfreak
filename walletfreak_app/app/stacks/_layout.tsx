@@ -32,7 +32,14 @@ export default function StacksLayout() {
       <Stack.Screen name="spend-optimizer" options={{ title: 'Spend Optimizer' }} />
       <Stack.Screen name="spend-optimizer-step2" options={{ title: 'Spend Optimizer' }} />
       <Stack.Screen name="spend-optimizer-results" options={{ title: 'Results' }} />
-      <Stack.Screen name="sub-optimizer" options={{ title: 'SUB Optimizer' }} />
+      <Stack.Screen
+        name="sub-optimizer"
+        options={{
+          title: 'SUB Optimizer',
+          headerStyle: { backgroundColor: '#0F0F1A' },
+          headerTintColor: '#FFFFFF',
+        }}
+      />
       <Stack.Screen name="sub-optimizer-results" options={{ title: 'Results' }} />
       <Stack.Screen name="booking-optimizer" options={{ title: 'Booking Optimizer' }} />
       <Stack.Screen name="booking-strategy/[id]" options={{ title: 'Strategy Report' }} />
@@ -43,7 +50,7 @@ export default function StacksLayout() {
       <Stack.Screen name="compare-cards" options={{ title: 'Compare Cards' }} />
       <Stack.Screen name="settings" options={{ title: 'Settings' }} />
       <Stack.Screen name="notifications" options={{ title: 'Notifications' }} />
-      <Stack.Screen name="personality-quiz" options={{ title: 'Personality Quiz' }} />
+      <Stack.Screen name="personality-quiz" options={{ title: 'Freak Quiz' }} />
       <Stack.Screen name="wallet-card/[userCardId]" options={{ title: 'Card Benefits', headerShown: false }} />
       <Stack.Screen name="privacy-policy" options={{ title: 'Privacy Policy' }} />
       <Stack.Screen name="terms-of-service" options={{ title: 'Terms of Service' }} />

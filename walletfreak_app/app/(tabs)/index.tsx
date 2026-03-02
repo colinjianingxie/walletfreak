@@ -38,16 +38,26 @@ const AnimatedSectionList = Animated.createAnimatedComponent(SectionList);
 
 const COLLAPSE_DISTANCE = 160;
 
-// Benefit type icon/color mapping
-const BENEFIT_TYPE_MAP: Record<string, { icon: string; color: string }> = {
-  Credit: { icon: 'credit-card-check-outline', color: '#60A5FA' },
-  'Free Night': { icon: 'bed-outline', color: '#A78BFA' },
-  Security: { icon: 'shield-check-outline', color: '#34D399' },
-  Upgrade: { icon: 'arrow-up-circle-outline', color: '#FB923C' },
-  Savings: { icon: 'piggy-bank-outline', color: '#4ADE80' },
-  Membership: { icon: 'card-account-details-outline', color: '#F472B6' },
-  Financing: { icon: 'percent-outline', color: '#FBBF24' },
-  Access: { icon: 'key-outline', color: '#818CF8' },
+// Benefit main category icon/color mapping
+const BENEFIT_CATEGORY_MAP: Record<string, { icon: string; color: string }> = {
+  Airlines: { icon: 'airplane', color: '#60A5FA' },
+  Hotels: { icon: 'bed-outline', color: '#A78BFA' },
+  Dining: { icon: 'silverware-fork-knife', color: '#FB923C' },
+  Travel: { icon: 'earth', color: '#34D399' },
+  'Travel Perks': { icon: 'compass-outline', color: '#2DD4BF' },
+  Lounges: { icon: 'glass-cocktail', color: '#818CF8' },
+  'Retail Shopping': { icon: 'shopping-outline', color: '#F472B6' },
+  Entertainment: { icon: 'movie-open-outline', color: '#C084FC' },
+  Rideshare: { icon: 'car-outline', color: '#FBBF24' },
+  'Car Rentals': { icon: 'car-key', color: '#FB923C' },
+  Gas: { icon: 'gas-station-outline', color: '#F97316' },
+  Protection: { icon: 'shield-check-outline', color: '#4ADE80' },
+  'Financial Rewards': { icon: 'cash-multiple', color: '#34D399' },
+  Utilities: { icon: 'flash-outline', color: '#FACC15' },
+  'Rent Payments': { icon: 'home-outline', color: '#60A5FA' },
+  Transit: { icon: 'train', color: '#38BDF8' },
+  Health: { icon: 'heart-pulse', color: '#F87171' },
+  Business: { icon: 'briefcase-outline', color: '#94A3B8' },
   Other: { icon: 'gift-outline', color: '#9CA3AF' },
 };
 
@@ -100,7 +110,7 @@ export default function WalletScreen() {
     setRefreshing(false);
   }, [refetch, refetchLoyalty]);
 
-  // Group benefits by benefit_type, sorted by expiring soon
+  // Group benefits by benefit_main_category, sorted by expiring soon
   const benefitsByCategory = useCallback(() => {
     const allBenefits = [
       ...(walletData?.action_needed_benefits ?? []),
@@ -110,7 +120,7 @@ export default function WalletScreen() {
 
     const groups: Record<string, BenefitDisplay[]> = {};
     allBenefits.forEach((b) => {
-      const category = b.benefit_type || 'Other';
+      const category = b.benefit_main_category || b.benefit_type || 'Other';
       if (!groups[category]) groups[category] = [];
       groups[category].push(b);
     });
@@ -200,7 +210,7 @@ export default function WalletScreen() {
       const totalAmount = item.amount ?? 0;
       const progress = totalAmount > 0 ? Math.min(usedAmount / totalAmount, 1) : 0;
 
-      const typeInfo = BENEFIT_TYPE_MAP[item.benefit_type || 'Other'] || BENEFIT_TYPE_MAP.Other;
+      const typeInfo = BENEFIT_CATEGORY_MAP[item.benefit_main_category || item.benefit_type || 'Other'] || BENEFIT_CATEGORY_MAP.Other;
       const barColor = typeInfo.color;
 
       return (
@@ -241,7 +251,7 @@ export default function WalletScreen() {
 
   const renderBenefitSectionHeader = useCallback(
     ({ section }: { section: { title: string; data: BenefitDisplay[] } }) => {
-      const typeInfo = BENEFIT_TYPE_MAP[section.title] || BENEFIT_TYPE_MAP.Other;
+      const typeInfo = BENEFIT_CATEGORY_MAP[section.title] || BENEFIT_CATEGORY_MAP.Other;
       return (
         <View style={styles.benefitSectionHeader}>
           <View style={[styles.benefitSectionIcon, { backgroundColor: typeInfo.color + '20' }]}>

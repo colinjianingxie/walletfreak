@@ -84,6 +84,7 @@ export interface BenefitDisplay {
   ytd_used: number;
   additional_details?: string;
   benefit_type?: string;
+  benefit_main_category?: string;
 }
 
 export interface PeriodDisplay {

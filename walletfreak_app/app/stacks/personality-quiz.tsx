@@ -315,8 +315,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   optionCard: {
-    width: '47%',
-    flexGrow: 1,
+    width: '48%',
     borderRadius: 12,
     padding: 16,
     minHeight: 70,

@@ -81,7 +81,7 @@ export const useUpdateAnniversary = () => {
 export const useUpdateBenefit = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({
+    mutationFn: async ({
       userCardId,
       benefitId,
       amount,
@@ -95,9 +95,11 @@ export const useUpdateBenefit = () => {
       periodKey: string;
       isFull?: boolean;
       increment?: boolean;
-    }) => updateBenefitUsage(userCardId, benefitId, amount, periodKey, isFull, increment),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['wallet'] });
+    }) => {
+      const result = await updateBenefitUsage(userCardId, benefitId, amount, periodKey, isFull, increment);
+      // Wait for wallet data to refetch so isPending stays true until fresh data arrives
+      await queryClient.invalidateQueries({ queryKey: ['wallet'] });
+      return result;
     },
   });
 };

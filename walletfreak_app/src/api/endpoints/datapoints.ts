@@ -14,9 +14,12 @@ export const getDatapoints = async (params?: DatapointListParams) => {
 };
 
 export const submitDatapoint = async (payload: {
-  card_id: string;
-  benefit: string;
-  data: string;
+  card_slug: string;
+  card_name: string;
+  benefit_name: string;
+  benefit_id: string;
+  status: string;
+  content: string;
 }) => {
   const { data } = await apiClient.post('/datapoints/', payload);
   return data;
@@ -24,5 +27,10 @@ export const submitDatapoint = async (payload: {
 
 export const voteDatapoint = async (id: string) => {
   const { data } = await apiClient.post(`/datapoints/${id}/vote/`);
+  return data;
+};
+
+export const markDatapointOutdated = async (id: string) => {
+  const { data } = await apiClient.post(`/datapoints/${id}/outdated/`);
   return data;
 };

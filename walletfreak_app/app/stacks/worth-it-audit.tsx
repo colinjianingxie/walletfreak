@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, Switch } from 'react-native';
+import { View, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { Text, Button, Surface, RadioButton, useTheme } from 'react-native-paper';
 import { useLocalSearchParams } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -166,16 +166,59 @@ export default function WorthItAuditScreen() {
           )}
 
           {benefit.input_type === 'toggle' ? (
-            <View style={styles.toggleRow}>
-              <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant }}>
-                {responses[index] === 1 ? 'Yes, I use this' : 'No, I don\'t use this'}
-              </Text>
-              <Switch
-                value={responses[index] === 1}
-                onValueChange={(val) => updateResponse(index, val ? 1 : 0)}
-                trackColor={{ false: theme.colors.surfaceVariant, true: theme.colors.primaryContainer }}
-                thumbColor={responses[index] === 1 ? theme.colors.primary : theme.colors.outline}
-              />
+            <View style={styles.yesNoRow}>
+              <Pressable
+                style={[
+                  styles.yesNoButton,
+                  {
+                    backgroundColor: responses[index] === 1
+                      ? theme.colors.primaryContainer
+                      : theme.colors.elevation.level2,
+                    borderColor: responses[index] === 1
+                      ? theme.colors.primary
+                      : 'transparent',
+                  },
+                ]}
+                onPress={() => updateResponse(index, 1)}
+              >
+                <Text
+                  variant="labelLarge"
+                  style={{
+                    color: responses[index] === 1
+                      ? theme.colors.primary
+                      : theme.colors.onSurfaceVariant,
+                    fontFamily: 'Outfit-Medium',
+                  }}
+                >
+                  Yes, I use this
+                </Text>
+              </Pressable>
+              <Pressable
+                style={[
+                  styles.yesNoButton,
+                  {
+                    backgroundColor: responses[index] === 0
+                      ? theme.colors.errorContainer
+                      : theme.colors.elevation.level2,
+                    borderColor: responses[index] === 0
+                      ? theme.colors.error
+                      : 'transparent',
+                  },
+                ]}
+                onPress={() => updateResponse(index, 0)}
+              >
+                <Text
+                  variant="labelLarge"
+                  style={{
+                    color: responses[index] === 0
+                      ? theme.colors.error
+                      : theme.colors.onSurfaceVariant,
+                    fontFamily: 'Outfit-Medium',
+                  }}
+                >
+                  No
+                </Text>
+              </Pressable>
             </View>
           ) : (
             <RadioButton.Group
@@ -224,10 +267,17 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 12,
   },
-  toggleRow: {
+  yesNoRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    gap: 10,
+  },
+  yesNoButton: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: 10,
+    borderWidth: 2,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   calculateButton: {
     marginTop: 16,
