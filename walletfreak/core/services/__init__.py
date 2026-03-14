@@ -7,6 +7,7 @@ from .notifications import NotificationMixin
 from .datapoints import DataPointMixin
 from .subscriptions import SubscriptionMixin
 from .loyalty import LoyaltyMixin
+from .hotel_prices import HotelPriceMixin
 
 class FirestoreService(
     UserMixin,
@@ -17,6 +18,7 @@ class FirestoreService(
     DataPointMixin,
     SubscriptionMixin,
     LoyaltyMixin,
+    HotelPriceMixin,
     BaseFirestoreService
 ):
     """

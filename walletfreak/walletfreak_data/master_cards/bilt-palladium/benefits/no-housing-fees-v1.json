@@ -1,0 +1,21 @@
+{
+    "benefit_id": "no-housing-fees",
+    "valid_from": "2026-02-06",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "No Housing Fees",
+    "description": "No transaction fees on rent or mortgage payments",
+    "additional_details": null,
+    "benefit_category": [
+        "Rent Payments",
+        "Fixed Expenses"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 0,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Permanent",
+    "enrollment_required": false,
+    "effective_date": "2026-02-06",
+    "benefit_main_category": "Rent Payments"
+}

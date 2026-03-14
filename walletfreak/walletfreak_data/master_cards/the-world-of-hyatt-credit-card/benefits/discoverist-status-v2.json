@@ -17,5 +17,6 @@
     "dollar_value": 50,
     "time_category": "Permanent",
     "enrollment_required": false,
-    "effective_date": "2026-01-22"
+    "effective_date": "2026-01-22",
+    "benefit_main_category": "Hotels"
 }

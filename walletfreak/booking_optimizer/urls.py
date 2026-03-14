@@ -10,4 +10,5 @@ urlpatterns = [
     path('report/<str:strategy_id>/', views.strategy_report, name='strategy_report'),
     path('report/<str:strategy_id>/prompt/', views.download_prompt, name='download_prompt'),
     path('api/status/', views.check_strategy_status, name='check_status'),
+    path('api/autocomplete/', views.autocomplete_location, name='autocomplete'),
 ]

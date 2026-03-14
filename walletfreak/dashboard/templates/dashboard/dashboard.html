@@ -81,9 +81,9 @@
 <script>
     // --- Manage Wallet Modal Logic ---
     const currentUserUid = "{{ request.session.uid }}";
-    // allCardsData contains ALL cards (database), used for client-side filtering
+    // allCardsData contains ALL cards including deprecated, used for wallet stack name/image lookup
     const allCardsData = {{ all_cards_json|safe }};
-    // Initialize availableCards with allCardsData for legacy compatibility, will be filtered by JS
-    let availableCards = allCardsData;
+    // availableCards excludes deprecated cards - used for "Add Card" search
+    let availableCards = allCardsData.filter(c => c.is_active !== false);
 </script>
 {% endblock %}

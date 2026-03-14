@@ -1,0 +1,38 @@
+{
+    "slug-id": "bilt-blue",
+    "name": "Bilt Blue",
+    "image_url": null,
+    "issuer": "Wells Fargo",
+    "annual_fee": 0,
+    "application_link": "https://www.biltrewards.com/credit-cards",
+    "min_credit_score": 670,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "6/10. The entry-level Bilt card. No annual fee and solid for rent payments with 4% Bilt Cash back, but limited earning rates compared to the higher tiers.",
+    "is_active": true,
+    "active_indices": {
+        "benefits": [
+            "bilt-cash-everyday-v1",
+            "housing-bonus-v1",
+            "no-housing-fees-v1",
+            "no-ftf-v1",
+            "phone-protection-v1",
+            "neighborhood-benefits-v1"
+        ],
+        "earning_rates": [
+            "everyday-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-v1"
+        ],
+        "card_questions": [
+            "q-0",
+            "q-1",
+            "q-2",
+            "q-3",
+            "q-4"
+        ]
+    },
+    "loyalty_program": "bilt_rewards"
+}

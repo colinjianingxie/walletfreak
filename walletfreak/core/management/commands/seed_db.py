@@ -107,6 +107,14 @@ class Command(BaseCommand):
         # Seed Transfer Rules
         self._seed_transfer_rules()
 
+        # Invalidate Django cache so stale card data doesn't persist
+        try:
+            from django.core.cache import cache
+            cache.delete('all_cards')
+            self.stdout.write('Invalidated cards cache.')
+        except Exception:
+            pass
+
         self.stdout.write(self.style.SUCCESS('Database seeding completed successfully.'))
 
     def _seed_categories_and_cards(self, base_dir, card_slugs_list, types_list, seed_categories):
@@ -189,6 +197,10 @@ class Command(BaseCommand):
                 card_data['points_value_cpp'] = loyalty_valuations[l_prog]
             else:
                 card_data['points_value_cpp'] = 1.0
+
+            # Ensure is_active is explicitly set (defaults to True for cards without the field)
+            if 'is_active' not in card_data:
+                card_data['is_active'] = True
 
             db.create_document('master_cards', card_data, doc_id=card_slug, merge=should_merge)
             

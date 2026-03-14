@@ -53,31 +53,35 @@ class StrategyAnalysisService:
     def run_analysis_in_background(self, prompt_text, user_id, strat_id):
         """Background worker function."""
         print(f"Starting background analysis for strategy {strat_id}...")
-        results = self.call_grok_analysis(prompt_text)
-        
-        if not results:
-            print(f"Analysis failed for {strat_id}")
-            # Update to failed state
-            try:
-                strategies_ref = db.db.collection('users').document(user_id).collection('hotel_strategies').document(strat_id)
-                strategies_ref.update({
-                    'status': 'failed',
-                    'analysis_results': []
-                })
-            except Exception as e:
-                print(f"Failed to update strategy to failed state: {e}")
-            return
-
         try:
+            results = self.call_grok_analysis(prompt_text)
+
+            if not results:
+                print(f"Analysis failed for {strat_id}")
+                self._update_strategy_status(user_id, strat_id, 'failed')
+                return
+
             strategies_ref = db.db.collection('users').document(user_id).collection('hotel_strategies').document(strat_id)
             strategies_ref.update({
                 'status': 'ready',
                 'analysis_results': results,
-                'hotel_count': len(results) # Update count based on successful analysis
+                'hotel_count': len(results)
             })
             print(f"Updated strategy {strat_id} with results.")
         except Exception as e:
-            print(f"Failed to update strategy result: {e}")
+            print(f"Background analysis error for {strat_id}: {e}")
+            self._update_strategy_status(user_id, strat_id, 'failed')
+
+    def _update_strategy_status(self, user_id, strat_id, status):
+        """Helper to update strategy status in Firestore."""
+        try:
+            strategies_ref = db.db.collection('users').document(user_id).collection('hotel_strategies').document(strat_id)
+            update_data = {'status': status}
+            if status == 'failed':
+                update_data['analysis_results'] = []
+            strategies_ref.update(update_data)
+        except Exception as e:
+            print(f"Failed to update strategy {strat_id} to {status}: {e}")
 
     def prepare_prompt(self, check_in, check_out, guests, user_cards, wallet_balances, transfer_rules, selected_hotels, valuations):
         """
@@ -137,7 +141,7 @@ class StrategyAnalysisService:
         # 3. Dynamic Valuations
         valuations = db.get_loyalty_valuations()
 
-        # 4. Parse Selected Hotels
+        # 4. Parse Selected Hotels (premium_programs already included from search)
         selected_hotels = []
         if selected_hotels_raw:
             for json_str in selected_hotels_raw:
@@ -146,7 +150,7 @@ class StrategyAnalysisService:
                     hotel_dict.pop('price', None)
                     hotel_dict.pop('rating', None)
                     selected_hotels.append(hotel_dict)
-                except: 
+                except:
                     pass
         
         # 5. Prepare Prompt

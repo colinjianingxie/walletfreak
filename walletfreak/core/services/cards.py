@@ -110,21 +110,26 @@ class CardMixin:
                 
         return hydrated_cards
 
-    def get_cards(self):
+    def get_cards(self, include_deprecated=False):
         """
         Get all cards with full subcollections (active benefits, earning_rates, sign_up_bonus).
         Returns hydrated card objects.
+
+        Args:
+            include_deprecated: If True, include cards with is_active=False.
         """
         # Check cache first
         cached_cards = cache.get('all_cards')
         if cached_cards:
-            return cached_cards
-        
+            if include_deprecated:
+                return cached_cards
+            return [c for c in cached_cards if c.get('is_active', True)]
+
         # 1. Fetch all master cards
         cards_snapshot = self.get_collection('master_cards')
         # Sort cards by name for consistent ordering
         cards_snapshot.sort(key=lambda x: x.get('name', ''))
-        
+
         cards_map = {c['id']: c for c in cards_snapshot if 'id' in c}
         
         if not cards_map:
@@ -300,6 +305,33 @@ class CardMixin:
                 })
                 results.append(composite)
             else:
+                # Fallback: try direct Firestore fetch for this card
+                try:
+                    direct_ref = self.db.collection('master_cards').document(card_id).get()
+                    if direct_ref.exists:
+                        master_data = direct_ref.to_dict()
+                        master_data['id'] = direct_ref.id
+                        if 'slug' not in master_data:
+                            master_data['slug'] = direct_ref.id
+                        composite = master_data.copy()
+                        composite.update({
+                            'user_card_id': card_id,
+                            'status': user_data.get('status'),
+                            'added_at': user_data.get('added_at'),
+                            'anniversary_date': user_data.get('anniversary_date'),
+                            'benefit_usage': user_data.get('benefit_usage', {}),
+                            'id': card_id,
+                            'card_id': card_id,
+                            'card_slug_id': card_id,
+                            'card_ref': user_data.get('card_ref'),
+                            'benefits': [],
+                            'earning_rates': [],
+                            'sign_up_bonus': {},
+                        })
+                        results.append(composite)
+                        continue
+                except Exception as e:
+                    print(f"Error fetching master card {card_id} directly: {e}")
                 results.append(user_data | {'id': card_id, 'name': 'Unknown Card'})
 
         return results

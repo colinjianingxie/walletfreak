@@ -1,0 +1,20 @@
+{
+    "benefit_id": "neighborhood-benefits",
+    "valid_from": "2026-02-06",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Neighborhood Benefits",
+    "description": "Access to Bilt Neighborhood Benefits and partner perks",
+    "additional_details": "Exclusive discounts and offers from Bilt partners",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 0,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Permanent",
+    "enrollment_required": false,
+    "effective_date": "2026-02-06",
+    "benefit_main_category": "Financial Rewards"
+}

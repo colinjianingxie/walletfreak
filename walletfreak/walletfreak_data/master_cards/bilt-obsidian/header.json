@@ -1,0 +1,43 @@
+{
+    "slug-id": "bilt-obsidian",
+    "name": "Bilt Obsidian",
+    "image_url": null,
+    "issuer": "Wells Fargo",
+    "annual_fee": 95,
+    "application_link": "https://www.biltrewards.com/credit-cards",
+    "min_credit_score": 700,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "7/10. The mid-tier Bilt card adds 3X on dining or grocery (pick one), 2X on travel, and a $100 Bilt Travel Hotel credit. Solid for $95/year.",
+    "is_active": true,
+    "active_indices": {
+        "benefits": [
+            "hotel-credit-v1",
+            "bilt-cash-everyday-v1",
+            "housing-bonus-v1",
+            "no-housing-fees-v1",
+            "no-ftf-v1",
+            "phone-protection-v1",
+            "trip-delay-v1",
+            "neighborhood-benefits-v1"
+        ],
+        "earning_rates": [
+            "dining-v1",
+            "travel-v1",
+            "everyday-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-v1"
+        ],
+        "card_questions": [
+            "q-0",
+            "q-1",
+            "q-2",
+            "q-3",
+            "q-4",
+            "q-5"
+        ]
+    },
+    "loyalty_program": "bilt_rewards"
+}

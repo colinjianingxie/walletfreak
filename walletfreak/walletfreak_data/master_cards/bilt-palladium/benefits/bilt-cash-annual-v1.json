@@ -1,0 +1,20 @@
+{
+    "benefit_id": "bilt-cash-annual",
+    "valid_from": "2026-02-06",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Annual Bilt Cash",
+    "description": "$200 Bilt Cash annually",
+    "additional_details": "Annual statement credit in Bilt Cash",
+    "benefit_category": [
+        "Financial Rewards"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 200.0,
+    "numeric_type": "Cash",
+    "dollar_value": 200,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-02-06",
+    "benefit_main_category": "Financial Rewards"
+}

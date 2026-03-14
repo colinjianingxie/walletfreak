@@ -15,5 +15,6 @@
     "dollar_value": 1000,
     "time_category": "Per occurrence",
     "enrollment_required": false,
-    "effective_date": "2025-01-01"
+    "effective_date": "2025-01-01",
+    "benefit_main_category": "Retail Shopping"
 }

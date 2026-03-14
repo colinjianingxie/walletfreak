@@ -1,8 +1,8 @@
 {
     "benefit_id": "rent-day-bonus",
     "valid_from": "2020-01-01",
-    "valid_until": null,
-    "is_active": true,
+    "valid_until": "2026-02-06",
+    "is_active": false,
     "short_description": "Rent Day Bonus",
     "description": "Rent Day double points bonus",
     "additional_details": null,
@@ -18,5 +18,6 @@
     "dollar_value": null,
     "time_category": "Monthly",
     "enrollment_required": false,
-    "effective_date": "2025-12-06"
+    "effective_date": "2025-12-06",
+    "benefit_main_category": "Financial Rewards"
 }

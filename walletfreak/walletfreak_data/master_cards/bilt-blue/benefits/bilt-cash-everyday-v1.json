@@ -1,0 +1,21 @@
+{
+    "benefit_id": "bilt-cash-everyday",
+    "valid_from": "2026-02-06",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Bilt Cash on Everyday Spend",
+    "description": "4% Bilt Cash on everyday spend",
+    "additional_details": "Bilt-exclusive bonus reward",
+    "benefit_category": [
+        "All Purchases",
+        "Financial Rewards"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 0,
+    "numeric_type": "Cash",
+    "dollar_value": null,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": "2026-02-06",
+    "benefit_main_category": "Financial Rewards"
+}

@@ -1,0 +1,42 @@
+{
+    "slug-id": "bilt-palladium",
+    "name": "Bilt Palladium",
+    "image_url": null,
+    "issuer": "Wells Fargo",
+    "annual_fee": 495,
+    "application_link": "https://www.biltrewards.com/credit-cards",
+    "min_credit_score": 740,
+    "max_credit_score": 850,
+    "is_524": true,
+    "freak_verdict": "8/10. The premium Bilt card with 2X on everything, $400 hotel credit, $200 Bilt Cash annually, Priority Pass, and 50K welcome bonus. Strong value if you maximize the credits.",
+    "is_active": true,
+    "active_indices": {
+        "benefits": [
+            "hotel-credit-v1",
+            "bilt-cash-annual-v1",
+            "bilt-cash-everyday-v1",
+            "housing-bonus-v1",
+            "no-housing-fees-v1",
+            "no-ftf-v1",
+            "phone-protection-v1",
+            "priority-pass-v1",
+            "neighborhood-benefits-v1"
+        ],
+        "earning_rates": [
+            "everyday-v1",
+            "financial-&-rewards-v1"
+        ],
+        "sign_up_bonus": [
+            "offer-v1"
+        ],
+        "card_questions": [
+            "q-0",
+            "q-1",
+            "q-2",
+            "q-3",
+            "q-4",
+            "q-5"
+        ]
+    },
+    "loyalty_program": "bilt_rewards"
+}

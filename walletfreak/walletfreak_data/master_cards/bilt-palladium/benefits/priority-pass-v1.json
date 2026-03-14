@@ -1,0 +1,21 @@
+{
+    "benefit_id": "priority-pass",
+    "valid_from": "2026-02-06",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Priority Pass",
+    "description": "Priority Pass lounge membership",
+    "additional_details": "Access to 1400+ airport lounges worldwide",
+    "benefit_category": [
+        "Lounges",
+        "Travel Perks"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 0,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Permanent",
+    "enrollment_required": true,
+    "effective_date": "2026-02-06",
+    "benefit_main_category": "Lounges"
+}

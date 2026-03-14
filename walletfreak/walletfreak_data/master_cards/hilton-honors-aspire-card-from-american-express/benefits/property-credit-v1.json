@@ -17,5 +17,6 @@
     "dollar_value": 100,
     "time_category": "Per qualifying stay",
     "enrollment_required": false,
-    "effective_date": "2025-12-25"
+    "effective_date": "2025-12-25",
+    "benefit_main_category": "Hotels"
 }

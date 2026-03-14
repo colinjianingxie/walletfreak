@@ -1,0 +1,9 @@
+{
+    "question_id": "q-4",
+    "short_desc": "Phone Protection",
+    "question": "Do you value cell phone protection coverage with a low deductible?",
+    "question_type": "multiple_choice",
+    "choices": ["No", "Somewhat", "Yes"],
+    "weights": [0.0, 0.5, 1.0],
+    "benefit_category": "Cell Phone Protection,Protection"
+}

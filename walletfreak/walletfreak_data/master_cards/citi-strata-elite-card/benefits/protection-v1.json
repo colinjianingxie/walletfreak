@@ -15,5 +15,6 @@
     "dollar_value": null,
     "time_category": "Per occurrence",
     "enrollment_required": false,
-    "effective_date": "2025-07-28"
+    "effective_date": "2025-07-28",
+    "benefit_main_category": "Protection"
 }

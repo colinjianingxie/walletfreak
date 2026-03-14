@@ -17,5 +17,6 @@
     "dollar_value": 120,
     "time_category": "Every 4 years",
     "enrollment_required": false,
-    "effective_date": "2026-01-22"
+    "effective_date": "2026-01-22",
+    "benefit_main_category": "Travel Perks"
 }

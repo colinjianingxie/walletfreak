@@ -1,0 +1,9 @@
+{
+    "question_id": "q-4",
+    "short_desc": "Premium Benefits",
+    "question": "Are you willing to pay $495/year for premium travel benefits and 2X on everything?",
+    "question_type": "multiple_choice",
+    "choices": ["No", "Maybe", "Yes"],
+    "weights": [0.0, 0.5, 1.0],
+    "benefit_category": "Financial Rewards,Travel Perks"
+}

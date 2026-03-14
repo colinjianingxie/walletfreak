@@ -1,0 +1,21 @@
+{
+    "benefit_id": "hotel-credit",
+    "valid_from": "2026-02-06",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Bilt Travel Hotel Credit",
+    "description": "$100 Bilt Travel Hotel credit",
+    "additional_details": "$50 semi-annually",
+    "benefit_category": [
+        "Hotels",
+        "Travel Perks"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 100.0,
+    "numeric_type": "Cash",
+    "dollar_value": 100,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-02-06",
+    "benefit_main_category": "Hotels"
+}

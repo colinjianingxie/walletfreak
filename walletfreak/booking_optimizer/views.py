@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 import json
 from .services import HotelSearchService
 from .strategy_service import StrategyAnalysisService
+from core.services.google_places_service import GooglePlacesService
 
 # --- MAIN VIEWS ---
 
@@ -13,7 +14,7 @@ from .strategy_service import StrategyAnalysisService
 def index(request):
     """
     Initial Search View.
-    Fetches raw hotel data from Amadeus and renders the list.
+    Fetches hotel data from Google Places and renders the list.
     """
     hotels = []
     location_query = request.GET.get('location')
@@ -177,6 +178,20 @@ def check_strategy_status(request):
             results[sid] = strat.get('status', 'unknown')
     
     return JsonResponse({'statuses': results})
+
+@login_required
+def autocomplete_location(request):
+    """AJAX endpoint for location autocomplete (session auth)."""
+    query = request.GET.get('query', '').strip()
+    if len(query) < 2:
+        return JsonResponse({'suggestions': []})
+    try:
+        service = GooglePlacesService()
+        suggestions = service.autocomplete(query)
+        return JsonResponse({'suggestions': suggestions})
+    except Exception as e:
+        return JsonResponse({'suggestions': [], 'error': str(e)})
+
 
 @login_required
 def download_prompt(request, strategy_id):

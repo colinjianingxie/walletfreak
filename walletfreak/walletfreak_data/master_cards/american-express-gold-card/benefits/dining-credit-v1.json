@@ -16,5 +16,6 @@
     "dollar_value": 120,
     "time_category": "Monthly",
     "enrollment_required": true,
-    "effective_date": "2025-11-29"
+    "effective_date": "2025-11-29",
+    "benefit_main_category": "Dining"
 }

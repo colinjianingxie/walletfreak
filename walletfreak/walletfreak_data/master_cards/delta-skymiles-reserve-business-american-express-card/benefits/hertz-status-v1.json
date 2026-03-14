@@ -16,5 +16,6 @@
     "dollar_value": null,
     "time_category": "Ongoing",
     "enrollment_required": true,
-    "effective_date": null
+    "effective_date": null,
+    "benefit_main_category": "Travel Perks"
 }

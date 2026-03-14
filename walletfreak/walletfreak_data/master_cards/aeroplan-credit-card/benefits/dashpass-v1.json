@@ -16,5 +16,6 @@
     "dollar_value": 120,
     "time_category": "One Time",
     "enrollment_required": true,
-    "effective_date": "2025-01-01"
+    "effective_date": "2025-01-01",
+    "benefit_main_category": "Dining"
 }

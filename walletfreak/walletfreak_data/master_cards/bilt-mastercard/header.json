@@ -9,6 +9,10 @@
     "max_credit_score": 850,
     "is_524": true,
     "freak_verdict": "0/10. No signup bonus. Card is for rent benefits only.",
+    "is_active": false,
+    "deprecated_at": "2026-02-06",
+    "superseded_by": ["bilt-blue", "bilt-obsidian", "bilt-palladium"],
+    "deprecation_reason": "Replaced by tiered Bilt card lineup",
     "active_indices": {
         "benefits": [
             "rent-day-bonus-v1",

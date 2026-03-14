@@ -1,0 +1,9 @@
+{
+    "question_id": "q-1",
+    "short_desc": "Cash Back",
+    "question": "Would you prefer cash back rewards over travel points for everyday purchases?",
+    "question_type": "multiple_choice",
+    "choices": ["No", "Somewhat", "Yes"],
+    "weights": [0.0, 0.5, 1.0],
+    "benefit_category": "Financial Rewards"
+}
