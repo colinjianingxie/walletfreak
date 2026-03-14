@@ -13,12 +13,15 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: theme.colors.primary,
-        tabBarInactiveTintColor: theme.colors.onSurfaceVariant,
+        tabBarInactiveTintColor: '#B0BEC5',
         tabBarStyle: {
           backgroundColor: theme.colors.surface,
           borderTopColor: theme.colors.outlineVariant,
+          borderTopWidth: 0.5,
           paddingBottom: Platform.OS === 'ios' ? 0 : 8,
           height: Platform.OS === 'ios' ? 88 : 64,
+          elevation: 0,
+          shadowOpacity: 0,
         },
         tabBarLabelStyle: {
           fontFamily: 'Outfit-Medium',
@@ -41,7 +44,7 @@ export default function TabLayout() {
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
-              name={'wallet-outline' as TabIconName}
+              name={'credit-card-outline' as TabIconName}
               size={size}
               color={color}
             />
@@ -55,7 +58,7 @@ export default function TabLayout() {
           headerTitle: 'Tools',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
-              name={'calculator-variant-outline' as TabIconName}
+              name={'view-grid-outline' as TabIconName}
               size={size}
               color={color}
             />
@@ -83,7 +86,7 @@ export default function TabLayout() {
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
-              name={'compass-outline' as TabIconName}
+              name={'earth' as TabIconName}
               size={size}
               color={color}
             />

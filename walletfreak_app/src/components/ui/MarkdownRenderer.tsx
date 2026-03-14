@@ -311,7 +311,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   link: {
-    color: '#4F46E5',
+    color: '#4361EE',
     textDecorationLine: 'underline',
   },
   inlineCode: {
@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
   // Blockquote
   blockquote: {
     borderLeftWidth: 3,
-    borderLeftColor: '#4F46E5',
+    borderLeftColor: '#4361EE',
     paddingLeft: 16,
     paddingVertical: 8,
     backgroundColor: '#F5F3FF',

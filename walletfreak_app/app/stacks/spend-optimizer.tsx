@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, Pressable, TextInput as RNTextInput } from 'react-native';
-import { Text, Surface, useTheme } from 'react-native-paper';
+import React from 'react';
+import { View, StyleSheet, FlatList, Pressable, Dimensions } from 'react-native';
+import { Text, useTheme } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LoadingState } from '../../src/components/layout/LoadingState';
@@ -33,189 +33,102 @@ const CATEGORY_ICONS: Record<string, string> = {
   'circle-outline': 'circle-outline',
 };
 
+const NUM_COLUMNS = 4;
+const GRID_GAP = 10;
+const HORIZONTAL_PADDING = 16;
+const screenWidth = Dimensions.get('window').width;
+const tileSize = (screenWidth - HORIZONTAL_PADDING * 2 - GRID_GAP * (NUM_COLUMNS - 1)) / NUM_COLUMNS;
+
 export default function SpendOptimizerScreen() {
   const theme = useTheme();
   const router = useRouter();
-  const [amount, setAmount] = useState('500');
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const { data: categoriesData, isLoading: loadingCategories } = useSpendCategories();
+  const { data: categoriesData, isLoading } = useSpendCategories();
 
   const categories = categoriesData?.categories ?? [];
 
-  const handleNext = () => {
-    if (!selectedCategory) return;
-    const currentCategory = categories.find((c) => c.name === selectedCategory);
-    const hasSubCategories = currentCategory && currentCategory.sub_categories.length > 0;
-
+  const handleSelect = (cat: any) => {
+    const hasSubCategories = cat.sub_categories && cat.sub_categories.length > 0;
     if (hasSubCategories) {
       router.push({
         pathname: '/stacks/spend-optimizer-step2' as any,
-        params: { amount, category: selectedCategory },
+        params: { category: cat.name },
       });
     } else {
-      // Skip step 2 — go directly to results
       router.push({
         pathname: '/stacks/spend-optimizer-results' as any,
-        params: { amount, category: selectedCategory, subCategory: '' },
+        params: { amount: '500', category: cat.name, subCategory: '' },
       });
     }
   };
 
-  return (
-    <ScrollView
-      style={[styles.container, { backgroundColor: theme.colors.background }]}
-      contentContainerStyle={{ paddingBottom: 40 }}
-    >
-      {/* Amount Input */}
-      <View style={styles.section}>
-        <Text variant="labelLarge" style={[styles.sectionLabel, { color: theme.colors.onSurface }]}>
-          Purchase Amount
-        </Text>
-        <Surface style={[styles.amountContainer, { backgroundColor: theme.colors.elevation.level1 }]} elevation={1}>
-          <Text style={[styles.dollarSign, { color: theme.colors.onSurfaceVariant }]}>$</Text>
-          <RNTextInput
-            style={[styles.amountInput, { color: theme.colors.onSurface }]}
-            value={amount}
-            onChangeText={setAmount}
-            keyboardType="numeric"
-            placeholder="500"
-            placeholderTextColor={theme.colors.onSurfaceVariant}
-          />
-        </Surface>
-      </View>
+  if (isLoading) {
+    return <LoadingState message="Loading categories..." />;
+  }
 
-      {/* Category Grid */}
-      <View style={styles.section}>
-        <Text variant="labelLarge" style={[styles.sectionLabel, { color: theme.colors.onSurface }]}>
+  return (
+    <FlatList
+      data={categories}
+      numColumns={NUM_COLUMNS}
+      keyExtractor={(item) => item.name}
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+      contentContainerStyle={styles.listContent}
+      columnWrapperStyle={styles.row}
+      ListHeaderComponent={
+        <Text style={[styles.heading, { color: theme.colors.onSurface }]}>
           What are you spending on?
         </Text>
-        {loadingCategories ? (
-          <LoadingState message="Loading categories..." />
-        ) : (
-          <View style={styles.categoryGrid}>
-            {categories.map((cat) => (
-              <Pressable
-                key={cat.name}
-                onPress={() => setSelectedCategory(cat.name)}
-                style={[
-                  styles.categoryItem,
-                  {
-                    backgroundColor:
-                      selectedCategory === cat.name
-                        ? theme.colors.primaryContainer
-                        : theme.colors.elevation.level1,
-                    borderColor:
-                      selectedCategory === cat.name
-                        ? theme.colors.primary
-                        : 'transparent',
-                  },
-                ]}
-              >
-                <MaterialCommunityIcons
-                  name={(CATEGORY_ICONS[cat.icon] || 'circle-outline') as any}
-                  size={24}
-                  color={
-                    selectedCategory === cat.name
-                      ? theme.colors.primary
-                      : theme.colors.onSurfaceVariant
-                  }
-                />
-                <Text
-                  variant="labelSmall"
-                  numberOfLines={2}
-                  style={{
-                    textAlign: 'center',
-                    marginTop: 4,
-                    color:
-                      selectedCategory === cat.name
-                        ? theme.colors.onPrimaryContainer
-                        : theme.colors.onSurfaceVariant,
-                  }}
-                >
-                  {cat.name}
-                </Text>
-              </Pressable>
-            ))}
-          </View>
-        )}
-      </View>
-
-      {/* Next Button */}
-      <View style={styles.section}>
+      }
+      renderItem={({ item: cat }) => (
         <Pressable
-          style={[
-            styles.nextButton,
-            !selectedCategory && styles.nextButtonDisabled,
-          ]}
-          onPress={handleNext}
-          disabled={!selectedCategory}
+          onPress={() => handleSelect(cat)}
+          style={[styles.tile, { backgroundColor: theme.colors.surfaceVariant }]}
         >
-          <Text style={styles.nextButtonText}>Next</Text>
-          <MaterialCommunityIcons name="arrow-right" size={18} color="#FFFFFF" />
+          <MaterialCommunityIcons
+            name={(CATEGORY_ICONS[cat.icon] || 'circle-outline') as any}
+            size={28}
+            color={theme.colors.onSurfaceVariant}
+          />
+          <Text
+            numberOfLines={2}
+            style={[styles.tileLabel, { color: theme.colors.onSurface }]}
+          >
+            {cat.name}
+          </Text>
         </Pressable>
-      </View>
-    </ScrollView>
+      )}
+    />
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
   },
-  section: {
-    marginTop: 16,
+  listContent: {
+    padding: HORIZONTAL_PADDING,
+    paddingBottom: 40,
   },
-  sectionLabel: {
-    fontFamily: 'Outfit-SemiBold',
-    marginBottom: 10,
-  },
-  amountContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-  dollarSign: {
-    fontSize: 24,
+  heading: {
+    fontSize: 20,
     fontFamily: 'Outfit-Bold',
-    marginRight: 4,
+    marginBottom: 16,
   },
-  amountInput: {
-    flex: 1,
-    fontSize: 24,
-    fontFamily: 'Outfit-Bold',
+  row: {
+    gap: GRID_GAP,
+    marginBottom: GRID_GAP,
   },
-  categoryGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  categoryItem: {
-    width: '22%',
-    aspectRatio: 1,
-    borderRadius: 12,
+  tile: {
+    width: tileSize,
+    height: tileSize,
+    borderRadius: 14,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 8,
-    borderWidth: 2,
+    padding: 6,
   },
-  nextButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    backgroundColor: '#0F172A',
-    paddingVertical: 16,
-    borderRadius: 12,
-  },
-  nextButtonDisabled: {
-    opacity: 0.4,
-  },
-  nextButtonText: {
-    fontSize: 16,
-    fontFamily: 'Outfit-SemiBold',
-    color: '#FFFFFF',
+  tileLabel: {
+    fontFamily: 'Outfit-Medium',
+    textAlign: 'center',
+    marginTop: 6,
+    fontSize: 11,
   },
 });

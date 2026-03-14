@@ -13,7 +13,6 @@ certifi
 psycopg2-binary
 dj-database-url
 
-amadeus
 selenium
 webdriver-manager
 xai-sdk

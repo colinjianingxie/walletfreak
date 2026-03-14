@@ -1,114 +1,114 @@
 export const colors = {
-  // MD3 Primary
-  primary: '#6750A4',
+  // Primary — blue
+  primary: '#4361EE',
   onPrimary: '#FFFFFF',
-  primaryContainer: '#EADDFF',
-  onPrimaryContainer: '#21005D',
+  primaryContainer: '#E0E7FF',
+  onPrimaryContainer: '#1E3A8A',
 
-  // MD3 Secondary
-  secondary: '#625B71',
+  // Secondary — slate
+  secondary: '#64748B',
   onSecondary: '#FFFFFF',
-  secondaryContainer: '#E8DEF8',
-  onSecondaryContainer: '#1D192B',
+  secondaryContainer: '#E2E8F0',
+  onSecondaryContainer: '#1E293B',
 
-  // MD3 Tertiary
-  tertiary: '#7D5260',
+  // Tertiary
+  tertiary: '#7C6FA0',
   onTertiary: '#FFFFFF',
-  tertiaryContainer: '#FFD8E4',
-  onTertiaryContainer: '#31111D',
+  tertiaryContainer: '#EDE9F6',
+  onTertiaryContainer: '#2D2052',
 
-  // MD3 Error
-  error: '#B3261E',
+  // Error
+  error: '#DC2626',
   onError: '#FFFFFF',
-  errorContainer: '#F9DEDC',
-  onErrorContainer: '#410E0B',
+  errorContainer: '#FEE2E2',
+  onErrorContainer: '#7F1D1D',
 
-  // MD3 Surface
-  surface: '#FFFBFE',
-  onSurface: '#1C1B1F',
-  surfaceVariant: '#E7E0EC',
-  onSurfaceVariant: '#49454F',
+  // Surface
+  surface: '#FFFFFF',
+  onSurface: '#1E293B',
+  surfaceVariant: '#F1F5F9',
+  onSurfaceVariant: '#64748B',
   surfaceContainerLowest: '#FFFFFF',
-  surfaceContainerLow: '#F7F2FA',
-  surfaceContainer: '#F3EDF7',
-  surfaceContainerHigh: '#ECE6F0',
-  surfaceContainerHighest: '#E6E0E9',
+  surfaceContainerLow: '#F8FAFC',
+  surfaceContainer: '#F1F5F9',
+  surfaceContainerHigh: '#E2E8F0',
+  surfaceContainerHighest: '#CBD5E1',
 
-  // MD3 Outline
-  outline: '#79747E',
-  outlineVariant: '#CAC4D0',
+  // Outline
+  outline: '#94A3B8',
+  outlineVariant: '#E2E8F0',
 
   // Background
-  background: '#FFFBFE',
-  onBackground: '#1C1B1F',
+  background: '#F8FAFC',
+  onBackground: '#1E293B',
 
   // Inverse
-  inverseSurface: '#313033',
-  inverseOnSurface: '#F4EFF4',
-  inversePrimary: '#D0BCFF',
+  inverseSurface: '#1E293B',
+  inverseOnSurface: '#F1F5F9',
+  inversePrimary: '#93B4FF',
 
   // Scrim
   scrim: '#000000',
 
   // Custom
-  success: '#2E7D32',
-  warning: '#ED6C02',
-  info: '#0288D1',
+  success: '#16A34A',
+  warning: '#EA580C',
+  info: '#2563EB',
 
   // Benefit status colors
-  benefitEmpty: '#E0E0E0',
-  benefitPartial: '#FFB74D',
-  benefitFull: '#66BB6A',
+  benefitEmpty: '#E2E8F0',
+  benefitPartial: '#FBBF24',
+  benefitFull: '#22C55E',
 } as const;
 
 export const darkColors = {
-  primary: '#D0BCFF',
-  onPrimary: '#381E72',
-  primaryContainer: '#4F378B',
-  onPrimaryContainer: '#EADDFF',
+  primary: '#93B4FF',
+  onPrimary: '#1E3A8A',
+  primaryContainer: '#2D4A9E',
+  onPrimaryContainer: '#E0E7FF',
 
-  secondary: '#CCC2DC',
-  onSecondary: '#332D41',
-  secondaryContainer: '#4A4458',
-  onSecondaryContainer: '#E8DEF8',
+  secondary: '#94A3B8',
+  onSecondary: '#1E293B',
+  secondaryContainer: '#334155',
+  onSecondaryContainer: '#E2E8F0',
 
-  tertiary: '#EFB8C8',
-  onTertiary: '#492532',
-  tertiaryContainer: '#633B48',
-  onTertiaryContainer: '#FFD8E4',
+  tertiary: '#C4B5FD',
+  onTertiary: '#2D2052',
+  tertiaryContainer: '#4C3D82',
+  onTertiaryContainer: '#EDE9F6',
 
-  error: '#F2B8B5',
-  onError: '#601410',
-  errorContainer: '#8C1D18',
-  onErrorContainer: '#F9DEDC',
+  error: '#FCA5A5',
+  onError: '#7F1D1D',
+  errorContainer: '#991B1B',
+  onErrorContainer: '#FEE2E2',
 
-  surface: '#1C1B1F',
-  onSurface: '#E6E1E5',
-  surfaceVariant: '#49454F',
-  onSurfaceVariant: '#CAC4D0',
-  surfaceContainerLowest: '#0F0D13',
-  surfaceContainerLow: '#1C1B1F',
-  surfaceContainer: '#211F26',
-  surfaceContainerHigh: '#2B2930',
-  surfaceContainerHighest: '#36343B',
+  surface: '#0F172A',
+  onSurface: '#E2E8F0',
+  surfaceVariant: '#1E293B',
+  onSurfaceVariant: '#94A3B8',
+  surfaceContainerLowest: '#020617',
+  surfaceContainerLow: '#0F172A',
+  surfaceContainer: '#1E293B',
+  surfaceContainerHigh: '#334155',
+  surfaceContainerHighest: '#475569',
 
-  outline: '#938F99',
-  outlineVariant: '#49454F',
+  outline: '#64748B',
+  outlineVariant: '#334155',
 
-  background: '#1C1B1F',
-  onBackground: '#E6E1E5',
+  background: '#0F172A',
+  onBackground: '#E2E8F0',
 
-  inverseSurface: '#E6E1E5',
-  inverseOnSurface: '#313033',
-  inversePrimary: '#6750A4',
+  inverseSurface: '#E2E8F0',
+  inverseOnSurface: '#1E293B',
+  inversePrimary: '#4361EE',
 
   scrim: '#000000',
 
-  success: '#66BB6A',
-  warning: '#FFB74D',
-  info: '#4FC3F7',
+  success: '#4ADE80',
+  warning: '#FBBF24',
+  info: '#60A5FA',
 
-  benefitEmpty: '#424242',
-  benefitPartial: '#FFB74D',
-  benefitFull: '#66BB6A',
+  benefitEmpty: '#334155',
+  benefitPartial: '#FBBF24',
+  benefitFull: '#4ADE80',
 } as const;

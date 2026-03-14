@@ -244,9 +244,8 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER or 'notifications@walletfreak.com'
 
 
 
-# Amadeus API Configuration
-AMADEUS_CLIENT_ID = os.environ.get('AMADEUS_CLIENT_ID')
-AMADEUS_CLIENT_SECRET = os.environ.get('AMADEUS_CLIENT_SECRET')
+# Google Places API Configuration
+GOOGLE_PLACES_API_KEY = os.environ.get('GOOGLE_PLACES_API_KEY')
 
 # Stripe Configuration
 # Check if live mode is enabled (default to False)

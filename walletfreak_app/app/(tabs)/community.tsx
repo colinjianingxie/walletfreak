@@ -28,13 +28,19 @@ const estimateReadTime = (content?: string): number => {
   return Math.max(1, Math.ceil(words / 200));
 };
 
-// Blog tag taxonomy groups
+// Quick filter categories shown as pills below search
+const QUICK_FILTERS = ['All', 'Reviews', 'Guides', 'News', 'Strategy', 'Travel'];
+
+// Blog tag taxonomy groups (for advanced filter sheet)
 const TAG_GROUPS = [
   { label: 'Ecosystem', tags: ['American Express', 'Chase', 'Citi'] },
   { label: 'Content Type', tags: ['guide', 'review', 'lounges', 'savings', 'strategy', 'tips'] },
   { label: 'Experience Level', tags: ['Beginner', 'Intermediate', 'Advanced'] },
   { label: 'Read Time', tags: ['Short (< 3m)', 'Medium (3-7m)', 'Long (7m+)', 'Video Only'] },
 ];
+
+// Quick filter categories for datapoints
+const DP_QUICK_FILTERS = ['All', 'Amex', 'Chase', 'Citi', 'Hyatt', 'Credits', 'Retention'];
 
 // Datapoint sort options
 const DP_SORT_OPTIONS = [
@@ -45,10 +51,12 @@ const DP_SORT_OPTIONS = [
 export default function CommunityScreen() {
   const [segment, setSegment] = useState<'blog' | 'datapoints'>('blog');
   const [search, setSearch] = useState('');
+  const [quickFilter, setQuickFilter] = useState('All');
   const [category, setCategory] = useState('');
   const [selectedTag, setSelectedTag] = useState('');
   const [showSaved, setShowSaved] = useState(false);
   // Datapoint filters
+  const [dpQuickFilter, setDpQuickFilter] = useState('All');
   const [dpSort, setDpSort] = useState('newest');
   const [dpCard, setDpCard] = useState('');
   const [dpBenefit, setDpBenefit] = useState('');
@@ -64,9 +72,10 @@ export default function CommunityScreen() {
     },
   });
 
+  const effectiveCategory = quickFilter !== 'All' ? quickFilter : (category || undefined);
   const { data: blogData, isLoading: blogLoading, isFetching: blogFetching, refetch: refetchBlogs } = useBlogPosts({
     search: search || undefined,
-    category: category || undefined,
+    category: effectiveCategory,
     tag: selectedTag || undefined,
     saved: showSaved || undefined,
   });
@@ -93,8 +102,20 @@ export default function CommunityScreen() {
     return { cards: Array.from(cards).sort(), benefits: Array.from(benefits).sort() };
   }, [dpData]);
 
+  // Client-side filtering for datapoint quick filters
+  const filteredDatapoints = useMemo(() => {
+    const all = dpData?.datapoints ?? [];
+    if (dpQuickFilter === 'All') return all;
+    const q = dpQuickFilter.toLowerCase();
+    return all.filter((dp: any) => {
+      const name = (dp.card_name || '').toLowerCase();
+      const benefit = (dp.benefit || '').toLowerCase();
+      return name.includes(q) || benefit.includes(q);
+    });
+  }, [dpData, dpQuickFilter]);
+
   const activeFilterCount = segment === 'blog'
-    ? (category ? 1 : 0) + (selectedTag ? 1 : 0) + (showSaved ? 1 : 0)
+    ? (selectedTag ? 1 : 0) + (showSaved ? 1 : 0)
     : (dpCard ? 1 : 0) + (dpBenefit ? 1 : 0) + (dpSort !== 'newest' ? 1 : 0);
 
   const handleBlogPress = (post: BlogPost) => {
@@ -106,9 +127,11 @@ export default function CommunityScreen() {
   }, []);
 
   const handleClearFilters = useCallback(() => {
+    setQuickFilter('All');
     setCategory('');
     setSelectedTag('');
     setShowSaved(false);
+    setDpQuickFilter('All');
     setDpSort('newest');
     setDpCard('');
     setDpBenefit('');
@@ -140,45 +163,44 @@ export default function CommunityScreen() {
   const renderBlogItem = ({ item }: { item: BlogPost }) => {
     const readTime = estimateReadTime(item.content || item.excerpt);
     const netVotes = (item.upvotes ?? 0) - (item.downvotes ?? 0);
+    const tagLabel = (() => {
+      const tags: any = item.tags;
+      if (Array.isArray(tags) && tags.length > 0) return String(tags[0]).toUpperCase();
+      if (typeof tags === 'string' && tags.trim()) return tags.split(',')[0].trim().toUpperCase();
+      return (item.category || '').toUpperCase();
+    })();
 
     return (
       <Pressable
-        style={[styles.articleCard, { backgroundColor: theme.colors.elevation.level1 }]}
+        style={[styles.articleCard, { backgroundColor: theme.colors.surface }]}
         onPress={() => handleBlogPress(item)}
       >
         {item.image_url ? (
           <Image
             source={{ uri: item.image_url }}
-            style={styles.articleThumbnail}
+            style={styles.articleImage}
             resizeMode="cover"
           />
         ) : (
-          <View style={[styles.articleThumbnail, styles.thumbnailPlaceholder, { backgroundColor: theme.colors.surfaceVariant }]}>
-            <MaterialCommunityIcons name="newspaper-variant-outline" size={28} color={theme.colors.onSurfaceVariant} />
+          <View style={[styles.articleImage, styles.thumbnailPlaceholder, { backgroundColor: theme.colors.surfaceVariant }]}>
+            <MaterialCommunityIcons name="newspaper-variant-outline" size={40} color={theme.colors.onSurfaceVariant} />
           </View>
         )}
 
         <View style={styles.articleContent}>
           <View style={styles.articleMeta}>
-            <View style={[styles.categoryBadge, { backgroundColor: '#4338CA' }]}>
-              <Text style={[styles.categoryBadgeText, { color: '#FFFFFF' }]}>
-                {(() => {
-                  const tags: any = item.tags;
-                  if (Array.isArray(tags) && tags.length > 0) return String(tags[0]).toUpperCase();
-                  if (typeof tags === 'string' && tags.trim()) return tags.split(',')[0].trim().toUpperCase();
-                  return (item.category || '').toUpperCase();
-                })()}
-              </Text>
+            <View style={[styles.categoryBadge, { backgroundColor: '#3B5998' }]}>
+              <Text style={styles.categoryBadgeText}>{tagLabel}</Text>
             </View>
             <Text variant="labelSmall" style={{ color: theme.colors.onSurfaceVariant }}>
               {formatDate(item.created_at)}
             </Text>
           </View>
-          <Text variant="titleSmall" numberOfLines={2} style={styles.articleTitle}>
+          <Text variant="titleMedium" numberOfLines={3} style={styles.articleTitle}>
             {item.title}
           </Text>
           {item.excerpt && (
-            <Text variant="bodySmall" numberOfLines={2} style={{ color: theme.colors.onSurfaceVariant, marginBottom: 8 }}>
+            <Text variant="bodySmall" numberOfLines={2} style={{ color: theme.colors.onSurfaceVariant, marginBottom: 10 }}>
               {item.excerpt}
             </Text>
           )}
@@ -207,58 +229,61 @@ export default function CommunityScreen() {
 
   const renderDatapointItem = ({ item }: { item: any }) => {
     return (
-      <View style={[styles.dpCard, { backgroundColor: theme.colors.elevation.level1 }]}>
+      <View style={[styles.dpCard, { backgroundColor: theme.colors.surface }]}>
         {/* Header: User + Date */}
         <View style={styles.dpHeader}>
           <Text style={styles.dpUsername}>@{item.author_name || 'Anonymous'}</Text>
-          <Text style={styles.dpTimestamp}>{formatRelativeTime(item.created_at)}</Text>
+          <Text style={styles.dpTimestamp}>{formatDate(item.created_at)}</Text>
         </View>
 
-        {/* Card row */}
-        <View style={styles.dpCardBenefitRow}>
-          {item.card_slug ? (
-            <CardImage slug={item.card_slug} size="small" />
-          ) : null}
-          <Text style={styles.dpCardName} numberOfLines={1} ellipsizeMode="tail">
-            {item.card_name || 'Unknown Card'}
-          </Text>
-        </View>
-
-        {/* Benefit tag + Status badge on same row */}
-        <View style={styles.dpBenefitStatusRow}>
-          {item.benefit ? (
-            <View style={styles.dpBenefitTag}>
-              <MaterialCommunityIcons name="lightning-bolt" size={12} color="#4F46E5" />
-              <Text style={styles.dpBenefitTagText}>{item.benefit.toUpperCase()}</Text>
-            </View>
-          ) : <View />}
-          <View style={[
-            styles.dpStatusBadge,
-            { backgroundColor: item.status === 'Success' ? '#ECFDF5' : '#FEF2F2' },
-          ]}>
-            <MaterialCommunityIcons
-              name={item.status === 'Success' ? 'check-circle' : 'close-circle'}
-              size={12}
-              color={item.status === 'Success' ? '#16A34A' : '#DC2626'}
-            />
-            <Text style={[
-              styles.dpStatusText,
-              { color: item.status === 'Success' ? '#16A34A' : '#DC2626' },
-            ]}>
-              {item.status || 'Success'}
-            </Text>
-          </View>
-        </View>
-
-        {/* Full content text on its own line */}
+        {/* Content / title */}
         {item.data ? (
           <Text style={styles.dpContent}>{item.data}</Text>
         ) : null}
 
-        {/* Footer: Votes */}
+        {/* Card info box */}
+        <View style={[styles.dpInfoBox, { backgroundColor: theme.colors.background }]}>
+          <View style={styles.dpInfoRow}>
+            <View style={styles.dpCardRow}>
+              {item.card_slug ? (
+                <CardImage slug={item.card_slug} size="small" />
+              ) : null}
+              <Text style={[styles.dpCardName, { color: theme.colors.onSurface }]} numberOfLines={1} ellipsizeMode="tail">
+                {item.card_name || 'Unknown Card'}
+              </Text>
+            </View>
+            <View style={[
+              styles.dpStatusBadge,
+              { backgroundColor: item.status === 'Success' ? '#ECFDF5' : '#FEF2F2' },
+            ]}>
+              <MaterialCommunityIcons
+                name={item.status === 'Success' ? 'check-circle-outline' : 'close-circle-outline'}
+                size={14}
+                color={item.status === 'Success' ? '#16A34A' : '#DC2626'}
+              />
+              <Text style={[
+                styles.dpStatusText,
+                { color: item.status === 'Success' ? '#16A34A' : '#DC2626' },
+              ]}>
+                {item.status || 'Success'}
+              </Text>
+            </View>
+          </View>
+          {item.benefit ? (
+            <View style={styles.dpBenefitTag}>
+              <MaterialCommunityIcons name="lightning-bolt" size={12} color="#4361EE" />
+              <Text style={styles.dpBenefitTagText}>{item.benefit.toUpperCase()}</Text>
+            </View>
+          ) : null}
+        </View>
+
+        {/* Footer: Works / Outdated pill buttons */}
         <View style={styles.dpFooter}>
           <Pressable
-            style={styles.dpFooterItem}
+            style={[
+              styles.dpFooterPill,
+              item.user_voted && styles.dpFooterPillActiveGreen,
+            ]}
             onPress={() => voteDatapoint.mutate(item.id)}
             disabled={voteDatapoint.isPending && voteDatapoint.variables === item.id}
           >
@@ -271,26 +296,29 @@ export default function CommunityScreen() {
                 color={item.user_voted ? '#16A34A' : '#94A3B8'}
               />
             )}
-            <Text style={[styles.dpFooterText, { color: item.user_voted ? '#16A34A' : '#94A3B8' }]}>
-              Works {item.upvotes ?? 0}
+            <Text style={[styles.dpFooterPillText, item.user_voted && { color: '#16A34A' }]}>
+              Works
             </Text>
           </Pressable>
           <Pressable
-            style={styles.dpFooterItem}
+            style={[
+              styles.dpFooterPill,
+              item.user_outdated && styles.dpFooterPillActiveRed,
+            ]}
             onPress={() => markOutdated.mutate(item.id)}
             disabled={markOutdated.isPending && markOutdated.variables === item.id}
           >
             {markOutdated.isPending && markOutdated.variables === item.id ? (
-              <ActivityIndicator size={14} color="#DC2626" />
+              <ActivityIndicator size={14} color="#F59E0B" />
             ) : (
               <MaterialCommunityIcons
-                name={item.user_outdated ? 'thumb-down' : 'thumb-down-outline'}
+                name="alert-circle-outline"
                 size={16}
-                color={item.user_outdated ? '#DC2626' : '#94A3B8'}
+                color={item.user_outdated ? '#F59E0B' : '#94A3B8'}
               />
             )}
-            <Text style={[styles.dpFooterText, { color: item.user_outdated ? '#DC2626' : '#94A3B8' }]}>
-              Outdated {item.outdated_count ?? 0}
+            <Text style={[styles.dpFooterPillText, item.user_outdated && { color: '#F59E0B' }]}>
+              Outdated
             </Text>
           </Pressable>
         </View>
@@ -329,8 +357,8 @@ export default function CommunityScreen() {
         </View>
       </View>
 
-      {/* Search + Filter — collapses on scroll */}
-      <Animated.View style={[styles.searchRow, animatedSearchRow]}>
+      {/* Search + Filter */}
+      <View style={styles.searchRow}>
         <Searchbar
           placeholder={segment === 'blog' ? 'Search articles...' : 'Search data points...'}
           onChangeText={setSearch}
@@ -357,11 +385,44 @@ export default function CommunityScreen() {
             </View>
           )}
         </Pressable>
-      </Animated.View>
+      </View>
 
-      {/* Active filter chips — collapses on scroll */}
+      {/* Quick filter pills */}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.quickFilterRow}
+        contentContainerStyle={styles.quickFilterContent}
+      >
+        {(segment === 'blog' ? QUICK_FILTERS : DP_QUICK_FILTERS).map((filter) => {
+          const isActive = segment === 'blog' ? quickFilter === filter : dpQuickFilter === filter;
+          return (
+            <Pressable
+              key={filter}
+              style={[
+                styles.quickFilterChip,
+                isActive
+                  ? styles.quickFilterChipActive
+                  : { borderColor: theme.colors.outlineVariant },
+              ]}
+              onPress={() => segment === 'blog' ? setQuickFilter(filter) : setDpQuickFilter(filter)}
+            >
+              <Text
+                style={[
+                  styles.quickFilterText,
+                  { color: isActive ? '#FFFFFF' : theme.colors.onSurfaceVariant },
+                ]}
+              >
+                {filter}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </ScrollView>
+
+      {/* Active advanced filter chips */}
       {activeFilterCount > 0 && (
-        <Animated.View style={animatedFilterChips}>
+        <View>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.activeFiltersRow} contentContainerStyle={styles.activeFiltersContent}>
             {segment === 'blog' ? (
               <>
@@ -374,15 +435,6 @@ export default function CommunityScreen() {
                     <MaterialCommunityIcons name="close" size={14} color={theme.colors.onPrimaryContainer} />
                   </Pressable>
                 )}
-                {category ? (
-                  <Pressable
-                    style={[styles.activeChip, { backgroundColor: theme.colors.primaryContainer }]}
-                    onPress={() => setCategory('')}
-                  >
-                    <Text style={[styles.activeChipText, { color: theme.colors.onPrimaryContainer }]}>{category}</Text>
-                    <MaterialCommunityIcons name="close" size={14} color={theme.colors.onPrimaryContainer} />
-                  </Pressable>
-                ) : null}
                 {selectedTag ? (
                   <Pressable
                     style={[styles.activeChip, { backgroundColor: theme.colors.primaryContainer }]}
@@ -428,13 +480,15 @@ export default function CommunityScreen() {
               <Text style={styles.clearAllText}>Clear all</Text>
             </Pressable>
           </ScrollView>
-        </Animated.View>
+        </View>
       )}
 
       {segment === 'blog' ? (
         <>
           {blogLoading ? (
-            <LoadingState message="Loading posts..." />
+            <View style={styles.centeredLoader}>
+              <ActivityIndicator size="large" color={theme.colors.primary} />
+            </View>
           ) : !blogData?.posts?.length ? (
             <EmptyState
               icon="post-outline"
@@ -464,7 +518,9 @@ export default function CommunityScreen() {
       ) : (
         <>
           {dpLoading ? (
-            <LoadingState message="Loading data points..." />
+            <View style={styles.centeredLoader}>
+              <ActivityIndicator size="large" color={theme.colors.primary} />
+            </View>
           ) : !dpData?.datapoints?.length ? (
             <EmptyState
               icon="chart-bubble"
@@ -475,7 +531,7 @@ export default function CommunityScreen() {
             />
           ) : (
             <Animated.FlatList
-              data={dpData.datapoints}
+              data={filteredDatapoints}
               renderItem={renderDatapointItem}
               keyExtractor={(item) => item.id}
               contentContainerStyle={styles.listContent}
@@ -486,7 +542,7 @@ export default function CommunityScreen() {
           )}
           {/* FAB for submitting data points */}
           <Pressable
-            style={[styles.fab, { backgroundColor: theme.colors.primary }]}
+            style={[styles.fab, { backgroundColor: '#1E293B' }]}
             onPress={() => router.push('/stacks/datapoint-submit' as any)}
           >
             <MaterialCommunityIcons name="plus" size={28} color="#FFFFFF" />
@@ -533,35 +589,6 @@ export default function CommunityScreen() {
                   </Text>
                 </Pressable>
               </View>
-
-              {/* Category */}
-              {availableCategories.length > 0 && (
-                <View style={styles.filterSection}>
-                  <Text style={styles.filterSectionTitle}>Category</Text>
-                  <View style={styles.chipGrid}>
-                    {availableCategories.map((cat: string) => (
-                      <Pressable
-                        key={cat}
-                        style={[
-                          styles.filterChip,
-                          category === cat && { backgroundColor: theme.colors.primaryContainer, borderColor: theme.colors.primary },
-                          { borderColor: theme.colors.outlineVariant },
-                        ]}
-                        onPress={() => setCategory(category === cat ? '' : cat)}
-                      >
-                        <Text
-                          style={[
-                            styles.filterChipText,
-                            { color: category === cat ? theme.colors.onPrimaryContainer : theme.colors.onSurface },
-                          ]}
-                        >
-                          {cat}
-                        </Text>
-                      </Pressable>
-                    ))}
-                  </View>
-                </View>
-              )}
 
               {/* Tag Groups */}
               {TAG_GROUPS.map((group) => (
@@ -715,7 +742,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   toggleIconActive: {
-    backgroundColor: 'rgba(103, 80, 164, 0.08)',
+    backgroundColor: 'rgba(67, 97, 238, 0.08)',
   },
   searchRow: {
     flexDirection: 'row',
@@ -745,7 +772,7 @@ const styles = StyleSheet.create({
     width: 16,
     height: 16,
     borderRadius: 8,
-    backgroundColor: '#4F46E5',
+    backgroundColor: '#4361EE',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -786,60 +813,90 @@ const styles = StyleSheet.create({
     color: '#94A3B8',
     textDecorationLine: 'underline',
   },
+  centeredLoader: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   listContent: {
     paddingHorizontal: 16,
     paddingBottom: 16,
     paddingTop: 4,
   },
-  // Blog article card
-  articleCard: {
+  // Quick filter pills
+  quickFilterRow: {
+    marginBottom: 10,
+  },
+  quickFilterContent: {
+    paddingHorizontal: 16,
+    gap: 10,
     flexDirection: 'row',
-    borderRadius: 12,
-    marginBottom: 12,
+    alignItems: 'center',
+  },
+  quickFilterChip: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 22,
+    borderWidth: 1,
+  },
+  quickFilterChipActive: {
+    backgroundColor: '#1E293B',
+    borderColor: '#1E293B',
+  },
+  quickFilterText: {
+    fontSize: 15,
+    fontFamily: 'Outfit-Medium',
+  },
+  // Blog article card — vertical layout
+  articleCard: {
+    borderRadius: 14,
+    marginBottom: 16,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: '#E2E8F0',
   },
-  articleThumbnail: {
-    width: 110,
-    minHeight: 120,
+  articleImage: {
+    width: '100%',
+    height: 200,
   },
   thumbnailPlaceholder: {
     justifyContent: 'center',
     alignItems: 'center',
   },
   articleContent: {
-    flex: 1,
-    padding: 12,
+    padding: 14,
   },
   articleMeta: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    marginBottom: 6,
+    marginBottom: 8,
   },
   categoryBadge: {
     paddingHorizontal: 8,
-    paddingVertical: 2,
+    paddingVertical: 3,
     borderRadius: 4,
   },
   categoryBadgeText: {
-    fontSize: 9,
+    fontSize: 10,
     fontFamily: 'Outfit-Bold',
     letterSpacing: 0.5,
+    color: '#FFFFFF',
   },
   articleTitle: {
-    fontFamily: 'Outfit-SemiBold',
-    marginBottom: 4,
+    fontFamily: 'Outfit-Bold',
+    marginBottom: 6,
+    lineHeight: 24,
   },
   articleFooter: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginTop: 4,
   },
   articleStats: {
     flexDirection: 'row',
-    gap: 12,
+    gap: 14,
   },
   statItem: {
     flexDirection: 'row',
@@ -848,96 +905,108 @@ const styles = StyleSheet.create({
   },
   // Datapoint card
   dpCard: {
-    borderRadius: 12,
+    borderRadius: 14,
     padding: 16,
-    marginBottom: 12,
+    marginBottom: 16,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: '#E2E8F0',
   },
   dpHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 8,
   },
   dpUsername: {
-    fontSize: 14,
+    fontSize: 15,
     fontFamily: 'Outfit-Bold',
-    color: '#1C1B1F',
+    color: '#1E293B',
   },
   dpTimestamp: {
-    fontSize: 11,
+    fontSize: 12,
     fontFamily: 'Outfit',
     color: '#94A3B8',
   },
-  dpCardBenefitRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    marginBottom: 8,
-  },
-  dpCardName: {
-    fontSize: 13,
-    fontFamily: 'Outfit-Medium',
-    color: '#64748B',
-  },
-  dpStatusBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 6,
-  },
-  dpStatusText: {
-    fontSize: 11,
+  dpContent: {
+    fontSize: 17,
     fontFamily: 'Outfit-SemiBold',
-    letterSpacing: 0.3,
+    color: '#1E293B',
+    lineHeight: 24,
+    marginBottom: 12,
   },
-  dpBenefitStatusRow: {
+  dpInfoBox: {
+    borderRadius: 12,
+    padding: 12,
+    marginBottom: 14,
+  },
+  dpInfoRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 8,
   },
-  dpBenefitTag: {
+  dpCardRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    flex: 1,
+  },
+  dpCardName: {
+    fontSize: 14,
+    fontFamily: 'Outfit-Medium',
+    flex: 1,
+  },
+  dpStatusBadge: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
-    backgroundColor: '#EEF2FF',
-    paddingHorizontal: 8,
+    paddingHorizontal: 10,
     paddingVertical: 4,
-    borderRadius: 6,
+    borderRadius: 8,
+  },
+  dpStatusText: {
+    fontSize: 12,
+    fontFamily: 'Outfit-SemiBold',
+  },
+  dpBenefitTag: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    gap: 4,
+    backgroundColor: '#EEF2FF',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 8,
   },
   dpBenefitTagText: {
-    fontSize: 10,
+    fontSize: 11,
     fontFamily: 'Outfit-Bold',
-    color: '#4F46E5',
+    color: '#4361EE',
     letterSpacing: 0.3,
-  },
-  dpContent: {
-    fontSize: 14,
-    fontFamily: 'Outfit',
-    color: '#1C1B1F',
-    lineHeight: 20,
-    marginBottom: 12,
   },
   dpFooter: {
     flexDirection: 'row',
-    gap: 20,
-    borderTopWidth: 1,
-    borderTopColor: '#F1F5F9',
-    paddingTop: 12,
+    gap: 10,
   },
-  dpFooterItem: {
+  dpFooterPill: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 20,
+    backgroundColor: '#F1F5F9',
   },
-  dpFooterText: {
+  dpFooterPillActiveGreen: {
+    backgroundColor: '#ECFDF5',
+  },
+  dpFooterPillActiveRed: {
+    backgroundColor: '#FEF3C7',
+  },
+  dpFooterPillText: {
     fontSize: 13,
     fontFamily: 'Outfit-Medium',
-    color: '#94A3B8',
+    color: '#64748B',
   },
   fab: {
     position: 'absolute',

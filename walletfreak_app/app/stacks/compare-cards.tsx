@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
   benefitsColumnHeader: {
     fontSize: 13,
     fontFamily: 'Outfit-SemiBold',
-    color: '#4F46E5',
+    color: '#4361EE',
     marginBottom: 8,
   },
   benefitItem: {

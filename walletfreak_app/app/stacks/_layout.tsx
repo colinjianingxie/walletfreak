@@ -14,9 +14,9 @@ export default function StacksLayout() {
         headerTintColor: theme.colors.onSurface,
         headerTitleStyle: { fontFamily: 'Outfit-Medium' },
         headerShadowVisible: false,
-        headerLeft: () => (
+        headerLeft: ({ tintColor }) => (
           <Pressable onPress={() => router.back()} style={{ marginLeft: 8, padding: 4 }}>
-            <MaterialCommunityIcons name="arrow-left" size={24} color={theme.colors.onSurface} />
+            <MaterialCommunityIcons name="arrow-left" size={24} color={tintColor ?? theme.colors.onSurface} />
           </Pressable>
         ),
       }}
@@ -41,7 +41,20 @@ export default function StacksLayout() {
         }}
       />
       <Stack.Screen name="sub-optimizer-results" options={{ title: 'Results' }} />
-      <Stack.Screen name="booking-optimizer" options={{ title: 'Booking Optimizer' }} />
+      <Stack.Screen
+        name="booking-optimizer"
+        options={{
+          title: 'Booking Optimizer',
+          headerRight: () => (
+            <Pressable
+              onPress={() => router.push('/stacks/booking-history' as any)}
+              style={{ marginRight: 8, padding: 4 }}
+            >
+              <MaterialCommunityIcons name="clipboard-text-clock-outline" size={22} color={theme.colors.primary} />
+            </Pressable>
+          ),
+        }}
+      />
       <Stack.Screen name="booking-strategy/[id]" options={{ title: 'Strategy Report' }} />
       <Stack.Screen name="booking-history" options={{ title: 'Booking History' }} />
       <Stack.Screen name="award-scout" options={{ title: 'Award Scout' }} />

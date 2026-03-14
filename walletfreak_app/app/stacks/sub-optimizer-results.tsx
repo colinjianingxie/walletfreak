@@ -153,7 +153,7 @@ export default function SubOptimizerResultsScreen() {
             </View>
             <View style={styles.viewApplyButton}>
               <Text style={styles.viewApplyText}>VIEW & APPLY</Text>
-              <MaterialCommunityIcons name="arrow-right" size={14} color="#4F46E5" />
+              <MaterialCommunityIcons name="arrow-right" size={14} color="#4361EE" />
             </View>
           </View>
         </Pressable>
@@ -353,7 +353,7 @@ const styles = StyleSheet.create({
   viewApplyText: {
     fontSize: 12,
     fontFamily: 'Outfit-Bold',
-    color: '#4F46E5',
+    color: '#4361EE',
     letterSpacing: 0.5,
   },
 });

@@ -238,7 +238,7 @@ export default function ExploreScreen() {
             <MaterialCommunityIcons
               name={isCompareSelected ? 'checkbox-marked' : 'checkbox-blank-outline'}
               size={22}
-              color={isCompareSelected ? '#4F46E5' : theme.colors.onSurfaceVariant}
+              color={isCompareSelected ? '#4361EE' : theme.colors.onSurfaceVariant}
             />
           </Pressable>
         </Pressable>
@@ -616,7 +616,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
-    backgroundColor: '#4F46E5',
+    backgroundColor: '#4361EE',
     paddingHorizontal: 14,
     paddingVertical: 8,
     borderRadius: 10,

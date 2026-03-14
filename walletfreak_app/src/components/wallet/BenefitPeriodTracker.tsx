@@ -250,7 +250,7 @@ export const BenefitPeriodTracker: React.FC<BenefitPeriodTrackerProps> = ({
             autoFocus
           />
           <Pressable
-            style={[styles.saveButton, { backgroundColor: '#4F46E5', opacity: updateBenefit.isPending ? 0.7 : 1 }]}
+            style={[styles.saveButton, { backgroundColor: '#4361EE', opacity: updateBenefit.isPending ? 0.7 : 1 }]}
             onPress={handleSave}
             disabled={updateBenefit.isPending}
           >
@@ -290,7 +290,7 @@ export const BenefitPeriodTracker: React.FC<BenefitPeriodTrackerProps> = ({
             disabled={updateBenefit.isPending || benefit.is_ignored}
           >
             {updateBenefit.isPending ? (
-              <ActivityIndicator size="small" color={isPeriodFull ? '#DC2626' : '#4F46E5'} />
+              <ActivityIndicator size="small" color={isPeriodFull ? '#DC2626' : '#4361EE'} />
             ) : showSuccess ? (
               <>
                 <Animated.View style={{ opacity: successOpacity }}>
@@ -305,7 +305,7 @@ export const BenefitPeriodTracker: React.FC<BenefitPeriodTrackerProps> = ({
               </>
             ) : (
               <>
-                <MaterialCommunityIcons name="check-circle-outline" size={18} color="#4F46E5" />
+                <MaterialCommunityIcons name="check-circle-outline" size={18} color="#4361EE" />
                 <Text style={styles.markFullButtonText}>Mark Full</Text>
               </>
             )}
@@ -442,7 +442,7 @@ const styles = StyleSheet.create({
     borderColor: '#16A34A',
   },
   periodBlockSelected: {
-    borderColor: '#4F46E5',
+    borderColor: '#4361EE',
     backgroundColor: '#EEF2FF',
   },
   periodBlockFuture: {
@@ -489,7 +489,7 @@ const styles = StyleSheet.create({
   markFullButtonText: {
     fontSize: 14,
     fontFamily: 'Outfit-SemiBold',
-    color: '#4F46E5',
+    color: '#4361EE',
   },
   // Ignore inline button (end of actions row)
   ignoreInlineButton: {

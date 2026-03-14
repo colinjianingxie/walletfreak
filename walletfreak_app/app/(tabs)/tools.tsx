@@ -43,7 +43,6 @@ const tools = [
     icon: 'bed-outline' as ToolIconName,
     route: '/stacks/booking-optimizer',
     premium: true,
-    disabled: true,
   },
   {
     id: 'award-scout',

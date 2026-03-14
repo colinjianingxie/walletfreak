@@ -14,7 +14,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.walletfreak.app"
+      "bundleIdentifier": "com.walletfreak.app",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -41,8 +44,9 @@
         "origin": false
       },
       "eas": {
-        "projectId": "walletfreak"
+        "projectId": "2e722712-5a9f-45f7-896d-fe818d45dbbb"
       }
-    }
+    },
+    "owner": "colinjianingxie"
   }
 }

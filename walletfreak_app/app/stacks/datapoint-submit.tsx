@@ -23,10 +23,19 @@ export default function DatapointSubmitScreen() {
     ...(walletData?.inactive_cards ?? []),
   ], [walletData]);
 
+  // Benefits are returned separately by the wallet API, not on card objects.
+  // Gather from all benefit arrays and filter by selected card.
+  const allBenefits = useMemo(() => [
+    ...(walletData?.action_needed_benefits ?? []),
+    ...(walletData?.maxed_out_benefits ?? []),
+    ...(walletData?.ignored_benefits ?? []),
+  ], [walletData]);
+
   const benefits = useMemo(() => {
     if (!selectedCard) return [];
-    return (selectedCard.benefits ?? []).filter((b: any) => b.dollar_value > 0);
-  }, [selectedCard]);
+    const cardId = selectedCard.card_id || selectedCard.id;
+    return allBenefits.filter((b: any) => b.card_id === cardId);
+  }, [selectedCard, allBenefits]);
 
   const handleSelectCard = (card: any) => {
     setSelectedCard(card);
@@ -42,8 +51,8 @@ export default function DatapointSubmitScreen() {
       {
         card_slug: selectedCard.card_id || selectedCard.slug,
         card_name: selectedCard.name,
-        benefit_name: selectedBenefit.description || selectedBenefit.short_description,
-        benefit_id: selectedBenefit.id || selectedBenefit.benefit_id,
+        benefit_name: selectedBenefit.benefit_name,
+        benefit_id: selectedBenefit.benefit_id,
         status,
         content: content.trim(),
       },
@@ -75,46 +84,39 @@ export default function DatapointSubmitScreen() {
 
       {/* Step 1: Card Selection */}
       <Text variant="labelLarge" style={styles.stepLabel}>1. Select Card</Text>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.cardScroller}
-        contentContainerStyle={styles.cardScrollerContent}
-      >
+      <View style={styles.cardList}>
         {allCards.map((card: any) => {
           const isSelected = selectedCard?.id === card.id;
           return (
             <Pressable
               key={card.id}
               style={[
-                styles.cardOption,
+                styles.cardRow,
                 {
                   backgroundColor: isSelected ? theme.colors.primaryContainer : theme.colors.elevation.level1,
-                  borderColor: isSelected ? theme.colors.primary : 'transparent',
+                  borderColor: isSelected ? theme.colors.primary : theme.colors.outlineVariant,
                 },
               ]}
               onPress={() => handleSelectCard(card)}
             >
               <CardImage slug={card.card_id || card.slug} size="small" />
               <Text
-                variant="labelSmall"
+                variant="bodyMedium"
                 numberOfLines={2}
                 style={[
-                  styles.cardOptionName,
+                  styles.cardRowName,
                   { color: isSelected ? theme.colors.onPrimaryContainer : theme.colors.onSurface },
                 ]}
               >
                 {card.name}
               </Text>
               {isSelected && (
-                <View style={[styles.checkBadge, { backgroundColor: theme.colors.primary }]}>
-                  <MaterialCommunityIcons name="check" size={10} color="#FFF" />
-                </View>
+                <MaterialCommunityIcons name="check-circle" size={20} color={theme.colors.primary} />
               )}
             </Pressable>
           );
         })}
-      </ScrollView>
+      </View>
 
       {/* Step 2: Benefit Selection */}
       {selectedCard && (
@@ -127,10 +129,10 @@ export default function DatapointSubmitScreen() {
           ) : (
             <View style={styles.benefitList}>
               {benefits.map((benefit: any) => {
-                const isSelected = selectedBenefit?.id === benefit.id;
+                const isSelected = selectedBenefit?.benefit_id === benefit.benefit_id;
                 return (
                   <Pressable
-                    key={benefit.id}
+                    key={benefit.benefit_id}
                     style={[
                       styles.benefitOption,
                       {
@@ -148,7 +150,7 @@ export default function DatapointSubmitScreen() {
                           color: isSelected ? theme.colors.onPrimaryContainer : theme.colors.onSurface,
                         }}
                       >
-                        {benefit.description}
+                        {benefit.benefit_name}
                       </Text>
                       {benefit.additional_details ? (
                         <Text variant="labelSmall" style={{ color: theme.colors.onSurfaceVariant, marginTop: 2 }}>
@@ -163,7 +165,7 @@ export default function DatapointSubmitScreen() {
                         color: isSelected ? theme.colors.primary : theme.colors.onSurfaceVariant,
                       }}
                     >
-                      ${benefit.dollar_value}
+                      ${benefit.amount}
                     </Text>
                   </Pressable>
                 );
@@ -264,36 +266,21 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   // Card picker
-  cardScroller: {
+  cardList: {
+    gap: 8,
     marginBottom: 16,
-    marginHorizontal: -16,
   },
-  cardScrollerContent: {
-    paddingHorizontal: 16,
-    gap: 10,
-  },
-  cardOption: {
-    width: 90,
+  cardRow: {
+    flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
-    borderRadius: 12,
-    borderWidth: 2,
+    padding: 12,
+    borderRadius: 10,
+    borderWidth: 1.5,
+    gap: 12,
   },
-  cardOptionName: {
+  cardRowName: {
     fontFamily: 'Outfit-Medium',
-    fontSize: 10,
-    textAlign: 'center',
-    marginTop: 6,
-  },
-  checkBadge: {
-    position: 'absolute',
-    top: 4,
-    right: 4,
-    width: 16,
-    height: 16,
-    borderRadius: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
+    flex: 1,
   },
   // Benefit picker
   benefitList: {

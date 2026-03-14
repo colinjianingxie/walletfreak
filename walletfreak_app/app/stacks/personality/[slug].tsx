@@ -132,7 +132,7 @@ export default function PersonalityDetailScreen() {
 
           {personality.match_score != null && (
             <View style={styles.matchBadge}>
-              <MaterialCommunityIcons name="lightning-bolt" size={14} color="#4F46E5" />
+              <MaterialCommunityIcons name="lightning-bolt" size={14} color="#4361EE" />
               <Text style={styles.matchText}>{personality.match_score}% Match</Text>
             </View>
           )}
@@ -186,7 +186,7 @@ export default function PersonalityDetailScreen() {
         {personality.slots && personality.slots.length > 0 && (
           <View style={styles.loadoutSection}>
             <View style={styles.sectionHeaderRow}>
-              <MaterialCommunityIcons name="lightning-bolt" size={20} color="#4F46E5" />
+              <MaterialCommunityIcons name="lightning-bolt" size={20} color="#4361EE" />
               <Text style={styles.sectionTitle}>Build Your Loadout</Text>
             </View>
 
@@ -226,7 +226,7 @@ export default function PersonalityDetailScreen() {
                           {/* Selection indicator */}
                           {isSelected && (
                             <View style={styles.checkmarkBadge}>
-                              <MaterialCommunityIcons name="check-circle" size={20} color="#4F46E5" />
+                              <MaterialCommunityIcons name="check-circle" size={20} color="#4361EE" />
                             </View>
                           )}
                           {/* In wallet indicator */}
@@ -271,7 +271,7 @@ export default function PersonalityDetailScreen() {
         {personality.rules && personality.rules.length > 0 && (
           <View style={styles.rulesSection}>
             <View style={styles.sectionHeaderRow}>
-              <MaterialCommunityIcons name="shield-check-outline" size={20} color="#4F46E5" />
+              <MaterialCommunityIcons name="shield-check-outline" size={20} color="#4361EE" />
               <Text style={styles.sectionTitle}>Rules of Engagement</Text>
             </View>
             {personality.rules.map((rule: { title: string; description: string }, idx: number) => (
@@ -299,10 +299,10 @@ const styles = StyleSheet.create({
   content: { paddingBottom: 40 },
   hero: { alignItems: 'center', paddingTop: 20, paddingHorizontal: 24, paddingBottom: 24 },
   taglinePill: { backgroundColor: '#EEF2FF', paddingHorizontal: 16, paddingVertical: 6, borderRadius: 20, marginTop: 16 },
-  taglineText: { fontSize: 13, fontFamily: 'Outfit-Medium', color: '#4F46E5' },
+  taglineText: { fontSize: 13, fontFamily: 'Outfit-Medium', color: '#4361EE' },
   name: { fontSize: 28, fontFamily: 'Outfit-Bold', color: '#1C1B1F', marginTop: 12, textAlign: 'center' },
   matchBadge: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 8, backgroundColor: '#EEF2FF', paddingHorizontal: 12, paddingVertical: 4, borderRadius: 12 },
-  matchText: { fontSize: 14, fontFamily: 'Outfit-SemiBold', color: '#4F46E5' },
+  matchText: { fontSize: 14, fontFamily: 'Outfit-SemiBold', color: '#4361EE' },
   description: { fontSize: 15, fontFamily: 'Outfit', lineHeight: 22, marginTop: 16, textAlign: 'center' },
   statsGrid: { paddingHorizontal: 16, gap: 10, marginBottom: 24 },
   statsRow: { flexDirection: 'row', gap: 10 },
@@ -315,25 +315,25 @@ const styles = StyleSheet.create({
   sectionTitle: { fontSize: 20, fontFamily: 'Outfit-Bold', color: '#1C1B1F' },
   slotContainer: { marginBottom: 20 },
   slotHeader: { flexDirection: 'row', alignItems: 'flex-start', gap: 10, marginBottom: 12 },
-  slotBadge: { backgroundColor: '#4F46E5', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 6, marginTop: 2 },
+  slotBadge: { backgroundColor: '#4361EE', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 6, marginTop: 2 },
   slotBadgeText: { fontSize: 10, fontFamily: 'Outfit-Bold', color: '#FFFFFF', letterSpacing: 0.5 },
   slotName: { fontSize: 16, fontFamily: 'Outfit-SemiBold', color: '#1C1B1F' },
   slotDescription: { fontSize: 13, fontFamily: 'Outfit', lineHeight: 18, marginTop: 2 },
   cardSlide: { width: 160, borderRadius: 12, padding: 14, alignItems: 'center', overflow: 'visible' },
-  cardSlideSelected: { borderWidth: 2, borderColor: '#4F46E5' },
+  cardSlideSelected: { borderWidth: 2, borderColor: '#4361EE' },
   cardImage: { marginBottom: 8 },
   cardName: { fontSize: 13, fontFamily: 'Outfit-SemiBold', color: '#1C1B1F', textAlign: 'center' },
   cardIssuer: { fontSize: 11, fontFamily: 'Outfit', marginTop: 2, textAlign: 'center' },
-  cardFee: { fontSize: 12, fontFamily: 'Outfit-Medium', color: '#4F46E5', marginTop: 4 },
+  cardFee: { fontSize: 12, fontFamily: 'Outfit-Medium', color: '#4361EE', marginTop: 4 },
   checkmarkBadge: { position: 'absolute', top: 6, right: 6, zIndex: 1 },
   walletBadge: { position: 'absolute', top: 6, left: 6, zIndex: 1, backgroundColor: '#10B981', width: 18, height: 18, borderRadius: 9, justifyContent: 'center', alignItems: 'center' },
   viewDetailsBtn: { marginTop: 8, backgroundColor: '#F1F5F9', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 8 },
-  viewDetailsBtnText: { fontSize: 11, fontFamily: 'Outfit-SemiBold', color: '#4F46E5' },
+  viewDetailsBtnText: { fontSize: 11, fontFamily: 'Outfit-SemiBold', color: '#4361EE' },
   emptySlotText: { fontSize: 13, fontFamily: 'Outfit', fontStyle: 'italic', paddingVertical: 8 },
   rulesSection: { paddingHorizontal: 16, marginBottom: 24 },
   ruleItem: { flexDirection: 'row', borderWidth: 1, borderRadius: 12, padding: 14, marginBottom: 10, gap: 12, backgroundColor: '#FFFFFF' },
   ruleNumber: { width: 28, height: 28, borderRadius: 14, backgroundColor: '#EEF2FF', justifyContent: 'center', alignItems: 'center' },
-  ruleNumberText: { fontSize: 14, fontFamily: 'Outfit-Bold', color: '#4F46E5' },
+  ruleNumberText: { fontSize: 14, fontFamily: 'Outfit-Bold', color: '#4361EE' },
   ruleTitle: { fontSize: 15, fontFamily: 'Outfit-SemiBold', color: '#1C1B1F', marginBottom: 2 },
   ruleDescription: { fontSize: 13, fontFamily: 'Outfit', lineHeight: 18 },
 });
