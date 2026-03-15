@@ -17,10 +17,17 @@
     
     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem;">
         {% if is_prompt_admin %}
-        <button type="button" id="btn-bulk-prompt" class="btn btn-primary" disabled
-                style="padding: 0.75rem 1.5rem; font-weight: 600; opacity: 0.5; cursor: not-allowed;">
-            Generate Bulk Prompt
-        </button>
+        <div style="display: flex; gap: 0.75rem; align-items: center;">
+            <button type="button" id="btn-bulk-update" class="btn" disabled
+                    style="padding: 0.75rem 1.5rem; font-weight: 600; opacity: 0.5; cursor: not-allowed; background: #10b981; color: white; border: none; border-radius: 0.5rem;">
+                Run Bulk Update
+            </button>
+            <button type="button" id="btn-bulk-prompt" class="btn btn-primary" disabled
+                    style="padding: 0.75rem 1.5rem; font-weight: 600; opacity: 0.5; cursor: not-allowed;">
+                Generate Bulk Prompt
+            </button>
+        </div>
+        <p id="bulk-update-status" style="font-size: 0.85rem; color: rgba(255,255,255,0.6); display: none; margin: 0;"></p>
         {% else %}
         <div></div>
         {% endif %}
@@ -279,6 +286,7 @@
         // Bulk Selection Logic
         const selectAll = document.getElementById('select-all');
         const bulkBtn = document.getElementById('btn-bulk-prompt');
+        const bulkUpdateBtn = document.getElementById('btn-bulk-update');
         const checkboxes = document.querySelectorAll('.card-checkbox');
 
         function updateBulkButton() {
@@ -288,11 +296,19 @@
                 bulkBtn.style.opacity = '1';
                 bulkBtn.style.cursor = 'pointer';
                 bulkBtn.innerText = `Generate Bulk Prompt (${checkedCount})`;
+                bulkUpdateBtn.disabled = false;
+                bulkUpdateBtn.style.opacity = '1';
+                bulkUpdateBtn.style.cursor = 'pointer';
+                bulkUpdateBtn.innerText = `Run Bulk Update (${checkedCount})`;
             } else {
                 bulkBtn.disabled = true;
                 bulkBtn.style.opacity = '0.5';
                 bulkBtn.style.cursor = 'not-allowed';
                 bulkBtn.innerText = 'Generate Bulk Prompt';
+                bulkUpdateBtn.disabled = true;
+                bulkUpdateBtn.style.opacity = '0.5';
+                bulkUpdateBtn.style.cursor = 'not-allowed';
+                bulkUpdateBtn.innerText = 'Run Bulk Update';
             }
         }
 
@@ -357,6 +373,57 @@
                 .finally(() => {
                     btn.innerText = originalText;
                     btn.disabled = false;
+                });
+            });
+        }
+
+        // Bulk Update Logic
+        if (bulkUpdateBtn) {
+            bulkUpdateBtn.addEventListener('click', function() {
+                const checkedBoxes = document.querySelectorAll('.card-checkbox:checked');
+                const ids = Array.from(checkedBoxes).map(cb => cb.value);
+
+                if (ids.length === 0) return;
+
+                const btn = this;
+                const status = document.getElementById('bulk-update-status');
+
+                if (!confirm(`Run Grok update for ${ids.length} selected card(s)? This will call the API and auto-seed.`)) return;
+
+                const originalText = btn.innerText;
+                btn.innerText = 'Running...';
+                btn.disabled = true;
+                btn.style.opacity = '0.7';
+                status.style.display = 'block';
+                status.innerText = 'Update in progress... This may take a few minutes.';
+                status.style.color = '#fbbf24';
+
+                fetch('/custom-admin/cards/run-bulk-update/', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({card_ids: ids, batch_size: 3, update_types: 'benefits,rates,bonus'})
+                })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.error) {
+                        status.innerText = 'Error: ' + data.error;
+                        status.style.color = '#ef4444';
+                        alert('Error: ' + data.error);
+                    } else {
+                        status.innerText = 'Update complete! Check your email for details.';
+                        status.style.color = '#10b981';
+                        alert('Success! Cards updated.\n\n' + data.message);
+                    }
+                })
+                .catch(err => {
+                    status.innerText = 'Request failed: ' + err.message;
+                    status.style.color = '#ef4444';
+                })
+                .finally(() => {
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                    updateBulkButton();
                 });
             });
         }

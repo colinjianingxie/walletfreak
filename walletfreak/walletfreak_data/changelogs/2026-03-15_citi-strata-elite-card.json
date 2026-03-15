@@ -1,0 +1,91 @@
+{
+  "slug": "citi-strata-elite-card",
+  "timestamp": "2026-03-15T03:00:17",
+  "run_id": "92129b3b",
+  "header_changes": [],
+  "benefits_changes": [
+    {
+      "action": "cosmetic_update",
+      "item_id": "hotel-credit",
+      "old_vid": "hotel-credit-v1",
+      "new_vid": "hotel-credit-v1",
+      "changes": [
+        {
+          "field": "description",
+          "old": "$300 Hotel Credit via CitiTravel",
+          "new": "Up to $300 off a hotel stay of 2 nights or more (excluding taxes and fees), applied instantly at booking via CitiTravel"
+        }
+      ]
+    },
+    {
+      "action": "cosmetic_update",
+      "item_id": "splurge-credit",
+      "old_vid": "splurge-credit-v1",
+      "new_vid": "splurge-credit-v1",
+      "changes": [
+        {
+          "field": "description",
+          "old": "$200 Lifestyle Splurge including Best Buy",
+          "new": "Up to $200 in statement credits per calendar year, choosable on up to 2 brands: 1stDibs, American Airlines, Best Buy, Future Personal Training, and Live Nation"
+        }
+      ]
+    },
+    {
+      "action": "cosmetic_update",
+      "item_id": "blacklane-credit",
+      "old_vid": "blacklane-credit-v1",
+      "new_vid": "blacklane-credit-v1",
+      "changes": [
+        {
+          "field": "description",
+          "old": "$200 Blacklane Ride Credit",
+          "new": "Up to $200 in statement credits per calendar year for bookings with Blacklane, split as up to $100 from January through June and up to $100 from July through December"
+        }
+      ]
+    },
+    {
+      "action": "created",
+      "item_id": "private-client-ongoing-credit",
+      "old_vid": null,
+      "new_vid": "private-client-ongoing-credit-v1",
+      "changes": []
+    },
+    {
+      "action": "cosmetic_update",
+      "item_id": "protection",
+      "old_vid": "protection-v1",
+      "new_vid": "protection-v1",
+      "changes": [
+        {
+          "field": "description",
+          "old": "Travel Insurance Coverage",
+          "new": "Travel and Shopping Protection including Trip Cancellation and Trip Interruption (Common Carrier), Trip Delay, Lost or Damaged Luggage, MasterRental Coverage (car rental insurance), Extended Warranty, Purchase Assurance Plus"
+        }
+      ]
+    },
+    {
+      "action": "created",
+      "item_id": "citi-entertainment",
+      "old_vid": null,
+      "new_vid": "citi-entertainment-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "id-theft-protection",
+      "old_vid": null,
+      "new_vid": "id-theft-protection-v1",
+      "changes": []
+    },
+    {
+      "action": "deprecated",
+      "item_id": "mixology-classes",
+      "old_vid": "mixology-classes-v1",
+      "new_vid": null,
+      "changes": []
+    }
+  ],
+  "earning_rates_changes": [],
+  "sign_up_bonus_changes": [],
+  "summary": "4 benefit(s) cosmetic_update, 3 benefit(s) created, 1 benefit(s) deprecated"
+}

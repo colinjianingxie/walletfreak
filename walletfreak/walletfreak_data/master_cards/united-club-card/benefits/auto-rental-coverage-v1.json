@@ -1,0 +1,21 @@
+{
+    "benefit_id": "auto-rental-coverage",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Auto Rental Coverage",
+    "description": "Primary Auto Rental Coverage",
+    "additional_details": "up to $60,000 for theft/collision on vehicles MSRP $125,000 or less; secondary in U.S. for NY residents",
+    "benefit_category": [
+        "Protection",
+        "Primary Rental Insurance"
+    ],
+    "benefit_type": "Insurance",
+    "numeric_value": 60000,
+    "numeric_type": "Cash",
+    "dollar_value": 60000,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Protection"
+}

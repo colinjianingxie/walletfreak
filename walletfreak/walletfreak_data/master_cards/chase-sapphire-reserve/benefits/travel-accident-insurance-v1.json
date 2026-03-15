@@ -1,0 +1,20 @@
+{
+    "benefit_id": "travel-accident-insurance",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Travel Accident Insurance",
+    "description": "Travel accident insurance",
+    "additional_details": "up to $1,000,000 for accidental death/dismemberment on paid air/bus/train/cruise travel",
+    "benefit_category": [
+        "Protection"
+    ],
+    "benefit_type": "Insurance",
+    "numeric_value": 1000000.0,
+    "numeric_type": "Cash",
+    "dollar_value": 1000000,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Protection"
+}

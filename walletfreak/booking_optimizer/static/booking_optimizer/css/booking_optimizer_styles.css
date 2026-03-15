@@ -489,6 +489,14 @@ body {
     flex-shrink: 0;
 }
 
+.hh-card-photo.hh-no-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f1f5f9;
+}
+
 @media (max-width: 767px) {
     .hh-card-photo {
         width: 100%;

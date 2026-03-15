@@ -1,0 +1,46 @@
+{
+  "slug": "chase-sapphire-reserve",
+  "timestamp": "2026-03-15T02:51:29",
+  "run_id": "92129b3b",
+  "header_changes": [],
+  "benefits_changes": [
+    {
+      "action": "created",
+      "item_id": "lost-luggage-reimbursement",
+      "old_vid": null,
+      "new_vid": "lost-luggage-reimbursement-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "travel-accident-insurance",
+      "old_vid": null,
+      "new_vid": "travel-accident-insurance-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "emergency-evacuation",
+      "old_vid": null,
+      "new_vid": "emergency-evacuation-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "roadside-assistance",
+      "old_vid": null,
+      "new_vid": "roadside-assistance-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "emergency-medical-dental",
+      "old_vid": null,
+      "new_vid": "emergency-medical-dental-v1",
+      "changes": []
+    }
+  ],
+  "earning_rates_changes": [],
+  "sign_up_bonus_changes": [],
+  "summary": "5 benefit(s) created"
+}

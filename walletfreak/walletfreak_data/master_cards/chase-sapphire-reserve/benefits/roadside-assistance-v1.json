@@ -1,0 +1,20 @@
+{
+    "benefit_id": "roadside-assistance",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Roadside Assistance",
+    "description": "Roadside assistance",
+    "additional_details": "up to $50 per incident, 4 times/year (tow, battery, tire, locksmith, gas)",
+    "benefit_category": [
+        "Protection"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 50.0,
+    "numeric_type": "Cash",
+    "dollar_value": 50,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Protection"
+}

@@ -1,0 +1,21 @@
+{
+    "benefit_id": "earned-choice-award",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Earned Choice Award",
+    "description": "Select one Earned Choice Award benefit after spending $60,000 in a calendar year",
+    "additional_details": "Options include 5 Nightly Upgrade Awards, one 85,000-point Free Night Award, $1,000 off a mattress, or gift Platinum status",
+    "benefit_category": [
+        "Generic Marriott Bonvoy",
+        "Status Boost"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": null,
+    "benefit_main_category": "Hotels"
+}

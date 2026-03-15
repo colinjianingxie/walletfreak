@@ -8,6 +8,8 @@ import {
   updateBenefitUsage,
   toggleIgnoreBenefit,
   checkDeleteConsequences,
+  syncWallet,
+  getWalletChangelogs,
 } from '../api/endpoints/wallet';
 
 export const useWallet = () => {
@@ -127,5 +129,22 @@ export const useCheckDelete = (userCardId: string) => {
     queryKey: ['check-delete', userCardId],
     queryFn: () => checkDeleteConsequences(userCardId),
     enabled: !!userCardId,
+  });
+};
+
+export const useSyncWallet = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: syncWallet,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['wallet'] });
+    },
+  });
+};
+
+export const useWalletChangelogs = () => {
+  return useQuery({
+    queryKey: ['wallet-changelogs'],
+    queryFn: getWalletChangelogs,
   });
 };

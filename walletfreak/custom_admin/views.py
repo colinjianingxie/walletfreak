@@ -22,7 +22,18 @@ def admin_logout_view(request):
 
 @staff_member_required
 def admin_dashboard(request):
-    return render(request, 'custom_admin/dashboard.html')
+    uid = request.session.get('uid')
+    if not uid and request.user.is_authenticated:
+        uid = request.user.username
+
+    user_profile = db.get_user_profile(uid) if uid else {}
+    email = user_profile.get('email', '').lower()
+    is_super = user_profile.get('is_super_staff', False)
+    is_prompt_admin = (email == 'colinjianingxie@gmail.com' and is_super)
+
+    return render(request, 'custom_admin/dashboard.html', {
+        'is_prompt_admin': is_prompt_admin,
+    })
 
 @staff_member_required
 def admin_card_list(request):
@@ -131,30 +142,102 @@ def admin_run_grok_update(request, card_id):
     uid = request.session.get('uid')
     if not uid and request.user.is_authenticated:
         uid = request.user.username
-        
+
     if not uid:
         return JsonResponse({'error': 'Unauthorized'}, status=403)
-        
+
     user_profile = db.get_user_profile(uid)
     email = user_profile.get('email', '').lower()
     is_super = user_profile.get('is_super_staff', False)
-    
+
     if email != 'colinjianingxie@gmail.com' or not is_super:
         return JsonResponse({'error': 'Unauthorized: Restricted access'}, status=403)
-        
+
     # 2. Run Command
     from django.core.management import call_command
-    import io
-    from contextlib import redirect_stdout
-    
+    from io import StringIO
+
     try:
-        # Capture stdout to return as message
-        f = io.StringIO()
-        with redirect_stdout(f):
-            call_command('update_cards_grok', cards=card_id, auto_seed=False)
-        
-        output = f.getvalue()
+        out = StringIO()
+        call_command('update_cards_grok', cards=card_id, auto_seed=True, stdout=out)
+        output = out.getvalue()
         return JsonResponse({'success': True, 'message': output})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+@csrf_exempt
+@staff_member_required
+def admin_run_bulk_update(request):
+    """
+    Run Grok update for multiple cards or all premium cards.
+    POST body: {"card_ids": ["slug1", "slug2"]} or {"premium_only": true}
+    """
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+
+    # Check permissions
+    uid = request.session.get('uid')
+    if not uid and request.user.is_authenticated:
+        uid = request.user.username
+
+    if not uid:
+        return JsonResponse({'error': 'Unauthorized'}, status=403)
+
+    user_profile = db.get_user_profile(uid)
+    email = user_profile.get('email', '').lower()
+    is_super = user_profile.get('is_super_staff', False)
+
+    if email != 'colinjianingxie@gmail.com' or not is_super:
+        return JsonResponse({'error': 'Unauthorized: Restricted access'}, status=403)
+
+    try:
+        data = json.loads(request.body)
+    except (json.JSONDecodeError, ValueError):
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+
+    card_ids = data.get('card_ids', [])
+    premium_only = data.get('premium_only', False)
+    batch_size = data.get('batch_size', 3)
+    update_types = data.get('update_types', 'benefits,rates,bonus')
+
+    from django.core.management import call_command
+    from io import StringIO
+
+    try:
+        out = StringIO()
+        kwargs = {
+            'auto_seed': True,
+            'update_types': update_types,
+            'batch_size': batch_size,
+            'stdout': out,
+        }
+        if card_ids:
+            kwargs['cards'] = ','.join(card_ids)
+        elif premium_only:
+            kwargs['premium_only'] = True
+
+        call_command('update_cards_grok', **kwargs)
+        output_text = out.getvalue()
+
+        # Send notification email
+        try:
+            mode = f"{len(card_ids)} selected cards" if card_ids else "all premium cards"
+            db.send_email_notification(
+                to='colinjianingxie@gmail.com',
+                subject=f'WalletFreak: Card Update Complete ({mode})',
+                text_content=output_text,
+                html_content=f"""
+                <div style="font-family: sans-serif; max-width: 700px; margin: 0 auto;">
+                    <h2>Card Update Complete ({mode})</h2>
+                    <pre style="background: #f5f5f5; padding: 16px; border-radius: 8px; font-size: 13px; overflow-x: auto;">{output_text}</pre>
+                </div>
+                """,
+            )
+        except Exception as e:
+            print(f"Failed to send update notification email: {e}")
+
+        return JsonResponse({'success': True, 'message': output_text})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
@@ -372,10 +455,72 @@ def admin_save_card_json(request):
                 json.dump(parsed_json, f, indent=4, ensure_ascii=False)
             
             return JsonResponse({
-                'success': True, 
+                'success': True,
                 'message': f'Saved to {slug_id}.json',
                 'filepath': filepath
             })
-        
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+@csrf_exempt
+@staff_member_required
+def admin_generate_blog(request):
+    """
+    Generate and publish a blog article via Grok + Unsplash.
+    POST body: {"topic": "optional override"} or {}
+    """
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+
+    # Check permissions
+    uid = request.session.get('uid')
+    if not uid and request.user.is_authenticated:
+        uid = request.user.username
+
+    if not uid:
+        return JsonResponse({'error': 'Unauthorized'}, status=403)
+
+    user_profile = db.get_user_profile(uid)
+    email = user_profile.get('email', '').lower()
+    is_super = user_profile.get('is_super_staff', False)
+
+    if email != 'colinjianingxie@gmail.com' or not is_super:
+        return JsonResponse({'error': 'Unauthorized: Restricted access'}, status=403)
+
+    try:
+        data = json.loads(request.body) if request.body else {}
+    except (json.JSONDecodeError, ValueError):
+        data = {}
+
+    from django.core.management import call_command
+    from io import StringIO
+
+    try:
+        out = StringIO()
+        kwargs = {'stdout': out}
+        topic = data.get('topic', '').strip()
+        if topic:
+            kwargs['topic'] = topic
+
+        call_command('generate_blog_article', **kwargs)
+        output = out.getvalue()
+
+        # Extract slug from output
+        slug = ''
+        title = ''
+        for line in output.splitlines():
+            if 'slug=' in line:
+                slug = line.split('slug=')[1].split()[0]
+            if 'Article: "' in line:
+                title = line.split('Article: "')[1].split('"')[0]
+
+        return JsonResponse({
+            'success': True,
+            'message': output,
+            'slug': slug,
+            'title': title,
+        })
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)

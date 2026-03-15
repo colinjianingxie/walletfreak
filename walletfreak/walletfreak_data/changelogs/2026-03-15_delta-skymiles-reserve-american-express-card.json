@@ -1,0 +1,66 @@
+{
+  "slug": "delta-skymiles-reserve-american-express-card",
+  "timestamp": "2026-03-15T02:55:48",
+  "run_id": "92129b3b",
+  "header_changes": [],
+  "benefits_changes": [
+    {
+      "action": "cosmetic_update",
+      "item_id": "delta-stays-credit",
+      "old_vid": "delta-stays-credit-v1",
+      "new_vid": "delta-stays-credit-v1",
+      "changes": [
+        {
+          "field": "additional_details",
+          "old": "Eligible bookings must be made through [delta.com/stays](https://delta.com/stays).",
+          "new": "Eligible bookings must be made through delta.com/stays."
+        }
+      ]
+    },
+    {
+      "action": "created",
+      "item_id": "free-checked-bag",
+      "old_vid": null,
+      "new_vid": "free-checked-bag-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "priority-boarding",
+      "old_vid": null,
+      "new_vid": "priority-boarding-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "hertz-status",
+      "old_vid": null,
+      "new_vid": "hertz-status-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "upgrade-priority",
+      "old_vid": null,
+      "new_vid": "upgrade-priority-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "in-flight-savings",
+      "old_vid": null,
+      "new_vid": "in-flight-savings-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "mqd-boost",
+      "old_vid": null,
+      "new_vid": "mqd-boost-v1",
+      "changes": []
+    }
+  ],
+  "earning_rates_changes": [],
+  "sign_up_bonus_changes": [],
+  "summary": "1 benefit(s) cosmetic_update, 6 benefit(s) created"
+}

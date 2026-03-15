@@ -3,12 +3,114 @@
 {% block content %}
 <div class="container" style="padding: 4rem 0;">
     <h1>Admin Dashboard</h1>
-    <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+    <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
         <div class="card" style="padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 1rem;">
             <h3>Manage Cards</h3>
-            <p>Update credit cards using AI Prompts.</p>
+            <p>View, update, and manage credit cards. Run single or bulk Grok updates.</p>
             <a href="{% url 'admin_card_list' %}" class="btn btn-primary">Go to Cards</a>
         </div>
+
+        {% if is_prompt_admin %}
+        <div class="card" style="padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 1rem;">
+            <h3>Update All Premium Cards</h3>
+            <p>Run Grok AI update for all premium cards (annual fee > $0). Uses batch mode for cost efficiency.</p>
+            <button type="button" id="btn-update-all-premium" class="btn btn-primary" style="background: #10b981;">
+                Run Premium Update
+            </button>
+            <p id="premium-update-status" style="margin-top: 1rem; font-size: 0.85rem; color: rgba(255,255,255,0.6); display: none;"></p>
+        </div>
+
+        <div class="card" style="padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 1rem;">
+            <h3>Generate Blog Article</h3>
+            <p>Auto-generate and publish a blog article using Grok AI + Unsplash.</p>
+            <button type="button" id="btn-generate-blog" class="btn btn-primary" style="background: #6366f1;">
+                Generate Article
+            </button>
+            <p id="blog-status" style="margin-top: 1rem; font-size: 0.85rem; color: rgba(255,255,255,0.6); display: none;"></p>
+        </div>
+        {% endif %}
     </div>
 </div>
+
+{% if is_prompt_admin %}
+<script>
+document.getElementById('btn-update-all-premium').addEventListener('click', function() {
+    const btn = this;
+    const status = document.getElementById('premium-update-status');
+
+    if (!confirm('Run Grok update for ALL premium cards? This may take several minutes and cost ~$1-3.')) return;
+
+    btn.innerText = 'Running...';
+    btn.disabled = true;
+    btn.style.opacity = '0.7';
+    status.style.display = 'block';
+    status.innerText = 'Update in progress... This may take a few minutes.';
+    status.style.color = '#fbbf24';
+
+    fetch('/custom-admin/cards/run-bulk-update/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({premium_only: true, batch_size: 3, update_types: 'benefits,rates,bonus'})
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.error) {
+            status.innerText = 'Error: ' + data.error;
+            status.style.color = '#ef4444';
+        } else {
+            status.innerText = 'Update complete! Check your email for details.';
+            status.style.color = '#10b981';
+        }
+    })
+    .catch(err => {
+        status.innerText = 'Request failed: ' + err.message;
+        status.style.color = '#ef4444';
+    })
+    .finally(() => {
+        btn.innerText = 'Run Premium Update';
+        btn.disabled = false;
+        btn.style.opacity = '1';
+    });
+});
+
+document.getElementById('btn-generate-blog').addEventListener('click', function() {
+    const btn = this;
+    const status = document.getElementById('blog-status');
+
+    if (!confirm('Generate and publish a new blog article? Cost ~$0.15.')) return;
+
+    btn.innerText = 'Generating...';
+    btn.disabled = true;
+    btn.style.opacity = '0.7';
+    status.style.display = 'block';
+    status.innerText = 'Generating article... This may take ~30 seconds.';
+    status.style.color = '#fbbf24';
+
+    fetch('/custom-admin/run-generate-blog/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({})
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.error) {
+            status.innerText = 'Error: ' + data.error;
+            status.style.color = '#ef4444';
+        } else {
+            status.innerHTML = 'Published: <a href="/blog/' + data.slug + '/" style="color: #60a5fa;">' + data.title + '</a>';
+            status.style.color = '#10b981';
+        }
+    })
+    .catch(err => {
+        status.innerText = 'Request failed: ' + err.message;
+        status.style.color = '#ef4444';
+    })
+    .finally(() => {
+        btn.innerText = 'Generate Article';
+        btn.disabled = false;
+        btn.style.opacity = '1';
+    });
+});
+</script>
+{% endif %}
 {% endblock %}

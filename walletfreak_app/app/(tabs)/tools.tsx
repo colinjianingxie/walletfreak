@@ -42,7 +42,6 @@ const tools = [
     description: 'Compare hotel bookings with cash vs points',
     icon: 'bed-outline' as ToolIconName,
     route: '/stacks/booking-optimizer',
-    premium: true,
   },
   {
     id: 'award-scout',

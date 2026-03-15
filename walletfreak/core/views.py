@@ -185,6 +185,18 @@ def run_cleanup_cron(request):
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
 
+@csrf_exempt
+def run_card_update_cron(request):
+    """
+    Cron endpoint to trigger premium card updates via Grok pipeline.
+    PAUSED — use admin dashboard to trigger updates manually instead.
+    """
+    return JsonResponse({
+        'status': 'paused',
+        'message': 'Automatic card updates are paused. Use the admin dashboard to trigger updates manually.'
+    }, status=200)
+
+
 def pricing(request):
     context = {
         'firebase_config': settings.FIREBASE_CLIENT_CONFIG,

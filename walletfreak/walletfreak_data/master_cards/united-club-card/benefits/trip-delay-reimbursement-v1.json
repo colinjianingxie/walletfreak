@@ -1,0 +1,21 @@
+{
+    "benefit_id": "trip-delay-reimbursement",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Trip Delay Reimbursement",
+    "description": "Trip Delay Reimbursement",
+    "additional_details": "up to $500 per traveler if delayed over 12 hours or overnight",
+    "benefit_category": [
+        "Protection",
+        "Trip Cancellation"
+    ],
+    "benefit_type": "Insurance",
+    "numeric_value": 500,
+    "numeric_type": "Cash",
+    "dollar_value": 500,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Protection"
+}

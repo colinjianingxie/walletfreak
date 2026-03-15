@@ -1,0 +1,21 @@
+{
+    "benefit_id": "extended-warranty",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Extended Warranty",
+    "description": "Extended warranty protection",
+    "additional_details": "extends U.S. manufacturer's warranty by 1 year on eligible warranties of 3 years or less",
+    "benefit_category": [
+        "Extended Warranty",
+        "Protection"
+    ],
+    "benefit_type": "Protection",
+    "numeric_value": 1,
+    "numeric_type": "Upgrade",
+    "dollar_value": null,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29",
+    "benefit_main_category": "Protection"
+}

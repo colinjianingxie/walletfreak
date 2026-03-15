@@ -1,0 +1,22 @@
+{
+    "benefit_id": "adobe-credit",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Adobe Credit",
+    "description": "$250 per calendar year after spending $600 or more on U.S. purchases directly with Adobe",
+    "additional_details": null,
+    "benefit_category": [
+        "Adobe",
+        "Business",
+        "Software as a Service"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 250.0,
+    "numeric_type": "Cash",
+    "dollar_value": 250,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": true,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Retail Shopping"
+}

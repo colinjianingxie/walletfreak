@@ -1,0 +1,22 @@
+{
+    "benefit_id": "rideshare-credit",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Rideshare Credit",
+    "description": "Up to $150 each calendar year on rideshare purchases",
+    "additional_details": "up to $12 monthly January-November, $18 in December",
+    "benefit_category": [
+        "Transit",
+        "Uber",
+        "Lyft"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 150,
+    "numeric_type": "Cash",
+    "dollar_value": 150,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": true,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Transit"
+}

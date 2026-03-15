@@ -63,3 +63,13 @@ export const checkDeleteConsequences = async (userCardId: string) => {
   const { data } = await apiClient.get(`/wallet/check-delete/${userCardId}/`);
   return data;
 };
+
+export const syncWallet = async () => {
+  const { data } = await apiClient.post('/wallet/sync/');
+  return data;
+};
+
+export const getWalletChangelogs = async () => {
+  const { data } = await apiClient.get('/wallet/changelogs/');
+  return data;
+};

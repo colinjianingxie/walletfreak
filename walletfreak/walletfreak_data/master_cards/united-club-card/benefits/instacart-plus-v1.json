@@ -1,0 +1,21 @@
+{
+    "benefit_id": "instacart-plus",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Complimentary Instacart+ Membership",
+    "description": "Complimentary Instacart+ membership",
+    "additional_details": "activate by 12/31/27; $0 delivery fees on eligible orders over $35; ends 12/31/27 or after 1-year minimum",
+    "benefit_category": [
+        "Delivery",
+        "Instacart"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Permanent",
+    "enrollment_required": true,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Delivery"
+}

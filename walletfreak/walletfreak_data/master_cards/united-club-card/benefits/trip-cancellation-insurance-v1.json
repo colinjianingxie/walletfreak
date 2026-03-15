@@ -1,0 +1,21 @@
+{
+    "benefit_id": "trip-cancellation-insurance",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Trip Cancellation/Interruption Insurance",
+    "description": "Trip Cancellation/Interruption Insurance",
+    "additional_details": "up to $10,000 per traveler, $20,000 per trip for non-refundable expenses",
+    "benefit_category": [
+        "Protection",
+        "Trip Cancellation"
+    ],
+    "benefit_type": "Insurance",
+    "numeric_value": 10000,
+    "numeric_type": "Cash",
+    "dollar_value": 10000,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Protection"
+}

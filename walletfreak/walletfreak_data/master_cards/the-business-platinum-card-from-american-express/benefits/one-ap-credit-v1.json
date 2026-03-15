@@ -1,0 +1,20 @@
+{
+    "benefit_id": "one-ap-credit",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "American Express One AP Credit",
+    "description": "Up to $2,400 in statement credits for next calendar year's monthly fees on American Express One AP",
+    "additional_details": "after spending $250,000 on eligible purchases in current calendar year; credits valid January 1 to December 31 of following year",
+    "benefit_category": [
+        "Business"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 2400.0,
+    "numeric_type": "Cash",
+    "dollar_value": 2400,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Business"
+}

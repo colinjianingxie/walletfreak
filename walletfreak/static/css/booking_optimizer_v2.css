@@ -241,6 +241,19 @@
     object-fit: cover;
 }
 
+.hh-no-image-v2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f1f5f9;
+}
+
+.hh-no-image-v2::after {
+    content: 'No image';
+    color: #94a3b8;
+    font-size: 0.8rem;
+}
+
 .hh-rating-badge {
     position: absolute;
     top: 0.75rem;

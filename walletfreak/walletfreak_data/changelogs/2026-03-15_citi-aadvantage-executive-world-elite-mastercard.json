@@ -1,0 +1,72 @@
+{
+  "slug": "citi-aadvantage-executive-world-elite-mastercard",
+  "timestamp": "2026-03-15T03:00:17",
+  "run_id": "92129b3b",
+  "header_changes": [],
+  "benefits_changes": [
+    {
+      "action": "cosmetic_update",
+      "item_id": "admirals-club",
+      "old_vid": "admirals-club-v1",
+      "new_vid": "admirals-club-v1",
+      "changes": [
+        {
+          "field": "additional_details",
+          "old": "Value of up to $850; primary cardmember and immediate family or up to 2 guests",
+          "new": "Value of up to $850; primary cardmember and immediate family or up to 2 guests; Complimentary access for Authorized Users"
+        }
+      ]
+    },
+    {
+      "action": "cosmetic_update",
+      "item_id": "rental-car-credit",
+      "old_vid": "rental-car-credit-v1",
+      "new_vid": "rental-car-credit-v1",
+      "changes": [
+        {
+          "field": "description",
+          "old": "Up to $120 back on eligible prepaid Avis\u00ae or Budget rentals",
+          "new": "Up to $120 back on eligible prepaid car rentals booked directly on aa.com or through the AAdvantage program with Avis or Budget"
+        }
+      ]
+    },
+    {
+      "action": "created",
+      "item_id": "inflight-savings",
+      "old_vid": null,
+      "new_vid": "inflight-savings-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "loyalty-points",
+      "old_vid": null,
+      "new_vid": "loyalty-points-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "no-foreign-fees",
+      "old_vid": null,
+      "new_vid": "no-foreign-fees-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "travel-protection",
+      "old_vid": null,
+      "new_vid": "travel-protection-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "id-theft-protection",
+      "old_vid": null,
+      "new_vid": "id-theft-protection-v1",
+      "changes": []
+    }
+  ],
+  "earning_rates_changes": [],
+  "sign_up_bonus_changes": [],
+  "summary": "2 benefit(s) cosmetic_update, 5 benefit(s) created"
+}

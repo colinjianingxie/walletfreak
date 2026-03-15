@@ -36,7 +36,7 @@ const TAG_GROUPS = [
   { label: 'Ecosystem', tags: ['American Express', 'Chase', 'Citi'] },
   { label: 'Content Type', tags: ['guide', 'review', 'lounges', 'savings', 'strategy', 'tips'] },
   { label: 'Experience Level', tags: ['Beginner', 'Intermediate', 'Advanced'] },
-  { label: 'Read Time', tags: ['Short (< 3m)', 'Medium (3-7m)', 'Long (7m+)', 'Video Only'] },
+  { label: 'Read Time', tags: ['Short (< 3m)', 'Medium (3-7m)', 'Long (7m+)'] },
 ];
 
 // Quick filter categories for datapoints
@@ -826,18 +826,22 @@ const styles = StyleSheet.create({
   // Quick filter pills
   quickFilterRow: {
     marginBottom: 10,
+    minHeight: 48,
   },
   quickFilterContent: {
     paddingHorizontal: 16,
     gap: 10,
     flexDirection: 'row',
     alignItems: 'center',
+    paddingVertical: 4,
   },
   quickFilterChip: {
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 22,
     borderWidth: 1,
+    minHeight: 40,
+    justifyContent: 'center',
   },
   quickFilterChipActive: {
     backgroundColor: '#1E293B',

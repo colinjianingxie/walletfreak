@@ -1,0 +1,20 @@
+{
+    "benefit_id": "fhr-value",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Fine Hotels + Resorts Value",
+    "description": "$550 average total value based on 2024 bookings for two-night stays",
+    "additional_details": "value varies by property, benefits, and usage",
+    "benefit_category": [
+        "Hotels"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 550.0,
+    "numeric_type": "Cash",
+    "dollar_value": 550,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Hotels"
+}

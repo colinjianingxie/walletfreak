@@ -1,0 +1,21 @@
+{
+    "benefit_id": "pqp-earning",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "PQP per Spend",
+    "description": "Earn 1 PQP per $15 spent",
+    "additional_details": "up to 28,000 PQP per year",
+    "benefit_category": [
+        "Airlines",
+        "United Airlines"
+    ],
+    "benefit_type": "Bonus",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Airlines"
+}

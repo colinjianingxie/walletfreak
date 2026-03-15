@@ -4,6 +4,7 @@ from core.services import db
 from django.utils.text import slugify
 import os
 import json
+import re
 
 class Command(BaseCommand):
     help = 'Seeds the Firestore database with initial data'
@@ -288,7 +289,19 @@ class Command(BaseCommand):
             c_qs = seed_subcollection('card_questions', 'card_questions', 'calculator_questions')
             if c_qs: seeded_types.append(f'{c_qs} questions')
 
+            # Build and store benefit version map
+            version_map = self._build_benefit_version_map(card_path)
+            if version_map:
+                db.db.collection('master_cards').document(card_slug).update({
+                    'benefit_version_map': version_map
+                })
+                seeded_types.append(f'{len(version_map)} version mappings')
+
             self.stdout.write(f'Seeded {card_slug}: {", ".join(seeded_types)}')
+
+        # Seed changelogs to Firestore
+        if seed_all or card_slugs_list or types_list:
+            self._seed_changelogs(base_dir, card_slugs_list)
 
         # After processing all cards, upsert collected categories
         if seed_categories and all_categories:
@@ -443,3 +456,106 @@ class Command(BaseCommand):
             batch.commit()
             
         self.stdout.write(f"Seeded transfer rules for {count} source programs.")
+
+    def _build_benefit_version_map(self, card_dir):
+        """Build a map of old benefit version IDs to current active version IDs.
+
+        Scans benefit files, groups by base benefit_id, finds the active version,
+        and maps all inactive versions to the active one.
+
+        Returns:
+            dict: e.g. {"dining-credit-v1": "dining-credit-v2"}
+        """
+        benefits_dir = os.path.join(card_dir, 'benefits')
+        if not os.path.exists(benefits_dir):
+            return {}
+
+        # Group benefits by base_id
+        # Filename pattern: {base_id}-v{N}.json
+        benefits_by_base = {}  # base_id -> [(version_num, filename, is_active)]
+
+        for fname in os.listdir(benefits_dir):
+            if not fname.endswith('.json'):
+                continue
+
+            vid = fname.replace('.json', '')
+            # Extract base_id and version number
+            match = re.match(r'^(.+)-v(\d+)$', vid)
+            if not match:
+                continue
+
+            base_id = match.group(1)
+            version_num = int(match.group(2))
+
+            try:
+                with open(os.path.join(benefits_dir, fname), 'r') as f:
+                    data = json.load(f)
+                is_active = data.get('is_active', True)
+            except (json.JSONDecodeError, OSError):
+                continue
+
+            if base_id not in benefits_by_base:
+                benefits_by_base[base_id] = []
+            benefits_by_base[base_id].append((version_num, vid, is_active))
+
+        # Build version map: old inactive versions -> current active version
+        version_map = {}
+        for base_id, versions in benefits_by_base.items():
+            # Find the active version (highest version number that is active)
+            active_versions = [(v, vid) for v, vid, active in versions if active]
+            if not active_versions:
+                continue
+
+            active_versions.sort(key=lambda x: x[0], reverse=True)
+            current_vid = active_versions[0][1]
+
+            # Map all inactive versions to the current active version
+            for v_num, vid, is_active in versions:
+                if not is_active and vid != current_vid:
+                    version_map[vid] = current_vid
+
+        return version_map
+
+    def _seed_changelogs(self, base_dir, card_slugs_list=None):
+        """Seed changelog entries to Firestore card_changelogs collection."""
+        changelog_dir = os.path.join(base_dir, 'walletfreak_data', 'changelogs')
+        if not os.path.exists(changelog_dir):
+            self.stdout.write(self.style.WARNING('No changelogs directory found'))
+            return
+
+        batch = db.db.batch()
+        count = 0
+
+        for filename in sorted(os.listdir(changelog_dir)):
+            if not filename.endswith('.json'):
+                continue
+
+            # Filter by card slugs if specified
+            if card_slugs_list:
+                # filename: YYYY-MM-DD_slug.json or YYYY-MM-DD_slug_N.json
+                parts = filename.replace('.json', '').split('_', 1)
+                if len(parts) >= 2:
+                    file_slug = parts[1].rsplit('_', 1)[0] if '_' in parts[1] and parts[1].rsplit('_', 1)[1].isdigit() else parts[1]
+                    if file_slug not in card_slugs_list:
+                        continue
+
+            filepath = os.path.join(changelog_dir, filename)
+            try:
+                with open(filepath, 'r') as f:
+                    data = json.load(f)
+            except (json.JSONDecodeError, OSError):
+                continue
+
+            doc_id = filename.replace('.json', '')
+            doc_ref = db.db.collection('card_changelogs').document(doc_id)
+            batch.set(doc_ref, data)
+            count += 1
+
+            if count % 400 == 0:
+                batch.commit()
+                batch = db.db.batch()
+
+        if count % 400 != 0:
+            batch.commit()
+
+        self.stdout.write(f"Seeded {count} changelog entries.")

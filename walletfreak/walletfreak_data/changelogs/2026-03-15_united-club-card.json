@@ -1,0 +1,236 @@
+{
+  "slug": "united-club-card",
+  "timestamp": "2026-03-15T03:04:25",
+  "run_id": "92129b3b",
+  "header_changes": [],
+  "benefits_changes": [
+    {
+      "action": "updated",
+      "item_id": "club-membership",
+      "old_vid": "club-membership-v1",
+      "new_vid": "club-membership-v2",
+      "changes": [
+        {
+          "field": "numeric_type",
+          "old": "Lounge",
+          "new": null
+        },
+        {
+          "field": "dollar_value",
+          "old": null,
+          "new": 750
+        },
+        {
+          "field": "numeric_value",
+          "old": 3,
+          "new": null
+        }
+      ]
+    },
+    {
+      "action": "updated",
+      "item_id": "free-bags",
+      "old_vid": "free-bags-v1",
+      "new_vid": "free-bags-v2",
+      "changes": [
+        {
+          "field": "dollar_value",
+          "old": null,
+          "new": 360
+        }
+      ]
+    },
+    {
+      "action": "created",
+      "item_id": "club-all-access",
+      "old_vid": null,
+      "new_vid": "club-all-access-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "renowned-hotels-credit",
+      "old_vid": null,
+      "new_vid": "renowned-hotels-credit-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "rideshare-credit",
+      "old_vid": null,
+      "new_vid": "rideshare-credit-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "travelbank-car-rental-credit",
+      "old_vid": null,
+      "new_vid": "travelbank-car-rental-credit-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "instacart-credit",
+      "old_vid": null,
+      "new_vid": "instacart-credit-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "jsx-credit",
+      "old_vid": null,
+      "new_vid": "jsx-credit-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "global-entry-credit",
+      "old_vid": null,
+      "new_vid": "global-entry-credit-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "bonus-pqp",
+      "old_vid": null,
+      "new_vid": "bonus-pqp-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "pqp-earning",
+      "old_vid": null,
+      "new_vid": "pqp-earning-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "ihg-platinum-status",
+      "old_vid": null,
+      "new_vid": "ihg-platinum-status-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "avis-presidents-club",
+      "old_vid": null,
+      "new_vid": "avis-presidents-club-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "trip-cancellation-insurance",
+      "old_vid": null,
+      "new_vid": "trip-cancellation-insurance-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "baggage-delay-insurance",
+      "old_vid": null,
+      "new_vid": "baggage-delay-insurance-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "lost-luggage-reimbursement",
+      "old_vid": null,
+      "new_vid": "lost-luggage-reimbursement-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "trip-delay-reimbursement",
+      "old_vid": null,
+      "new_vid": "trip-delay-reimbursement-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "auto-rental-coverage",
+      "old_vid": null,
+      "new_vid": "auto-rental-coverage-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "purchase-protection",
+      "old_vid": null,
+      "new_vid": "purchase-protection-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "return-protection",
+      "old_vid": null,
+      "new_vid": "return-protection-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "extended-warranty",
+      "old_vid": null,
+      "new_vid": "extended-warranty-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "premier-access",
+      "old_vid": null,
+      "new_vid": "premier-access-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "inflight-discount",
+      "old_vid": null,
+      "new_vid": "inflight-discount-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "award-mile-discount",
+      "old_vid": null,
+      "new_vid": "award-mile-discount-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "saver-award-discount",
+      "old_vid": null,
+      "new_vid": "saver-award-discount-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "no-foreign-fees",
+      "old_vid": null,
+      "new_vid": "no-foreign-fees-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "visa-concierge",
+      "old_vid": null,
+      "new_vid": "visa-concierge-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "instacart-plus",
+      "old_vid": null,
+      "new_vid": "instacart-plus-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "premier-upgrades-awards",
+      "old_vid": null,
+      "new_vid": "premier-upgrades-awards-v1",
+      "changes": []
+    }
+  ],
+  "earning_rates_changes": [],
+  "sign_up_bonus_changes": [],
+  "summary": "2 benefit(s) updated, 27 benefit(s) created"
+}

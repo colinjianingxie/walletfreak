@@ -12,7 +12,7 @@
     "active_indices": {
         "benefits": [
             "airline-credit-v1",
-            "hotel-credit-v1",
+            "hotel-credit-v2",
             "clear-credit-v1",
             "uber-cash-v1",
             "entertainment-credit-v1",
@@ -21,7 +21,9 @@
             "walmart-credit-v1",
             "saks-credit-v1",
             "equinox-credit-v1",
-            "oura-credit-v1"
+            "oura-credit-v1",
+            "uber-one-credit-v1",
+            "trusted-traveler-credit-v1"
         ],
         "earning_rates": [
             "airlines-v1",

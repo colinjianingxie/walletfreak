@@ -1,0 +1,21 @@
+{
+    "benefit_id": "free-bags",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Free Bags",
+    "description": "Free first & second checked bag on United flights",
+    "additional_details": "for the cardmember and one companion on the same reservation; savings up to $360 per roundtrip",
+    "benefit_category": [
+        "Airlines",
+        "United Airlines"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": 360,
+    "time_category": "Permanent",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29",
+    "benefit_main_category": "Airlines"
+}

@@ -1,0 +1,21 @@
+{
+    "benefit_id": "club-all-access",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Club All Access",
+    "description": "Earn United Club All Access membership",
+    "additional_details": "after $50,000 in net purchases in a calendar year or earning Premier Gold status or higher; valid for remainder of effective year and next year; maintenance requires Premier Gold status or $50,000 annual spend; with All Access and an authorized user, earn 4 United Club one-time passes annually on account anniversary (over $200 value)",
+    "benefit_category": [
+        "United Airlines",
+        "United Club"
+    ],
+    "benefit_type": "Access",
+    "numeric_value": 4,
+    "numeric_type": null,
+    "dollar_value": 200,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2025-08-01",
+    "benefit_main_category": "Airlines"
+}

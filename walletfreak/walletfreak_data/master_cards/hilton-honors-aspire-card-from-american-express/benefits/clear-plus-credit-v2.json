@@ -1,0 +1,21 @@
+{
+    "benefit_id": "clear-plus-credit",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "CLEAR Plus Credit",
+    "description": "$209 CLEAR Plus Credit",
+    "additional_details": null,
+    "benefit_category": [
+        "Airport Security Credits",
+        "CLEAR Plus"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 209.0,
+    "numeric_type": "Cash",
+    "dollar_value": 209,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": true,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Travel Perks"
+}

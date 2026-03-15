@@ -1,0 +1,22 @@
+{
+    "benefit_id": "premier-upgrades-awards",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Complimentary Premier Upgrades on Award Tickets",
+    "description": "Complimentary Premier Upgrades on award tickets for Premier status holders",
+    "additional_details": "primary and one companion, subject to availability",
+    "benefit_category": [
+        "Airlines",
+        "United Airlines",
+        "Upgrade Priority"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Permanent",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Airlines"
+}

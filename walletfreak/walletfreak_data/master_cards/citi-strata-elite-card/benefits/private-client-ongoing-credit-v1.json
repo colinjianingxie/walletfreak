@@ -1,0 +1,20 @@
+{
+    "benefit_id": "private-client-ongoing-credit",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Private Client Ongoing Credit",
+    "description": "$145 Citigold Private Client Credit each year after the first",
+    "additional_details": null,
+    "benefit_category": [
+        "Financial Rewards"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 145.0,
+    "numeric_type": "Cash",
+    "dollar_value": 145,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": true,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Financial Rewards"
+}

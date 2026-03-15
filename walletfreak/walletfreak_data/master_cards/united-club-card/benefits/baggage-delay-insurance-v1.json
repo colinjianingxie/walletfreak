@@ -1,0 +1,21 @@
+{
+    "benefit_id": "baggage-delay-insurance",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Baggage Delay Insurance",
+    "description": "Baggage Delay Insurance",
+    "additional_details": "up to $100/day for 3 days if delayed over 6 hours",
+    "benefit_category": [
+        "Protection",
+        "Baggage Delay Insurance"
+    ],
+    "benefit_type": "Insurance",
+    "numeric_value": 100,
+    "numeric_type": "Cash",
+    "dollar_value": 100,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Protection"
+}

@@ -1,0 +1,20 @@
+{
+    "benefit_id": "hilton-credit",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Hilton Credit",
+    "description": "Up to $200 per calendar year ($50 quarterly) for Hilton for Business members on eligible purchases directly with Hilton",
+    "additional_details": "enrollment required; auto-registers if no account exists",
+    "benefit_category": [
+        "Generic Hilton"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 200.0,
+    "numeric_type": "Cash",
+    "dollar_value": 200,
+    "time_category": "Quarterly",
+    "enrollment_required": true,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Hotels"
+}

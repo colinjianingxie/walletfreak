@@ -1,0 +1,48 @@
+{
+  "slug": "american-express-platinum-card",
+  "timestamp": "2026-03-15T02:51:29",
+  "run_id": "92129b3b",
+  "header_changes": [],
+  "benefits_changes": [
+    {
+      "action": "updated",
+      "item_id": "hotel-credit",
+      "old_vid": "hotel-credit-v1",
+      "new_vid": "hotel-credit-v2",
+      "changes": [
+        {
+          "field": "time_category",
+          "old": "Semi-annually",
+          "new": "Per Use"
+        },
+        {
+          "field": "dollar_value",
+          "old": 600,
+          "new": 100
+        },
+        {
+          "field": "numeric_value",
+          "old": 600.0,
+          "new": 100.0
+        }
+      ]
+    },
+    {
+      "action": "created",
+      "item_id": "uber-one-credit",
+      "old_vid": null,
+      "new_vid": "uber-one-credit-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "trusted-traveler-credit",
+      "old_vid": null,
+      "new_vid": "trusted-traveler-credit-v1",
+      "changes": []
+    }
+  ],
+  "earning_rates_changes": [],
+  "sign_up_bonus_changes": [],
+  "summary": "1 benefit(s) updated, 2 benefit(s) created"
+}

@@ -1,0 +1,21 @@
+{
+    "benefit_id": "leaders-club-status",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Leaders Club Sterling Status",
+    "description": "Complimentary Leaders Club Sterling Status from The Leading Hotels of the World",
+    "additional_details": "enrollment required; available at over 400 independent luxury hotels",
+    "benefit_category": [
+        "Hotels",
+        "Status Boost"
+    ],
+    "benefit_type": "Status",
+    "numeric_value": 1,
+    "numeric_type": "Upgrade",
+    "dollar_value": null,
+    "time_category": "Ongoing",
+    "enrollment_required": true,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Hotels"
+}

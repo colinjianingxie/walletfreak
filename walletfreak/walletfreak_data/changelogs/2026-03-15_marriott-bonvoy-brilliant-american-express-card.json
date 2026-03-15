@@ -1,0 +1,58 @@
+{
+  "slug": "marriott-bonvoy-brilliant-american-express-card",
+  "timestamp": "2026-03-15T02:55:48",
+  "run_id": "92129b3b",
+  "header_changes": [],
+  "benefits_changes": [
+    {
+      "action": "updated",
+      "item_id": "marriott-dining",
+      "old_vid": "marriott-dining-v1",
+      "new_vid": "marriott-dining-v2",
+      "changes": [
+        {
+          "field": "benefit_category",
+          "old": [
+            "Dining",
+            "Generic Marriott Bonvoy",
+            "Hotels"
+          ],
+          "new": [
+            "Dining"
+          ]
+        }
+      ]
+    },
+    {
+      "action": "created",
+      "item_id": "earned-choice-award",
+      "old_vid": null,
+      "new_vid": "earned-choice-award-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "elite-night-credits",
+      "old_vid": null,
+      "new_vid": "elite-night-credits-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "luxury-property-credit",
+      "old_vid": null,
+      "new_vid": "luxury-property-credit-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "priority-pass-select",
+      "old_vid": null,
+      "new_vid": "priority-pass-select-v1",
+      "changes": []
+    }
+  ],
+  "earning_rates_changes": [],
+  "sign_up_bonus_changes": [],
+  "summary": "1 benefit(s) updated, 4 benefit(s) created"
+}

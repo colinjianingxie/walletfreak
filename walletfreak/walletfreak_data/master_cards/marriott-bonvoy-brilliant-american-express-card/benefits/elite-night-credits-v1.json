@@ -1,0 +1,21 @@
+{
+    "benefit_id": "elite-night-credits",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "25 Elite Night Credits",
+    "description": "25 Elite Night Credits annually",
+    "additional_details": "Credited each calendar year to help achieve or maintain higher elite status levels",
+    "benefit_category": [
+        "Generic Marriott Bonvoy",
+        "Status Boost"
+    ],
+    "benefit_type": "Status",
+    "numeric_value": 25.0,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": null,
+    "benefit_main_category": "Hotels"
+}

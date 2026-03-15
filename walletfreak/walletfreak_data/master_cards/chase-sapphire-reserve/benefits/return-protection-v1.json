@@ -1,0 +1,21 @@
+{
+    "benefit_id": "return-protection",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Return Protection",
+    "description": "Return protection",
+    "additional_details": "reimbursement for eligible items if merchant won't take back within 90 days, up to $500 per item, $1,000 per year",
+    "benefit_category": [
+        "Return Protection",
+        "Protection"
+    ],
+    "benefit_type": "Protection",
+    "numeric_value": 500.0,
+    "numeric_type": "Cash",
+    "dollar_value": 500,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29",
+    "benefit_main_category": "Protection"
+}

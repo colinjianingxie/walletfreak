@@ -16,6 +16,8 @@ class Command(BaseCommand):
         parser.add_argument('--update-types', type=str, default='all',
                             help='Components to update: header, bonus, benefits, rates, questions, all')
         parser.add_argument('--prompt', action='store_true', help='Output prompt for debugging')
+        parser.add_argument('--batch-size', type=int, default=1,
+                            help='Number of cards per API call (1=default, 3-5 recommended for cost savings)')
         parser.add_argument('--deprecate', type=str, help='Deprecate a card: slug:reason:successor1,successor2')
 
     def handle(self, *args, **options):
@@ -75,11 +77,16 @@ class Command(BaseCommand):
         self.stdout.write(f"Processing {len(slugs)} cards...")
         pipeline = CardUpdatePipeline(api_key=api_key, master_dir=master_dir, logger_obj=self.stdout)
 
+        batch_size = options.get('batch_size', 1)
+        if batch_size > 1:
+            self.stdout.write(f"Batch mode: {batch_size} cards per API call")
+
         results = pipeline.run(
             slugs=slugs,
             update_types=update_types_list,
             prompt_only=options.get('prompt', False),
             auto_seed=options.get('auto_seed', False),
+            batch_size=batch_size,
         )
 
         for r in results:
@@ -88,7 +95,10 @@ class Command(BaseCommand):
                 self.stdout.write("-" * 50)
                 self.stdout.write(r.prompt_text)
             elif r.success:
-                self.stdout.write(self.style.SUCCESS(f"Updated {r.slug}"))
+                cost_str = f" (${r.usage.total_cost:.4f})" if r.usage.total_tokens else ""
+                self.stdout.write(self.style.SUCCESS(f"Updated {r.slug}{cost_str}"))
+                if r.usage.total_tokens:
+                    self.stdout.write(f"  Tokens: {r.usage.prompt_tokens:,} in + {r.usage.completion_tokens:,} out")
                 if r.changelog:
                     self.stdout.write(f"  Changelog: {r.changelog.summary}")
             else:

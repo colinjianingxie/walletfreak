@@ -1,0 +1,20 @@
+{
+    "benefit_id": "id-theft-protection",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "ID Theft Protection",
+    "description": "Mastercard ID Theft Protection: Free monitoring of chosen information for suspicious activity",
+    "additional_details": null,
+    "benefit_category": [
+        "Protection"
+    ],
+    "benefit_type": "Protection",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Ongoing",
+    "enrollment_required": true,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Protection"
+}

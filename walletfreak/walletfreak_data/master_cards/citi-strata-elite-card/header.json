@@ -19,9 +19,11 @@
             "security-program-v1",
             "citigold-credit-v1",
             "private-client-credit-v1",
+            "private-client-ongoing-credit-v1",
             "protection-v1",
             "no-foreign-fees-v1",
-            "mixology-classes-v1"
+            "citi-entertainment-v1",
+            "id-theft-protection-v1"
         ],
         "earning_rates": [
             "citi-travel-hotels-v1",

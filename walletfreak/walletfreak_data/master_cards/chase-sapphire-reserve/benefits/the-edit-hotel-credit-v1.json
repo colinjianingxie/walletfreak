@@ -1,8 +1,8 @@
 {
     "benefit_id": "the-edit-hotel-credit",
     "valid_from": "2020-01-01",
-    "valid_until": null,
-    "is_active": true,
+    "valid_until": "2026-03-14",
+    "is_active": false,
     "short_description": "The Edit Hotel Credit",
     "description": "$500 The Edit by Chase Travel hotel credit",
     "additional_details": "up to $500 annually, max $250 per transaction on prepaid 2-night stays",

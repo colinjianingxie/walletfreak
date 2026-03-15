@@ -1,0 +1,22 @@
+{
+    "benefit_id": "edit-stays-perks",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "The Edit Stays Perks",
+    "description": "$550+ in Value with The Edit Stays",
+    "additional_details": "Complimentary benefits on The Edit bookings via Chase Travel (e.g., property credit, daily breakfast for two, room upgrade if available); average $550 per stay",
+    "benefit_category": [
+        "Chase Travel",
+        "The Edit by Chase Travel",
+        "Hotels"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 550.0,
+    "numeric_type": "Cash",
+    "dollar_value": 550,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": "2026-01-01",
+    "benefit_main_category": "Travel Perks"
+}
