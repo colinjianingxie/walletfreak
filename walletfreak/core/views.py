@@ -197,6 +197,48 @@ def run_card_update_cron(request):
     }, status=200)
 
 
+@csrf_exempt
+def run_blog_generation_cron(request):
+    """
+    Cron endpoint to auto-generate and publish a blog article.
+    Protected by secret.
+    Usage: /cron/generate-blog/?secret=YOUR_CRON_SECRET
+    """
+    import os
+    from django.core.management import call_command
+    from io import StringIO
+
+    cron_secret = os.environ.get('CRON_SECRET', 'temp_insecure_secret_change_me')
+    request_secret = request.GET.get('secret')
+
+    if request_secret != cron_secret:
+        return JsonResponse({'status': 'error', 'message': 'Unauthorized'}, status=401)
+
+    try:
+        out = StringIO()
+        call_command('generate_blog_article', stdout=out)
+        output_text = out.getvalue()
+
+        try:
+            db.send_email_notification(
+                to='colinjianingxie@gmail.com',
+                subject='WalletFreak: Blog Article Auto-Published',
+                text_content=output_text,
+                html_content=f"""
+                <div style="font-family: sans-serif; max-width: 700px; margin: 0 auto;">
+                    <h2>Blog Article Auto-Published</h2>
+                    <pre style="background: #f5f5f5; padding: 16px; border-radius: 8px; font-size: 13px; overflow-x: auto;">{output_text}</pre>
+                </div>
+                """,
+            )
+        except Exception as e:
+            print(f"Failed to send blog cron notification: {e}")
+
+        return JsonResponse({'status': 'success', 'output': output_text})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+
+
 def pricing(request):
     context = {
         'firebase_config': settings.FIREBASE_CLIENT_CONFIG,
