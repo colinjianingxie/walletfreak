@@ -1,0 +1,20 @@
+{
+    "benefit_id": "no-foreign-fees",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "No Foreign Transaction Fees",
+    "description": "No foreign transaction fees",
+    "additional_details": "on international purchases",
+    "benefit_category": [
+        "Travel Perks"
+    ],
+    "benefit_type": "Waiver",
+    "numeric_value": 0,
+    "numeric_type": "Cash",
+    "dollar_value": 0,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29",
+    "benefit_main_category": "Travel Perks"
+}

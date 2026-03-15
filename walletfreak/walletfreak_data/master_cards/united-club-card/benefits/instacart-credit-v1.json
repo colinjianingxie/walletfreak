@@ -1,0 +1,21 @@
+{
+    "benefit_id": "instacart-credit",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Instacart Credits",
+    "description": "Up to $240 each calendar year in Instacart credits",
+    "additional_details": "two $10 credits monthly for direct Instacart purchases",
+    "benefit_category": [
+        "Delivery",
+        "Instacart"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 240,
+    "numeric_type": "Cash",
+    "dollar_value": 240,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Delivery"
+}

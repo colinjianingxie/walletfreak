@@ -1,0 +1,20 @@
+{
+    "benefit_id": "events-experiences",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Events and Experiences",
+    "description": "Access to special events and experiences",
+    "additional_details": "special ticket packages and private experiences in travel, dining, music, film, entertainment, arts via reservedbysapphire.com",
+    "benefit_category": [
+        "Entertainment"
+    ],
+    "benefit_type": "Access",
+    "numeric_value": 0,
+    "numeric_type": "Cash",
+    "dollar_value": 0,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29",
+    "benefit_main_category": "Entertainment"
+}

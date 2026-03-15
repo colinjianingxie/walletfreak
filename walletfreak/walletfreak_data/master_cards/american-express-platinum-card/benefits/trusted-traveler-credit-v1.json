@@ -1,0 +1,22 @@
+{
+    "benefit_id": "trusted-traveler-credit",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Global Entry/TSA PreCheck Credit",
+    "description": "Up to $120 statement credit every 4 years for Global Entry or up to $85 for TSA PreCheck",
+    "additional_details": "Global Entry includes TSA PreCheck",
+    "benefit_category": [
+        "Airport Security Credits",
+        "Global Entry",
+        "TSA PreCheck"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 120.0,
+    "numeric_type": "Cash",
+    "dollar_value": 120,
+    "time_category": "Every 4 years",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Travel Perks"
+}

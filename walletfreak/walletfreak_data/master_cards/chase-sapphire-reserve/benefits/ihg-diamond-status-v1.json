@@ -1,0 +1,22 @@
+{
+    "benefit_id": "ihg-diamond-status",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "IHG Diamond Status",
+    "description": "Complimentary IHG One Rewards Diamond Elite status",
+    "additional_details": "after $75,000 annual spend; available remainder of year earned + following year; activate by linking account",
+    "benefit_category": [
+        "Generic IHG",
+        "Hotels",
+        "Status Boost"
+    ],
+    "benefit_type": "Status",
+    "numeric_value": 1,
+    "numeric_type": "Upgrade",
+    "dollar_value": null,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": true,
+    "effective_date": "2026-01-01",
+    "benefit_main_category": "Hotels"
+}

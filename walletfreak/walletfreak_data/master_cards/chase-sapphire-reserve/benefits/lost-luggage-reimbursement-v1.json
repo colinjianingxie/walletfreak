@@ -1,0 +1,20 @@
+{
+    "benefit_id": "lost-luggage-reimbursement",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Lost Luggage Reimbursement",
+    "description": "Lost luggage reimbursement",
+    "additional_details": "up to $3,000 per traveler for repair/replacement of lost/damaged/stolen baggage",
+    "benefit_category": [
+        "Protection"
+    ],
+    "benefit_type": "Insurance",
+    "numeric_value": 3000.0,
+    "numeric_type": "Cash",
+    "dollar_value": 3000,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Protection"
+}

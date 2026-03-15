@@ -1,0 +1,22 @@
+{
+    "benefit_id": "premier-access",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Premier Access Travel Services",
+    "description": "Premier Access travel services",
+    "additional_details": "priority check-in, security, boarding, baggage handling where available; for primary and companions on same reservation",
+    "benefit_category": [
+        "Airlines",
+        "United Airlines",
+        "Priority Boarding"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Permanent",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Airlines"
+}

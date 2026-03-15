@@ -1,0 +1,21 @@
+{
+    "benefit_id": "hotel-collection-credit",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "The Hotel Collection Credit",
+    "description": "$100 credit on eligible charges for two-night minimum stay bookings through AmexTravel.com",
+    "additional_details": "eligible charges vary by property",
+    "benefit_category": [
+        "Amex Travel",
+        "Hotels"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 100.0,
+    "numeric_type": "Cash",
+    "dollar_value": 100,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Travel Perks"
+}

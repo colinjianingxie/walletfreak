@@ -1,8 +1,8 @@
 {
     "benefit_id": "adobe-credit",
     "valid_from": "2020-01-01",
-    "valid_until": null,
-    "is_active": true,
+    "valid_until": "2026-03-14",
+    "is_active": false,
     "short_description": "Adobe Credit",
     "description": "$150 Adobe Annual Credit",
     "additional_details": null,

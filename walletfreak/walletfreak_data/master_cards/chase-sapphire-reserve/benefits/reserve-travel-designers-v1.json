@@ -1,0 +1,21 @@
+{
+    "benefit_id": "reserve-travel-designers",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Reserve Travel Designers",
+    "description": "Custom itinerary building with Reserve Travel Designers",
+    "additional_details": "personalized service unlocking hidden gems and experiences; valued up to $300 per trip; no travel agency fees",
+    "benefit_category": [
+        "Chase Travel",
+        "Travel Perks"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": 300.0,
+    "numeric_type": "Cash",
+    "dollar_value": 300,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29",
+    "benefit_main_category": "Travel Perks"
+}

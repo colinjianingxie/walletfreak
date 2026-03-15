@@ -1,8 +1,8 @@
 {
     "benefit_id": "dell-credit",
     "valid_from": "2020-01-01",
-    "valid_until": null,
-    "is_active": true,
+    "valid_until": "2026-03-14",
+    "is_active": false,
     "short_description": "Dell Credit",
     "description": "$400 Dell Technologies Credit",
     "additional_details": "$200 semi-annually",

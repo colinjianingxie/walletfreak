@@ -16,7 +16,12 @@
             "lyft-credit-v1",
             "rental-car-credit-v1",
             "global-entry-credit-v1",
-            "free-checked-bag-v1"
+            "free-checked-bag-v1",
+            "inflight-savings-v1",
+            "loyalty-points-v1",
+            "no-foreign-fees-v1",
+            "travel-protection-v1",
+            "id-theft-protection-v1"
         ],
         "earning_rates": [
             "american-airlines-hotels-v1",

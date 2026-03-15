@@ -1,0 +1,136 @@
+{
+  "slug": "chase-sapphire-reserve",
+  "timestamp": "2026-03-15T02:37:47",
+  "run_id": "1f79bf4d",
+  "header_changes": [],
+  "benefits_changes": [
+    {
+      "action": "updated",
+      "item_id": "the-edit-hotel-credit",
+      "old_vid": "the-edit-hotel-credit-v1",
+      "new_vid": "the-edit-hotel-credit-v2",
+      "changes": [
+        {
+          "field": "benefit_category",
+          "old": [
+            "Chase Travel",
+            "Max",
+            "The Edit by Chase Travel"
+          ],
+          "new": [
+            "Chase Travel",
+            "The Edit by Chase Travel"
+          ]
+        }
+      ]
+    },
+    {
+      "action": "created",
+      "item_id": "edit-stays-perks",
+      "old_vid": null,
+      "new_vid": "edit-stays-perks-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "reserve-travel-designers",
+      "old_vid": null,
+      "new_vid": "reserve-travel-designers-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "events-experiences",
+      "old_vid": null,
+      "new_vid": "events-experiences-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "no-foreign-fees",
+      "old_vid": null,
+      "new_vid": "no-foreign-fees-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "ihg-diamond-status",
+      "old_vid": null,
+      "new_vid": "ihg-diamond-status-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "southwest-alist-status",
+      "old_vid": null,
+      "new_vid": "southwest-alist-status-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "shops-credit-threshold",
+      "old_vid": null,
+      "new_vid": "shops-credit-threshold-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "southwest-travel-credit",
+      "old_vid": null,
+      "new_vid": "southwest-travel-credit-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "primary-rental-insurance",
+      "old_vid": null,
+      "new_vid": "primary-rental-insurance-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "trip-cancellation-insurance",
+      "old_vid": null,
+      "new_vid": "trip-cancellation-insurance-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "baggage-delay-insurance",
+      "old_vid": null,
+      "new_vid": "baggage-delay-insurance-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "purchase-protection",
+      "old_vid": null,
+      "new_vid": "purchase-protection-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "return-protection",
+      "old_vid": null,
+      "new_vid": "return-protection-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "extended-warranty",
+      "old_vid": null,
+      "new_vid": "extended-warranty-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "fraud-protection",
+      "old_vid": null,
+      "new_vid": "fraud-protection-v1",
+      "changes": []
+    }
+  ],
+  "earning_rates_changes": [],
+  "sign_up_bonus_changes": [],
+  "summary": "1 benefit(s) updated, 15 benefit(s) created"
+}

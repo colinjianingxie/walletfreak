@@ -1,0 +1,21 @@
+{
+    "benefit_id": "amex-travel-flight-credit",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Amex Travel Online Flight Credit",
+    "description": "Up to $1,200 in statement credits on flights booked on AmexTravel.com for next calendar year",
+    "additional_details": "after spending $250,000 on eligible purchases in current calendar year; valid January 1 to December 31 of following year",
+    "benefit_category": [
+        "Amex Travel",
+        "Airlines"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 1200.0,
+    "numeric_type": "Cash",
+    "dollar_value": 1200,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Airlines"
+}

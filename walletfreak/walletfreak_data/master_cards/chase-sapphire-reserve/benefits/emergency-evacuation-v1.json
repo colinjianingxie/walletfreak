@@ -1,0 +1,20 @@
+{
+    "benefit_id": "emergency-evacuation",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Emergency Evacuation/Transportation",
+    "description": "Emergency evacuation and transportation",
+    "additional_details": "up to $100,000 for medical/transport if injured/sick >100 miles from home",
+    "benefit_category": [
+        "Protection"
+    ],
+    "benefit_type": "Insurance",
+    "numeric_value": 100000.0,
+    "numeric_type": "Cash",
+    "dollar_value": 100000,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Protection"
+}

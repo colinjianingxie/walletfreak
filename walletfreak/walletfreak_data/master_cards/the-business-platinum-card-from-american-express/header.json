@@ -12,13 +12,22 @@
     "active_indices": {
         "benefits": [
             "airline-fee-credit-v1",
-            "dell-credit-v1",
+            "dell-credit-v2",
             "indeed-credit-v1",
-            "adobe-credit-v1",
+            "adobe-credit-v2",
             "wireless-credit-v1",
-            "clear-credit-v1",
+            "clear-credit-v2",
             "walmart-credit-v1",
-            "global-lounge-access-v1"
+            "global-lounge-access-v1",
+            "hotel-credit-v1",
+            "fhr-value-v1",
+            "hilton-credit-v1",
+            "airline-points-bonus-v1",
+            "leaders-club-status-v1",
+            "hotel-collection-credit-v1",
+            "trusted-traveler-credit-v1",
+            "one-ap-credit-v1",
+            "amex-travel-flight-credit-v1"
         ],
         "earning_rates": [
             "airlines-v1",

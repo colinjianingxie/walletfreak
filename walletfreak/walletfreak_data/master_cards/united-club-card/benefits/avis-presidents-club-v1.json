@@ -1,0 +1,21 @@
+{
+    "benefit_id": "avis-presidents-club",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Avis President's Club Membership",
+    "description": "Avis President's Club membership",
+    "additional_details": "enroll at united.com/AvisChaseBenefit; benefits include upgrades, guaranteed availability",
+    "benefit_category": [
+        "Car Rentals",
+        "Avis"
+    ],
+    "benefit_type": "Status",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Permanent",
+    "enrollment_required": true,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Car Rentals"
+}

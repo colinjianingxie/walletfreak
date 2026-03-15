@@ -1,0 +1,21 @@
+{
+    "benefit_id": "loyalty-points",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Loyalty Points",
+    "description": "Earn 1 Loyalty Point for every 1 eligible AAdvantage mile earned from purchases. Earn a 10,000 Loyalty Point bonus after reaching 50,000 Loyalty Points in a status qualification year, and another 10,000 after reaching 90,000",
+    "additional_details": null,
+    "benefit_category": [
+        "Status Boost",
+        "American Airlines"
+    ],
+    "benefit_type": "Bonus",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Ongoing",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Airlines"
+}

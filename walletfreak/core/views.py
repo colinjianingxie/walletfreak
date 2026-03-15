@@ -209,10 +209,38 @@ def run_card_update_cron(request):
             premium_only=True,
             auto_seed=True,
             update_types='benefits,rates,bonus',
+            batch_size=3,
             stdout=out,
         )
-        return JsonResponse({'status': 'success', 'output': out.getvalue()})
+        output_text = out.getvalue()
+
+        # Send notification email with results
+        try:
+            db.send_email_notification(
+                to='colinjianingxie@gmail.com',
+                subject='WalletFreak: Premium Card Update Complete',
+                text_content=output_text,
+                html_content=f"""
+                <div style="font-family: sans-serif; max-width: 700px; margin: 0 auto;">
+                    <h2>Premium Card Update Complete</h2>
+                    <pre style="background: #f5f5f5; padding: 16px; border-radius: 8px; font-size: 13px; overflow-x: auto;">{output_text}</pre>
+                </div>
+                """,
+            )
+        except Exception as e:
+            print(f"Failed to send cron notification email: {e}")
+
+        return JsonResponse({'status': 'success', 'output': output_text})
     except Exception as e:
+        # Send failure notification too
+        try:
+            db.send_email_notification(
+                to='colinjianingxie@gmail.com',
+                subject='WalletFreak: Premium Card Update FAILED',
+                text_content=f'Error: {str(e)}',
+            )
+        except Exception:
+            pass
         return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
 
 

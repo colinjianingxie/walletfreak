@@ -12,8 +12,12 @@
     "active_indices": {
         "benefits": [
             "platinum-status-v1",
-            "marriott-dining-v1",
-            "free-night-v1"
+            "marriott-dining-v2",
+            "free-night-v1",
+            "earned-choice-award-v1",
+            "elite-night-credits-v1",
+            "luxury-property-credit-v1",
+            "priority-pass-select-v1"
         ],
         "earning_rates": [
             "marriott-v1",

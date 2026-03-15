@@ -1,0 +1,20 @@
+{
+    "benefit_id": "shops-credit-threshold",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "The Shops at Chase Credit",
+    "description": "$250 credit for The Shops at Chase",
+    "additional_details": "statement credits for purchases after $75,000 annual spend; available remainder of year earned + following year",
+    "benefit_category": [
+        "Retail Shopping"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 250.0,
+    "numeric_type": "Cash",
+    "dollar_value": 250,
+    "time_category": "One Time",
+    "enrollment_required": false,
+    "effective_date": "2026-01-01",
+    "benefit_main_category": "Retail Shopping"
+}

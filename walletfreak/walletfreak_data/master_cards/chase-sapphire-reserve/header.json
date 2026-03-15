@@ -12,7 +12,7 @@
     "active_indices": {
         "benefits": [
             "travel-credit-v1",
-            "the-edit-hotel-credit-v1",
+            "the-edit-hotel-credit-v2",
             "additional-hotel-credit-v1",
             "trusted-traveler-credit-v1",
             "priority-pass-v1",
@@ -24,7 +24,27 @@
             "peloton-credit-v1",
             "ihg-platinum-status-v1",
             "exclusive-tables-v1",
-            "apple-tv-music-v1"
+            "apple-tv-music-v1",
+            "edit-stays-perks-v1",
+            "reserve-travel-designers-v1",
+            "events-experiences-v1",
+            "no-foreign-fees-v1",
+            "ihg-diamond-status-v1",
+            "southwest-alist-status-v1",
+            "shops-credit-threshold-v1",
+            "southwest-travel-credit-v1",
+            "primary-rental-insurance-v1",
+            "trip-cancellation-insurance-v1",
+            "baggage-delay-insurance-v1",
+            "purchase-protection-v1",
+            "return-protection-v1",
+            "extended-warranty-v1",
+            "fraud-protection-v1",
+            "lost-luggage-reimbursement-v1",
+            "travel-accident-insurance-v1",
+            "emergency-evacuation-v1",
+            "roadside-assistance-v1",
+            "emergency-medical-dental-v1"
         ],
         "earning_rates": [
             "chase-travel-hotels-v1",

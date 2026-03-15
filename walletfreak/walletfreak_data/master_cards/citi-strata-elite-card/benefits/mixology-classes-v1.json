@@ -1,8 +1,8 @@
 {
     "benefit_id": "mixology-classes",
     "valid_from": "2020-01-01",
-    "valid_until": null,
-    "is_active": true,
+    "valid_until": "2026-03-14",
+    "is_active": false,
     "short_description": "Mixology Classes",
     "description": "Death & Co Cocktail Tutorials",
     "additional_details": null,

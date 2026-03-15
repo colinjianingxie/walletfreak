@@ -1,0 +1,21 @@
+{
+    "benefit_id": "award-mile-discount",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "10,000-Mile Award Flight Discount",
+    "description": "Earn 10,000-mile award flight discount after $20,000 spend",
+    "additional_details": "up to two per year, up to $40,000 spend; posted within 6-8 weeks",
+    "benefit_category": [
+        "Airlines",
+        "United Airlines"
+    ],
+    "benefit_type": "Bonus",
+    "numeric_value": 10000,
+    "numeric_type": "Miles",
+    "dollar_value": null,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Airlines"
+}

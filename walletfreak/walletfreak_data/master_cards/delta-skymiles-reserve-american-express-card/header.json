@@ -19,7 +19,13 @@
             "rideshare-credit-v1",
             "mqd-headstart-v1",
             "takeoff-15-v1",
-            "global-entry-credit-v1"
+            "global-entry-credit-v1",
+            "free-checked-bag-v1",
+            "priority-boarding-v1",
+            "hertz-status-v1",
+            "upgrade-priority-v1",
+            "in-flight-savings-v1",
+            "mqd-boost-v1"
         ],
         "earning_rates": [
             "delta-v2",

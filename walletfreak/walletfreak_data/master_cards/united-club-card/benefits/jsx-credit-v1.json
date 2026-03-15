@@ -1,0 +1,21 @@
+{
+    "benefit_id": "jsx-credit",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "JSX Flight Credit",
+    "description": "Up to $200 annually on JSX flight bookings",
+    "additional_details": "made directly with card",
+    "benefit_category": [
+        "Airlines",
+        "Direct Airline Bookings"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 200,
+    "numeric_type": "Cash",
+    "dollar_value": 200,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Airlines"
+}

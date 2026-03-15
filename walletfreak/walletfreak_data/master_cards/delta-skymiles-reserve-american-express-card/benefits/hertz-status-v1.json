@@ -1,0 +1,21 @@
+{
+    "benefit_id": "hertz-status",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Hertz Five Star Status",
+    "description": "Complimentary Hertz Five Star Status",
+    "additional_details": null,
+    "benefit_category": [
+        "Car Rentals",
+        "Hertz"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Ongoing",
+    "enrollment_required": true,
+    "effective_date": null,
+    "benefit_main_category": "Travel Perks"
+}

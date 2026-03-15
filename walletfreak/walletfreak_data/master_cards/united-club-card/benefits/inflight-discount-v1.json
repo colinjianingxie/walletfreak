@@ -1,0 +1,22 @@
+{
+    "benefit_id": "inflight-discount",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "25% Back on Inflight Purchases",
+    "description": "25% back on inflight food, beverages, Wi-Fi, and United Club premium drinks",
+    "additional_details": "statement credit within 24 hours",
+    "benefit_category": [
+        "Airlines",
+        "United Airlines",
+        "In-flight Discounts"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Airlines"
+}

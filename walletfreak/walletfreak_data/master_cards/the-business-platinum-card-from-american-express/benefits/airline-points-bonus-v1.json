@@ -1,0 +1,21 @@
+{
+    "benefit_id": "airline-points-bonus",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Airline Points Bonus",
+    "description": "35% points back after using Pay with Points for flights through Amex Travel with selected qualifying airline",
+    "additional_details": "up to 1,000,000 points back per calendar year",
+    "benefit_category": [
+        "Airlines",
+        "Amex Travel"
+    ],
+    "benefit_type": "Bonus",
+    "numeric_value": 35.0,
+    "numeric_type": "Points",
+    "dollar_value": null,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Airlines"
+}

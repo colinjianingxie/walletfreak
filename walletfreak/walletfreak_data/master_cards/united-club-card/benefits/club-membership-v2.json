@@ -1,0 +1,21 @@
+{
+    "benefit_id": "club-membership",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Club Membership",
+    "description": "United Club membership",
+    "additional_details": "unlimited access for the primary cardmember, one adult guest, and dependent children under the age of 18",
+    "benefit_category": [
+        "United Airlines",
+        "United Club"
+    ],
+    "benefit_type": "Access",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": 750,
+    "time_category": "Permanent",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29",
+    "benefit_main_category": "Airlines"
+}

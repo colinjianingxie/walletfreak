@@ -1,0 +1,21 @@
+{
+    "benefit_id": "upgrade-priority",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Upgrade Priority",
+    "description": "Complimentary upgrade eligibility",
+    "additional_details": "Added to the Complimentary Upgrade list for Delta Comfort+ and First Class upgrades",
+    "benefit_category": [
+        "Delta Air Lines",
+        "Upgrade Priority"
+    ],
+    "benefit_type": "Perk",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": null,
+    "benefit_main_category": "Airlines"
+}

@@ -1,0 +1,21 @@
+{
+    "benefit_id": "ihg-platinum-status",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "IHG One Rewards Platinum Elite Status",
+    "description": "IHG One Rewards Platinum Elite status",
+    "additional_details": "register at united.com/ihgstatus; maintain with open account; benefits include room upgrades, extended check-out, bonus points",
+    "benefit_category": [
+        "Hotels",
+        "Generic IHG"
+    ],
+    "benefit_type": "Status",
+    "numeric_value": null,
+    "numeric_type": null,
+    "dollar_value": null,
+    "time_category": "Permanent",
+    "enrollment_required": true,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Hotels"
+}

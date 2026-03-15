@@ -1,0 +1,20 @@
+{
+    "benefit_id": "uber-one-credit",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Uber One Credit",
+    "description": "Up to $120 annual statement credits after purchasing auto-renewing Uber One membership",
+    "additional_details": "terms apply",
+    "benefit_category": [
+        "Uber"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 120.0,
+    "numeric_type": "Cash",
+    "dollar_value": 120,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Travel Perks"
+}

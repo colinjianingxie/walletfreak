@@ -1,0 +1,21 @@
+{
+    "benefit_id": "dell-credit",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Dell Credit",
+    "description": "Up to $150 on U.S. purchases directly with Dell Technologies, plus additional $1,000 after spending $5,000 or more on those purchases",
+    "additional_details": null,
+    "benefit_category": [
+        "Business",
+        "Dell Technologies"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 1150.0,
+    "numeric_type": "Cash",
+    "dollar_value": 1150,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": true,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Business"
+}

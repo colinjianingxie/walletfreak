@@ -1,0 +1,21 @@
+{
+    "benefit_id": "travelbank-car-rental-credit",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "TravelBank Car Rental Credit",
+    "description": "Up to $100 annually in United TravelBank cash",
+    "additional_details": "$50 for 1st and 2nd Avis/Budget rental booked via cars.united.com, minimum 2-day reservation, with MileagePlus number and discount codes",
+    "benefit_category": [
+        "Car Rentals",
+        "Avis"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 100,
+    "numeric_type": "Cash",
+    "dollar_value": 100,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Car Rentals"
+}

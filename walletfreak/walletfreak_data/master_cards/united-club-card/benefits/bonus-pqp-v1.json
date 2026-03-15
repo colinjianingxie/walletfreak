@@ -1,0 +1,21 @@
+{
+    "benefit_id": "bonus-pqp",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Bonus Premier Qualifying Points",
+    "description": "1,500 Card Bonus Premier qualifying points (PQP) each year",
+    "additional_details": "awarded within 8 weeks of February 1, starting calendar year after account open; account must be open as of December 31 prior",
+    "benefit_category": [
+        "Airlines",
+        "United Airlines"
+    ],
+    "benefit_type": "Status",
+    "numeric_value": 1500,
+    "numeric_type": "Points",
+    "dollar_value": null,
+    "time_category": "Annually (calendar year)",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Airlines"
+}

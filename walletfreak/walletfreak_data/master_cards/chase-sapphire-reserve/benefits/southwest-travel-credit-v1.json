@@ -1,0 +1,21 @@
+{
+    "benefit_id": "southwest-travel-credit",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Southwest Travel Credit",
+    "description": "$500 Southwest Airlines Chase Travel credit",
+    "additional_details": "statement credits for Southwest purchases via Chase Travel after $75,000 annual spend; available remainder of year earned + following year; does not earn points",
+    "benefit_category": [
+        "Southwest Airlines",
+        "Chase Travel"
+    ],
+    "benefit_type": "Credit",
+    "numeric_value": 500.0,
+    "numeric_type": "Cash",
+    "dollar_value": 500,
+    "time_category": "One Time",
+    "enrollment_required": false,
+    "effective_date": "2026-01-01",
+    "benefit_main_category": "Airlines"
+}

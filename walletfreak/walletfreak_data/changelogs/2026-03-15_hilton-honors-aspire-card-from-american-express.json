@@ -1,0 +1,76 @@
+{
+  "slug": "hilton-honors-aspire-card-from-american-express",
+  "timestamp": "2026-03-15T03:00:17",
+  "run_id": "92129b3b",
+  "header_changes": [],
+  "benefits_changes": [
+    {
+      "action": "cosmetic_update",
+      "item_id": "diamond-status",
+      "old_vid": "diamond-status-v1",
+      "new_vid": "diamond-status-v1",
+      "changes": [
+        {
+          "field": "additional_details",
+          "old": "Top-tier Hilton status",
+          "new": "Top-tier Hilton status; Provides a 100% Bonus on Base Points earned on every stay, Premium Wi-Fi, space-available room upgrades at select properties, executive lounge access at select properties, and more"
+        }
+      ]
+    },
+    {
+      "action": "cosmetic_update",
+      "item_id": "free-night",
+      "old_vid": "free-night-v1",
+      "new_vid": "free-night-v1",
+      "changes": [
+        {
+          "field": "additional_details",
+          "old": "Standard night at any Hilton",
+          "new": "Standard night at any Hilton; in the first year of Card Membership and every year upon Card renewal"
+        }
+      ]
+    },
+    {
+      "action": "updated",
+      "item_id": "clear-plus-credit",
+      "old_vid": "clear-plus-credit-v1",
+      "new_vid": "clear-plus-credit-v2",
+      "changes": [
+        {
+          "field": "dollar_value",
+          "old": 199,
+          "new": 209
+        },
+        {
+          "field": "numeric_value",
+          "old": 199.0,
+          "new": 209.0
+        }
+      ]
+    },
+    {
+      "action": "deprecated",
+      "item_id": "national-executive-status",
+      "old_vid": "national-executive-status-v1",
+      "new_vid": null,
+      "changes": []
+    },
+    {
+      "action": "deprecated",
+      "item_id": "property-credit",
+      "old_vid": "property-credit-v1",
+      "new_vid": null,
+      "changes": []
+    },
+    {
+      "action": "deprecated",
+      "item_id": "cell-phone-protection",
+      "old_vid": "cell-phone-protection-v1",
+      "new_vid": null,
+      "changes": []
+    }
+  ],
+  "earning_rates_changes": [],
+  "sign_up_bonus_changes": [],
+  "summary": "2 benefit(s) cosmetic_update, 1 benefit(s) updated, 3 benefit(s) deprecated"
+}

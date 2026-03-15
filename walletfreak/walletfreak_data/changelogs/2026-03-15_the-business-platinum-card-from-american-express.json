@@ -1,0 +1,133 @@
+{
+  "slug": "the-business-platinum-card-from-american-express",
+  "timestamp": "2026-03-15T02:51:29",
+  "run_id": "92129b3b",
+  "header_changes": [],
+  "benefits_changes": [
+    {
+      "action": "updated",
+      "item_id": "dell-credit",
+      "old_vid": "dell-credit-v1",
+      "new_vid": "dell-credit-v2",
+      "changes": [
+        {
+          "field": "time_category",
+          "old": "Semi-annually",
+          "new": "Annually (calendar year)"
+        },
+        {
+          "field": "dollar_value",
+          "old": 400,
+          "new": 1150
+        },
+        {
+          "field": "numeric_value",
+          "old": 400.0,
+          "new": 1150.0
+        }
+      ]
+    },
+    {
+      "action": "updated",
+      "item_id": "adobe-credit",
+      "old_vid": "adobe-credit-v1",
+      "new_vid": "adobe-credit-v2",
+      "changes": [
+        {
+          "field": "dollar_value",
+          "old": 150,
+          "new": 250
+        },
+        {
+          "field": "numeric_value",
+          "old": 150.0,
+          "new": 250.0
+        }
+      ]
+    },
+    {
+      "action": "updated",
+      "item_id": "clear-credit",
+      "old_vid": "clear-credit-v1",
+      "new_vid": "clear-credit-v2",
+      "changes": [
+        {
+          "field": "dollar_value",
+          "old": 189,
+          "new": 209
+        },
+        {
+          "field": "numeric_value",
+          "old": 189.0,
+          "new": 209.0
+        }
+      ]
+    },
+    {
+      "action": "created",
+      "item_id": "hotel-credit",
+      "old_vid": null,
+      "new_vid": "hotel-credit-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "fhr-value",
+      "old_vid": null,
+      "new_vid": "fhr-value-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "hilton-credit",
+      "old_vid": null,
+      "new_vid": "hilton-credit-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "airline-points-bonus",
+      "old_vid": null,
+      "new_vid": "airline-points-bonus-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "leaders-club-status",
+      "old_vid": null,
+      "new_vid": "leaders-club-status-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "hotel-collection-credit",
+      "old_vid": null,
+      "new_vid": "hotel-collection-credit-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "trusted-traveler-credit",
+      "old_vid": null,
+      "new_vid": "trusted-traveler-credit-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "one-ap-credit",
+      "old_vid": null,
+      "new_vid": "one-ap-credit-v1",
+      "changes": []
+    },
+    {
+      "action": "created",
+      "item_id": "amex-travel-flight-credit",
+      "old_vid": null,
+      "new_vid": "amex-travel-flight-credit-v1",
+      "changes": []
+    }
+  ],
+  "earning_rates_changes": [],
+  "sign_up_bonus_changes": [],
+  "summary": "3 benefit(s) updated, 9 benefit(s) created"
+}

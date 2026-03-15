@@ -1,0 +1,21 @@
+{
+    "benefit_id": "purchase-protection",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Purchase Protection",
+    "description": "Purchase Protection",
+    "additional_details": "120 days from purchase, up to $10,000 per item; 90 days in NY",
+    "benefit_category": [
+        "Protection",
+        "Purchase Protection"
+    ],
+    "benefit_type": "Protection",
+    "numeric_value": 10000,
+    "numeric_type": "Cash",
+    "dollar_value": 10000,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": "2026-03-15",
+    "benefit_main_category": "Protection"
+}

@@ -188,3 +188,119 @@ ALL of these fields MUST be included in your response:
 Return ONLY the strictly valid JSON object with these components: {components_str}. Include the slug-id, name, and issuer fields as well. No markdown.
 """
     return prompt
+
+
+def build_batch_update_prompt(
+    cards: list[tuple[dict, str]],
+    update_types: list[str],
+    category_hierarchy: str,
+) -> str:
+    """Build a single prompt that updates multiple cards at once.
+
+    Args:
+        cards: List of (current_json, slug) tuples.
+        update_types: Components to update.
+        category_hierarchy: Formatted category hierarchy string.
+
+    Returns:
+        Prompt string covering all cards in the batch.
+    """
+    today = datetime.date.today().isoformat()
+
+    # Build component labels
+    components_to_update = []
+    if 'header' in update_types:
+        components_to_update.append("header (card metadata)")
+    if 'bonus' in update_types:
+        components_to_update.append("sign-up bonus")
+    if 'benefits' in update_types:
+        components_to_update.append("benefits")
+    if 'rates' in update_types:
+        components_to_update.append("earning rates")
+    if 'questions' in update_types:
+        components_to_update.append("questions")
+    components_str = ", ".join(components_to_update)
+
+    # Build per-card data sections
+    cards_section = ""
+    for current_json, slug in cards:
+        clean_json = current_json.copy()
+        clean_json.pop('active_indices', None)
+        if 'benefits' not in update_types:
+            clean_json.pop('benefits', None)
+        if 'rates' not in update_types:
+            clean_json.pop('earning_rates', None)
+        if 'bonus' not in update_types:
+            clean_json.pop('sign_up_bonus', None)
+        if 'questions' not in update_types:
+            clean_json.pop('questions', None)
+
+        cards_section += f"""
+---
+### Card: "{clean_json.get('name', slug)}" (Slug: {slug})
+```json
+{json.dumps(clean_json, indent=2)}
+```
+"""
+
+    prompt = f"""
+I want to do a websearch to get the latest updates for {len(cards)} credit cards as of {today}.
+
+**FOCUS**: This update is ONLY for: {components_str}. Do NOT update other components.
+
+{cards_section}
+
+**VALID CATEGORIES HIERARCHY**:
+{category_hierarchy}
+
+**CRITICAL INSTRUCTIONS FOR UPDATES (READ CAREFULLY)**:
+1. **CONSERVATIVE UPDATES**: The data provided above is heavily curated. **DO NOT CHANGE** values unless you find **EXPLICIT, RECENT EVIDENCE** in the web search results.
+2. **Ambiguity**: If web results are ambiguous or unclear, **KEEP THE CURRENT VALUE**.
+3. **Categories**: You MUST choose categories ONLY from the "Valid Categories Hierarchy" above.
+4. **Specificity**: For `benefit_category` and `earning_rates.category`, select the most specific child category.
+5. **No Duplicates**: **DO NOT CREATE DUPLICATE CATEGORIES**.
+6. **No Inventions**: Do NOT invent new categories not in the list.
+"""
+
+    # Add schema rules (shared once for all cards)
+    if 'benefits' in update_types:
+        prompt += """
+**BENEFITS SCHEMA**:
+- `benefit_id`: Keep existing ID if updating. Create logical ID for new ones.
+- `short_description`, `description`, `additional_details`: Strings.
+- `benefit_category`: List of strings. `benefit_main_category`: Single string.
+- `benefit_type`: "Credit", "Perk", "Protection", "Insurance", "Bonus", "Status", "Access", "Waiver", "Free Night".
+- `numeric_value`: Float. `numeric_type`: "Cash", "Points", "Miles". `dollar_value`: Integer.
+- `time_category`: "Annually (calendar year)", "Monthly", "One-time", "Per Use", "Quarterly".
+- `enrollment_required`: Boolean. `effective_date`: "YYYY-MM-DD" or null.
+- **SPLIT BUNDLED CREDITS** into separate benefit objects.
+"""
+
+    if 'rates' in update_types:
+        prompt += """
+**EARNING RATES SCHEMA**:
+- `rate_id`: Keep existing ID. `multiplier`: Number. `category`: List of strings.
+- `additional_details`: Required string. `is_default`: Boolean.
+- Every card MUST have at least an "All Other Purchases" default rate.
+"""
+
+    if 'bonus' in update_types:
+        prompt += """
+**SIGN-UP BONUS SCHEMA**:
+- `offer_id`: Keep existing ID when updating. `value`: Number. `terms`: String. `currency`: String.
+- If no bonus exists or has expired, return empty list [].
+"""
+
+    prompt += f"""
+**OUTPUT**:
+Return a JSON object keyed by card slug. Each value contains the updated {components_str} for that card.
+Example format:
+```
+{{
+  "card-slug-1": {{ "slug-id": "card-slug-1", "name": "...", "benefits": [...], ... }},
+  "card-slug-2": {{ "slug-id": "card-slug-2", "name": "...", "benefits": [...], ... }}
+}}
+```
+Return ONLY valid JSON, no markdown. Include slug-id, name, and issuer for each card.
+"""
+    return prompt

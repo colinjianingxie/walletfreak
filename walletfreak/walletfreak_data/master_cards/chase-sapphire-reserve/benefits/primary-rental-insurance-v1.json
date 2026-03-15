@@ -1,0 +1,21 @@
+{
+    "benefit_id": "primary-rental-insurance",
+    "valid_from": "2026-03-15",
+    "valid_until": null,
+    "is_active": true,
+    "short_description": "Primary Rental Car Insurance",
+    "description": "Primary auto rental collision damage waiver",
+    "additional_details": "up to $75,000 for theft and collision damage in US and abroad; decline rental company's insurance",
+    "benefit_category": [
+        "Primary Rental Insurance",
+        "Protection"
+    ],
+    "benefit_type": "Insurance",
+    "numeric_value": 75000.0,
+    "numeric_type": "Cash",
+    "dollar_value": 75000,
+    "time_category": "Per Use",
+    "enrollment_required": false,
+    "effective_date": "2025-11-29",
+    "benefit_main_category": "Protection"
+}
