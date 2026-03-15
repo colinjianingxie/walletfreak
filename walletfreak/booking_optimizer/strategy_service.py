@@ -2,10 +2,8 @@ import json
 import os
 import threading
 from django.conf import settings
-from xai_sdk import Client
-from xai_sdk.chat import user
-from xai_sdk.tools import web_search
 from core.services import db
+from core.card_pipeline.grok_client import GrokClient
 from .prompts import STRATEGY_ANALYSIS_PROMPT_TEMPLATE
 
 class StrategyAnalysisService:
@@ -15,7 +13,7 @@ class StrategyAnalysisService:
     def call_grok_analysis(self, prompt):
         """
         Calls Grok API with web search enabled to analyze hotel strategies.
-        Uses xai_sdk for Agent Tools API support.
+        Uses the REST-based GrokClient for reliability.
         """
         api_key = os.environ.get('GROK_API_KEY')
         if not api_key:
@@ -23,31 +21,18 @@ class StrategyAnalysisService:
             return None
 
         try:
-            client = Client(api_key=api_key)
-            
-            # Initialize chat with web_search tool
-            chat = client.chat.create(
-                model="grok-4-1-fast", 
-                tools=[web_search()], 
-            )
-            
-            chat.append(user(prompt))
-            
-            # Get the full response synchronously
-            response = chat.sample()
-            
-            full_response = response.content
-            
-            # Clean Markdown
-            if "```json" in full_response:
-                full_response = full_response.split("```json")[1].split("```")[0].strip()
-            elif "```" in full_response:
-                full_response = full_response.split("```")[1].split("```")[0].strip()
-                
-            return json.loads(full_response).get('analysis_results', [])
+            client = GrokClient(api_key=api_key)
+            result = client.call_with_usage(prompt)
+
+            if result.data:
+                print(f"Grok analysis cost: ${result.usage.total_cost:.4f}")
+                return result.data.get('analysis_results', [])
+
+            print("Grok returned no data for strategy analysis")
+            return None
 
         except Exception as e:
-            print(f"Grok SDK Error: {e}")
+            print(f"Grok API Error: {e}")
             return None
 
     def run_analysis_in_background(self, prompt_text, user_id, strat_id):
