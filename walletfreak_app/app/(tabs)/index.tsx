@@ -24,7 +24,7 @@ import { CardImage } from '../../src/components/ui/CardImage';
 import { CardActionsSheet } from '../../src/components/wallet/CardActionsSheet';
 import { AddCardSheet } from '../../src/components/wallet/AddCardSheet';
 import { PersonalityAvatar } from '../../src/components/personality/PersonalityAvatar';
-import { useWallet } from '../../src/hooks/useWallet';
+import { useWallet, useSyncWallet, useWalletChangelogs } from '../../src/hooks/useWallet';
 import { useLoyaltyPrograms } from '../../src/hooks/useLoyalty';
 import { formatCurrency } from '../../src/utils/formatters';
 import { LoyaltyProgramCard } from '../../src/components/loyalty/LoyaltyProgramCard';
@@ -67,8 +67,11 @@ export default function WalletScreen() {
   const [viewMode, setViewMode] = useState<ViewMode>('cards');
   const [selectedCard, setSelectedCard] = useState<any>(null);
   const [selectedLoyaltyProgram, setSelectedLoyaltyProgram] = useState<LoyaltyProgram | null>(null);
+  const [syncReport, setSyncReport] = useState<any>(null);
   const { data, isLoading, refetch } = useWallet();
   const { data: loyaltyData, refetch: refetchLoyalty } = useLoyaltyPrograms();
+  const syncMutation = useSyncWallet();
+  const { data: changelogsData } = useWalletChangelogs();
   const [refreshing, setRefreshing] = useState(false);
   const router = useRouter();
   const theme = useTheme();
@@ -77,6 +80,7 @@ export default function WalletScreen() {
   const addCardSheetRef = useRef<BottomSheet>(null);
   const editBalanceSheetRef = useRef<BottomSheet>(null);
   const addProgramSheetRef = useRef<BottomSheet>(null);
+  const syncSheetRef = useRef<BottomSheet>(null);
 
   // Scroll-driven animation
   const scrollY = useSharedValue(0);
@@ -109,6 +113,17 @@ export default function WalletScreen() {
     await Promise.all([refetch(), refetchLoyalty()]);
     setRefreshing(false);
   }, [refetch, refetchLoyalty]);
+
+  const handleSync = useCallback(async () => {
+    try {
+      const result = await syncMutation.mutateAsync();
+      setSyncReport(result);
+      syncSheetRef.current?.snapToIndex(0);
+    } catch {
+      setSyncReport({ migrations: [], up_to_date: true });
+      syncSheetRef.current?.snapToIndex(0);
+    }
+  }, [syncMutation]);
 
   // Group benefits by benefit_main_category, sorted by expiring soon
   const benefitsByCategory = useCallback(() => {
@@ -337,6 +352,18 @@ export default function WalletScreen() {
               </View>
             </Animated.View>
           </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+          <Pressable
+            style={styles.headerIconButton}
+            onPress={handleSync}
+            disabled={syncMutation.isPending}
+          >
+            <MaterialCommunityIcons
+              name="sync"
+              size={20}
+              color={syncMutation.isPending ? '#475569' : '#60A5FA'}
+            />
+          </Pressable>
           {walletData?.personality ? (
             <Pressable
               style={styles.headerIconButton}
@@ -352,6 +379,7 @@ export default function WalletScreen() {
               <MaterialCommunityIcons name="help-circle-outline" size={22} color="#60A5FA" />
             </Pressable>
           )}
+        </View>
         </Animated.View>
 
         {/* Stats Grid 2x2 — collapses on scroll */}
@@ -560,6 +588,64 @@ export default function WalletScreen() {
         existingProgramIds={(loyaltyData?.programs ?? []).map((p: LoyaltyProgram) => p.program_id)}
         onDismiss={() => addProgramSheetRef.current?.close()}
       />
+
+      {/* Sync Report Sheet */}
+      <BottomSheet
+        ref={syncSheetRef}
+        index={-1}
+        snapPoints={['50%']}
+        enablePanDownToClose
+        backgroundStyle={{ backgroundColor: theme.colors.elevation.level2 }}
+        handleIndicatorStyle={{ backgroundColor: theme.colors.onSurfaceVariant }}
+      >
+        <View style={{ padding: 20 }}>
+          <Text variant="titleLarge" style={{ fontFamily: 'Outfit-Bold', marginBottom: 16 }}>
+            Sync Report
+          </Text>
+          {syncReport?.up_to_date ? (
+            <View style={{ alignItems: 'center', paddingVertical: 24 }}>
+              <MaterialCommunityIcons name="check-circle" size={48} color="#34D399" />
+              <Text variant="bodyLarge" style={{ marginTop: 12, fontFamily: 'Outfit-Medium' }}>
+                All cards are up to date
+              </Text>
+            </View>
+          ) : (
+            syncReport?.migrations?.map((m: any, i: number) => (
+              <View key={i} style={{ marginBottom: 16 }}>
+                <Text variant="titleSmall" style={{ fontFamily: 'Outfit-SemiBold', marginBottom: 6 }}>
+                  {m.card_name}
+                </Text>
+                {m.changes?.map((c: any, j: number) => (
+                  <View key={j} style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 4, paddingLeft: 8 }}>
+                    <MaterialCommunityIcons name="arrow-right" size={14} color={theme.colors.primary} style={{ marginTop: 3, marginRight: 6 }} />
+                    <View style={{ flex: 1 }}>
+                      <Text variant="bodyMedium" style={{ fontFamily: 'Outfit' }}>{c.benefit}</Text>
+                      <Text variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>{c.detail}</Text>
+                    </View>
+                  </View>
+                ))}
+              </View>
+            ))
+          )}
+          {changelogsData?.changelogs?.length > 0 && (
+            <View style={{ marginTop: 8 }}>
+              <Text variant="titleSmall" style={{ fontFamily: 'Outfit-SemiBold', marginBottom: 8, color: theme.colors.onSurfaceVariant }}>
+                Recent Changes
+              </Text>
+              {changelogsData.changelogs.slice(0, 5).map((cl: any, i: number) => (
+                <View key={i} style={{ marginBottom: 8, paddingLeft: 8 }}>
+                  <Text variant="bodySmall" style={{ fontFamily: 'Outfit-Medium' }}>
+                    {cl.slug} — {cl.summary}
+                  </Text>
+                  <Text variant="labelSmall" style={{ color: theme.colors.onSurfaceVariant }}>
+                    {cl.timestamp?.slice(0, 10)}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          )}
+        </View>
+      </BottomSheet>
     </View>
   );
 }

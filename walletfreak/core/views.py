@@ -185,6 +185,37 @@ def run_cleanup_cron(request):
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
 
+@csrf_exempt
+def run_card_update_cron(request):
+    """
+    Cron endpoint to trigger premium card updates via Grok pipeline.
+    Protected by secret.
+    Usage: POST /cron/update-premium-cards/?secret=YOUR_CRON_SECRET
+    """
+    import os
+    from django.core.management import call_command
+    from io import StringIO
+
+    cron_secret = os.environ.get('CRON_SECRET', 'temp_insecure_secret_change_me')
+    request_secret = request.GET.get('secret')
+
+    if request_secret != cron_secret:
+        return JsonResponse({'status': 'error', 'message': 'Unauthorized'}, status=401)
+
+    try:
+        out = StringIO()
+        call_command(
+            'update_cards_grok',
+            premium_only=True,
+            auto_seed=True,
+            update_types='benefits,rates,bonus',
+            stdout=out,
+        )
+        return JsonResponse({'status': 'success', 'output': out.getvalue()})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+
+
 def pricing(request):
     context = {
         'firebase_config': settings.FIREBASE_CLIENT_CONFIG,

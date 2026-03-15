@@ -35,6 +35,13 @@ def get_wallet(request):
     except Exception:
         active_cards, inactive_cards, eyeing_cards = [], [], []
 
+    # Silent migration: migrate orphaned benefit_usage keys for active cards
+    for card in active_cards:
+        try:
+            db.migrate_benefit_usage(uid, card.get("card_id", card.get("id")), card)
+        except Exception:
+            pass
+
     # Get personality
     try:
         assigned_personality = db.get_user_assigned_personality(uid)
@@ -521,6 +528,87 @@ def toggle_ignore_benefit(request, user_card_id: str, benefit_id: str, payload: 
         return {"success": True}
     except Exception as e:
         return JsonResponse({"success": False, "error": str(e)}, status=500)
+
+
+@router.post("/sync/")
+def sync_wallet(request):
+    """Explicitly sync wallet: migrate benefit versions and return a report."""
+    uid = request.auth
+    try:
+        active_cards = db.get_user_cards(uid, status="active")
+    except Exception:
+        return JsonResponse({"success": False, "error": "Failed to fetch cards"}, status=500)
+
+    all_migrations = []
+    for card in active_cards:
+        try:
+            card_id = card.get("card_id", card.get("id"))
+            migrations = db.migrate_benefit_usage(uid, card_id, card)
+            if migrations:
+                # Build human-readable changes
+                changes = []
+                # Look up benefit descriptions from card data
+                benefits_map = {b.get("id"): b for b in card.get("benefits", [])}
+                for m in migrations:
+                    new_benefit = benefits_map.get(m["new_key"], {})
+                    desc = new_benefit.get("description", m["new_key"])
+                    changes.append({
+                        "benefit": desc,
+                        "detail": f"Updated from {m['old_key']} to {m['new_key']}, your tracking preserved",
+                    })
+                all_migrations.append({
+                    "card_name": card.get("name", card_id),
+                    "changes": changes,
+                })
+        except Exception:
+            continue
+
+    return {
+        "migrations": all_migrations,
+        "up_to_date": len(all_migrations) == 0,
+    }
+
+
+@router.get("/changelogs/")
+def get_wallet_changelogs(request):
+    """Get recent changelog entries for cards in the user's wallet."""
+    uid = request.auth
+    try:
+        user_cards = db.get_user_cards(uid, hydrate=False)
+    except Exception:
+        return JsonResponse({"success": False, "error": "Failed to fetch cards"}, status=500)
+
+    card_slugs = [c.get("card_slug_id", c.get("id")) for c in user_cards]
+    if not card_slugs:
+        return {"changelogs": []}
+
+    # Query changelogs from Firestore for user's cards, last 30 days
+    from datetime import timedelta
+    since_date = (datetime.now() - timedelta(days=30)).strftime("%Y-%m-%d")
+
+    changelogs = []
+    for slug in card_slugs:
+        try:
+            query = (
+                db.db.collection("card_changelogs")
+                .where("slug", "==", slug)
+                .order_by("timestamp", direction="DESCENDING")
+                .limit(5)
+            )
+            docs = list(query.stream())
+            for doc in docs:
+                data = doc.to_dict()
+                # Filter by date
+                ts = data.get("timestamp", "")
+                if ts[:10] >= since_date:
+                    changelogs.append(data)
+        except Exception:
+            continue
+
+    # Sort by timestamp descending
+    changelogs.sort(key=lambda x: x.get("timestamp", ""), reverse=True)
+
+    return {"changelogs": changelogs[:20]}
 
 
 @router.get("/check-delete/{user_card_id}/")

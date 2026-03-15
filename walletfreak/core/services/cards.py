@@ -592,6 +592,74 @@ class CardMixin:
             
         card_ref.update(update_data)
 
+    def migrate_benefit_usage(self, uid, user_card_id, card_data):
+        """Migrate orphaned benefit_usage keys to current versions using benefit_version_map.
+
+        Returns:
+            list of dicts describing migrations performed, or empty list if none needed.
+        """
+        version_map = card_data.get('benefit_version_map', {})
+        if not version_map:
+            return []
+
+        card_ref = self.db.collection('users').document(uid).collection('user_cards').document(user_card_id)
+        card_doc = card_ref.get()
+        if not card_doc.exists:
+            return []
+
+        benefit_usage = card_doc.to_dict().get('benefit_usage', {})
+        if not benefit_usage:
+            return []
+
+        migrations = []
+        updated_usage = dict(benefit_usage)
+
+        for old_key, new_key in version_map.items():
+            if old_key not in updated_usage:
+                continue
+
+            old_data = updated_usage[old_key]
+            new_data = updated_usage.get(new_key, {})
+
+            # Merge periods: take higher used per period
+            old_periods = old_data.get('periods', {})
+            new_periods = new_data.get('periods', {})
+            merged_periods = dict(new_periods)
+            for period_key, period_val in old_periods.items():
+                if period_key in merged_periods:
+                    existing_used = merged_periods[period_key].get('used', 0)
+                    incoming_used = period_val.get('used', 0)
+                    if incoming_used > existing_used:
+                        merged_periods[period_key] = period_val
+                else:
+                    merged_periods[period_key] = period_val
+
+            # Recalculate total used from periods
+            total_used = sum(p.get('used', 0) for p in merged_periods.values())
+
+            # Carry over is_ignored (user preference)
+            is_ignored = old_data.get('is_ignored', new_data.get('is_ignored', False))
+
+            updated_usage[new_key] = {
+                'periods': merged_periods,
+                'used': total_used,
+                'is_ignored': is_ignored,
+                'last_updated': firestore.SERVER_TIMESTAMP,
+            }
+
+            # Remove old key
+            del updated_usage[old_key]
+
+            migrations.append({
+                'old_key': old_key,
+                'new_key': new_key,
+            })
+
+        if migrations:
+            card_ref.update({'benefit_usage': updated_usage})
+
+        return migrations
+
     def toggle_benefit_ignore(self, uid, user_card_id, benefit_name, is_ignored):
         card_ref = self.db.collection('users').document(uid).collection('user_cards').document(user_card_id)
         update_data = {
