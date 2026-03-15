@@ -189,59 +189,12 @@ def run_cleanup_cron(request):
 def run_card_update_cron(request):
     """
     Cron endpoint to trigger premium card updates via Grok pipeline.
-    Protected by secret.
-    Usage: POST /cron/update-premium-cards/?secret=YOUR_CRON_SECRET
+    PAUSED — use admin dashboard to trigger updates manually instead.
     """
-    import os
-    from django.core.management import call_command
-    from io import StringIO
-
-    cron_secret = os.environ.get('CRON_SECRET', 'temp_insecure_secret_change_me')
-    request_secret = request.GET.get('secret')
-
-    if request_secret != cron_secret:
-        return JsonResponse({'status': 'error', 'message': 'Unauthorized'}, status=401)
-
-    try:
-        out = StringIO()
-        call_command(
-            'update_cards_grok',
-            premium_only=True,
-            auto_seed=True,
-            update_types='benefits,rates,bonus',
-            batch_size=3,
-            stdout=out,
-        )
-        output_text = out.getvalue()
-
-        # Send notification email with results
-        try:
-            db.send_email_notification(
-                to='colinjianingxie@gmail.com',
-                subject='WalletFreak: Premium Card Update Complete',
-                text_content=output_text,
-                html_content=f"""
-                <div style="font-family: sans-serif; max-width: 700px; margin: 0 auto;">
-                    <h2>Premium Card Update Complete</h2>
-                    <pre style="background: #f5f5f5; padding: 16px; border-radius: 8px; font-size: 13px; overflow-x: auto;">{output_text}</pre>
-                </div>
-                """,
-            )
-        except Exception as e:
-            print(f"Failed to send cron notification email: {e}")
-
-        return JsonResponse({'status': 'success', 'output': output_text})
-    except Exception as e:
-        # Send failure notification too
-        try:
-            db.send_email_notification(
-                to='colinjianingxie@gmail.com',
-                subject='WalletFreak: Premium Card Update FAILED',
-                text_content=f'Error: {str(e)}',
-            )
-        except Exception:
-            pass
-        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+    return JsonResponse({
+        'status': 'paused',
+        'message': 'Automatic card updates are paused. Use the admin dashboard to trigger updates manually.'
+    }, status=200)
 
 
 def pricing(request):

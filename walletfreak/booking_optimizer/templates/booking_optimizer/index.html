@@ -160,6 +160,11 @@
                             <div class="hh-color-bar {{ hotel.brand_class }}"></div>
                             {% if hotel.photo_url %}
                             <div class="hh-card-photo" style="background-image: url('{{ hotel.photo_url }}');"></div>
+                            {% else %}
+                            <div class="hh-card-photo hh-no-image">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: #94a3b8;"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="m20 17-3.5-3.5-2.5 3-4-5L4 17"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
+                                <span style="color: #94a3b8; font-size: 0.7rem; margin-top: 0.25rem;">No image</span>
+                            </div>
                             {% endif %}
                             <div class="hh-card-content">
                                 <div class="hh-card-top-row">
