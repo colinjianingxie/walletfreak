@@ -133,7 +133,6 @@ class StrategyAnalysisService:
                 try:
                     hotel_dict = json.loads(json_str)
                     hotel_dict.pop('price', None)
-                    hotel_dict.pop('rating', None)
                     selected_hotels.append(hotel_dict)
                 except:
                     pass
@@ -178,7 +177,6 @@ class StrategyAnalysisService:
                 try:
                     hotel_dict = json.loads(json_str)
                     hotel_dict.pop('price', None)
-                    hotel_dict.pop('rating', None)
                     selected_hotels.append(hotel_dict)
                 except: 
                     pass
