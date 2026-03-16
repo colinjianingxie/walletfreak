@@ -1,9 +1,29 @@
 import { Tabs, useRouter } from 'expo-router';
-import { useTheme } from 'react-native-paper';
+import { useTheme, Badge } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Platform, Pressable } from 'react-native';
+import { Platform, Pressable, View } from 'react-native';
+import { useUnreadCount } from '../../src/hooks/useNotifications';
 
 type TabIconName = React.ComponentProps<typeof MaterialCommunityIcons>['name'];
+
+function NotificationBell() {
+  const theme = useTheme();
+  const router = useRouter();
+  const { data: count } = useUnreadCount();
+
+  return (
+    <Pressable onPress={() => router.push('/stacks/notification-center' as any)} style={{ marginRight: 12, padding: 4 }}>
+      <View>
+        <MaterialCommunityIcons name="bell-outline" size={22} color={theme.colors.onSurface} />
+        {(count ?? 0) > 0 && (
+          <Badge size={16} style={{ position: 'absolute', top: -4, right: -6 }}>
+            {count! > 99 ? '99+' : count}
+          </Badge>
+        )}
+      </View>
+    </Pressable>
+  );
+}
 
 export default function TabLayout() {
   const theme = useTheme();
@@ -35,6 +55,7 @@ export default function TabLayout() {
           fontFamily: 'Outfit-SemiBold',
         },
         headerShadowVisible: false,
+        headerRight: () => <NotificationBell />,
       }}
     >
       <Tabs.Screen

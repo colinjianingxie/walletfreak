@@ -145,11 +145,19 @@
                     </div>
                 </div>
                 
-                <div class="header-right">
-                    <!-- <button class="icon-btn relative">
+                <div class="header-right" style="position:relative;">
+                    <button class="icon-btn" id="notif-bell-btn" onclick="toggleNotificationPanel()" style="position:relative;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg>
-                        <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white"></span>
-                    </button> -->
+                        <span id="notif-badge" style="display:none;position:absolute;top:2px;right:2px;width:8px;height:8px;background:#ef4444;border-radius:50%;border:2px solid white;"></span>
+                    </button>
+                    <!-- Notification dropdown panel -->
+                    <div id="notif-panel" style="display:none;position:absolute;right:0;top:100%;margin-top:8px;width:360px;max-height:420px;background:white;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,0.15);z-index:1000;overflow:hidden;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid #eee;">
+                            <span style="font-weight:600;font-family:'Outfit',sans-serif;">Notifications</span>
+                            <button onclick="markAllNotificationsRead()" style="background:none;border:none;color:var(--primary);cursor:pointer;font-size:13px;font-family:'Outfit',sans-serif;">Mark all read</button>
+                        </div>
+                        <div id="notif-list" style="overflow-y:auto;max-height:360px;"></div>
+                    </div>
                 </div>
             </header>
 
@@ -212,6 +220,108 @@
             });
         }
     </script>
+    {% if user.is_authenticated %}
+    <script>
+    (function() {
+        let notifPanelOpen = false;
+
+        async function getAuthHeaders() {
+            try {
+                const user = firebase.auth().currentUser;
+                if (!user) return null;
+                const token = await user.getIdToken();
+                return { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' };
+            } catch (e) { return null; }
+        }
+
+        window.fetchUnreadCount = async function() {
+            const headers = await getAuthHeaders();
+            if (!headers) return;
+            try {
+                const res = await fetch('/api/v1/notifications/unread-count/', { headers });
+                if (!res.ok) return;
+                const data = await res.json();
+                const badge = document.getElementById('notif-badge');
+                if (badge) badge.style.display = data.count > 0 ? 'block' : 'none';
+            } catch (e) {}
+        };
+
+        window.toggleNotificationPanel = async function() {
+            const panel = document.getElementById('notif-panel');
+            if (!panel) return;
+            notifPanelOpen = !notifPanelOpen;
+            panel.style.display = notifPanelOpen ? 'block' : 'none';
+            if (notifPanelOpen) await loadNotifications();
+        };
+
+        async function loadNotifications() {
+            const headers = await getAuthHeaders();
+            if (!headers) return;
+            const list = document.getElementById('notif-list');
+            if (!list) return;
+            list.innerHTML = '<div style="padding:24px;text-align:center;color:#999;">Loading...</div>';
+            try {
+                const res = await fetch('/api/v1/notifications/?limit=10', { headers });
+                if (!res.ok) return;
+                const data = await res.json();
+                if (!data.notifications || data.notifications.length === 0) {
+                    list.innerHTML = '<div style="padding:32px;text-align:center;color:#999;font-family:Outfit,sans-serif;">No notifications</div>';
+                    return;
+                }
+                list.innerHTML = data.notifications.map(n => {
+                    const bg = n.read ? '#fff' : '#f8f5ff';
+                    const weight = n.read ? '400' : '600';
+                    const dot = n.read ? '' : '<span style="width:8px;height:8px;border-radius:50%;background:var(--primary);flex-shrink:0;"></span>';
+                    return `<a href="${n.action_url || '#'}" onclick="markNotifRead('${n.id}')" style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:${bg};text-decoration:none;color:inherit;border-bottom:1px solid #f0f0f0;">
+                        <div style="flex:1;">
+                            <div style="font-weight:${weight};font-size:14px;font-family:Outfit,sans-serif;color:#1a1a2e;">${n.title}</div>
+                            <div style="font-size:13px;color:#666;margin-top:2px;line-height:1.4;">${n.body}</div>
+                        </div>
+                        ${dot}
+                    </a>`;
+                }).join('');
+            } catch (e) {
+                list.innerHTML = '<div style="padding:24px;text-align:center;color:#999;">Error loading</div>';
+            }
+        }
+
+        window.markNotifRead = async function(id) {
+            const headers = await getAuthHeaders();
+            if (!headers) return;
+            try { await fetch('/api/v1/notifications/' + id + '/read/', { method: 'POST', headers }); } catch (e) {}
+        };
+
+        window.markAllNotificationsRead = async function() {
+            const headers = await getAuthHeaders();
+            if (!headers) return;
+            try {
+                await fetch('/api/v1/notifications/read-all/', { method: 'POST', headers });
+                const badge = document.getElementById('notif-badge');
+                if (badge) badge.style.display = 'none';
+                await loadNotifications();
+            } catch (e) {}
+        };
+
+        // Close panel on outside click
+        document.addEventListener('click', function(e) {
+            const panel = document.getElementById('notif-panel');
+            const btn = document.getElementById('notif-bell-btn');
+            if (panel && notifPanelOpen && !panel.contains(e.target) && !btn.contains(e.target)) {
+                notifPanelOpen = false;
+                panel.style.display = 'none';
+            }
+        });
+
+        // Poll unread count on load + every 60s
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                setTimeout(fetchUnreadCount, 1000);
+                setInterval(fetchUnreadCount, 60000);
+            }
+        });
+    })();
+    </script>
+    {% endif %}
     {% block extra_js %}{% endblock %}
 </body>
 

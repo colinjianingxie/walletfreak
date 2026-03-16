@@ -4,6 +4,7 @@ from .cards import CardMixin
 from .personalities import PersonalityMixin
 from .blogs import BlogMixin
 from .notifications import NotificationMixin
+from .in_app_notifications import InAppNotificationMixin
 from .datapoints import DataPointMixin
 from .subscriptions import SubscriptionMixin
 from .loyalty import LoyaltyMixin
@@ -15,6 +16,7 @@ class FirestoreService(
     PersonalityMixin,
     BlogMixin,
     NotificationMixin,
+    InAppNotificationMixin,
     DataPointMixin,
     SubscriptionMixin,
     LoyaltyMixin,

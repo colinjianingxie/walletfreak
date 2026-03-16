@@ -268,7 +268,27 @@ The WalletFreak Team
                 print(f"Sent blog notification to {len(emails_to_send)} subscribers via BCC.")
             except Exception as e:
                 print(f"Failed to queue blog notification email: {e}")
-                
+
+            # --- In-app notifications (go to ALL users, not just email subscribers) ---
+            try:
+                all_users = self.db.collection('users').stream()
+                notif_list = []
+                for u_doc in all_users:
+                    notif_list.append({
+                        'uid': u_doc.id,
+                        'type': 'blog_published',
+                        'title': 'New Blog Post',
+                        'body': f'{title}' + (f' — {excerpt[:80]}' if excerpt else ''),
+                        'metadata': {'blog_slug': slug},
+                        'action_url': f'/blog/{slug}',
+                        'action_route': f'/stacks/blog/{slug}',
+                    })
+                if notif_list:
+                    count = self.create_bulk_notifications(notif_list)
+                    print(f"Created {count} in-app blog notifications.")
+            except Exception as e:
+                print(f"Failed to create in-app blog notifications: {e}")
+
         except Exception as e:
             print(f"Error in blog notification thread: {e}")
 

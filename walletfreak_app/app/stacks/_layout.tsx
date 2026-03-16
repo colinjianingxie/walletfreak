@@ -63,6 +63,7 @@ export default function StacksLayout() {
       <Stack.Screen name="compare-cards" options={{ title: 'Compare Cards' }} />
       <Stack.Screen name="settings" options={{ title: 'Settings' }} />
       <Stack.Screen name="notifications" options={{ title: 'Notifications' }} />
+      <Stack.Screen name="notification-center" options={{ title: 'Notifications' }} />
       <Stack.Screen name="personality-quiz" options={{ title: 'Freak Quiz' }} />
       <Stack.Screen name="wallet-card/[userCardId]" options={{ title: 'Card Benefits', headerShown: false }} />
       <Stack.Screen name="privacy-policy" options={{ title: 'Privacy Policy' }} />
