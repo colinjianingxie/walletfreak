@@ -34,6 +34,17 @@ class Command(BaseCommand):
         card_names = self._load_card_names()
         total_cost = 0.0
 
+        # Fetch recent article titles for deduplication
+        from core.services import db
+        try:
+            recent_blogs = db.get_blogs(status='published', limit=10)
+            recent_titles = [b.get('title', '') for b in recent_blogs if b.get('title')]
+            if recent_titles:
+                self.stdout.write(f"Loaded {len(recent_titles)} recent titles for dedup")
+        except Exception as e:
+            self.stdout.write(self.style.WARNING(f"Could not load recent blogs: {e}"))
+            recent_titles = []
+
         # Step 1: Discover topic
         if options.get('topic'):
             topic_data = {
@@ -46,7 +57,7 @@ class Command(BaseCommand):
             self.stdout.write(f"Using manual topic: {options['topic']}")
         else:
             self.stdout.write("Discovering trending topic...")
-            prompt = build_topic_discovery_prompt()
+            prompt = build_topic_discovery_prompt(recent_titles=recent_titles)
             result = grok.call_with_usage(prompt)
             total_cost += result.usage.total_cost
 
@@ -141,8 +152,6 @@ class Command(BaseCommand):
             return
 
         # Step 5: Check for duplicate slug and save
-        from core.services import db
-
         existing = db.get_blog_by_slug(slug)
         if existing:
             slug = f"{slug}-{int(now.timestamp())}"
