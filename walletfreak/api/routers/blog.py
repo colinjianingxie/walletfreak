@@ -128,8 +128,14 @@ def blog_list(request, params: Query[BlogListParams]):
     start = (params.page - 1) * params.page_size
     end = start + params.page_size
 
+    # Strip full content from list view — fetch it only on detail view
+    page_posts = []
+    for p in posts[start:end]:
+        p.pop("content", None)
+        page_posts.append(p)
+
     return {
-        "posts": posts[start:end],
+        "posts": page_posts,
         "total": total,
         "page": params.page,
         "has_next": end < total,

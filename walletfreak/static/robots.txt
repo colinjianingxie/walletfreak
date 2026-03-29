@@ -1,0 +1,12 @@
+User-agent: *
+Disallow: /blog/?*
+Disallow: /cards/?*
+Disallow: /wallet/
+Disallow: /tools/
+Disallow: /cron/
+Disallow: /api/
+Disallow: /custom-admin/
+Disallow: /admin/
+
+Allow: /blog/$
+Allow: /

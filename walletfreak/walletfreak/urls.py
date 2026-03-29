@@ -17,12 +17,33 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView
+from django.http import HttpResponse
 from accounts import views as accounts_views
 from custom_admin import views as custom_admin_views
 
 from api.urls import api as ninja_api
 
+
+def robots_txt(request):
+    content = "\n".join([
+        "User-agent: *",
+        "Disallow: /blog/?*",
+        "Disallow: /cards/?*",
+        "Disallow: /wallet/",
+        "Disallow: /tools/",
+        "Disallow: /cron/",
+        "Disallow: /api/",
+        "Disallow: /custom-admin/",
+        "Disallow: /admin/",
+        "",
+        "Allow: /blog/$",
+        "Allow: /",
+    ])
+    return HttpResponse(content, content_type="text/plain")
+
+
 urlpatterns = [
+    path("robots.txt", robots_txt),
     path('api/v1/', ninja_api.urls),
     path('admin/logout/', custom_admin_views.admin_logout_view, name='admin_logout'),
     path('admin/', admin.site.urls),
