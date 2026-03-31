@@ -1,14 +1,21 @@
 from django.shortcuts import render
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.core.cache import cache
 from django.utils.safestring import mark_safe
+from django.views.decorators.cache import cache_control
+from django_ratelimit.decorators import ratelimit
 from core.services import db
 from datetime import datetime
 import markdown
 from .utils import parse_tags_helper
 
+
+@ratelimit(key='ip', rate='60/m', block=False)
+@cache_control(max_age=120, public=True)
 def blog_list(request):
     """Display list of published blogs with search and filtering"""
+    if getattr(request, 'limited', False):
+        return HttpResponse('Too many requests. Please slow down.', status=429)
     # Get filter parameters
     category = request.GET.get('category')
     search_query = request.GET.get('q')
@@ -309,8 +316,12 @@ def blog_list(request):
 
     return render(request, 'blog/blog_list.html', context)
 
+@ratelimit(key='ip', rate='60/m', block=False)
+@cache_control(max_age=300, public=True)
 def blog_detail(request, slug):
     """Display a single blog post"""
+    if getattr(request, 'limited', False):
+        return HttpResponse('Too many requests. Please slow down.', status=429)
     blog = db.get_blog_by_slug(slug)
     if not blog:
         raise Http404("Post not found")
